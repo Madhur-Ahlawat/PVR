@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_background_login"
+    tools:context=".ui.login.LoginActivity">
+
+
+    <View
+        android:id="@+id/view8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/view8"
+        app:layout_constraintTop_toTopOf="@+id/view8"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <View
+                android:id="@+id/view9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="63dp"
+                android:layout_marginEnd="34dp"
+                android:drawablePadding="5dp"
+                android:fontFamily="@font/helvetica_neu"
+                android:text="@string/skip"
+                android:textColor="@color/login_color"
+                android:textSize="@dimen/dim_h14"
+                app:drawableRightCompat="@drawable/ic_skip_arrow"
+                app:layout_constraintEnd_toEndOf="@+id/view9"
+                app:layout_constraintTop_toTopOf="@+id/view9" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/view9"
+                app:layout_constraintTop_toBottomOf="@+id/textView8"
+                app:srcCompat="@drawable/pvr_new"
+                tools:ignore="ContentDescription,ImageContrastCheck" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="40dp"
+                app:layout_constraintBottom_toTopOf="@+id/textView11"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/view9"
+                app:layout_constraintTop_toBottomOf="@+id/imageView6">
+
+
+                <View
+                    android:id="@+id/view10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:fontFamily="@font/helvetica_neu"
+                    android:text="@string/verify_number"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="30sp"
+                    app:layout_constraintStart_toStartOf="@+id/view10"
+                    app:layout_constraintTop_toTopOf="@+id/view10" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/toContinue"
+                    android:textColor="@color/textColor"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/view10"
+                    app:layout_constraintTop_toBottomOf="@+id/textView9"
+                    tools:ignore="TextContrastCheck" />
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/mobileLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:hint="@string/mobile_number"
+                    app:boxBackgroundColor="@color/white"
+                    app:boxStrokeColor="#EDE8E9"
+                    app:boxStrokeWidth="1dp"
+                    app:endIconDrawable="@drawable/ic_vector_call"
+                    app:endIconMode="custom"
+                    app:errorEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView10">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/phoneIdEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:digits="1234567890"
+                        android:imeOptions="actionDone"
+                        android:inputType="phone"
+                        android:maxLength="10"
+                        android:textColor="@color/pvr_dark_black"
+                        android:textSize="16sp"
+                        tools:ignore="TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:fontFamily="@font/cafeta"
+                android:gravity="center"
+                android:letterSpacing="0.6"
+                android:text="@string/continue_txt"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:layout_marginTop="@dimen/dimen_30dp"
+                android:layout_marginBottom="@dimen/dimen_30dp"
+                android:background="@drawable/btn_yellow_curve"
+                app:layout_constraintBottom_toBottomOf="@+id/view9"
+                app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
+                app:layout_constraintStart_toStartOf="@+id/constraintLayout" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

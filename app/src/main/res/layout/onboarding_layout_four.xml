@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/view5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/splash_back"/>
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/view5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view5"
+        app:srcCompat="@drawable/slider_icon_four"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:text="@string/onBoarding_three_four"
+        app:layout_constraintEnd_toEndOf="@+id/imageView5"
+        app:layout_constraintStart_toStartOf="@+id/imageView5"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp"
+        android:textColor="@color/black"
+        android:background="@drawable/btn_yellow_rounded"
+        android:text="@string/get_started"
+        app:layout_constraintEnd_toEndOf="@+id/view5"
+        app:layout_constraintStart_toStartOf="@+id/view5"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

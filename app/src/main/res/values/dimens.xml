@@ -1,0 +1,432 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!--Helvetica font size-->
+    <dimen name="dim_h1">20sp</dimen>
+    <dimen name="dim_h1.1">24sp</dimen>
+    <dimen name="dim_h2">20sp</dimen>
+    <dimen name="dim_h3">18sp</dimen>
+    <dimen name="dim_h4">12sp</dimen>
+    <dimen name="dim_h4.1">12sp</dimen>
+    <dimen name="dim_h5">24sp</dimen>
+    <dimen name="dim_h5.1">24sp</dimen>
+    <dimen name="dim_h6">20sp</dimen>
+    <dimen name="dim_h6.1">20sp</dimen>
+    <dimen name="dim_h7">16sp</dimen>
+    <dimen name="dim_h8">16sp</dimen>
+    <dimen name="dim_h9">13sp</dimen>
+    <dimen name="dim_h10">12sp</dimen>
+    <dimen name="dim_h11">12sp</dimen>
+    <dimen name="dim_h12">10sp</dimen>
+    <dimen name="dim_h13">12sp</dimen>
+    <dimen name="dim_h14">10sp</dimen>
+    <dimen name="dim_h15">8sp</dimen>
+    <dimen name="dim_h16">12sp</dimen>
+    <dimen name="dim_h17">10sp</dimen>
+    <dimen name="dim_h18">9sp</dimen>
+    <dimen name="dim_h19">14sp</dimen>
+    <dimen name="dim_h19.1">15sp</dimen>
+    <dimen name="dim_h22">22sp</dimen>
+
+
+    <!--cafeta font size-->
+
+
+    <dimen name="padding_default">10dp</dimen>
+
+    <dimen name="detail_backdrop_height">256dp</dimen>
+
+    <dimen name="line_header_below">1dp</dimen>
+
+    <!--start ========== Language selection size config========================= Added by Asha -->
+    <dimen name="height_image_expanded_card_image">150dp</dimen>
+    <dimen name="padding_medium">8dp</dimen>
+    <dimen name="card_View_radius">5dp</dimen>
+    <dimen name="width_facebook_google_button">240dp</dimen>
+    <dimen name="height_facebook_google_button">44dp</dimen>
+
+
+    <dimen name="langague_selection_first_card_left_right_margin">10dp</dimen>
+    <dimen name="langague_selection_second_card_left_right_margin">16dp</dimen>
+    <dimen name="langague_selection_third_card_left_right_margin">20dp</dimen>
+
+    <dimen name="langague_selection_second_card_top_margin">-15dp</dimen>
+    <dimen name="langague_selection_third_card_top_margin">-15dp</dimen>
+
+    <dimen name="langague_selection_second_card_left_right_bottom_padding">5dp</dimen>
+
+    <dimen name="langague_selection_second_card_top_padding">25dp</dimen>
+    <dimen name="langague_selection_third_card_top_padding">18dp</dimen>
+
+
+    <!-- End language selection config-->
+
+    <!--common header config
+  -->
+
+    <!--common header config-->
+
+
+    <!--Start ============Show selection size config===========================Added by Kailash-->
+    <!--  show selection detail screen -->
+
+    <!-- toolbar dimensions -->
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="toolbar_left_right_padding">10dp</dimen>
+
+    <!-- horizontal scroll day dimensions -->
+    <dimen name="booking_day_scrollview_paddingTop">10dp</dimen>
+    <dimen name="booking_day_scrollview_paddingBottom">10dp</dimen>
+
+    <dimen name="global_left_right_spacing">10dp</dimen>
+    <dimen name="movie_length_and_type">10dp</dimen>
+
+    <!-- Recycler View Dimensions -->
+    <dimen name="recycler_list_item_padding">16dp</dimen>
+    <dimen name="recycler_item_height">64dp</dimen>
+    <dimen name="show_card_layout_border">1dp</dimen>
+    <dimen name="layout_border">.5dp</dimen>
+    <dimen name="height_language_view">40dp</dimen>
+    <dimen name="selected_item_bottom_padding">12dp</dimen>
+    <dimen name="selected_item_top_bottom_padding">8dp</dimen>
+
+
+    <!--Navigation header Dimentions-->
+
+    <!--End show selection config-->
+
+    <!--Start ============seat selection size config===========================Added by Rohit-->
+
+
+    <!--seat size config start-->
+
+    <dimen name="seat_selection_show_tab_height">52dp</dimen>
+    <dimen name="seat_selection_counter_width">132dp</dimen>
+    <dimen name="bottom_button_height">48dp</dimen>
+
+
+    <!--seat size config end-->
+
+
+    <!--landing page configuration-->
+
+
+    <dimen name="multiformate_image_height">100dp</dimen>
+    <dimen name="single_formate_image_height">113dp</dimen>
+    <dimen name="multiformate_movie_bar_height">58dp</dimen>
+    <dimen name="singleformate_movie_bar_height">53dp</dimen>
+
+    <dimen name="item_height_landing_page">166dp</dimen>
+    <dimen name="item_height_landing_113dp">113dp</dimen>
+
+    <dimen name="landing_page_list_padding">10dp</dimen>
+
+    <!--End show selection config-->
+
+
+    <!--login screen  dimentions  -->
+    <dimen name="register">16sp</dimen>
+
+    <dimen name="login_margin_top_facebook_btn">20dp</dimen>
+    <dimen name="login_margin_top_google_btn">10dp</dimen>
+    <dimen name="login_margin_top_register_text">24dp</dimen>
+    <dimen name="login_margin_top_login_with_text">20dp</dimen>
+    <dimen name="login_margin_top_skip_btn">15dp</dimen>
+    <dimen name="login_margin_top_pvr_logo">5dp</dimen>
+
+    <!--common header view (Navigataion header)-->
+    <dimen name="common_hear_subtitle_margin">-2dp</dimen>
+    <dimen name="navigation_padding_defualt">10dp</dimen>
+    <dimen name="common_header_padding_side_menu">13dp</dimen>
+    <dimen name="common_header_margin_search_btn">12dp</dimen>
+    <dimen name="common_header_margin_location_btn">13dp</dimen>
+
+    <!--landing screen list item dimension-->
+    <dimen name="padding_favourite_landing_screen">3dp</dimen>
+    <dimen name="padding_favourite_landing_left">5dp</dimen>
+    <dimen name="padding_landing_screen">10dp</dimen>
+
+    <!--location screen dimens-->
+    <dimen name="enable_location_margin_default">10dp</dimen>
+    <dimen name="enable_location_margin_large">25dp</dimen>
+    <dimen name="select_city_adapter_padding_default">10dp</dimen>
+    <dimen name="list_divider_height">1dp</dimen>
+
+
+    <!--enable location screen default value-->
+    <integer name="tracking">1</integer>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <!-- Navigation menu-->
+    <dimen name="item_top_bottom_padding">10dp</dimen>
+    <dimen name="subtext_top_margin">5dp</dimen>
+    <dimen name="nav_signOut_height">64dp</dimen>
+    <dimen name="divider_width">170dp</dimen>
+
+    <dimen name="enable_location_margin_small">5dp</dimen>
+
+
+    <!-- common header dimension-->
+    <dimen name="back_btn_width">40dp</dimen>
+
+    <!-- food screen-->
+    <dimen name="food_bottom_item_height">52dp</dimen>
+    <dimen name="food_discount_layout_height">36dp</dimen>
+    <dimen name="all_theater_divider">10dp</dimen>
+    <dimen name="all_theatre_padding_default">10dp</dimen>
+    <dimen name="all_theatre_divider_view_height">1dp</dimen>
+    <dimen name="all_theatres_padding_textview">10dp</dimen>
+    <dimen name="width_all_thratere_movie_next_textview">50dp</dimen>
+    <dimen name="user_login_padding_default">16dp</dimen>
+    <dimen name="user_login_padding_default1">10dp</dimen>
+    <dimen name="contact_us_padding_large">20dp</dimen>
+    <dimen name="contact_us_padding_default">10dp</dimen>
+    <dimen name="privacy_screen_padding_default">10dp</dimen>
+
+
+    <!-- movie detail -->
+    <dimen name="movie_detail_margin_left">15dp</dimen>
+
+
+    <!-- forms -->
+    <dimen name="forms_margin_right">5dp</dimen>
+    <dimen name="form_margin_default">15dp</dimen>
+    <dimen name="form_margin_large">10dp</dimen>
+    <dimen name="edit_text_height">38dp</dimen>
+
+    <dimen name="alert_dialog_padding_default">10dp</dimen>
+    <dimen name="alert_dialog_margin_top_bottom">30dp</dimen>
+    <dimen name="alert_dialog_margin_left_right">10dp</dimen>
+    <dimen name="alert_dialog_view_height">50dp</dimen>
+    <dimen name="alert_dialog_width">305dp</dimen>
+    <dimen name="aler_dialog_radious">5dp</dimen>
+
+    <dimen name="qr_code_round_padding">10dp</dimen>
+
+    <dimen name="all_theatre_height_top_view">55dp</dimen>
+    <dimen name="all_theatre_height_bottom_view">51dp</dimen>
+    <dimen name="all_theatre_search_view_height">44dp</dimen>
+    <dimen name="all_thatre_arrow_padding">14dp</dimen>
+
+
+    <!--my ticket-->
+    <dimen name="margin_top_for_image">132dp</dimen>
+    <dimen name="margin_top_for_textView">23dp</dimen>
+    <dimen name="margin_top_for_button">23dp</dimen>
+    <dimen name="margin_bottom_for_button">125dp</dimen>
+    <dimen name="margin_left">51dp</dimen>
+    <dimen name="margin_right">51dp</dimen>
+
+    <dimen name="terms_and_conditions_recycler_item_height">50dp</dimen>
+    <dimen name="terms_and_conditions_button_height">40dp</dimen>
+
+    <dimen name="language_padding">8dp</dimen>
+    <dimen name="city_height">42dp</dimen>
+    <dimen name="height_header_city">34dp</dimen>
+    <dimen name="margin_select_food">10dp</dimen>
+    <dimen name="food_image_height">72dp</dimen>
+    <dimen name="food_image_width">72dp</dimen>
+    <dimen name="food_list_item_padding_default">10dp</dimen>
+    <dimen name="ticket_common_dimen">15dp</dimen>
+
+    <!--coming soon-->
+
+    <dimen name="coming_soon_image_height">118dp</dimen>
+    <dimen name="coming_soon_margin_left">10dp</dimen>
+    <dimen name="coming_soon_margin_right">10dp</dimen>
+    <dimen name="coming_soon_like_margin_top">5dp</dimen>
+    <dimen name="coming_soon_like_margin_right">10dp</dimen>
+    <dimen name="coming_soon_text_view_height">60dp</dimen>
+
+    <!--other payment option-->
+
+    <dimen name="payment_option_item_height">50dp</dimen>
+    <dimen name="payment_option_margin_left_right_outer">10dp</dimen>
+    <dimen name="payment_option_margin_right_left_inner">20dp</dimen>
+    <dimen name="payment_option_image_diff">5dp</dimen>
+    <dimen name="payment_option_margin_bottom">12dp</dimen>
+    <dimen name="payment_option_margin_left_right">20dp</dimen>
+    <dimen name="payment_option_padding_top">15dp</dimen>
+    <dimen name="payment_option_padding_bottom">5dp</dimen>
+    <dimen name="payment_option_edit_height">70dp</dimen>
+
+
+    <!--custom toolbar 2)-->
+
+    <dimen name="common_header_subtitle_margin">10dp</dimen>
+    <dimen name="common_header_margin">20dp</dimen>
+    <!--movie detail-->
+
+    <dimen name="movie_detail_padding_top">15dp</dimen>
+    <dimen name="movie_detail_padding_right">10dp</dimen>
+    <dimen name="movie_detail_padding_top_between_item">20dp</dimen>
+    <dimen name="movie_detail_like_margin">64dp</dimen>
+
+    <dimen name="ticket_draw_left_right_margin">35dp</dimen>
+    <dimen name="sound_ticket_draw_left_right_margin">40dp</dimen>
+
+    <dimen name="user_prefrence_padding_default">10dp</dimen>
+    <dimen name="user_prefrence_padding_large">20dp</dimen>
+
+    <dimen name="padding_contact_us_scroll">50dp</dimen>
+    <dimen name="user_prefrence_user_image_size">96dp</dimen>
+    <dimen name="user_preference_tab_height">48dp</dimen>
+    <dimen name="user_prefrence_padding_top_bottom">16dp</dimen>
+    <dimen name="user_prefrence_padding_small">2dp</dimen>
+
+    <dimen name="spacing_between_msg_and_editext_top">5dp</dimen>
+    <dimen name="spacing_between_msg_and_editext_bottom">5dp</dimen>
+    <dimen name="textview_padding_bottom">3dp</dimen>
+
+
+    <dimen name="like_view_top">5dp</dimen>
+    <dimen name="like_view_bottom_4">4dp</dimen>
+    <dimen name="dialog_message_textsize">16sp</dimen>
+    <dimen name="past_ticket_divider_height">8dp</dimen>
+
+
+    <dimen name="common_like_view_width">40dp</dimen>
+    <dimen name="retry_button_height">50dp</dimen>
+    <dimen name="retry_button_width">262dp</dimen>
+    <dimen name="default_margin_mobiquik">10dp</dimen>
+    <dimen name="default_padding_mobiquik">10dp</dimen>
+    <dimen name="negative_padding">-5dp</dimen>
+    <dimen name="linespacing">3dp</dimen>
+    <dimen name="movie_details_bottom_bar_height">50dp</dimen>
+
+    <dimen name="date_scrollview_padding_top_btm">10dp</dimen>
+    <dimen name="date_scrollview_padding_left_right">20dp</dimen>
+    <dimen name="offer_image_height_width">98dp</dimen>
+    <dimen name="padding_offer_item">10dp</dimen>
+    <dimen name="margin_offer_item">7dp</dimen>
+
+    <dimen name="gift_card_width">152dp</dimen>
+    <dimen name="fab_size_normal">56dp</dimen>
+    <dimen name="fab_size_mini">40dp</dimen>
+    <dimen name="labels_text_size">14sp</dimen>
+
+    <dimen name="gift_card_padding">17dp</dimen>
+    <dimen name="gift_card_padding_bottom">10dp</dimen>
+    <dimen name="gift_card_margin_large">50dp</dimen>
+    <dimen name="gift_card_small_padding">5dp</dimen>
+    <dimen name="gift_card_margin">15dp</dimen>
+    <dimen name="gift_card_padding_bottom_large">25dp</dimen>
+    <dimen name="gift_card_padding_left_right">20dp</dimen>
+    <dimen name="offer_radious">3dp</dimen>
+    <dimen name="order_and_snack_height">50dp</dimen>
+
+    <dimen name="trailer_hint_padding_bottom">18dp</dimen>
+    <dimen name="trailer_hint_margin_right">13dp</dimen>
+    <dimen name="trailer_hint_margin_top">8dp</dimen>
+    <dimen name="trailer_hint_margin_top_small">2dp</dimen>
+    <dimen name="choose_movie_padding">10dp</dimen>
+    <dimen name="top_margin_in_seat_icon">15dp</dimen>
+
+    <dimen name="camera__cover_start_height">300dp</dimen>
+    <dimen name="camera__cover_start_width">250dp</dimen>
+    <dimen name="overlap_pager_margin">-10dp</dimen>
+    <dimen name="common_header_padding">8dp</dimen>
+    <dimen name="landing_page_list_padding_">16dp</dimen>
+
+
+
+
+    <dimen name="activity_padding">16dp</dimen>
+    <dimen name="placeholder_image">50dp</dimen>
+    <dimen name="placeholder_text_height">10dp</dimen>
+    <dimen name="activity_padding_horizontal">16dp</dimen>
+    <dimen name="padding_10">10dp</dimen>
+    <dimen name="name">15dp</dimen>
+    <dimen name="chef">12dp</dimen>
+    <dimen name="timestamp">11dp</dimen>
+    <dimen name="description">15dp</dimen>
+    <dimen name="price">13dp</dimen>
+
+
+
+
+    <dimen name="dimen_0dp">0dp</dimen>
+    <dimen name="dimen_100dp">100dp</dimen>
+    <dimen name="dimen_10dp">10dp</dimen>
+    <dimen name="dimen_11dp">11dp</dimen>
+    <dimen name="dimen_11sp">11sp</dimen>
+    <dimen name="dimen_12dp">12dp</dimen>
+    <dimen name="dimen_12sp">12sp</dimen>
+    <dimen name="dimen_135dp">135dp</dimen>
+    <dimen name="dimen_13dp">13dp</dimen>
+    <dimen name="dimen_13sp">13sp</dimen>
+    <dimen name="dimen_14dp">14dp</dimen>
+    <dimen name="dimen_14sp">14sp</dimen>
+    <dimen name="dimen_15dp">15dp</dimen>
+    <dimen name="dimen_15sp">15sp</dimen>
+    <dimen name="dimen_16dp">16dp</dimen>
+    <dimen name="dimen_16sp">16sp</dimen>
+    <dimen name="dimen_170dp">170dp</dimen>
+    <dimen name="dimen_17dp">17dp</dimen>
+    <dimen name="dimen_17sp">17sp</dimen>
+    <dimen name="dimen_180dp">180dp</dimen>
+    <dimen name="dimen_18dp">18dp</dimen>
+    <dimen name="dimen_18sp">18sp</dimen>
+    <dimen name="dimen_190dp">190dp</dimen>
+    <dimen name="dimen_19dp">19dp</dimen>
+    <dimen name="dimen_1dp">1dp</dimen>
+    <dimen name="dimen_20dp">20dp</dimen>
+    <dimen name="dimen_20sp">20sp</dimen>
+    <dimen name="dimen_210dp">210dp</dimen>
+    <dimen name="dimen_21dp">21dp</dimen>
+    <dimen name="dimen_21sp">21sp</dimen>
+    <dimen name="dimen_224dp">224dp</dimen>
+    <dimen name="dimen_22dp">22dp</dimen>
+    <dimen name="dimen_22sp">22sp</dimen>
+    <dimen name="dimen_23dp">23dp</dimen>
+    <dimen name="dimen_24dp">24dp</dimen>
+    <dimen name="dimen_25dp">25dp</dimen>
+    <dimen name="dimen_25sp">25sp</dimen>
+    <dimen name="dimen_26dp">26dp</dimen>
+    <dimen name="dimen_270dp">270dp</dimen>
+    <dimen name="dimen_27dp">27dp</dimen>
+    <dimen name="dimen_280dp">280dp</dimen>
+    <dimen name="dimen_28dp">28dp</dimen>
+    <dimen name="dimen_28sp">28sp</dimen>
+    <dimen name="dimen_29dp">29dp</dimen>
+    <dimen name="dimen_2dp">2dp</dimen>
+    <dimen name="dimen_30dp">30dp</dimen>
+    <dimen name="dimen_30sp">30sp</dimen>
+    <dimen name="dimen_320dp">320dp</dimen>
+    <dimen name="dimen_32dp">32dp</dimen>
+    <dimen name="dimen_33dp">33dp</dimen>
+    <dimen name="dimen_34dp">34dp</dimen>
+    <dimen name="dimen_35dp">35dp</dimen>
+    <dimen name="dimen_35p">35dp</dimen>
+    <dimen name="dimen_35sp">35sp</dimen>
+    <dimen name="dimen_36dp">36dp</dimen>
+    <dimen name="dimen_37dp">37dp</dimen>
+    <dimen name="dimen_37sp">37sp</dimen>
+    <dimen name="dimen_38dp">38dp</dimen>
+    <dimen name="dimen_39dp">39dp</dimen>
+    <dimen name="dimen_3dp">3dp</dimen>
+    <dimen name="dimen_40dp">40dp</dimen>
+    <dimen name="dimen_41dp">41dp</dimen>
+    <dimen name="dimen_45dp">45dp</dimen>
+    <dimen name="dimen_48dp">48dp</dimen>
+    <dimen name="dimen_49dp">49dp</dimen>
+    <dimen name="dimen_4dp">4dp</dimen>
+    <dimen name="dimen_4sp">4sp</dimen>
+    <dimen name="dimen_50dp">50dp</dimen>
+    <dimen name="dimen_55dp">55dp</dimen>
+    <dimen name="dimen_5dp">5dp</dimen>
+    <dimen name="dimen_5sp">5sp</dimen>
+    <dimen name="dimen_60dp">60dp</dimen>
+    <dimen name="dimen_65dp">65dp</dimen>
+    <dimen name="dimen_6dp">6dp</dimen>
+    <dimen name="dimen_6sp">6sp</dimen>
+    <dimen name="dimen_70dp">70dp</dimen>
+    <dimen name="dimen_75dp">75dp</dimen>
+    <dimen name="dimen_76dp">76dp</dimen>
+    <dimen name="dimen_7dp">7dp</dimen>
+    <dimen name="dimen_80dp">80dp</dimen>
+    <dimen name="dimen_85dp">85dp</dimen>
+    <dimen name="dimen_8dp">8dp</dimen>
+    <dimen name="dimen_9dp">9dp</dimen></resources>
