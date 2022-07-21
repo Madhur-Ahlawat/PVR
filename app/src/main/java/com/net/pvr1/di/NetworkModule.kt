@@ -1,16 +1,19 @@
 package com.net.pvr1.di
 
 import com.net.pvr1.api.AuthInterceptor
-import com.net.pvr1.api.NoteAPI
 import com.net.pvr1.api.UserAPI
 import com.net.pvr1.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import retrofit2.Retrofit
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -33,16 +36,26 @@ class NetworkModule {
     @Singleton
     @Provides
     fun providesUserAPI(retrofitBuilder: Retrofit.Builder): UserAPI {
-        return retrofitBuilder.build().create(UserAPI::class.java)
-    }
+        val client = OkHttpClient.Builder()
+        client.readTimeout(600, TimeUnit.SECONDS)
+        client.connectTimeout(600, TimeUnit.SECONDS)
+        client.addInterceptor(Interceptor { chain ->
+            val newRequest: Request = chain.request().newBuilder()
+                .addHeader("Content-Type", "application/json")
+                .build()
+            chain.proceed(newRequest)
+        })
 
-    @Singleton
-    @Provides
-    fun providesNoteAPI(retrofitBuilder: Retrofit.Builder, okHttpClient: OkHttpClient): NoteAPI {
+
+        // if (BuildConfig.DEBUG) {
+        val logging = HttpLoggingInterceptor()
+        logging.level = HttpLoggingInterceptor.Level.BODY
+        client.addInterceptor(logging)
+
         return retrofitBuilder
-            .client(okHttpClient)
-            .build().create(NoteAPI::class.java)
+            .client(client.build())
+            .build()
+            .create(UserAPI::class.java)
     }
-
 
 }

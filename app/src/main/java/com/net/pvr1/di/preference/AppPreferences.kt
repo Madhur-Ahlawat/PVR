@@ -7,7 +7,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AppPreferences @Inject constructor(applicationContext: Context) {
+class AppPreferences @Inject constructor() {
     var preferenceName = "PiInsite"
     var preference: SharedPreferences? = null
     var editor: SharedPreferences.Editor? = null

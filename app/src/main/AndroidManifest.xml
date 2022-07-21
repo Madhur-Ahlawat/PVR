@@ -14,13 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
         <activity
-            android:name=".OtpVerifyActivity"
+            android:name=".ui.otpVerify.OtpVerifyActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".RegistrationActivity"
+            android:name=".ui.resister.RegistrationActivity"
             android:exported="false" />
         <activity
             android:name=".ui.onBoarding.LandingActivity"

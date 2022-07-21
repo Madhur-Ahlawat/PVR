@@ -67,6 +67,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
 
 //room
     def room_version = "2.4.2"
@@ -88,5 +89,9 @@ dependencies {
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 //Otp View
     implementation 'com.github.KevinSchildhorn:OTPView:0.2.2'
+
+    //GifImageView
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.23'
+
 
 }

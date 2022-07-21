@@ -1,17 +1,27 @@
 package com.net.pvr1.api
 
-import com.net.pvr1.models.request.UserRequest
-import com.net.pvr1.models.response.UserResponse
+import com.net.pvr1.ui.login.response.LoginResponse
 import retrofit2.Response
-import retrofit2.http.Body
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface UserAPI {
 
-    @POST("/users/signup")
-    suspend fun signup(@Body userRequest: UserRequest) : Response<UserResponse>
+    @POST("user/login")
+    suspend fun loginMobile(
+        @Query("mobile") mobile: String,
+        @Query("city") city: String,
+        @Query("cname") cName: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<LoginResponse>
 
-    @POST("/users/signin")
-    suspend fun signin(@Body userRequest: UserRequest) : Response<UserResponse>
+    @POST("user/verify")
+    suspend fun otpVerify(
+        @Query("mobile") mobile: String,
+        @Query("token") token: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<LoginResponse>
 
 }

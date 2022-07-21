@@ -22,6 +22,7 @@ import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.onBoarding.LandingActivity
 import com.net.pvr1.utils.Constant
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
@@ -35,7 +36,7 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        preferences =  AppPreferences(applicationContext)
+        preferences = AppPreferences()
 
         //Check interNet Connection
         if (isConnected()) {
@@ -92,11 +93,11 @@ class SplashActivity : AppCompatActivity() {
 
         val restart = networkDialog?.findViewById<View>(R.id.view49)
         val network = networkDialog?.findViewById<View>(R.id.view48)
-        network?.setOnClickListener { v: View? ->
+        network?.setOnClickListener {
             val intent2 = Intent(Settings.ACTION_WIRELESS_SETTINGS)
             startActivity(intent2)
         }
-        restart?.setOnClickListener { v: View? ->
+        restart?.setOnClickListener {
             recreate()
             Log.d("clickedButton", "yes")
         }

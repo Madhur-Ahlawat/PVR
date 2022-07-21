@@ -35,6 +35,7 @@
     <string name="get_started">Get Started</string>
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
+    <string name="get_start">Get Started</string>
     <string name="verify_number">Verify\nMobile Number</string>
     <string name="toContinue">to continue, enter your mobile number</string>
     <string name="mobile_number">Mobile Number</string>
@@ -43,4 +44,8 @@
     <string name="sentCode">We’ve sent a code to your mobile number</string>
     <string name="resend_otp">Resend OTP</string>
     <string name="submit">Submit</string>
+    <string name="prev">PREV</string>
+    <string name="onboard_txt1">Limitless movie watching\n experience!</string>
+    <string name="onboard_txt2">Delicious food &amp; beverage \n choices</string>
+    <string name="onboard_txt3">Seamless ticket booking \n &amp; rewards</string>
 </resources>
