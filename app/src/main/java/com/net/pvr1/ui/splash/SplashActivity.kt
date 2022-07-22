@@ -5,31 +5,28 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import com.net.pvr1.MainActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySplashBinding
 import com.net.pvr1.di.preference.AppPreferences
-import com.net.pvr1.ui.onBoarding.LandingActivity
+import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.utils.Constant
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
-    lateinit var preferences: AppPreferences
+    private lateinit var preferences: AppPreferences
     private var binding: ActivitySplashBinding? = null
-    var networkDialog: Dialog? = null
+    private var networkDialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,11 +46,12 @@ class SplashActivity : AppCompatActivity() {
     private fun movedNext() {
         val runnable = Runnable {
             if (preferences.getBoolean(Constant.IS_LOGIN)) {
-                val intent = Intent(this@SplashActivity, MainActivity::class.java)
+                val intent = Intent(this@SplashActivity, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {
-                val intent = Intent(this@SplashActivity, LandingActivity::class.java)
+//                val intent = Intent(this@SplashActivity, LandingActivity::class.java)
+                val intent = Intent(this@SplashActivity, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
             }
@@ -99,7 +97,6 @@ class SplashActivity : AppCompatActivity() {
         }
         restart?.setOnClickListener {
             recreate()
-            Log.d("clickedButton", "yes")
         }
     }
 

@@ -108,7 +108,7 @@
 
     <color name="header_bg">#ffffff</color>
 
-    <color name="transparent">#E6494848</color>
+    <color name="transparent">#00000000</color>
 
     <color name="transparent1">#00000000</color>
     <color name="transparent2">#B3000000</color>
@@ -126,7 +126,7 @@
     <color name="red">#FF0000</color>
 
     <color name="black_menu">#de000000</color>
-    <color name="gray_">#828282</color>
+    <color name="gray">#828282</color>
 
     <color name="movie_details_text">#828282</color>
     <color name="gray_new">#e6e6e6</color>

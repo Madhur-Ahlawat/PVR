@@ -1,0 +1,982 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.home.fragment.MoreFragment">
+
+    <View
+        android:id="@+id/view6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/view6"
+        app:layout_constraintStart_toStartOf="@+id/view6"
+        app:layout_constraintTop_toTopOf="@+id/view6">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tvLoginButton"
+                style="@style/text_black_gift"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:background="#ffcb07"
+                android:gravity="center"
+                android:text="@string/login_register"
+                android:textAllCaps="true"
+                android:textColor="@color/pvr_dark_black"
+                android:textSize="14sp" />
+
+            <include layout="@layout/loyalty_paid_member" />
+
+
+            <ImageView
+                android:id="@+id/NonPvrKnowMore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/non_loyalty_member_home"
+                android:scaleType="fitXY"
+                android:visibility="gone"
+                tools:ignore="ContentDescription" />
+
+
+            <LinearLayout
+                android:id="@+id/llBookingSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:id="@+id/llMyBookings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="16dp"
+                        android:src="@drawable/booking_more"
+                        tools:ignore="ContentDescription" />
+
+
+                    <TextView
+                        style="@style/SearchText_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="12dp"
+                        android:letterSpacing="0.04"
+                        android:text="@string/my_bookings"
+                        android:textColor="@color/pvr_dark_black"
+                        android:textSize="14sp" />
+
+
+                    <TextView
+                        android:id="@+id/new_txt"
+                        style="@style/NewTxtStyle"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginStart="7dp"
+                        android:background="@drawable/rounded_textview"
+                        android:gravity="center"
+                        android:textColor="#fafafa"
+                        android:textSize="11sp"
+                        android:visibility="visible"
+                        tools:text="2" />
+
+
+                    <TextView
+                        android:id="@+id/tvMyBookings_new"
+                        style="@style/H021Style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:background="@drawable/yellow_curve_two"
+                        android:gravity="center"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="2dp"
+                        android:paddingRight="5dp"
+                        android:paddingBottom="2dp"
+                        android:text="@string/newTxt"
+                        android:textColor="@color/pvr_dark_black"
+                        android:textSize="11sp"
+                        android:visibility="gone" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/llMyPVR"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="16dp"
+                        android:src="@drawable/pvr_more"
+                        tools:ignore="ContentDescription" />
+
+
+                    <TextView
+                        style="@style/SearchText_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="12dp"
+                        android:letterSpacing="0.04"
+                        android:text="@string/my_pvr"
+                        android:textColor="@color/pvr_dark_black"
+                        android:textSize="14sp" />
+
+
+                    <TextView
+                        android:id="@+id/tvPVR_new"
+                        style="@style/H021Style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        android:background="@drawable/yellow_curve_two"
+                        android:gravity="center"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="2dp"
+                        android:paddingRight="5dp"
+                        android:paddingBottom="2dp"
+                        android:text="@string/newTxt"
+                        android:textColor="@color/pvr_dark_black"
+                        android:textSize="10sp"
+                        android:visibility="gone" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/llMovieAlert"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="16dp"
+                        android:src="@drawable/ic_movie_alert"
+                        tools:ignore="ContentDescription,RtlHardcoded">
+
+                    </ImageView>
+
+
+                    <TextView
+                        style="@style/SearchText_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="12dp"
+                        android:letterSpacing="0.04"
+                        android:text="@string/alert_movie"
+                        android:textColor="@color/pvr_dark_black"
+                        android:textSize="14sp" />
+
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:background="#e6e6e6" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/llMovies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:id="@+id/llMovie"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="16dp"
+                        android:src="@drawable/movie_more"
+                        tools:ignore="ContentDescription" />
+
+
+                    <TextView
+                        style="@style/SearchText_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="12dp"
+                        android:letterSpacing="0.04"
+                        android:text="@string/movies"
+                        android:textColor="@color/pvr_dark_black"
+                        android:textSize="14sp" />
+
+
+                    <TextView
+                        android:id="@+id/tvMovie_new"
+                        style="@style/H021Style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:background="@drawable/yellow_curve_two"
+                        android:gravity="center"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="2dp"
+                        android:paddingRight="5dp"
+                        android:paddingBottom="2dp"
+                        android:text="@string/newTxt"
+                        android:textColor="@color/pvr_dark_black"
+                        android:textSize="10sp"
+                        android:visibility="gone" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/llComming"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="16dp"
+                        android:src="@drawable/coming_more"
+                        tools:ignore="ContentDescription" />
+
+
+                    <TextView
+                        style="@style/SearchText_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="12dp"
+                        android:letterSpacing="0.04"
+                        android:text="@string/coming_soon"
+                        android:textColor="@color/pvr_dark_black"
+                        android:textSize="14sp" />
+
+
+                    <TextView
+                        android:id="@+id/tvComing_new"
+                        style="@style/H021Style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:background="@drawable/yellow_curve_two"
+                        android:gravity="center"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="2dp"
+                        android:paddingRight="5dp"
+                        android:paddingBottom="2dp"
+                        android:text="@string/newTxt"
+                        android:textColor="@color/pvr_dark_black"
+                        android:textSize="10sp"
+                        android:visibility="gone" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/llPVRCares"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="16dp"
+                        android:src="@drawable/pvr_cares"/>
+
+
+                    <TextView
+                        style="@style/SearchText_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="12dp"
+                        android:letterSpacing="0.04"
+                        android:text="@string/pvr_cares"
+                        android:textColor="@color/pvr_dark_black"
+                        android:textSize="14sp" />
+
+
+                    <TextView
+                        android:id="@+id/tvCares_new"
+                        style="@style/H021Style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:background="@drawable/yellow_curve_two"
+                        android:gravity="center"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="2dp"
+                        android:paddingRight="5dp"
+                        android:paddingBottom="2dp"
+                        android:text="@string/newTxt"
+                        android:textColor="@color/pvr_dark_black"
+                        android:textSize="10sp"
+                        android:visibility="gone" />
+
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:background="#e6e6e6" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/llmerchendise"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_20dp"
+                    android:layout_height="@dimen/dimen_20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/merchandise"
+                    app:tint="@color/black"
+                    tools:ignore="ContentDescription" />
+
+
+                <TextView
+                    style="@style/SearchText_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="12dp"
+                    android:letterSpacing="0.04"
+                    android:text="@string/merchandise"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:id="@+id/tvMer_new"
+                    style="@style/H021Style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:background="@drawable/yellow_curve_two"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="2dp"
+                    android:text="@string/newTxt"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="10sp"
+                    android:visibility="gone" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llScanQr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/scan_more"
+                    tools:ignore="ContentDescription" />
+
+
+                <TextView
+                    style="@style/SearchText_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="12dp"
+                    android:letterSpacing="0.04"
+                    android:text="@string/scan_qr"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:id="@+id/tvScan_new"
+                    style="@style/H021Style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:background="@drawable/yellow_curve_two"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="2dp"
+                    android:text="@string/newTxt"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="10sp"
+                    android:visibility="gone" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/llGiftCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/gift_more"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    style="@style/SearchText_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="12dp"
+                    android:letterSpacing="0.04"
+                    android:text="@string/gift_cards"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="14sp" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/llPvRPass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/gift_more"
+                    tools:ignore="ContentDescription" />
+
+
+                <TextView
+                    style="@style/SearchText_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="12dp"
+                    android:letterSpacing="0.04"
+                    android:text="@string/cine_value_pass"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvActiveCount"
+                    style="@style/H51Style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_8dp"
+                    android:background="#ffcc08"
+                    android:paddingLeft="@dimen/dimen_7dp"
+                    android:paddingTop="@dimen/dimen_2dp"
+                    android:paddingRight="@dimen/dimen_7dp"
+                    android:paddingBottom="@dimen/dimen_2dp"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    tools:text="2" />
+
+                <TextView
+                    android:id="@+id/tvGift_new"
+                    style="@style/H021Style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:background="@drawable/yellow_curve_two"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="2dp"
+                    android:text="@string/newTxt"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="10sp"
+                    android:visibility="gone" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/llOffer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_offer_more"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    style="@style/SearchText_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="12dp"
+                    android:letterSpacing="0.04"
+                    android:text="@string/offers"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:id="@+id/tvGOffers_new"
+                    style="@style/H021Style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="7dp"
+                    android:background="@drawable/yellow_curve_two"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="2dp"
+                    android:text="@string/newTxt"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="10sp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/llPVRMagazine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/magazine_more"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    style="@style/SearchText_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="12dp"
+                    android:letterSpacing="0.04"
+                    android:text="@string/pvr_magazine"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:id="@+id/tvMagazine_new"
+                    style="@style/H021Style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="7dp"
+                    android:background="@drawable/yellow_curve_two"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="2dp"
+                    android:text="@string/newTxt"
+                    android:textColor="@color/pvr_dark_black"
+                    android:visibility="gone" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/llPrivate_screen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/video_more"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    style="@style/SearchText_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="12dp"
+                    android:letterSpacing="0.04"
+                    android:text="@string/private_screening"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:id="@+id/tvPrivate_new"
+                    style="@style/H021Style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="7dp"
+                    android:background="@drawable/yellow_curve_two"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="2dp"
+                    android:text="@string/newTxt"
+                    android:textColor="@color/pvr_dark_black"
+                    android:visibility="gone" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/llMovieLibrary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/video_more"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    style="@style/SearchText_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="12dp"
+                    android:letterSpacing="0.04"
+                    android:text="@string/movie_library"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:id="@+id/tvMovieLibrary_new"
+                    style="@style/H021Style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="7dp"
+                    android:background="@drawable/yellow_curve_two"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="2dp"
+                    android:text="@string/newTxt"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="10sp"
+                    android:visibility="gone" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/llTheatreDemand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/video_more"
+                    tools:ignore="ContentDescription">
+
+                </ImageView>
+
+
+                <PCTextView
+                    style="@style/SearchText_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="12dp"
+                    android:letterSpacing="0.04"
+                    android:text="@string/theatre_on_demand"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:id="@+id/tvTheatre_new"
+                    style="@style/H021Style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:background="@drawable/yellow_curve_two"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="2dp"
+                    android:text="New"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="10sp"
+                    android:visibility="gone" />
+
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:background="#e6e6e6" />
+
+            <RelativeLayout
+                android:id="@+id/rlWhatsapp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+
+                <ImageView
+                    android:id="@+id/ic_whatsapp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/whatsapp_more" />
+
+
+                <TextView
+                    android:id="@+id/tvEventName"
+                    style="@style/SearchText_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="12dp"
+                    android:layout_toEndOf="@+id/ic_whatsapp"
+                    android:text="@string/whatsapp_notifications"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:id="@+id/llchkState"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="center"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="@dimen/dimen_1dp">
+
+                    <ImageView
+                        android:id="@+id/checkState"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_switch_toggle_off"
+                        tools:ignore="ContentDescription" />
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/termsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="64dp"
+                android:orientation="vertical"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:id="@+id/tvTerm"
+                    style="@style/SearchText_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="16dp"
+                    android:gravity="center_vertical"
+                    android:lineSpacingExtra="2sp"
+                    android:text="@string/terms_privacy"
+                    android:textColor="@color/black_menu"
+                    android:textSize="12sp" />
+
+
+                <TextView
+                    android:id="@+id/tvContact"
+                    style="@style/SearchText_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="16dp"
+                    android:gravity="center_vertical"
+                    android:lineSpacingExtra="2sp"
+                    android:text="@string/contact_us"
+                    android:textColor="@color/black_menu"
+                    android:textSize="12sp" />
+
+
+                <LinearLayout
+                    android:id="@+id/llSignOut"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/tvSignOut"
+                        style="@style/SearchText_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="16dp"
+                        android:gravity="center_vertical"
+                        android:lineSpacingExtra="2sp"
+                        android:text="@string/sign_out"
+                        android:textColor="@color/black_menu"
+                        android:textSize="12sp" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,11 +6,16 @@ import android.text.TextUtils
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityLoginBinding
 import com.net.pvr1.di.preference.AppPreferences
+import com.net.pvr1.ui.dailogs.LoaderDialog
+import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.login.viewModel.LoginViewModel
 import com.net.pvr1.ui.otpVerify.OtpVerifyActivity
+import com.net.pvr1.utils.Constant
+import com.net.pvr1.utils.Constant.Companion.SUCCESS_CODE
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,7 +23,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private lateinit var preferences: AppPreferences
     private var binding: ActivityLoginBinding? = null
+    private var loader: LoaderDialog? = null
     private val authViewModel: LoginViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater, null, false)
@@ -46,13 +53,40 @@ class LoginActivity : AppCompatActivity() {
         authViewModel.userResponseLiveData.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
-                    retrieveData(it.data?.output)
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && SUCCESS_CODE == it.data.code) {
+                        retrieveData(it.data.output)
+                    }else{
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {
+                            },
+                            negativeClick = {
+                            })
+                        dialog.show()
+                    }
                 }
                 is NetworkResult.Error -> {
-                    Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {
+                        },
+                        negativeClick = {
+                        })
+                    dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    println("Loading--->")
+                    loader = LoaderDialog(R.string.pleasewait)
+                    loader?.show(supportFragmentManager, null)
                 }
             }
         }

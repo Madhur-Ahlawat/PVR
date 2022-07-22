@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/transparent"
+    android:padding="24dp"
+    android:elevation="5dp"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:gravity="center"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/dimen_10dp"
+        app:cardBackgroundColor="@color/white"
+        app:contentPadding="@dimen/dimen_10dp"
+        app:cardUseCompatPadding="true">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingClass" />
+
+
+            <TextView
+                android:id="@+id/pleaseWait"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/helvetica_neu_medium"
+                android:gravity="center"
+                android:lineSpacingExtra="1dp"
+                android:text="@string/pleasewait"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_16sp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/progress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/progress"
+                app:layout_constraintTop_toTopOf="@+id/progress" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/message"
+        android:fontFamily="@font/helvetica_light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="We are processing\nyour details"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/dimen_15dp"
+        android:visibility="gone"
+        android:gravity="center"
+        android:textSize="@dimen/dimen_14sp"
+        android:lineSpacingExtra="@dimen/dimen_3dp"
+        app:layout_constraintEnd_toEndOf="@id/pleaseWait"
+        app:layout_constraintStart_toStartOf="@id/pleaseWait"
+        app:layout_constraintTop_toBottomOf="@id/pleaseWait" />
+
+</LinearLayout>

@@ -35,17 +35,17 @@ class OtpVerifyActivity : AppCompatActivity() {
 
     private fun movedNext() {
         binding?.textView15?.setOnClickListener {
-//            val mobile = binding?.textView15?.text.toString()
-//            if (!TextUtils.isEmpty(mobile) && mobile.length != 10) {
-//                Toast.makeText(this, "Mobile Number Should We 10 Digit", Toast.LENGTH_SHORT)
-//                    .show()
-//            } else {
+            val otp = binding?.otpEditText?.getStringFromFields()
+            Toast.makeText(this, "", Toast.LENGTH_SHORT).show()
+            if (otp== "null") {
+                Toast.makeText(this, "Please Enter Your Otp", Toast.LENGTH_SHORT).show()
+            } else {
                 authViewModel.otpVerify(mobile,
                     getHash(
-                        "$mobile|111111"
+                        "$mobile|${otp}"
                     )!!
                 )
-//            }
+            }
         }
         loginApi()
     }

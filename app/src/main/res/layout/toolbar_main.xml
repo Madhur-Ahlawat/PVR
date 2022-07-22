@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_60dp"
+    android:paddingStart="@dimen/padding_10"
+    android:paddingEnd="@dimen/padding_10"
+    android:background="@color/white">
+
+
+    <View
+        android:id="@+id/view7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        tools:text="MOVIES FOR YOU"
+        android:textColor="@color/pvr_dark_black"
+        android:textSize="@dimen/dim_h2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view7" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/view7"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/searchBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/lNotification"
+            android:background="@android:color/transparent"
+            android:paddingLeft="@dimen/common_header_padding"
+            android:paddingRight="@dimen/common_header_padding"
+            android:src="@drawable/search"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/lNotification"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <LinearLayout
+            android:id="@+id/lNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/llLocation"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/common_header_padding"
+            android:paddingRight="@dimen/common_header_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/scanQr"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="UseCompoundDrawables">
+
+
+            <ImageView
+                android:id="@+id/notify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_notification"
+                android:visibility="visible"
+                tools:ignore="ContentDescription,ImageContrastCheck" />
+
+            <TextView
+                android:id="@+id/counter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-18dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/yellow_circle"
+                android:gravity="center"
+                android:textColor="@color/pvr_dark_gray"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                tools:ignore="TextContrastCheck"
+                tools:text="2" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/scanQr"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="@dimen/common_header_padding"
+            android:paddingRight="@dimen/common_header_padding"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/llLocation">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/qr_code_new"
+                android:visibility="visible"
+                tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:paddingStart="@dimen/common_header_padding"
+            android:paddingEnd="@dimen/dimen_2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <ImageButton
+                android:id="@+id/locationBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:src="@drawable/location"
+                tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+
+            <TextView
+                android:id="@+id/subTitle"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="@dimen/common_hear_subtitle_margin"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/dim_h4"
+                tools:ignore="TextContrastCheck"
+                tools:text="Delhi" />
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
