@@ -6,12 +6,13 @@ import com.net.pvr1.api.UserAPI
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.login.response.LoginResponse
+import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
+import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import org.json.JSONObject
 import retrofit2.Response
 import javax.inject.Inject
-import kotlin.math.ln
 
 class UserRepository @Inject constructor(private val userAPI: UserAPI) {
 //Login
@@ -109,6 +110,65 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
         else{
             cinemaLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+  //GiftCard
+    private val giftCardLiveData = MutableLiveData<NetworkResult<GiftCardResponse>>()
+    val giftCardResponseLiveData: LiveData<NetworkResult<GiftCardResponse>>
+        get() = giftCardLiveData
+
+    suspend fun giftCard(userId: String, did: String) {
+        giftCardLiveData.postValue(NetworkResult.Loading())
+        val response =userAPI.giftCard(userId,did, Constant.version,
+            Constant.platform
+        )
+        giftCardResponse(response)
+    }
+
+    private fun giftCardResponse(response: Response<GiftCardResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            giftCardLiveData.postValue(NetworkResult.Success(response.body()!!))
+        }
+        else if(response.errorBody()!=null){
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            giftCardLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        }
+        else{
+            giftCardLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+  //FoodTicket
+    private val foodTicketLiveData = MutableLiveData<NetworkResult<FoodTicketResponse>>()
+    val foodTicketResponseLiveData: LiveData<NetworkResult<FoodTicketResponse>>
+        get() = foodTicketLiveData
+
+    suspend fun foodTicket(
+        userId: String,
+        did: String,
+        sriLanka: String,
+        city: String,
+        isSpi: String,
+        past: String
+    ) {
+        giftCardLiveData.postValue(NetworkResult.Loading())
+        val response =userAPI.foodTicket(userId,did,sriLanka,city,isSpi,past, Constant.version,
+            Constant.platform
+        )
+        foodTicketResponse(response)
+    }
+
+    private fun foodTicketResponse(response: Response<FoodTicketResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            foodTicketLiveData.postValue(NetworkResult.Success(response.body()!!))
+        }
+        else if(response.errorBody()!=null){
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            foodTicketLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        }
+        else{
+            foodTicketLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 

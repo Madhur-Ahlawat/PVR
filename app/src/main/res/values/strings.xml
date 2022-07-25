@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">PVR NEW</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -48,7 +48,7 @@
     <string name="onboard_txt1">Limitless movie watching\n experience!</string>
     <string name="onboard_txt2">Delicious food &amp; beverage \n choices</string>
     <string name="onboard_txt3">Seamless ticket booking \n &amp; rewards</string>
-    <string name="ok">Ok</string>
+    <string name="ok" tools:ignore="Typos">Ok</string>
     <string name="pleasewait">Please Wait for this process.....</string>
     <string name="no">No</string>
     //Home
@@ -88,5 +88,12 @@
     <string name="directions">Directions</string>
     <string name="dots">•</string>
     <string name="shows">Shows</string>
+    //MyBookings
+    <string name="ticket_food">Tickets &amp; Food</string>
+    <string name="resend_text">Resend</string>
+    <string name="order">Order : </string>
+    <string name="view_parking">View Parking</string>
+    <string name="add_food">Add Food</string>
+
 
 </resources>

@@ -3,6 +3,8 @@ package com.net.pvr1.api
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.login.response.LoginResponse
+import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
+import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import retrofit2.Response
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -47,5 +49,25 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<CinemaResponse>
+
+    @POST("history/giftcard")
+    suspend fun giftCard(
+        @Query("userid") userid: String,
+        @Query("did") did: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<GiftCardResponse>
+
+    @POST("history/history-new/myticket")
+    suspend fun foodTicket(
+        @Query("userid") userid: String,
+        @Query("did") did: String,
+        @Query("srilanka") sriLanka: String,
+        @Query("city") city: String,
+        @Query("isSpi") isSpi: String,
+        @Query("past") past: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+    ): Response<FoodTicketResponse>
 
 }

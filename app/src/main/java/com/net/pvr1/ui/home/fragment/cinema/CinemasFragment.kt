@@ -93,7 +93,6 @@ class CinemasFragment : Fragment(),CinemaAdapter.Direction,CinemaAdapter.Locatio
 
     override fun onDirectionClick(comingSoonItem: CinemaResponse.Output.C) {
 
-
     }
 
     override fun onLocationClick(comingSoonItem: CinemaResponse.Output.C) {
