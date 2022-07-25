@@ -20,7 +20,7 @@
 
 
         <ImageView
-            android:id="@+id/ivImagedata"
+            android:id="@+id/imageData"
             android:layout_width="90dp"
             android:layout_height="48dp"
             android:layout_alignParentLeft="true"
@@ -34,8 +34,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_toEndOf="@id/ivImagedata"
-            android:orientation="horizontal">
+            android:layout_toEndOf="@id/imageData"
+            android:orientation="horizontal"
+            tools:ignore="RelativeOverlap">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -46,7 +47,7 @@
 
                 <TextView
                     android:id="@+id/pt"
-                    style="@style/H35Style"
+                    style="@style/H3Size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -58,7 +59,7 @@
 
 
                 <TextView
-                    style="@style/H36Style"
+                    style="@style/H3SizeBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -80,7 +81,7 @@
 
                 <TextView
                     android:id="@+id/num_vou"
-                    style="@style/H35Style"
+                    style="@style/H3Size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -92,7 +93,7 @@
 
 
                 <TextView
-                    style="@style/H36Style"
+                    style="@style/H3SizeBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -105,19 +106,17 @@
 
             </LinearLayout>
 
-
         </LinearLayout>
 
-
         <ImageView
-            android:id="@+id/qr_img_mainpge"
+            android:id="@+id/qrImgMainPage"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
-            android:layout_marginRight="16dp"
-            android:src="@drawable/ic_qr_code_group" />
-
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_qr_code_group"
+            tools:ignore="ContentDescription" />
 
     </RelativeLayout>
 

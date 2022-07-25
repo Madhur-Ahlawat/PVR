@@ -2,33 +2,26 @@ package com.net.pvr1.utils
 
 import android.app.Activity
 import android.app.ProgressDialog
-import android.content.ActivityNotFoundException
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Typeface
 import android.net.ConnectivityManager
-import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ForegroundColorSpan
-import android.text.style.RelativeSizeSpan
-import android.text.style.UnderlineSpan
 import android.util.Base64
 import android.util.Log
 import android.util.Patterns
 import android.view.View
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
+import com.net.pvr1.R
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
-import java.util.ArrayList
 
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "DEPRECATED_IDENTITY_EQUALS")
@@ -36,7 +29,7 @@ class Constant {
 
     companion object {
         const val platform = "ANDROID"
-        const val version = "1.5"
+        const val version = "11.3"
         const val status = "success"
         const val SUCCESS_CODE = 10001
         const val TITLE = "title"
@@ -389,5 +382,26 @@ class Constant {
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
     }
 
+    fun spannableText(
+        activityContext: Activity,
+        stringBuilder: StringBuilder?,
+        tvCensorLang: TextView
+    ) {
+        val ss = SpannableString(stringBuilder)
+        ss.setSpan(
+            ForegroundColorSpan(activityContext.resources.getColor(R.color.yellow)),
+            0,
+            1,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        ss.setSpan(
+            ForegroundColorSpan(activityContext.resources.getColor(R.color.gray)),
+            2,
+            ss.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        tvCensorLang.text = ss
+        tvCensorLang.movementMethod = LinkMovementMethod.getInstance()
+    }
 }
 

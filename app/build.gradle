@@ -53,7 +53,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
 //Hilt
-    def hilt_version="2.42"
+    def hilt_version = "2.42"
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
@@ -93,5 +93,7 @@ dependencies {
     //GifImageView
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.23'
 
-
+//LoadImage
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
 }

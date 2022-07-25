@@ -8,6 +8,8 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityHomeBinding
 import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.home.fragment.*
+import com.net.pvr1.ui.home.fragment.cinema.CinemasFragment
+import com.net.pvr1.ui.home.fragment.commingSoon.ComingSoonFragment
 import com.net.pvr1.ui.login.viewModel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

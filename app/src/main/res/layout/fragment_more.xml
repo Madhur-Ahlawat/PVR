@@ -88,15 +88,13 @@
 
 
                     <TextView
-                        style="@style/SearchText_price"
+                        style="@style/H2SizeDark"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="12dp"
                         android:letterSpacing="0.04"
-                        android:text="@string/my_bookings"
-                        android:textColor="@color/pvr_dark_black"
-                        android:textSize="14sp" />
+                        android:text="@string/my_bookings"/>
 
 
                     <TextView
@@ -110,12 +108,13 @@
                         android:textColor="#fafafa"
                         android:textSize="11sp"
                         android:visibility="visible"
-                        tools:text="2" />
+                        android:text="2"
+                        tools:ignore="HardcodedText" />
 
 
                     <TextView
                         android:id="@+id/tvMyBookings_new"
-                        style="@style/H021Style"
+                        style="@style/H1Size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
@@ -158,17 +157,15 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="12dp"
                         android:letterSpacing="0.04"
-                        android:text="@string/my_pvr"
-                        android:textColor="@color/pvr_dark_black"
-                        android:textSize="14sp" />
+                        android:text="@string/my_pvr" />
 
 
                     <TextView
                         android:id="@+id/tvPVR_new"
-                        style="@style/H021Style"
+                        style="@style/H1Size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="7dp"
+                        android:layout_marginStart="7dp"
                         android:background="@drawable/yellow_curve_two"
                         android:gravity="center"
                         android:paddingLeft="5dp"
@@ -176,8 +173,6 @@
                         android:paddingRight="5dp"
                         android:paddingBottom="2dp"
                         android:text="@string/newTxt"
-                        android:textColor="@color/pvr_dark_black"
-                        android:textSize="10sp"
                         android:visibility="gone" />
 
 
@@ -191,7 +186,8 @@
                     android:orientation="horizontal"
                     android:paddingTop="12dp"
                     android:paddingBottom="12dp"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    tools:ignore="UseCompoundDrawables">
 
                     <ImageView
                         android:layout_width="16dp"
@@ -257,20 +253,18 @@
 
 
                     <TextView
-                        style="@style/SearchText_price"
+                        style="@style/H2SizeDark"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="12dp"
                         android:letterSpacing="0.04"
-                        android:text="@string/movies"
-                        android:textColor="@color/pvr_dark_black"
-                        android:textSize="14sp" />
+                        android:text="@string/movies" />
 
 
                     <TextView
                         android:id="@+id/tvMovie_new"
-                        style="@style/H021Style"
+                        style="@style/H2SizeDark"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
@@ -281,8 +275,6 @@
                         android:paddingRight="5dp"
                         android:paddingBottom="2dp"
                         android:text="@string/newTxt"
-                        android:textColor="@color/pvr_dark_black"
-                        android:textSize="10sp"
                         android:visibility="gone" />
 
 
@@ -290,7 +282,7 @@
 
 
                 <LinearLayout
-                    android:id="@+id/llComming"
+                    android:id="@+id/llComing"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -321,7 +313,7 @@
 
                     <TextView
                         android:id="@+id/tvComing_new"
-                        style="@style/H021Style"
+                        style="@style/H1Size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
@@ -332,8 +324,6 @@
                         android:paddingRight="5dp"
                         android:paddingBottom="2dp"
                         android:text="@string/newTxt"
-                        android:textColor="@color/pvr_dark_black"
-                        android:textSize="10sp"
                         android:visibility="gone" />
 
 
@@ -354,7 +344,8 @@
                         android:layout_height="16dp"
                         android:layout_gravity="center"
                         android:layout_marginStart="16dp"
-                        android:src="@drawable/pvr_cares"/>
+                        android:src="@drawable/pvr_cares"
+                        tools:ignore="ContentDescription" />
 
 
                     <TextView
@@ -371,7 +362,7 @@
 
                     <TextView
                         android:id="@+id/tvCares_new"
-                        style="@style/H021Style"
+                        style="@style/H1Size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
@@ -382,8 +373,6 @@
                         android:paddingRight="5dp"
                         android:paddingBottom="2dp"
                         android:text="@string/newTxt"
-                        android:textColor="@color/pvr_dark_black"
-                        android:textSize="10sp"
                         android:visibility="gone" />
 
 
@@ -402,7 +391,7 @@
 
 
             <LinearLayout
-                android:id="@+id/llmerchendise"
+                android:id="@+id/merchandise"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -421,20 +410,18 @@
 
 
                 <TextView
-                    style="@style/SearchText_price"
+                    style="@style/H2SizeDark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="12dp"
                     android:letterSpacing="0.04"
-                    android:text="@string/merchandise"
-                    android:textColor="@color/pvr_dark_black"
-                    android:textSize="14sp" />
+                    android:text="@string/merchandise"/>
 
 
                 <TextView
                     android:id="@+id/tvMer_new"
-                    style="@style/H021Style"
+                    style="@style/H1Size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
@@ -445,8 +432,6 @@
                     android:paddingRight="5dp"
                     android:paddingBottom="2dp"
                     android:text="@string/newTxt"
-                    android:textColor="@color/pvr_dark_black"
-                    android:textSize="10sp"
                     android:visibility="gone" />
 
 
@@ -470,20 +455,18 @@
 
 
                 <TextView
-                    style="@style/SearchText_price"
+                    style="@style/H2SizeDark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="12dp"
                     android:letterSpacing="0.04"
-                    android:text="@string/scan_qr"
-                    android:textColor="@color/pvr_dark_black"
-                    android:textSize="14sp" />
+                    android:text="@string/scan_qr"/>
 
 
                 <TextView
                     android:id="@+id/tvScan_new"
-                    style="@style/H021Style"
+                    style="@style/H1Size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
@@ -494,8 +477,6 @@
                     android:paddingRight="5dp"
                     android:paddingBottom="2dp"
                     android:text="@string/newTxt"
-                    android:textColor="@color/pvr_dark_black"
-                    android:textSize="10sp"
                     android:visibility="gone" />
 
 
@@ -508,7 +489,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="12dp"
-                android:paddingBottom="12dp">
+                android:paddingBottom="12dp"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:layout_width="16dp"
@@ -516,18 +498,16 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="16dp"
                     android:src="@drawable/gift_more"
-                    tools:ignore="ContentDescription" />
+                    tools:ignore="ContentDescription,ImageContrastCheck" />
 
                 <TextView
-                    style="@style/SearchText_price"
+                    style="@style/H2SizeDark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="12dp"
                     android:letterSpacing="0.04"
-                    android:text="@string/gift_cards"
-                    android:textColor="@color/pvr_dark_black"
-                    android:textSize="14sp" />
+                    android:text="@string/gift_cards" />
 
 
             </LinearLayout>
@@ -564,7 +544,7 @@
 
                 <TextView
                     android:id="@+id/tvActiveCount"
-                    style="@style/H51Style"
+                    style="@style/H1Size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_8dp"
@@ -573,14 +553,12 @@
                     android:paddingTop="@dimen/dimen_2dp"
                     android:paddingRight="@dimen/dimen_7dp"
                     android:paddingBottom="@dimen/dimen_2dp"
-                    android:textColor="@color/pvr_dark_black"
-                    android:textSize="12sp"
                     android:visibility="gone"
                     tools:text="2" />
 
                 <TextView
                     android:id="@+id/tvGift_new"
-                    style="@style/H021Style"
+                    style="@style/H1Size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
@@ -591,8 +569,6 @@
                     android:paddingRight="5dp"
                     android:paddingBottom="2dp"
                     android:text="@string/newTxt"
-                    android:textColor="@color/pvr_dark_black"
-                    android:textSize="10sp"
                     android:visibility="gone" />
 
 
@@ -616,20 +592,18 @@
                     tools:ignore="ContentDescription" />
 
                 <TextView
-                    style="@style/SearchText_price"
+                    style="@style/H2SizeDark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="12dp"
                     android:letterSpacing="0.04"
-                    android:text="@string/offers"
-                    android:textColor="@color/pvr_dark_black"
-                    android:textSize="14sp" />
+                    android:text="@string/offers" />
 
 
                 <TextView
                     android:id="@+id/tvGOffers_new"
-                    style="@style/H021Style"
+                    style="@style/H1Size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -641,8 +615,6 @@
                     android:paddingRight="5dp"
                     android:paddingBottom="2dp"
                     android:text="@string/newTxt"
-                    android:textColor="@color/pvr_dark_black"
-                    android:textSize="10sp"
                     android:visibility="gone" />
 
             </LinearLayout>
@@ -679,7 +651,7 @@
 
                 <TextView
                     android:id="@+id/tvMagazine_new"
-                    style="@style/H021Style"
+                    style="@style/H1Size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -691,7 +663,6 @@
                     android:paddingRight="5dp"
                     android:paddingBottom="2dp"
                     android:text="@string/newTxt"
-                    android:textColor="@color/pvr_dark_black"
                     android:visibility="gone" />
 
 
@@ -729,7 +700,7 @@
 
                 <TextView
                     android:id="@+id/tvPrivate_new"
-                    style="@style/H021Style"
+                    style="@style/H1Size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -741,7 +712,6 @@
                     android:paddingRight="5dp"
                     android:paddingBottom="2dp"
                     android:text="@string/newTxt"
-                    android:textColor="@color/pvr_dark_black"
                     android:visibility="gone" />
 
 
@@ -779,7 +749,7 @@
 
                 <TextView
                     android:id="@+id/tvMovieLibrary_new"
-                    style="@style/H021Style"
+                    style="@style/H1Size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -791,8 +761,6 @@
                     android:paddingRight="5dp"
                     android:paddingBottom="2dp"
                     android:text="@string/newTxt"
-                    android:textColor="@color/pvr_dark_black"
-                    android:textSize="10sp"
                     android:visibility="gone" />
 
 
@@ -819,7 +787,7 @@
                 </ImageView>
 
 
-                <PCTextView
+                <TextView
                     style="@style/SearchText_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -833,7 +801,7 @@
 
                 <TextView
                     android:id="@+id/tvTheatre_new"
-                    style="@style/H021Style"
+                    style="@style/H1Size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
@@ -843,9 +811,7 @@
                     android:paddingTop="2dp"
                     android:paddingRight="5dp"
                     android:paddingBottom="2dp"
-                    android:text="New"
-                    android:textColor="@color/pvr_dark_black"
-                    android:textSize="10sp"
+                    android:text="@string/newTxt"
                     android:visibility="gone" />
 
 
@@ -877,23 +843,23 @@
                     android:layout_centerInParent="true"
                     android:layout_gravity="center"
                     android:layout_marginStart="16dp"
-                    android:src="@drawable/whatsapp_more" />
+                    android:src="@drawable/whatsapp_more"
+                    tools:ignore="ContentDescription" />
 
 
                 <TextView
                     android:id="@+id/tvEventName"
-                    style="@style/SearchText_price"
+                    style="@style/H2SizeDark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_marginStart="12dp"
                     android:layout_toEndOf="@+id/ic_whatsapp"
                     android:text="@string/whatsapp_notifications"
-                    android:textColor="@color/pvr_dark_black"
-                    android:textSize="14sp" />
+                    tools:ignore="RelativeOverlap" />
 
                 <LinearLayout
-                    android:id="@+id/llchkState"
+                    android:id="@+id/chekState"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
@@ -908,12 +874,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_switch_toggle_off"
-                        tools:ignore="ContentDescription" />
+                        tools:ignore="ContentDescription,ImageContrastCheck" />
                 </LinearLayout>
 
-
             </RelativeLayout>
-
 
             <LinearLayout
                 android:id="@+id/termsContainer"
@@ -926,28 +890,25 @@
 
                 <TextView
                     android:id="@+id/tvTerm"
-                    style="@style/SearchText_price"
+                    style="@style/H1Size"
                     android:layout_width="match_parent"
                     android:layout_height="32dp"
                     android:layout_marginStart="16dp"
                     android:gravity="center_vertical"
                     android:lineSpacingExtra="2sp"
-                    android:text="@string/terms_privacy"
-                    android:textColor="@color/black_menu"
-                    android:textSize="12sp" />
+                    android:text="@string/terms_privacy"/>
 
 
                 <TextView
                     android:id="@+id/tvContact"
-                    style="@style/SearchText_price"
+                    style="@style/H1Size"
                     android:layout_width="match_parent"
                     android:layout_height="32dp"
                     android:layout_marginStart="16dp"
                     android:gravity="center_vertical"
                     android:lineSpacingExtra="2sp"
                     android:text="@string/contact_us"
-                    android:textColor="@color/black_menu"
-                    android:textSize="12sp" />
+                    tools:ignore="TooManyViews" />
 
 
                 <LinearLayout
@@ -959,24 +920,20 @@
 
                     <TextView
                         android:id="@+id/tvSignOut"
-                        style="@style/SearchText_price"
+                        style="@style/H1Size"
                         android:layout_width="match_parent"
                         android:layout_height="32dp"
                         android:layout_marginStart="16dp"
                         android:gravity="center_vertical"
                         android:lineSpacingExtra="2sp"
-                        android:text="@string/sign_out"
-                        android:textColor="@color/black_menu"
-                        android:textSize="12sp" />
-
+                        android:text="@string/sign_out" />
 
                 </LinearLayout>
 
-
             </LinearLayout>
-
 
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

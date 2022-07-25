@@ -3,12 +3,15 @@ package com.net.pvr1.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.net.pvr1.api.UserAPI
+import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
+import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import org.json.JSONObject
 import retrofit2.Response
 import javax.inject.Inject
+import kotlin.math.ln
 
 class UserRepository @Inject constructor(private val userAPI: UserAPI) {
 //Login
@@ -55,6 +58,57 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
         else{
             otpVerifyLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+    //ComingSoon
+    private val comingSoonLiveData = MutableLiveData<NetworkResult<CommingSoonResponse>>()
+    val comingSoonResponseLiveData: LiveData<NetworkResult<CommingSoonResponse>>
+        get() = comingSoonLiveData
+
+    suspend fun comingSoon(city: String, genre: String, lang: String, userid: String) {
+        comingSoonLiveData.postValue(NetworkResult.Loading())
+        val response =userAPI.comingSoon(city,genre,lang,userid, Constant.version,
+            Constant.platform
+        )
+        comingSoonResponse(response)
+    }
+
+    private fun comingSoonResponse(response: Response<CommingSoonResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            comingSoonLiveData.postValue(NetworkResult.Success(response.body()!!))
+        }
+        else if(response.errorBody()!=null){
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            comingSoonLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        }
+        else{
+            comingSoonLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    //Cinema
+    private val cinemaLiveData = MutableLiveData<NetworkResult<CinemaResponse>>()
+    val cinemaResponseLiveData: LiveData<NetworkResult<CinemaResponse>>
+        get() = cinemaLiveData
+
+    suspend fun cinema(city: String, lat: String, lng: String, userid: String, searchTxt: String) {
+        cinemaLiveData.postValue(NetworkResult.Loading())
+        val response =userAPI.cinema(city,lat, lng,userid,searchTxt, Constant.version,
+            Constant.platform
+        )
+        cinemaResponse(response)
+    }
+
+    private fun cinemaResponse(response: Response<CinemaResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            cinemaLiveData.postValue(NetworkResult.Success(response.body()!!))
+        }
+        else if(response.errorBody()!=null){
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            cinemaLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        }
+        else{
+            cinemaLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 
