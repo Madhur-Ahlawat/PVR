@@ -14,6 +14,18 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
         <activity
+            android:name=".PrivateScreeningsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.giftCard.GiftCardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.offer.OfferActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.webView.WebViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.myBookings.MyBookingsActivity"
             android:exported="false" />
         <activity

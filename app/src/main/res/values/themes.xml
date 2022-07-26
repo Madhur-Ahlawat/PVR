@@ -92,6 +92,17 @@
         <item name="android:textSize">8sp</item>
         <item name="android:textColor">@color/h5color</item>
     </style>
+    <style name="styleSpinner">
+        <item name="android:imeOptions">actionNext</item>
+        <item name="android:singleLine">true</item>
+        <item name="colorControlNormal">#828282</item>
+        <item name="colorControlActivated">#828282</item>
+        <item name="android:textColorPrimary">#828282</item>
+        <item name="android:textSize">@dimen/register</item>
+        <item name="typeface">helvetica_neu.ttf</item>
+        <item name="android:textColorHint">#828282</item>
+        <item name="colorAccent">#828282</item>
+    </style>
 
 
 </resources>

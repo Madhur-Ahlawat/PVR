@@ -92,8 +92,25 @@
     <string name="ticket_food">Tickets &amp; Food</string>
     <string name="resend_text">Resend</string>
     <string name="order">Order : </string>
+    <string name="orderId">Order ID: </string>
     <string name="view_parking">View Parking</string>
     <string name="add_food">Add Food</string>
+    <string name="upcomingBooking">Upcoming Bookings: </string>
+    //Offers
+    <string name="featured_offers">Featured Offers</string>
+    <string name="more_details">More Details</string>
+    <string name="validTill">Valid till</string>
+    <string name="send_request">SEND REQUEST</string>
+    //Private Screening
+    <string name="movie">Movie</string>
+    <string name="movie_type">Movie Type</string>
+    <string name="date">Date</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="mobile">Mobile</string>
+    <string name="your_requirements">Your Requirements</string>
+    <string name="copy_to_self">Copy To Self</string>
+    <string name="no_of_seats">No. of Seats</string>
 
 
 </resources>

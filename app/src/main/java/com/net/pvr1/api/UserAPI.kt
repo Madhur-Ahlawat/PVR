@@ -5,6 +5,7 @@ import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
+import com.net.pvr1.ui.offer.response.OfferResponse
 import retrofit2.Response
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -69,5 +70,12 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String,
     ): Response<FoodTicketResponse>
+
+    @POST("deals/mobile")
+    suspend fun offer(
+        @Query("did") did: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+    ): Response<OfferResponse>
 
 }

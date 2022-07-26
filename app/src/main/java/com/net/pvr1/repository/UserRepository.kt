@@ -8,6 +8,7 @@ import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
+import com.net.pvr1.ui.offer.response.OfferResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import org.json.JSONObject
@@ -169,6 +170,33 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
         else{
             foodTicketLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+  //Offer
+    private val offerLiveData = MutableLiveData<NetworkResult<OfferResponse>>()
+    val offerResponseLiveData: LiveData<NetworkResult<OfferResponse>>
+        get() = offerLiveData
+
+    suspend fun offer(
+        did: String,
+    ) {
+        giftCardLiveData.postValue(NetworkResult.Loading())
+        val response =userAPI.offer(did, Constant.version,Constant.platform
+        )
+        offerResponse(response)
+    }
+
+    private fun offerResponse(response: Response<OfferResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            offerLiveData.postValue(NetworkResult.Success(response.body()!!))
+        }
+        else if(response.errorBody()!=null){
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            offerLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        }
+        else{
+            offerLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 

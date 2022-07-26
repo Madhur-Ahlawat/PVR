@@ -11,12 +11,14 @@ import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
+import com.net.pvr1.ui.myBookings.adapter.FoodTicketAdapter
 import com.net.pvr1.ui.myBookings.adapter.GiftCardAdapter
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.myBookings.viewModel.MyBookingViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,19 +54,29 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.Direction {
         binding?.ticketFood?.setOnClickListener {
             //Ticket & Food Api Call
             authViewModel.foodTicket(
-                "H5KQhI22Y8h4DtJYuU6ZAA==",
-                "0cb41def6f59fb5f",
+                "3myIKiEnYJgF3Jh8jqCATw==",
+                "1415BC19-37F5-4CAE-B968-497EDFCB4B71",
                 "",
                 "Delhi-NCR",
                 "",
-                "yes"
+                "NO"
             )
+
 
             binding?.view17?.backgroundTintList =
                 AppCompatResources.getColorStateList(this, R.color.gray)
             binding?.view18?.backgroundTintList =
                 AppCompatResources.getColorStateList(this, R.color.yellow)
         }
+//FoodCall
+        authViewModel.foodTicket(
+            "3myIKiEnYJgF3Jh8jqCATw==",
+            "1415BC19-37F5-4CAE-B968-497EDFCB4B71",
+            "",
+            "Delhi-NCR",
+            "",
+            "NO"
+        )
 
         giftCard()
         foodTicket()
@@ -160,9 +172,13 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.Direction {
 
     //Food With Ticket Response
     private fun retrieveFoodTicketData(output: FoodTicketResponse.Output) {
-
+        val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+        val foodTicketAdapter = FoodTicketAdapter(output.c, this)
+        binding?.recyclerMyBooking?.layoutManager = gridLayout2
+        binding?.recyclerMyBooking?.adapter = foodTicketAdapter
     }
 
+    //GiftCard
     private fun retrieveGiftCardData(output: GiftCardResponse.Output) {
         val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
         val giftCardAdapter = GiftCardAdapter(output.gc, this, this)

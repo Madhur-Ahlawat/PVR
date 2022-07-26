@@ -484,7 +484,7 @@
 
 
             <LinearLayout
-                android:id="@+id/llGiftCard"
+                android:id="@+id/giftCardClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -576,7 +576,7 @@
 
 
             <LinearLayout
-                android:id="@+id/llOffer"
+                android:id="@+id/Offer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -670,13 +670,13 @@
 
 
             <LinearLayout
-                android:id="@+id/llPrivate_screen"
+                android:id="@+id/privateScreen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="12dp"
                 android:paddingBottom="12dp"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <ImageView
                     android:layout_width="16dp"
