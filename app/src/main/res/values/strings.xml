@@ -111,6 +111,10 @@
     <string name="your_requirements">Your Requirements</string>
     <string name="copy_to_self">Copy To Self</string>
     <string name="no_of_seats">No. of Seats</string>
+    //
+    <string name="active_gift_cards">Active Gift Cards</string>
+    <string name="generic">Generic</string>
+    <string name="create_gift_card">Create Gift Card</string>
 
 
 </resources>

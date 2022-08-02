@@ -18,6 +18,8 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySplashBinding
 import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.home.HomeActivity
+import com.net.pvr1.ui.onBoarding.LandingActivity
+import com.net.pvr1.ui.otpVerify.OtpVerifyActivity
 import com.net.pvr1.utils.Constant
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -51,7 +53,7 @@ class SplashActivity : AppCompatActivity() {
                 finish()
             } else {
 //                val intent = Intent(this@SplashActivity, LandingActivity::class.java)
-                val intent = Intent(this@SplashActivity, HomeActivity::class.java)
+                val intent = Intent(this@SplashActivity, OtpVerifyActivity::class.java)
                 startActivity(intent)
                 finish()
             }

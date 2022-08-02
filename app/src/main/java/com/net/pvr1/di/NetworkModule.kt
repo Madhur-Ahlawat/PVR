@@ -1,5 +1,6 @@
 package com.net.pvr1.di
 
+import com.net.pvr1.BuildConfig
 import com.net.pvr1.api.AuthInterceptor
 import com.net.pvr1.api.UserAPI
 import com.net.pvr1.utils.Constants
@@ -46,10 +47,14 @@ class NetworkModule {
             chain.proceed(newRequest)
         })
 
+        val logging = HttpLoggingInterceptor()
 
         // if (BuildConfig.DEBUG) {
-        val logging = HttpLoggingInterceptor()
-        logging.level = HttpLoggingInterceptor.Level.BODY
+        if (BuildConfig.DEBUG) {
+            logging.level = HttpLoggingInterceptor.Level.BODY
+        }else{
+            logging.level = HttpLoggingInterceptor.Level.NONE
+        }
         client.addInterceptor(logging)
 
         return retrofitBuilder
