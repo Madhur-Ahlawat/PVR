@@ -13,8 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
+
         <activity
-            android:name=".PrivateScreeningsActivity"
+            android:name=".ui.selectCity.SelectCityActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.privateScreenings.PrivateScreeningsActivity"
             android:exported="false" />
         <activity
             android:name=".ui.giftCard.GiftCardActivity"
@@ -42,6 +46,17 @@
             android:exported="false" />
         <activity
             android:name="com.net.pvr1.ui.splash.SplashActivity"
+            android:exported="false">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+
+        </activity>
+        <activity
+            android:name=".ui.home.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,9 +64,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.home.HomeActivity"
-            android:exported="false" />
     </application>
 
 </manifest>

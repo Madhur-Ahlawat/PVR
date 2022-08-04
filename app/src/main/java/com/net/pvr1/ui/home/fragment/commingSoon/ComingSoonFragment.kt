@@ -20,7 +20,6 @@ import com.net.pvr1.ui.home.fragment.commingSoon.viewModel.ComingSoonViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 
-
 class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListener,
     ComingSoonMovieAdapter.VideoPlay {
     private var binding: FragmentComingSoonBinding? = null
@@ -30,8 +29,7 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
     private var checkLogin: Boolean = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = FragmentComingSoonBinding.inflate(inflater, container, false)
         return binding?.root

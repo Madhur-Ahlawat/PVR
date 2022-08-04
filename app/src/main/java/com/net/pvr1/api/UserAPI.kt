@@ -6,6 +6,7 @@ import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
+import com.net.pvr1.ui.selectCity.response.SelectCityResponse
 import retrofit2.Response
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -77,5 +78,16 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String,
     ): Response<OfferResponse>
+
+    @POST("content/cities")
+    suspend fun selectCity(
+        @Query("lat") lat: String,
+        @Query("lng") lng: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("userid") userid: String,
+        @Query("isSpi") isSpi: String,
+        @Query("srilanka") srilanka: String
+    ): Response<SelectCityResponse>
 
 }

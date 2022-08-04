@@ -1,0 +1,194 @@
+[
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\fragment_register.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\fragment_register.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\fragment_note.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\fragment_note.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\activity_select_city.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_select_city.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\gift_card_item.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\gift_card_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\internet_dialog.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\internet_dialog.xml"
+    },
+    {
+        "merged": "com.net.pvr1.app-mergeDebugResources-52:/layout/activity_select_city.xml",
+        "source": "com.net.pvr1.app-main-55:/layout/activity_select_city.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\create_gift_card.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\create_gift_card.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\fragment_login.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\fragment_login.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\select_city_item_layout.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\select_city_item_layout.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\activity_landing.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_landing.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\activity_private_screenings.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_private_screenings.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\activity_web_view.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_web_view.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\ticket_food_child_item.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\ticket_food_child_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\activity_offer.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_offer.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\fragment_home.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\fragment_home.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\fragment_profile.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\fragment_profile.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\ticket_food_item.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\ticket_food_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\onboarding_layout_one.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\onboarding_layout_one.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\item_coming_soon_filter.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\item_coming_soon_filter.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\select_other_city_item_layout.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\select_other_city_item_layout.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\dialog_loader.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\dialog_loader.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\activity_registration.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_registration.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\layout_offer_item.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\layout_offer_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\dialog_option.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\dialog_option.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\fragment_cinemas.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\fragment_cinemas.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\activity_login.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_login.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\onboarding_layout_two.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\onboarding_layout_two.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\activity_my_booking.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_my_booking.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\fragment_main.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\fragment_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\activity_splash.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_splash.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\toolbar_main.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\toolbar_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\onboarding_layout_four.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\onboarding_layout_four.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\onboarding_layout_three.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\onboarding_layout_three.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\note_item.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\note_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\loyalty_paid_member.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\loyalty_paid_member.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\fragment_coming_soon.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\fragment_coming_soon.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\ticket_food_food_item.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\ticket_food_food_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\coming_soon_item_layout.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\coming_soon_item_layout.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\activity_home.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_home.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\cinema_child_item.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\cinema_child_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\fragment_privilege.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\fragment_privilege.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\activity_gift_card.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_gift_card.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\gift_card_cateogry_item.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\gift_card_cateogry_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\common_toolbar.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\common_toolbar.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\activity_otp_verify.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_otp_verify.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\fragment_more.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\fragment_more.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\gift_card_image_item.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\gift_card_image_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-52:\\layout\\cinema_item.xml",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\cinema_item.xml"
+    }
+]
