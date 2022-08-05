@@ -143,36 +143,45 @@
 82            android:required="false" />
 82-->[androidx.window:window:1.0.0] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\989a07503391efdcbb2a49c609e61934\transformed\jetified-window-1.0.0\AndroidManifest.xml:30:13-37
 83
-84        <service
-84-->[androidx.room:room-runtime:2.4.2] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\39d7528cb976357a68f2ab155b114f34\transformed\room-runtime-2.4.2\AndroidManifest.xml:25:9-28:40
-85            android:name="androidx.room.MultiInstanceInvalidationService"
-85-->[androidx.room:room-runtime:2.4.2] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\39d7528cb976357a68f2ab155b114f34\transformed\room-runtime-2.4.2\AndroidManifest.xml:26:13-74
-86            android:directBootAware="true"
-86-->[androidx.room:room-runtime:2.4.2] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\39d7528cb976357a68f2ab155b114f34\transformed\room-runtime-2.4.2\AndroidManifest.xml:27:13-43
+84        <provider
+84-->[com.squareup.picasso:picasso:2.71828] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\4011280657396264f902dafdf50b5e6b\transformed\jetified-picasso-2.71828\AndroidManifest.xml:8:9-11:40
+85            android:name="com.squareup.picasso.PicassoProvider"
+85-->[com.squareup.picasso:picasso:2.71828] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\4011280657396264f902dafdf50b5e6b\transformed\jetified-picasso-2.71828\AndroidManifest.xml:9:13-64
+86            android:authorities="com.net.pvr1.com.squareup.picasso"
+86-->[com.squareup.picasso:picasso:2.71828] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\4011280657396264f902dafdf50b5e6b\transformed\jetified-picasso-2.71828\AndroidManifest.xml:10:13-72
 87            android:exported="false" />
-87-->[androidx.room:room-runtime:2.4.2] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\39d7528cb976357a68f2ab155b114f34\transformed\room-runtime-2.4.2\AndroidManifest.xml:28:13-37
+87-->[com.squareup.picasso:picasso:2.71828] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\4011280657396264f902dafdf50b5e6b\transformed\jetified-picasso-2.71828\AndroidManifest.xml:11:13-37
 88
-89        <provider
-89-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\ecba2db138f882ddde8140db487b3800\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:26:9-34:20
-90            android:name="androidx.startup.InitializationProvider"
-90-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\ecba2db138f882ddde8140db487b3800\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:27:13-67
-91            android:authorities="com.net.pvr1.androidx-startup"
-91-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\ecba2db138f882ddde8140db487b3800\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:28:13-68
-92            android:exported="false" >
-92-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\ecba2db138f882ddde8140db487b3800\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:29:13-37
-93            <meta-data
-93-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\ecba2db138f882ddde8140db487b3800\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:31:13-33:52
-94                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-94-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\ecba2db138f882ddde8140db487b3800\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:32:17-75
-95                android:value="androidx.startup" />
-95-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\ecba2db138f882ddde8140db487b3800\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:33:17-49
-96            <meta-data
-96-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\eddb3b18b72614c0ac12f1239b3a691e\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:31:13-33:52
-97                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-97-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\eddb3b18b72614c0ac12f1239b3a691e\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:32:17-78
-98                android:value="androidx.startup" />
-98-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\eddb3b18b72614c0ac12f1239b3a691e\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:33:17-49
-99        </provider>
-100    </application>
-101
-102</manifest>
+89        <service
+89-->[androidx.room:room-runtime:2.4.2] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\39d7528cb976357a68f2ab155b114f34\transformed\room-runtime-2.4.2\AndroidManifest.xml:25:9-28:40
+90            android:name="androidx.room.MultiInstanceInvalidationService"
+90-->[androidx.room:room-runtime:2.4.2] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\39d7528cb976357a68f2ab155b114f34\transformed\room-runtime-2.4.2\AndroidManifest.xml:26:13-74
+91            android:directBootAware="true"
+91-->[androidx.room:room-runtime:2.4.2] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\39d7528cb976357a68f2ab155b114f34\transformed\room-runtime-2.4.2\AndroidManifest.xml:27:13-43
+92            android:exported="false" />
+92-->[androidx.room:room-runtime:2.4.2] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\39d7528cb976357a68f2ab155b114f34\transformed\room-runtime-2.4.2\AndroidManifest.xml:28:13-37
+93
+94        <provider
+94-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\ecba2db138f882ddde8140db487b3800\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:26:9-34:20
+95            android:name="androidx.startup.InitializationProvider"
+95-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\ecba2db138f882ddde8140db487b3800\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:27:13-67
+96            android:authorities="com.net.pvr1.androidx-startup"
+96-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\ecba2db138f882ddde8140db487b3800\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:28:13-68
+97            android:exported="false" >
+97-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\ecba2db138f882ddde8140db487b3800\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:29:13-37
+98            <meta-data
+98-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\ecba2db138f882ddde8140db487b3800\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:31:13-33:52
+99                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+99-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\ecba2db138f882ddde8140db487b3800\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:32:17-75
+100                android:value="androidx.startup" />
+100-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\ecba2db138f882ddde8140db487b3800\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:33:17-49
+101            <meta-data
+101-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\eddb3b18b72614c0ac12f1239b3a691e\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:31:13-33:52
+102                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+102-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\eddb3b18b72614c0ac12f1239b3a691e\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:32:17-78
+103                android:value="androidx.startup" />
+103-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\eddb3b18b72614c0ac12f1239b3a691e\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:33:17-49
+104        </provider>
+105    </application>
+106
+107</manifest>

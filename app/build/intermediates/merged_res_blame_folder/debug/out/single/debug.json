@@ -1,982 +1,990 @@
 [
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_yellow_circle.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\yellow_circle.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xxxhdpi_ic_direction_new.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xxxhdpi\\ic_direction_new.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-ldpi_ic_un_favourite_theatre.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-ldpi\\ic_un_favourite_theatre.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_gift_card_cateogry_item.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\gift_card_cateogry_item.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-hdpi_ic_checke_box_checked.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-hdpi\\ic_checke_box_checked.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_activity_otp_verify.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\activity_otp_verify.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_img.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\img.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_layout_offer_item.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\layout_offer_item.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_ic_dob_icon.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\ic_dob_icon.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_grey_curve.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\grey_curve.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_video_more.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\video_more.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-hdpi_ic_checke_box_checked.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-hdpi\\ic_checke_box_checked.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_loyalty_paid_member.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\loyalty_paid_member.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_top_curve.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\top_curve.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-anydpi-v24_ic_qr_code_group.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-anydpi-v24\\ic_qr_code_group.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_ic_switch_toggle_on.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\ic_switch_toggle_on.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-hdpi_ic_yellow.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-hdpi\\ic_yellow.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_flat_rectangle.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\flat_rectangle.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_default_dot.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\default_dot.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\mipmap-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\mipmap-xxhdpi\\ic_launcher_foreground.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_ic_add.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\ic_add.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_dialog_option.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\dialog_option.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_activity_registration.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_registration.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-anydpi-v24_search.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-anydpi-v24\\search.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_gift_card_image_placeholder.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\gift_card_image_placeholder.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xxxhdpi_ic_yellow.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xxxhdpi\\ic_yellow.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_activity_home.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_home.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_fragment_note.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\fragment_note.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_top_shadow.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\top_shadow.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_coming_soon_item_layout.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\coming_soon_item_layout.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xxhdpi_ic_favourite_theatre.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xxhdpi\\ic_favourite_theatre.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_circle_black.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\circle_black.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_food_icon.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\food_icon.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_dialog_loader.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\dialog_loader.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_ic_launcher_background.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\ic_launcher_background.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-mdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-mdpi\\ic_launcher_foreground.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-hdpi_ic_qr_code_group.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-hdpi\\ic_qr_code_group.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_ic_skip_arrow.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\ic_skip_arrow.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xhdpi_ic_yellow.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xhdpi\\ic_yellow.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_movie_more.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\movie_more.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-hdpi_search.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-hdpi\\search.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-mdpi_ic_direction_new.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-mdpi\\ic_direction_new.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_activity_my_booking.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_my_booking.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-ldpi_back.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-ldpi\\back.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\mipmap-xhdpi_ic_launcher_round.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\mipmap-xhdpi\\ic_launcher_round.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_splash_back.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\splash_back.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_ic_slideshow.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\ic_slideshow.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-anydpi-v24_ic_direction_new.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-anydpi-v24\\ic_direction_new.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_ic_offer_more.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\ic_offer_more.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xxhdpi_ic_qr_code_group.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xxhdpi\\ic_qr_code_group.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-ldpi_ic_checkek_box_unchecked.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-ldpi\\ic_checkek_box_unchecked.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\mipmap-xhdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\mipmap-xhdpi\\ic_launcher_foreground.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xxhdpi_ic_launcher_foreground.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xxhdpi\\ic_launcher_foreground.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\mipmap-hdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\mipmap-hdpi\\ic_launcher_foreground.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xxxhdpi_ic_direction_new.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xxxhdpi\\ic_direction_new.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\font_helvetica_neu.ttf.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\font\\helvetica_neu.ttf"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_slider_icon_three.webp.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\slider_icon_three.webp"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_pvr_logo.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\pvr_logo.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xxhdpi_food_ticket.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xxhdpi\\food_ticket.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_common_toolbar.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\common_toolbar.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xhdpi_ic_qr_code_group.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xhdpi\\ic_qr_code_group.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_toolbar_main.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\toolbar_main.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_select_city_item_layout.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\select_city_item_layout.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-mdpi_back.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-mdpi\\back.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_dialog_option.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\dialog_option.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\mipmap-hdpi\\ic_launcher_round.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_movie_more.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\movie_more.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_ic_metro.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\ic_metro.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_flat_rectangle.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\flat_rectangle.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_image_gradient.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\image_gradient.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_filter_text_selector.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\filter_text_selector.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\font_helvetica_neu_medium.ttf.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\font\\helvetica_neu_medium.ttf"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-hdpi_food_ticket.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-hdpi\\food_ticket.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_more_grey.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\more_grey.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_fragment_note.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\fragment_note.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_activity_login.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\activity_login.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xxxhdpi_ic_qr_code_group.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xxxhdpi\\ic_qr_code_group.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_splash_gif1.gif.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\splash_gif1.gif"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xxxhdpi_ic_un_favourite_theatre.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xxxhdpi\\ic_un_favourite_theatre.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-mdpi_ic_un_favourite_theatre.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-mdpi\\ic_un_favourite_theatre.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xxhdpi_ic_direction_new.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xxhdpi\\ic_direction_new.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_pvr_more.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\pvr_more.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xxxhdpi_ic_checke_box_checked.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xxxhdpi\\ic_checke_box_checked.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-hdpi_search.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-hdpi\\search.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xxhdpi_ic_qr_code_group.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xxhdpi\\ic_qr_code_group.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\font_helvetica_neu_bold.ttf.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\font\\helvetica_neu_bold.ttf"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_private_screen_banner.webp.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\private_screen_banner.webp"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xhdpi_ic_un_favourite_theatre.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xhdpi\\ic_un_favourite_theatre.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_tab_selector.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\tab_selector.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-anydpi-v24_ic_yellow.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-anydpi-v24\\ic_yellow.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_ic_parking.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\ic_parking.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-ldpi_food_ticket.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-ldpi\\food_ticket.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-ldpi_ic_launcher_foreground.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-ldpi\\ic_launcher_foreground.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_ic_background_login.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\ic_background_login.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xxxhdpi_ic_yellow.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xxxhdpi\\ic_yellow.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xxhdpi_ic_direction_new.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xxhdpi\\ic_direction_new.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xxxhdpi_back.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xxxhdpi\\back.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_private_screen_banner.webp.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\private_screen_banner.webp"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-mdpi_food_ticket.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-mdpi\\food_ticket.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_onboarding_layout_two.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\onboarding_layout_two.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_app_icon.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\app_icon.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_ic_dob_icon.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\ic_dob_icon.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_grey_curve.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\grey_curve.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-ldpi_ic_favourite_theatre.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-ldpi\\ic_favourite_theatre.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_fragment_login.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\fragment_login.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_onboarding_layout_four.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\onboarding_layout_four.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xhdpi_back.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xhdpi\\back.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_qr_code_new.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\qr_code_new.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xxxhdpi_ic_favourite_theatre.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xxxhdpi\\ic_favourite_theatre.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_selected_dot.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\selected_dot.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_pvr_cares.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\pvr_cares.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xxhdpi_search.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xxhdpi\\search.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_slider_icon_four.webp.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\slider_icon_four.webp"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-mdpi_ic_yellow.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-mdpi\\ic_yellow.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-anydpi-v24_search.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-anydpi-v24\\search.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xxhdpi_ic_favourite_theatre.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xxhdpi\\ic_favourite_theatre.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_merchandise.webp.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\merchandise.webp"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xhdpi_search.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xhdpi\\search.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xxxhdpi_ic_launcher_foreground.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xxxhdpi\\ic_launcher_foreground.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_icon_refresh.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\icon_refresh.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_commingsoon_grey.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\commingsoon_grey.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xxxhdpi_ic_un_favourite_theatre.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xxxhdpi\\ic_un_favourite_theatre.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_gift_card_image_item.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\gift_card_image_item.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_ic_group_play.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\ic_group_play.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-mdpi_ic_favourite_theatre.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-mdpi\\ic_favourite_theatre.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_checked_filter_selector.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\checked_filter_selector.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_gift_card.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\gift_card.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_activity_web_view.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\activity_web_view.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-anydpi-v24_ic_launcher_foreground.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-anydpi-v24\\ic_launcher_foreground.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_cinema_child_item.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\cinema_child_item.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-hdpi_ic_favourite_theatre.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-hdpi\\ic_favourite_theatre.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\mipmap-mdpi\\ic_launcher_round.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xxhdpi_search.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xxhdpi\\search.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_activity_home.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\activity_home.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_ticket_food_item.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\ticket_food_item.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_default_dot.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\default_dot.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_shape_gold_border.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\shape_gold_border.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_ticket_food_food_item.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\ticket_food_food_item.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_gift_card_cateogry_item.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\gift_card_cateogry_item.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_ic_add.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\ic_add.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_splash_gif2.gif.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\splash_gif2.gif"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_onboarding_layout_one.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\onboarding_layout_one.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_wish_list_background.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\wish_list_background.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xhdpi_ic_favourite_theatre.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xhdpi\\ic_favourite_theatre.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-anydpi-v24_ic_checkek_box_unchecked.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-anydpi-v24\\ic_checkek_box_unchecked.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_activity_landing.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\activity_landing.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_note_item.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\note_item.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_ic_wishlist_white.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\ic_wishlist_white.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\color_bottom_nav_icon_color.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\color\\bottom_nav_icon_color.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\font_helvetica_neu_reg.ttf.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\font\\helvetica_neu_reg.ttf"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_offer_shadow.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\offer_shadow.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-anydpi-v24_back.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-anydpi-v24\\back.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_ic_delete.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\ic_delete.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-ldpi_ic_un_favourite_theatre.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-ldpi\\ic_un_favourite_theatre.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_pvr_new.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\pvr_new.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_fragment_profile.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\fragment_profile.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\menu_bottom_nav_menu.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\menu\\bottom_nav_menu.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-anydpi-v24_ic_checke_box_checked.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-anydpi-v24\\ic_checke_box_checked.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_ic_food_icon.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\ic_food_icon.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-ldpi_ic_yellow.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-ldpi\\ic_yellow.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\mipmap-hdpi_ic_launcher.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\mipmap-hdpi\\ic_launcher.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_location.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\location.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-mdpi_search.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-mdpi\\search.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-mdpi_food_ticket.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-mdpi\\food_ticket.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_activity_gift_card.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_gift_card.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_splash_gif3.gif.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\splash_gif3.gif"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_ic_wishlist_yellow.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\ic_wishlist_yellow.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_bg_quick_botton.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\bg_quick_botton.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_fragment_profile.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\fragment_profile.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xhdpi_back.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xhdpi\\back.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_whatsapp_more.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\whatsapp_more.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xxxhdpi_ic_checke_box_checked.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xxxhdpi\\ic_checke_box_checked.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_more_grey.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\more_grey.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\menu_bottom_nav_menu.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\menu\\bottom_nav_menu.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_cinema_child_item.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\cinema_child_item.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\font_flaticon.ttf.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\font\\flaticon.ttf"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_activity_select_city.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_select_city.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-hdpi_ic_qr_code_group.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-hdpi\\ic_qr_code_group.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_right_arrow.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\right_arrow.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-ldpi_ic_direction_new.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-ldpi\\ic_direction_new.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_ic_switch_toggle_on.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\ic_switch_toggle_on.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-hdpi_ic_favourite_theatre.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-hdpi\\ic_favourite_theatre.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\mipmap-hdpi_ic_launcher_round.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\mipmap-hdpi\\ic_launcher_round.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_fragment_register.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\fragment_register.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_note_background.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\note_background.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_splash_gif2.gif.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\splash_gif2.gif"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-mdpi_ic_checke_box_checked.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-mdpi\\ic_checke_box_checked.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_icon_settings.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\icon_settings.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_cinema_item.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\cinema_item.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xhdpi_ic_checkek_box_unchecked.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xhdpi\\ic_checkek_box_unchecked.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-ldpi_search.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-ldpi\\search.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_home_black.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\home_black.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_fragment_more.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\fragment_more.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_slider_icon_three.webp.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\slider_icon_three.webp"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\font_helvetica_light.ttf.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\font\\helvetica_light.ttf"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_pvr_new.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\pvr_new.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_ic_wishlist_white.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\ic_wishlist_white.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_ic_wishlist_yellow.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\ic_wishlist_yellow.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-mdpi_ic_qr_code_group.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-mdpi\\ic_qr_code_group.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xxxhdpi_search.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xxxhdpi\\search.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_background.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\background.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_filter_text_selector.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\filter_text_selector.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-mdpi_ic_yellow.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-mdpi\\ic_yellow.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_activity_select_city.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\activity_select_city.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xxhdpi_ic_un_favourite_theatre.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xxhdpi\\ic_un_favourite_theatre.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-anydpi-v24_ic_qr_code_group.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-anydpi-v24\\ic_qr_code_group.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\color_text_selection_menu.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\color\\text_selection_menu.xml"
+        "merged": "com.net.pvr1.app-merged_res-54:/layout_fragment_home.xml.flat",
+        "source": "com.net.pvr1.app-main-56:/layout/fragment_home.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_splash_gif3.gif.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\splash_gif3.gif"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-mdpi_ic_qr_code_group.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-mdpi\\ic_qr_code_group.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_booking_more.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\booking_more.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xhdpi_ic_direction_new.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xhdpi\\ic_direction_new.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_pvr_privilege_icon_copy.webp.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\pvr_privilege_icon_copy.webp"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_select_other_city_item_layout.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\select_other_city_item_layout.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_non_loyalty_member_home.webp.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\non_loyalty_member_home.webp"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_bg_quick_book.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\bg_quick_book.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_coming_more.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\coming_more.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xxhdpi_ic_un_favourite_theatre.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xxhdpi\\ic_un_favourite_theatre.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_pvr_more.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\pvr_more.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\color_bottom_nav_icon_color.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\color\\bottom_nav_icon_color.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_onboarding_layout_one.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\onboarding_layout_one.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_mgf.JPG.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\mgf.JPG"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xhdpi_ic_direction_new.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xhdpi\\ic_direction_new.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-mdpi_search.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-mdpi\\search.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_ic_notification.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\ic_notification.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\mipmap-xxxhdpi\\ic_launcher_round.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xxhdpi_back.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xxhdpi\\back.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_img.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\img.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_ic_vector_call.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\ic_vector_call.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_video_more.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\video_more.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_coming_soon_item_layout.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\coming_soon_item_layout.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_shape_gold_border.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\shape_gold_border.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xxxhdpi_ic_checkek_box_unchecked.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xxxhdpi\\ic_checkek_box_unchecked.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_scan_more.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\scan_more.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_fragment_cinemas.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\fragment_cinemas.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_right_arrow.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\right_arrow.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-mdpi_ic_checkek_box_unchecked.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-mdpi\\ic_checkek_box_unchecked.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\font_cafeta.otf.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\font\\cafeta.otf"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_gift_more.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\gift_more.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_note_item.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\note_item.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\font_helvetica_neu_bold.ttf.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\font\\helvetica_neu_bold.ttf"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_activity_my_booking.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\activity_my_booking.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_item_coming_soon_filter.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\item_coming_soon_filter.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_activity_offer.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\activity_offer.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_ic_group_play.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\ic_group_play.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-hdpi_ic_checkek_box_unchecked.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-hdpi\\ic_checkek_box_unchecked.png"
     },
     {
-        "merged": "com.net.pvr1.app-merged_res-53:/layout_activity_select_city.xml.flat",
-        "source": "com.net.pvr1.app-main-55:/layout/activity_select_city.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_pvr_white.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\pvr_white.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\mipmap-xxxhdpi\\ic_launcher.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xxhdpi_ic_checke_box_checked.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xxhdpi\\ic_checke_box_checked.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_ic_background_login.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\ic_background_login.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\font_helvetica_light.ttf.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\font\\helvetica_light.ttf"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xhdpi_ic_favourite_theatre.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xhdpi\\ic_favourite_theatre.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-ldpi_search.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-ldpi\\search.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\mipmap-xxxhdpi_ic_launcher_foreground.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\mipmap-xxxhdpi\\ic_launcher_foreground.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-anydpi-v24_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-anydpi-v24\\ic_launcher_foreground.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_dialog_loader.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\dialog_loader.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_rectangle_default.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\rectangle_default.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\mipmap-mdpi_ic_launcher_round.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\mipmap-mdpi\\ic_launcher_round.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-hdpi_ic_yellow.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-hdpi\\ic_yellow.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-hdpi_back.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-hdpi\\back.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_item_coming_soon_filter.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\item_coming_soon_filter.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_mgf.JPG.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\mgf.JPG"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_bottom_curve_ui.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\bottom_curve_ui.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_privilege_home_back_check.webp.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\privilege_home_back_check.webp"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_background.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\background.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-ldpi_ic_direction_new.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-ldpi\\ic_direction_new.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xxhdpi_back.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xxhdpi\\back.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\mipmap-mdpi_ic_launcher.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\mipmap-mdpi\\ic_launcher.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_fragment_more.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\fragment_more.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_bottom_corner.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\bottom_corner.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xxhdpi\\ic_launcher_foreground.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_ic_skip_arrow.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\ic_skip_arrow.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_activity_registration.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\activity_registration.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_pvr_white.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\pvr_white.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_coming_more.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\coming_more.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-anydpi-v24_ic_checke_box_checked.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-anydpi-v24\\ic_checke_box_checked.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\color_text_selection_menu.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\color\\text_selection_menu.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_yellow_button_selector.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\yellow_button_selector.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\mipmap-xxxhdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\mipmap-xxxhdpi\\ic_launcher_foreground.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\font_helvetica_neu_medium.ttf.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\font\\helvetica_neu_medium.ttf"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_ic_movie_alert.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\ic_movie_alert.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_theatre_like_selector.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\theatre_like_selector.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xhdpi_food_ticket.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xhdpi\\food_ticket.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xhdpi_ic_checkek_box_unchecked.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xhdpi\\ic_checkek_box_unchecked.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_ic_switch_toggle_off.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\ic_switch_toggle_off.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\mipmap-xhdpi\\ic_launcher.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_pvr_cares.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\pvr_cares.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_background_highlighted.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\background_highlighted.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_btn_yellow_rounded.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\btn_yellow_rounded.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_privilege_home_back.webp.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\privilege_home_back.webp"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xxhdpi_ic_checkek_box_unchecked.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xxhdpi\\ic_checkek_box_unchecked.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_ic_movie_alert.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\ic_movie_alert.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_cinema_item.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\cinema_item.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-ldpi_food_ticket.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-ldpi\\food_ticket.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-anydpi-v24_ic_favourite_theatre.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-anydpi-v24\\ic_favourite_theatre.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_activity_offer.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_offer.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xhdpi_ic_checke_box_checked.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xhdpi\\ic_checke_box_checked.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xxxhdpi_food_ticket.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xxxhdpi\\food_ticket.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_commingsoon_grey.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\commingsoon_grey.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_gift_card_placeholder.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\gift_card_placeholder.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_background_sign_in.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\background_sign_in.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_rectangle_default.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\rectangle_default.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_privilege_grey.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\privilege_grey.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_icon_refresh.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\icon_refresh.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xxxhdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xxxhdpi\\ic_launcher_foreground.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\mipmap-xxhdpi\\ic_launcher.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_gift_card.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\gift_card.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xxhdpi_ic_checke_box_checked.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xxhdpi\\ic_checke_box_checked.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_merchandise.webp.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\merchandise.webp"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-hdpi_ic_checkek_box_unchecked.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-hdpi\\ic_checkek_box_unchecked.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_activity_gift_card.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\activity_gift_card.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_home_black.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\home_black.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-hdpi_food_ticket.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-hdpi\\food_ticket.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_magazine_more.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\magazine_more.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xxxhdpi_ic_favourite_theatre.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xxxhdpi\\ic_favourite_theatre.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_pvr_logo.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\pvr_logo.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_privilege_home_back_check.webp.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\privilege_home_back_check.webp"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_activity_login.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_login.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-mdpi_ic_favourite_theatre.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-mdpi\\ic_favourite_theatre.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_select_other_city_item_layout.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\select_other_city_item_layout.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\mipmap-xxxhdpi\\ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xhdpi_food_ticket.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xhdpi\\food_ticket.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_privilege_home_back.webp.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\privilege_home_back.webp"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xxhdpi_ic_checkek_box_unchecked.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xxhdpi\\ic_checkek_box_unchecked.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\mipmap-mdpi\\ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-ldpi_back.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-ldpi\\back.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\mipmap-hdpi\\ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_ic_switch_toggle_off.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\ic_switch_toggle_off.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\mipmap-xhdpi\\ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_background_sign_in.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\background_sign_in.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_fragment_cinemas.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\fragment_cinemas.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-mdpi_ic_un_favourite_theatre.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-mdpi\\ic_un_favourite_theatre.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xxxhdpi_food_ticket.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xxxhdpi\\food_ticket.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-anydpi-v24_ic_favourite_theatre.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-anydpi-v24\\ic_favourite_theatre.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_activity_splash.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\activity_splash.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_circle_black.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\circle_black.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-hdpi_ic_un_favourite_theatre.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-hdpi\\ic_un_favourite_theatre.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_activity_landing.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_landing.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xhdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xhdpi\\ic_launcher_foreground.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_ic_metro.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\ic_metro.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_booking_more.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\booking_more.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\font_helvetica_neu.ttf.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\font\\helvetica_neu.ttf"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_fragment_privilege.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\fragment_privilege.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xhdpi_ic_launcher_foreground.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xhdpi\\ic_launcher_foreground.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-mdpi_ic_checke_box_checked.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-mdpi\\ic_checke_box_checked.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_onboarding_layout_three.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\onboarding_layout_three.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_bg_search.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\bg_search.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-anydpi-v24_back.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-anydpi-v24\\back.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\navigation_nav_graph.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\navigation\\nav_graph.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_bg_search.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\bg_search.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_ticket_food_child_item.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\ticket_food_child_item.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_privilege_grey.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\privilege_grey.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_fragment_login.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\fragment_login.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_toolbar_main.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\toolbar_main.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\mipmap-mdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\mipmap-mdpi\\ic_launcher_foreground.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_fragment_privilege.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\fragment_privilege.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_ic_delete.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\ic_delete.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xhdpi_ic_checke_box_checked.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xhdpi\\ic_checke_box_checked.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_onboarding_layout_three.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\onboarding_layout_three.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_onboarding_layout_four.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\onboarding_layout_four.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xhdpi_ic_qr_code_group.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xhdpi\\ic_qr_code_group.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_fragment_main.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\fragment_main.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-hdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-hdpi\\ic_launcher_foreground.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-ldpi_ic_favourite_theatre.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-ldpi\\ic_favourite_theatre.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_internet_dialog.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\internet_dialog.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-anydpi-v24_ic_yellow.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-anydpi-v24\\ic_yellow.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_gift_card_item.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\gift_card_item.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_qr_code_new.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\qr_code_new.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_food_icon.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\food_icon.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\mipmap-xxhdpi_ic_launcher_foreground.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\mipmap-xxhdpi\\ic_launcher_foreground.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_ic_offer_more.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\ic_offer_more.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_checked_filter_selector.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\checked_filter_selector.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_gift_card_image_item.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\gift_card_image_item.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_slider_icon_two.webp.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\slider_icon_two.webp"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-anydpi-v24_ic_checkek_box_unchecked.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-anydpi-v24\\ic_checkek_box_unchecked.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_fragment_home.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\fragment_home.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_activity_private_screenings.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\activity_private_screenings.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_bottom_curve_ui.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\bottom_curve_ui.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\mipmap-xxhdpi\\ic_launcher_round.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_ticket_food_child_item.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\ticket_food_child_item.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_ic_vector_call.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\ic_vector_call.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-ldpi_ic_checke_box_checked.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-ldpi\\ic_checke_box_checked.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_whatsapp_more.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\whatsapp_more.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_activity_web_view.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_web_view.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\mipmap-xxhdpi\\ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_image_gradient.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\image_gradient.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_ic_notification.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\ic_notification.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-anydpi-v24_ic_direction_new.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-anydpi-v24\\ic_direction_new.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_gift_more.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\gift_more.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_activity_private_screenings.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_private_screenings.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_cinema_grey.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\cinema_grey.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-mdpi_ic_direction_new.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-mdpi\\ic_direction_new.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_ic_parking.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\ic_parking.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-anydpi-v24_ic_un_favourite_theatre.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-anydpi-v24\\ic_un_favourite_theatre.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_create_gift_card.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\create_gift_card.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_selected_dot.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\selected_dot.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_theatre_like_selector.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\theatre_like_selector.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_gray_border.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\gray_border.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_offer_shadow.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\offer_shadow.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\mipmap-xxhdpi_ic_launcher_round.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\mipmap-xxhdpi\\ic_launcher_round.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_yellow_button_selector.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\yellow_button_selector.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xhdpi_search.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xhdpi\\search.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_top_shadow.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\top_shadow.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_splash_gif1.gif.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\splash_gif1.gif"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_yellow_curve_two.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\yellow_curve_two.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_gift_card_item.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\gift_card_item.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_gift_card_image_placeholder.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\gift_card_image_placeholder.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_cinema_grey.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\cinema_grey.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_non_loyalty_member_home.webp.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\non_loyalty_member_home.webp"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_location.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\location.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\mipmap-xhdpi\\ic_launcher_round.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\navigation_nav_graph.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\navigation\\nav_graph.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xxxhdpi_ic_qr_code_group.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xxxhdpi\\ic_qr_code_group.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_create_gift_card.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\create_gift_card.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_curve_ui.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\curve_ui.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\mipmap-xxxhdpi\\ic_launcher_round.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_slider_icon_four.webp.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\slider_icon_four.webp"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-mdpi_ic_launcher_foreground.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-mdpi\\ic_launcher_foreground.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-mdpi_ic_checkek_box_unchecked.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-mdpi\\ic_checkek_box_unchecked.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_activity_otp_verify.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_otp_verify.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_gift_card_placeholder.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\gift_card_placeholder.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_yellow_curve_two.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\yellow_curve_two.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\ic_launcher_background.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_icon_settings.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\icon_settings.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_select_city_item_layout.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\select_city_item_layout.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\font_flaticon.ttf.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\font\\flaticon.ttf"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xxxhdpi_ic_checkek_box_unchecked.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xxxhdpi\\ic_checkek_box_unchecked.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_btn_yellow_curve.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\btn_yellow_curve.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xxhdpi_food_ticket.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xxhdpi\\food_ticket.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_splash_back.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\splash_back.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_app_icon.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\app_icon.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_btn_yellow_rounded.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\btn_yellow_rounded.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_btn_yellow_curve.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\btn_yellow_curve.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-hdpi_ic_un_favourite_theatre.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-hdpi\\ic_un_favourite_theatre.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-ldpi_ic_checke_box_checked.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-ldpi\\ic_checke_box_checked.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xxxhdpi_search.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xxxhdpi\\search.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_magazine_more.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\magazine_more.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_splash_icon.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\splash_icon.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_pvr_privilege_icon_copy.webp.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\pvr_privilege_icon_copy.webp"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xxhdpi_ic_yellow.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xxhdpi\\ic_yellow.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_fragment_home.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\fragment_home.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_top_curve.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\top_curve.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_wish_list_background.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\wish_list_background.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-anydpi-v24_food_ticket.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-anydpi-v24\\food_ticket.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-hdpi_back.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-hdpi\\back.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_ticket_food_food_item.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\ticket_food_food_item.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-anydpi-v24_food_ticket.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-anydpi-v24\\food_ticket.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_curve_ui.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\curve_ui.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_loyalty_paid_member.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\loyalty_paid_member.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\mipmap-mdpi_ic_launcher_foreground.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\mipmap-mdpi\\ic_launcher_foreground.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_slider_icon_two.webp.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\slider_icon_two.webp"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-mdpi_back.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-mdpi\\back.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_tab_selector.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\tab_selector.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_fragment_coming_soon.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\fragment_coming_soon.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-anydpi-v24_ic_un_favourite_theatre.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-anydpi-v24\\ic_un_favourite_theatre.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_scan_more.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\scan_more.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_note_background.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\note_background.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-ldpi_ic_yellow.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-ldpi\\ic_yellow.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-ldpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-ldpi\\ic_launcher_foreground.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-ldpi_ic_qr_code_group.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-ldpi\\ic_qr_code_group.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xxxhdpi_back.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xxxhdpi\\back.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\mipmap-hdpi_ic_launcher_foreground.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\mipmap-hdpi\\ic_launcher_foreground.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_fragment_coming_soon.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\fragment_coming_soon.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-hdpi_ic_launcher_foreground.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-hdpi\\ic_launcher_foreground.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-ldpi_ic_checkek_box_unchecked.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-ldpi\\ic_checkek_box_unchecked.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-hdpi_ic_direction_new.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-hdpi\\ic_direction_new.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_ic_food_icon.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\ic_food_icon.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable-xhdpi_ic_un_favourite_theatre.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-48:\\drawable-xhdpi\\ic_un_favourite_theatre.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-hdpi_ic_direction_new.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-hdpi\\ic_direction_new.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_common_toolbar.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\common_toolbar.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_ic_slideshow.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\ic_slideshow.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\font_cafeta.otf.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\font\\cafeta.otf"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_bottom_corner.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\bottom_corner.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\drawable_rounded_textview.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\drawable\\rounded_textview.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-ldpi_ic_qr_code_group.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-ldpi\\ic_qr_code_group.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_activity_splash.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\activity_splash.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_yellow_circle.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\yellow_circle.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_internet_dialog.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\internet_dialog.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_rounded_textview.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\rounded_textview.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_layout_offer_item.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\layout_offer_item.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_splash_icon.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\splash_icon.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\mipmap-xhdpi_ic_launcher_foreground.png.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\mipmap-xhdpi\\ic_launcher_foreground.png"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_ticket_food_item.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\ticket_food_item.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\font_helvetica_neu_reg.ttf.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\font\\helvetica_neu_reg.ttf"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xxhdpi_ic_yellow.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xxhdpi\\ic_yellow.png"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_fragment_register.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\fragment_register.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_gray_border.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\gray_border.xml"
     },
     {
-        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-53:\\layout_onboarding_layout_two.xml.flat",
-        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-55:\\layout\\onboarding_layout_two.xml"
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable-xhdpi_ic_yellow.png.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-49:\\drawable-xhdpi\\ic_yellow.png"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\drawable_background_highlighted.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\drawable\\background_highlighted.xml"
+    },
+    {
+        "merged": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-54:\\layout_fragment_main.xml.flat",
+        "source": "C:\\Users\\Thinkpad Pro\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-56:\\layout\\fragment_main.xml"
     }
 ]

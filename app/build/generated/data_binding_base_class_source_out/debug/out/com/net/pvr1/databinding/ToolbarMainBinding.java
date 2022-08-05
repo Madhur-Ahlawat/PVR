@@ -23,6 +23,9 @@ public final class ToolbarMainBinding implements ViewBinding {
   private final ConstraintLayout rootView;
 
   @NonNull
+  public final ConstraintLayout constraintLayout6;
+
+  @NonNull
   public final TextView counter;
 
   @NonNull
@@ -50,14 +53,22 @@ public final class ToolbarMainBinding implements ViewBinding {
   public final TextView textView2;
 
   @NonNull
+  public final TextView txtCity;
+
+  @NonNull
   public final View view7;
 
-  private ToolbarMainBinding(@NonNull ConstraintLayout rootView, @NonNull TextView counter,
+  @NonNull
+  public final View viewCity;
+
+  private ToolbarMainBinding(@NonNull ConstraintLayout rootView,
+      @NonNull ConstraintLayout constraintLayout6, @NonNull TextView counter,
       @NonNull LinearLayout lNotification, @NonNull LinearLayout llLocation,
       @NonNull ImageButton locationBtn, @NonNull ImageView notify, @NonNull LinearLayout scanQr,
       @NonNull ImageButton searchBtn, @NonNull TextView subTitle, @NonNull TextView textView2,
-      @NonNull View view7) {
+      @NonNull TextView txtCity, @NonNull View view7, @NonNull View viewCity) {
     this.rootView = rootView;
+    this.constraintLayout6 = constraintLayout6;
     this.counter = counter;
     this.lNotification = lNotification;
     this.llLocation = llLocation;
@@ -67,7 +78,9 @@ public final class ToolbarMainBinding implements ViewBinding {
     this.searchBtn = searchBtn;
     this.subTitle = subTitle;
     this.textView2 = textView2;
+    this.txtCity = txtCity;
     this.view7 = view7;
+    this.viewCity = viewCity;
   }
 
   @Override
@@ -97,6 +110,12 @@ public final class ToolbarMainBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.constraintLayout6;
+      ConstraintLayout constraintLayout6 = ViewBindings.findChildViewById(rootView, id);
+      if (constraintLayout6 == null) {
+        break missingId;
+      }
+
       id = R.id.counter;
       TextView counter = ViewBindings.findChildViewById(rootView, id);
       if (counter == null) {
@@ -151,14 +170,27 @@ public final class ToolbarMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.txtCity;
+      TextView txtCity = ViewBindings.findChildViewById(rootView, id);
+      if (txtCity == null) {
+        break missingId;
+      }
+
       id = R.id.view7;
       View view7 = ViewBindings.findChildViewById(rootView, id);
       if (view7 == null) {
         break missingId;
       }
 
-      return new ToolbarMainBinding((ConstraintLayout) rootView, counter, lNotification, llLocation,
-          locationBtn, notify, scanQr, searchBtn, subTitle, textView2, view7);
+      id = R.id.viewCity;
+      View viewCity = ViewBindings.findChildViewById(rootView, id);
+      if (viewCity == null) {
+        break missingId;
+      }
+
+      return new ToolbarMainBinding((ConstraintLayout) rootView, constraintLayout6, counter,
+          lNotification, llLocation, locationBtn, notify, scanQr, searchBtn, subTitle, textView2,
+          txtCity, view7, viewCity);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

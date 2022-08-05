@@ -26,11 +26,16 @@ public final class SelectOtherCityItemLayoutBinding implements ViewBinding {
   @NonNull
   public final TextView otherCityName;
 
+  @NonNull
+  public final View vwUnderline;
+
   private SelectOtherCityItemLayoutBinding(@NonNull ConstraintLayout rootView,
-      @NonNull CardView constraintLayoutCity, @NonNull TextView otherCityName) {
+      @NonNull CardView constraintLayoutCity, @NonNull TextView otherCityName,
+      @NonNull View vwUnderline) {
     this.rootView = rootView;
     this.constraintLayoutCity = constraintLayoutCity;
     this.otherCityName = otherCityName;
+    this.vwUnderline = vwUnderline;
   }
 
   @Override
@@ -72,8 +77,14 @@ public final class SelectOtherCityItemLayoutBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.vwUnderline;
+      View vwUnderline = ViewBindings.findChildViewById(rootView, id);
+      if (vwUnderline == null) {
+        break missingId;
+      }
+
       return new SelectOtherCityItemLayoutBinding((ConstraintLayout) rootView, constraintLayoutCity,
-          otherCityName);
+          otherCityName, vwUnderline);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

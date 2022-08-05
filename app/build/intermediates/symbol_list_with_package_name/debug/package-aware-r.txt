@@ -1042,6 +1042,10 @@ attr suffixText
 attr suffixTextAppearance
 attr suffixTextColor
 attr suggestionRowLayout
+attr svp_colorActiveIndicator
+attr svp_colorInactiveIndicator
+attr svp_runAuto
+attr svp_timeMillis
 attr switchMinWidth
 attr switchPadding
 attr switchStyle
@@ -1295,6 +1299,7 @@ color black_menu
 color black_shadow
 color black_with_fifteen_opacity
 color black_with_ninety_opacity
+color blacktransparent
 color blue_color
 color blue_data
 color booking_day_white_circle_bg
@@ -1314,6 +1319,9 @@ color cardview_shadow_start_color
 color checkbox_themeable_attribute_color
 color chef
 color colorAccent
+color colorPrimary
+color colorPrimaryDark
+color colorPrimarytrasparent
 color coming_soon_show_card_layout_border_color
 color darkYellow
 color dark_slate_gray
@@ -1925,6 +1933,7 @@ color pvr_light_gray
 color pvr_orange
 color pvr_yellow
 color pvr_yellow_hover_button
+color quick_bg
 color radiobutton_themeable_attribute_color
 color rating0
 color rating1
@@ -2956,6 +2965,8 @@ drawable back
 drawable background
 drawable background_highlighted
 drawable background_sign_in
+drawable bg_quick_book
+drawable bg_quick_botton
 drawable bg_search
 drawable booking_more
 drawable bottom_corner
@@ -3263,6 +3274,7 @@ id bounceBoth
 id bounceEnd
 id bounceStart
 id btnBack
+id btnQuickBook
 id btn_delete
 id btn_login
 id btn_sign_up
@@ -3274,6 +3286,7 @@ id cancel_action
 id cancel_button
 id cardUi
 id cardView
+id card_item_header
 id carryVelocity
 id cbCC
 id cbFav
@@ -3320,6 +3333,7 @@ id constraintLayout2
 id constraintLayout3
 id constraintLayout4
 id constraintLayout5
+id constraintLayout6
 id constraintLayoutCity
 id container
 id content
@@ -3455,6 +3469,7 @@ id imageView6
 id imageView7
 id imageView8
 id imageView9
+id img_header_background
 id immediateStop
 id include
 id include2
@@ -3630,6 +3645,7 @@ id outline
 id outward
 id overshoot
 id packed
+id pagerSlider
 id paid_member_back
 id parallax
 id parent
@@ -3656,6 +3672,7 @@ id progress_circular
 id progress_horizontal
 id pt
 id qrImgMainPage
+id quickBook
 id radio
 id ratio
 id recComSoonMovie
@@ -3668,6 +3685,8 @@ id recyclerMyBooking
 id recyclerView
 id recyclerView2
 id recyclerView3
+id recyclerViewCategory
+id recyclerViewDetails
 id recyclerViewOtherCity
 id recyclerViewSearchCity
 id registerFragment
@@ -3888,12 +3907,15 @@ id tvTheatre_new
 id tvValue
 id tvValueTxt
 id tvresend
+id txtCity
+id txtHateToWait
 id txtOtherCity
 id txtSelectedCity
 id txtSelectedLocation
 id txt_description
 id txt_email
 id txt_error
+id txt_item_header
 id txt_password
 id txt_title
 id txt_username
@@ -3941,6 +3963,7 @@ id view6
 id view7
 id view8
 id view9
+id viewCity
 id viewPager
 id view_offset_helper
 id view_transition
@@ -3951,7 +3974,9 @@ id visible
 id visible_removing_fragment_view_tag
 id vwL
 id vwMain
+id vwMain1s
 id vwS
+id vwUnderline
 id webView
 id west
 id wishlist
@@ -4107,6 +4132,7 @@ layout gift_card_image_item
 layout gift_card_item
 layout internet_dialog
 layout item_coming_soon_filter
+layout item_pager
 layout layout_offer_item
 layout loyalty_paid_member
 layout m3_alert_dialog
@@ -4274,6 +4300,7 @@ string generic
 string get_start
 string get_started
 string gift_cards
+string hate_to_wait
 string hello_blank_fragment
 string hide_bottom_view_on_scroll_behavior
 string home
@@ -4396,6 +4423,7 @@ string private_screening
 string privilege
 string pvr_cares
 string pvr_magazine
+string quick_book
 string resend_otp
 string resend_text
 string scan_qr
@@ -5696,6 +5724,7 @@ styleable RadialViewGroup materialCircleRadius
 styleable RangeSlider minSeparation values
 styleable RecycleListView paddingBottomNoButtons paddingTopNoTitle
 styleable RecyclerView android_orientation android_clipToPadding android_descendantFocusability fastScrollEnabled fastScrollHorizontalThumbDrawable fastScrollHorizontalTrackDrawable fastScrollVerticalThumbDrawable fastScrollVerticalTrackDrawable layoutManager reverseLayout spanCount stackFromEnd
+styleable RecyclerViewPager svp_colorActiveIndicator svp_colorInactiveIndicator svp_runAuto svp_timeMillis
 styleable ScrimInsetsFrameLayout insetForeground
 styleable ScrollingViewBehavior_Layout behavior_overlapTop
 styleable SearchView android_focusable android_maxWidth android_inputType android_imeOptions closeIcon commitIcon defaultQueryHint goIcon iconifiedByDefault layout queryBackground queryHint searchHintIcon searchIcon submitBackground suggestionRowLayout voiceIcon

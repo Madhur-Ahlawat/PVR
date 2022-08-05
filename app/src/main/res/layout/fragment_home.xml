@@ -1,14 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.home.fragment.home.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+            <View
+                android:id="@+id/vwMain1s"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/dimen_20dp"
+                android:layout_marginEnd="@dimen/dimen_20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewCategory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                app:layout_constraintEnd_toEndOf="@+id/vwMain1s"
+                app:layout_constraintHorizontal_bias="0.448"
+                app:layout_constraintStart_toStartOf="@+id/vwMain1s"
+                app:layout_constraintTop_toTopOf="@+id/vwMain1s" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/quickBook"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dimen_60dp"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:background="@drawable/bg_quick_book"
+                app:layout_constraintEnd_toEndOf="@+id/vwMain1s"
+                app:layout_constraintStart_toStartOf="@+id/vwMain1s"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewCategory">
+
+                <TextView
+                    android:id="@+id/txtHateToWait"
+                    style="@style/H1Size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hate_to_wait"
+                    android:textSize="@dimen/dimen_16sp"
+                    android:layout_marginStart="@dimen/dimen_16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/btnQuickBook"
+                    style="@style/H1Size"
+                    android:layout_width="120dp"
+                    android:layout_height="@dimen/dimen_35dp"
+                    android:text="@string/quick_book"
+                    android:gravity="center"
+                    android:textSize="@dimen/dimen_14sp"
+                    android:fontFamily="@font/helvetica_neu_bold"
+                    android:background="@drawable/bg_quick_botton"
+                    android:layout_marginEnd="@dimen/dimen_16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewDetails"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="@+id/vwMain1s"
+                app:layout_constraintStart_toStartOf="@+id/vwMain1s"
+                app:layout_constraintTop_toBottomOf="@+id/quickBook" />
+
+            <net.seifhadjhassen.recyclerviewpager.RecyclerViewPager
+                android:id="@+id/pagerSlider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_60dp"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewDetails"
+                app:svp_colorActiveIndicator="@color/colorPrimary"
+                app:svp_colorInactiveIndicator="@color/gray"
+                app:svp_runAuto="true"
+                app:svp_timeMillis="3000" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewMovies"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="@+id/vwMain1s"
+                app:layout_constraintStart_toStartOf="@+id/vwMain1s"
+                app:layout_constraintTop_toBottomOf="@+id/pagerSlider" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintTrailerMusic"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_12dp"
+                android:layout_marginTop="@dimen/dimen_40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/vwMain1s"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewMovies">
+
+                <TextView
+                    android:id="@+id/txtTrailerMusic"
+                    style="@style/H3SizeBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_8dp"
+                    android:fontFamily="@font/helvetica_neu_bold"
+                    android:text="@string/trailer_amp_music"
+                    android:textSize="@dimen/dimen_20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txtTrailers"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_16dp"
+                    android:layout_marginEnd="@dimen/dimen_2dp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/dimen_50dp"
+                    android:drawablePadding="@dimen/dimen_8dp"
+                    android:text="@string/trailers"
+                    android:textSize="@dimen/dimen_16sp"
+                    app:drawableStartCompat="@drawable/ic_delete"
+                    app:layout_constraintEnd_toStartOf="@+id/txtMusic"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtTrailerMusic"
+                    tools:ignore="RtlSymmetry" />
+
+                <TextView
+                    android:id="@+id/txtMusic"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_20dp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/dimen_50dp"
+                    android:text="@string/music"
+                    android:textSize="@dimen/dimen_16sp"
+                    app:drawableStartCompat="@drawable/ic_delete"
+                    android:drawablePadding="@dimen/dimen_8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtTrailers"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/txtTrailers"
+                    app:layout_constraintTop_toTopOf="@+id/txtTrailers"
+                    tools:ignore="RtlSymmetry" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewTrailerMusic"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="@dimen/dimen_12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtTrailers" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

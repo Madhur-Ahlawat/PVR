@@ -45,12 +45,13 @@ com.net.pvr1.app-jetified-emoji2-1.0.0-43 C:\Users\Thinkpad Pro\.gradle\caches\t
 com.net.pvr1.app-jetified-lifecycle-process-2.4.0-44 C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\eddb3b18b72614c0ac12f1239b3a691e\transformed\jetified-lifecycle-process-2.4.0\res
 com.net.pvr1.app-recyclerview-1.1.0-45 C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\f24b2f41951e2aa98aad72c160c90fe9\transformed\recyclerview-1.1.0\res
 com.net.pvr1.app-media-1.0.0-46 C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\f4d543d2d6094f068715816afbc75de8\transformed\media-1.0.0\res
-com.net.pvr1.app-jetified-lifecycle-viewmodel-ktx-2.5.0-rc02-47 C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\fcbbe378924987cc74df557f9dba7786\transformed\jetified-lifecycle-viewmodel-ktx-2.5.0-rc02\res
-com.net.pvr1.app-pngs-48 D:\development\b2c-pvr-android\app\build\generated\res\pngs\debug
-com.net.pvr1.app-resValues-49 D:\development\b2c-pvr-android\app\build\generated\res\resValues\debug
-com.net.pvr1.app-rs-50 D:\development\b2c-pvr-android\app\build\generated\res\rs\debug
-com.net.pvr1.app-mergeDebugResources-51 D:\development\b2c-pvr-android\app\build\intermediates\incremental\debug\mergeDebugResources\merged.dir
-com.net.pvr1.app-mergeDebugResources-52 D:\development\b2c-pvr-android\app\build\intermediates\incremental\debug\mergeDebugResources\stripped.dir
-com.net.pvr1.app-merged_res-53 D:\development\b2c-pvr-android\app\build\intermediates\merged_res\debug
-com.net.pvr1.app-debug-54 D:\development\b2c-pvr-android\app\src\debug\res
-com.net.pvr1.app-main-55 D:\development\b2c-pvr-android\app\src\main\res
+com.net.pvr1.app-jetified-RecyclerScrollViewPager-1.0.2-47 C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\fb5ec1fe7f667487c650e2d73d262fe3\transformed\jetified-RecyclerScrollViewPager-1.0.2\res
+com.net.pvr1.app-jetified-lifecycle-viewmodel-ktx-2.5.0-rc02-48 C:\Users\Thinkpad Pro\.gradle\caches\transforms-3\fcbbe378924987cc74df557f9dba7786\transformed\jetified-lifecycle-viewmodel-ktx-2.5.0-rc02\res
+com.net.pvr1.app-pngs-49 D:\development\b2c-pvr-android\app\build\generated\res\pngs\debug
+com.net.pvr1.app-resValues-50 D:\development\b2c-pvr-android\app\build\generated\res\resValues\debug
+com.net.pvr1.app-rs-51 D:\development\b2c-pvr-android\app\build\generated\res\rs\debug
+com.net.pvr1.app-mergeDebugResources-52 D:\development\b2c-pvr-android\app\build\intermediates\incremental\debug\mergeDebugResources\merged.dir
+com.net.pvr1.app-mergeDebugResources-53 D:\development\b2c-pvr-android\app\build\intermediates\incremental\debug\mergeDebugResources\stripped.dir
+com.net.pvr1.app-merged_res-54 D:\development\b2c-pvr-android\app\build\intermediates\merged_res\debug
+com.net.pvr1.app-debug-55 D:\development\b2c-pvr-android\app\src\debug\res
+com.net.pvr1.app-main-56 D:\development\b2c-pvr-android\app\src\main\res

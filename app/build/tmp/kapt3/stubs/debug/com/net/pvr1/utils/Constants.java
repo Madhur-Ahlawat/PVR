@@ -7,7 +7,7 @@ public final class Constants {
     @org.jetbrains.annotations.NotNull()
     public static final com.net.pvr1.utils.Constants INSTANCE = null;
     @org.jetbrains.annotations.NotNull()
-    public static final java.lang.String BASE_URL = "https://demoapi.pvrcinemas.com/PVRCinemasCMS/api/";
+    public static final java.lang.String BASE_URL = "https://api1.pvrcinemas.com/PVRCinemasCMS/api/";
     @org.jetbrains.annotations.NotNull()
     public static final java.lang.String USER_TOKEN = "user_token";
     @org.jetbrains.annotations.NotNull()

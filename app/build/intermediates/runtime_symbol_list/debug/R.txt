@@ -1041,6 +1041,10 @@ int attr suffixText 0x7f0303c7
 int attr suffixTextAppearance 0x7f0303c8
 int attr suffixTextColor 0x7f0303c9
 int attr suggestionRowLayout 0x7f0303ca
+int attr svp_colorActiveIndicator 0x7f030496
+int attr svp_colorInactiveIndicator 0x7f030497
+int attr svp_runAuto 0x7f030498
+int attr svp_timeMillis 0x7f030499
 int attr switchMinWidth 0x7f0303cb
 int attr switchPadding 0x7f0303cc
 int attr switchStyle 0x7f0303cd
@@ -1294,6 +1298,7 @@ int color black_menu 0x7f05002b
 int color black_shadow 0x7f05002c
 int color black_with_fifteen_opacity 0x7f05002d
 int color black_with_ninety_opacity 0x7f05002e
+int color blacktransparent 0x7f0502d7
 int color blue_color 0x7f05002f
 int color blue_data 0x7f050030
 int color booking_day_white_circle_bg 0x7f050031
@@ -1313,6 +1318,9 @@ int color cardview_shadow_start_color 0x7f05003e
 int color checkbox_themeable_attribute_color 0x7f05003f
 int color chef 0x7f050040
 int color colorAccent 0x7f050041
+int color colorPrimary 0x7f0502d8
+int color colorPrimaryDark 0x7f0502d9
+int color colorPrimarytrasparent 0x7f0502da
 int color coming_soon_show_card_layout_border_color 0x7f050042
 int color darkYellow 0x7f050043
 int color dark_slate_gray 0x7f050044
@@ -1924,6 +1932,7 @@ int color pvr_light_gray 0x7f0502a1
 int color pvr_orange 0x7f0502a2
 int color pvr_yellow 0x7f0502a3
 int color pvr_yellow_hover_button 0x7f0502a4
+int color quick_bg 0x7f0502db
 int color radiobutton_themeable_attribute_color 0x7f0502a5
 int color rating0 0x7f0502a6
 int color rating1 0x7f0502a7
@@ -2955,6 +2964,8 @@ int drawable back 0x7f070059
 int drawable background 0x7f07005a
 int drawable background_highlighted 0x7f07005b
 int drawable background_sign_in 0x7f07005c
+int drawable bg_quick_book 0x7f070105
+int drawable bg_quick_botton 0x7f070106
 int drawable bg_search 0x7f07005d
 int drawable booking_more 0x7f07005e
 int drawable bottom_corner 0x7f07005f
@@ -3262,6 +3273,7 @@ int id bounceBoth 0x7f090080
 int id bounceEnd 0x7f090081
 int id bounceStart 0x7f090082
 int id btnBack 0x7f090083
+int id btnQuickBook 0x7f090344
 int id btn_delete 0x7f090084
 int id btn_login 0x7f090085
 int id btn_sign_up 0x7f090086
@@ -3273,6 +3285,7 @@ int id cancel_action 0x7f09008b
 int id cancel_button 0x7f09008c
 int id cardUi 0x7f09008d
 int id cardView 0x7f09008e
+int id card_item_header 0x7f090345
 int id carryVelocity 0x7f09008f
 int id cbCC 0x7f090090
 int id cbFav 0x7f090091
@@ -3319,6 +3332,7 @@ int id constraintLayout2 0x7f0900b9
 int id constraintLayout3 0x7f0900ba
 int id constraintLayout4 0x7f0900bb
 int id constraintLayout5 0x7f0900bc
+int id constraintLayout6 0x7f090341
 int id constraintLayoutCity 0x7f0900bd
 int id container 0x7f0900be
 int id content 0x7f0900bf
@@ -3454,6 +3468,7 @@ int id imageView6 0x7f090140
 int id imageView7 0x7f090141
 int id imageView8 0x7f090142
 int id imageView9 0x7f090143
+int id img_header_background 0x7f090346
 int id immediateStop 0x7f090144
 int id include 0x7f090145
 int id include2 0x7f090146
@@ -3629,6 +3644,7 @@ int id outline 0x7f0901ef
 int id outward 0x7f0901f0
 int id overshoot 0x7f0901f1
 int id packed 0x7f0901f2
+int id pagerSlider 0x7f09034d
 int id paid_member_back 0x7f0901f3
 int id parallax 0x7f0901f4
 int id parent 0x7f0901f5
@@ -3655,6 +3671,7 @@ int id progress_circular 0x7f090209
 int id progress_horizontal 0x7f09020a
 int id pt 0x7f09020b
 int id qrImgMainPage 0x7f09020c
+int id quickBook 0x7f090347
 int id radio 0x7f09020d
 int id ratio 0x7f09020e
 int id recComSoonMovie 0x7f09020f
@@ -3667,6 +3684,8 @@ int id recyclerMyBooking 0x7f090215
 int id recyclerView 0x7f090216
 int id recyclerView2 0x7f090217
 int id recyclerView3 0x7f090218
+int id recyclerViewCategory 0x7f090348
+int id recyclerViewDetails 0x7f090349
 int id recyclerViewOtherCity 0x7f090219
 int id recyclerViewSearchCity 0x7f09021a
 int id registerFragment 0x7f09021b
@@ -3887,12 +3906,15 @@ int id tvTheatre_new 0x7f0902f1
 int id tvValue 0x7f0902f2
 int id tvValueTxt 0x7f0902f3
 int id tvresend 0x7f0902f4
+int id txtCity 0x7f090342
+int id txtHateToWait 0x7f09034a
 int id txtOtherCity 0x7f0902f5
 int id txtSelectedCity 0x7f0902f6
 int id txtSelectedLocation 0x7f0902f7
 int id txt_description 0x7f0902f8
 int id txt_email 0x7f0902f9
 int id txt_error 0x7f0902fa
+int id txt_item_header 0x7f09034b
 int id txt_password 0x7f0902fb
 int id txt_title 0x7f0902fc
 int id txt_username 0x7f0902fd
@@ -3940,6 +3962,7 @@ int id view6 0x7f090326
 int id view7 0x7f090327
 int id view8 0x7f090328
 int id view9 0x7f090329
+int id viewCity 0x7f090343
 int id viewPager 0x7f09032a
 int id view_offset_helper 0x7f09032b
 int id view_transition 0x7f09032c
@@ -3950,7 +3973,9 @@ int id visible 0x7f090330
 int id visible_removing_fragment_view_tag 0x7f090331
 int id vwL 0x7f090332
 int id vwMain 0x7f090333
+int id vwMain1s 0x7f09034c
 int id vwS 0x7f090334
+int id vwUnderline 0x7f090340
 int id webView 0x7f090335
 int id west 0x7f090336
 int id wishlist 0x7f090337
@@ -4106,6 +4131,7 @@ int layout gift_card_image_item 0x7f0c004a
 int layout gift_card_item 0x7f0c004b
 int layout internet_dialog 0x7f0c004c
 int layout item_coming_soon_filter 0x7f0c004d
+int layout item_pager 0x7f0c00af
 int layout layout_offer_item 0x7f0c004e
 int layout loyalty_paid_member 0x7f0c004f
 int layout m3_alert_dialog 0x7f0c0050
@@ -4273,6 +4299,7 @@ int string generic 0x7f11003c
 int string get_start 0x7f11003d
 int string get_started 0x7f11003e
 int string gift_cards 0x7f11003f
+int string hate_to_wait 0x7f1100ea
 int string hello_blank_fragment 0x7f110040
 int string hide_bottom_view_on_scroll_behavior 0x7f110041
 int string home 0x7f110042
@@ -4395,6 +4422,7 @@ int string private_screening 0x7f1100b6
 int string privilege 0x7f1100b7
 int string pvr_cares 0x7f1100b8
 int string pvr_magazine 0x7f1100b9
+int string quick_book 0x7f1100eb
 int string resend_otp 0x7f1100ba
 int string resend_text 0x7f1100bb
 int string scan_qr 0x7f1100bc
@@ -7246,6 +7274,11 @@ int styleable RecyclerView_layoutManager 8
 int styleable RecyclerView_reverseLayout 9
 int styleable RecyclerView_spanCount 10
 int styleable RecyclerView_stackFromEnd 11
+int[] styleable RecyclerViewPager { 0x7f030496, 0x7f030497, 0x7f030498, 0x7f030499 }
+int styleable RecyclerViewPager_svp_colorActiveIndicator 0
+int styleable RecyclerViewPager_svp_colorInactiveIndicator 1
+int styleable RecyclerViewPager_svp_runAuto 2
+int styleable RecyclerViewPager_svp_timeMillis 3
 int[] styleable ScrimInsetsFrameLayout { 0x7f03020d }
 int styleable ScrimInsetsFrameLayout_insetForeground 0
 int[] styleable ScrollingViewBehavior_Layout { 0x7f030064 }
