@@ -51,6 +51,8 @@
     <string name="ok" tools:ignore="Typos">Ok</string>
     <string name="pleasewait">Please Wait for this process.....</string>
     <string name="no">No</string>
+    <string name="enterOtp">Please Enter Your Otp</string>
+    <string name="mobileNotAvailable">No phone numbers found</string>
     //Home
     <string name="home">Home</string>
     <string name="cinema">Cinemas</string>

@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
         <activity
-            android:name=".PrivateScreeningsActivity"
+            android:name=".ui.privateScreenings.PrivateScreeningsActivity"
             android:exported="false" />
         <activity
             android:name=".ui.giftCard.GiftCardActivity"

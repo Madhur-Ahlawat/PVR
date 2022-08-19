@@ -52,8 +52,9 @@ class SplashActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             } else {
+                val intent = Intent(this@SplashActivity, HomeActivity::class.java)
 //                val intent = Intent(this@SplashActivity, LandingActivity::class.java)
-                val intent = Intent(this@SplashActivity, OtpVerifyActivity::class.java)
+//                val intent = Intent(this@SplashActivity, OtpVerifyActivity::class.java)
                 startActivity(intent)
                 finish()
             }
