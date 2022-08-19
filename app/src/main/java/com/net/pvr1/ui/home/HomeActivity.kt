@@ -1,6 +1,8 @@
 package com.net.pvr1.ui.home
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.LinearLayout
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -10,7 +12,9 @@ import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.home.fragment.*
 import com.net.pvr1.ui.home.fragment.cinema.CinemasFragment
 import com.net.pvr1.ui.home.fragment.commingSoon.ComingSoonFragment
+import com.net.pvr1.ui.home.fragment.home.HomeFragment
 import com.net.pvr1.ui.login.viewModel.LoginViewModel
+import com.net.pvr1.ui.selectCity.SelectCityActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,7 +31,15 @@ class HomeActivity : AppCompatActivity() {
         preferences = AppPreferences()
         switchFragment()
 
+        // Select City
+       val llLocation = findViewById<LinearLayout>(R.id.llLocation)
+        llLocation.setOnClickListener {
+            val intent = Intent(this, SelectCityActivity::class.java)
+            startActivity(intent)
+        }
+
     }
+
     private fun switchFragment() {
         val firstFragment = HomeFragment()
         val secondFragment = CinemasFragment()

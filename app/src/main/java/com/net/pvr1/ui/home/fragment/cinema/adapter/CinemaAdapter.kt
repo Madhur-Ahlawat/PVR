@@ -58,6 +58,7 @@ class CinemaAdapter(
         holder.direction.setOnClickListener {
             listener.onDirectionClick(cinemaItem)
         }
+
         //Kilometer
         holder.kiloMeter.setOnClickListener {
             location.onLocationClick(cinemaItem)

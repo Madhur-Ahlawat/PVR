@@ -5,10 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import com.net.pvr1.api.UserAPI
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
+import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
+import com.net.pvr1.ui.selectCity.response.SelectCityResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import org.json.JSONObject
@@ -16,6 +18,7 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(private val userAPI: UserAPI) {
+
 //Login
     private val _userResponseLiveData = MutableLiveData<NetworkResult<LoginResponse>>()
     val userResponseLiveData: LiveData<NetworkResult<LoginResponse>>
@@ -62,6 +65,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             otpVerifyLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
+
     //ComingSoon
     private val comingSoonLiveData = MutableLiveData<NetworkResult<CommingSoonResponse>>()
     val comingSoonResponseLiveData: LiveData<NetworkResult<CommingSoonResponse>>
@@ -178,12 +182,9 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     val offerResponseLiveData: LiveData<NetworkResult<OfferResponse>>
         get() = offerLiveData
 
-    suspend fun offer(
-        did: String,
-    ) {
+    suspend fun offer(did: String, ) {
         giftCardLiveData.postValue(NetworkResult.Loading())
-        val response =userAPI.offer(did, Constant.version,Constant.platform
-        )
+        val response =userAPI.offer(did, Constant.version,Constant.platform)
         offerResponse(response)
     }
 
@@ -199,5 +200,54 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             offerLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
+
+    // Select City
+    private val selectCityLiveData = MutableLiveData<NetworkResult<SelectCityResponse>>()
+    val citiesResponseLiveData: LiveData<NetworkResult<SelectCityResponse>>
+        get() = selectCityLiveData
+
+    suspend fun selectCity(lat: String,lng: String,userid: String,isSpi: String, srilanka: String) {
+        selectCityLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.selectCity(lat,lng,Constant.version,Constant.platform,userid,isSpi,srilanka)
+        selectCityResponse(response)
+    }
+
+    private fun selectCityResponse(response: Response<SelectCityResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            selectCityLiveData.postValue(NetworkResult.Success(response.body()!!))
+        }
+        else if(response.errorBody()!=null){
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            selectCityLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        }
+        else{
+            selectCityLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    // Home Data
+    private val homeLiveData = MutableLiveData<NetworkResult<HomeResponse>>()
+    val homeResponseLiveData: LiveData<NetworkResult<HomeResponse>>
+        get() = homeLiveData
+
+    suspend fun homeData(lat: String,lng: String,userid: String,isSpi: String, srilanka: String) {
+        selectCityLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.home(lat,lng,Constant.version,Constant.platform,userid,isSpi,srilanka)
+        homeResponse(response)
+    }
+
+    private fun homeResponse(response: Response<SelectCityResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            selectCityLiveData.postValue(NetworkResult.Success(response.body()!!))
+        }
+        else if(response.errorBody()!=null){
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            selectCityLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        }
+        else{
+            selectCityLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
 
 }

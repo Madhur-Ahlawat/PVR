@@ -117,6 +117,15 @@
     <string name="active_gift_cards">Active Gift Cards</string>
     <string name="generic">Generic</string>
     <string name="create_gift_card">Create Gift Card</string>
+    <string name="select_city">Select City</string>
+    <string name="search_city">Search City</string>
+    <string name="selected_location">Selected Location:</string>
+    <string name="other_cities">Other Cities</string>
+    <string name="hate_to_wait">Hate to wait?</string>
+    <string name="quick_book">Quick Book</string>
+    <string name="trailer_amp_music"><![CDATA[Trailer & Music]]></string>
+    <string name="trailers">Trailers</string>
+    <string name="music">Music</string>
 
 
 </resources>

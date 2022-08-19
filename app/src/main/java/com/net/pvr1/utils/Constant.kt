@@ -20,6 +20,7 @@ class Constant {
         const val merchandise = "https://pvr.macmerise.com/?user_agent=pvr"
 
         const val IS_LOGIN = "is_login"
+        const val CITY_NAME = "city_name"
         var DISPLAY = 1
     }
 

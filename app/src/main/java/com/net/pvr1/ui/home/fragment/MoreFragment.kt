@@ -20,8 +20,7 @@ class MoreFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = FragmentMoreBinding.inflate(inflater, container, false)
         return binding?.root
@@ -63,11 +62,13 @@ class MoreFragment : Fragment() {
             val intent = Intent(requireContext(), OfferActivity::class.java)
             startActivity(intent)
         }
+
         //GiftCard
         binding?.giftCardClick?.setOnClickListener {
             val intent = Intent(requireContext(), GiftCardActivity::class.java)
             startActivity(intent)
         }
+
         //Private Screen
         binding?.privateScreen?.setOnClickListener {
             val intent = Intent(requireContext(), PrivateScreeningsActivity::class.java)

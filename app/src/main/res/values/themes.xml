@@ -46,6 +46,7 @@
         <item name="android:textColor">@color/h5color</item>
 
     </style>
+
 //Font Style
     <style name="H1Size">
         <item name="typeface">helvetica_neu.otf</item>
