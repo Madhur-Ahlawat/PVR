@@ -14,6 +14,7 @@
     <color name="quick_bg">#F4E6C7</color>
     <color name="darkYellow">#D59932</color>
     <color name="textColor">#908E8E</color>
+    <color name="textColorGray">#7A7A7A</color>
 
 
     <color name="text_color_default">#303030</color>
@@ -63,19 +64,12 @@
     <color name="h5color">#FFCB05</color>
     <color name="h5.1color">#FFCB05</color>
 
-    <color name="h6color">#303030</color>
-    <color name="h7color">#303030</color>
     <color name="h8color">#494848</color>
     <color name="h9color">#77be06</color>
-    <color name="h10color">#303030</color>
-    <color name="h11color">#303030</color>
     <color name="h12color">#767373</color>
     <color name="h13color">#FFFFFF</color>
     <color name="h14color">#FFFFFF</color>
-    <color name="h15color">#303030</color>
-    <color name="h17color">#303030</color>
     <color name="h19.1">#dedede</color>
-    <color name="h18color">#303030</color>
     <color name="h8Point1Color">#6c6c6c</color>
     <color name="gray_light">#dddddd</color>
     <color name="filter_text_color">#818181</color>

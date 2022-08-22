@@ -23,6 +23,9 @@
         android:testOnly="true"
         android:theme="@style/NoActionBar" >
         <activity
+            android:name="com.net.pvr1.ui.player.PlayerActivity"
+            android:exported="false" />
+        <activity
             android:name="com.net.pvr1.ui.privateScreenings.PrivateScreeningsActivity"
             android:exported="false" />
         <activity

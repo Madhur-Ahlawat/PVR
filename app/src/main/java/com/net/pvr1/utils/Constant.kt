@@ -1,6 +1,7 @@
 package com.net.pvr1.utils
 
 import android.app.Activity
+import android.provider.ContactsContract.Directory.PACKAGE_NAME
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
@@ -18,10 +19,21 @@ class Constant {
         const val SUCCESS_CODE = 10001
         const val pvrCare = "https://www.pvrcinemas.com/pvrstatic/pvr-care/"
         const val merchandise = "https://pvr.macmerise.com/?user_agent=pvr"
+        var select_pos = 0
 
         const val IS_LOGIN = "is_login"
         const val CITY_NAME = "city_name"
         var DISPLAY = 1
+
+        const val SUCCESS_RESULT = 1
+        const val RECEVIER = "$PACKAGE_NAME.RECEVIER"
+        const val LOCATION_DATA_EXTRA = "$PACKAGE_NAME.LOCATION_DATA_EXTRA"
+        const val ADDRESS = "$PACKAGE_NAME.ADDRESS"
+        const val LOCAITY = "$PACKAGE_NAME.LOCAITY"
+        const val COUNTRY = "$PACKAGE_NAME.COUNTRY"
+        const val DISTRICT = "$PACKAGE_NAME.DISTRICT"
+        const val POST_CODE = "$PACKAGE_NAME.POST_CODE"
+        const val STATE = "$PACKAGE_NAME.STATE"
     }
 
 

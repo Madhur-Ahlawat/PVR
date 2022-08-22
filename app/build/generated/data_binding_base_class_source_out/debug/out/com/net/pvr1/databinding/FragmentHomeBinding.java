@@ -11,11 +11,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
+import androidx.viewpager2.widget.ViewPager2;
+import com.google.android.material.tabs.TabLayout;
 import com.net.pvr1.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
-import net.seifhadjhassen.recyclerviewpager.RecyclerViewPager;
 
 public final class FragmentHomeBinding implements ViewBinding {
   @NonNull
@@ -28,22 +29,25 @@ public final class FragmentHomeBinding implements ViewBinding {
   public final ConstraintLayout constraintTrailerMusic;
 
   @NonNull
-  public final RecyclerViewPager pagerSlider;
+  public final TabLayout promotionPosition;
 
   @NonNull
   public final ConstraintLayout quickBook;
 
   @NonNull
-  public final RecyclerView recyclerViewCategory;
+  public final RecyclerView recyclerCinemaCat;
 
   @NonNull
-  public final RecyclerView recyclerViewDetails;
+  public final RecyclerView recyclerMovies;
 
   @NonNull
-  public final RecyclerView recyclerViewMovies;
+  public final ViewPager2 recyclerPromotion;
 
   @NonNull
-  public final RecyclerView recyclerViewTrailerMusic;
+  public final RecyclerView recyclerTrailer;
+
+  @NonNull
+  public final RecyclerView recyclerViewSlider;
 
   @NonNull
   public final TextView txtHateToWait;
@@ -58,28 +62,38 @@ public final class FragmentHomeBinding implements ViewBinding {
   public final TextView txtTrailers;
 
   @NonNull
+  public final View view33;
+
+  @NonNull
+  public final View view34;
+
+  @NonNull
   public final View vwMain1s;
 
   private FragmentHomeBinding(@NonNull ConstraintLayout rootView, @NonNull TextView btnQuickBook,
-      @NonNull ConstraintLayout constraintTrailerMusic, @NonNull RecyclerViewPager pagerSlider,
-      @NonNull ConstraintLayout quickBook, @NonNull RecyclerView recyclerViewCategory,
-      @NonNull RecyclerView recyclerViewDetails, @NonNull RecyclerView recyclerViewMovies,
-      @NonNull RecyclerView recyclerViewTrailerMusic, @NonNull TextView txtHateToWait,
-      @NonNull TextView txtMusic, @NonNull TextView txtTrailerMusic, @NonNull TextView txtTrailers,
-      @NonNull View vwMain1s) {
+      @NonNull ConstraintLayout constraintTrailerMusic, @NonNull TabLayout promotionPosition,
+      @NonNull ConstraintLayout quickBook, @NonNull RecyclerView recyclerCinemaCat,
+      @NonNull RecyclerView recyclerMovies, @NonNull ViewPager2 recyclerPromotion,
+      @NonNull RecyclerView recyclerTrailer, @NonNull RecyclerView recyclerViewSlider,
+      @NonNull TextView txtHateToWait, @NonNull TextView txtMusic,
+      @NonNull TextView txtTrailerMusic, @NonNull TextView txtTrailers, @NonNull View view33,
+      @NonNull View view34, @NonNull View vwMain1s) {
     this.rootView = rootView;
     this.btnQuickBook = btnQuickBook;
     this.constraintTrailerMusic = constraintTrailerMusic;
-    this.pagerSlider = pagerSlider;
+    this.promotionPosition = promotionPosition;
     this.quickBook = quickBook;
-    this.recyclerViewCategory = recyclerViewCategory;
-    this.recyclerViewDetails = recyclerViewDetails;
-    this.recyclerViewMovies = recyclerViewMovies;
-    this.recyclerViewTrailerMusic = recyclerViewTrailerMusic;
+    this.recyclerCinemaCat = recyclerCinemaCat;
+    this.recyclerMovies = recyclerMovies;
+    this.recyclerPromotion = recyclerPromotion;
+    this.recyclerTrailer = recyclerTrailer;
+    this.recyclerViewSlider = recyclerViewSlider;
     this.txtHateToWait = txtHateToWait;
     this.txtMusic = txtMusic;
     this.txtTrailerMusic = txtTrailerMusic;
     this.txtTrailers = txtTrailers;
+    this.view33 = view33;
+    this.view34 = view34;
     this.vwMain1s = vwMain1s;
   }
 
@@ -122,9 +136,9 @@ public final class FragmentHomeBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.pagerSlider;
-      RecyclerViewPager pagerSlider = ViewBindings.findChildViewById(rootView, id);
-      if (pagerSlider == null) {
+      id = R.id.promotionPosition;
+      TabLayout promotionPosition = ViewBindings.findChildViewById(rootView, id);
+      if (promotionPosition == null) {
         break missingId;
       }
 
@@ -134,27 +148,33 @@ public final class FragmentHomeBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.recyclerViewCategory;
-      RecyclerView recyclerViewCategory = ViewBindings.findChildViewById(rootView, id);
-      if (recyclerViewCategory == null) {
+      id = R.id.recyclerCinemaCat;
+      RecyclerView recyclerCinemaCat = ViewBindings.findChildViewById(rootView, id);
+      if (recyclerCinemaCat == null) {
         break missingId;
       }
 
-      id = R.id.recyclerViewDetails;
-      RecyclerView recyclerViewDetails = ViewBindings.findChildViewById(rootView, id);
-      if (recyclerViewDetails == null) {
+      id = R.id.recyclerMovies;
+      RecyclerView recyclerMovies = ViewBindings.findChildViewById(rootView, id);
+      if (recyclerMovies == null) {
         break missingId;
       }
 
-      id = R.id.recyclerViewMovies;
-      RecyclerView recyclerViewMovies = ViewBindings.findChildViewById(rootView, id);
-      if (recyclerViewMovies == null) {
+      id = R.id.recyclerPromotion;
+      ViewPager2 recyclerPromotion = ViewBindings.findChildViewById(rootView, id);
+      if (recyclerPromotion == null) {
         break missingId;
       }
 
-      id = R.id.recyclerViewTrailerMusic;
-      RecyclerView recyclerViewTrailerMusic = ViewBindings.findChildViewById(rootView, id);
-      if (recyclerViewTrailerMusic == null) {
+      id = R.id.recyclerTrailer;
+      RecyclerView recyclerTrailer = ViewBindings.findChildViewById(rootView, id);
+      if (recyclerTrailer == null) {
+        break missingId;
+      }
+
+      id = R.id.recyclerViewSlider;
+      RecyclerView recyclerViewSlider = ViewBindings.findChildViewById(rootView, id);
+      if (recyclerViewSlider == null) {
         break missingId;
       }
 
@@ -182,6 +202,18 @@ public final class FragmentHomeBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.view33;
+      View view33 = ViewBindings.findChildViewById(rootView, id);
+      if (view33 == null) {
+        break missingId;
+      }
+
+      id = R.id.view34;
+      View view34 = ViewBindings.findChildViewById(rootView, id);
+      if (view34 == null) {
+        break missingId;
+      }
+
       id = R.id.vwMain1s;
       View vwMain1s = ViewBindings.findChildViewById(rootView, id);
       if (vwMain1s == null) {
@@ -189,9 +221,9 @@ public final class FragmentHomeBinding implements ViewBinding {
       }
 
       return new FragmentHomeBinding((ConstraintLayout) rootView, btnQuickBook,
-          constraintTrailerMusic, pagerSlider, quickBook, recyclerViewCategory, recyclerViewDetails,
-          recyclerViewMovies, recyclerViewTrailerMusic, txtHateToWait, txtMusic, txtTrailerMusic,
-          txtTrailers, vwMain1s);
+          constraintTrailerMusic, promotionPosition, quickBook, recyclerCinemaCat, recyclerMovies,
+          recyclerPromotion, recyclerTrailer, recyclerViewSlider, txtHateToWait, txtMusic,
+          txtTrailerMusic, txtTrailers, view33, view34, vwMain1s);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

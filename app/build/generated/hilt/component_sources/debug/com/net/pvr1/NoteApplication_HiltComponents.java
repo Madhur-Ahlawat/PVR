@@ -16,6 +16,8 @@ import com.net.pvr1.ui.offer.viewModel.OfferViewModel_HiltModules;
 import com.net.pvr1.ui.onBoarding.LandingActivity_GeneratedInjector;
 import com.net.pvr1.ui.otpVerify.OtpVerifyActivity_GeneratedInjector;
 import com.net.pvr1.ui.otpVerify.viewModel.OtpVerifyViewModel_HiltModules;
+import com.net.pvr1.ui.player.PlayerActivity_GeneratedInjector;
+import com.net.pvr1.ui.player.viewModel.PlayerViewModel_HiltModules;
 import com.net.pvr1.ui.privateScreenings.PrivateScreeningsActivity_GeneratedInjector;
 import com.net.pvr1.ui.privateScreenings.viewModel.PrivateScreenViewModel_HiltModules;
 import com.net.pvr1.ui.selectCity.SelectCityActivity_GeneratedInjector;
@@ -174,6 +176,7 @@ public final class NoteApplication_HiltComponents {
           ViewModelCBuilderModule.class,
           OfferViewModel_HiltModules.KeyModule.class,
           OtpVerifyViewModel_HiltModules.KeyModule.class,
+          PlayerViewModel_HiltModules.KeyModule.class,
           PrivateScreenViewModel_HiltModules.KeyModule.class,
           SelectCityViewModel_HiltModules.KeyModule.class,
           giftCardViewModel_HiltModules.KeyModule.class
@@ -205,6 +208,7 @@ public final class NoteApplication_HiltComponents {
       OfferActivity_GeneratedInjector,
       LandingActivity_GeneratedInjector,
       OtpVerifyActivity_GeneratedInjector,
+      PlayerActivity_GeneratedInjector,
       PrivateScreeningsActivity_GeneratedInjector,
       SelectCityActivity_GeneratedInjector,
       SplashActivity_GeneratedInjector,
@@ -231,6 +235,7 @@ public final class NoteApplication_HiltComponents {
           MyBookingViewModel_HiltModules.BindsModule.class,
           OfferViewModel_HiltModules.BindsModule.class,
           OtpVerifyViewModel_HiltModules.BindsModule.class,
+          PlayerViewModel_HiltModules.BindsModule.class,
           PrivateScreenViewModel_HiltModules.BindsModule.class,
           SelectCityViewModel_HiltModules.BindsModule.class,
           giftCardViewModel_HiltModules.BindsModule.class

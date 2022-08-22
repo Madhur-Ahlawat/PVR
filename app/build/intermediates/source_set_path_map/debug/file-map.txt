@@ -19,41 +19,44 @@ com.net.pvr1.app-lifecycle-livedata-2.5.0-rc02-17 C:\Users\Dell\.gradle\caches\t
 com.net.pvr1.app-navigation-common-2.4.2-18 C:\Users\Dell\.gradle\caches\transforms-3\4ad766f420e0b0d64bfb74de2a6ea024\transformed\navigation-common-2.4.2\res
 com.net.pvr1.app-jetified-lifecycle-viewmodel-ktx-2.5.0-rc02-19 C:\Users\Dell\.gradle\caches\transforms-3\4fe3cf45581a943faf22b8442400bffa\transformed\jetified-lifecycle-viewmodel-ktx-2.5.0-rc02\res
 com.net.pvr1.app-jetified-android-gif-drawable-1.2.23-20 C:\Users\Dell\.gradle\caches\transforms-3\56b34e76e205e2c8d4dc237c5137bc4f\transformed\jetified-android-gif-drawable-1.2.23\res
-com.net.pvr1.app-lifecycle-livedata-core-2.5.0-21 C:\Users\Dell\.gradle\caches\transforms-3\5bca7e2cbd810cd9cbdae72e44182700\transformed\lifecycle-livedata-core-2.5.0\res
-com.net.pvr1.app-navigation-common-ktx-2.4.2-22 C:\Users\Dell\.gradle\caches\transforms-3\702119dd6a24d1dd0328e10abff4240e\transformed\navigation-common-ktx-2.4.2\res
-com.net.pvr1.app-media-1.0.0-23 C:\Users\Dell\.gradle\caches\transforms-3\737656247fbbe5f0b97ada463bfc0ec8\transformed\media-1.0.0\res
-com.net.pvr1.app-drawerlayout-1.1.1-24 C:\Users\Dell\.gradle\caches\transforms-3\74ed5744724e066d9076794aef2ae794\transformed\drawerlayout-1.1.1\res
-com.net.pvr1.app-jetified-OTPView-0.2.2-25 C:\Users\Dell\.gradle\caches\transforms-3\79941d2c4714b807488178c42304d238\transformed\jetified-OTPView-0.2.2\res
-com.net.pvr1.app-material-1.6.1-26 C:\Users\Dell\.gradle\caches\transforms-3\7b06e149770546d3b10997fa2dccb508\transformed\material-1.6.1\res
-com.net.pvr1.app-core-1.8.0-27 C:\Users\Dell\.gradle\caches\transforms-3\7bd2710f3cd2352a26a987dfa5f37c38\transformed\core-1.8.0\res
-com.net.pvr1.app-coordinatorlayout-1.1.0-28 C:\Users\Dell\.gradle\caches\transforms-3\7fa6d141cd931795c2c312b05e905a8d\transformed\coordinatorlayout-1.1.0\res
-com.net.pvr1.app-jetified-fragment-ktx-1.4.1-29 C:\Users\Dell\.gradle\caches\transforms-3\817b901e3ca55e27d49ae2622df383c2\transformed\jetified-fragment-ktx-1.4.1\res
-com.net.pvr1.app-recyclerview-1.1.0-30 C:\Users\Dell\.gradle\caches\transforms-3\83026f4c05bc882374c56fababe021fe\transformed\recyclerview-1.1.0\res
-com.net.pvr1.app-lifecycle-viewmodel-2.5.0-31 C:\Users\Dell\.gradle\caches\transforms-3\88c0a7f9dbdb4ef68af54c70af4f535f\transformed\lifecycle-viewmodel-2.5.0\res
-com.net.pvr1.app-navigation-fragment-ktx-2.4.2-32 C:\Users\Dell\.gradle\caches\transforms-3\893d34c4abbe7689b2970be842ea3e99\transformed\navigation-fragment-ktx-2.4.2\res
-com.net.pvr1.app-jetified-appcompat-resources-1.5.0-33 C:\Users\Dell\.gradle\caches\transforms-3\8b4776e784bc4d6dd8a6b4a6426c106b\transformed\jetified-appcompat-resources-1.5.0\res
-com.net.pvr1.app-jetified-Android-SpinKit-1.4.0-34 C:\Users\Dell\.gradle\caches\transforms-3\912f1e50fb56f701ce64eb7ae3a66ed5\transformed\jetified-Android-SpinKit-1.4.0\res
-com.net.pvr1.app-jetified-window-1.0.0-35 C:\Users\Dell\.gradle\caches\transforms-3\915431bc5dbb173ffda8c4462a8baea8\transformed\jetified-window-1.0.0\res
-com.net.pvr1.app-navigation-ui-2.4.2-36 C:\Users\Dell\.gradle\caches\transforms-3\9257cda28cd5cbac6b6f84270322117d\transformed\navigation-ui-2.4.2\res
-com.net.pvr1.app-navigation-ui-ktx-2.4.2-37 C:\Users\Dell\.gradle\caches\transforms-3\a7ea3ce92028b137e9bd85176d9743c0\transformed\navigation-ui-ktx-2.4.2\res
-com.net.pvr1.app-jetified-glide-4.13.2-38 C:\Users\Dell\.gradle\caches\transforms-3\aae4a2fcb36decfb99b74a7a4f6643f1\transformed\jetified-glide-4.13.2\res
-com.net.pvr1.app-jetified-savedstate-1.2.0-39 C:\Users\Dell\.gradle\caches\transforms-3\ac3cee12f772493eae0e566db6ca9829\transformed\jetified-savedstate-1.2.0\res
-com.net.pvr1.app-jetified-emoji2-1.2.0-40 C:\Users\Dell\.gradle\caches\transforms-3\ac6fc974891da1fb95e40b019e0dbbc5\transformed\jetified-emoji2-1.2.0\res
-com.net.pvr1.app-navigation-runtime-2.4.2-41 C:\Users\Dell\.gradle\caches\transforms-3\ac852fc5a433957ee8c840e22ac711d8\transformed\navigation-runtime-2.4.2\res
-com.net.pvr1.app-jetified-play-services-base-18.1.0-42 C:\Users\Dell\.gradle\caches\transforms-3\afd6efc9df7debd4c3745ff5bb61667e\transformed\jetified-play-services-base-18.1.0\res
-com.net.pvr1.app-jetified-lifecycle-process-2.4.1-43 C:\Users\Dell\.gradle\caches\transforms-3\c78df3754a75d3d5f73ade5c498d6b03\transformed\jetified-lifecycle-process-2.4.1\res
-com.net.pvr1.app-jetified-activity-1.5.0-44 C:\Users\Dell\.gradle\caches\transforms-3\cd340e7ed2785d6541cfcf1ff1966edd\transformed\jetified-activity-1.5.0\res
-com.net.pvr1.app-jetified-annotation-experimental-1.1.0-45 C:\Users\Dell\.gradle\caches\transforms-3\cfa78040127fe2254a2c09b2bcd55d59\transformed\jetified-annotation-experimental-1.1.0\res
-com.net.pvr1.app-jetified-startup-runtime-1.1.1-46 C:\Users\Dell\.gradle\caches\transforms-3\dd6531523c90c30602b0b662cfe9cd90\transformed\jetified-startup-runtime-1.1.1\res
-com.net.pvr1.app-transition-1.4.1-47 C:\Users\Dell\.gradle\caches\transforms-3\e1a18380fa282117efa13b6fca23a67d\transformed\transition-1.4.1\res
-com.net.pvr1.app-sqlite-2.2.0-48 C:\Users\Dell\.gradle\caches\transforms-3\e61279e55e06d25e1a82a0befe3a3b8f\transformed\sqlite-2.2.0\res
-com.net.pvr1.app-slidingpanelayout-1.2.0-49 C:\Users\Dell\.gradle\caches\transforms-3\ec76e9f939bf62de20f86656beb0c8c8\transformed\slidingpanelayout-1.2.0\res
-com.net.pvr1.app-room-runtime-2.4.2-50 C:\Users\Dell\.gradle\caches\transforms-3\fc998960edd871b96a6ed7706cc441a8\transformed\room-runtime-2.4.2\res
-com.net.pvr1.app-pngs-51 D:\Wemonde Project\b2c-pvr-android\app\build\generated\res\pngs\debug
-com.net.pvr1.app-resValues-52 D:\Wemonde Project\b2c-pvr-android\app\build\generated\res\resValues\debug
-com.net.pvr1.app-rs-53 D:\Wemonde Project\b2c-pvr-android\app\build\generated\res\rs\debug
-com.net.pvr1.app-mergeDebugResources-54 D:\Wemonde Project\b2c-pvr-android\app\build\intermediates\incremental\debug\mergeDebugResources\merged.dir
-com.net.pvr1.app-mergeDebugResources-55 D:\Wemonde Project\b2c-pvr-android\app\build\intermediates\incremental\debug\mergeDebugResources\stripped.dir
-com.net.pvr1.app-merged_res-56 D:\Wemonde Project\b2c-pvr-android\app\build\intermediates\merged_res\debug
-com.net.pvr1.app-debug-57 D:\Wemonde Project\b2c-pvr-android\app\src\debug\res
-com.net.pvr1.app-main-58 D:\Wemonde Project\b2c-pvr-android\app\src\main\res
+com.net.pvr1.app-databinding-adapters-3.5.3-21 C:\Users\Dell\.gradle\caches\transforms-3\56f0b261bdb37e527f57a746410082b1\transformed\databinding-adapters-3.5.3\res
+com.net.pvr1.app-lifecycle-livedata-core-2.5.0-22 C:\Users\Dell\.gradle\caches\transforms-3\5bca7e2cbd810cd9cbdae72e44182700\transformed\lifecycle-livedata-core-2.5.0\res
+com.net.pvr1.app-navigation-common-ktx-2.4.2-23 C:\Users\Dell\.gradle\caches\transforms-3\702119dd6a24d1dd0328e10abff4240e\transformed\navigation-common-ktx-2.4.2\res
+com.net.pvr1.app-media-1.0.0-24 C:\Users\Dell\.gradle\caches\transforms-3\737656247fbbe5f0b97ada463bfc0ec8\transformed\media-1.0.0\res
+com.net.pvr1.app-drawerlayout-1.1.1-25 C:\Users\Dell\.gradle\caches\transforms-3\74ed5744724e066d9076794aef2ae794\transformed\drawerlayout-1.1.1\res
+com.net.pvr1.app-jetified-OTPView-0.2.2-26 C:\Users\Dell\.gradle\caches\transforms-3\79941d2c4714b807488178c42304d238\transformed\jetified-OTPView-0.2.2\res
+com.net.pvr1.app-material-1.6.1-27 C:\Users\Dell\.gradle\caches\transforms-3\7b06e149770546d3b10997fa2dccb508\transformed\material-1.6.1\res
+com.net.pvr1.app-core-1.8.0-28 C:\Users\Dell\.gradle\caches\transforms-3\7bd2710f3cd2352a26a987dfa5f37c38\transformed\core-1.8.0\res
+com.net.pvr1.app-coordinatorlayout-1.1.0-29 C:\Users\Dell\.gradle\caches\transforms-3\7fa6d141cd931795c2c312b05e905a8d\transformed\coordinatorlayout-1.1.0\res
+com.net.pvr1.app-jetified-fragment-ktx-1.4.1-30 C:\Users\Dell\.gradle\caches\transforms-3\817b901e3ca55e27d49ae2622df383c2\transformed\jetified-fragment-ktx-1.4.1\res
+com.net.pvr1.app-recyclerview-1.1.0-31 C:\Users\Dell\.gradle\caches\transforms-3\83026f4c05bc882374c56fababe021fe\transformed\recyclerview-1.1.0\res
+com.net.pvr1.app-lifecycle-viewmodel-2.5.0-32 C:\Users\Dell\.gradle\caches\transforms-3\88c0a7f9dbdb4ef68af54c70af4f535f\transformed\lifecycle-viewmodel-2.5.0\res
+com.net.pvr1.app-navigation-fragment-ktx-2.4.2-33 C:\Users\Dell\.gradle\caches\transforms-3\893d34c4abbe7689b2970be842ea3e99\transformed\navigation-fragment-ktx-2.4.2\res
+com.net.pvr1.app-jetified-appcompat-resources-1.5.0-34 C:\Users\Dell\.gradle\caches\transforms-3\8b4776e784bc4d6dd8a6b4a6426c106b\transformed\jetified-appcompat-resources-1.5.0\res
+com.net.pvr1.app-jetified-CardSlider-1.0.1-35 C:\Users\Dell\.gradle\caches\transforms-3\90ac42719fe302a8ca5c254031a83262\transformed\jetified-CardSlider-1.0.1\res
+com.net.pvr1.app-jetified-Android-SpinKit-1.4.0-36 C:\Users\Dell\.gradle\caches\transforms-3\912f1e50fb56f701ce64eb7ae3a66ed5\transformed\jetified-Android-SpinKit-1.4.0\res
+com.net.pvr1.app-jetified-window-1.0.0-37 C:\Users\Dell\.gradle\caches\transforms-3\915431bc5dbb173ffda8c4462a8baea8\transformed\jetified-window-1.0.0\res
+com.net.pvr1.app-navigation-ui-2.4.2-38 C:\Users\Dell\.gradle\caches\transforms-3\9257cda28cd5cbac6b6f84270322117d\transformed\navigation-ui-2.4.2\res
+com.net.pvr1.app-databinding-runtime-3.5.3-39 C:\Users\Dell\.gradle\caches\transforms-3\a203de73729ab8ab9d82a8d3a10aad3f\transformed\databinding-runtime-3.5.3\res
+com.net.pvr1.app-navigation-ui-ktx-2.4.2-40 C:\Users\Dell\.gradle\caches\transforms-3\a7ea3ce92028b137e9bd85176d9743c0\transformed\navigation-ui-ktx-2.4.2\res
+com.net.pvr1.app-jetified-glide-4.13.2-41 C:\Users\Dell\.gradle\caches\transforms-3\aae4a2fcb36decfb99b74a7a4f6643f1\transformed\jetified-glide-4.13.2\res
+com.net.pvr1.app-jetified-savedstate-1.2.0-42 C:\Users\Dell\.gradle\caches\transforms-3\ac3cee12f772493eae0e566db6ca9829\transformed\jetified-savedstate-1.2.0\res
+com.net.pvr1.app-jetified-emoji2-1.2.0-43 C:\Users\Dell\.gradle\caches\transforms-3\ac6fc974891da1fb95e40b019e0dbbc5\transformed\jetified-emoji2-1.2.0\res
+com.net.pvr1.app-navigation-runtime-2.4.2-44 C:\Users\Dell\.gradle\caches\transforms-3\ac852fc5a433957ee8c840e22ac711d8\transformed\navigation-runtime-2.4.2\res
+com.net.pvr1.app-jetified-play-services-base-18.1.0-45 C:\Users\Dell\.gradle\caches\transforms-3\afd6efc9df7debd4c3745ff5bb61667e\transformed\jetified-play-services-base-18.1.0\res
+com.net.pvr1.app-jetified-lifecycle-process-2.4.1-46 C:\Users\Dell\.gradle\caches\transforms-3\c78df3754a75d3d5f73ade5c498d6b03\transformed\jetified-lifecycle-process-2.4.1\res
+com.net.pvr1.app-jetified-activity-1.5.0-47 C:\Users\Dell\.gradle\caches\transforms-3\cd340e7ed2785d6541cfcf1ff1966edd\transformed\jetified-activity-1.5.0\res
+com.net.pvr1.app-jetified-annotation-experimental-1.1.0-48 C:\Users\Dell\.gradle\caches\transforms-3\cfa78040127fe2254a2c09b2bcd55d59\transformed\jetified-annotation-experimental-1.1.0\res
+com.net.pvr1.app-jetified-startup-runtime-1.1.1-49 C:\Users\Dell\.gradle\caches\transforms-3\dd6531523c90c30602b0b662cfe9cd90\transformed\jetified-startup-runtime-1.1.1\res
+com.net.pvr1.app-transition-1.4.1-50 C:\Users\Dell\.gradle\caches\transforms-3\e1a18380fa282117efa13b6fca23a67d\transformed\transition-1.4.1\res
+com.net.pvr1.app-sqlite-2.2.0-51 C:\Users\Dell\.gradle\caches\transforms-3\e61279e55e06d25e1a82a0befe3a3b8f\transformed\sqlite-2.2.0\res
+com.net.pvr1.app-slidingpanelayout-1.2.0-52 C:\Users\Dell\.gradle\caches\transforms-3\ec76e9f939bf62de20f86656beb0c8c8\transformed\slidingpanelayout-1.2.0\res
+com.net.pvr1.app-room-runtime-2.4.2-53 C:\Users\Dell\.gradle\caches\transforms-3\fc998960edd871b96a6ed7706cc441a8\transformed\room-runtime-2.4.2\res
+com.net.pvr1.app-pngs-54 D:\Wemonde Project\b2c-pvr-android\app\build\generated\res\pngs\debug
+com.net.pvr1.app-resValues-55 D:\Wemonde Project\b2c-pvr-android\app\build\generated\res\resValues\debug
+com.net.pvr1.app-rs-56 D:\Wemonde Project\b2c-pvr-android\app\build\generated\res\rs\debug
+com.net.pvr1.app-mergeDebugResources-57 D:\Wemonde Project\b2c-pvr-android\app\build\intermediates\incremental\debug\mergeDebugResources\merged.dir
+com.net.pvr1.app-mergeDebugResources-58 D:\Wemonde Project\b2c-pvr-android\app\build\intermediates\incremental\debug\mergeDebugResources\stripped.dir
+com.net.pvr1.app-merged_res-59 D:\Wemonde Project\b2c-pvr-android\app\build\intermediates\merged_res\debug
+com.net.pvr1.app-debug-60 D:\Wemonde Project\b2c-pvr-android\app\src\debug\res
+com.net.pvr1.app-main-61 D:\Wemonde Project\b2c-pvr-android\app\src\main\res

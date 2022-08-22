@@ -100,7 +100,7 @@ interface UserAPI {
         @Query("userid") userid: String,
         @Query("mobile") mobile: String,
         @Query("upbooking") upbooking : Boolean,
-        @Query("srilanka") srilanka: Boolean,
+        @Query("srilanka") srilanka: String,
         @Query("type") type: String,
         @Query("lng") lng: String,
         @Query("gener") gener: String,

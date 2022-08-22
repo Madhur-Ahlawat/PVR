@@ -35,6 +35,9 @@ import com.net.pvr1.ui.onBoarding.LandingActivity;
 import com.net.pvr1.ui.otpVerify.OtpVerifyActivity;
 import com.net.pvr1.ui.otpVerify.viewModel.OtpVerifyViewModel;
 import com.net.pvr1.ui.otpVerify.viewModel.OtpVerifyViewModel_HiltModules_KeyModule_ProvideFactory;
+import com.net.pvr1.ui.player.PlayerActivity;
+import com.net.pvr1.ui.player.viewModel.PlayerViewModel;
+import com.net.pvr1.ui.player.viewModel.PlayerViewModel_HiltModules_KeyModule_ProvideFactory;
 import com.net.pvr1.ui.privateScreenings.PrivateScreeningsActivity;
 import com.net.pvr1.ui.privateScreenings.viewModel.PrivateScreenViewModel;
 import com.net.pvr1.ui.privateScreenings.viewModel.PrivateScreenViewModel_HiltModules_KeyModule_ProvideFactory;
@@ -411,6 +414,10 @@ public final class DaggerNoteApplication_HiltComponents_SingletonC {
     }
 
     @Override
+    public void injectPlayerActivity(PlayerActivity playerActivity) {
+    }
+
+    @Override
     public void injectPrivateScreeningsActivity(
         PrivateScreeningsActivity privateScreeningsActivity) {
     }
@@ -434,7 +441,7 @@ public final class DaggerNoteApplication_HiltComponents_SingletonC {
 
     @Override
     public Set<String> getViewModelKeys() {
-      return SetBuilder.<String>newSetBuilder(11).add(CinemaViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ComingSoonViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(HomeViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(com.net.pvr1.ui.home.viewModel.HomeViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(LoginViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(MyBookingViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(OfferViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(OtpVerifyViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(PrivateScreenViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SelectCityViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(giftCardViewModel_HiltModules_KeyModule_ProvideFactory.provide()).build();
+      return SetBuilder.<String>newSetBuilder(12).add(CinemaViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ComingSoonViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(HomeViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(com.net.pvr1.ui.home.viewModel.HomeViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(LoginViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(MyBookingViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(OfferViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(OtpVerifyViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(PlayerViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(PrivateScreenViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SelectCityViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(giftCardViewModel_HiltModules_KeyModule_ProvideFactory.provide()).build();
     }
 
     @Override
@@ -476,6 +483,8 @@ public final class DaggerNoteApplication_HiltComponents_SingletonC {
 
     private Provider<OtpVerifyViewModel> otpVerifyViewModelProvider;
 
+    private Provider<PlayerViewModel> playerViewModelProvider;
+
     private Provider<PrivateScreenViewModel> privateScreenViewModelProvider;
 
     private Provider<SelectCityViewModel> selectCityViewModelProvider;
@@ -505,14 +514,15 @@ public final class DaggerNoteApplication_HiltComponents_SingletonC {
       this.myBookingViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 5);
       this.offerViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 6);
       this.otpVerifyViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 7);
-      this.privateScreenViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 8);
-      this.selectCityViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 9);
-      this.giftCardViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 10);
+      this.playerViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 8);
+      this.privateScreenViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 9);
+      this.selectCityViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 10);
+      this.giftCardViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 11);
     }
 
     @Override
     public Map<String, Provider<ViewModel>> getHiltViewModelMap() {
-      return MapBuilder.<String, Provider<ViewModel>>newMapBuilder(11).put("com.net.pvr1.ui.home.fragment.cinema.viewModel.CinemaViewModel", ((Provider) cinemaViewModelProvider)).put("com.net.pvr1.ui.home.fragment.commingSoon.viewModel.ComingSoonViewModel", ((Provider) comingSoonViewModelProvider)).put("com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel", ((Provider) homeViewModelProvider)).put("com.net.pvr1.ui.home.viewModel.HomeViewModel", ((Provider) homeViewModelProvider2)).put("com.net.pvr1.ui.login.viewModel.LoginViewModel", ((Provider) loginViewModelProvider)).put("com.net.pvr1.ui.myBookings.viewModel.MyBookingViewModel", ((Provider) myBookingViewModelProvider)).put("com.net.pvr1.ui.offer.viewModel.OfferViewModel", ((Provider) offerViewModelProvider)).put("com.net.pvr1.ui.otpVerify.viewModel.OtpVerifyViewModel", ((Provider) otpVerifyViewModelProvider)).put("com.net.pvr1.ui.privateScreenings.viewModel.PrivateScreenViewModel", ((Provider) privateScreenViewModelProvider)).put("com.net.pvr1.ui.selectCity.viewModel.SelectCityViewModel", ((Provider) selectCityViewModelProvider)).put("com.net.pvr1.ui.giftCard.viewModel.giftCardViewModel", ((Provider) giftCardViewModelProvider)).build();
+      return MapBuilder.<String, Provider<ViewModel>>newMapBuilder(12).put("com.net.pvr1.ui.home.fragment.cinema.viewModel.CinemaViewModel", ((Provider) cinemaViewModelProvider)).put("com.net.pvr1.ui.home.fragment.commingSoon.viewModel.ComingSoonViewModel", ((Provider) comingSoonViewModelProvider)).put("com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel", ((Provider) homeViewModelProvider)).put("com.net.pvr1.ui.home.viewModel.HomeViewModel", ((Provider) homeViewModelProvider2)).put("com.net.pvr1.ui.login.viewModel.LoginViewModel", ((Provider) loginViewModelProvider)).put("com.net.pvr1.ui.myBookings.viewModel.MyBookingViewModel", ((Provider) myBookingViewModelProvider)).put("com.net.pvr1.ui.offer.viewModel.OfferViewModel", ((Provider) offerViewModelProvider)).put("com.net.pvr1.ui.otpVerify.viewModel.OtpVerifyViewModel", ((Provider) otpVerifyViewModelProvider)).put("com.net.pvr1.ui.player.viewModel.PlayerViewModel", ((Provider) playerViewModelProvider)).put("com.net.pvr1.ui.privateScreenings.viewModel.PrivateScreenViewModel", ((Provider) privateScreenViewModelProvider)).put("com.net.pvr1.ui.selectCity.viewModel.SelectCityViewModel", ((Provider) selectCityViewModelProvider)).put("com.net.pvr1.ui.giftCard.viewModel.giftCardViewModel", ((Provider) giftCardViewModelProvider)).build();
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -560,13 +570,16 @@ public final class DaggerNoteApplication_HiltComponents_SingletonC {
           case 7: // com.net.pvr1.ui.otpVerify.viewModel.OtpVerifyViewModel 
           return (T) new OtpVerifyViewModel(viewModelCImpl.userRepository());
 
-          case 8: // com.net.pvr1.ui.privateScreenings.viewModel.PrivateScreenViewModel 
+          case 8: // com.net.pvr1.ui.player.viewModel.PlayerViewModel 
+          return (T) new PlayerViewModel(viewModelCImpl.userRepository());
+
+          case 9: // com.net.pvr1.ui.privateScreenings.viewModel.PrivateScreenViewModel 
           return (T) new PrivateScreenViewModel(viewModelCImpl.userRepository());
 
-          case 9: // com.net.pvr1.ui.selectCity.viewModel.SelectCityViewModel 
+          case 10: // com.net.pvr1.ui.selectCity.viewModel.SelectCityViewModel 
           return (T) new SelectCityViewModel(viewModelCImpl.userRepository());
 
-          case 10: // com.net.pvr1.ui.giftCard.viewModel.giftCardViewModel 
+          case 11: // com.net.pvr1.ui.giftCard.viewModel.giftCardViewModel 
           return (T) new giftCardViewModel(viewModelCImpl.userRepository());
 
           default: throw new AssertionError(id);

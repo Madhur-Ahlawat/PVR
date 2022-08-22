@@ -43,14 +43,19 @@
                     app:layout_constraintVertical_bias="0.0" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewCategory"
+                    android:id="@+id/recyclerCinemaCat"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_20dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="@+id/vwMain1s"
                     app:layout_constraintHorizontal_bias="0.448"
                     app:layout_constraintStart_toStartOf="@+id/vwMain1s"
-                    app:layout_constraintTop_toTopOf="@+id/vwMain1s" />
+                    app:layout_constraintTop_toTopOf="@+id/vwMain1s"
+                    tools:ignore="SpeakableTextPresentCheck"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_home_image" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/quickBook"
@@ -60,7 +65,7 @@
                     android:background="@drawable/bg_quick_book"
                     app:layout_constraintEnd_toEndOf="@+id/vwMain1s"
                     app:layout_constraintStart_toStartOf="@+id/vwMain1s"
-                    app:layout_constraintTop_toBottomOf="@+id/recyclerViewCategory">
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerCinemaCat">
 
                     <TextView
                         android:id="@+id/txtHateToWait"
@@ -92,35 +97,55 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewDetails"
+                    android:id="@+id/recyclerViewSlider"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    app:layout_constraintEnd_toEndOf="@+id/vwMain1s"
-                    app:layout_constraintStart_toStartOf="@+id/vwMain1s"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_home_slider"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/quickBook" />
 
-                <androidx.viewpager.widget.ViewPager
-                    android:id="@+id/pagerSlider"
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/recyclerPromotion"
                     android:layout_width="match_parent"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
                     android:layout_height="@dimen/dimen_60dp"
                     android:layout_marginTop="@dimen/dimen_20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/recyclerViewDetails"
-                    app:svp_colorActiveIndicator="@color/colorPrimary"
-                    app:svp_colorInactiveIndicator="@color/gray"
-                    app:svp_runAuto="true"
-                    app:svp_timeMillis="3000" />
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerViewSlider" />
+
+
+                <com.google.android.material.tabs.TabLayout
+                    android:visibility="gone"
+                    android:id="@+id/promotionPosition"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerPromotion"
+                    app:tabBackground="@drawable/indicator_selector"
+                    app:tabGravity="center"
+                    app:tabIndicatorHeight="0dp"/>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewMovies"
+                    android:id="@+id/recyclerMovies"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_home_cinema_list"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="2"
                     app:layout_constraintEnd_toEndOf="@+id/vwMain1s"
                     app:layout_constraintStart_toStartOf="@+id/vwMain1s"
-                    app:layout_constraintTop_toBottomOf="@+id/pagerSlider" />
+                    app:layout_constraintTop_toBottomOf="@+id/promotionPosition" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintTrailerMusic"
@@ -131,7 +156,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/vwMain1s"
-                    app:layout_constraintTop_toBottomOf="@+id/recyclerViewMovies">
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerMovies">
 
                     <TextView
                         android:id="@+id/txtTrailerMusic"
@@ -155,8 +180,10 @@
                         android:drawablePadding="@dimen/dimen_8dp"
                         android:gravity="center_vertical"
                         android:paddingStart="@dimen/dimen_50dp"
+                        android:fontFamily="@font/sf_pro_text_bold"
+                        android:textColor="@color/black"
                         android:text="@string/trailers"
-                        android:textSize="@dimen/dimen_16sp"
+                        android:textSize="@dimen/dimen_12sp"
                         app:drawableStartCompat="@drawable/ic_delete"
                         app:layout_constraintEnd_toStartOf="@+id/txtMusic"
                         app:layout_constraintStart_toStartOf="parent"
@@ -170,9 +197,11 @@
                         android:layout_marginEnd="@dimen/dimen_20dp"
                         android:drawablePadding="@dimen/dimen_8dp"
                         android:gravity="center_vertical"
+                        android:fontFamily="@font/sf_pro_text_bold"
+                        android:textColor="@color/textColorGray"
                         android:paddingStart="@dimen/dimen_50dp"
                         android:text="@string/music"
-                        android:textSize="@dimen/dimen_16sp"
+                        android:textSize="@dimen/dimen_12sp"
                         app:drawableStartCompat="@drawable/ic_delete"
                         app:layout_constraintBottom_toBottomOf="@+id/txtTrailers"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -181,21 +210,48 @@
                         tools:ignore="RtlSymmetry" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerViewTrailerMusic"
+                        android:id="@+id/recyclerTrailer"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="@dimen/dimen_12dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtTrailers"
+                        tools:itemCount="3"
+                        tools:listitem="@layout/item_home_trailer" />
+
+                    <View
+                        android:id="@+id/view33"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@color/gray"
+                        app:layout_constraintBottom_toTopOf="@+id/recyclerTrailer"
+                        app:layout_constraintEnd_toEndOf="@+id/txtTrailers"
+                        app:layout_constraintStart_toStartOf="@+id/txtTrailers"
                         app:layout_constraintTop_toBottomOf="@+id/txtTrailers" />
+
+                    <View
+                        android:id="@+id/view34"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@color/yellow"
+                        app:layout_constraintBottom_toTopOf="@+id/recyclerTrailer"
+                        app:layout_constraintEnd_toEndOf="@+id/txtMusic"
+                        app:layout_constraintStart_toEndOf="@+id/txtTrailers"
+                        app:layout_constraintTop_toBottomOf="@+id/txtMusic" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.core.widget.NestedScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

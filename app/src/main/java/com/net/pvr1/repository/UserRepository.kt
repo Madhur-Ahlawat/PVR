@@ -230,24 +230,35 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     val homeResponseLiveData: LiveData<NetworkResult<HomeResponse>>
         get() = homeLiveData
 
-    suspend fun homeData(lat: String,lng: String,userid: String,isSpi: String, srilanka: String) {
+    suspend fun homeData(
+        city: String,
+        dtmsource: String,
+        userid: String,
+        mobile: String,
+        upbooking: Boolean,
+        srilanka: String,
+        type: String,
+        lng: String,
+        gener: String,
+        spShow: String,
+        isSpi: String
+    ) {
         selectCityLiveData.postValue(NetworkResult.Loading())
-        val response = userAPI.home(lat,lng,Constant.version,Constant.platform,userid,isSpi,srilanka)
+        val response = userAPI.home(city,Constant.version,Constant.platform,dtmsource,userid,mobile,
+        upbooking,srilanka,type,lng,gener,spShow,isSpi)
         homeResponse(response)
     }
 
-    private fun homeResponse(response: Response<SelectCityResponse>) {
+    private fun homeResponse(response: Response<HomeResponse>) {
         if (response.isSuccessful && response.body() != null) {
-            selectCityLiveData.postValue(NetworkResult.Success(response.body()!!))
+            homeLiveData.postValue(NetworkResult.Success(response.body()!!))
         }
         else if(response.errorBody()!=null){
             val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
-            selectCityLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            homeLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         }
         else{
-            selectCityLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+            homeLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
-
-
 }
