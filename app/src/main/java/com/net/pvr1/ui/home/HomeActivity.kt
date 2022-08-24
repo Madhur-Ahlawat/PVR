@@ -14,6 +14,7 @@ import com.net.pvr1.ui.home.fragment.cinema.CinemasFragment
 import com.net.pvr1.ui.home.fragment.commingSoon.ComingSoonFragment
 import com.net.pvr1.ui.home.fragment.home.HomeFragment
 import com.net.pvr1.ui.login.viewModel.LoginViewModel
+import com.net.pvr1.ui.searchHome.SearchHomeActivity
 import com.net.pvr1.ui.selectCity.SelectCityActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,7 +38,16 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this, SelectCityActivity::class.java)
             startActivity(intent)
         }
+        movedNext()
+    }
 
+    //ClickMovedNext
+    private fun movedNext() {
+        binding?.include?.searchBtn?.setOnClickListener {
+            val intent = Intent(this@HomeActivity, SearchHomeActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun switchFragment() {

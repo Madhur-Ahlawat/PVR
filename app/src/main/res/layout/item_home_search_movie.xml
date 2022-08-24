@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingStart="@dimen/dimen_20dp"
+    android:paddingTop="@dimen/dimen_20dp"
+    android:paddingEnd="@dimen/dimen_20dp"
+    android:paddingBottom="@dimen/padding_10">
+
+
+    <ImageView
+        android:id="@+id/imageView25"
+        android:layout_width="@dimen/dimen_55dp"
+        android:layout_height="78dp"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:src="@color/placeholder_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription,ImageContrastCheck" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/view37"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView25"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView47"
+            style="@style/H12Size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="center_vertical"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_16sp"
+            tools:text="Pvr Gurgaon" />
+
+        <TextView
+            android:id="@+id/textView48"
+            style="@style/H1Size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="center_vertical"
+            android:textAllCaps="false"
+            android:textColor="#6B6B6B"
+            android:textSize="@dimen/dimen_14sp"
+            tools:text="Pvr Gurgaon" />
+
+        <TextView
+            android:id="@+id/textView49"
+            style="@style/H1Size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="center_vertical"
+            android:textAllCaps="false"
+            android:textColor="#6B6B6B"
+            android:textSize="@dimen/dimen_14sp"
+            tools:text="Pvr Gurgaon" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view37"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="8dp"
+        android:background="#e6e6e6"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView25"
+        tools:layout_editor_absoluteX="20dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

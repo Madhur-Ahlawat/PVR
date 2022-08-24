@@ -1,5 +1,13 @@
 [
     {
+        "merged": "com.net.pvr1.app-mergeDebugResources-58:/layout/activity_search_home.xml",
+        "source": "com.net.pvr1.app-main-61:/layout/activity_search_home.xml"
+    },
+    {
+        "merged": "com.net.pvr1.app-mergeDebugResources-58:/layout/item_home_search_movie.xml",
+        "source": "com.net.pvr1.app-main-61:/layout/item_home_search_movie.xml"
+    },
+    {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-58:\\layout\\onboarding_layout_one.xml",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\onboarding_layout_one.xml"
     },
@@ -10,6 +18,10 @@
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-58:\\layout\\onboarding_layout_four.xml",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\onboarding_layout_four.xml"
+    },
+    {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-58:\\layout\\item_home_search_movie.xml",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\item_home_search_movie.xml"
     },
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-58:\\layout\\activity_offer.xml",
@@ -26,6 +38,10 @@
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-58:\\layout\\fragment_more.xml",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\fragment_more.xml"
+    },
+    {
+        "merged": "com.net.pvr1.app-mergeDebugResources-58:/layout/item_home_search_cinema.xml",
+        "source": "com.net.pvr1.app-main-61:/layout/item_home_search_cinema.xml"
     },
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-58:\\layout\\item_home_slider.xml",
@@ -84,6 +100,10 @@
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\cinema_item.xml"
     },
     {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-58:\\layout\\activity_search_home.xml",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\activity_search_home.xml"
+    },
+    {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-58:\\layout\\fragment_coming_soon.xml",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\fragment_coming_soon.xml"
     },
@@ -132,6 +152,10 @@
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\activity_my_booking.xml"
     },
     {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-58:\\layout\\item_search_cinema.xml",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\item_search_cinema.xml"
+    },
+    {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-58:\\layout\\fragment_register.xml",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\fragment_register.xml"
     },
@@ -172,12 +196,12 @@
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\activity_splash.xml"
     },
     {
-        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-58:\\layout\\layout_offer_item.xml",
-        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\layout_offer_item.xml"
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-58:\\layout\\activity_enable_location.xml",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\activity_enable_location.xml"
     },
     {
-        "merged": "com.net.pvr1.app-mergeDebugResources-58:/layout/fragment_home.xml",
-        "source": "com.net.pvr1.app-main-61:/layout/fragment_home.xml"
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-58:\\layout\\layout_offer_item.xml",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\layout_offer_item.xml"
     },
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-58:\\layout\\loyalty_paid_member.xml",
@@ -210,6 +234,10 @@
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-58:\\layout\\fragment_main.xml",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\fragment_main.xml"
+    },
+    {
+        "merged": "com.net.pvr1.app-mergeDebugResources-58:/layout/activity_my_booking.xml",
+        "source": "com.net.pvr1.app-main-61:/layout/activity_my_booking.xml"
     },
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-mergeDebugResources-58:\\layout\\activity_select_city.xml",

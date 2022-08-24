@@ -29,6 +29,23 @@ public final class Constant {
     @org.jetbrains.annotations.NotNull()
     public static final java.lang.String CITY_NAME = "city_name";
     private static int DISPLAY = 1;
+    public static final int SUCCESS_RESULT = 1;
+    @org.jetbrains.annotations.NotNull()
+    public static final java.lang.String RECEVIER = "packageName.RECEVIER";
+    @org.jetbrains.annotations.NotNull()
+    public static final java.lang.String LOCATION_DATA_EXTRA = "packageName.LOCATION_DATA_EXTRA";
+    @org.jetbrains.annotations.NotNull()
+    public static final java.lang.String ADDRESS = "packageName.ADDRESS";
+    @org.jetbrains.annotations.NotNull()
+    public static final java.lang.String LOCAITY = "packageName.LOCAITY";
+    @org.jetbrains.annotations.NotNull()
+    public static final java.lang.String COUNTRY = "packageName.COUNTRY";
+    @org.jetbrains.annotations.NotNull()
+    public static final java.lang.String DISTRICT = "packageName.DISTRICT";
+    @org.jetbrains.annotations.NotNull()
+    public static final java.lang.String POST_CODE = "packageName.POST_CODE";
+    @org.jetbrains.annotations.NotNull()
+    public static final java.lang.String STATE = "packageName.STATE";
     
     public Constant() {
         super();
@@ -40,7 +57,7 @@ public final class Constant {
     android.widget.TextView tvCensorLang) {
     }
     
-    @kotlin.Metadata(mv = {1, 7, 1}, k = 1, d1 = {"\u0000\u001a\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0002\b\u0002\n\u0002\u0010\u000e\n\u0000\n\u0002\u0010\b\n\u0002\b\u000f\b\u0086\u0003\u0018\u00002\u00020\u0001B\u0007\b\u0002\u00a2\u0006\u0002\u0010\u0002R\u000e\u0010\u0003\u001a\u00020\u0004X\u0086T\u00a2\u0006\u0002\n\u0000R\u001a\u0010\u0005\u001a\u00020\u0006X\u0086\u000e\u00a2\u0006\u000e\n\u0000\u001a\u0004\b\u0007\u0010\b\"\u0004\b\t\u0010\nR\u000e\u0010\u000b\u001a\u00020\u0004X\u0086T\u00a2\u0006\u0002\n\u0000R\u000e\u0010\f\u001a\u00020\u0006X\u0086T\u00a2\u0006\u0002\n\u0000R\u000e\u0010\r\u001a\u00020\u0004X\u0086T\u00a2\u0006\u0002\n\u0000R\u000e\u0010\u000e\u001a\u00020\u0004X\u0086T\u00a2\u0006\u0002\n\u0000R\u000e\u0010\u000f\u001a\u00020\u0004X\u0086T\u00a2\u0006\u0002\n\u0000R\u001a\u0010\u0010\u001a\u00020\u0006X\u0086\u000e\u00a2\u0006\u000e\n\u0000\u001a\u0004\b\u0011\u0010\b\"\u0004\b\u0012\u0010\nR\u000e\u0010\u0013\u001a\u00020\u0004X\u0086T\u00a2\u0006\u0002\n\u0000R\u000e\u0010\u0014\u001a\u00020\u0004X\u0086T\u00a2\u0006\u0002\n\u0000\u00a8\u0006\u0015"}, d2 = {"Lcom/net/pvr1/utils/Constant$Companion;", "", "()V", "CITY_NAME", "", "DISPLAY", "", "getDISPLAY", "()I", "setDISPLAY", "(I)V", "IS_LOGIN", "SUCCESS_CODE", "merchandise", "platform", "pvrCare", "select_pos", "getSelect_pos", "setSelect_pos", "status", "version", "app_debug"})
+    @kotlin.Metadata(mv = {1, 7, 1}, k = 1, d1 = {"\u0000\u001c\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0002\b\u0002\n\u0002\u0010\u000e\n\u0002\b\u0003\n\u0002\u0010\b\n\u0002\b\u0016\b\u0086\u0003\u0018\u00002\u00020\u0001B\u0007\b\u0002\u00a2\u0006\u0002\u0010\u0002R\u000e\u0010\u0003\u001a\u00020\u0004X\u0086T\u00a2\u0006\u0002\n\u0000R\u000e\u0010\u0005\u001a\u00020\u0004X\u0086T\u00a2\u0006\u0002\n\u0000R\u000e\u0010\u0006\u001a\u00020\u0004X\u0086T\u00a2\u0006\u0002\n\u0000R\u001a\u0010\u0007\u001a\u00020\bX\u0086\u000e\u00a2\u0006\u000e\n\u0000\u001a\u0004\b\t\u0010\n\"\u0004\b\u000b\u0010\fR\u000e\u0010\r\u001a\u00020\u0004X\u0086T\u00a2\u0006\u0002\n\u0000R\u000e\u0010\u000e\u001a\u00020\u0004X\u0086T\u00a2\u0006\u0002\n\u0000R\u000e\u0010\u000f\u001a\u00020\u0004X\u0086T\u00a2\u0006\u0002\n\u0000R\u000e\u0010\u0010\u001a\u00020\u0004X\u0086T\u00a2\u0006\u0002\n\u0000R\u000e\u0010\u0011\u001a\u00020\u0004X\u0086T\u00a2\u0006\u0002\n\u0000R\u000e\u0010\u0012\u001a\u00020\u0004X\u0086T\u00a2\u0006\u0002\n\u0000R\u000e\u0010\u0013\u001a\u00020\u0004X\u0086T\u00a2\u0006\u0002\n\u0000R\u000e\u0010\u0014\u001a\u00020\bX\u0086T\u00a2\u0006\u0002\n\u0000R\u000e\u0010\u0015\u001a\u00020\bX\u0086T\u00a2\u0006\u0002\n\u0000R\u000e\u0010\u0016\u001a\u00020\u0004X\u0086T\u00a2\u0006\u0002\n\u0000R\u000e\u0010\u0017\u001a\u00020\u0004X\u0086T\u00a2\u0006\u0002\n\u0000R\u000e\u0010\u0018\u001a\u00020\u0004X\u0086T\u00a2\u0006\u0002\n\u0000R\u001a\u0010\u0019\u001a\u00020\bX\u0086\u000e\u00a2\u0006\u000e\n\u0000\u001a\u0004\b\u001a\u0010\n\"\u0004\b\u001b\u0010\fR\u000e\u0010\u001c\u001a\u00020\u0004X\u0086T\u00a2\u0006\u0002\n\u0000R\u000e\u0010\u001d\u001a\u00020\u0004X\u0086T\u00a2\u0006\u0002\n\u0000\u00a8\u0006\u001e"}, d2 = {"Lcom/net/pvr1/utils/Constant$Companion;", "", "()V", "ADDRESS", "", "CITY_NAME", "COUNTRY", "DISPLAY", "", "getDISPLAY", "()I", "setDISPLAY", "(I)V", "DISTRICT", "IS_LOGIN", "LOCAITY", "LOCATION_DATA_EXTRA", "POST_CODE", "RECEVIER", "STATE", "SUCCESS_CODE", "SUCCESS_RESULT", "merchandise", "platform", "pvrCare", "select_pos", "getSelect_pos", "setSelect_pos", "status", "version", "app_debug"})
     public static final class Companion {
         
         private Companion() {

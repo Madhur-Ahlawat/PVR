@@ -1,6 +1,8 @@
 package com.net.pvr1;
 
 import com.net.pvr1.di.NetworkModule;
+import com.net.pvr1.ui.enableLocation.EnableLocationActivity_GeneratedInjector;
+import com.net.pvr1.ui.enableLocation.viewModel.EnableLocationViewModel_HiltModules;
 import com.net.pvr1.ui.giftCard.GiftCardActivity_GeneratedInjector;
 import com.net.pvr1.ui.giftCard.viewModel.giftCardViewModel_HiltModules;
 import com.net.pvr1.ui.home.HomeActivity_GeneratedInjector;
@@ -20,6 +22,8 @@ import com.net.pvr1.ui.player.PlayerActivity_GeneratedInjector;
 import com.net.pvr1.ui.player.viewModel.PlayerViewModel_HiltModules;
 import com.net.pvr1.ui.privateScreenings.PrivateScreeningsActivity_GeneratedInjector;
 import com.net.pvr1.ui.privateScreenings.viewModel.PrivateScreenViewModel_HiltModules;
+import com.net.pvr1.ui.searchHome.SearchHomeActivity_GeneratedInjector;
+import com.net.pvr1.ui.searchHome.viewModel.HomeSearchViewModel_HiltModules;
 import com.net.pvr1.ui.selectCity.SelectCityActivity_GeneratedInjector;
 import com.net.pvr1.ui.selectCity.viewModel.SelectCityViewModel_HiltModules;
 import com.net.pvr1.ui.splash.SplashActivity_GeneratedInjector;
@@ -167,7 +171,9 @@ public final class NoteApplication_HiltComponents {
       modules = {
           CinemaViewModel_HiltModules.KeyModule.class,
           ComingSoonViewModel_HiltModules.KeyModule.class,
+          EnableLocationViewModel_HiltModules.KeyModule.class,
           HiltWrapper_ActivityRetainedComponentManager_LifecycleModule.class,
+          HomeSearchViewModel_HiltModules.KeyModule.class,
           HomeViewModel_HiltModules.KeyModule.class,
           com.net.pvr1.ui.home.viewModel.HomeViewModel_HiltModules.KeyModule.class,
           LoginViewModel_HiltModules.KeyModule.class,
@@ -201,7 +207,8 @@ public final class NoteApplication_HiltComponents {
       }
   )
   @ActivityScoped
-  public abstract static class ActivityC implements GiftCardActivity_GeneratedInjector,
+  public abstract static class ActivityC implements EnableLocationActivity_GeneratedInjector,
+      GiftCardActivity_GeneratedInjector,
       HomeActivity_GeneratedInjector,
       LoginActivity_GeneratedInjector,
       MyBookingsActivity_GeneratedInjector,
@@ -210,6 +217,7 @@ public final class NoteApplication_HiltComponents {
       OtpVerifyActivity_GeneratedInjector,
       PlayerActivity_GeneratedInjector,
       PrivateScreeningsActivity_GeneratedInjector,
+      SearchHomeActivity_GeneratedInjector,
       SelectCityActivity_GeneratedInjector,
       SplashActivity_GeneratedInjector,
       WebViewActivity_GeneratedInjector,
@@ -228,7 +236,9 @@ public final class NoteApplication_HiltComponents {
       modules = {
           CinemaViewModel_HiltModules.BindsModule.class,
           ComingSoonViewModel_HiltModules.BindsModule.class,
+          EnableLocationViewModel_HiltModules.BindsModule.class,
           HiltWrapper_HiltViewModelFactory_ViewModelModule.class,
+          HomeSearchViewModel_HiltModules.BindsModule.class,
           HomeViewModel_HiltModules.BindsModule.class,
           com.net.pvr1.ui.home.viewModel.HomeViewModel_HiltModules.BindsModule.class,
           LoginViewModel_HiltModules.BindsModule.class,

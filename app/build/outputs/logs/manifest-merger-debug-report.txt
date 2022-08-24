@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:2:1-60:12
-INJECTED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:2:1-60:12
-INJECTED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:2:1-60:12
-INJECTED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:2:1-60:12
+ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:2:1-70:12
+INJECTED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:2:1-70:12
+INJECTED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:2:1-70:12
+INJECTED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:2:1-70:12
 MERGED from [androidx.databinding:viewbinding:7.2.2] C:\Users\Dell\.gradle\caches\transforms-3\2325d371b5a9bd7b4819d026c91e9fa5\transformed\jetified-viewbinding-7.2.2\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.navigation:navigation-fragment-ktx:2.4.2] C:\Users\Dell\.gradle\caches\transforms-3\893d34c4abbe7689b2970be842ea3e99\transformed\navigation-fragment-ktx-2.4.2\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.navigation:navigation-fragment:2.4.2] C:\Users\Dell\.gradle\caches\transforms-3\32e8325d8bd9b6d321af781a5bf6a1c9\transformed\navigation-fragment-2.4.2\AndroidManifest.xml:17:1-24:12
@@ -29,6 +29,7 @@ MERGED from [com.github.bumptech.glide:glide:4.13.2] C:\Users\Dell\.gradle\cache
 MERGED from [com.google.android.gms:play-services-auth:20.2.0] C:\Users\Dell\.gradle\caches\transforms-3\16537b0fe9ed33bffe2592abb6df4001\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:17:1-40:12
 MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.1] C:\Users\Dell\.gradle\caches\transforms-3\fa7d3b6f05564050dbf9726b78109549\transformed\jetified-play-services-auth-api-phone-18.0.1\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.gms:play-services-identity:18.0.1] C:\Users\Dell\.gradle\caches\transforms-3\9e517261bb7712926a8701fcfb5f4651\transformed\jetified-play-services-identity-18.0.1\AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.gms:play-services-location:20.0.0] C:\Users\Dell\.gradle\caches\transforms-3\bb32ddd06ba6e0b244ffa2630acf0974\transformed\jetified-play-services-location-20.0.0\AndroidManifest.xml:2:1-9:12
 MERGED from [com.google.android.gms:play-services-auth-base:18.0.1] C:\Users\Dell\.gradle\caches\transforms-3\2190f33f8a84dc061b8fe1fb54a0fdd6\transformed\jetified-play-services-auth-base-18.0.1\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\Dell\.gradle\caches\transforms-3\afd6efc9df7debd4c3745ff5bb61667e\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:16:1-24:12
 MERGED from [androidx.viewpager2:viewpager2:1.0.0] C:\Users\Dell\.gradle\caches\transforms-3\24d0e5fdcba0f424882018d5b218ade1\transformed\jetified-viewpager2-1.0.0\AndroidManifest.xml:17:1-24:12
@@ -90,33 +91,41 @@ MERGED from [androidx.arch.core:core-runtime:2.1.0] C:\Users\Dell\.gradle\caches
 MERGED from [androidx.annotation:annotation-experimental:1.1.0] C:\Users\Dell\.gradle\caches\transforms-3\cfa78040127fe2254a2c09b2bcd55d59\transformed\jetified-annotation-experimental-1.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.dagger:dagger-lint-aar:2.42] C:\Users\Dell\.gradle\caches\transforms-3\d457626f9afb60c5e9e849a07c54d60a\transformed\jetified-dagger-lint-aar-2.42\AndroidManifest.xml:16:1-19:12
 MERGED from [pl.droidsonroids.relinker:relinker:1.4.1] C:\Users\Dell\.gradle\caches\transforms-3\92104778bd28920d785c671197698903\transformed\jetified-relinker-1.4.1\AndroidManifest.xml:2:1-7:12
-INJECTED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:2:1-60:12
-INJECTED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:2:1-60:12
-INJECTED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:2:1-60:12
+INJECTED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:2:1-70:12
+INJECTED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:2:1-70:12
+INJECTED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:2:1-70:12
 	package
 		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:3:5-27
 		INJECTED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml
 		INJECTED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:2:1-60:12
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:2:1-70:12
 		INJECTED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:2:1-60:12
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:2:1-70:12
 		INJECTED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:2:11-69
-uses-permission#android.permission.INTERNET
-ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:5:5-67
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:5:5-81
 	android:name
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:5:22-64
-uses-permission#android.permission.ACCESS_NETWORK_STATE
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:5:22-78
+uses-permission#android.permission.ACCESS_FINE_LOCATION
 ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:6:5-79
 	android:name
 		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:6:22-76
+uses-permission#android.permission.INTERNET
+ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:7:5-67
+	android:name
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:7:22-64
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:8:5-79
+	android:name
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:8:22-76
 application
-ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:8:5-58:19
+ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:10:5-68:19
 MERGED from [com.google.android.material:material:1.6.1] C:\Users\Dell\.gradle\caches\transforms-3\7b06e149770546d3b10997fa2dccb508\transformed\material-1.6.1\AndroidManifest.xml:24:5-20
 MERGED from [com.google.android.material:material:1.6.1] C:\Users\Dell\.gradle\caches\transforms-3\7b06e149770546d3b10997fa2dccb508\transformed\material-1.6.1\AndroidManifest.xml:24:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\Dell\.gradle\caches\transforms-3\1a0feb0bbb7687518237ce3f90a5e8f6\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
@@ -127,6 +136,8 @@ MERGED from [com.google.android.gms:play-services-auth:20.2.0] C:\Users\Dell\.gr
 MERGED from [com.google.android.gms:play-services-auth:20.2.0] C:\Users\Dell\.gradle\caches\transforms-3\16537b0fe9ed33bffe2592abb6df4001\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:22:5-38:19
 MERGED from [com.google.android.gms:play-services-identity:18.0.1] C:\Users\Dell\.gradle\caches\transforms-3\9e517261bb7712926a8701fcfb5f4651\transformed\jetified-play-services-identity-18.0.1\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.gms:play-services-identity:18.0.1] C:\Users\Dell\.gradle\caches\transforms-3\9e517261bb7712926a8701fcfb5f4651\transformed\jetified-play-services-identity-18.0.1\AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-location:20.0.0] C:\Users\Dell\.gradle\caches\transforms-3\bb32ddd06ba6e0b244ffa2630acf0974\transformed\jetified-play-services-location-20.0.0\AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-location:20.0.0] C:\Users\Dell\.gradle\caches\transforms-3\bb32ddd06ba6e0b244ffa2630acf0974\transformed\jetified-play-services-location-20.0.0\AndroidManifest.xml:7:5-20
 MERGED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\Dell\.gradle\caches\transforms-3\afd6efc9df7debd4c3745ff5bb61667e\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:19:5-23:19
 MERGED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\Dell\.gradle\caches\transforms-3\afd6efc9df7debd4c3745ff5bb61667e\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:19:5-23:19
 MERGED from [com.google.android.gms:play-services-tasks:18.0.2] C:\Users\Dell\.gradle\caches\transforms-3\e9398000e3d2725ef33e0511633033b2\transformed\jetified-play-services-tasks-18.0.2\AndroidManifest.xml:5:5-20
@@ -152,101 +163,117 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\De
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.8.0] C:\Users\Dell\.gradle\caches\transforms-3\7bd2710f3cd2352a26a987dfa5f37c38\transformed\core-1.8.0\AndroidManifest.xml:24:18-86
 	android:supportsRtl
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:14:9-35
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:16:9-35
 	android:label
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:12:9-41
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:14:9-41
 	android:roundIcon
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:13:9-54
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:15:9-54
 	android:icon
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:11:9-43
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:13:9-43
 	android:allowBackup
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:10:9-35
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:12:9-35
 	android:theme
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:15:9-43
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:17:9-43
 	android:name
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:9:9-52
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:11:9-52
+activity#com.net.pvr1.ui.searchHome.SearchHomeActivity
+ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:18:9-20:40
+	android:exported
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:20:13-37
+	android:name
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:19:13-61
+activity#com.net.pvr1.ui.enableLocation.EnableLocationActivity
+ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:21:9-23:40
+	android:exported
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:23:13-37
+	android:name
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:22:13-69
 activity#com.net.pvr1.ui.player.PlayerActivity
-ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:16:9-18:40
+ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:24:9-26:40
 	android:exported
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:18:13-37
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:26:13-37
 	android:name
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:17:13-53
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:25:13-53
 activity#com.net.pvr1.ui.privateScreenings.PrivateScreeningsActivity
-ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:19:9-21:40
+ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:27:9-29:40
 	android:exported
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:21:13-37
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:29:13-37
 	android:name
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:20:13-75
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:28:13-75
 activity#com.net.pvr1.ui.giftCard.GiftCardActivity
-ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:22:9-24:40
+ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:30:9-32:40
 	android:exported
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:24:13-37
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:32:13-37
 	android:name
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:23:13-57
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:31:13-57
 activity#com.net.pvr1.ui.offer.OfferActivity
-ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:25:9-27:40
+ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:33:9-35:40
 	android:exported
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:27:13-37
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:35:13-37
 	android:name
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:26:13-51
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:34:13-51
 activity#com.net.pvr1.ui.webView.WebViewActivity
-ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:28:9-30:40
+ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:36:9-38:40
 	android:exported
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:30:13-37
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:38:13-37
 	android:name
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:29:13-55
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:37:13-55
 activity#com.net.pvr1.ui.myBookings.MyBookingsActivity
-ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:31:9-33:40
+ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:39:9-41:40
 	android:exported
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:33:13-37
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:41:13-37
 	android:name
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:32:13-61
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:40:13-61
 activity#com.net.pvr1.ui.otpVerify.OtpVerifyActivity
-ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:34:9-36:40
+ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:42:9-44:40
 	android:exported
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:36:13-37
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:44:13-37
 	android:name
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:35:13-59
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:43:13-59
 activity#com.net.pvr1.ui.login.LoginActivity
-ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:37:9-39:40
+ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:45:9-47:40
 	android:exported
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:39:13-37
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:47:13-37
 	android:name
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:38:13-51
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:46:13-51
 activity#com.net.pvr1.ui.resister.RegistrationActivity
-ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:40:9-42:40
+ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:48:9-50:40
 	android:exported
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:42:13-37
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:50:13-37
 	android:name
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:41:13-61
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:49:13-61
 activity#com.net.pvr1.ui.onBoarding.LandingActivity
-ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:43:9-45:40
+ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:51:9-53:40
 	android:exported
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:45:13-37
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:53:13-37
 	android:name
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:44:13-58
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:52:13-58
 activity#com.net.pvr1.ui.splash.SplashActivity
-ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:46:9-54:20
+ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:54:9-62:20
 	android:exported
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:48:13-36
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:56:13-36
 	android:name
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:47:13-65
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:55:13-65
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:49:13-53:29
+ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:57:13-61:29
 action#android.intent.action.MAIN
-ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:50:17-69
+ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:58:17-69
 	android:name
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:50:25-66
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:58:25-66
 category#android.intent.category.LAUNCHER
-ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:52:17-77
+ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:60:17-77
 	android:name
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:52:27-74
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:60:27-74
 activity#com.net.pvr1.ui.home.HomeActivity
-ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:55:9-57:40
+ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:63:9-65:40
 	android:exported
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:57:13-37
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:65:13-37
 	android:name
-		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:56:13-49
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:64:13-49
+service#com.net.pvr1.utils.FetchAddressIntentServices
+ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:67:9-69
+	android:name
+		ADDED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:67:18-66
 uses-sdk
 INJECTED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml
@@ -301,6 +328,8 @@ MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.1] C:\User
 MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.1] C:\Users\Dell\.gradle\caches\transforms-3\fa7d3b6f05564050dbf9726b78109549\transformed\jetified-play-services-auth-api-phone-18.0.1\AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-identity:18.0.1] C:\Users\Dell\.gradle\caches\transforms-3\9e517261bb7712926a8701fcfb5f4651\transformed\jetified-play-services-identity-18.0.1\AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-identity:18.0.1] C:\Users\Dell\.gradle\caches\transforms-3\9e517261bb7712926a8701fcfb5f4651\transformed\jetified-play-services-identity-18.0.1\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-location:20.0.0] C:\Users\Dell\.gradle\caches\transforms-3\bb32ddd06ba6e0b244ffa2630acf0974\transformed\jetified-play-services-location-20.0.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-location:20.0.0] C:\Users\Dell\.gradle\caches\transforms-3\bb32ddd06ba6e0b244ffa2630acf0974\transformed\jetified-play-services-location-20.0.0\AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-auth-base:18.0.1] C:\Users\Dell\.gradle\caches\transforms-3\2190f33f8a84dc061b8fe1fb54a0fdd6\transformed\jetified-play-services-auth-base-18.0.1\AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-auth-base:18.0.1] C:\Users\Dell\.gradle\caches\transforms-3\2190f33f8a84dc061b8fe1fb54a0fdd6\transformed\jetified-play-services-auth-base-18.0.1\AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\Dell\.gradle\caches\transforms-3\afd6efc9df7debd4c3745ff5bb61667e\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:18:5-43

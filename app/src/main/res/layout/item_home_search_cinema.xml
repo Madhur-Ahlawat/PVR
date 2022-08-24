@@ -20,10 +20,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <TextView
-            android:id="@+id/title"
-            style="@style/H12point1Style"
+            android:id="@+id/textView50"
+            style="@style/H12Size"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -42,32 +41,32 @@
             tools:text="Pvr Gurgaon" />
 
         <TextView
-            android:id="@+id/address"
-            style="@style/H11Style"
+            android:id="@+id/textView51"
+            style="@style/H1RegSize"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/title"
+            android:layout_below="@+id/textView50"
             android:layout_marginStart="@dimen/dimen_3dp"
             android:layout_marginTop="@dimen/dimen_5dp"
             android:gravity="top"
-            android:text="Pvr Gurgaonggfggffg"
             android:textAllCaps="false"
             android:textColor="#6B6B6B"
-            android:textSize="@dimen/dimen_14dp"
-            app:layout_constraintEnd_toEndOf="@+id/title"
+            android:textSize="@dimen/dimen_14sp"
+            app:layout_constraintEnd_toEndOf="@+id/textView50"
             app:layout_constraintStart_toEndOf="@+id/imageView4"
-            app:layout_constraintTop_toBottomOf="@+id/title" />
+            app:layout_constraintTop_toBottomOf="@+id/textView50"
+            tools:text="Pvr" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/address"
+            android:layout_below="@+id/textView51"
             android:layout_gravity="bottom"
             android:layout_marginTop="@dimen/padding_10"
             android:background="#e6e6e6"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/address" />
+            app:layout_constraintTop_toBottomOf="@+id/textView51" />
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -76,20 +75,21 @@
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="UseCompoundDrawables">
 
             <TextView
-                android:id="@+id/textView5"
-                style="@style/H12point1Style"
+                android:id="@+id/textView52"
+                style="@style/H12Size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="16dp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/dimen_14sp"
-                app:layout_constraintBottom_toBottomOf="@+id/address"
+                app:layout_constraintBottom_toBottomOf="@+id/textView51"
                 app:layout_constraintEnd_toStartOf="@+id/direction"
-                app:layout_constraintTop_toTopOf="@+id/address"
+                app:layout_constraintTop_toTopOf="@+id/textView51"
                 tools:text="1.8 km" />
 
             <ImageView
@@ -108,7 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding_10"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintTop_toBottomOf="@+id/textView50"
             app:srcCompat="@drawable/ic_vector_loc"
             tools:ignore="ContentDescription" />
     </androidx.constraintlayout.widget.ConstraintLayout>

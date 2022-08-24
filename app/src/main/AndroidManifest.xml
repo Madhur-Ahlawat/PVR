@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
         <activity
-            android:name=".SearchHomeActivity"
+            android:name=".ui.searchHome.SearchHomeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.enableLocation.EnableLocationActivity"

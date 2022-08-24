@@ -12,20 +12,20 @@
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\splash_back.png"
     },
     {
-        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\layout_activity_otp_verify.xml.flat",
-        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\activity_otp_verify.xml"
-    },
-    {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\font_sf_pro_text_light.otf.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\font\\sf_pro_text_light.otf"
     },
     {
-        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_theatre_like_selector.xml.flat",
-        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\theatre_like_selector.xml"
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\layout_activity_otp_verify.xml.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\activity_otp_verify.xml"
     },
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable-mdpi_ic_launcher_foreground.png.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-54:\\drawable-mdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_theatre_like_selector.xml.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\theatre_like_selector.xml"
     },
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable-xxxhdpi_ic_yellow.png.flat",
@@ -44,10 +44,6 @@
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\item_coming_soon_filter.xml"
     },
     {
-        "merged": "com.net.pvr1.app-merged_res-59:/layout_fragment_home.xml.flat",
-        "source": "com.net.pvr1.app-main-61:/layout/fragment_home.xml"
-    },
-    {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\mipmap-xxxhdpi\\ic_launcher_round.png"
     },
@@ -60,12 +56,12 @@
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\whatsapp_more.png"
     },
     {
-        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable-mdpi_food_ticket.png.flat",
-        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-54:\\drawable-mdpi\\food_ticket.png"
-    },
-    {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable-ldpi_search.png.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-54:\\drawable-ldpi\\search.png"
+    },
+    {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable-mdpi_food_ticket.png.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-54:\\drawable-mdpi\\food_ticket.png"
     },
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_selected_dot.xml.flat",
@@ -84,16 +80,20 @@
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\font\\sf_pro_text_medium.otf"
     },
     {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_tab_button2_color.xml.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\tab_button2_color.xml"
+    },
+    {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\layout_activity_my_booking.xml.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\activity_my_booking.xml"
     },
     {
-        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_privilege_home_back_check.webp.flat",
-        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\privilege_home_back_check.webp"
-    },
-    {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_yellow_button_selector.xml.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\yellow_button_selector.xml"
+    },
+    {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_privilege_home_back_check.webp.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\privilege_home_back_check.webp"
     },
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\mipmap-hdpi_ic_launcher_round.png.flat",
@@ -104,12 +104,16 @@
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-54:\\drawable-xxhdpi\\back.png"
     },
     {
-        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable-ldpi_ic_launcher_foreground.png.flat",
-        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-54:\\drawable-ldpi\\ic_launcher_foreground.png"
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\layout_item_home_search_movie.xml.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\item_home_search_movie.xml"
     },
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_non_loyalty_member_home.webp.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\non_loyalty_member_home.webp"
+    },
+    {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable-ldpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-54:\\drawable-ldpi\\ic_launcher_foreground.png"
     },
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable-ldpi_ic_checkek_box_unchecked.png.flat",
@@ -124,12 +128,12 @@
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\indicator_selector.xml"
     },
     {
-        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable-xxhdpi_ic_launcher_foreground.png.flat",
-        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-54:\\drawable-xxhdpi\\ic_launcher_foreground.png"
-    },
-    {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable-xxxhdpi_food_ticket.png.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-54:\\drawable-xxxhdpi\\food_ticket.png"
+    },
+    {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-54:\\drawable-xxhdpi\\ic_launcher_foreground.png"
     },
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\layout_fragment_register.xml.flat",
@@ -140,20 +144,24 @@
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-54:\\drawable-anydpi-v24\\search.xml"
     },
     {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_white_round_shape.xml.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\white_round_shape.xml"
+    },
+    {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\mipmap-mdpi_ic_launcher.png.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\mipmap-mdpi\\ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\mipmap-xxhdpi_ic_launcher_foreground.png.flat",
-        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\mipmap-xxhdpi\\ic_launcher_foreground.png"
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\layout_loyalty_paid_member.xml.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\loyalty_paid_member.xml"
     },
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_splash_icon.png.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\splash_icon.png"
     },
     {
-        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\layout_loyalty_paid_member.xml.flat",
-        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\loyalty_paid_member.xml"
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\mipmap-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\mipmap-xxhdpi\\ic_launcher_foreground.png"
     },
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_offer_shadow.xml.flat",
@@ -300,8 +308,16 @@
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\ic_delete.xml"
     },
     {
+        "merged": "com.net.pvr1.app-merged_res-59:/layout_activity_my_booking.xml.flat",
+        "source": "com.net.pvr1.app-main-61:/layout/activity_my_booking.xml"
+    },
+    {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable-hdpi_search.png.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-54:\\drawable-hdpi\\search.png"
+    },
+    {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_enable_location.webp.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\enable_location.webp"
     },
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_img.png.flat",
@@ -512,6 +528,10 @@
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\item_home_prmotion.xml"
     },
     {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_ic_vector_loc.xml.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\ic_vector_loc.xml"
+    },
+    {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\layout_cinema_item.xml.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\cinema_item.xml"
     },
@@ -608,6 +628,10 @@
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\item_home_image.xml"
     },
     {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\layout_activity_search_home.xml.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\activity_search_home.xml"
+    },
+    {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_tab_selector.xml.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\tab_selector.xml"
     },
@@ -642,6 +666,10 @@
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_top_curve.xml.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\top_curve.xml"
+    },
+    {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_img_2.png.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\img_2.png"
     },
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_ic_food_icon.png.flat",
@@ -682,6 +710,10 @@
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable-xhdpi_ic_qr_code_group.png.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-54:\\drawable-xhdpi\\ic_qr_code_group.png"
+    },
+    {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_tab_parrent.xml.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\tab_parrent.xml"
     },
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_icon_settings.xml.flat",
@@ -756,6 +788,10 @@
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\magazine_more.png"
     },
     {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_tab_button_color.xml.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\tab_button_color.xml"
+    },
+    {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable-hdpi_ic_launcher_foreground.png.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-54:\\drawable-hdpi\\ic_launcher_foreground.png"
     },
@@ -774,6 +810,14 @@
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable-xhdpi_ic_direction_new.png.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-54:\\drawable-xhdpi\\ic_direction_new.png"
+    },
+    {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_ic_vector_direction.xml.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\ic_vector_direction.xml"
+    },
+    {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_cross_search.png.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\cross_search.png"
     },
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\font_helvetica_neu_bold.ttf.flat",
@@ -816,6 +860,10 @@
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\rounded_textview.xml"
     },
     {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\layout_activity_enable_location.xml.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\activity_enable_location.xml"
+    },
+    {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\layout_ticket_food_food_item.xml.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\ticket_food_food_item.xml"
     },
@@ -852,8 +900,16 @@
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-54:\\drawable-mdpi\\ic_yellow.png"
     },
     {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_img_1.png.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\img_1.png"
+    },
+    {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_more_grey.png.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\more_grey.png"
+    },
+    {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_tab_text_color.xml.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\tab_text_color.xml"
     },
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_ic_vector_call.xml.flat",
@@ -936,6 +992,10 @@
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\common_toolbar.xml"
     },
     {
+        "merged": "com.net.pvr1.app-merged_res-59:/layout_item_home_search_cinema.xml.flat",
+        "source": "com.net.pvr1.app-main-61:/layout/item_home_search_cinema.xml"
+    },
+    {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\layout_activity_landing.xml.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\activity_landing.xml"
     },
@@ -950,6 +1010,10 @@
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_ic_parking.png.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\ic_parking.png"
+    },
+    {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_searchn.png.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\searchn.png"
     },
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable-xxxhdpi_ic_un_favourite_theatre.png.flat",
@@ -996,6 +1060,10 @@
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\gift_card_image_placeholder.png"
     },
     {
+        "merged": "com.net.pvr1.app-merged_res-59:/layout_item_home_search_movie.xml.flat",
+        "source": "com.net.pvr1.app-main-61:/layout/item_home_search_movie.xml"
+    },
+    {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable-xxxhdpi_ic_launcher_foreground.png.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-54:\\drawable-xxxhdpi\\ic_launcher_foreground.png"
     },
@@ -1024,8 +1092,16 @@
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-54:\\drawable-mdpi\\ic_un_favourite_theatre.png"
     },
     {
+        "merged": "com.net.pvr1.app-merged_res-59:/layout_activity_search_home.xml.flat",
+        "source": "com.net.pvr1.app-main-61:/layout/activity_search_home.xml"
+    },
+    {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable-xhdpi_ic_launcher_foreground.png.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-pngs-54:\\drawable-xhdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\layout_item_search_cinema.xml.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\layout\\item_search_cinema.xml"
     },
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\font_sf_pro_text_heavy.otf.flat",
@@ -1094,5 +1170,9 @@
     {
         "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_top_shadow.png.flat",
         "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\top_shadow.png"
+    },
+    {
+        "merged": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-merged_res-59:\\drawable_round_corner_search.xml.flat",
+        "source": "C:\\Users\\Dell\\.gradle\\daemon\\7.3.3\\com.net.pvr1.app-main-61:\\drawable\\round_corner_search.xml"
     }
 ]

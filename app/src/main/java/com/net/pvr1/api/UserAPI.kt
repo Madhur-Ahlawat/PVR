@@ -7,6 +7,7 @@ import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
+import com.net.pvr1.ui.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.selectCity.response.SelectCityResponse
 import retrofit2.Response
 import retrofit2.http.POST
@@ -107,5 +108,16 @@ interface UserAPI {
         @Query("spShow") spShow: String,
         @Query("isSpi") isSpi: String,
     ): Response<HomeResponse>
+
+   @POST("content/search")
+    suspend fun homeSearch(
+       @Query("city")city: String,
+       @Query("text") text: String,
+       @Query("searchFilter") searchFilter: String,
+       @Query("lat")  lat: String,
+       @Query("lng") lng: String,
+       @Query("av") version: String,
+       @Query("pt") platform: String
+   ): Response<HomeSearchResponse>
 
 }

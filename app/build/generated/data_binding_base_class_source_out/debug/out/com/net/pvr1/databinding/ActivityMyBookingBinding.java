@@ -37,7 +37,7 @@ public final class ActivityMyBookingBinding implements ViewBinding {
   public final TextView textView4;
 
   @NonNull
-  public final TextView textView5;
+  public final TextView textView52;
 
   @NonNull
   public final ConstraintLayout ticketFood;
@@ -60,7 +60,7 @@ public final class ActivityMyBookingBinding implements ViewBinding {
   private ActivityMyBookingBinding(@NonNull ConstraintLayout rootView,
       @NonNull ConstraintLayout giftCard, @NonNull CommonToolbarBinding include2,
       @NonNull LinearLayout linearLayout, @NonNull RecyclerView recyclerMyBooking,
-      @NonNull TextView textView4, @NonNull TextView textView5,
+      @NonNull TextView textView4, @NonNull TextView textView52,
       @NonNull ConstraintLayout ticketFood, @NonNull View view14, @NonNull View view15,
       @NonNull View view16, @NonNull View view17, @NonNull View view18) {
     this.rootView = rootView;
@@ -69,7 +69,7 @@ public final class ActivityMyBookingBinding implements ViewBinding {
     this.linearLayout = linearLayout;
     this.recyclerMyBooking = recyclerMyBooking;
     this.textView4 = textView4;
-    this.textView5 = textView5;
+    this.textView52 = textView52;
     this.ticketFood = ticketFood;
     this.view14 = view14;
     this.view15 = view15;
@@ -136,9 +136,9 @@ public final class ActivityMyBookingBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.textView5;
-      TextView textView5 = ViewBindings.findChildViewById(rootView, id);
-      if (textView5 == null) {
+      id = R.id.textView52;
+      TextView textView52 = ViewBindings.findChildViewById(rootView, id);
+      if (textView52 == null) {
         break missingId;
       }
 
@@ -179,8 +179,8 @@ public final class ActivityMyBookingBinding implements ViewBinding {
       }
 
       return new ActivityMyBookingBinding((ConstraintLayout) rootView, giftCard, binding_include2,
-          linearLayout, recyclerMyBooking, textView4, textView5, ticketFood, view14, view15, view16,
-          view17, view18);
+          linearLayout, recyclerMyBooking, textView4, textView52, ticketFood, view14, view15,
+          view16, view17, view18);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

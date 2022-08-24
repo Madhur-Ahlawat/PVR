@@ -8,6 +8,8 @@
         android:minSdkVersion="21"
         android:targetSdkVersion="32" />
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -22,6 +24,12 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/NoActionBar" >
+        <activity
+            android:name="com.net.pvr1.ui.searchHome.SearchHomeActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.net.pvr1.ui.enableLocation.EnableLocationActivity"
+            android:exported="false" />
         <activity
             android:name="com.net.pvr1.ui.player.PlayerActivity"
             android:exported="false" />
@@ -64,6 +72,9 @@
         <activity
             android:name="com.net.pvr1.ui.home.HomeActivity"
             android:exported="false" />
+
+        <service android:name="com.net.pvr1.utils.FetchAddressIntentServices" />
+
         <activity
             android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
             android:excludeFromRecents="true"

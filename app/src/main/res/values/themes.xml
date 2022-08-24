@@ -54,6 +54,18 @@
         <item name="android:textColor">@color/black</item>
 
     </style>
+    <style name="H1RegSize">
+        <item name="typeface">helvetica_neu_reg.ttf</item>
+        <item name="android:textSize">@dimen/dim_h11</item>
+        <item name="android:textColor">@color/h1color</item>
+
+    </style>
+    <style name="H12Size">
+        <item name="typeface">helvetica_neu_medium.ttf</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/white</item>
+
+    </style>
 
     <style name="H2SizeDark">
         <item name="typeface">helvetica_neu.otf</item>
@@ -65,27 +77,27 @@
     <style name="H3Size">
         <item name="typeface">helvetica_neu_reg.otf</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/h11color</item>
+        <item name="android:textColor">@color/h1color</item>
 
     </style>
 
     <style name="H3SizeBold">
         <item name="typeface">helvetica_neu_reg.otf</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/h11color</item>
+        <item name="android:textColor">@color/h1color</item>
 
     </style>
 
     <style name="H4SizeBold">
         <item name="typeface">helvetica_neu_bold.otf</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/h6color</item>
+        <item name="android:textColor">@color/h1color</item>
     </style>
 
     <style name="H4SizeRegular">
         <item name="typeface">helvetica_neu_reg.ttf</item>
         <item name="android:textSize">@dimen/dimen_20sp</item>
-        <item name="android:textColor">@color/h6color</item>
+        <item name="android:textColor">@color/h1color</item>
 
     </style>
     <style name="H5tSize">

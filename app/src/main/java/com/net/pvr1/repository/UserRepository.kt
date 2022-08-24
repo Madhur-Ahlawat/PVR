@@ -10,6 +10,7 @@ import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
+import com.net.pvr1.ui.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.selectCity.response.SelectCityResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
@@ -259,6 +260,36 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
         else{
             homeLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    //Search
+    private val homeSearchLiveData = MutableLiveData<NetworkResult<HomeSearchResponse>>()
+    val searchResponseLiveData: LiveData<NetworkResult<HomeSearchResponse>>
+        get() = homeSearchLiveData
+
+    suspend fun homeSearchData(
+        city: String,
+        text: String,
+        searchFilter: String,
+        lat: String,
+        lng: String
+    ) {
+        homeSearchLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.homeSearch(city,text,searchFilter,lat,lng,Constant.version,Constant.platform)
+        homeSearchResponse(response)
+    }
+
+    private fun homeSearchResponse(response: Response<HomeSearchResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            homeSearchLiveData.postValue(NetworkResult.Success(response.body()!!))
+        }
+        else if(response.errorBody()!=null){
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            homeSearchLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        }
+        else{
+            homeSearchLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 }
