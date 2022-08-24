@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.searchHome.response
+package com.net.pvr1.ui.search.searchHome.response
 
 import java.io.Serializable
 

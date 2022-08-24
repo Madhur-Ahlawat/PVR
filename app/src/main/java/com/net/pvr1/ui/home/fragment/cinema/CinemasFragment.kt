@@ -1,9 +1,11 @@
 package com.net.pvr1.ui.home.fragment.cinema
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -12,13 +14,16 @@ import com.net.pvr1.databinding.FragmentCinemasBinding
 import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.home.fragment.cinema.adapter.CinemaAdapter
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.cinema.viewModel.CinemaViewModel
+import com.net.pvr1.ui.search.searchCinema.SearchCinemaActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.hide
 
-class CinemasFragment : Fragment(),CinemaAdapter.Direction,CinemaAdapter.Location {
+class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Location {
     private var binding: FragmentCinemasBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel by activityViewModels<CinemaViewModel>()
@@ -35,9 +40,18 @@ class CinemasFragment : Fragment(),CinemaAdapter.Direction,CinemaAdapter.Locatio
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         preferences = AppPreferences()
-        authViewModel.cinema("Delhi-NCR","0.0","0.0","","")
-
+        authViewModel.cinema("Delhi-NCR", "0.0", "0.0", "", "")
+        (requireActivity().findViewById(R.id.notify) as ImageView).hide()
         cinemaApi()
+        movedNext()
+    }
+
+    private fun movedNext() {
+       val search=requireActivity().findViewById(R.id.searchBtn) as ImageView
+        search.setOnClickListener {
+            val intent = Intent(requireActivity(), SearchCinemaActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun cinemaApi() {
@@ -86,7 +100,7 @@ class CinemasFragment : Fragment(),CinemaAdapter.Direction,CinemaAdapter.Locatio
 
     private fun retrieveData(output: CinemaResponse.Output) {
         val gridLayout2 = GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
-        val comingSoonMovieAdapter = CinemaAdapter(output.c, requireActivity(), this,this)
+        val comingSoonMovieAdapter = CinemaAdapter(output.c, requireActivity(), this, this)
         binding?.recyclerCinema?.layoutManager = gridLayout2
         binding?.recyclerCinema?.adapter = comingSoonMovieAdapter
     }

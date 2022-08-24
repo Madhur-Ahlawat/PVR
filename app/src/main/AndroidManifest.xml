@@ -16,7 +16,16 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
         <activity
-            android:name=".ui.searchHome.SearchHomeActivity"
+            android:name=".ui.movieDetails.MovieDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.search.searchComingSoon.SearchComingSoonActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.search.searchCinema.SearchCinemaActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.net.pvr1.ui.search.searchHome.SearchHomeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.enableLocation.EnableLocationActivity"
@@ -65,6 +74,9 @@
             android:exported="false" />
 
         <service android:name=".utils.FetchAddressIntentServices" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

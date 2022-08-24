@@ -1,13 +1,14 @@
-package com.net.pvr1.ui.searchHome.adapter
+package com.net.pvr1.ui.search.searchHome.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
-import com.net.pvr1.ui.searchHome.response.HomeSearchResponse
+import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import kotlin.collections.ArrayList
 
 class SearchHomeCinemaAdapter(
@@ -30,9 +31,8 @@ class SearchHomeCinemaAdapter(
         holder.address.text = selectCityItemList.ad
         holder.distance.text = selectCityItemList.length
 
-        holder.itemView.setOnClickListener {
-            listner.onSearchCinema(selectCityList)
-
+        holder.direction.setOnClickListener {
+            listner.onSearchCinema(selectCityItemList)
         }
 
     }
@@ -44,10 +44,11 @@ class SearchHomeCinemaAdapter(
     class MyViewHolderNowShowing(view: View) : RecyclerView.ViewHolder(view) {
         var title: TextView = view.findViewById(R.id.textView50)
         var address: TextView = view.findViewById(R.id.textView51)
-        var distance: TextView = view.findViewById(R.id.textView49)
+        var distance: TextView = view.findViewById(R.id.textView53)
+        var direction: ImageView = view.findViewById(R.id.direction)
     }
 
     interface RecycleViewItemClickListenerCity {
-        fun onSearchCinema(city: ArrayList<HomeSearchResponse.Output.T>)
+        fun onSearchCinema(selectCityItemList: HomeSearchResponse.Output.T)
     }
 }

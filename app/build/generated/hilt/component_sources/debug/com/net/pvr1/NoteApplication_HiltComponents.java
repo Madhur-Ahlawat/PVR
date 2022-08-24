@@ -22,8 +22,12 @@ import com.net.pvr1.ui.player.PlayerActivity_GeneratedInjector;
 import com.net.pvr1.ui.player.viewModel.PlayerViewModel_HiltModules;
 import com.net.pvr1.ui.privateScreenings.PrivateScreeningsActivity_GeneratedInjector;
 import com.net.pvr1.ui.privateScreenings.viewModel.PrivateScreenViewModel_HiltModules;
-import com.net.pvr1.ui.searchHome.SearchHomeActivity_GeneratedInjector;
-import com.net.pvr1.ui.searchHome.viewModel.HomeSearchViewModel_HiltModules;
+import com.net.pvr1.ui.search.searchCinema.SearchCinemaActivity_GeneratedInjector;
+import com.net.pvr1.ui.search.searchCinema.viewModel.CinemaSearchViewModel_HiltModules;
+import com.net.pvr1.ui.search.searchComingSoon.SearchComingSoonActivity_GeneratedInjector;
+import com.net.pvr1.ui.search.searchComingSoon.viewModel.ComingSoonSearchViewModel_HiltModules;
+import com.net.pvr1.ui.search.searchHome.SearchHomeActivity_GeneratedInjector;
+import com.net.pvr1.ui.search.searchHome.viewModel.HomeSearchViewModel_HiltModules;
 import com.net.pvr1.ui.selectCity.SelectCityActivity_GeneratedInjector;
 import com.net.pvr1.ui.selectCity.viewModel.SelectCityViewModel_HiltModules;
 import com.net.pvr1.ui.splash.SplashActivity_GeneratedInjector;
@@ -169,7 +173,9 @@ public final class NoteApplication_HiltComponents {
 
   @Subcomponent(
       modules = {
+          CinemaSearchViewModel_HiltModules.KeyModule.class,
           CinemaViewModel_HiltModules.KeyModule.class,
+          ComingSoonSearchViewModel_HiltModules.KeyModule.class,
           ComingSoonViewModel_HiltModules.KeyModule.class,
           EnableLocationViewModel_HiltModules.KeyModule.class,
           HiltWrapper_ActivityRetainedComponentManager_LifecycleModule.class,
@@ -217,6 +223,8 @@ public final class NoteApplication_HiltComponents {
       OtpVerifyActivity_GeneratedInjector,
       PlayerActivity_GeneratedInjector,
       PrivateScreeningsActivity_GeneratedInjector,
+      SearchCinemaActivity_GeneratedInjector,
+      SearchComingSoonActivity_GeneratedInjector,
       SearchHomeActivity_GeneratedInjector,
       SelectCityActivity_GeneratedInjector,
       SplashActivity_GeneratedInjector,
@@ -234,7 +242,9 @@ public final class NoteApplication_HiltComponents {
 
   @Subcomponent(
       modules = {
+          CinemaSearchViewModel_HiltModules.BindsModule.class,
           CinemaViewModel_HiltModules.BindsModule.class,
+          ComingSoonSearchViewModel_HiltModules.BindsModule.class,
           ComingSoonViewModel_HiltModules.BindsModule.class,
           EnableLocationViewModel_HiltModules.BindsModule.class,
           HiltWrapper_HiltViewModelFactory_ViewModelModule.class,

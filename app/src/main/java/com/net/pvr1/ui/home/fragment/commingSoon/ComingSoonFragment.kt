@@ -1,9 +1,13 @@
 package com.net.pvr1.ui.home.fragment.commingSoon
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -17,8 +21,11 @@ import com.net.pvr1.ui.home.fragment.commingSoon.adapter.ComingSoonMovieAdapter
 import com.net.pvr1.ui.home.fragment.commingSoon.adapter.LanguageAdapter
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.commingSoon.viewModel.ComingSoonViewModel
+import com.net.pvr1.ui.search.searchCinema.SearchCinemaActivity
+import com.net.pvr1.ui.search.searchComingSoon.SearchComingSoonActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.hide
 
 class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListener,
     ComingSoonMovieAdapter.VideoPlay {
@@ -40,7 +47,21 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
         preferences = AppPreferences()
         checkLogin=preferences.getBoolean(Constant.IS_LOGIN)
         authViewModel.comingSoon("Delhi-NCR", "ALL", "ALL", "")
+        (requireActivity().findViewById(R.id.notify) as ImageView).hide()
+        (requireActivity().findViewById(R.id.locationBtn) as ImageView).hide()
+        (requireActivity().findViewById(R.id.textView2) as TextView).hide()
+        (requireActivity().findViewById(R.id.subTitle) as TextView).hide()
+        (requireActivity().findViewById(R.id.txtCity) as TextView).hide()
         comingSoonApi()
+        movedNext()
+    }
+
+    private fun movedNext() {
+        val search=requireActivity().findViewById(R.id.searchBtn) as ImageView
+        search.setOnClickListener {
+            val intent = Intent(requireActivity(), SearchComingSoonActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun comingSoonApi() {

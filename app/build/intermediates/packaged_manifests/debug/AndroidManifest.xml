@@ -25,7 +25,13 @@
         android:testOnly="true"
         android:theme="@style/NoActionBar" >
         <activity
-            android:name="com.net.pvr1.ui.searchHome.SearchHomeActivity"
+            android:name="com.net.pvr1.ui.search.searchComingSoon.SearchComingSoonActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.net.pvr1.ui.search.searchCinema.SearchCinemaActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.net.pvr1.ui.search.searchHome.SearchHomeActivity"
             android:exported="false" />
         <activity
             android:name="com.net.pvr1.ui.enableLocation.EnableLocationActivity"

@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.searchHome.adapter
+package com.net.pvr1.ui.search.searchHome.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
-import com.net.pvr1.ui.searchHome.response.HomeSearchResponse
+import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 
 class SearchHomeMovieAdapter(
     private var selectCityList: List<HomeSearchResponse.Output.M>,

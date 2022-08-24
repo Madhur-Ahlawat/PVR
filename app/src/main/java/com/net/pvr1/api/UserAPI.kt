@@ -7,7 +7,7 @@ import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
-import com.net.pvr1.ui.searchHome.response.HomeSearchResponse
+import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.selectCity.response.SelectCityResponse
 import retrofit2.Response
 import retrofit2.http.POST

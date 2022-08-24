@@ -1,10 +1,10 @@
-package com.net.pvr1.ui.searchHome.viewModel
+package com.net.pvr1.ui.search.searchHome.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
-import com.net.pvr1.ui.searchHome.response.HomeSearchResponse
+import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

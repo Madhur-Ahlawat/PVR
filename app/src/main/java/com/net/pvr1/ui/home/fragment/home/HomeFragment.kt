@@ -7,7 +7,9 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -29,6 +31,8 @@ import com.net.pvr1.ui.player.PlayerActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.select_pos
 import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.show
 import java.util.*
 import kotlin.math.abs
 
@@ -62,9 +66,14 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         preferences = AppPreferences()
-        homeApi()
         authViewModel.home("Delhi-NCR", "", "0", "0", false, "no", "", "ALL", "ALL", "ALL", "no")
+        (requireActivity().findViewById(R.id.notify) as ImageView).show()
+        (requireActivity().findViewById(R.id.locationBtn) as ImageView).show()
+        (requireActivity().findViewById(R.id.textView2) as TextView).show()
+        (requireActivity().findViewById(R.id.subTitle) as TextView).show()
+        (requireActivity().findViewById(R.id.txtCity) as TextView).show()
         movedNext()
+        homeApi()
     }
 
     private fun movedNext() {

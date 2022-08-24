@@ -24,7 +24,7 @@
 14-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:8:22-76
 15
 16    <application
-16-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:10:5-68:19
+16-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:10:5-74:19
 17        android:name="com.net.pvr1.NoteApplication"
 17-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:11:9-52
 18        android:allowBackup="true"
@@ -45,188 +45,200 @@
 26-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:17:9-43
 27        <activity
 27-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:18:9-20:40
-28            android:name="com.net.pvr1.ui.searchHome.SearchHomeActivity"
-28-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:19:13-61
+28            android:name="com.net.pvr1.ui.search.searchComingSoon.SearchComingSoonActivity"
+28-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:19:13-80
 29            android:exported="false" />
 29-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:20:13-37
 30        <activity
 30-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:21:9-23:40
-31            android:name="com.net.pvr1.ui.enableLocation.EnableLocationActivity"
-31-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:22:13-69
+31            android:name="com.net.pvr1.ui.search.searchCinema.SearchCinemaActivity"
+31-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:22:13-72
 32            android:exported="false" />
 32-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:23:13-37
 33        <activity
 33-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:24:9-26:40
-34            android:name="com.net.pvr1.ui.player.PlayerActivity"
-34-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:25:13-53
+34            android:name="com.net.pvr1.ui.search.searchHome.SearchHomeActivity"
+34-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:25:13-80
 35            android:exported="false" />
 35-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:26:13-37
 36        <activity
 36-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:27:9-29:40
-37            android:name="com.net.pvr1.ui.privateScreenings.PrivateScreeningsActivity"
-37-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:28:13-75
+37            android:name="com.net.pvr1.ui.enableLocation.EnableLocationActivity"
+37-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:28:13-69
 38            android:exported="false" />
 38-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:29:13-37
 39        <activity
 39-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:30:9-32:40
-40            android:name="com.net.pvr1.ui.giftCard.GiftCardActivity"
-40-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:31:13-57
+40            android:name="com.net.pvr1.ui.player.PlayerActivity"
+40-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:31:13-53
 41            android:exported="false" />
 41-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:32:13-37
 42        <activity
 42-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:33:9-35:40
-43            android:name="com.net.pvr1.ui.offer.OfferActivity"
-43-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:34:13-51
+43            android:name="com.net.pvr1.ui.privateScreenings.PrivateScreeningsActivity"
+43-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:34:13-75
 44            android:exported="false" />
 44-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:35:13-37
 45        <activity
 45-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:36:9-38:40
-46            android:name="com.net.pvr1.ui.webView.WebViewActivity"
-46-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:37:13-55
+46            android:name="com.net.pvr1.ui.giftCard.GiftCardActivity"
+46-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:37:13-57
 47            android:exported="false" />
 47-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:38:13-37
 48        <activity
 48-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:39:9-41:40
-49            android:name="com.net.pvr1.ui.myBookings.MyBookingsActivity"
-49-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:40:13-61
+49            android:name="com.net.pvr1.ui.offer.OfferActivity"
+49-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:40:13-51
 50            android:exported="false" />
 50-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:41:13-37
 51        <activity
 51-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:42:9-44:40
-52            android:name="com.net.pvr1.ui.otpVerify.OtpVerifyActivity"
-52-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:43:13-59
+52            android:name="com.net.pvr1.ui.webView.WebViewActivity"
+52-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:43:13-55
 53            android:exported="false" />
 53-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:44:13-37
 54        <activity
 54-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:45:9-47:40
-55            android:name="com.net.pvr1.ui.login.LoginActivity"
-55-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:46:13-51
+55            android:name="com.net.pvr1.ui.myBookings.MyBookingsActivity"
+55-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:46:13-61
 56            android:exported="false" />
 56-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:47:13-37
 57        <activity
 57-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:48:9-50:40
-58            android:name="com.net.pvr1.ui.resister.RegistrationActivity"
-58-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:49:13-61
+58            android:name="com.net.pvr1.ui.otpVerify.OtpVerifyActivity"
+58-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:49:13-59
 59            android:exported="false" />
 59-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:50:13-37
 60        <activity
 60-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:51:9-53:40
-61            android:name="com.net.pvr1.ui.onBoarding.LandingActivity"
-61-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:52:13-58
+61            android:name="com.net.pvr1.ui.login.LoginActivity"
+61-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:52:13-51
 62            android:exported="false" />
 62-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:53:13-37
 63        <activity
-63-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:54:9-62:20
-64            android:name="com.net.pvr1.ui.splash.SplashActivity"
-64-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:55:13-65
-65            android:exported="true" >
-65-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:56:13-36
-66            <intent-filter>
-66-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:57:13-61:29
-67                <action android:name="android.intent.action.MAIN" />
-67-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:58:17-69
-67-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:58:25-66
-68
-69                <category android:name="android.intent.category.LAUNCHER" />
-69-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:60:17-77
-69-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:60:27-74
-70            </intent-filter>
-71        </activity>
-72        <activity
-72-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:63:9-65:40
-73            android:name="com.net.pvr1.ui.home.HomeActivity"
-73-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:64:13-49
-74            android:exported="false" />
-74-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:65:13-37
-75
-76        <service android:name="com.net.pvr1.utils.FetchAddressIntentServices" />
-76-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:67:9-69
-76-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:67:18-66
-77
+63-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:54:9-56:40
+64            android:name="com.net.pvr1.ui.resister.RegistrationActivity"
+64-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:55:13-61
+65            android:exported="false" />
+65-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:56:13-37
+66        <activity
+66-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:57:9-59:40
+67            android:name="com.net.pvr1.ui.onBoarding.LandingActivity"
+67-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:58:13-58
+68            android:exported="false" />
+68-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:59:13-37
+69        <activity
+69-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:60:9-68:20
+70            android:name="com.net.pvr1.ui.splash.SplashActivity"
+70-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:61:13-65
+71            android:exported="true" >
+71-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:62:13-36
+72            <intent-filter>
+72-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:63:13-67:29
+73                <action android:name="android.intent.action.MAIN" />
+73-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:64:17-69
+73-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:64:25-66
+74
+75                <category android:name="android.intent.category.LAUNCHER" />
+75-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:66:17-77
+75-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:66:27-74
+76            </intent-filter>
+77        </activity>
 78        <activity
-78-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\Dell\.gradle\caches\transforms-3\16537b0fe9ed33bffe2592abb6df4001\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:23:9-27:75
-79            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
-79-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\Dell\.gradle\caches\transforms-3\16537b0fe9ed33bffe2592abb6df4001\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:24:13-93
-80            android:excludeFromRecents="true"
-80-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\Dell\.gradle\caches\transforms-3\16537b0fe9ed33bffe2592abb6df4001\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:25:13-46
-81            android:exported="false"
-81-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\Dell\.gradle\caches\transforms-3\16537b0fe9ed33bffe2592abb6df4001\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:26:13-37
-82            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-82-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\Dell\.gradle\caches\transforms-3\16537b0fe9ed33bffe2592abb6df4001\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:27:13-72
-83        <!--
-84            Service handling Google Sign-In user revocation. For apps that do not integrate with
-85            Google Sign-In, this service will never be started.
-86        -->
-87        <service
-87-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\Dell\.gradle\caches\transforms-3\16537b0fe9ed33bffe2592abb6df4001\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:33:9-37:51
-88            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
-88-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\Dell\.gradle\caches\transforms-3\16537b0fe9ed33bffe2592abb6df4001\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:34:13-89
-89            android:exported="true"
-89-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\Dell\.gradle\caches\transforms-3\16537b0fe9ed33bffe2592abb6df4001\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:35:13-36
-90            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
-90-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\Dell\.gradle\caches\transforms-3\16537b0fe9ed33bffe2592abb6df4001\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:36:13-107
-91            android:visibleToInstantApps="true" />
-91-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\Dell\.gradle\caches\transforms-3\16537b0fe9ed33bffe2592abb6df4001\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:37:13-48
-92
-93        <activity
-93-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Dell\.gradle\caches\transforms-3\afd6efc9df7debd4c3745ff5bb61667e\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:20:9-22:45
-94            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-94-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Dell\.gradle\caches\transforms-3\afd6efc9df7debd4c3745ff5bb61667e\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:20:19-85
-95            android:exported="false"
-95-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Dell\.gradle\caches\transforms-3\afd6efc9df7debd4c3745ff5bb61667e\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:22:19-43
-96            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-96-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Dell\.gradle\caches\transforms-3\afd6efc9df7debd4c3745ff5bb61667e\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:21:19-78
-97
-98        <meta-data
-98-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\Dell\.gradle\caches\transforms-3\0bdf1e21bbeb01b5cc8ec1db0d666d14\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:21:9-23:69
-99            android:name="com.google.android.gms.version"
-99-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\Dell\.gradle\caches\transforms-3\0bdf1e21bbeb01b5cc8ec1db0d666d14\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:22:13-58
-100            android:value="@integer/google_play_services_version" />
-100-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\Dell\.gradle\caches\transforms-3\0bdf1e21bbeb01b5cc8ec1db0d666d14\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:23:13-66
-101
-102        <uses-library
-102-->[androidx.window:window:1.0.0] C:\Users\Dell\.gradle\caches\transforms-3\915431bc5dbb173ffda8c4462a8baea8\transformed\jetified-window-1.0.0\AndroidManifest.xml:25:9-27:40
-103            android:name="androidx.window.extensions"
-103-->[androidx.window:window:1.0.0] C:\Users\Dell\.gradle\caches\transforms-3\915431bc5dbb173ffda8c4462a8baea8\transformed\jetified-window-1.0.0\AndroidManifest.xml:26:13-54
-104            android:required="false" />
-104-->[androidx.window:window:1.0.0] C:\Users\Dell\.gradle\caches\transforms-3\915431bc5dbb173ffda8c4462a8baea8\transformed\jetified-window-1.0.0\AndroidManifest.xml:27:13-37
-105        <uses-library
-105-->[androidx.window:window:1.0.0] C:\Users\Dell\.gradle\caches\transforms-3\915431bc5dbb173ffda8c4462a8baea8\transformed\jetified-window-1.0.0\AndroidManifest.xml:28:9-30:40
-106            android:name="androidx.window.sidecar"
-106-->[androidx.window:window:1.0.0] C:\Users\Dell\.gradle\caches\transforms-3\915431bc5dbb173ffda8c4462a8baea8\transformed\jetified-window-1.0.0\AndroidManifest.xml:29:13-51
-107            android:required="false" />
-107-->[androidx.window:window:1.0.0] C:\Users\Dell\.gradle\caches\transforms-3\915431bc5dbb173ffda8c4462a8baea8\transformed\jetified-window-1.0.0\AndroidManifest.xml:30:13-37
-108
-109        <service
-109-->[androidx.room:room-runtime:2.4.2] C:\Users\Dell\.gradle\caches\transforms-3\fc998960edd871b96a6ed7706cc441a8\transformed\room-runtime-2.4.2\AndroidManifest.xml:25:9-28:40
-110            android:name="androidx.room.MultiInstanceInvalidationService"
-110-->[androidx.room:room-runtime:2.4.2] C:\Users\Dell\.gradle\caches\transforms-3\fc998960edd871b96a6ed7706cc441a8\transformed\room-runtime-2.4.2\AndroidManifest.xml:26:13-74
-111            android:directBootAware="true"
-111-->[androidx.room:room-runtime:2.4.2] C:\Users\Dell\.gradle\caches\transforms-3\fc998960edd871b96a6ed7706cc441a8\transformed\room-runtime-2.4.2\AndroidManifest.xml:27:13-43
-112            android:exported="false" />
-112-->[androidx.room:room-runtime:2.4.2] C:\Users\Dell\.gradle\caches\transforms-3\fc998960edd871b96a6ed7706cc441a8\transformed\room-runtime-2.4.2\AndroidManifest.xml:28:13-37
-113
-114        <provider
-114-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Dell\.gradle\caches\transforms-3\ac6fc974891da1fb95e40b019e0dbbc5\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
-115            android:name="androidx.startup.InitializationProvider"
-115-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Dell\.gradle\caches\transforms-3\ac6fc974891da1fb95e40b019e0dbbc5\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:25:13-67
-116            android:authorities="com.net.pvr1.androidx-startup"
-116-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Dell\.gradle\caches\transforms-3\ac6fc974891da1fb95e40b019e0dbbc5\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:26:13-68
-117            android:exported="false" >
-117-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Dell\.gradle\caches\transforms-3\ac6fc974891da1fb95e40b019e0dbbc5\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:27:13-37
-118            <meta-data
-118-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Dell\.gradle\caches\transforms-3\ac6fc974891da1fb95e40b019e0dbbc5\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
-119                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-119-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Dell\.gradle\caches\transforms-3\ac6fc974891da1fb95e40b019e0dbbc5\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:30:17-75
-120                android:value="androidx.startup" />
-120-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Dell\.gradle\caches\transforms-3\ac6fc974891da1fb95e40b019e0dbbc5\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:31:17-49
-121            <meta-data
-121-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Dell\.gradle\caches\transforms-3\c78df3754a75d3d5f73ade5c498d6b03\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:31:13-33:52
-122                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-122-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Dell\.gradle\caches\transforms-3\c78df3754a75d3d5f73ade5c498d6b03\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:32:17-78
-123                android:value="androidx.startup" />
-123-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Dell\.gradle\caches\transforms-3\c78df3754a75d3d5f73ade5c498d6b03\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:33:17-49
-124        </provider>
-125    </application>
-126
-127</manifest>
+78-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:69:9-71:40
+79            android:name="com.net.pvr1.ui.home.HomeActivity"
+79-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:70:13-49
+80            android:exported="false" />
+80-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:71:13-37
+81
+82        <service android:name="com.net.pvr1.utils.FetchAddressIntentServices" />
+82-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:73:9-69
+82-->D:\Wemonde Project\b2c-pvr-android\app\src\main\AndroidManifest.xml:73:18-66
+83
+84        <activity
+84-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\Dell\.gradle\caches\transforms-3\16537b0fe9ed33bffe2592abb6df4001\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:23:9-27:75
+85            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+85-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\Dell\.gradle\caches\transforms-3\16537b0fe9ed33bffe2592abb6df4001\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:24:13-93
+86            android:excludeFromRecents="true"
+86-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\Dell\.gradle\caches\transforms-3\16537b0fe9ed33bffe2592abb6df4001\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:25:13-46
+87            android:exported="false"
+87-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\Dell\.gradle\caches\transforms-3\16537b0fe9ed33bffe2592abb6df4001\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:26:13-37
+88            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+88-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\Dell\.gradle\caches\transforms-3\16537b0fe9ed33bffe2592abb6df4001\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:27:13-72
+89        <!--
+90            Service handling Google Sign-In user revocation. For apps that do not integrate with
+91            Google Sign-In, this service will never be started.
+92        -->
+93        <service
+93-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\Dell\.gradle\caches\transforms-3\16537b0fe9ed33bffe2592abb6df4001\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:33:9-37:51
+94            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+94-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\Dell\.gradle\caches\transforms-3\16537b0fe9ed33bffe2592abb6df4001\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:34:13-89
+95            android:exported="true"
+95-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\Dell\.gradle\caches\transforms-3\16537b0fe9ed33bffe2592abb6df4001\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:35:13-36
+96            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+96-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\Dell\.gradle\caches\transforms-3\16537b0fe9ed33bffe2592abb6df4001\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:36:13-107
+97            android:visibleToInstantApps="true" />
+97-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\Dell\.gradle\caches\transforms-3\16537b0fe9ed33bffe2592abb6df4001\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:37:13-48
+98
+99        <activity
+99-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Dell\.gradle\caches\transforms-3\afd6efc9df7debd4c3745ff5bb61667e\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:20:9-22:45
+100            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+100-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Dell\.gradle\caches\transforms-3\afd6efc9df7debd4c3745ff5bb61667e\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:20:19-85
+101            android:exported="false"
+101-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Dell\.gradle\caches\transforms-3\afd6efc9df7debd4c3745ff5bb61667e\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:22:19-43
+102            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+102-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Dell\.gradle\caches\transforms-3\afd6efc9df7debd4c3745ff5bb61667e\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:21:19-78
+103
+104        <meta-data
+104-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\Dell\.gradle\caches\transforms-3\0bdf1e21bbeb01b5cc8ec1db0d666d14\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:21:9-23:69
+105            android:name="com.google.android.gms.version"
+105-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\Dell\.gradle\caches\transforms-3\0bdf1e21bbeb01b5cc8ec1db0d666d14\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:22:13-58
+106            android:value="@integer/google_play_services_version" />
+106-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\Dell\.gradle\caches\transforms-3\0bdf1e21bbeb01b5cc8ec1db0d666d14\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:23:13-66
+107
+108        <uses-library
+108-->[androidx.window:window:1.0.0] C:\Users\Dell\.gradle\caches\transforms-3\915431bc5dbb173ffda8c4462a8baea8\transformed\jetified-window-1.0.0\AndroidManifest.xml:25:9-27:40
+109            android:name="androidx.window.extensions"
+109-->[androidx.window:window:1.0.0] C:\Users\Dell\.gradle\caches\transforms-3\915431bc5dbb173ffda8c4462a8baea8\transformed\jetified-window-1.0.0\AndroidManifest.xml:26:13-54
+110            android:required="false" />
+110-->[androidx.window:window:1.0.0] C:\Users\Dell\.gradle\caches\transforms-3\915431bc5dbb173ffda8c4462a8baea8\transformed\jetified-window-1.0.0\AndroidManifest.xml:27:13-37
+111        <uses-library
+111-->[androidx.window:window:1.0.0] C:\Users\Dell\.gradle\caches\transforms-3\915431bc5dbb173ffda8c4462a8baea8\transformed\jetified-window-1.0.0\AndroidManifest.xml:28:9-30:40
+112            android:name="androidx.window.sidecar"
+112-->[androidx.window:window:1.0.0] C:\Users\Dell\.gradle\caches\transforms-3\915431bc5dbb173ffda8c4462a8baea8\transformed\jetified-window-1.0.0\AndroidManifest.xml:29:13-51
+113            android:required="false" />
+113-->[androidx.window:window:1.0.0] C:\Users\Dell\.gradle\caches\transforms-3\915431bc5dbb173ffda8c4462a8baea8\transformed\jetified-window-1.0.0\AndroidManifest.xml:30:13-37
+114
+115        <service
+115-->[androidx.room:room-runtime:2.4.2] C:\Users\Dell\.gradle\caches\transforms-3\fc998960edd871b96a6ed7706cc441a8\transformed\room-runtime-2.4.2\AndroidManifest.xml:25:9-28:40
+116            android:name="androidx.room.MultiInstanceInvalidationService"
+116-->[androidx.room:room-runtime:2.4.2] C:\Users\Dell\.gradle\caches\transforms-3\fc998960edd871b96a6ed7706cc441a8\transformed\room-runtime-2.4.2\AndroidManifest.xml:26:13-74
+117            android:directBootAware="true"
+117-->[androidx.room:room-runtime:2.4.2] C:\Users\Dell\.gradle\caches\transforms-3\fc998960edd871b96a6ed7706cc441a8\transformed\room-runtime-2.4.2\AndroidManifest.xml:27:13-43
+118            android:exported="false" />
+118-->[androidx.room:room-runtime:2.4.2] C:\Users\Dell\.gradle\caches\transforms-3\fc998960edd871b96a6ed7706cc441a8\transformed\room-runtime-2.4.2\AndroidManifest.xml:28:13-37
+119
+120        <provider
+120-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Dell\.gradle\caches\transforms-3\ac6fc974891da1fb95e40b019e0dbbc5\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+121            android:name="androidx.startup.InitializationProvider"
+121-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Dell\.gradle\caches\transforms-3\ac6fc974891da1fb95e40b019e0dbbc5\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:25:13-67
+122            android:authorities="com.net.pvr1.androidx-startup"
+122-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Dell\.gradle\caches\transforms-3\ac6fc974891da1fb95e40b019e0dbbc5\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:26:13-68
+123            android:exported="false" >
+123-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Dell\.gradle\caches\transforms-3\ac6fc974891da1fb95e40b019e0dbbc5\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:27:13-37
+124            <meta-data
+124-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Dell\.gradle\caches\transforms-3\ac6fc974891da1fb95e40b019e0dbbc5\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+125                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+125-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Dell\.gradle\caches\transforms-3\ac6fc974891da1fb95e40b019e0dbbc5\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:30:17-75
+126                android:value="androidx.startup" />
+126-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Dell\.gradle\caches\transforms-3\ac6fc974891da1fb95e40b019e0dbbc5\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:31:17-49
+127            <meta-data
+127-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Dell\.gradle\caches\transforms-3\c78df3754a75d3d5f73ade5c498d6b03\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:31:13-33:52
+128                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+128-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Dell\.gradle\caches\transforms-3\c78df3754a75d3d5f73ade5c498d6b03\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:32:17-78
+129                android:value="androidx.startup" />
+129-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Dell\.gradle\caches\transforms-3\c78df3754a75d3d5f73ade5c498d6b03\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:33:17-49
+130        </provider>
+131    </application>
+132
+133</manifest>

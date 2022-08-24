@@ -132,9 +132,25 @@
     <string name="enable_location">ENABLE LOCATION</string>
     <string name="battery_usage">we will keep the battery usage to minimum</string>
     <string name="recommendation"><u>Not Now</u></string>
-//Search
+    //Search
     <string name="search_hint_text">Search for a movie or cinema</string>
     <string name="cinemas">CINEMAS</string>
+    <string name="cancel">Cancel</string>
+    //MovieDetails
+    <string name="book_now">Book Now</string>
+    <string name="release_date">Release Date</string>
+    <string name="available_in">Available in</string>
+    <string name="releasing_in_9_days">Releasing in 9 Days</string>
+    <string name="set_alert">Set Alert</string>
+    <string name="new_txt">New</string>
+    <string name="plot">Plot</string>
+    <string name="cast">Cast</string>
+    <string name="crew">Crew</string>
+    <string name="technical_details">Technical Details</string>
+    <string name="film_type">Film Type</string>
+    <string name="language">Language</string>
+    <string name="color_info">Color Info</string>
+    <string name="sound_mix">Sound Mix</string>
 
 
 </resources>
