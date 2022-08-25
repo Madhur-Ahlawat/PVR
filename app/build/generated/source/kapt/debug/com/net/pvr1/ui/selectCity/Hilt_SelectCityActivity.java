@@ -10,12 +10,10 @@ import dagger.hilt.internal.GeneratedComponentManagerHolder;
 import dagger.hilt.internal.UnsafeCasts;
 import java.lang.Object;
 import java.lang.Override;
-import java.lang.SuppressWarnings;
 
 /**
  * A generated base class to be extended by the @dagger.hilt.android.AndroidEntryPoint annotated class. If using the Gradle plugin, this is swapped as the base class via bytecode transformation.
  */
-@SuppressWarnings("NAME_SHADOWING")
 public abstract class Hilt_SelectCityActivity extends AppCompatActivity implements GeneratedComponentManagerHolder {
   private volatile ActivityComponentManager componentManager;
 

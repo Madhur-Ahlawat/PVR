@@ -23,19 +23,16 @@ import com.net.pvr1.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.collections.ArrayList
 
-@Suppress("NAME_SHADOWING")
 @AndroidEntryPoint
 class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewItemClickListener,
-    OtherCityAdapter.RecycleViewItemClickListenerCity, SelectCityAdapter.RecycleViewItemClickListenerSelectCity {
+    OtherCityAdapter.RecycleViewItemClickListenerCity,
+    SelectCityAdapter.RecycleViewItemClickListenerSelectCity {
     private lateinit var preferences: AppPreferences
     private var binding: ActivitySelectCityBinding? = null
     private var loader: LoaderDialog? = null
     private val selectCityViewModel: SelectCityViewModel by viewModels()
-
     private var otherCityList: ArrayList<SelectCityResponse.Output.Ot> = ArrayList()
-
     private var otherCityAdapter: SearchCityAdapter? = null
-
     private var dataList: java.util.ArrayList<Any> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,16 +41,15 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         val view = binding?.root
         setContentView(view)
         preferences = AppPreferences()
-
-        selectCity()
         selectCityViewModel.selectCity("28.679079", "77.069710", "0", "no", "no")
+        selectCity()
+        movedNext()
+    }
 
-//        if (preferences.getString(Constant.CITY_NAME) != null){
-//            binding?.consSelectedLocation?.show()
-//            binding?.txtSelectedCity?.text = preferences.getString(Constant.CITY_NAME)
-//        }else{
-//            binding?.consSelectedLocation?.hide()
-//        }
+    private fun movedNext() {
+        binding?.imageView35?.setOnClickListener {
+            finish()
+        }
 
         binding?.searchCity?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -62,7 +58,6 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             override fun onTextChanged(cs: CharSequence?, start: Int, before: Int, count: Int) {
                 var cs = cs
                 if (cs.toString().isEmpty()) {
-//                    otherCityList.clear()
                     dataList.clear()
                     binding?.recyclerViewSearchCity?.hide()
                     binding?.consSelectCity?.show()
@@ -84,7 +79,6 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             override fun afterTextChanged(s: Editable?) {
             }
         })
-
     }
 
     private fun selectCity() {
@@ -94,8 +88,6 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         retrieveData(it.data.output)
-                        retrieveOtherCityData(it.data.output)
-                        retrieveSearchData(it.data.output)
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -132,13 +124,10 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         }
     }
 
-    private fun retrieveSearchData(output: SelectCityResponse.Output) {
-        val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        otherCityAdapter = SearchCityAdapter(output.ot, dataList, dataList, this, this)
-        binding?.recyclerViewSearchCity?.layoutManager = gridLayout2
-        binding?.recyclerViewSearchCity?.adapter = otherCityAdapter
-    }
-    override fun onItemClickCitySearch(city: ArrayList<SelectCityResponse.Output.Ot>, position: Int,) {
+    override fun onItemClickCitySearch(
+        city: ArrayList<SelectCityResponse.Output.Ot>,
+        position: Int
+    ) {
         binding?.searchCity?.setText(" ")
         binding?.searchCity?.isFocusable = false
         binding?.searchCity?.isClickable = false
@@ -151,41 +140,44 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
     }
 
 
-        private fun retrieveOtherCityData(output: SelectCityResponse.Output) {
+    private fun retrieveData(output: SelectCityResponse.Output) {
         val gridLayout2 = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
         val otherCityAdapter = OtherCityAdapter(output.ot, this, this)
         binding?.recyclerViewOtherCity?.layoutManager = gridLayout2
         binding?.recyclerViewOtherCity?.adapter = otherCityAdapter
-    }
 
-    private fun retrieveData(output: SelectCityResponse.Output) {
+
         dataList.clear()
         otherCityList = output.ot
         dataList.addAll(output.ot)
         dataList.addAll(output.pc)
-        val gridLayout2 = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
+        val gridLayout = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
         val selectCityAdapter = SelectCityAdapter(output.pc, this, this)
-        binding?.recyclerCity?.layoutManager = gridLayout2
+        binding?.recyclerCity?.layoutManager = gridLayout
         binding?.recyclerCity?.adapter = selectCityAdapter
+
+        val gridLayout3 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+        val otherCityAdapter4 = SearchCityAdapter(output.ot, dataList, dataList, this, this)
+        binding?.recyclerViewSearchCity?.layoutManager = gridLayout3
+        binding?.recyclerViewSearchCity?.adapter = otherCityAdapter4
     }
 
-    override fun onItemClickCityOtherCity(city: ArrayList<SelectCityResponse.Output.Ot>, position: Int,) {
+
+    override fun onItemClickCityOtherCity(
+        city: ArrayList<SelectCityResponse.Output.Ot>,
+        position: Int
+    ) {
+        binding?.consSelectedLocation?.show()
         binding?.txtSelectedCity?.text = city[position].name
-//        binding?.searchCity?.setText(" ")
-//        binding?.searchCity?.isFocusable = false
-//        binding?.recyclerViewSearchCity?.hide()
-//        binding?.consSelectCity?.show()
-//        binding?.consSelectedLocation?.show()
         preferences.putString(Constant.CITY_NAME, city[position].name)
     }
 
-    override fun onItemClickCityImgCity(city: ArrayList<SelectCityResponse.Output.Pc>, position: Int, ) {
+    override fun onItemClickCityImgCity(
+        city: ArrayList<SelectCityResponse.Output.Pc>,
+        position: Int
+    ) {
+        binding?.consSelectedLocation?.show()
         binding?.txtSelectedCity?.text = city[position].name
-//        binding?.searchCity?.setText(" ")
-//        binding?.searchCity?.isFocusable = false
-//        binding?.recyclerViewSearchCity?.hide()
-//        binding?.consSelectCity?.show()
-//        binding?.consSelectedLocation?.show()
         preferences.putString(Constant.CITY_NAME, city[position].name)
 
     }

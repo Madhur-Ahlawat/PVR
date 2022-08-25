@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
-import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
+import com.net.pvr1.ui.movieDetails.response.MovieDetailsResponse
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -13,12 +13,12 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieDetailsViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
 
-    val homeSearchLiveData: LiveData<NetworkResult<HomeSearchResponse>>
-    get() = userRepository.searchResponseLiveData
+    val movieDetailsLiveData: LiveData<NetworkResult<MovieDetailsResponse>>
+    get() = userRepository.movieDetailsResponseLiveData
 
-    fun homeSearch(city: String,text: String,searchFilter: String,lat: String, lng: String) {
+    fun movieDetails(city: String,mid: String,type: String,userid: String,lat: String, lng: String, isSpi: String, srilanka: String,) {
         viewModelScope.launch {
-            userRepository.homeSearchData(city,text,searchFilter,lat, lng)
+            userRepository.movieDetailsData(city,mid,type,userid,lat, lng,isSpi,srilanka)
         }
     }
 

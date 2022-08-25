@@ -7,6 +7,7 @@ import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.login.response.LoginResponse
+import com.net.pvr1.ui.movieDetails.response.MovieDetailsResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
@@ -290,6 +291,39 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
         else{
             homeSearchLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    //MovieDetails
+    private val movieDetailsLiveData = MutableLiveData<NetworkResult<MovieDetailsResponse>>()
+    val movieDetailsResponseLiveData: LiveData<NetworkResult<MovieDetailsResponse>>
+        get() = movieDetailsLiveData
+
+    suspend fun movieDetailsData(
+        city: String,
+        mid: String,
+        type: String,
+        userid: String,
+        lat: String,
+        lng: String,
+        isSpi: String,
+        srilanka: String
+    ) {
+        movieDetailsLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.movieDetails(city,mid,Constant.version,type,Constant.platform,userid,lat,lng,isSpi,srilanka)
+        movieDetailsResponse(response)
+    }
+
+    private fun movieDetailsResponse(response: Response<MovieDetailsResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            movieDetailsLiveData.postValue(NetworkResult.Success(response.body()!!))
+        }
+        else if(response.errorBody()!=null){
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            movieDetailsLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        }
+        else{
+            movieDetailsLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 }

@@ -4,6 +4,7 @@ import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.login.response.LoginResponse
+import com.net.pvr1.ui.movieDetails.response.MovieDetailsResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
@@ -23,7 +24,6 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<LoginResponse>
-
 
     @POST("v2/user/verify")
     suspend fun otpVerify(
@@ -119,5 +119,19 @@ interface UserAPI {
        @Query("av") version: String,
        @Query("pt") platform: String
    ): Response<HomeSearchResponse>
+
+   @POST("content/getmovie")
+    suspend fun movieDetails(
+       @Query("city") city: String,
+       @Query("mid") mid: String,
+       @Query("av")  version: String,
+       @Query("type") type: String,
+       @Query("pt") platform: String,
+       @Query("userid") userid: String,
+       @Query("lat") lat: String,
+       @Query("lng") lng: String,
+       @Query("isSpi") isSpi: String,
+       @Query("srilanka") srilanka: String
+   ): Response<MovieDetailsResponse>
 
 }

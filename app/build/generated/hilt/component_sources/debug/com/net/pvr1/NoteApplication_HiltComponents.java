@@ -11,6 +11,8 @@ import com.net.pvr1.ui.home.fragment.commingSoon.viewModel.ComingSoonViewModel_H
 import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel_HiltModules;
 import com.net.pvr1.ui.login.LoginActivity_GeneratedInjector;
 import com.net.pvr1.ui.login.viewModel.LoginViewModel_HiltModules;
+import com.net.pvr1.ui.movieDetails.MovieDetailsActivity_GeneratedInjector;
+import com.net.pvr1.ui.movieDetails.viewModel.MovieDetailsViewModel_HiltModules;
 import com.net.pvr1.ui.myBookings.MyBookingsActivity_GeneratedInjector;
 import com.net.pvr1.ui.myBookings.viewModel.MyBookingViewModel_HiltModules;
 import com.net.pvr1.ui.offer.OfferActivity_GeneratedInjector;
@@ -183,6 +185,7 @@ public final class NoteApplication_HiltComponents {
           HomeViewModel_HiltModules.KeyModule.class,
           com.net.pvr1.ui.home.viewModel.HomeViewModel_HiltModules.KeyModule.class,
           LoginViewModel_HiltModules.KeyModule.class,
+          MovieDetailsViewModel_HiltModules.KeyModule.class,
           MyBookingViewModel_HiltModules.KeyModule.class,
           ActivityCBuilderModule.class,
           ViewModelCBuilderModule.class,
@@ -217,6 +220,7 @@ public final class NoteApplication_HiltComponents {
       GiftCardActivity_GeneratedInjector,
       HomeActivity_GeneratedInjector,
       LoginActivity_GeneratedInjector,
+      MovieDetailsActivity_GeneratedInjector,
       MyBookingsActivity_GeneratedInjector,
       OfferActivity_GeneratedInjector,
       LandingActivity_GeneratedInjector,
@@ -252,6 +256,7 @@ public final class NoteApplication_HiltComponents {
           HomeViewModel_HiltModules.BindsModule.class,
           com.net.pvr1.ui.home.viewModel.HomeViewModel_HiltModules.BindsModule.class,
           LoginViewModel_HiltModules.BindsModule.class,
+          MovieDetailsViewModel_HiltModules.BindsModule.class,
           MyBookingViewModel_HiltModules.BindsModule.class,
           OfferViewModel_HiltModules.BindsModule.class,
           OtpVerifyViewModel_HiltModules.BindsModule.class,

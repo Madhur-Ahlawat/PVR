@@ -174,4 +174,7 @@
     <color name="blue_data">#7185cd</color>
     <color name="gray_data">#cccccc</color>
     <color name="header_black">#222222</color>
+
+    <color name="barcode_reticle_background">#99000000</color>
+    <color name="barcode_reticle_stroke">#ffffff</color>
 </resources>

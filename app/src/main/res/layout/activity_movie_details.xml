@@ -41,10 +41,10 @@
 
             <ImageView
                 android:id="@+id/imageView26"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="220dp"
-                android:adjustViewBounds="true"
                 android:scaleType="fitXY"
+                android:adjustViewBounds="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/view40"
                 app:layout_constraintTop_toTopOf="parent"
@@ -101,7 +101,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="24dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/view41"
                 app:layout_constraintTop_toBottomOf="@+id/imageView26">
@@ -132,7 +132,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:fontFamily="@font/sf_pro_text_bold"
-                    android:text="DRAMA, ACTION 2D"
+                    tools:text="DRAMA, ACTION 2D"
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimen_14sp"
                     app:layout_constraintStart_toStartOf="@+id/textView55"
@@ -353,7 +353,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="40dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout12">
@@ -384,13 +384,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:orientation="horizontal"
-                    tools:listitem="@layout/item_details_cast"
-                    tools:itemCount="3"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/view50"
-                    app:layout_constraintTop_toBottomOf="@+id/textView67" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView67"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_details_cast" />
 
                 <TextView
                     android:id="@+id/textView68"
@@ -409,13 +409,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:orientation="horizontal"
-                    tools:listitem="@layout/item_details_cast"
-                    tools:itemCount="3"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/view50"
-                    app:layout_constraintTop_toBottomOf="@+id/textView68" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView68"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_details_cast" />
 
                 <View
                     android:layout_width="match_parent"
@@ -450,7 +450,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_alternates_bold"
-                    android:text="@string/cast"
+                    android:text="@string/trailers"
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimen_18sp"
                     app:layout_constraintStart_toStartOf="@+id/view52"
@@ -461,13 +461,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:orientation="horizontal"
-                    tools:listitem="@layout/item_details_music"
-                    tools:itemCount="3"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/view52"
-                    app:layout_constraintTop_toBottomOf="@+id/textView69" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView69"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_details_music" />
 
                 <TextView
                     android:id="@+id/textView70"
@@ -475,7 +475,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
                     android:fontFamily="@font/montserrat_alternates_bold"
-                    android:text="@string/crew"
+                    android:text="@string/music_videos"
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimen_18sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -486,13 +486,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:orientation="horizontal"
-                    tools:listitem="@layout/item_details_music"
-                    tools:itemCount="3"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/view52"
-                    app:layout_constraintTop_toBottomOf="@+id/textView70" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView70"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_details_music" />
 
                 <View
                     android:layout_width="match_parent"
@@ -508,7 +508,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="@dimen/dimen_30dp"
                 android:layout_marginEnd="24dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/musicTrailer">

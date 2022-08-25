@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.net.pvr1.app-mergeDebugResources-57:/values-te/values-te.xml",
+            "outputFile": "com.net.pvr1.app-mergeDebugResources-61:/values-te/values-te.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Dell\\.gradle\\caches\\transforms-3\\0bdf1e21bbeb01b5cc8ec1db0d666d14\\transformed\\jetified-play-services-basement-18.1.0\\res\\values-te\\values.xml",

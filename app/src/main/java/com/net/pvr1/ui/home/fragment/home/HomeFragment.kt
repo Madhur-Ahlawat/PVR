@@ -24,10 +24,13 @@ import com.net.pvr1.databinding.FragmentHomeBinding
 import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.home.fragment.home.adapter.*
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
+import com.net.pvr1.ui.movieDetails.MovieDetailsActivity
 import com.net.pvr1.ui.player.PlayerActivity
+import com.net.pvr1.ui.selectCity.SelectCityActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.select_pos
 import com.net.pvr1.utils.NetworkResult
@@ -66,12 +69,17 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         preferences = AppPreferences()
-        authViewModel.home("Delhi-NCR", "", "0", "0", false, "no", "", "ALL", "ALL", "ALL", "no")
+        authViewModel.home("Delhi-NCR", "", "0", "0", true, "no", "", "ALL", "ALL", "ALL", "no")
         (requireActivity().findViewById(R.id.notify) as ImageView).show()
         (requireActivity().findViewById(R.id.locationBtn) as ImageView).show()
         (requireActivity().findViewById(R.id.textView2) as TextView).show()
         (requireActivity().findViewById(R.id.subTitle) as TextView).show()
         (requireActivity().findViewById(R.id.txtCity) as TextView).show()
+        (requireActivity().findViewById(R.id.txtCity) as TextView).setOnClickListener {
+            val intent = Intent(requireActivity(), SelectCityActivity::class.java)
+            startActivity(intent)
+        }
+
         movedNext()
         homeApi()
     }
@@ -175,16 +183,16 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 //        binding?.promotionPosition?.setupWithViewPager(binding?.recyclerPromotion, true)
         /*After setting the adapter use the timer */
         val pagerLength = output.mv.size
-
-        val runnable = Runnable {
-
-            if (currentPage == pagerLength) {
-                currentPage = 0
-            }
-            binding?.recyclerPromotion?.setCurrentItem(currentPage++, true)
-        }
-        val handler = Handler(Looper.getMainLooper())
-        handler.postDelayed(runnable, 3000)
+//
+//        val runnable = Runnable {
+//
+//            if (currentPage == pagerLength) {
+//                currentPage = 0
+//            }
+//            binding?.recyclerPromotion?.setCurrentItem(currentPage++, true)
+//        }
+//        val handler = Handler(Looper.getMainLooper())
+//        handler.postDelayed(runnable, 3000)
 
 //        val handler = Handler()
 //        val update = Runnable {
@@ -194,12 +202,12 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 //            binding?.recyclerPromotion?.setCurrentItem(currentPage++, true)
 //        }
 
-        timer = Timer()
-        timer!!.schedule(object : TimerTask() {
-            override fun run() {
-                handler.post(runnable)
-            }
-        }, delayMS, periodMS)
+//        timer = Timer()
+//        timer!!.schedule(object : TimerTask() {
+//            override fun run() {
+//                handler.post(runnable)
+//            }
+//        }, delayMS, periodMS)
 
         binding?.recyclerPromotion?.offscreenPageLimit = 3
         binding?.recyclerPromotion?.clipChildren = false
@@ -252,19 +260,27 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     override fun onCategoryClick(comingSoonItem: HomeResponse.Mfi) {
-
+        val intent = Intent(requireActivity(), MovieDetailsActivity::class.java)
+        intent.putExtra("mid", comingSoonItem.name)
+        startActivity(intent)
     }
 
     override fun onSliderBookClick(comingSoonItem: HomeResponse.Mv) {
-
+        val intent = Intent(requireActivity(), MovieDetailsActivity::class.java)
+        intent.putExtra("mid", comingSoonItem.id)
+        startActivity(intent)
     }
 
     override fun onPromotionClick(comingSoonItem: HomeResponse.Mfi) {
-
+        val intent = Intent(requireActivity(), MovieDetailsActivity::class.java)
+        intent.putExtra("mid", comingSoonItem.name)
+        startActivity(intent)
     }
 
     override fun onMoviesClick(comingSoonItem: HomeResponse.Mv) {
-
+        val intent = Intent(requireActivity(), MovieDetailsActivity::class.java)
+        intent.putExtra("mid", comingSoonItem.id)
+        startActivity(intent)
     }
 
     override fun onTrailerClick(comingSoonItem: HomeResponse.Mv) {

@@ -11,6 +11,7 @@ import com.net.pvr1.ui.giftCard.GiftCardActivity
 import com.net.pvr1.ui.myBookings.MyBookingsActivity
 import com.net.pvr1.ui.offer.OfferActivity
 import com.net.pvr1.ui.privateScreenings.PrivateScreeningsActivity
+import com.net.pvr1.ui.scanner.ScannerActivity
 import com.net.pvr1.ui.webView.WebViewActivity
 import com.net.pvr1.utils.Constant
 
@@ -72,6 +73,12 @@ class MoreFragment : Fragment() {
         //Private Screen
         binding?.privateScreen?.setOnClickListener {
             val intent = Intent(requireContext(), PrivateScreeningsActivity::class.java)
+            startActivity(intent)
+        }
+
+        //ScanQr
+        binding?.llScanQr?.setOnClickListener {
+            val intent = Intent(requireContext(), ScannerActivity::class.java)
             startActivity(intent)
         }
     }

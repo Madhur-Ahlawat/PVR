@@ -4,6 +4,8 @@ package com.net.pvr1.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,8 +13,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.net.pvr1.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -32,6 +32,15 @@ public final class ActivitySelectCityBinding implements ViewBinding {
   public final TextView headerTittle;
 
   @NonNull
+  public final ImageView imageView35;
+
+  @NonNull
+  public final ImageView imageView38;
+
+  @NonNull
+  public final ImageView imageView39;
+
+  @NonNull
   public final RecyclerView recyclerCity;
 
   @NonNull
@@ -41,10 +50,10 @@ public final class ActivitySelectCityBinding implements ViewBinding {
   public final RecyclerView recyclerViewSearchCity;
 
   @NonNull
-  public final TextInputEditText searchCity;
+  public final EditText searchCity;
 
   @NonNull
-  public final TextInputLayout searchSelectCity;
+  public final ConstraintLayout searchSelectCity;
 
   @NonNull
   public final TextView txtOtherCity;
@@ -54,6 +63,9 @@ public final class ActivitySelectCityBinding implements ViewBinding {
 
   @NonNull
   public final TextView txtSelectedLocation;
+
+  @NonNull
+  public final View view55;
 
   @NonNull
   public final View vwL;
@@ -66,16 +78,20 @@ public final class ActivitySelectCityBinding implements ViewBinding {
 
   private ActivitySelectCityBinding(@NonNull ConstraintLayout rootView,
       @NonNull ConstraintLayout consSelectCity, @NonNull ConstraintLayout consSelectedLocation,
-      @NonNull TextView headerTittle, @NonNull RecyclerView recyclerCity,
-      @NonNull RecyclerView recyclerViewOtherCity, @NonNull RecyclerView recyclerViewSearchCity,
-      @NonNull TextInputEditText searchCity, @NonNull TextInputLayout searchSelectCity,
-      @NonNull TextView txtOtherCity, @NonNull TextView txtSelectedCity,
-      @NonNull TextView txtSelectedLocation, @NonNull View vwL, @NonNull View vwMain,
-      @NonNull View vwS) {
+      @NonNull TextView headerTittle, @NonNull ImageView imageView35,
+      @NonNull ImageView imageView38, @NonNull ImageView imageView39,
+      @NonNull RecyclerView recyclerCity, @NonNull RecyclerView recyclerViewOtherCity,
+      @NonNull RecyclerView recyclerViewSearchCity, @NonNull EditText searchCity,
+      @NonNull ConstraintLayout searchSelectCity, @NonNull TextView txtOtherCity,
+      @NonNull TextView txtSelectedCity, @NonNull TextView txtSelectedLocation,
+      @NonNull View view55, @NonNull View vwL, @NonNull View vwMain, @NonNull View vwS) {
     this.rootView = rootView;
     this.consSelectCity = consSelectCity;
     this.consSelectedLocation = consSelectedLocation;
     this.headerTittle = headerTittle;
+    this.imageView35 = imageView35;
+    this.imageView38 = imageView38;
+    this.imageView39 = imageView39;
     this.recyclerCity = recyclerCity;
     this.recyclerViewOtherCity = recyclerViewOtherCity;
     this.recyclerViewSearchCity = recyclerViewSearchCity;
@@ -84,6 +100,7 @@ public final class ActivitySelectCityBinding implements ViewBinding {
     this.txtOtherCity = txtOtherCity;
     this.txtSelectedCity = txtSelectedCity;
     this.txtSelectedLocation = txtSelectedLocation;
+    this.view55 = view55;
     this.vwL = vwL;
     this.vwMain = vwMain;
     this.vwS = vwS;
@@ -134,6 +151,24 @@ public final class ActivitySelectCityBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.imageView35;
+      ImageView imageView35 = ViewBindings.findChildViewById(rootView, id);
+      if (imageView35 == null) {
+        break missingId;
+      }
+
+      id = R.id.imageView38;
+      ImageView imageView38 = ViewBindings.findChildViewById(rootView, id);
+      if (imageView38 == null) {
+        break missingId;
+      }
+
+      id = R.id.imageView39;
+      ImageView imageView39 = ViewBindings.findChildViewById(rootView, id);
+      if (imageView39 == null) {
+        break missingId;
+      }
+
       id = R.id.recyclerCity;
       RecyclerView recyclerCity = ViewBindings.findChildViewById(rootView, id);
       if (recyclerCity == null) {
@@ -153,13 +188,13 @@ public final class ActivitySelectCityBinding implements ViewBinding {
       }
 
       id = R.id.searchCity;
-      TextInputEditText searchCity = ViewBindings.findChildViewById(rootView, id);
+      EditText searchCity = ViewBindings.findChildViewById(rootView, id);
       if (searchCity == null) {
         break missingId;
       }
 
       id = R.id.searchSelectCity;
-      TextInputLayout searchSelectCity = ViewBindings.findChildViewById(rootView, id);
+      ConstraintLayout searchSelectCity = ViewBindings.findChildViewById(rootView, id);
       if (searchSelectCity == null) {
         break missingId;
       }
@@ -182,6 +217,12 @@ public final class ActivitySelectCityBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.view55;
+      View view55 = ViewBindings.findChildViewById(rootView, id);
+      if (view55 == null) {
+        break missingId;
+      }
+
       id = R.id.vwL;
       View vwL = ViewBindings.findChildViewById(rootView, id);
       if (vwL == null) {
@@ -201,9 +242,9 @@ public final class ActivitySelectCityBinding implements ViewBinding {
       }
 
       return new ActivitySelectCityBinding((ConstraintLayout) rootView, consSelectCity,
-          consSelectedLocation, headerTittle, recyclerCity, recyclerViewOtherCity,
-          recyclerViewSearchCity, searchCity, searchSelectCity, txtOtherCity, txtSelectedCity,
-          txtSelectedLocation, vwL, vwMain, vwS);
+          consSelectedLocation, headerTittle, imageView35, imageView38, imageView39, recyclerCity,
+          recyclerViewOtherCity, recyclerViewSearchCity, searchCity, searchSelectCity, txtOtherCity,
+          txtSelectedCity, txtSelectedLocation, view55, vwL, vwMain, vwS);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

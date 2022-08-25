@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
@@ -25,27 +24,26 @@ public final class SelectCityItemLayoutBinding implements ViewBinding {
   public final TextView cityName;
 
   @NonNull
-  public final CardView constraintLayoutCity;
+  public final ConstraintLayout constraintLayout13;
 
   @NonNull
-  public final ImageView imageSelectCity;
+  public final ImageView imageView36;
 
   @NonNull
-  public final ImageView ivWishlist;
+  public final ImageView imageView37;
 
   @NonNull
-  public final ConstraintLayout wishlist;
+  public final ImageView view54;
 
   private SelectCityItemLayoutBinding(@NonNull ConstraintLayout rootView,
-      @NonNull TextView cityName, @NonNull CardView constraintLayoutCity,
-      @NonNull ImageView imageSelectCity, @NonNull ImageView ivWishlist,
-      @NonNull ConstraintLayout wishlist) {
+      @NonNull TextView cityName, @NonNull ConstraintLayout constraintLayout13,
+      @NonNull ImageView imageView36, @NonNull ImageView imageView37, @NonNull ImageView view54) {
     this.rootView = rootView;
     this.cityName = cityName;
-    this.constraintLayoutCity = constraintLayoutCity;
-    this.imageSelectCity = imageSelectCity;
-    this.ivWishlist = ivWishlist;
-    this.wishlist = wishlist;
+    this.constraintLayout13 = constraintLayout13;
+    this.imageView36 = imageView36;
+    this.imageView37 = imageView37;
+    this.view54 = view54;
   }
 
   @Override
@@ -81,32 +79,28 @@ public final class SelectCityItemLayoutBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.constraintLayoutCity;
-      CardView constraintLayoutCity = ViewBindings.findChildViewById(rootView, id);
-      if (constraintLayoutCity == null) {
+      ConstraintLayout constraintLayout13 = (ConstraintLayout) rootView;
+
+      id = R.id.imageView36;
+      ImageView imageView36 = ViewBindings.findChildViewById(rootView, id);
+      if (imageView36 == null) {
         break missingId;
       }
 
-      id = R.id.imageSelectCity;
-      ImageView imageSelectCity = ViewBindings.findChildViewById(rootView, id);
-      if (imageSelectCity == null) {
+      id = R.id.imageView37;
+      ImageView imageView37 = ViewBindings.findChildViewById(rootView, id);
+      if (imageView37 == null) {
         break missingId;
       }
 
-      id = R.id.ivWishlist;
-      ImageView ivWishlist = ViewBindings.findChildViewById(rootView, id);
-      if (ivWishlist == null) {
-        break missingId;
-      }
-
-      id = R.id.wishlist;
-      ConstraintLayout wishlist = ViewBindings.findChildViewById(rootView, id);
-      if (wishlist == null) {
+      id = R.id.view54;
+      ImageView view54 = ViewBindings.findChildViewById(rootView, id);
+      if (view54 == null) {
         break missingId;
       }
 
       return new SelectCityItemLayoutBinding((ConstraintLayout) rootView, cityName,
-          constraintLayoutCity, imageSelectCity, ivWishlist, wishlist);
+          constraintLayout13, imageView36, imageView37, view54);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

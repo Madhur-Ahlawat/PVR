@@ -1,60 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.selectCity.SelectCityActivity">
+    <ImageView
+        android:id="@+id/imageView35"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/searchSelectCity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/close"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/headerTittle"
         style="@style/H4SizeBold"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="56dp"
+        android:layout_marginStart="24dp"
         android:gravity="center"
         android:text="@string/select_city"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/searchSelectCity"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dimen_40dp"
         android:layout_marginStart="@dimen/dimen_16dp"
         android:layout_marginTop="@dimen/dimen_8dp"
         android:layout_marginEnd="@dimen/dimen_16dp"
-        android:hint="@string/search_city"
-        app:boxBackgroundColor="@color/white"
-        app:boxCornerRadiusBottomEnd="@dimen/dimen_20dp"
-        app:boxCornerRadiusBottomStart="@dimen/dimen_20dp"
-        app:boxCornerRadiusTopEnd="@dimen/dimen_20dp"
-        app:boxCornerRadiusTopStart="@dimen/dimen_20dp"
-        app:boxStrokeColor="#EDE8E9"
-        app:boxStrokeWidth="1dp"
-        android:textColorHint="@color/filter_text_color"
-        app:endIconDrawable="@drawable/location"
-        app:endIconMode="custom"
-        app:errorEnabled="false"
+        android:background="@drawable/city_search_curv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerTittle"
-        app:startIconDrawable="@drawable/search">
+        app:layout_constraintTop_toBottomOf="@+id/headerTittle">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/searchCity"
-            android:layout_width="match_parent"
+        <View
+            android:id="@+id/view55"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
-            android:inputType="text"
-            android:maxLength="10"
-            android:textColor="@color/pvr_dark_black"
-            android:textSize="16sp"
-            tools:ignore="TextContrastCheck" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <ImageView
+            android:id="@+id/imageView38"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/view55"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/view55"
+            app:srcCompat="@drawable/search"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/imageView39"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="11dp"
+            app:layout_constraintBottom_toBottomOf="@+id/view55"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/location"
+            tools:ignore="ContentDescription" />
+
+        <EditText
+            android:id="@+id/searchCity"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginEnd="13dp"
+            android:background="@null"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="@string/search_city"
+            app:layout_constraintBottom_toBottomOf="@+id/view55"
+            app:layout_constraintEnd_toStartOf="@+id/imageView39"
+            app:layout_constraintStart_toEndOf="@+id/imageView38"
+            app:layout_constraintTop_toTopOf="@+id/view55"
+            tools:ignore="LabelFor,TouchTargetSizeCheck"
+            android:importantForAutofill="no" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
@@ -85,6 +118,7 @@
                     android:id="@+id/consSelectedLocation"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:layout_marginStart="@dimen/dimen_16dp"
                     android:layout_marginEnd="@dimen/dimen_16dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -103,7 +137,8 @@
                         android:textSize="@dimen/dimen_16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="TextContrastCheck" />
 
                     <TextView
                         android:id="@+id/txtSelectedCity"
@@ -122,6 +157,7 @@
                     android:id="@+id/consSelectCity"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/consSelectedLocation">
@@ -197,8 +233,8 @@
                     android:id="@+id/recyclerViewSearchCity"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:layout_margin="@dimen/dimen_12dp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -208,5 +244,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

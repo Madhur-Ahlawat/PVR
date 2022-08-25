@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.net.pvr1.app-mergeDebugResources-57:/values-hr/values-hr.xml",
+            "outputFile": "com.net.pvr1.app-mergeDebugResources-61:/values-hr/values-hr.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Dell\\.gradle\\caches\\transforms-3\\11c8d18d6b7ba222fce93735bf90b865\\transformed\\appcompat-1.5.0\\res\\values-hr\\values-hr.xml",
