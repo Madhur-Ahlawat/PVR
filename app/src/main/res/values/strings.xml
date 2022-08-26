@@ -153,7 +153,7 @@
     <string name="sound_mix">Sound Mix</string>
     <string name="music_videos">Music Videos</string>
 
-//Scanner
+    //Scanner
     <string name="start_scanning">Start Scanning</string>
     <string name="turn_flash_on_off">Turn Flash On/Off</string>
     <string name="view_finder">View Finder</string>
@@ -164,4 +164,6 @@
     <string name="scan_with_ml_kit">Scan with ML Kit</string>
     <string name="scan_with_zxing">Scan with ZXing</string>
     <string name="developed_by_maulik_hirani">Developed by Maulik Hirani</string>
+    <string name="view_more">View more</string>
+    <string name="also_close_to">Also close to</string>
 </resources>

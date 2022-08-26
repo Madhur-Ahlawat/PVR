@@ -1,5 +1,6 @@
 package com.net.pvr1.api
 
+import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
@@ -16,7 +17,7 @@ import retrofit2.http.Query
 
 interface UserAPI {
 
-        @POST("v2/user/login")
+    @POST("v2/user/login")
     suspend fun loginMobile(
         @Query("mobile") mobile: String,
         @Query("city") city: String,
@@ -100,7 +101,7 @@ interface UserAPI {
         @Query("dtmsource") dtmsource: String,
         @Query("userid") userid: String,
         @Query("mobile") mobile: String,
-        @Query("upbooking") upbooking : Boolean,
+        @Query("upbooking") upbooking: Boolean,
         @Query("srilanka") srilanka: String,
         @Query("type") type: String,
         @Query("lng") lng: String,
@@ -109,29 +110,51 @@ interface UserAPI {
         @Query("isSpi") isSpi: String,
     ): Response<HomeResponse>
 
-   @POST("content/search")
+    @POST("content/search")
     suspend fun homeSearch(
-       @Query("city")city: String,
-       @Query("text") text: String,
-       @Query("searchFilter") searchFilter: String,
-       @Query("lat")  lat: String,
-       @Query("lng") lng: String,
-       @Query("av") version: String,
-       @Query("pt") platform: String
-   ): Response<HomeSearchResponse>
+        @Query("city") city: String,
+        @Query("text") text: String,
+        @Query("searchFilter") searchFilter: String,
+        @Query("lat") lat: String,
+        @Query("lng") lng: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<HomeSearchResponse>
 
-   @POST("content/getmovie")
+    @POST("content/getmovie")
     suspend fun movieDetails(
-       @Query("city") city: String,
-       @Query("mid") mid: String,
-       @Query("av")  version: String,
-       @Query("type") type: String,
-       @Query("pt") platform: String,
-       @Query("userid") userid: String,
-       @Query("lat") lat: String,
-       @Query("lng") lng: String,
-       @Query("isSpi") isSpi: String,
-       @Query("srilanka") srilanka: String
-   ): Response<MovieDetailsResponse>
+        @Query("city") city: String,
+        @Query("mid") mid: String,
+        @Query("av") version: String,
+        @Query("type") type: String,
+        @Query("pt") platform: String,
+        @Query("userid") userid: String,
+        @Query("lat") lat: String,
+        @Query("lng") lng: String,
+        @Query("isSpi") isSpi: String,
+        @Query("srilanka") srilanka: String
+    ): Response<MovieDetailsResponse>
+
+    @POST("content/csessionsfilters")
+    suspend fun cinemaSession(
+        @Query("city") city: String,
+        @Query("cid") cid: String,
+        @Query("lat") lat: String,
+        @Query("lng") lng: String,
+        @Query("userid") userid: String,
+        @Query("date") date: String,
+        @Query("version") version: String,
+        @Query("platform") platform: String,
+        @Query("lang") lang: String,
+        @Query("format") format: String,
+        @Query("price") price: String,
+        @Query("time") time: String,
+        @Query("hc") hc: String,
+        @Query("cc") cc: String,
+        @Query("ad") ad: String,
+        @Query("qr") qr: String,
+        @Query("cinetype") cinetype: String,
+        @Query("cinetypeQR") cinetypeQR: String
+    ): Response<CinemaSessionResponse>
 
 }

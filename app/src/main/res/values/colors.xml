@@ -34,8 +34,7 @@
     <color name="booking_day_white_circle_bg">#ffffff</color>
     <color name="show_card_layout_border_color">#EBEBEB</color>
     <color name="h7.1color">#FFCB05</color>
-    <color name="recycler_list_item_color">#F9F9F9</color>
-    <color name="all_screen_background_color">#F9F9F9</color>
+    <color name="background_color">#F9F9F9</color>
     <color name="pvr_beige">#F2F2F2</color>
     <color name="pvr_light_black">#494848</color>
     <color name="pvr_dark_black">#2F2F2F</color>

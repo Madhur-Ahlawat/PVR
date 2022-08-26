@@ -19,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
         <activity
+            android:name=".ui.cinemaSession.CinemaSessionActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.scanner.ScannerActivity"
             android:exported="false" />
         <activity
@@ -83,6 +86,7 @@
             android:exported="false" />
 
         <service android:name=".utils.FetchAddressIntentServices" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

@@ -4,21 +4,56 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
-import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
+import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CinemaSearchViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
+class CinemaSearchViewModel @Inject constructor(private val userRepository: UserRepository) :
+    ViewModel() {
 
-    val homeSearchLiveData: LiveData<NetworkResult<HomeSearchResponse>>
-    get() = userRepository.searchResponseLiveData
+    val cinemaSessionLiveData: LiveData<NetworkResult<CinemaSessionResponse>>
+        get() = userRepository.cinemaSessionResponseLiveData
 
-    fun cinemaSearch(city: String,text: String,searchFilter: String,lat: String, lng: String) {
+    fun cinemaSession(
+        city: String,
+        cid: String,
+        lat: String,
+        lng: String,
+        userid: String,
+        date: String,
+        lang: String,
+        format: String,
+        price: String,
+        time: String,
+        hc: String,
+        cc: String,
+        ad: String,
+        qr: String,
+        cinetype: String,
+        cinetypeQR: String,
+    ) {
         viewModelScope.launch {
-            userRepository.homeSearchData(city,text,searchFilter,lat, lng)
+            userRepository.cinemaSessionData(
+                city,
+                cid,
+                lat,
+                lng,
+                userid,
+                date,
+                lang,
+                format,
+                price,
+                time,
+                hc,
+                cc,
+                ad,
+                qr,
+                cinetype,
+                cinetypeQR
+            )
         }
     }
 
