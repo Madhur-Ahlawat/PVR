@@ -166,4 +166,7 @@
     <string name="developed_by_maulik_hirani">Developed by Maulik Hirani</string>
     <string name="view_more">View more</string>
     <string name="also_close_to">Also close to</string>
+    //Summery
+    <string name="also_playing">Also playing</string>
+    <string name="food_beverages">Food $ Beverages</string>
 </resources>

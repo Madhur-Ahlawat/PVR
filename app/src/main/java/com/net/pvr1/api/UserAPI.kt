@@ -1,5 +1,6 @@
 package com.net.pvr1.api
 
+import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
@@ -156,5 +157,19 @@ interface UserAPI {
         @Query("cinetype") cinetype: String,
         @Query("cinetypeQR") cinetypeQR: String
     ): Response<CinemaSessionResponse>
+
+    @POST("content/msessionsnew")
+    suspend fun bookingSession(
+        @Query("city") city: String,
+        @Query("mid") mid: String,
+        @Query("lat") lat: String,
+        @Query("lng") lng: String,
+        @Query("date") date: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("isSpi") isSpi: String,
+        @Query("srilanka") srilanka: String,
+        @Query("userid") userid: String
+    ): Response<BookingResponse>
 
 }

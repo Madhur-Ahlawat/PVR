@@ -3,6 +3,7 @@ package com.net.pvr1.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.net.pvr1.api.UserAPI
+import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
@@ -403,4 +404,40 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             cinemaSessionLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
+
+    //BookingTicket
+    private val bookingSessionLiveData = MutableLiveData<NetworkResult<BookingResponse>>()
+    val bookingSessionResponseLiveData: LiveData<NetworkResult<BookingResponse>>
+        get() = bookingSessionLiveData
+
+    suspend fun bookingTicket(
+        city: String,
+        mid: String,
+        lat: String,
+        lng: String,
+        date: String,
+        isSpi: String,
+        srilanka: String,
+        userid: String
+    ) {
+        cinemaSessionLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.bookingSession(
+            city, mid, lat, lng, date, Constant.version, Constant.platform, isSpi, srilanka, userid
+
+        )
+        bookingSessionResponse(response)
+    }
+
+    private fun bookingSessionResponse(response: Response<BookingResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            bookingSessionLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            bookingSessionLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            bookingSessionLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
 }

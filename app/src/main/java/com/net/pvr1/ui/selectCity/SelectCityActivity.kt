@@ -33,7 +33,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
     private val selectCityViewModel: SelectCityViewModel by viewModels()
     private var otherCityList: ArrayList<SelectCityResponse.Output.Ot> = ArrayList()
     private var otherCityAdapter: SearchCityAdapter? = null
-    private var dataList: java.util.ArrayList<Any> = ArrayList()
+    private var dataList:ArrayList<Any> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

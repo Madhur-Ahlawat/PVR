@@ -1,58 +1,39 @@
-package com.net.pvr1.ui.cinemaSession
+package com.net.pvr1.ui.bookingSession
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.net.pvr1.R
-import com.net.pvr1.databinding.ActivityCinemaSessionBinding
-import com.net.pvr1.databinding.ActivityEnableLocationBinding
+import com.net.pvr1.databinding.ActivityBookingBinding
 import com.net.pvr1.di.preference.AppPreferences
-import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
-import com.net.pvr1.ui.cinemaSession.viewModel.CinemaSessionViewModel
+import com.net.pvr1.ui.bookingSession.response.BookingResponse
+import com.net.pvr1.ui.bookingSession.viewModel.BookingViewModel
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.enableLocation.viewModel.EnableLocationViewModel
-import com.net.pvr1.ui.search.searchCinema.viewModel.CinemaSearchViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CinemaSessionActivity : AppCompatActivity() {
+class BookingActivity : AppCompatActivity() {
     private lateinit var preferences: AppPreferences
-    private var binding: ActivityCinemaSessionBinding? = null
-    private val authViewModel: CinemaSessionViewModel by viewModels()
+    private var binding: ActivityBookingBinding? = null
+    private val authViewModel: BookingViewModel by viewModels()
     private var loader: LoaderDialog? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCinemaSessionBinding.inflate(layoutInflater, null, false)
+        binding = ActivityBookingBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
         preferences = AppPreferences()
-        authViewModel.cinemaSession(
-            "Delhi-NCR",
-            "192",
-            "0",
-            "0",
-            "0",
-            "NA",
-            "ALL",
-            "ALL",
-            "ALL",
-            "ALL",
-            "ALL",
-            "ALL",
-            "ALL",
-            "no",
-            "ALL",
-            "ALL"
-        )
-        cinemaSessionDataLoad()
+        authViewModel.bookingTicket("Delhi-NCR", "NHO00015379", "0", "0", "NA", "no", "no", "")
+
+        bookingTicketDataLoad()
     }
 
-    private fun cinemaSessionDataLoad() {
-        authViewModel.cinemaSessionLiveData.observe(this) {
+    private fun bookingTicketDataLoad() {
+        authViewModel.userResponseLiveData.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
@@ -94,8 +75,8 @@ class CinemaSessionActivity : AppCompatActivity() {
         }
     }
 
-    private fun retrieveData(output: CinemaSessionResponse.Output) {
-
+    private fun retrieveData(output: BookingResponse.Output) {
+        printLog("${output}")
     }
 
 }

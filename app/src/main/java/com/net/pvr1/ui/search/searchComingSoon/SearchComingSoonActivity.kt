@@ -1,22 +1,21 @@
 package com.net.pvr1.ui.search.searchComingSoon
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySearchComingSoonBinding
 import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.search.searchCinema.viewModel.CinemaSearchViewModel
 import com.net.pvr1.ui.search.searchComingSoon.adapter.SearchComingSoonAdapter
-import com.net.pvr1.ui.search.searchHome.adapter.SearchHomeCinemaAdapter
+import com.net.pvr1.ui.search.searchComingSoon.viewModel.ComingSoonSearchViewModel
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
@@ -30,7 +29,7 @@ class SearchComingSoonActivity : AppCompatActivity(),
 
     private lateinit var preferences: AppPreferences
     private var binding: ActivitySearchComingSoonBinding? = null
-    private val authViewModel: CinemaSearchViewModel by viewModels()
+    private val authViewModel: ComingSoonSearchViewModel by viewModels()
     private var loader: LoaderDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
