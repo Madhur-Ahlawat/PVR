@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.net.pvr1.api.UserAPI
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
+import com.net.pvr1.ui.bookingSession.response.BookingTheatreResponse
+import com.net.pvr1.ui.cinemaSession.response.CinemaNearTheaterResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
@@ -14,6 +16,7 @@ import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
+import com.net.pvr1.ui.seatLayout.response.SeatResponse
 import com.net.pvr1.ui.selectCity.response.SelectCityResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
@@ -436,6 +439,92 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             bookingSessionLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             bookingSessionLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    //BookingTheatre
+    private val bookingTheatreLiveData = MutableLiveData<NetworkResult<BookingTheatreResponse>>()
+    val bookingTheatreResponseLiveData: LiveData<NetworkResult<BookingTheatreResponse>>
+        get() = bookingTheatreLiveData
+
+    suspend fun bookingTheatre(
+        city: String,
+        cid: String,
+        userid: String,
+        mid: String,
+        isSpi: String
+    ) {
+        cinemaSessionLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.bookingTheatre(
+            city, cid, userid, mid, Constant.version, Constant.platform, isSpi
+        )
+        bookingTheatreResponse(response)
+    }
+
+    private fun bookingTheatreResponse(response: Response<BookingTheatreResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            bookingTheatreLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            bookingTheatreLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            bookingTheatreLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    //NearbyTheatre
+    private val nearTheaterLiveData = MutableLiveData<NetworkResult<CinemaNearTheaterResponse>>()
+    val nearTheaterResponseLiveData: LiveData<NetworkResult<CinemaNearTheaterResponse>>
+        get() = nearTheaterLiveData
+
+    suspend fun nearTheater(city: String, lat: String, lng: String?, cid: String) {
+        nearTheaterLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.nearTheatre(
+            city, lat, lng, cid, Constant.version, Constant.platform
+        )
+        nearTheatreResponse(response)
+    }
+
+    private fun nearTheatreResponse(response: Response<CinemaNearTheaterResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            nearTheaterLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            nearTheaterLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            nearTheaterLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    //SeatLayout
+    private val seatLiveData = MutableLiveData<NetworkResult<SeatResponse>>()
+    val seatResponseLiveData: LiveData<NetworkResult<SeatResponse>>
+        get() = seatLiveData
+
+    suspend fun seatLayout(
+        cinemacode: String,
+        sessionid: String,
+        dtmsource: String,
+        partnerid: String,
+        cdate: String,
+        bundle: Boolean,
+        isSpi: String
+    ) {
+        seatLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.seatLayout(
+           cinemacode,sessionid,dtmsource,partnerid,cdate,bundle,isSpi, Constant.version, Constant.platform
+        )
+        seatLayoutResponse(response)
+    }
+
+    private fun seatLayoutResponse(response: Response<SeatResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            seatLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            seatLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            seatLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 

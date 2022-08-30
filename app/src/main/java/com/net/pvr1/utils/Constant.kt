@@ -1,6 +1,7 @@
 package com.net.pvr1.utils
 
 import android.app.Activity
+import android.content.Context
 import android.provider.ContactsContract.Directory.PACKAGE_NAME
 import android.text.*
 import android.text.method.LinkMovementMethod
@@ -11,6 +12,7 @@ import android.widget.TextView
 import com.net.pvr1.R
 import java.net.MalformedURLException
 import java.net.URL
+import java.text.DecimalFormat
 
 
 class Constant {
@@ -37,6 +39,9 @@ class Constant {
         const val DISTRICT = "$PACKAGE_NAME.DISTRICT"
         const val POST_CODE = "$PACKAGE_NAME.POST_CODE"
         const val STATE = "$PACKAGE_NAME.STATE"
+        const val SEAT_AVAILABEL = 1
+        const val SEAT_BOOKED = 2
+        const val SEAT_SELECTED = 3
     }
 
 
@@ -157,6 +162,19 @@ class Constant {
         } catch (e: Exception) {
             ""
         }
+    }
+
+    fun convertDpToPixel(dp: Float, context: Context): Int {
+        val resources = context.resources
+        val metrics = resources.displayMetrics
+        val px = dp * (metrics.densityDpi / 160f)
+        return px.toInt()
+    }
+
+    fun removeTrailingZeroFormatter(d: Float): String? {
+        val df = DecimalFormat("#0.00")
+        df.format(d.toDouble())
+        return d.toString()
     }
 }
 

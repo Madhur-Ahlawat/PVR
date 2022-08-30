@@ -10,8 +10,10 @@ import com.net.pvr1.BuildConfig
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityMovieDetailsBinding
 import com.net.pvr1.di.preference.AppPreferences
+import com.net.pvr1.ui.bookingSession.BookingActivity
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.movieDetails.adapter.*
 import com.net.pvr1.ui.movieDetails.response.MovieDetailsResponse
 import com.net.pvr1.ui.movieDetails.viewModel.MovieDetailsViewModel
@@ -145,13 +147,20 @@ class MovieDetailsActivity : AppCompatActivity(),
         binding?.textView66?.text = output.p
         binding?.textView66?.let { Constant().makeTextViewResizable(it, 4, "See More", true) }
         //FilmType
-        binding?.textView75?.text=output.tag
+        binding?.textView75?.text = output.tag
         //Language
-        binding?.textView76?.text=output.lng
+        binding?.textView76?.text = output.lng
         //ColorInfo
-        binding?.textView77?.text=output.sm
+        binding?.textView77?.text = output.sm
         //SoundMix
-        binding?.textView79?.text=output.p
+        binding?.textView79?.text = output.p
+
+        //MovedNext
+        binding?.include?.textView5?.setOnClickListener {
+            val intent = Intent(this@MovieDetailsActivity, BookingActivity::class.java)
+            intent.putExtra("mid", output.id)
+            startActivity(intent)
+        }
 
 //        Cast
         val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)

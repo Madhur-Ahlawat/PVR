@@ -1,6 +1,7 @@
 package com.net.pvr1.ui.home.fragment.cinema
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.net.pvr1.R
 import com.net.pvr1.databinding.FragmentCinemasBinding
 import com.net.pvr1.di.preference.AppPreferences
+import com.net.pvr1.ui.cinemaSession.CinemaSessionActivity
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.HomeActivity
@@ -106,11 +108,19 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
     }
 
     override fun onDirectionClick(comingSoonItem: CinemaResponse.Output.C) {
-
+        val strUri =
+            "http://maps.google.com/maps?q=loc:" + comingSoonItem.lat+ "," +  comingSoonItem.lang + " (" + "Label which you want" + ")"
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(strUri))
+        intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity")
+        startActivity(intent)
     }
 
     override fun onLocationClick(comingSoonItem: CinemaResponse.Output.C) {
-
+        val intent = Intent(requireActivity(), CinemaSessionActivity::class.java)
+        intent.putExtra("cid",comingSoonItem.cId.toString())
+        intent.putExtra("lat", comingSoonItem.lat)
+        intent.putExtra("lang", comingSoonItem.lang)
+        startActivity(intent)
     }
 
 }

@@ -1,6 +1,8 @@
 package com.net.pvr1.api
 
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
+import com.net.pvr1.ui.bookingSession.response.BookingTheatreResponse
+import com.net.pvr1.ui.cinemaSession.response.CinemaNearTheaterResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
@@ -11,9 +13,11 @@ import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
+import com.net.pvr1.ui.seatLayout.response.SeatResponse
 import com.net.pvr1.ui.selectCity.response.SelectCityResponse
 import retrofit2.Response
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface UserAPI {
@@ -144,8 +148,8 @@ interface UserAPI {
         @Query("lng") lng: String,
         @Query("userid") userid: String,
         @Query("date") date: String,
-        @Query("version") version: String,
-        @Query("platform") platform: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
         @Query("lang") lang: String,
         @Query("format") format: String,
         @Query("price") price: String,
@@ -171,5 +175,39 @@ interface UserAPI {
         @Query("srilanka") srilanka: String,
         @Query("userid") userid: String
     ): Response<BookingResponse>
+
+    @POST("content/movietheater")
+    suspend fun bookingTheatre(
+        @Query("city") city: String,
+        @Query("cid") mid: String,
+        @Query("userid") lat: String,
+        @Query("mid") lng: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("isSpi") isSpi: String
+    ): Response<BookingTheatreResponse>
+
+    @POST("content/nearcinetheater")
+    suspend fun nearTheatre(
+        @Query("city") city: String,
+        @Query("lat") lat: String,
+        @Query("lng") lng: String?,
+        @Query("cid") cid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<CinemaNearTheaterResponse>
+
+    @POST("trans/getseatlayoutnew/{cinemacode}/{sessionid}")
+    suspend fun seatLayout(
+        @Path("cinemacode") cinemacode: String,
+        @Path("sessionid") sessionid: String,
+        @Query("dtmsource") dtmsource: String,
+        @Query("partnerid") partnerid: String,
+        @Query("cdate") cdate: String,
+        @Query("bundle") bundle: Boolean,
+        @Query("isSpi") isSpi: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<SeatResponse>
 
 }

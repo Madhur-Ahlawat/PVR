@@ -9,8 +9,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
 import com.net.pvr1.ui.selectCity.response.SelectCityResponse
-import com.net.pvr1.utils.hide
-import com.net.pvr1.utils.show
 import kotlin.collections.ArrayList
 
 class OtherCityAdapter(

@@ -48,7 +48,7 @@
 
                 <ImageView
                     android:id="@+id/imageView40"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -60,7 +60,7 @@
 
                 <View
                     android:id="@+id/view58"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:background="@drawable/details_image_gradient"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -300,6 +300,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView13"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:orientation="horizontal"
@@ -331,23 +332,24 @@
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout15">
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView14"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:itemCount="10"
-                    tools:listitem="@layout/item_cinema_details_language"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:itemCount="10"
+                    tools:listitem="@layout/item_cinema_details_language" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout17"
                 android:layout_width="0dp"
-                android:layout_marginTop="@dimen/dimen_10dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10dp"
                 android:background="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -363,6 +365,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView15"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -395,6 +398,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView18"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
@@ -414,10 +418,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="30dp"
-                    android:textSize="@dimen/dimen_12sp"
                     android:fontFamily="@font/sf_pro_text_medium"
-                    android:textColor="@color/textColorGray"
                     android:text="@string/also_close_to"
+                    android:textColor="@color/textColorGray"
+                    android:textSize="@dimen/dimen_12sp"
                     app:layout_constraintStart_toStartOf="@+id/view60"
                     app:layout_constraintTop_toTopOf="@+id/view60" />
 

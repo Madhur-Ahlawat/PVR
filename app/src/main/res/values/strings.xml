@@ -169,4 +169,8 @@
     //Summery
     <string name="also_playing">Also playing</string>
     <string name="food_beverages">Food $ Beverages</string>
+    //Seat Layout
+    <string name="max_seat_msz">You Can\'t Select More Than two Seat.</string>
+    <string name="currency">₹</string>
+
 </resources>

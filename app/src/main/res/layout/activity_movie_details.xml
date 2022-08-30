@@ -652,6 +652,7 @@
 
 
         <include
+            android:id="@+id/include"
             layout="@layout/button_next"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
