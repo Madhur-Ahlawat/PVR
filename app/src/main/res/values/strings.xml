@@ -172,5 +172,15 @@
     //Seat Layout
     <string name="max_seat_msz">You Can\'t Select More Than two Seat.</string>
     <string name="currency">₹</string>
+    <string name="screen_this_way">SCREEN</string>
+    <string name="your_seats">Selected</string>
+    <string name="vacant">Vacant</string>
+    <string name="occupied">Occupied</string>
+    <string name="disable">Wheelchair</string>
+    <string name="buddy">Buddy</string>
+    <string name="retry">RETRY</string>
+    <string name="your_session_expired_message">Your session has expired.</string>
+    <string name="selected_seats">SELECTED SEATS</string>
+    <string name="social_distance">Social\nDistance</string>
 
 </resources>

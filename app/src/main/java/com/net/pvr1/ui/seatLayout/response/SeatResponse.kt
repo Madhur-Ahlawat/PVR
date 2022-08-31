@@ -27,8 +27,8 @@ data class SeatResponse(
         val imh: String,
         val iw: String,
         val mn: String,
-        val priceList: PriceList,
-        val rows: List<Row>,
+        val priceList:Map<String, PriceList.Price>,
+        val rows: ArrayList<Row>,
         val sd: Boolean,
         val showId: Int,
         val st: String,
@@ -36,11 +36,11 @@ data class SeatResponse(
         val transId: Any
     ):Serializable{
         data class PriceList(
-            val `0000000006`: X0000000006,
-            val `0000000007`: X0000000006,
-            val `0000000008`: X0000000006
+            val `0000000006`: Price,
+            val `0000000007`: Price,
+            val `0000000008`: Price
         ):Serializable{
-            data class X0000000006(
+            data class Price(
                 val description: String,
                 val price: String,
                 val priceCode: String
@@ -50,7 +50,8 @@ data class SeatResponse(
         data class Row(
             val n: String,
             val s: List<S>,
-            val t: String
+            val t: String,
+            val c: String,
         ):Serializable{
 
             data class S(
@@ -61,7 +62,7 @@ data class SeatResponse(
                 val displaynumber: String,
                 val en: Boolean,
                 val hc: Boolean,
-                val s: Int,
+                var s: Int,
                 val sn: String,
                 val st: Int
             ):Serializable

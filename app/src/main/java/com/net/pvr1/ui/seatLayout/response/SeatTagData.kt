@@ -3,6 +3,7 @@ package com.net.pvr1.ui.seatLayout.response
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
+
 class SeatTagData {
     /**
      *
@@ -20,8 +21,7 @@ class SeatTagData {
 
     @SerializedName("c")
     @Expose
-    private var c: String? = null
-
+    internal var c: String? = null
     /**
      *
      * @return
@@ -35,7 +35,6 @@ class SeatTagData {
     @SerializedName("s")
     @Expose
     var s: Int? = null
-
     /**
      *
      * @return
@@ -53,7 +52,6 @@ class SeatTagData {
     @SerializedName("st")
     @Expose
     var st: Int? = null
-
     /**
      *
      * @return
@@ -67,7 +65,6 @@ class SeatTagData {
     @SerializedName("hc")
     @Expose
     var hc = false
-
     /**
      *
      * @return
@@ -107,5 +104,4 @@ class SeatTagData {
     fun setC(c: String?) {
         this.c = c
     }
-
 }

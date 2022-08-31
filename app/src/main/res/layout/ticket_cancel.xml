@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="@dimen/alert_dialog_width"
+    android:background="@drawable/alert_dialog_background"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="top"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="@dimen/alert_dialog_margin_left_right"
+        android:layout_marginRight="@dimen/alert_dialog_margin_left_right">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/icon"
+            android:layout_gravity="top"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:visibility="gone"
+            android:src="@drawable/ic_alert"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/titleText"
+            android:layout_marginLeft="10dp"
+            android:gravity="top|left"
+            android:layout_gravity="top"
+            android:drawablePadding="10dp"
+            android:drawableLeft="@drawable/ic_alert"
+            style="@style/H1Size"
+            android:text="Are you sure you want to cancel this ticket?"
+            android:textColor="@color/pvr_light_black"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="54.5dp"
+        android:layout_marginRight="@dimen/alert_dialog_margin_left_right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:gravity="left"
+        android:lineSpacingExtra="2.5dp"
+        style="@style/H2SizeDark"
+        android:textSize="10sp"
+        android:textColor="#7f7f7f"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/yellow_book_curve"
+
+        >
+
+        <TextView
+            android:id="@+id/no"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="NO"
+            android:textAllCaps="true"
+            android:layout_weight="1"
+            android:layout_gravity="left"
+            android:textColor="@color/black"
+            style="@style/H2SizeDark"
+            />
+
+        <TextView
+            android:id="@+id/yes"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textAllCaps="true"
+            android:layout_gravity="right"
+            android:text="Yes, cancel ticket"
+            android:textColor="@color/black"
+            style="@style/H2SizeDark"
+            />
+
+    </LinearLayout>
+</LinearLayout>

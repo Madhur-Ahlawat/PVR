@@ -1,0 +1,12 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#e5e5e5" />
+    <stroke android:width="@dimen/show_card_layout_border" android:color="#e5e5e5"/>
+
+    <corners
+        android:radius="3dp" />
+    <corners
+        android:bottomLeftRadius="0dp"
+        android:bottomRightRadius="0dp"
+        android:topLeftRadius="0dp"
+        android:topRightRadius="0dp" />
+</shape>

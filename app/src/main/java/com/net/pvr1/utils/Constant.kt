@@ -42,6 +42,15 @@ class Constant {
         const val SEAT_AVAILABEL = 1
         const val SEAT_BOOKED = 2
         const val SEAT_SELECTED = 3
+        const val HATCHBACK = 5
+        const val SEAT_SOCIAL_DISTANCING = 4
+        const val SEAT_SELECTED_HATCHBACK = 1137
+        const val SEAT_SELECTED_SUV = 1136
+        const val SEAT_SELECTED_BIKE = 1138
+        const val SUV = 6
+        const val BIKE = 7
+        const val BIKE_SEAT_BOOKED = 8
+
     }
 
 
@@ -176,5 +185,6 @@ class Constant {
         df.format(d.toDouble())
         return d.toString()
     }
+
 }
 

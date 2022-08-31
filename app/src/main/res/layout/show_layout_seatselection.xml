@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seat_selection_show_tab_height"
+        android:layout_marginTop="-2dp"
+        android:visibility="gone"
+        android:layout_below="@+id/navigationHeader"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:id="@+id/firstTab"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:background="@drawable/flat_corner_rect"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textTime1"
+                    style="@style/H2SizeDark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/textShowStatus1"
+                    style="@style/H1Size"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/negative_padding"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/secondTab"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/flat_corner_rect"
+
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textTime2"
+                    style="@style/H2SizeDark"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/textShowStatus2"
+                    style="@style/H1Size"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/negative_padding"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/thirdTab"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@drawable/flat_corner_rect"
+
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textTime3"
+                    style="@style/H1Size"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/textShowStatus3"
+                    style="@style/H1Size"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/negative_padding"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-2dp"
+        android:visibility="visible"
+        android:layout_below="@+id/navigationHeader"
+        android:id="@+id/parrent">
+        <HorizontalScrollView
+            android:id="@+id/rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fillViewport="true"
+            android:layout_alignParentTop="true"
+            android:measureAllChildren="false"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/llshowTab1"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="-2dp"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+
+
+
+        </HorizontalScrollView>
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl"
+            android:background="@drawable/bottomshadow" />
+    </RelativeLayout>
+
+
+
+</LinearLayout>
