@@ -182,5 +182,6 @@
     <string name="your_session_expired_message">Your session has expired.</string>
     <string name="selected_seats">SELECTED SEATS</string>
     <string name="social_distance">Social\nDistance</string>
+    //Food
 
 </resources>

@@ -51,7 +51,6 @@ class MovieDetailsActivity : AppCompatActivity(),
             "no",
             "no"
         )
-//        authViewModel.movieDetails("Delhi-NCR","NHO00017550","","","","","no","no")
 
     }
 
@@ -100,7 +99,6 @@ class MovieDetailsActivity : AppCompatActivity(),
     }
 
     private fun retrieveData(output: MovieDetailsResponse.Output) {
-        printLog("Image---->${output.wit}")
         //Image
         Glide.with(this)
             .load(output.wit)

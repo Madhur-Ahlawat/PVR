@@ -1,7 +1,9 @@
 package com.net.pvr1.ui.seatLayout
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -9,19 +11,22 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.util.TypedValue
-import android.view.Gravity
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
+import android.view.*
 import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySeatLayoutBinding
 import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.seatLayout.response.*
+import com.net.pvr1.ui.food.FoodActivity
+import com.net.pvr1.ui.home.HomeActivity
+import com.net.pvr1.ui.seatLayout.response.Seat
+import com.net.pvr1.ui.seatLayout.response.SeatHC
+import com.net.pvr1.ui.seatLayout.response.SeatResponse
+import com.net.pvr1.ui.seatLayout.response.SeatTagData
 import com.net.pvr1.ui.seatLayout.viewModel.SeatLayoutViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
@@ -38,25 +43,29 @@ class SeatLayoutActivity : AppCompatActivity() {
     private var priceMap: Map<String, SeatResponse.Output.PriceList.Price>? = null
     private var selectedSeats = ArrayList<Seat>()
     private var noOfSeatsSelected = ArrayList<SeatTagData>()
-    var isDit = false
-    var selectedSeatsdbox:  ArrayList<SeatHC>? = null
-    var selectedSeats1: ArrayList<SeatHC>? = null
-    var select_buddy = false
-    var hc_seat = false
-    var hc_seat1 = false
-    var ca_seat = false
-    var flag_hc = false
-    var flag_hc1 = false
-    var price_val = 0.0
-    var hc_count1 = 0
-    var ca_count1 = 0
-    var hc_count = 0
-    var ca_count = 0
-    var Key_data = ""
-    var seats_n: ArrayList<String>? = null
-    var coupol_seat = 0
-    var messahe_text = ""
-    private val noOfRows_small: List<SeatResponse.Output.Row>? = null
+    private var isDit = false
+    private var selectedSeatsBox: ArrayList<SeatHC>? = null
+    private var selectedSeats1: ArrayList<SeatHC>? = null
+    private var selectBuddy = false
+    private var hcSeat = false
+    private var hcSeat1 = false
+    private var caSeat = false
+    private var flagHc = false
+    private var flagHc1 = false
+    private var priceVal = 0.0
+    private var hcCount1 = 0
+    private var caCount1 = 0
+    private var hcCount = 0
+    private var caCount = 0
+    private var keyData = ""
+    private var seatsN: ArrayList<String>? = null
+    private var coupleSeat = 0
+    private var messageText = ""
+    private var noOfRowsSmall: List<SeatResponse.Output.Row>? = null
+    private var flagCount = 0
+    private var posX = 0
+    private var posY = 0
+    private val showSeat: PopupWindow? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,10 +74,47 @@ class SeatLayoutActivity : AppCompatActivity() {
         val view = binding?.root
         setContentView(view)
         preferences = AppPreferences()
-        authViewModel.seatLayout(
-            "DWAR", "33466", "", "", "", false, ""
-        )
+        authViewModel.seatLayout("DPXL", "33461", "", "", "", false, "")
         seatLayout()
+        movedNext()
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun movedNext() {
+        binding?.btnContinue?.setOnClickListener {
+            val intent = Intent(this@SeatLayoutActivity, FoodActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding?.seatInclude?.outerScroll?.setOnTouchListener { _, motionEvent ->
+            if (motionEvent.action == MotionEvent.ACTION_UP) {
+                if (showSeat != null && showSeat.isShowing) {
+                    showSeat.dismiss()
+                    flagCount = 1
+                }
+            } else {
+                if (showSeat == null || !showSeat.isShowing) {
+                    showSeats()
+                }
+            }
+            false
+        }
+
+        binding?.seatInclude?.llHorizontalScroll?.setOnTouchListener { _, motionEvent ->
+            if (motionEvent.action == MotionEvent.ACTION_UP) {
+                if (showSeat != null && showSeat.isShowing) {
+                    showSeat.dismiss()
+                    flagCount = 1
+                }
+            } else {
+                if (showSeat == null || !showSeat.isShowing) {
+                    showSeats()
+                }
+            }
+            false
+        }
+
+
     }
 
     private fun seatLayout() {
@@ -78,9 +124,8 @@ class SeatLayoutActivity : AppCompatActivity() {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         priceMap = it.data.output.priceList
-//                        selectedSeatsdbox=it.data.output.rows
-                        retrieveData(it.data.output.rows)
-                        drowColum(it.data.output.rows)
+                        noOfRowsSmall=it.data.output.rows
+                        drawColumn(it.data.output.rows)
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -117,65 +162,16 @@ class SeatLayoutActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun retrieveData(noOfRows: List<SeatResponse.Output.Row>) {
+    private fun drawColumn(noOfRows: List<SeatResponse.Output.Row>) {
         binding?.seatInclude?.llSeatlayout?.removeAllViews()
         var areaName = ""
         for (i in noOfRows.indices) {
             val row: SeatResponse.Output.Row = noOfRows[i]
             val noSeats: List<SeatResponse.Output.Row.S> = row.s
             if (noSeats.isNotEmpty()) {
-                //Draw seats ==================
-                val linearLayout = LinearLayout(this)
-                linearLayout.orientation = LinearLayout.HORIZONTAL
-                val layoutParams = LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-                linearLayout.layoutParams = layoutParams
-
-                binding?.seatInclude?.llSeatlayout?.addView(linearLayout)
-                drowRowSmall(noSeats, linearLayout)
-            } else {
-
-                val rlLayuout = RelativeLayout(this)
-                val layoutParams = LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    Constant().convertDpToPixel(10F, this)
-                )
-                rlLayuout.layoutParams = layoutParams
-                if (row.c != null) {
-                    var colorCodes: String = if (row.c.contains("#")) row.c else "#" + row.c
-                    rlLayuout.setBackgroundColor(Color.parseColor(colorCodes))
-                }
-                val centerLayout = LinearLayout(this)
-                val centerLayoutParameter = RelativeLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-                centerLayoutParameter.addRule(RelativeLayout.CENTER_IN_PARENT)
-                centerLayout.gravity = Gravity.CENTER_VERTICAL
-                centerLayout.orientation = LinearLayout.HORIZONTAL
-                centerLayout.layoutParams = centerLayoutParameter
-
-                rlLayuout.addView(centerLayout)
-                binding?.seatInclude?.llSeatlayout?.addView(rlLayuout)
-            }
-        }
-//        if (progressDialog != null) DialogClass.dismissDialog(progressDialog)
-    }
-
-    private fun drowColum(noOfRows: List<SeatResponse.Output.Row>) {
-        binding?.seatInclude?.llSeatlayout?.removeAllViews()
-        var areaName = ""
-        for (i in noOfRows.indices) {
-            val row: SeatResponse.Output.Row = noOfRows[i]
-            val noSeats: List<SeatResponse.Output.Row.S> = row.s
-            //    System.out.println("fhjfhjfh-->" + row.getN());
-            if (noSeats.size > 0) {
                 //draw extras space for row name
                 addRowName(row.n, false)
-                //Draw seats ==================
+                //Draw seats ============
                 val linearLayout = LinearLayout(this)
                 linearLayout.orientation = LinearLayout.HORIZONTAL
                 val layoutParams = LinearLayout.LayoutParams(
@@ -184,7 +180,7 @@ class SeatLayoutActivity : AppCompatActivity() {
                 )
                 linearLayout.layoutParams = layoutParams
                 binding?.seatInclude?.llSeatlayout?.addView(linearLayout)
-                drowRow(linearLayout, noSeats, areaName, i)
+                drawRow(linearLayout, noSeats, areaName, i)
             } else {
 
                 //draw extras space for row name
@@ -192,17 +188,19 @@ class SeatLayoutActivity : AppCompatActivity() {
                 //update area
                 areaName = row.n
 
-                //Draw Area==================
-                val rlLayuout = RelativeLayout(this)
+                //Draw Area============
+                val rlLayout = RelativeLayout(this)
                 val layoutParams = LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     Constant().convertDpToPixel(50F, this)
                 )
-                rlLayuout.layoutParams = layoutParams
-                if (row.c != null) {
-                    var colorCodes: String
-                    colorCodes = if (row.c.contains("#")) row.c else "#" + row.c
-                    rlLayuout.setBackgroundColor(Color.parseColor(colorCodes))
+                rlLayout.layoutParams = layoutParams
+                try {
+                    val colorCodes: String = if (row.c.contains("#")) row.c else "#" + row.c
+                    rlLayout.setBackgroundColor(Color.parseColor(colorCodes))
+
+                }catch (e:Exception){
+                    e.printStackTrace()
                 }
                 val centerLayout = LinearLayout(this)
                 val centerLayoutParameter = RelativeLayout.LayoutParams(
@@ -215,46 +213,44 @@ class SeatLayoutActivity : AppCompatActivity() {
                 centerLayout.layoutParams = centerLayoutParameter
                 val padding: Int = Constant().convertDpToPixel(2F, this)
                 val downButtonLeft = ImageButton(this)
-                val layoutParmatere1 = LinearLayout.LayoutParams(
+                val layoutParameter1 = LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
-                downButtonLeft.layoutParams = layoutParmatere1
+                downButtonLeft.layoutParams = layoutParameter1
                 downButtonLeft.setPadding(padding, 0, padding, 0)
                 downButtonLeft.setBackgroundColor(Color.TRANSPARENT)
                 downButtonLeft.setImageResource(R.drawable.down_arrow)
                 centerLayout.addView(downButtonLeft)
                 val textView = TextView(this)
-                textView.layoutParams = layoutParmatere1
+                textView.layoutParams = layoutParameter1
                 textView.gravity = Gravity.CENTER
                 textView.text = row.n
                 textView.setPadding(padding, 0, padding, 0)
                 textView.setTextAppearance(this, R.style.H1Size)
                 centerLayout.addView(textView)
                 val downButtonRight = ImageButton(this)
-                downButtonRight.layoutParams = layoutParmatere1
+                downButtonRight.layoutParams = layoutParameter1
                 downButtonRight.setPadding(padding, 0, padding, 0)
                 downButtonRight.setImageResource(R.drawable.down_arrow)
                 downButtonRight.setBackgroundColor(Color.TRANSPARENT)
                 centerLayout.addView(downButtonRight)
-                rlLayuout.addView(centerLayout)
-                binding?.seatInclude?.llSeatlayout?.addView(rlLayuout)
+                rlLayout.addView(centerLayout)
+                binding?.seatInclude?.llSeatlayout?.addView(rlLayout)
 
-                // System.out.println("currentContext====================" + row.getN());
             }
         }
-//        if (progressDialog != null) DialogClass.dismissDialog(progressDialog)
     }
 
-    private fun drowRow(
-        llDarwRow: LinearLayout,
+    private fun drawRow(
+        llDrawRow: LinearLayout,
         noSeats: List<SeatResponse.Output.Row.S>,
         areaName: String,
         num: Int
     ) {
         for (i in noSeats.indices) {
             val seat: SeatResponse.Output.Row.S = noSeats[i]
-            if (seat.b != null && !seat.b.equals("")) {
+            if (seat.b != "") {
                 val seatView = TextView(this)
                 seatView.setBackgroundColor(Color.TRANSPARENT)
                 seatView.gravity = Gravity.CENTER
@@ -265,136 +261,153 @@ class SeatLayoutActivity : AppCompatActivity() {
                     Constant().convertDpToPixel(20F, this),
                     Constant().convertDpToPixel(20F, this)
                 ) else {
-                    if (seat.s === Constant.BIKE || seat.s === Constant.BIKE_SEAT_BOOKED || seat.s === Constant.SEAT_SELECTED_BIKE) {
-                        seatView.setPadding(0, Constant().convertDpToPixel(8F, this), 0, 0)
-                        layoutParams = LinearLayout.LayoutParams(
-                            Constant().convertDpToPixel(20F, this),
-                            Constant().convertDpToPixel(30F, this)
-                        )
-                    } else {
-                        seatView.setPadding(0, Constant().convertDpToPixel(8F, this), 0, 0)
-                        layoutParams = LinearLayout.LayoutParams(
-                            Constant().convertDpToPixel(20F, this),
-                            Constant().convertDpToPixel(40F, this)
-                        )
-                    }
+                    layoutParams =
+                        if (seat.s == Constant.BIKE || seat.s == Constant.BIKE_SEAT_BOOKED || seat.s == Constant.SEAT_SELECTED_BIKE) {
+                            seatView.setPadding(0, Constant().convertDpToPixel(8F, this), 0, 0)
+                            LinearLayout.LayoutParams(
+                                Constant().convertDpToPixel(20F, this),
+                                Constant().convertDpToPixel(30F, this)
+                            )
+                        } else {
+                            seatView.setPadding(0, Constant().convertDpToPixel(8F, this), 0, 0)
+                            LinearLayout.LayoutParams(
+                                Constant().convertDpToPixel(20F, this),
+                                Constant().convertDpToPixel(40F, this)
+                            )
+                        }
                 }
                 val margin: Int = Constant().convertDpToPixel(4F, this)
                 layoutParams.setMargins(margin, margin, margin, margin)
                 seatView.layoutParams = layoutParams
-                if (seat.s === Constant.SEAT_AVAILABEL) {
-                    //   System.out.println("Handicaped1-" + seat.getHc());
-                    if (seat.st === 1) {
-                        hc_count1 = hc_count1 + 1
-                        hc_seat = false
-                        hc_seat1 = true
-                        flag_hc1 = true
-                        seatView.text = ""
-                        seatView.setBackgroundResource(R.drawable.ic_hcseat)
-                    } else if (seat.st === 2) {
-                        ca_count1 = ca_count1 + 1
-                        seatView.text = ""
-                        seatView.setBackgroundResource(R.drawable.ic_camp)
-                    } else if (seat.st === 3) {
-                        seatView.text = ""
-                        seatView.setBackgroundResource(R.drawable.buddy)
-                    } else {
-                        seatView.setBackgroundResource(R.drawable.ic_vacant)
-                        seatView.text = seat.sn.replace("[^\\d.]", "")
+                if (seat.s == Constant.SEAT_AVAILABEL) {
+                    when (seat.st) {
+                        1 -> {
+                            hcCount1 += 1
+                            hcSeat = false
+                            hcSeat1 = true
+                            flagHc1 = true
+                            seatView.text = ""
+                            seatView.setBackgroundResource(R.drawable.ic_hcseat)
+                        }
+                        2 -> {
+                            caCount1 += 1
+                            seatView.text = ""
+                            seatView.setBackgroundResource(R.drawable.ic_camp)
+                        }
+                        3 -> {
+                            seatView.text = ""
+                            seatView.setBackgroundResource(R.drawable.buddy)
+                        }
+                        else -> {
+                            seatView.setBackgroundResource(R.drawable.ic_vacant)
+                            seatView.text = seat.sn.replace("[^\\d.]", "")
+                        }
                     }
-                    seatView.setTextColor(resources.getColor(R.color.black_with_fifteen_opacity))
-                } else if (seat.s === Constant.SEAT_SELECTED) {
+                    seatView.setTextColor(
+                        ContextCompat.getColor(
+                            this,
+                            R.color.black_with_fifteen_opacity
+                        )
+                    )
+                } else if (seat.s == Constant.SEAT_SELECTED) {
 
                     //Add selected seat to list
-                    seatView.setTextColor(resources.getColor(R.color.black))
+                    seatView.setTextColor(ContextCompat.getColor(this, R.color.black))
                     val seatTagData = SeatTagData()
-                    seatTagData.b=seat.b
+                    seatTagData.b = seat.b
 //                    seatTagData?.c=seat.c
-                    seatTagData.s=seat.s
-                    seatTagData.sn=seat.sn
-                    seatTagData.st=seat.st
-                    seatTagData.area=areaName
+                    seatTagData.s = seat.s
+                    seatTagData.sn = seat.sn
+                    seatTagData.st = seat.st
+                    seatTagData.area = areaName
                     addSelectedSeats(seatTagData, seatView, num, i)
 
-                    //set desing for selected seat
                     seatView.setBackgroundResource(R.drawable.ic_selected)
                     if (isDit) seatView.setBackgroundResource(R.drawable.ic_selected_car)
-                } else if (seat.s === Constant.SEAT_BOOKED) {
-                    /*  System.out.println("seats=============="+seats_n.contains(seat.getSn()));
-                    System.out.println("seats=============="+(seat.getSn()));
-                    System.out.println("seats=============="+seats_n);*/
-                    if (seats_n != null && seats_n!!.size > 0 && seats_n!!.contains(seat.sn)) {
-                        if (seat.st === 1) {
-                            if (hc_seat1 == false) hc_seat = true
-                            seatView.setBackgroundResource(R.drawable.ic_hco_green)
-                        } else if (seat.st === 2) {
-                            seatView.setBackgroundResource(R.drawable.ic_cao_green)
-                        } else {
-                            seatView.setTextColor(resources.getColor(R.color.black))
-                            seatView.setBackgroundResource(R.drawable.ic_previous_selected)
+                } else if (seat.s == Constant.SEAT_BOOKED) {
+                    /*  System.out.println("seats=========="+seats_n.contains(seat.getSn()));
+                    System.out.println("seats=========="+(seat.getSn()));
+                    System.out.println("seats=========="+seats_n);*/
+                    if (seatsN != null && seatsN!!.size > 0 && seatsN!!.contains(seat.sn)) {
+                        when (seat.st) {
+                            1 -> {
+                                if (!hcSeat1) hcSeat = true
+                                seatView.setBackgroundResource(R.drawable.ic_hco_green)
+                            }
+                            2 -> {
+                                seatView.setBackgroundResource(R.drawable.ic_cao_green)
+                            }
+                            else -> {
+                                seatView.setTextColor(ContextCompat.getColor(this, R.color.black))
+                                seatView.setBackgroundResource(R.drawable.ic_previous_selected)
+                            }
                         }
                     } else {
-                        if (seat.st === 1) {
-                            if (hc_seat1 == false) hc_seat = true
-                            seatView.setBackgroundResource(R.drawable.ic_hco)
-                        } else if (seat.st === 2) {
-                            seatView.setBackgroundResource(R.drawable.ic_cao)
-                        } else {
-                            seatView.setTextColor(resources.getColor(R.color.white))
-                            seatView.setBackgroundResource(R.drawable.ic_fill)
+                        when (seat.st) {
+                            1 -> {
+                                if (!hcSeat1) hcSeat = true
+                                seatView.setBackgroundResource(R.drawable.ic_hco)
+                            }
+                            2 -> {
+                                seatView.setBackgroundResource(R.drawable.ic_cao)
+                            }
+                            else -> {
+                                seatView.setTextColor(ContextCompat.getColor(this, R.color.white))
+                                seatView.setBackgroundResource(R.drawable.ic_fill)
+                            }
                         }
                     }
                     if (isDit) seatView.setBackgroundResource(R.drawable.ic_occupied_car)
-                } else if (seat.s === Constant.SEAT_SOCIAL_DISTANCING) {
+                } else if (seat.s == Constant.SEAT_SOCIAL_DISTANCING) {
                     seatView.setBackgroundResource(R.drawable.ic_social_distancing)
-                } else if (seat.s === Constant.HATCHBACK) {
+                } else if (seat.s == Constant.HATCHBACK) {
                     seatView.text = seat.sn.replace("[^\\d.]", "")
-                    seatView.setTextColor(resources.getColor(R.color.red_data))
+                    seatView.setTextColor(ContextCompat.getColor(this, R.color.red_data))
                     seatView.setBackgroundResource(R.drawable.ic_red_sedan)
-                } else if (seat.s === Constant.SUV) {
+                } else if (seat.s == Constant.SUV) {
                     seatView.text = seat.sn.replace("[^\\d.]", "")
-                    seatView.setTextColor(resources.getColor(R.color.blue_data))
+                    seatView.setTextColor(ContextCompat.getColor(this, R.color.blue_data))
                     seatView.setBackgroundResource(R.drawable.ic_blue_suv)
-                } else if (seat.s === Constant.BIKE) {
+                } else if (seat.s == Constant.BIKE) {
                     // seatView.setText(seat.getSn().replaceAll("[^\\d.]", ""));
                     //seatView.setTextColor(getResources().getColor(R.color.blue_data));
                     seatView.setBackgroundResource(R.drawable.ic_bike_normal)
-                } else if (seat.s === Constant.BIKE_SEAT_BOOKED) {
+                } else if (seat.s == Constant.BIKE_SEAT_BOOKED) {
                     // seatView.setText(seat.getSn().replaceAll("[^\\d.]", ""));
                     //seatView.setTextColor(getResources().getColor(R.color.blue_data));
                     seatView.setBackgroundResource(R.drawable.ic_bike_booked)
-                } else if (seat.s === Constant.SEAT_SELECTED_HATCHBACK || seat.s === Constant.SEAT_SELECTED_SUV) {
+                } else if (seat.s == Constant.SEAT_SELECTED_HATCHBACK || seat.s == Constant.SEAT_SELECTED_SUV) {
 
                     //Add selected seat to list
-                    seatView.setTextColor(resources.getColor(R.color.black))
+                    seatView.setTextColor(ContextCompat.getColor(this, R.color.black))
                     val seatTagData = SeatTagData()
-                    seatTagData.b=seat.b
-                    seatTagData.c=seat.c
-                    seatTagData.s=seat.s
-                    seatTagData.sn=seat.sn
-                    seatTagData.st=seat.st
-                    seatTagData.area=areaName
+                    seatTagData.b = seat.b
+                    seatTagData.c = seat.c
+                    seatTagData.s = seat.s
+                    seatTagData.sn = seat.sn
+                    seatTagData.st = seat.st
+                    seatTagData.area = areaName
                     addSelectedSeats(seatTagData, seatView, num, i)
 
 
-                    //set desing for selected seat
+                    //set des for selected seat
                     seatView.setBackgroundResource(R.drawable.ic_selected)
                     if (isDit) seatView.setBackgroundResource(R.drawable.ic_selected_car)
-                } else if (seat.s === Constant.SEAT_SELECTED_BIKE) {
+                } else if (seat.s == Constant.SEAT_SELECTED_BIKE) {
 
                     //Add selected seat to list
-                    seatView.setTextColor(resources.getColor(R.color.black))
+                    seatView.setTextColor(ContextCompat.getColor(this, R.color.black))
                     val seatTagData = SeatTagData()
-                    seatTagData.b=seat.b
-                    seatTagData.c=seat.c
-                    seatTagData.s=seat.s
-                    seatTagData.sn=seat.sn
-                    seatTagData.st=seat.st
-                    seatTagData.area=areaName
+                    seatTagData.b = seat.b
+                    seatTagData.c = seat.c
+                    seatTagData.s = seat.s
+                    seatTagData.sn = seat.sn
+                    seatTagData.st = seat.st
+                    seatTagData.area = areaName
                     addSelectedSeats(seatTagData, seatView, num, i)
 
 
-                    //set desing for selected seat
+                    //set des for selected seat
                     seatView.setBackgroundResource(R.drawable.ic_selected)
                     seatView.text = ""
                     if (isDit) seatView.setBackgroundResource(R.drawable.ic_bike_selected)
@@ -403,29 +416,19 @@ class SeatLayoutActivity : AppCompatActivity() {
                 }
                 //create tag for seat partial_layout
                 val seatTagData = SeatTagData()
-                seatTagData.b=seat.b
-                seatTagData.c=seat.c
-                seatTagData.s=seat.s
-                seatTagData.sn=seat.sn
-                seatTagData.area=areaName
-                seatTagData.hc=seat.hc
-                seatTagData.bu=seat.bu
-                seatTagData.st=seat.st
-                seatTagData.cos=seat.cos
+                seatTagData.b = seat.b
+                seatTagData.c = seat.c
+                seatTagData.s = seat.s
+                seatTagData.sn = seat.sn
+                seatTagData.area = areaName
+                seatTagData.hc = seat.hc
+                seatTagData.bu = seat.bu
+                seatTagData.st = seat.st
+                seatTagData.cos = seat.cos
                 seatView.tag = seatTagData
 
-                //make click listner for seatview
-                setClick(seatView, num, i, "1")
-                llDarwRow.addView(seatView)
-                /* if (seatTagData.getS() == PCConstants.SEAT_AVAILABEL && seatTagData.getBu()==true && seatTagData.getSt() == 3 && !arrayListSeat.contains(seatTagData)) {
-                    arrayListSeat.add(seatTagData);
-
-                    Seatselection_class seatselectionClass = new Seatselection_class();
-                    seatselectionClass.setTextView(seatView);
-                    seatselectionClass.setNum1(num);
-                    seatselectionClass.setNum2(i);
-                    arrayListSeatText.add(seatselectionClass);
-                }*/
+                setClick(seatView, num, i)
+                llDrawRow.addView(seatView)
             } else {
                 val seatView = TextView(this)
                 val layoutParams: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
@@ -436,18 +439,17 @@ class SeatLayoutActivity : AppCompatActivity() {
                 val margin: Int = Constant().convertDpToPixel(2F, this)
                 layoutParams.setMargins(margin, margin, margin, margin)
                 seatView.setBackgroundColor(Color.TRANSPARENT)
-                llDarwRow.addView(seatView)
+                llDrawRow.addView(seatView)
             }
         }
     }
 
     private fun addRowName(rowName: String, space: Boolean) {
-        //  System.out.println("rowName========"+rowName+"====="+space);
+        //  System.out.println("rowName======"+rowName+"===="+space);
         if (space) {
             val txtRowName = TextView(this)
             txtRowName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
-            val layoutParams: LinearLayout.LayoutParams
-            layoutParams = if (isDit) LinearLayout.LayoutParams(
+            val layoutParams: LinearLayout.LayoutParams = if (isDit) LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 Constant().convertDpToPixel(40F, this)
             ) else LinearLayout.LayoutParams(
@@ -461,13 +463,11 @@ class SeatLayoutActivity : AppCompatActivity() {
             binding?.seatInclude?.llRowName?.addView(txtRowName)
         } else {
 
-            //Area partial_layout design ==========================
+            //Area partial_layout design ==================
             val txtRowName = TextView(this)
             txtRowName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
             txtRowName.textSize = Color.parseColor("#767373").toFloat()
-//            FontClass.sethelveticaNeueBold(txtRowName)
-            val layoutParams: LinearLayout.LayoutParams
-            layoutParams = if (isDit) LinearLayout.LayoutParams(
+            val layoutParams: LinearLayout.LayoutParams = if (isDit) LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 Constant().convertDpToPixel(40F, this)
             ) else LinearLayout.LayoutParams(
@@ -483,26 +483,36 @@ class SeatLayoutActivity : AppCompatActivity() {
         }
     }
 
-    private fun drowRowSmall(noSeats: List<SeatResponse.Output.Row.S>, llDarwRow: LinearLayout) {
+    private fun drawRowSmall(noSeats: List<SeatResponse.Output.Row.S>, llDrawRow: LinearLayout) {
         for (i in noSeats.indices) {
             val seat: SeatResponse.Output.Row.S = noSeats[i]
-            if (seat.b != null && seat.b != "") {
+            if (seat.b != "") {
                 val seatView = ImageButton(this)
                 seatView.setBackgroundColor(Color.WHITE)
                 val layoutParams = LinearLayout.LayoutParams(10, 10)
                 val margin: Int = Constant().convertDpToPixel(1F, this)
                 layoutParams.setMargins(margin, margin, margin, margin)
                 seatView.layoutParams = layoutParams
-                if (seat.s === Constant.SEAT_AVAILABEL || seat.s === Constant.HATCHBACK || seat.s === Constant.SUV || seat.s === Constant.BIKE) {
-                    seatView.setImageResource(R.drawable.group)
-                } else if (seat.s === Constant.SEAT_SELECTED || seat.s === Constant.SEAT_SELECTED_HATCHBACK || seat.s === Constant.SEAT_SELECTED_SUV || seat.s === Constant.SEAT_SELECTED_BIKE) {
-                    seatView.setBackgroundColor(resources.getColor(R.color.pvr_yellow))
-                } else if (seat.s === Constant.SEAT_BOOKED) {
-                    seatView.setImageResource(R.drawable.occupied)
-                } else {
-                    seatView.setBackgroundColor(Color.TRANSPARENT)
+                when (seat.s) {
+                    Constant.SEAT_AVAILABEL, Constant.HATCHBACK, Constant.SUV, Constant.BIKE -> {
+                        seatView.setImageResource(R.drawable.group)
+                    }
+                    Constant.SEAT_SELECTED, Constant.SEAT_SELECTED_HATCHBACK, Constant.SEAT_SELECTED_SUV, Constant.SEAT_SELECTED_BIKE -> {
+                        seatView.setBackgroundColor(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.pvr_yellow
+                            )
+                        )
+                    }
+                    Constant.SEAT_BOOKED -> {
+                        seatView.setImageResource(R.drawable.occupied)
+                    }
+                    else -> {
+                        seatView.setBackgroundColor(Color.TRANSPARENT)
+                    }
                 }
-                llDarwRow.addView(seatView)
+                llDrawRow.addView(seatView)
             } else {
                 val seatView = ImageButton(this)
                 val layoutParams = LinearLayout.LayoutParams(10, 10)
@@ -510,188 +520,46 @@ class SeatLayoutActivity : AppCompatActivity() {
                 val margin: Int = Constant().convertDpToPixel(1F, this)
                 layoutParams.setMargins(margin, margin, margin, margin)
                 seatView.setBackgroundColor(Color.TRANSPARENT)
-                llDarwRow.addView(seatView)
+                llDrawRow.addView(seatView)
             }
         }
     }
 
-    private fun setClick(seatView: TextView, num1: Int, num2: Int, tp: String) {
+    private fun setClick(seatView: TextView, num1: Int, num2: Int) {
         seatView.setOnClickListener {
             try {
                 val seat = seatView.tag as SeatTagData
-                if (seat != null) {
-                    if (seat.s === Constant.SEAT_AVAILABEL) {
-                        if (seat.st === 1) {
-                            buttonClicked(this, seatView, num1, num2)
-                        } else {
-                            if (seat.st === 2) {
-                                hc_seat = ca_count1 > hc_count1
-                            }
-                            //  System.out.println("Handicaped--->" + hc_seat + ca_count + "--" + hc_count + "-" + ca_count1 + "---" + hc_count1);
-                            if (seat.st === 2 && hc_seat == false && ca_count >= hc_count) {
 
+                if (seat.s == Constant.SEAT_AVAILABEL) {
+                    if (seat.st == 1) {
+                        printLog("printSeat--->${seat.st}")
+
+                        buttonClicked(this, seatView, num1, num2)
+                    } else {
+                        if (seat.st == 2) {
+                            hcSeat = caCount1 > hcCount1
+                        }
+                        if (seat.st == 2 && !hcSeat && caCount >= hcCount) {
+                            val dialog = OptionDialog(this,
+                                R.mipmap.ic_launcher,
+                                R.string.app_name,
+                                "Companion seat is only available with a wheelchair seat.",
+                                positiveBtnText = R.string.ok,
+                                negativeBtnText = R.string.no,
+                                positiveClick = {
+                                },
+                                negativeClick = {
+                                })
+                            dialog.show()
+
+                        } else {
+                            if (flagHc1) hcSeat = false
+                            if (seat.cos && coupleSeat == 0) {
+                                coupleSeat = 1
                                 val dialog = OptionDialog(this,
                                     R.mipmap.ic_launcher,
                                     R.string.app_name,
-                                    "Companion seat is only available with a wheelchair seat.",
-                                    positiveBtnText = R.string.ok,
-                                    negativeBtnText = R.string.no,
-                                    positiveClick = {
-                                    },
-                                    negativeClick = {
-                                    })
-                                dialog.show()
-//                                DialogClass.alertDialog(
-//                                    currentContext,
-//                                    "Companion seat is only available with a wheelchair seat."
-//                                )
-                            } else {
-                                if (flag_hc1 == true) hc_seat = false
-                                if (seat.cos === true && coupol_seat == 0) {
-                                    coupol_seat = 1
-                                    val dialog = OptionDialog(this,
-                                        R.mipmap.ic_launcher,
-                                        R.string.app_name,
-                                        "These are couple recliners.",
-                                        positiveBtnText = R.string.ok,
-                                        negativeBtnText = R.string.no,
-                                        positiveClick = {
-                                        },
-                                        negativeClick = {
-                                        })
-                                    dialog.show()
-//                                    DialogClass.alertDialog(
-//                                        this,
-//                                        "These are couple recliners."
-//                                    )
-                                }
-                                println("select_buddy=============$select_buddy")
-                                if (select_buddy == true) {
-                                    val dialog = OptionDialog(this,
-                                        R.mipmap.ic_launcher,
-                                        R.string.app_name,
-                                        messahe_text,
-                                        positiveBtnText = R.string.ok,
-                                        negativeBtnText = R.string.no,
-                                        positiveClick = {
-                                        },
-                                        negativeClick = {
-                                        })
-                                    dialog.show()
-//                                    DialogClass.alertDialog(this, messahe_text)
-                                } else {
-                                    if (selectedSeats.size < 10) {
-                                        if (select_buddy == true && seat.bu === true) {
-                                            val dialog = OptionDialog(this,
-                                                R.mipmap.ic_launcher,
-                                                R.string.app_name,
-                                                messahe_text,
-                                                positiveBtnText = R.string.ok,
-                                                negativeBtnText = R.string.no,
-                                                positiveClick = {
-                                                },
-                                                negativeClick = {
-                                                })
-                                            dialog.show()
-                                        } else {
-                                            if (selectedSeats.size > 0 && seat.bu === true) {
-                                                val dialog = OptionDialog(this,
-                                                    R.mipmap.ic_launcher,
-                                                    R.string.app_name,
-                                                    messahe_text,
-                                                    positiveBtnText = R.string.ok,
-                                                    negativeBtnText = R.string.no,
-                                                    positiveClick = {
-                                                    },
-                                                    negativeClick = {
-                                                    })
-                                                dialog.show()
-                                            } else {
-                                                seat.s=Constant.SEAT_SELECTED
-                                                if (noOfRows_small?.size!! > 0) noOfRows_small?.get(
-                                                    num1
-                                                )
-                                                    ?.s?.get(num2)
-                                                    ?.s=Constant.SEAT_SELECTED
-                                                if (seat.st === 1) {
-                                                    seatView.text = ""
-                                                    seatView.setBackgroundResource(R.drawable.ic_hcseaty)
-                                                } else if (seat.st === 2) {
-                                                    seatView.text = ""
-                                                    seatView.setBackgroundResource(R.drawable.ic_campy)
-                                                } else if (seat.st === 3) {
-                                                    seatView.text = ""
-                                                    seatView.setBackgroundResource(R.drawable.buddyw)
-                                                } else {
-                                                    seatView.setBackgroundResource(R.drawable.ic_selected)
-                                                    seatView.setTextColor(resources.getColor(R.color.black))
-                                                }
-                                                addSelectedSeats(seat, seatView, num1, num2)
-                                            }
-                                        }
-                                    } else {
-                                        val dialog = OptionDialog(this,
-                                            R.mipmap.ic_launcher,
-                                            R.string.app_name,
-                                            getString(R.string.max_seat_msz),
-                                            positiveBtnText = R.string.ok,
-                                            negativeBtnText = R.string.no,
-                                            positiveClick = {
-                                            },
-                                            negativeClick = {
-                                            })
-                                        dialog.show()
-
-                                    }
-                                }
-                            }
-                        }
-
-                        /*  getTxtSelectedSeat=seatView;
-                            num_buddy_1=num1;
-                            num_buddy_2=num2;*/
-                    } else if (seat.s === Constant.SEAT_SELECTED) {
-                        if (seat.st === 1 && flag_hc == false) {
-                            removeHC(this, seatView, num1, num2)
-                        } else {
-                            seat.s=Constant.SEAT_AVAILABEL
-                            if (seat.st === 1) {
-                                hc_seat = false
-                            } else if (seat.st === 2) {
-                                ca_seat = false
-                            } else if (seat.st === 3) {
-                                select_buddy = false
-                            }
-                            if (seat.st === 1) {
-                                seatView.text = ""
-                                seatView.setBackgroundResource(R.drawable.ic_hcseat)
-                            } else if (seat.st === 2) {
-                                seatView.text = ""
-                                seatView.setBackgroundResource(R.drawable.ic_camp)
-                            } else if (seat.st === 3) {
-                                seatView.text = ""
-                                seatView.setBackgroundResource(R.drawable.buddy)
-                            } else {
-                                seatView.setBackgroundResource(R.drawable.ic_vacant)
-                                seatView.setTextColor(resources.getColor(R.color.black_with_fifteen_opacity))
-                            }
-                            if (noOfRows_small?.size!! > 0) noOfRows_small?.get(num1)?.s?.get(num2)
-                                ?.s=Constant.SEAT_AVAILABEL
-                            removeSelectedSeats(seat)
-                        }
-                    } else if (seat.s === Constant.HATCHBACK) {
-                        if (seat.st === 1) {
-                            buttonClicked(this, seatView, num1, num2)
-                        } else {
-                            if (seat.st === 2) {
-                                hc_seat = ca_count1 > hc_count1
-                            }
-                            //  System.out.println("Handicaped--->" + hc_seat + ca_count + "--" + hc_count + "-" + ca_count1 + "---" + hc_count1);
-                            if (seat.st === 2 && !hc_seat && ca_count >= hc_count) {
-                                val dialog = OptionDialog(this,
-                                    R.mipmap.ic_launcher,
-                                    R.string.app_name,
-                                    "Companion seat is only available with a wheelchair seat.",
+                                    "These are couple recliners.",
                                     positiveBtnText = R.string.ok,
                                     negativeBtnText = R.string.no,
                                     positiveClick = {
@@ -700,127 +568,13 @@ class SeatLayoutActivity : AppCompatActivity() {
                                     })
                                 dialog.show()
 
-//                                DialogClass.alertDialog(
-//                                    currentContext,
-//                                    "Companion seat is only available with a wheelchair seat."
-//                                )
-//                            } else {
-                                if (flag_hc1 == true) hc_seat = false
-                                if (seat.cos === true && coupol_seat == 0) {
-                                    coupol_seat = 1
-                                    val dialog = OptionDialog(this,
-                                        R.mipmap.ic_launcher,
-                                        R.string.app_name,
-                                        "These are couple recliners.",
-                                        positiveBtnText = R.string.ok,
-                                        negativeBtnText = R.string.no,
-                                        positiveClick = {
-                                        },
-                                        negativeClick = {
-                                        })
-                                    dialog.show()
-
-                                }
-                                if (select_buddy == true) {
-//                                    DialogClass.alertDialog(currentContext, messahe_text)
-
-                                    val dialog = OptionDialog(this,
-                                        R.mipmap.ic_launcher,
-                                        R.string.app_name,
-                                        messahe_text,
-                                        positiveBtnText = R.string.ok,
-                                        negativeBtnText = R.string.no,
-                                        positiveClick = {
-                                        },
-                                        negativeClick = {
-                                        })
-                                    dialog.show()
-
-                                } else {
-                                    if (selectedSeats.size < 10) {
-                                        if (select_buddy == true && seat.bu === true) {
-
-                                            val dialog = OptionDialog(this,
-                                                R.mipmap.ic_launcher,
-                                                R.string.app_name,
-                                                messahe_text,
-                                                positiveBtnText = R.string.ok,
-                                                negativeBtnText = R.string.no,
-                                                positiveClick = {
-                                                },
-                                                negativeClick = {
-                                                })
-                                            dialog.show()
-
-                                        } else {
-                                            if (selectedSeats.size > 0 && seat.bu === true) {
-
-                                                val dialog = OptionDialog(this,
-                                                    R.mipmap.ic_launcher,
-                                                    R.string.app_name,
-                                                    messahe_text,
-                                                    positiveBtnText = R.string.ok,
-                                                    negativeBtnText = R.string.no,
-                                                    positiveClick = {
-                                                    },
-                                                    negativeClick = {
-                                                    })
-                                                dialog.show()
-                                            } else {
-                                                seat.s=Constant.SEAT_SELECTED_HATCHBACK
-                                                if (noOfRows_small?.size!! > 0) noOfRows_small?.get(
-                                                    num1
-                                                )
-                                                    ?.s?.get(num2)
-                                                    ?.s=Constant.SEAT_SELECTED
-                                                if (seat.st === 1) {
-                                                    seatView.text = ""
-                                                    seatView.setBackgroundResource(R.drawable.ic_hcseaty)
-                                                } else if (seat.st === 2) {
-                                                    seatView.text = ""
-                                                    seatView.setBackgroundResource(R.drawable.ic_campy)
-                                                } else if (seat.st === 3) {
-                                                    seatView.text = ""
-                                                    seatView.setBackgroundResource(R.drawable.buddyw)
-                                                } else {
-                                                    seatView.setBackgroundResource(R.drawable.ic_selected)
-                                                    seatView.setTextColor(resources.getColor(R.color.black))
-                                                }
-                                                addSelectedSeats(seat, seatView, num1, num2)
-                                                if (isDit) seatView.setBackgroundResource(R.drawable.ic_selected_car)
-                                            }
-                                        }
-                                    } else {
-                                        val dialog = OptionDialog(this,
-                                            R.mipmap.ic_launcher,
-                                            R.string.app_name,
-                                            getString(R.string.max_seat_msz),
-                                            positiveBtnText = R.string.ok,
-                                            negativeBtnText = R.string.no,
-                                            positiveClick = {
-                                            },
-                                            negativeClick = {
-                                            })
-                                        dialog.show()
-                                    }
-                                }
                             }
-                        }
-                    } else if (seat.s === Constant.BIKE) {
-                        if (seat.st === 1) {
-                            buttonClicked(this, seatView, num1, num2)
-                        } else {
-                            if (seat.st === 2) {
-                                hc_seat = ca_count1 > hc_count1
-                            }
-                            //  System.out.println("Handicaped--->" + hc_seat + ca_count + "--" + hc_count + "-" + ca_count1 + "---" + hc_count1);
-                            if (seat.st === 2 && hc_seat == false && ca_count >= hc_count) {
-
-
+                            println("select_buddy=========$selectBuddy")
+                            if (selectBuddy) {
                                 val dialog = OptionDialog(this,
                                     R.mipmap.ic_launcher,
                                     R.string.app_name,
-                                    "Companion seat is only available with a wheelchair seat.",
+                                    messageText,
                                     positiveBtnText = R.string.ok,
                                     negativeBtnText = R.string.no,
                                     positiveClick = {
@@ -829,41 +583,30 @@ class SeatLayoutActivity : AppCompatActivity() {
                                     })
                                 dialog.show()
                             } else {
-                                if (flag_hc1 == true) hc_seat = false
-                                if (seat.cos === true && coupol_seat == 0) {
-                                    coupol_seat = 1
-                                    val dialog = OptionDialog(this,
-                                        R.mipmap.ic_launcher,
-                                        R.string.app_name,
-                                        "These are couple recliners.",
-                                        positiveBtnText = R.string.ok,
-                                        negativeBtnText = R.string.no,
-                                        positiveClick = {
-                                        },
-                                        negativeClick = {
-                                        })
-                                    dialog.show()
+                                if (selectedSeats.size < 10) {
+                                    printLog("EnterInSeat--->${selectedSeats.size}")
+                                    if (selectBuddy && seat.bu) {
+                                        printLog("EnterInSeat--bu->${ seat.bu}")
 
-                                }
-                                if (select_buddy == true) {
-                                    val dialog = OptionDialog(this,
-                                        R.mipmap.ic_launcher,
-                                        R.string.app_name,
-                                        messahe_text,
-                                        positiveBtnText = R.string.ok,
-                                        negativeBtnText = R.string.no,
-                                        positiveClick = {
-                                        },
-                                        negativeClick = {
-                                        })
-                                    dialog.show()
-                                } else {
-                                    if (selectedSeats.size < 10) {
-                                        if (select_buddy == true && seat.bu === true) {
+                                        val dialog = OptionDialog(this,
+                                            R.mipmap.ic_launcher,
+                                            R.string.app_name,
+                                            messageText,
+                                            positiveBtnText = R.string.ok,
+                                            negativeBtnText = R.string.no,
+                                            positiveClick = {
+                                            },
+                                            negativeClick = {
+                                            })
+                                        dialog.show()
+                                    } else {
+                                        if (selectedSeats.size > 0 && seat.bu) {
+                                            printLog("EnterInSeat--bu-s>${ seat.bu}")
+
                                             val dialog = OptionDialog(this,
                                                 R.mipmap.ic_launcher,
                                                 R.string.app_name,
-                                                messahe_text,
+                                                messageText,
                                                 positiveBtnText = R.string.ok,
                                                 negativeBtnText = R.string.no,
                                                 positiveClick = {
@@ -872,270 +615,612 @@ class SeatLayoutActivity : AppCompatActivity() {
                                                 })
                                             dialog.show()
                                         } else {
-                                            if (selectedSeats.size > 0 && seat.bu === true) {
-                                                val dialog = OptionDialog(this,
-                                                    R.mipmap.ic_launcher,
-                                                    R.string.app_name,
-                                                    messahe_text,
-                                                    positiveBtnText = R.string.ok,
-                                                    negativeBtnText = R.string.no,
-                                                    positiveClick = {
-                                                    },
-                                                    negativeClick = {
-                                                    })
-                                                dialog.show()
-                                            } else {
-                                                seat.s=Constant.SEAT_SELECTED_BIKE
-                                                if (noOfRows_small?.size!! > 0) noOfRows_small?.get(num1)
-                                                    ?.s?.get(num2)
-                                                    ?.s=Constant.SEAT_SELECTED
-                                                if (seat.st === 1) {
+                                            seat.s = Constant.SEAT_SELECTED
+                                            printLog("EnterInSeat-- seat.s->${ seat.st}size--->${noOfRowsSmall?.size}")
+
+                                            if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1]
+                                                .s[num2]
+                                                .s = Constant.SEAT_SELECTED
+                                            when (seat.st) {
+                                                1 -> {
                                                     seatView.text = ""
                                                     seatView.setBackgroundResource(R.drawable.ic_hcseaty)
-                                                } else if (seat.st === 2) {
+                                                }
+                                                2 -> {
                                                     seatView.text = ""
                                                     seatView.setBackgroundResource(R.drawable.ic_campy)
-                                                } else if (seat.st === 3) {
+                                                }
+                                                3 -> {
                                                     seatView.text = ""
                                                     seatView.setBackgroundResource(R.drawable.buddyw)
-                                                } else {
-                                                    seatView.setBackgroundResource(R.drawable.ic_selected)
-                                                    seatView.setTextColor(resources.getColor(R.color.black))
                                                 }
-                                                seatView.text = ""
-                                                addSelectedSeats(seat, seatView, num1, num2)
-                                                if (isDit) seatView.setBackgroundResource(R.drawable.ic_bike_selected)
+                                                else -> {
+                                                    seatView.setBackgroundResource(R.drawable.ic_selected)
+                                                    seatView.setTextColor(
+                                                        ContextCompat.getColor(
+                                                            this,
+                                                            R.color.black
+                                                        )
+                                                    )
+                                                }
                                             }
+                                            addSelectedSeats(seat, seatView, num1, num2)
                                         }
-                                    } else {
-                                        val dialog = OptionDialog(this,
-                                            R.mipmap.ic_launcher,
-                                            R.string.app_name,
-                                            getString(R.string.max_seat_msz),
-                                            positiveBtnText = R.string.ok,
-                                            negativeBtnText = R.string.no,
-                                            positiveClick = {
-                                            },
-                                            negativeClick = {
-                                            })
-                                        dialog.show()
                                     }
-                                }
-                            }
-                        }
-                    } else if (seat.s === Constant.SUV) {
-                        if (seat.st === 1) {
-                            buttonClicked(this, seatView, num1, num2)
-                        } else {
-                            if (seat.st === 2) {
-                                hc_seat = ca_count1 > hc_count1
-                            }
-                            //  System.out.println("Handicaped--->" + hc_seat + ca_count + "--" + hc_count + "-" + ca_count1 + "---" + hc_count1);
-                            if (seat.st === 2 && hc_seat == false && ca_count >= hc_count) {
-                                val dialog = OptionDialog(this,
-                                    R.mipmap.ic_launcher,
-                                    R.string.app_name,
-                                    "Companion seat is only available with a wheelchair seat.",
-                                    positiveBtnText = R.string.ok,
-                                    negativeBtnText = R.string.no,
-                                    positiveClick = {
-                                    },
-                                    negativeClick = {
-                                    })
-                                dialog.show()
-
-                            } else {
-                                if (flag_hc1 == true) hc_seat = false
-                                if (seat.cos === true && coupol_seat == 0) {
-                                    coupol_seat = 1
-                                    val dialog = OptionDialog(this,
-                                        R.mipmap.ic_launcher,
-                                        R.string.app_name,
-                                        "These are couple recliners.",
-                                        positiveBtnText = R.string.ok,
-                                        negativeBtnText = R.string.no,
-                                        positiveClick = {
-                                        },
-                                        negativeClick = {
-                                        })
-                                    dialog.show()
-
-                                }
-                                if (select_buddy == true) {
-                                    val dialog = OptionDialog(this,
-                                        R.mipmap.ic_launcher,
-                                        R.string.app_name,
-                                        messahe_text,
-                                        positiveBtnText = R.string.ok,
-                                        negativeBtnText = R.string.no,
-                                        positiveClick = {
-                                        },
-                                        negativeClick = {
-                                        })
-                                    dialog.show()
                                 } else {
-                                    if (selectedSeats.size < 10) {
-                                        if (select_buddy && seat.bu === true) {
-                                            val dialog = OptionDialog(this,
-                                                R.mipmap.ic_launcher,
-                                                R.string.app_name,
-                                                messahe_text,
-                                                positiveBtnText = R.string.ok,
-                                                negativeBtnText = R.string.no,
-                                                positiveClick = {
-                                                },
-                                                negativeClick = {
-                                                })
-                                            dialog.show()
-                                        } else {
-                                            if (selectedSeats.size > 0 && seat.bu === true) {
-                                                val dialog = OptionDialog(this,
-                                                    R.mipmap.ic_launcher,
-                                                    R.string.app_name,
-                                                    messahe_text,
-                                                    positiveBtnText = R.string.ok,
-                                                    negativeBtnText = R.string.no,
-                                                    positiveClick = {
-                                                    },
-                                                    negativeClick = {
-                                                    })
-                                                dialog.show()
+                                    val dialog = OptionDialog(this,
+                                        R.mipmap.ic_launcher,
+                                        R.string.app_name,
+                                        getString(R.string.max_seat_msz),
+                                        positiveBtnText = R.string.ok,
+                                        negativeBtnText = R.string.no,
+                                        positiveClick = {
+                                        },
+                                        negativeClick = {
+                                        })
+                                    dialog.show()
 
-                                            } else {
-                                                seat.s=Constant.SEAT_SELECTED_SUV
-                                                if (noOfRows_small?.size!! > 0) noOfRows_small?.get(num1)
-                                                    ?.s?.get(num2)
-                                                    ?.s=Constant.SEAT_SELECTED
-                                                if (seat.st === 1) {
-                                                    seatView.text = ""
-                                                    seatView.setBackgroundResource(R.drawable.ic_hcseaty)
-                                                } else if (seat.st === 2) {
-                                                    seatView.text = ""
-                                                    seatView.setBackgroundResource(R.drawable.ic_campy)
-                                                } else if (seat.st === 3) {
-                                                    seatView.text = ""
-                                                    seatView.setBackgroundResource(R.drawable.buddyw)
-                                                } else {
-                                                    seatView.setBackgroundResource(R.drawable.ic_selected)
-                                                    seatView.setTextColor(resources.getColor(R.color.black))
-                                                }
-                                                addSelectedSeats(seat, seatView, num1, num2)
-                                                if (isDit) seatView.setBackgroundResource(R.drawable.ic_selected_car)
-                                            }
-                                        }
-                                    } else {
-
-                                        val dialog = OptionDialog(this,
-                                            R.mipmap.ic_launcher,
-                                            R.string.app_name,
-                                            getString(R.string.max_seat_msz),
-                                            positiveBtnText = R.string.ok,
-                                            negativeBtnText = R.string.no,
-                                            positiveClick = {
-                                            },
-                                            negativeClick = {
-                                            })
-                                        dialog.show()
-
-                                    }
                                 }
                             }
-                        }
-                    } else if (seat.s === Constant.SEAT_SELECTED_HATCHBACK) {
-                        if (seat.st === 1 && !flag_hc) {
-                            removeHC(this, seatView, num1, num2)
-                        } else {
-                            seat.s=Constant.HATCHBACK
-                            if (seat.st === 1) {
-                                hc_seat = false
-                            } else if (seat.st === 2) {
-                                ca_seat = false
-                            } else if (seat.st === 3) {
-                                select_buddy = false
-                            }
-                            if (seat.st === 1) {
-                                seatView.text = ""
-                                seatView.setBackgroundResource(R.drawable.ic_hcseat)
-                            } else if (seat.st === 2) {
-                                seatView.text = ""
-                                seatView.setBackgroundResource(R.drawable.ic_camp)
-                            } else if (seat.st === 3) {
-                                seatView.text = ""
-                                seatView.setBackgroundResource(R.drawable.buddy)
-                            } else {
-                                seatView.setBackgroundResource(R.drawable.ic_vacant)
-                                seatView.setTextColor(resources.getColor(R.color.black_with_fifteen_opacity))
-                            }
-                            if (noOfRows_small?.size!! > 0) noOfRows_small?.get(num1)?.s?.get(num2)
-                                ?.s=Constant.SEAT_AVAILABEL
-                            removeSelectedSeats(seat)
-                            seatView.setBackgroundResource(R.drawable.ic_red_sedan)
-                            seatView.setTextColor(resources.getColor(R.color.red_data))
-                        }
-                    } else if (seat.s === Constant.SEAT_SELECTED_BIKE) {
-                        if (seat.st === 1 && flag_hc == false) {
-                            removeHC(this, seatView, num1, num2)
-                        } else {
-                            seat.s=Constant.BIKE
-                            if (seat.st === 1) {
-                                hc_seat = false
-                            } else if (seat.st === 2) {
-                                ca_seat = false
-                            } else if (seat.st === 3) {
-                                select_buddy = false
-                            }
-                            if (seat.st === 1) {
-                                seatView.text = ""
-                                seatView.setBackgroundResource(R.drawable.ic_hcseat)
-                            } else if (seat.st === 2) {
-                                seatView.text = ""
-                                seatView.setBackgroundResource(R.drawable.ic_camp)
-                            } else if (seat.st === 3) {
-                                seatView.text = ""
-                                seatView.setBackgroundResource(R.drawable.buddy)
-                            } else {
-                                seatView.setBackgroundResource(R.drawable.ic_vacant)
-                                seatView.setTextColor(resources.getColor(R.color.black_with_fifteen_opacity))
-                            }
-                            if (noOfRows_small?.size!! > 0) noOfRows_small?.get(num1)?.s?.get(num2)
-                                ?.s=Constant.SEAT_AVAILABEL
-                            removeSelectedSeats(seat)
-                            seatView.text = ""
-                            seatView.setBackgroundResource(R.drawable.ic_bike_normal)
-                        }
-                    } else if (seat.s === Constant.SEAT_SELECTED_SUV) {
-                        if (seat.st === 1 && flag_hc == false) {
-                            removeHC(this, seatView, num1, num2)
-                        } else {
-                            seat.s=Constant.SUV
-                            if (seat.st === 1) {
-                                hc_seat = false
-                            } else if (seat.st === 2) {
-                                ca_seat = false
-                            } else if (seat.st === 3) {
-                                select_buddy = false
-                            }
-                            if (seat.st === 1) {
-                                seatView.text = ""
-                                seatView.setBackgroundResource(R.drawable.ic_hcseat)
-                            } else if (seat.st === 2) {
-                                seatView.text = ""
-                                seatView.setBackgroundResource(R.drawable.ic_camp)
-                            } else if (seat.st === 3) {
-                                seatView.text = ""
-                                seatView.setBackgroundResource(R.drawable.buddy)
-                            } else {
-                                seatView.setBackgroundResource(R.drawable.ic_vacant)
-                                seatView.setTextColor(resources.getColor(R.color.black_with_fifteen_opacity))
-                            }
-                            if (noOfRows_small?.size!! > 0) noOfRows_small?.get(num1)?.s?.get(num2)
-                                ?.s=Constant.SEAT_AVAILABEL
-                            removeSelectedSeats(seat)
-                            seatView.setBackgroundResource(R.drawable.ic_blue_suv)
-                            seatView.setTextColor(resources.getColor(R.color.blue_data))
                         }
                     }
 
+                } else if (seat.s == Constant.SEAT_SELECTED) {
+                    if (seat.st == 1 && !flagHc) {
+                        removeHC(this, seatView)
+                    } else {
+                        seat.s = Constant.SEAT_AVAILABEL
+                        when (seat.st) {
+                            1 -> {
+                                hcSeat = false
+                            }
+                            2 -> {
+                                caSeat = false
+                            }
+                            3 -> {
+                                selectBuddy = false
+                            }
+                        }
+                        when (seat.st) {
+                            1 -> {
+                                seatView.text = ""
+                                seatView.setBackgroundResource(R.drawable.ic_hcseat)
+                            }
+                            2 -> {
+                                seatView.text = ""
+                                seatView.setBackgroundResource(R.drawable.ic_camp)
+                            }
+                            3 -> {
+                                seatView.text = ""
+                                seatView.setBackgroundResource(R.drawable.buddy)
+                            }
+                            else -> {
+                                seatView.setBackgroundResource(R.drawable.ic_vacant)
+                                seatView.setTextColor(
+                                    ContextCompat.getColor(
+                                        this,
+                                        R.color.black_with_fifteen_opacity
+                                    )
+                                )
+                            }
+                        }
+                        if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1].s[num2]
+                            .s = Constant.SEAT_AVAILABEL
+                        removeSelectedSeats(seat)
+                    }
+                } else if (seat.s == Constant.HATCHBACK) {
+                    if (seat.st == 1) {
+                        buttonClicked(this, seatView, num1, num2)
+                    } else {
+                        if (seat.st == 2) {
+                            hcSeat = caCount1 > hcCount1
+                        }
+                        if (seat.st == 2 && !hcSeat && caCount >= hcCount) {
+                            val dialog = OptionDialog(this,
+                                R.mipmap.ic_launcher,
+                                R.string.app_name,
+                                "Companion seat is only available with a wheelchair seat.",
+                                positiveBtnText = R.string.ok,
+                                negativeBtnText = R.string.no,
+                                positiveClick = {
+                                },
+                                negativeClick = {
+                                })
+                            dialog.show()
+
+                            if (flagHc1) hcSeat = false
+                            if (seat.cos && coupleSeat == 0) {
+                                coupleSeat = 1
+                                val dialog = OptionDialog(this,
+                                    R.mipmap.ic_launcher,
+                                    R.string.app_name,
+                                    "These are couple recliners.",
+                                    positiveBtnText = R.string.ok,
+                                    negativeBtnText = R.string.no,
+                                    positiveClick = {
+                                    },
+                                    negativeClick = {
+                                    })
+                                dialog.show()
+
+                            }
+                            if (selectBuddy) {
+                                val dialog = OptionDialog(this,
+                                    R.mipmap.ic_launcher,
+                                    R.string.app_name,
+                                    messageText,
+                                    positiveBtnText = R.string.ok,
+                                    negativeBtnText = R.string.no,
+                                    positiveClick = {
+                                    },
+                                    negativeClick = {
+                                    })
+                                dialog.show()
+
+                            } else {
+                                if (selectedSeats.size < 10) {
+                                    if (selectBuddy && seat.bu) {
+                                        val dialog = OptionDialog(this,
+                                            R.mipmap.ic_launcher,
+                                            R.string.app_name,
+                                            messageText,
+                                            positiveBtnText = R.string.ok,
+                                            negativeBtnText = R.string.no,
+                                            positiveClick = {
+                                            },
+                                            negativeClick = {
+                                            })
+                                        dialog.show()
+
+                                    } else {
+                                        if (selectedSeats.size > 0 && seat.bu) {
+
+                                            val dialog = OptionDialog(this,
+                                                R.mipmap.ic_launcher,
+                                                R.string.app_name,
+                                                messageText,
+                                                positiveBtnText = R.string.ok,
+                                                negativeBtnText = R.string.no,
+                                                positiveClick = {
+                                                },
+                                                negativeClick = {
+                                                })
+                                            dialog.show()
+                                        } else {
+                                            seat.s = Constant.SEAT_SELECTED_HATCHBACK
+                                            if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1]
+                                                .s[num2]
+                                                .s = Constant.SEAT_SELECTED
+                                            when (seat.st) {
+                                                1 -> {
+                                                    seatView.text = ""
+                                                    seatView.setBackgroundResource(R.drawable.ic_hcseaty)
+                                                }
+                                                2 -> {
+                                                    seatView.text = ""
+                                                    seatView.setBackgroundResource(R.drawable.ic_campy)
+                                                }
+                                                3 -> {
+                                                    seatView.text = ""
+                                                    seatView.setBackgroundResource(R.drawable.buddyw)
+                                                }
+                                                else -> {
+                                                    seatView.setBackgroundResource(R.drawable.ic_selected)
+                                                    seatView.setTextColor(
+                                                        ContextCompat.getColor(
+                                                            this,
+                                                            R.color.black
+                                                        )
+                                                    )
+                                                }
+                                            }
+                                            addSelectedSeats(seat, seatView, num1, num2)
+                                            if (isDit) seatView.setBackgroundResource(R.drawable.ic_selected_car)
+                                        }
+                                    }
+                                } else {
+                                    val dialog = OptionDialog(this,
+                                        R.mipmap.ic_launcher,
+                                        R.string.app_name,
+                                        getString(R.string.max_seat_msz),
+                                        positiveBtnText = R.string.ok,
+                                        negativeBtnText = R.string.no,
+                                        positiveClick = {
+                                        },
+                                        negativeClick = {
+                                        })
+                                    dialog.show()
+                                }
+                            }
+                        }
+                    }
+                } else if (seat.s == Constant.BIKE) {
+                    if (seat.st == 1) {
+                        buttonClicked(this, seatView, num1, num2)
+                    } else {
+                        if (seat.st == 2) {
+                            hcSeat = caCount1 > hcCount1
+                        }
+                        if (seat.st == 2 && !hcSeat && caCount >= hcCount) {
+
+                            val dialog = OptionDialog(this,
+                                R.mipmap.ic_launcher,
+                                R.string.app_name,
+                                "Companion seat is only available with a wheelchair seat.",
+                                positiveBtnText = R.string.ok,
+                                negativeBtnText = R.string.no,
+                                positiveClick = {
+                                },
+                                negativeClick = {
+                                })
+                            dialog.show()
+                        } else {
+                            if (flagHc1) hcSeat = false
+                            if (seat.cos && coupleSeat == 0) {
+                                coupleSeat = 1
+                                val dialog = OptionDialog(this,
+                                    R.mipmap.ic_launcher,
+                                    R.string.app_name,
+                                    "These are couple recliners.",
+                                    positiveBtnText = R.string.ok,
+                                    negativeBtnText = R.string.no,
+                                    positiveClick = {
+                                    },
+                                    negativeClick = {
+                                    })
+                                dialog.show()
+
+                            }
+                            if (selectBuddy) {
+                                val dialog = OptionDialog(this,
+                                    R.mipmap.ic_launcher,
+                                    R.string.app_name,
+                                    messageText,
+                                    positiveBtnText = R.string.ok,
+                                    negativeBtnText = R.string.no,
+                                    positiveClick = {
+                                    },
+                                    negativeClick = {
+                                    })
+                                dialog.show()
+                            } else {
+                                if (selectedSeats.size < 10) {
+                                    if (selectBuddy && seat.bu) {
+                                        val dialog = OptionDialog(this,
+                                            R.mipmap.ic_launcher,
+                                            R.string.app_name,
+                                            messageText,
+                                            positiveBtnText = R.string.ok,
+                                            negativeBtnText = R.string.no,
+                                            positiveClick = {
+                                            },
+                                            negativeClick = {
+                                            })
+                                        dialog.show()
+                                    } else {
+                                        if (selectedSeats.size > 0 && seat.bu) {
+                                            val dialog = OptionDialog(this,
+                                                R.mipmap.ic_launcher,
+                                                R.string.app_name,
+                                                messageText,
+                                                positiveBtnText = R.string.ok,
+                                                negativeBtnText = R.string.no,
+                                                positiveClick = {
+                                                },
+                                                negativeClick = {
+                                                })
+                                            dialog.show()
+                                        } else {
+                                            seat.s = Constant.SEAT_SELECTED_BIKE
+                                            if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1]
+                                                .s[num2]
+                                                .s = Constant.SEAT_SELECTED
+                                            when (seat.st) {
+                                                1 -> {
+                                                    seatView.text = ""
+                                                    seatView.setBackgroundResource(R.drawable.ic_hcseaty)
+                                                }
+                                                2 -> {
+                                                    seatView.text = ""
+                                                    seatView.setBackgroundResource(R.drawable.ic_campy)
+                                                }
+                                                3 -> {
+                                                    seatView.text = ""
+                                                    seatView.setBackgroundResource(R.drawable.buddyw)
+                                                }
+                                                else -> {
+                                                    seatView.setBackgroundResource(R.drawable.ic_selected)
+                                                    seatView.setTextColor(
+                                                        ContextCompat.getColor(
+                                                            this,
+                                                            R.color.black
+                                                        )
+                                                    )
+                                                }
+                                            }
+                                            seatView.text = ""
+                                            addSelectedSeats(seat, seatView, num1, num2)
+                                            if (isDit) seatView.setBackgroundResource(R.drawable.ic_bike_selected)
+                                        }
+                                    }
+                                } else {
+                                    val dialog = OptionDialog(this,
+                                        R.mipmap.ic_launcher,
+                                        R.string.app_name,
+                                        getString(R.string.max_seat_msz),
+                                        positiveBtnText = R.string.ok,
+                                        negativeBtnText = R.string.no,
+                                        positiveClick = {
+                                        },
+                                        negativeClick = {
+                                        })
+                                    dialog.show()
+                                }
+                            }
+                        }
+                    }
+                } else if (seat.s == Constant.SUV) {
+                    if (seat.st == 1) {
+                        buttonClicked(this, seatView, num1, num2)
+                    } else {
+                        if (seat.st == 2) {
+                            hcSeat = caCount1 > hcCount1
+                        }
+                        if (seat.st == 2 && !hcSeat && caCount >= hcCount) {
+                            val dialog = OptionDialog(this,
+                                R.mipmap.ic_launcher,
+                                R.string.app_name,
+                                "Companion seat is only available with a wheelchair seat.",
+                                positiveBtnText = R.string.ok,
+                                negativeBtnText = R.string.no,
+                                positiveClick = {
+                                },
+                                negativeClick = {
+                                })
+                            dialog.show()
+
+                        } else {
+                            if (flagHc1) hcSeat = false
+                            if (seat.cos && coupleSeat == 0) {
+                                coupleSeat = 1
+                                val dialog = OptionDialog(this,
+                                    R.mipmap.ic_launcher,
+                                    R.string.app_name,
+                                    "These are couple recliners.",
+                                    positiveBtnText = R.string.ok,
+                                    negativeBtnText = R.string.no,
+                                    positiveClick = {
+                                    },
+                                    negativeClick = {
+                                    })
+                                dialog.show()
+
+                            }
+                            if (selectBuddy) {
+                                val dialog = OptionDialog(this,
+                                    R.mipmap.ic_launcher,
+                                    R.string.app_name,
+                                    messageText,
+                                    positiveBtnText = R.string.ok,
+                                    negativeBtnText = R.string.no,
+                                    positiveClick = {
+                                    },
+                                    negativeClick = {
+                                    })
+                                dialog.show()
+                            } else {
+                                if (selectedSeats.size < 10) {
+                                    if (selectBuddy && seat.bu) {
+                                        val dialog = OptionDialog(this,
+                                            R.mipmap.ic_launcher,
+                                            R.string.app_name,
+                                            messageText,
+                                            positiveBtnText = R.string.ok,
+                                            negativeBtnText = R.string.no,
+                                            positiveClick = {
+                                            },
+                                            negativeClick = {
+                                            })
+                                        dialog.show()
+                                    } else {
+                                        if (selectedSeats.size > 0 && seat.bu) {
+                                            val dialog = OptionDialog(this,
+                                                R.mipmap.ic_launcher,
+                                                R.string.app_name,
+                                                messageText,
+                                                positiveBtnText = R.string.ok,
+                                                negativeBtnText = R.string.no,
+                                                positiveClick = {
+                                                },
+                                                negativeClick = {
+                                                })
+                                            dialog.show()
+
+                                        } else {
+                                            seat.s = Constant.SEAT_SELECTED_SUV
+                                            if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1]
+                                                .s[num2]
+                                                .s = Constant.SEAT_SELECTED
+                                            when (seat.st) {
+                                                1 -> {
+                                                    seatView.text = ""
+                                                    seatView.setBackgroundResource(R.drawable.ic_hcseaty)
+                                                }
+                                                2 -> {
+                                                    seatView.text = ""
+                                                    seatView.setBackgroundResource(R.drawable.ic_campy)
+                                                }
+                                                3 -> {
+                                                    seatView.text = ""
+                                                    seatView.setBackgroundResource(R.drawable.buddyw)
+                                                }
+                                                else -> {
+                                                    seatView.setBackgroundResource(R.drawable.ic_selected)
+                                                    seatView.setTextColor(
+                                                        ContextCompat.getColor(
+                                                            this,
+                                                            R.color.black
+                                                        )
+                                                    )
+                                                }
+                                            }
+                                            addSelectedSeats(seat, seatView, num1, num2)
+                                            if (isDit) seatView.setBackgroundResource(R.drawable.ic_selected_car)
+                                        }
+                                    }
+                                } else {
+
+                                    val dialog = OptionDialog(this,
+                                        R.mipmap.ic_launcher,
+                                        R.string.app_name,
+                                        getString(R.string.max_seat_msz),
+                                        positiveBtnText = R.string.ok,
+                                        negativeBtnText = R.string.no,
+                                        positiveClick = {
+                                        },
+                                        negativeClick = {
+                                        })
+                                    dialog.show()
+
+                                }
+                            }
+                        }
+                    }
+                } else if (seat.s == Constant.SEAT_SELECTED_HATCHBACK) {
+                    if (seat.st == 1 && !flagHc) {
+                        removeHC(this, seatView)
+                    } else {
+                        seat.s = Constant.HATCHBACK
+                        when (seat.st) {
+                            1 -> {
+                                hcSeat = false
+                            }
+                            2 -> {
+                                caSeat = false
+                            }
+                            3 -> {
+                                selectBuddy = false
+                            }
+                        }
+                        when (seat.st) {
+                            1 -> {
+                                seatView.text = ""
+                                seatView.setBackgroundResource(R.drawable.ic_hcseat)
+                            }
+                            2 -> {
+                                seatView.text = ""
+                                seatView.setBackgroundResource(R.drawable.ic_camp)
+                            }
+                            3 -> {
+                                seatView.text = ""
+                                seatView.setBackgroundResource(R.drawable.buddy)
+                            }
+                            else -> {
+                                seatView.setBackgroundResource(R.drawable.ic_vacant)
+                                seatView.setTextColor(
+                                    ContextCompat.getColor(
+                                        this,
+                                        R.color.black_with_fifteen_opacity
+                                    )
+                                )
+                            }
+                        }
+                        if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1].s[num2]
+                            .s = Constant.SEAT_AVAILABEL
+                        removeSelectedSeats(seat)
+                        seatView.setBackgroundResource(R.drawable.ic_red_sedan)
+                        seatView.setTextColor(ContextCompat.getColor(this, R.color.red_data))
+                    }
+                } else if (seat.s == Constant.SEAT_SELECTED_BIKE) {
+                    if (seat.st == 1 && !flagHc) {
+                        removeHC(this, seatView)
+                    } else {
+                        seat.s = Constant.BIKE
+                        when (seat.st) {
+                            1 -> {
+                                hcSeat = false
+                            }
+                            2 -> {
+                                caSeat = false
+                            }
+                            3 -> {
+                                selectBuddy = false
+                            }
+                        }
+                        when (seat.st) {
+                            1 -> {
+                                seatView.text = ""
+                                seatView.setBackgroundResource(R.drawable.ic_hcseat)
+                            }
+                            2 -> {
+                                seatView.text = ""
+                                seatView.setBackgroundResource(R.drawable.ic_camp)
+                            }
+                            3 -> {
+                                seatView.text = ""
+                                seatView.setBackgroundResource(R.drawable.buddy)
+                            }
+                            else -> {
+                                seatView.setBackgroundResource(R.drawable.ic_vacant)
+                                seatView.setTextColor(
+                                    ContextCompat.getColor(
+                                        this,
+                                        R.color.black_with_fifteen_opacity
+                                    )
+                                )
+                            }
+                        }
+                        if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1].s[num2]
+                            .s = Constant.SEAT_AVAILABEL
+                        removeSelectedSeats(seat)
+                        seatView.text = ""
+                        seatView.setBackgroundResource(R.drawable.ic_bike_normal)
+                    }
+                } else if (seat.s == Constant.SEAT_SELECTED_SUV) {
+                    if (seat.st == 1 && !flagHc) {
+                        removeHC(this, seatView)
+                    } else {
+                        seat.s = Constant.SUV
+                        when (seat.st) {
+                            1 -> {
+                                hcSeat = false
+                            }
+                            2 -> {
+                                caSeat = false
+                            }
+                            3 -> {
+                                selectBuddy = false
+                            }
+                        }
+                        when (seat.st) {
+                            1 -> {
+                                seatView.text = ""
+                                seatView.setBackgroundResource(R.drawable.ic_hcseat)
+                            }
+                            2 -> {
+                                seatView.text = ""
+                                seatView.setBackgroundResource(R.drawable.ic_camp)
+                            }
+                            3 -> {
+                                seatView.text = ""
+                                seatView.setBackgroundResource(R.drawable.buddy)
+                            }
+                            else -> {
+                                seatView.setBackgroundResource(R.drawable.ic_vacant)
+                                seatView.setTextColor(
+                                    ContextCompat.getColor(
+                                        this,
+                                        R.color.black_with_fifteen_opacity
+                                    )
+                                )
+                            }
+                        }
+                        if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1].s[num2]
+                            .s = Constant.SEAT_AVAILABEL
+                        removeSelectedSeats(seat)
+                        seatView.setBackgroundResource(R.drawable.ic_blue_suv)
+                        seatView.setTextColor(ContextCompat.getColor(this, R.color.blue_data))
+                    }
                 }
             } catch (e: Exception) {
                 printLog("exception---${e.message}")
@@ -1146,16 +1231,16 @@ class SeatLayoutActivity : AppCompatActivity() {
     private fun removeSelectedSeats(seat: SeatTagData) {
         for (i in selectedSeats.indices) {
             if (seat.b.equals(selectedSeats[i].seatBookingId)) {
-                if (seat.st === 1) {
-                    hc_count--
-                    hc_count1 = hc_count1 + 1
-                } else if (seat.st === 2) {
-                    ca_count--
-                    ca_count1 = ca_count1 + 1
+                if (seat.st == 1) {
+                    hcCount--
+                    hcCount1 += 1
+                } else if (seat.st == 2) {
+                    caCount--
+                    caCount1 += 1
                 }
                 noOfSeatsSelected.removeAt(i)
                 selectedSeats.removeAt(i)
-                selectedSeatsdbox?.removeAt(i)
+                selectedSeatsBox?.removeAt(i)
                 //                    selectedSeats1.remove(i);
                 break
             }
@@ -1190,7 +1275,7 @@ class SeatLayoutActivity : AppCompatActivity() {
                     noOfSeatsSelected.size.toString() + " Vehicle Slots Selected"
             }
         } else {
-//            btnContinue.setText("PAY "+getString(R.string.default_currency));
+            binding?.btnContinue?.text = "PAY "+getString(R.string.currency);
             binding?.btnContinue?.isClickable = false
             binding?.btnContinue?.setTextColor(Color.parseColor("#80000000"))
             binding?.btnContinue?.setCompoundDrawablesWithIntrinsicBounds(
@@ -1205,64 +1290,70 @@ class SeatLayoutActivity : AppCompatActivity() {
             binding?.btitem?.text = ""
         }
         var totalPrice = 0f
-        val selecteSeat = java.util.ArrayList<Spannable>()
+        val selectSeat = ArrayList<Spannable>()
         var bigDecimal = BigDecimal(0)
         for (i in noOfSeatsSelected.indices) {
             try {
                 val seatTagData = noOfSeatsSelected[i]
-                val price = priceMap!![seatTagData.getC()]
-                var wordtoSpan: Spannable
+                val price = priceMap!![seatTagData.c]
+                var wordToSpan: Spannable
                 var seatNo: String
-                if (seatTagData.st === 1) {
-                    seatNo =
-                        if (binding?.txtSelectedSeat?.text.toString()
-                                .equals("", ignoreCase = true)
-                        ) {
-                            "\uF101 " + seatTagData.sn
-                        } else {
-                            "," + "\uF101 " + seatTagData.sn
-                        }
-                    wordtoSpan = SpannableString(seatNo)
-                    wordtoSpan.setSpan(
-                        ForegroundColorSpan(Color.parseColor("#800080")),
-                        0,
-                        seatNo.length,
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                    binding?.txtSelectedSeat?.append(wordtoSpan)
-                } else if (seatTagData.st === 2) {
-                    seatNo =
-                        if (binding?.txtSelectedSeat?.text.toString()
-                                .equals("", ignoreCase = true)
-                        ) {
-                            "\uF102 " + seatTagData.sn
-                        } else {
-                            "," + "\uF102 " + seatTagData.sn
-                        }
-                    wordtoSpan = SpannableString(seatNo)
-                    wordtoSpan.setSpan(
-                        ForegroundColorSpan(Color.parseColor("#800080")),
-                        0,
-                        seatNo.length,
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                   binding?.txtSelectedSeat?.append(wordtoSpan)
-                } else {
-                    if ( binding?.txtSelectedSeat?.getText().toString().equals("", ignoreCase = true)) {
-                        seatNo = seatTagData.sn.toString()
-                    } else {
-                        seatNo = "," + seatTagData.sn
+                when (seatTagData.st) {
+                    1 -> {
+                        seatNo =
+                            if (binding?.txtSelectedSeat?.text.toString()
+                                    .equals("", ignoreCase = true)
+                            ) {
+                                "\uF101 " + seatTagData.sn
+                            } else {
+                                "," + "\uF101 " + seatTagData.sn
+                            }
+                        wordToSpan = SpannableString(seatNo)
+                        wordToSpan.setSpan(
+                            ForegroundColorSpan(Color.parseColor("#800080")),
+                            0,
+                            seatNo.length,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                        binding?.txtSelectedSeat?.append(wordToSpan)
                     }
-                    wordtoSpan = SpannableString(seatNo)
-                    wordtoSpan.setSpan(
-                        ForegroundColorSpan(Color.parseColor("#333333")),
-                        0,
-                        seatNo.length,
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                    binding?.txtSelectedSeat?.append(wordtoSpan)
+                    2 -> {
+                        seatNo =
+                            if (binding?.txtSelectedSeat?.text.toString()
+                                    .equals("", ignoreCase = true)
+                            ) {
+                                "\uF102 " + seatTagData.sn
+                            } else {
+                                "," + "\uF102 " + seatTagData.sn
+                            }
+                        wordToSpan = SpannableString(seatNo)
+                        wordToSpan.setSpan(
+                            ForegroundColorSpan(Color.parseColor("#800080")),
+                            0,
+                            seatNo.length,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                        binding?.txtSelectedSeat?.append(wordToSpan)
+                    }
+                    else -> {
+                        seatNo = if (binding?.txtSelectedSeat?.text.toString()
+                                .equals("", ignoreCase = true)
+                        ) {
+                            seatTagData.sn.toString()
+                        } else {
+                            "," + seatTagData.sn
+                        }
+                        wordToSpan = SpannableString(seatNo)
+                        wordToSpan.setSpan(
+                            ForegroundColorSpan(Color.parseColor("#333333")),
+                            0,
+                            seatNo.length,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                        binding?.txtSelectedSeat?.append(wordToSpan)
+                    }
                 }
-                selecteSeat.add(wordtoSpan)
+                selectSeat.add(wordToSpan)
 //                binding?.txtArea?.setText(price.)
                 bigDecimal = BigDecimal(totalPrice.toString()).add(BigDecimal(price?.price))
                 totalPrice = bigDecimal.toFloat()
@@ -1271,46 +1362,50 @@ class SeatLayoutActivity : AppCompatActivity() {
             }
         }
 
-        //txtSelectedSeat.setText(android.text.TextUtils.join(", ", selecteSeat));
         binding?.btnContinue?.text =
             "PAY " + getString(R.string.currency) + " " + Constant().removeTrailingZeroFormatter(
                 bigDecimal.toFloat()
             )
-        binding?.seatCounterLayout?.seatCounter?.setText(selecteSeat.size.toString())
-        price_val = bigDecimal.toFloat().toDouble()
+        binding?.seatCounterLayout?.seatCounter?.text = selectSeat.size.toString()
+        priceVal = bigDecimal.toFloat().toDouble()
     }
 
     private fun addSelectedSeats(seat: SeatTagData, seatView: TextView, num1: Int, num2: Int) {
-        if (seat.st === 1) {
-            hc_seat = true
-            hc_count = hc_count + 1
-            hc_count1--
-        } else if (seat.st === 2) {
-            ca_seat = true
-            ca_count += 1
-            ca_count1--
-        } else if (seat.st === 3) {
-            select_buddy = true
+        printLog("SeatClick--->${seat.st}")
+        when (seat.st) {
+            1 -> {
+                hcSeat = true
+                hcCount += 1
+                hcCount1--
+            }
+            2 -> {
+                caSeat = true
+                caCount += 1
+                caCount1--
+            }
+            3 -> {
+                selectBuddy = true
+            }
         }
         try {
-            Key_data = seat?.c as String
+            keyData = seat.c as String
         } catch (e: Exception) {
         }
         val selectedSeat = Seat()
         val selectedSeat1 = SeatHC()
-        selectedSeat.seatBookingId=seat.b
-        val price = priceMap!![seat.getC()]
-        selectedSeat.priceCode=price?.priceCode
+        selectedSeat.seatBookingId = seat.b
+        val price = priceMap!![seat.c]
+        selectedSeat.priceCode = price?.priceCode
         noOfSeatsSelected.add(seat)
         selectedSeats.add(selectedSeat)
-        selectedSeat1.setNum1(num1)
-        selectedSeat1.setNum2(num2)
-        selectedSeat1.setSeatView(seatView)
-        selectedSeat1.setSt(seat.st)
-        selectedSeat1.setPriceCode(price?.priceCode)
-        selectedSeat1.setSeatBookingId(seat.b)
+        selectedSeat1.num1 = num1
+        selectedSeat1.num2 = num2
+        selectedSeat1.seatView = seatView
+        selectedSeat1.st = seat.st
+        selectedSeat1.priceCode = price?.priceCode
+        selectedSeat1.seatBookingId = seat.b
         selectedSeats1?.add(selectedSeat1)
-        selectedSeatsdbox?.add(selectedSeat1)
+        selectedSeatsBox?.add(selectedSeat1)
         calculatePrice()
     }
 
@@ -1337,27 +1432,27 @@ class SeatLayoutActivity : AppCompatActivity() {
         icon = dialog.findViewById<View>(R.id.icon) as ImageView
         icon.visibility = View.VISIBLE
         delete = dialog.findViewById<View>(R.id.no) as TextView
-        if (seat.st === 1) {
-            titleText.setText("Are you sure you want to book a Wheelchair-friendly seat?")
-            messagePcTextView.setText("Please do not book it if you are not on a wheelchair. You may be requested to move to accommodate.")
+        if (seat.st == 1) {
+            titleText.text = "Are you sure you want to book a Wheelchair-friendly seat?"
+            messagePcTextView.text =
+                "Please do not book it if you are not on a wheelchair. You may be requested to move to accommodate."
             titleText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
             icon.setImageResource(R.drawable.hc_icon)
         } else {
-            titleText.setText("Are you sure you want to book a Companion seat?")
-            messagePcTextView.setText("You have selected a Wheelchair Companion Seat. You may be requested to move to accommodate.")
+            titleText.text = "Are you sure you want to book a Companion seat?"
+            messagePcTextView.text =
+                "You have selected a Wheelchair Companion Seat. You may be requested to move to accommodate."
             titleText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
             icon.setImageResource(R.drawable.ic_caf)
         }
-        //        }
-        delete.setText("Change Seat")
-        delete.setOnClickListener(View.OnClickListener { dialog.dismiss() })
+        delete.text = "Change Seat"
+        delete.setOnClickListener { dialog.dismiss() }
         cancel = dialog.findViewById<View>(R.id.yes) as TextView
-        cancel.setText("Confirm Seat")
-        cancel.setOnClickListener(View.OnClickListener {
-            hc_seat = true
-            //                ca_seat = false;
-            if (seat.cos === true && coupol_seat == 0) {
-                coupol_seat = 1
+        cancel.text = "Confirm Seat"
+        cancel.setOnClickListener {
+            hcSeat = true
+            if (seat.cos && coupleSeat == 0) {
+                coupleSeat = 1
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
                     R.string.app_name,
@@ -1370,12 +1465,12 @@ class SeatLayoutActivity : AppCompatActivity() {
                     })
                 dialog.show()
             }
-            println("select_buddy=============1===$select_buddy")
-            if (select_buddy == true) {
+            println("select_buddy=========1==$selectBuddy")
+            if (selectBuddy) {
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
                     R.string.app_name,
-                    messahe_text,
+                    messageText,
                     positiveBtnText = R.string.ok,
                     negativeBtnText = R.string.no,
                     positiveClick = {
@@ -1385,11 +1480,11 @@ class SeatLayoutActivity : AppCompatActivity() {
                 dialog.show()
             } else {
                 if (selectedSeats.size < 10) {
-                    if (select_buddy && seat.bu === true) {
+                    if (selectBuddy && seat.bu) {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
                             R.string.app_name,
-                            messahe_text,
+                            messageText,
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
                             positiveClick = {
@@ -1398,11 +1493,11 @@ class SeatLayoutActivity : AppCompatActivity() {
                             })
                         dialog.show()
                     } else {
-                        if (selectedSeats.size > 0 && seat.bu === true) {
+                        if (selectedSeats.size > 0 && seat.bu) {
                             val dialog = OptionDialog(this,
                                 R.mipmap.ic_launcher,
                                 R.string.app_name,
-                                messahe_text,
+                                messageText,
                                 positiveBtnText = R.string.ok,
                                 negativeBtnText = R.string.no,
                                 positiveClick = {
@@ -1411,21 +1506,31 @@ class SeatLayoutActivity : AppCompatActivity() {
                                 })
                             dialog.show()
                         } else {
-                            seat.s=Constant.SEAT_SELECTED
-                            if (noOfRows_small?.size!! > 0) noOfRows_small?.get(num1)?.s?.get(num2)
-                                ?.s=Constant.SEAT_SELECTED
-                            if (seat.st === 1) {
-                                seatView.text = ""
-                                seatView.setBackgroundResource(R.drawable.ic_hcseaty)
-                            } else if (seat.st === 2) {
-                                seatView.text = ""
-                                seatView.setBackgroundResource(R.drawable.ic_campy)
-                            } else if (seat.st === 3) {
-                                seatView.text = ""
-                                seatView.setBackgroundResource(R.drawable.buddyw)
-                            } else {
-                                seatView.setBackgroundResource(R.drawable.ic_selected)
-                                seatView.setTextColor(resources.getColor(R.color.black))
+                            seat.s = Constant.SEAT_SELECTED
+                            if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1].s[num2]
+                                .s = Constant.SEAT_SELECTED
+                            when (seat.st) {
+                                1 -> {
+                                    seatView.text = ""
+                                    seatView.setBackgroundResource(R.drawable.ic_hcseaty)
+                                }
+                                2 -> {
+                                    seatView.text = ""
+                                    seatView.setBackgroundResource(R.drawable.ic_campy)
+                                }
+                                3 -> {
+                                    seatView.text = ""
+                                    seatView.setBackgroundResource(R.drawable.buddyw)
+                                }
+                                else -> {
+                                    seatView.setBackgroundResource(R.drawable.ic_selected)
+                                    seatView.setTextColor(
+                                        ContextCompat.getColor(
+                                            this,
+                                            R.color.black
+                                        )
+                                    )
+                                }
                             }
                             addSelectedSeats(seat, seatView, num1, num2)
                         }
@@ -1446,11 +1551,11 @@ class SeatLayoutActivity : AppCompatActivity() {
                 }
             }
             dialog.dismiss()
-        })
+        }
         dialog.show()
     }
 
-    private fun removeHC(context: Activity, seatView: TextView, num1: Int, num2: Int) {
+    private fun removeHC(context: Activity, seatView: TextView) {
         // custom dialog
         val messagePcTextView: TextView
         val titleText: TextView
@@ -1479,74 +1584,94 @@ class SeatLayoutActivity : AppCompatActivity() {
         titleText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
         icon.setImageResource(R.drawable.hc_icon)
         delete.text = "NO"
-        delete.setOnClickListener(View.OnClickListener { dialog.dismiss() })
+        delete.setOnClickListener { dialog.dismiss() }
         cancel = dialog.findViewById<View>(R.id.yes) as TextView
         cancel.text = "YES"
-//        cancel.setOnClickListener(View.OnClickListener {
-//            seat.setS(PCConstants.SEAT_AVAILABEL)
-//            //  System.out.println("Handicaped" + seat.getHc());
-//            if (seat.st === 1) {
-//                hc_seat = false
-//            } else if (seat.st === 2) {
-//                ca_seat = false
-//            } else if (seat.st === 3) {
-//                select_buddy = false
-//            }
-//            if (seat.st === 1) {
-//                seatView.text = ""
-//                seatView.setBackgroundResource(R.drawable.ic_hcseat)
-//            } else if (seat.st === 2) {
-//                seatView.text = ""
-//                seatView.setBackgroundResource(R.drawable.ic_camp)
-//            } else if (seat.st === 3) {
-//                seatView.text = ""
-//                seatView.setBackgroundResource(R.drawable.buddy)
-//            } else {
-//                seatView.setBackgroundResource(R.drawable.ic_vacant)
-//                seatView.setTextColor(resources.getColor(R.color.black_with_fifteen_opacity))
-//            }
-//            if (noOfRows_small!!.size > 0) noOfRows_small[num1].getS().get(num2)
-//                .setS(Constant.SEAT_AVAILABEL)
-//            removeSelectedSeats(seat)
-//            for (i in 0 until selectedSeats1.size) {
-//                //   System.out.println("selectedSeats1--->" + selectedSeats1.get(i).getSt());
-//                flag_hc = true
-//                if (selectedSeats1[i].getSt() === 1 || selectedSeats1[i].getSt() === 2) {
-//                    val seat = selectedSeats1[i].getSeatView().getTag() as SeatTagData
-//                    seat.setS(Constant.SEAT_AVAILABEL)
-//                    //  System.out.println("Handicaped" + seat.getHc());
-//                    if (seat.st === 1) {
-//                        hc_seat = false
-//                    } else if (seat.st === 2) {
-//                        ca_seat = false
-//                    } else if (seat.st === 3) {
-//                        select_buddy = false
-//                    }
-//                    if (seat.st === 1) {
-//                        selectedSeats1[i].getSeatView().setText("")
-//                        selectedSeats1[i].getSeatView().setBackgroundResource(R.drawable.ic_hcseat)
-//                    } else if (seat.st === 2) {
-//                        selectedSeats1[i].getSeatView().setText("")
-//                        selectedSeats1[i].getSeatView().setBackgroundResource(R.drawable.ic_camp)
-//                    } else if (seat.st === 3) {
-//                        selectedSeats1[i].getSeatView().setText("")
-//                        selectedSeats1[i].getSeatView().setBackgroundResource(R.drawable.buddy)
-//                    } else {
-//                        selectedSeats1[i].getSeatView().setBackgroundResource(R.drawable.ic_vacant)
-//                        selectedSeats1[i].getSeatView()
-//                            .setTextColor(resources.getColor(R.color.black_with_fifteen_opacity))
-//                    }
-//                    if (noOfRows_small.size > 0) noOfRows_small[selectedSeats1[i].getNum1()].getS()
-//                        .get(
-//                            selectedSeats1[i].getNum2()
-//                        ).setS(Constant.SEAT_AVAILABEL)
-//                    removeSelectedSeats(seat)
-//                }
-//            }
-//            flag_hc = false
-//            dialog.dismiss()
-//        })
         dialog.show()
+    }
+
+    private fun showSeats() {
+        val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val popupView =
+            inflater.inflate(R.layout.seat_layout_small, findViewById(R.id.small_seat))
+        val moveView = popupView.findViewById(R.id.move_view) as View
+        if (flagCount == 1) {
+            moveView.x = 0f
+            moveView.y = 0f
+        }
+
+        val lineallySmall = popupView.findViewById<View>(R.id.llSeatlayout) as LinearLayout
+        val letdownSmall = popupView.findViewById<View>(R.id.llRowName) as LinearLayout
+        letdownSmall.removeAllViews()
+        lineallySmall.removeAllViews()
+        if (posX > 0 || posY > 0) {
+            moveView.x = posX.toFloat()
+            moveView.y = posY.toFloat()
+        }
+        try {
+            noOfRowsSmall?.let { drawColumnSmall(it, lineallySmall) }
+        } catch (e: java.lang.Exception) {
+        }
+        val showSeat1 = PopupWindow()
+        showSeat1.contentView = popupView
+        showSeat1.height = WindowManager.LayoutParams.WRAP_CONTENT
+        showSeat1.width = WindowManager.LayoutParams.WRAP_CONTENT
+        showSeat1.showAtLocation(popupView, Gravity.TOP or Gravity.LEFT, 50, 410)
+        showSeat1.update()
+
+
+    }
+
+    private fun drawColumnSmall(
+        noOfRows: List<SeatResponse.Output.Row>,
+        llColumnLayout: LinearLayout
+    ) {
+        llColumnLayout.removeAllViews()
+        for (i in noOfRows.indices) {
+            val row: SeatResponse.Output.Row = noOfRows[i]
+//            val noSeats: List<S> = row.getS()
+            val noSeats: List<SeatResponse.Output.Row.S> = row.s
+            if (noSeats.isNotEmpty()) {
+                //draw extras space for row name
+//                addRowNameSmall(row.getN(), false);
+                //Draw seats ============
+                val linearLayout = LinearLayout(this)
+                linearLayout.orientation = LinearLayout.HORIZONTAL
+                val layoutParams = LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+                linearLayout.layoutParams = layoutParams
+                llColumnLayout.addView(linearLayout)
+                drawRowSmall(noSeats, linearLayout)
+            } else {
+
+                //Draw Area============
+                val rlLayout = RelativeLayout(this)
+                val layoutParams = LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    Constant().convertDpToPixel(10F, this)
+                )
+                rlLayout.layoutParams = layoutParams
+                if (row.c != "") {
+                    val colorCodes: String = if (row.c.contains("#")) row.c else "#" + row.c
+                    rlLayout.setBackgroundColor(Color.parseColor(colorCodes))
+                }
+                val centerLayout = LinearLayout(this)
+                val centerLayoutParameter = RelativeLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+                centerLayoutParameter.addRule(RelativeLayout.CENTER_IN_PARENT)
+                centerLayout.gravity = Gravity.CENTER_VERTICAL
+                centerLayout.orientation = LinearLayout.HORIZONTAL
+                centerLayout.layoutParams = centerLayoutParameter
+                val padding: Int = Constant().convertDpToPixel(1F, this)
+                printLog("$padding")
+                rlLayout.addView(centerLayout)
+                llColumnLayout.addView(rlLayout)
+            }
+        }
     }
 
 }

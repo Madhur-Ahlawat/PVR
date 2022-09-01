@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-
     <include
         android:id="@+id/seatCounterLayout"
         layout="@layout/seat_counter_layout"
@@ -601,13 +600,13 @@
             android:layout_weight="2"
             android:background="@color/yellow"
             android:clickable="false"
-            android:drawableEnd="@drawable/ic_right"
             android:drawablePadding="5dp"
             android:gravity="right|center"
             android:padding="10dp"
             android:text=""
             android:textColor="#80000000"
-            app:text="Rs 0" />
+            app:text="Rs 0"
+            app:drawableEndCompat="@drawable/ic_right" />
 
 
     </LinearLayout>

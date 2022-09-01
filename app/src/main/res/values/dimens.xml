@@ -40,7 +40,7 @@
 
     <dimen name="line_header_below">1dp</dimen>
 
-    <!--start ========== Language selection size config========================= Added by Asha -->
+    <!--start ======= Language selection size config================= Added by Asha -->
     <dimen name="height_image_expanded_card_image">150dp</dimen>
     <dimen name="padding_medium">8dp</dimen>
     <dimen name="card_View_radius">5dp</dimen>
@@ -69,7 +69,7 @@
     <!--common header config-->
 
 
-    <!--Start ============Show selection size config===========================Added by Kailash-->
+    <!--Start ========Show selection size config==================Added by Kailash-->
     <!--  show selection detail screen -->
 
     <!-- toolbar dimensions -->
@@ -97,7 +97,7 @@
 
     <!--End show selection config-->
 
-    <!--Start ============seat selection size config===========================Added by Rohit-->
+    <!--Start ========seat selection size config==================Added by Rohit-->
 
 
     <!--seat size config start-->

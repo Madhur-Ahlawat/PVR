@@ -11,7 +11,7 @@ class AppPreferences @Inject constructor() {
     var preferenceName = "PiInsite"
     var preference: SharedPreferences? = null
     var editor: SharedPreferences.Editor? = null
-    val tag = "ConsultantPreferences======="
+    val tag = "ConsultantPreferences====="
 
     fun getInstance(): AppPreferences? {
         return this

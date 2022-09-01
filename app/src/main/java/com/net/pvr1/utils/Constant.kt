@@ -185,6 +185,11 @@ class Constant {
         df.format(d.toDouble())
         return d.toString()
     }
-
+    fun removeTrailingZeroFormater(d: Float): String? {
+        return if (d == d.toLong().toFloat()) String.format("%d", d.toLong()) else {
+            val df = DecimalFormat("#0.00")
+            df.format(d.toDouble())
+        }
+    }
 }
 

@@ -7,6 +7,7 @@ import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.ui.bookingSession.response.BookingTheatreResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaNearTheaterResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
+import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
@@ -525,6 +526,43 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             seatLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             seatLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    //Food
+    private val foodLiveData = MutableLiveData<NetworkResult<FoodResponse>>()
+    val foodResponseLiveData: LiveData<NetworkResult<FoodResponse>>
+        get() = foodLiveData
+
+    suspend fun foodLayout(
+        userid: String,
+        ccode: String,
+        bookingid: String,
+        cbookid: String,
+        transid: String,
+        type: String,
+        audi: String,
+        seat: String,
+        city: String,
+        qr: String,
+        iserv: String,
+        isSpi: String
+    ) {
+        seatLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.food(
+           userid,ccode,bookingid,cbookid,transid,type,audi,seat,city,qr,iserv,isSpi, Constant.version, Constant.platform
+        )
+        foodLayoutResponse(response)
+    }
+
+    private fun foodLayoutResponse(response: Response<FoodResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            foodLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            foodLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            foodLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 

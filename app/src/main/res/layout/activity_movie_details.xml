@@ -462,12 +462,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
                     android:orientation="horizontal"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_details_music"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/view52"
-                    app:layout_constraintTop_toBottomOf="@+id/textView69"
-                    tools:itemCount="3"
-                    tools:listitem="@layout/item_details_music" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView69" />
 
                 <TextView
                     android:id="@+id/textView70"

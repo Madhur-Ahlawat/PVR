@@ -11,7 +11,7 @@ import com.google.android.gms.common.api.Status
 class SmsBroadcastReceiver : BroadcastReceiver() {
     var smsBroadcastReceiverListener: SmsBroadcastReceiverListener? = null
     override fun onReceive(context: Context?, intent: Intent) {
-        if (intent.action === SmsRetriever.SMS_RETRIEVED_ACTION) {
+        if (intent.action == SmsRetriever.SMS_RETRIEVED_ACTION) {
             val extras = intent.extras
             val smsRetrieverStatus: Status? = extras!![SmsRetriever.EXTRA_STATUS] as Status?
             when (smsRetrieverStatus?.statusCode) {
