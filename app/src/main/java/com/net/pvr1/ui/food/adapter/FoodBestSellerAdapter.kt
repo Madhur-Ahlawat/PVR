@@ -10,7 +10,6 @@ import com.net.pvr1.databinding.ItemFoodBinding
 import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.hide
-import com.net.pvr1.utils.invisible
 import com.net.pvr1.utils.show
 
 
@@ -37,19 +36,16 @@ class FoodBestSellerAdapter(
             with(nowShowingList[position]) {
                 //title
                 binding.textView132.text = this.nm
-                val price: String = Constant().removeTrailingZeroFormater(this.op.toFloat())!!
 
                 //price
+                val price: String = Constant().removeTrailingZeroFormater(this.dp.toFloat())!!
                 binding.textView133.text = context.resources.getString(R.string.currency) + price
-                //customize
-//                binding.textView134.text = this.genres.joinToString { it }
-                //Add
-                binding.textView135.text = "Hindi Static"
+
                 //fssai
                 if (this.veg) {
-                    binding.imageView69.setImageDrawable(context.resources.getDrawable(R.drawable.veg_ic))
+                    binding.imageView69.setImageDrawable(context.getDrawable(R.drawable.veg_ic))
                 } else {
-                    binding.imageView69.setImageDrawable(context.resources.getDrawable(R.drawable.nonveg_ic))
+                    binding.imageView69.setImageDrawable(context.getDrawable(R.drawable.nonveg_ic))
                 }
                 //Image
                 Glide.with(context)
@@ -57,37 +53,39 @@ class FoodBestSellerAdapter(
                     .error(R.drawable.app_icon)
                     .into(binding.imageView65)
 
+                //quantity
+                binding.uiPlusMinus.foodCount.text = this.qt.toString()
+
                 binding.imageView65.setOnClickListener {
                     listener.foodBestImageClick(this)
+                    notifyDataSetChanged()
                 }
                 //AddFood
                 binding.textView135.setOnClickListener {
-                    listener.addFood(this)
+                    listener.addFood(this,position)
                     binding.consAddUi.show()
                     binding.textView135.hide()
+                    notifyDataSetChanged()
                 }
                 //SubTract
                 binding.uiPlusMinus.plus.setOnClickListener {
-                    listener.addFoodPlus(this)
+                    listener.addFoodPlus(this,position)
+                    notifyDataSetChanged()
                 }
                 //Add
                 binding.uiPlusMinus.minus.setOnClickListener {
-                    listener.addFoodMinus(this)
-                }
+                    listener.addFoodMinus(this,position)
 
-                if (this.r.size > 1) {
-                    binding.textView134.hide()
-                    binding.textView132.text = this.nm
-                    val price: String = Constant().removeTrailingZeroFormater(this.dp.toFloat())!!
-                    binding.textView133.text =
-                        context.resources.getString(R.string.currency) + price
+                    notifyDataSetChanged()
+                }
+                //UiShowHide
+
+                if (this.qt >0) {
+                    binding.consAddUi.show()
+                    binding.textView135.hide()
                 } else {
-                    binding.textView134.invisible()
-                    binding.textView132.text = this.r[0].h
-                    val price: String =
-                        Constant().removeTrailingZeroFormater(r.get(0).dp.toFloat())!!
-                    binding.textView133.text =
-                        context.resources.getString(R.string.currency) + price
+                    binding.consAddUi.hide()
+                    binding.textView135.show()
                 }
             }
         }
@@ -101,9 +99,9 @@ class FoodBestSellerAdapter(
 
     interface RecycleViewItemClickListenerCity {
         fun foodBestImageClick(comingSoonItem: FoodResponse.Output.Bestseller)
-        fun addFood(comingSoonItem: FoodResponse.Output.Bestseller)
-        fun addFoodPlus(comingSoonItem: FoodResponse.Output.Bestseller)
-        fun addFoodMinus(comingSoonItem: FoodResponse.Output.Bestseller)
+        fun addFood(comingSoonItem: FoodResponse.Output.Bestseller, position: Int)
+        fun addFoodPlus(comingSoonItem: FoodResponse.Output.Bestseller, position: Int)
+        fun addFoodMinus(comingSoonItem: FoodResponse.Output.Bestseller, position: Int)
     }
 
 }

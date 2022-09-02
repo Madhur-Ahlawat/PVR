@@ -21,7 +21,7 @@ data class FoodResponse(
         val h1: String,
         val h2: String,
         val ins: Boolean,
-        val mfl: List<Mfl>,
+        val mfl: ArrayList<Mfl>,
         val na: String,
         val nams: String,
         val pastfoods: String,
@@ -39,6 +39,7 @@ data class FoodResponse(
             val mi: String,
             val mid: Int,
             val miw: String,
+            var qt: Int,
             val nm: String,
             val op: Int,
             val r: List<R>,
@@ -57,7 +58,7 @@ data class FoodResponse(
                 val iw: String,
                 val masterItemId: Int,
                 val op: Int,
-                val qt: Any,
+                var qt: Int,
                 val sf: Boolean,
                 val si: String,
                 val veg: Boolean
@@ -80,6 +81,7 @@ data class FoodResponse(
             val miw: String,
             val nm: String,
             val op: Int,
+            var qt: Int,
             val r: List<Bestseller.R>,
             val veg: Boolean
         ) : Serializable

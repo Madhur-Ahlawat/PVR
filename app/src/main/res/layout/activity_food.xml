@@ -75,7 +75,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="@+id/view83"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout30"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout27"
@@ -174,16 +175,29 @@
                     tools:text="Your Happy Place" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView20"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="@+id/view89"
+                    app:layout_constraintStart_toStartOf="@+id/view89"
+                    app:layout_constraintTop_toBottomOf="@+id/textView138"
                     tools:itemCount="3"
-                    tools:listitem="@layout/item_food_place"
+                    tools:listitem="@layout/item_food_place" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView21"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="@+id/view89"
                     app:layout_constraintEnd_toEndOf="@+id/view89"
                     app:layout_constraintStart_toStartOf="@+id/view89"
-                    app:layout_constraintTop_toBottomOf="@+id/textView138"/>
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerView20"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_food_filter" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -217,8 +231,158 @@
                     app:layout_constraintStart_toStartOf="@+id/view92"
                     app:layout_constraintTop_toTopOf="@+id/view92"
                     tools:itemCount="3"
-                    tools:listitem="@layout/item_food_prmotion" />
+                    tools:listitem="@layout/item_food_promotion" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout30"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/view83"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout35"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50dp"
+            android:background="@color/yellow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <View
+                android:id="@+id/view100"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView148"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:drawablePadding="@dimen/dimen_14sp"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:text="@string/proceed"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/view100"
+                app:layout_constraintTop_toTopOf="@+id/view100"
+                app:drawableEndCompat="@drawable/right_arrow" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout34"
+                android:layout_width="40dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/view100"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/imageView73"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_cart"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@id/textView151"
+                    android:layout_width="@dimen/dimen_15dp"
+                    android:layout_height="@dimen/dimen_15dp"
+                    android:layout_marginTop="@dimen/dimen_10dp"
+                    android:background="@drawable/ic_oval_2"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimen_11sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="2" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/imageView74"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_10"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/constraintLayout34"
+                app:layout_constraintStart_toEndOf="@+id/constraintLayout34"
+                app:layout_constraintTop_toTopOf="@+id/constraintLayout34"
+                app:srcCompat="@drawable/arrow_down"
+                tools:ignore="ContentDescription" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout36"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@color/background_color"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayout35"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout35"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout35">
+
+            <View
+                android:id="@+id/view101"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView149"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:text="@string/sub_total"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/view101"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView150"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/view101"
+                tools:text="1760" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView23"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout36" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
