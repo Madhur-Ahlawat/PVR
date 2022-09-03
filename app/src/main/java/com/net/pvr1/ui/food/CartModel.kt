@@ -5,5 +5,6 @@ data class CartModel (
     val title: String?,
     val image: String?,
     var quantity: Int,
-    val price: Int
+    val price: Int,
+    val veg: Boolean,
 )

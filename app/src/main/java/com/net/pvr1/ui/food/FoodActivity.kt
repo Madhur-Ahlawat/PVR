@@ -21,10 +21,7 @@ import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.adapter.*
 import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.ui.food.viewModel.FoodViewModel
-import com.net.pvr1.utils.Constant
-import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.hide
-import com.net.pvr1.utils.show
+import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,6 +31,8 @@ class FoodActivity : AppCompatActivity(),
     FilterAdapter.RecycleViewItemClickListenerCity,
     FilterBottomAdapter.RecycleViewItemClickListenerCity,
     CartAdapter.RecycleViewItemClickListenerCity {
+
+
     private lateinit var preferences: AppPreferences
     private var binding: ActivityFoodBinding? = null
     private val authViewModel: FoodViewModel by viewModels()
@@ -41,6 +40,11 @@ class FoodActivity : AppCompatActivity(),
     private val cartModel: ArrayList<CartModel> = arrayListOf()
     private var filterResponse: ArrayList<FoodResponse.Output.Mfl>? = null
     private var up: Boolean = false
+
+    private var foodBestSellerAdapter: FoodBestSellerAdapter? = null
+    private var categoryAdapter: CategoryAdapter? = null
+    private var filterAdapter: FilterAdapter? = null
+    private var filterBottomAdapter: FilterBottomAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,12 +117,12 @@ class FoodActivity : AppCompatActivity(),
     private fun retrieveData(output: FoodResponse.Output) {
         //Food
         val layoutManagerCrew = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
-        val crewAdapter = FoodBestSellerAdapter(output.bestsellers, this, this)
+        foodBestSellerAdapter = FoodBestSellerAdapter(output.bestsellers, this, this)
         binding?.recyclerView19?.layoutManager = layoutManagerCrew
-        binding?.recyclerView19?.adapter = crewAdapter
+        binding?.recyclerView19?.adapter = foodBestSellerAdapter
         //Category
         val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-        val categoryAdapter = CategoryAdapter(output.cat, this, this)
+        categoryAdapter = CategoryAdapter(output.cat, this, this)
         binding?.recyclerView20?.layoutManager = layoutManager
         binding?.recyclerView20?.adapter = categoryAdapter
 
@@ -144,7 +148,8 @@ class FoodActivity : AppCompatActivity(),
                     comingSoonItem.nm,
                     comingSoonItem.mi,
                     comingSoonItem.qt,
-                    comingSoonItem.dp
+                    comingSoonItem.dp,
+                    comingSoonItem.veg
                 )
             )
         } else {
@@ -167,7 +172,8 @@ class FoodActivity : AppCompatActivity(),
                         comingSoonItem.nm,
                         comingSoonItem.mi,
                         comingSoonItem.qt,
-                        comingSoonItem.dp
+                        comingSoonItem.dp,
+                        comingSoonItem.veg
                     )
                 )
             }
@@ -237,7 +243,8 @@ class FoodActivity : AppCompatActivity(),
                     comingSoonItem.nm,
                     comingSoonItem.mi,
                     comingSoonItem.qt,
-                    comingSoonItem.dp
+                    comingSoonItem.dp,
+                    comingSoonItem.veg
                 )
             )
         } else {
@@ -260,7 +267,8 @@ class FoodActivity : AppCompatActivity(),
                         comingSoonItem.nm,
                         comingSoonItem.mi,
                         comingSoonItem.qt,
-                        comingSoonItem.dp
+                        comingSoonItem.dp,
+                        comingSoonItem.veg
                     )
                 )
             }
@@ -269,8 +277,8 @@ class FoodActivity : AppCompatActivity(),
     }
 
     override fun categoryClick(comingSoonItem: FoodResponse.Output.Cat) {
-        val foodListAdapter = FilterAdapter(getFilterCategoryList(comingSoonItem.name), this, this)
-        binding?.recyclerView21?.adapter = foodListAdapter
+        filterAdapter = FilterAdapter(getFilterCategoryList(comingSoonItem.name), this, this)
+        binding?.recyclerView21?.adapter = filterAdapter
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding?.recyclerView21?.setHasFixedSize(true)
         binding?.recyclerView21?.layoutManager = layoutManager
@@ -355,7 +363,8 @@ class FoodActivity : AppCompatActivity(),
                     comingSoonItem.nm,
                     comingSoonItem.mi,
                     comingSoonItem.qt,
-                    comingSoonItem.dp
+                    comingSoonItem.dp,
+                    comingSoonItem.veg
                 )
             )
         } else {
@@ -378,7 +387,8 @@ class FoodActivity : AppCompatActivity(),
                         comingSoonItem.nm,
                         comingSoonItem.mi,
                         comingSoonItem.qt,
-                        comingSoonItem.dp
+                        comingSoonItem.dp,
+                        comingSoonItem.veg
                     )
                 )
             }
@@ -413,7 +423,7 @@ class FoodActivity : AppCompatActivity(),
         val title = dialog.findViewById<TextView>(R.id.textView143)
 
         val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        val filterBottomAdapter = FilterBottomAdapter(comingSoonItem, this, this)
+        filterBottomAdapter = FilterBottomAdapter(comingSoonItem, this, this)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = filterBottomAdapter
 
@@ -488,7 +498,8 @@ class FoodActivity : AppCompatActivity(),
                     comingSoonItem.h,
                     comingSoonItem.i,
                     comingSoonItem.qt,
-                    comingSoonItem.dp
+                    comingSoonItem.dp,
+                    comingSoonItem.veg
                 )
             )
         } else {
@@ -511,7 +522,8 @@ class FoodActivity : AppCompatActivity(),
                         comingSoonItem.h,
                         comingSoonItem.i,
                         comingSoonItem.qt,
-                        comingSoonItem.dp
+                        comingSoonItem.dp,
+                        comingSoonItem.veg
                     )
                 )
             }
@@ -528,6 +540,11 @@ class FoodActivity : AppCompatActivity(),
     }
 
     private fun cartData() {
+        printLog("cartUpdate--->")
+        foodBestSellerAdapter?.notifyDataSetChanged()
+        categoryAdapter?.notifyDataSetChanged()
+        filterAdapter?.notifyDataSetChanged()
+        filterBottomAdapter?.notifyDataSetChanged()
         if (cartModel.isEmpty()) {
             binding?.constraintLayout30?.hide()
         } else {
@@ -572,6 +589,7 @@ class FoodActivity : AppCompatActivity(),
             num += 1
             comingSoonItem.quantity = num
             cartData()
+
             updateCartFoodCartList(comingSoonItem)
         }
     }
@@ -606,7 +624,8 @@ class FoodActivity : AppCompatActivity(),
                     comingSoonItem.title,
                     comingSoonItem.image,
                     comingSoonItem.quantity,
-                    comingSoonItem.price
+                    comingSoonItem.price,
+                    comingSoonItem.veg
                 )
             )
         } else {
@@ -629,7 +648,8 @@ class FoodActivity : AppCompatActivity(),
                         comingSoonItem.title,
                         comingSoonItem.image,
                         comingSoonItem.quantity,
-                        comingSoonItem.price
+                        comingSoonItem.price,
+                        comingSoonItem.veg
                     )
                 )
             }

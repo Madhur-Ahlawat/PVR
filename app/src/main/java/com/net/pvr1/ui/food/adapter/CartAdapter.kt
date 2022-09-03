@@ -61,11 +61,11 @@ class CartAdapter(
                     notifyDataSetChanged()
                 }
 
-//                if (this.veg) {
-//                    binding.imageView75.setImageDrawable(context.getDrawable(R.drawable.veg_ic))
-//                } else {
-//                    binding.imageView75.setImageDrawable(context.getDrawable(R.drawable.nonveg_ic))
-//                }
+                if (this.veg) {
+                    binding.imageView75.setImageDrawable(context.getDrawable(R.drawable.veg_ic))
+                } else {
+                    binding.imageView75.setImageDrawable(context.getDrawable(R.drawable.nonveg_ic))
+                }
             }
         }
 
