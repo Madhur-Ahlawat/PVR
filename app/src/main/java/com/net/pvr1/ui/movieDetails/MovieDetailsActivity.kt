@@ -152,15 +152,13 @@ class MovieDetailsActivity : AppCompatActivity(),
         binding?.textView77?.text = output.sm
         //SoundMix
         binding?.textView79?.text = output.p
-
         //MovedNext
         binding?.include?.textView5?.setOnClickListener {
             val intent = Intent(this@MovieDetailsActivity, BookingActivity::class.java)
             intent.putExtra("mid", output.id)
             startActivity(intent)
         }
-
-//        Cast
+        //Cast
         val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
         val castAdapter = CastAdapter(output.mb.cast, this, this)
         binding?.recyclerView4?.layoutManager = layoutManager

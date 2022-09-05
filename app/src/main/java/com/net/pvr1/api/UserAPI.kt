@@ -13,10 +13,12 @@ import com.net.pvr1.ui.movieDetails.response.MovieDetailsResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
+import com.net.pvr1.ui.otpVerify.response.ResisterResponse
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.seatLayout.response.SeatResponse
 import com.net.pvr1.ui.selectCity.response.SelectCityResponse
 import retrofit2.Response
+import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -35,10 +37,24 @@ interface UserAPI {
     @POST("v2/user/verify")
     suspend fun otpVerify(
         @Query("mobile") mobile: String,
-        @Query("token") token: String,
+        @Header("X-Token") token: String,
+        @Query("cname") cName: String,
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<LoginResponse>
+
+    @POST("v2/user/register")
+    suspend fun resister(
+        @Header("X-Token") hash: String,
+        @Query("email") email: String,
+        @Query("name") name: String,
+        @Query("mobile") mobile: String,
+        @Query("otp") otp: String,
+        @Query("city") city: String,
+        @Query("cname") cname: Boolean,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<ResisterResponse>
 
     @POST("content/comingsoon/v2")
     suspend fun comingSoon(
@@ -225,6 +241,15 @@ interface UserAPI {
         @Query("qr") qr: String,
         @Query("iserv") iserv: String,
         @Query("isSpi") isSpi: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<FoodResponse>
+
+    @POST("trans/setdonation")
+    suspend fun summery(
+        @Query("bookingid") bookingid: String,
+        @Query("transid") transid: String,
+        @Query("isDonate") isDonate: Boolean,
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<FoodResponse>

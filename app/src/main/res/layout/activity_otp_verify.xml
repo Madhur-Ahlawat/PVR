@@ -9,10 +9,10 @@
 
     <View
         android:id="@+id/view11"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="@dimen/dimen_10dp"
         android:layout_marginEnd="@dimen/dimen_10dp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,12 +33,12 @@
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/helvetica_neu_medium"
+        android:text="@string/verify_code"
         android:textColor="@color/pvr_dark_black"
         android:textSize="30sp"
-        android:layout_gravity="center"
-        android:fontFamily="@font/helvetica_neu_medium"
-        android:layout_marginTop="10dp"
-        android:text="@string/verify_code"
         app:layout_constraintStart_toStartOf="@+id/view11"
         app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
@@ -72,7 +72,7 @@
         app:otp_itemCount="6"
         app:otp_itemHeight="42dp"
         app:otp_itemWidth="42dp"
-        app:otp_showCursor="false"/>
+        app:otp_showCursor="false" />
 
     <TextView
         android:id="@+id/textView14"
@@ -81,33 +81,116 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="30dp"
-        android:gravity="center"
         android:drawablePadding="@dimen/dimen_5dp"
-        android:textSize="@dimen/dimen_14sp"
         android:fontFamily="@font/helvetica_neu_medium"
+        android:gravity="center"
         android:text="@string/resend_otp"
         android:textAllCaps="false"
         android:textColor="#2f2f2f"
+        android:textSize="@dimen/dimen_14sp"
+        app:drawableEndCompat="@drawable/ic_yellow"
         app:layout_constraintEnd_toEndOf="@+id/otpEditText"
-        app:layout_constraintTop_toBottomOf="@+id/otpEditText"
-        app:drawableEndCompat="@drawable/ic_yellow" />
+        app:layout_constraintTop_toBottomOf="@+id/otpEditText" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout38"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/view11"
+        app:layout_constraintStart_toStartOf="@+id/view11"
+        app:layout_constraintTop_toBottomOf="@+id/textView14">
+
+        <View
+            android:id="@+id/view105"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Name"
+            app:boxBackgroundColor="@color/white"
+            app:boxStrokeColor="#EDE8E9"
+            app:boxStrokeWidth="1dp"
+            app:endIconMode="custom"
+            app:errorEnabled="false"
+            app:layout_constraintEnd_toEndOf="@+id/view105"
+            app:layout_constraintStart_toStartOf="@+id/view105"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="textPersonName"
+                android:textColor="@color/pvr_dark_black"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout2"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Email"
+            app:boxBackgroundColor="@color/white"
+            app:boxStrokeColor="#EDE8E9"
+            app:boxStrokeWidth="1dp"
+            app:endIconMode="custom"
+
+            app:errorEnabled="false"
+            app:layout_constraintEnd_toEndOf="@+id/view105"
+            app:layout_constraintStart_toStartOf="@+id/view105"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/pvr_dark_black"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textView158"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:text="@string/keep_info_safe"
+            android:textSize="@dimen/dimen_14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/view105"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/textView15"
         android:layout_width="0dp"
         android:layout_height="@dimen/dimen_40dp"
-        android:layout_marginTop="32dp"
-        android:gravity="center"
-        android:textAllCaps="true"
-        android:fontFamily="@font/cafeta"
-        android:textSize="@dimen/dimen_20sp"
         android:layout_margin="@dimen/dimen_50dp"
-        android:textColor="@color/text_color_default"
         android:background="@drawable/yellow_button_selector"
+        android:fontFamily="@font/cafeta"
+        android:gravity="center"
         android:text="@string/submit"
+        android:textAllCaps="true"
+        android:textColor="@color/text_color_default"
+        android:textSize="@dimen/dimen_20sp"
         app:layout_constraintEnd_toEndOf="@+id/view11"
         app:layout_constraintStart_toStartOf="@+id/view11"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout38" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

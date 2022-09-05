@@ -66,6 +66,7 @@ class CartAdapter(
                 } else {
                     binding.imageView75.setImageDrawable(context.getDrawable(R.drawable.nonveg_ic))
                 }
+
             }
         }
 

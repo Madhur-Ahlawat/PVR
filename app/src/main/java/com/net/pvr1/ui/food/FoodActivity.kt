@@ -1,6 +1,7 @@
 package com.net.pvr1.ui.food
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
@@ -21,6 +22,8 @@ import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.adapter.*
 import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.ui.food.viewModel.FoodViewModel
+import com.net.pvr1.ui.home.HomeActivity
+import com.net.pvr1.ui.summery.SummeryActivity
 import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -120,11 +123,13 @@ class FoodActivity : AppCompatActivity(),
         foodBestSellerAdapter = FoodBestSellerAdapter(output.bestsellers, this, this)
         binding?.recyclerView19?.layoutManager = layoutManagerCrew
         binding?.recyclerView19?.adapter = foodBestSellerAdapter
+        binding?.recyclerView19?.setHasFixedSize(true)
         //Category
         val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
         categoryAdapter = CategoryAdapter(output.cat, this, this)
         binding?.recyclerView20?.layoutManager = layoutManager
         binding?.recyclerView20?.adapter = categoryAdapter
+        binding?.recyclerView20?.setHasFixedSize(true)
 
     }
 
@@ -138,6 +143,14 @@ class FoodActivity : AppCompatActivity(),
         comingSoonItem.qt = num
         updateBestSellerCartList(comingSoonItem)
         cartData()
+        movedNext()
+    }
+
+    private fun movedNext() {
+        binding?.textView148?.setOnClickListener {
+            val intent = Intent(this@FoodActivity, SummeryActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun updateBestSellerCartList(comingSoonItem: FoodResponse.Output.Bestseller) {
@@ -541,6 +554,7 @@ class FoodActivity : AppCompatActivity(),
 
     private fun cartData() {
         printLog("cartUpdate--->")
+
         foodBestSellerAdapter?.notifyDataSetChanged()
         categoryAdapter?.notifyDataSetChanged()
         filterAdapter?.notifyDataSetChanged()
@@ -557,9 +571,9 @@ class FoodActivity : AppCompatActivity(),
                     up = true
                     binding?.imageView74?.setImageDrawable(this.getDrawable(R.drawable.arrow_down))
                     binding?.recyclerView23?.hide()
-
                 }
             }
+
             binding?.textView151?.text = cartModel.size.toString()
             binding?.constraintLayout30?.show()
             val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)

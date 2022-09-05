@@ -17,6 +17,7 @@ import com.net.pvr1.databinding.ActivityLoginBinding
 import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.login.viewModel.LoginViewModel
 import com.net.pvr1.ui.otpVerify.OtpVerifyActivity
@@ -74,6 +75,11 @@ class LoginActivity : AppCompatActivity() {
                 authViewModel.loginMobileUser(mobile, "", "INDIA")
             }
         }
+        //Skip
+        binding?.textView8?.setOnClickListener {
+            val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+            startActivity(intent)
+        }
         loginApi()
     }
 
@@ -83,7 +89,18 @@ class LoginActivity : AppCompatActivity() {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && SUCCESS_CODE == it.data.code) {
-                        retrieveData(it.data.output)
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data.msg,
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {
+                                retrieveData(it.data.output)
+                            },
+                            negativeClick = {
+                            })
+                        dialog.show()
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -123,10 +140,11 @@ class LoginActivity : AppCompatActivity() {
     private fun retrieveData(output: LoginResponse.Output?) {
         val intent = Intent(this@LoginActivity, OtpVerifyActivity::class.java)
         intent.putExtra("mobile", binding?.mobileNumber?.text.toString())
+        intent.putExtra("newUser", output?.nu)
         startActivity(intent)
-        finish()
     }
 
+    @Deprecated("Deprecated in Java")
     @Override
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CREDENTIAL_PICKER_REQUEST && resultCode == RESULT_OK) {

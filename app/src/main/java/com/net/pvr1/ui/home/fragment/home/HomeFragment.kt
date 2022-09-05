@@ -163,7 +163,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     private fun retrieveData(output: HomeResponse.Output) {
         //Category
         val gridLayout =
-            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+            GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
         binding?.recyclerCinemaCat?.layoutManager = LinearLayoutManager(context)
         val adapter = HomeCinemaCategoryAdapter(requireActivity(), output.mfi, this)
         binding?.recyclerCinemaCat?.layoutManager = gridLayout
@@ -171,7 +171,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
         //Slider
         val gridLayoutSlider =
-            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+            GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
         binding?.recyclerViewSlider?.layoutManager = LinearLayoutManager(context)
         val adapterSlider = HomeSliderAdapter(requireActivity(), output.mv, this)
         binding?.recyclerViewSlider?.layoutManager = gridLayoutSlider

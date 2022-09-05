@@ -44,6 +44,7 @@
     <string name="sentCode">We’ve sent a code to your mobile number</string>
     <string name="resend_otp">Resend OTP</string>
     <string name="submit">Submit</string>
+    <string name="keep_info_safe">We promise to keep your information safe</string>
     <string name="prev">PREV</string>
     <string name="onboard_txt1">Limitless movie watching\n experience!</string>
     <string name="onboard_txt2">Delicious food &amp; beverage \n choices</string>
@@ -52,6 +53,8 @@
     <string name="pleasewait">Please Wait for this process.....</string>
     <string name="no">No</string>
     <string name="enterOtp">Please Enter Your Otp</string>
+    <string name="enterName">Please Enter Your Name</string>
+    <string name="enterEmail">Please Enter Your Email</string>
     <string name="mobileNotAvailable">No phone numbers found</string>
     //Home
     <string name="home">Home</string>
@@ -189,5 +192,9 @@
     <string name="min_item_msz">You can only order 0 items at a time.</string>
     <string name="proceed">Proceed</string>
     <string name="sub_total">Sub Total</string>
+    //Offer
+    <string name="new_offers_are_live">New offers are live!</string>
+//trailer
+    <string name="video_not_avail">Video not available</string>
 
 </resources>

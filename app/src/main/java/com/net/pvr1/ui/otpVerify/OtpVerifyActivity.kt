@@ -13,12 +13,10 @@ import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.login.response.LoginResponse
+import com.net.pvr1.ui.otpVerify.response.ResisterResponse
 import com.net.pvr1.ui.otpVerify.viewModel.OtpVerifyViewModel
-import com.net.pvr1.utils.Constant
-import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.SmsBroadcastReceiver
+import com.net.pvr1.utils.*
 import com.net.pvr1.utils.SmsBroadcastReceiver.SmsBroadcastReceiverListener
-import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.internal.and
 import java.security.MessageDigest
@@ -33,6 +31,7 @@ class OtpVerifyActivity : AppCompatActivity() {
     private val authViewModel: OtpVerifyViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var mobile: String = ""
+    private var newUser: String = ""
 
     //Otp Read
     private val User_Content = 200
@@ -45,7 +44,13 @@ class OtpVerifyActivity : AppCompatActivity() {
         setContentView(view)
         preferences = AppPreferences()
         mobile = intent.getStringExtra("mobile").toString()
+        newUser = intent.getStringExtra("newUser").toString()
 
+        if (newUser == "false") {
+            binding?.textView15?.text = "Submit"
+        } else {
+            binding?.textView15?.text = "Continue"
+        }
         startSmsUserConsent()
         movedNext()
     }
@@ -81,15 +86,61 @@ class OtpVerifyActivity : AppCompatActivity() {
                     })
                 dialog.show()
             } else {
-                authViewModel.otpVerify(
-                    mobile,
-                    getHash(
-                        "$mobile|${otp}"
+                if (newUser == "false") {
+                    authViewModel.otpVerify(
+                        mobile,
+                        getHash(
+                            "$mobile|$otp"
+                        )
                     )
-                )
+                } else {
+                    binding?.textView15?.setOnClickListener {
+                        val name = binding?.name?.text.toString()
+                        val email = binding?.email?.text.toString()
+                        binding?.constraintLayout38?.show()
+
+                        if (name == "") {
+                            val dialog = OptionDialog(this,
+                                R.mipmap.ic_launcher,
+                                R.string.app_name,
+                                getString(R.string.enterName),
+                                positiveBtnText = R.string.ok,
+                                negativeBtnText = R.string.no,
+                                positiveClick = {
+                                },
+                                negativeClick = {
+                                })
+                            dialog.show()
+                        } else if (email == "") {
+                            val dialog = OptionDialog(this,
+                                R.mipmap.ic_launcher,
+                                R.string.app_name,
+                                getString(R.string.enterEmail),
+                                positiveBtnText = R.string.ok,
+                                negativeBtnText = R.string.no,
+                                positiveClick = {
+                                },
+                                negativeClick = {
+                                })
+                            dialog.show()
+                        } else {
+                            authViewModel.resister(
+                                getHash(
+                                    "$mobile|$otp|$email"
+                                ),
+                                name,
+                                email, mobile, otp.toString(), "INDIA", false
+                            )
+                        }
+                    }
+
+                }
+
             }
         }
         otpVerify()
+        registerUser()
+
     }
 
     private fun otpVerify() {
@@ -134,7 +185,65 @@ class OtpVerifyActivity : AppCompatActivity() {
         }
     }
 
+    private fun registerUser() {
+        authViewModel.userResponseResLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        retrieveResisterData(it.data.output)
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {
+                            },
+                            negativeClick = {
+                            })
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.data?.msg.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {
+                        },
+                        negativeClick = {
+                        })
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleasewait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+
+    private fun retrieveResisterData(output: ResisterResponse.Output) {
+        preferences.putBoolean(
+            Constant.IS_LOGIN, true
+        )
+        preferences.putString(Constant.USER_ID,output.id)
+        preferences.putString(Constant.USER_NAME,output.cn)
+        val intent = Intent(this@OtpVerifyActivity, HomeActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
     private fun retrieveData(output: LoginResponse.Output?) {
+        preferences.putBoolean(
+            Constant.IS_LOGIN, true
+        )
+//        preferences.putString(Constant.USER_ID,output)
+//        preferences.putString(Constant.USER_NAME,output.cn)
         val intent = Intent(this@OtpVerifyActivity, HomeActivity::class.java)
         startActivity(intent)
         finish()
@@ -142,13 +251,22 @@ class OtpVerifyActivity : AppCompatActivity() {
 
     @Throws(Exception::class)
     fun getHash(text: String): String {
-        val mdText = MessageDigest.getInstance("SHA-512")
-        val byteData = mdText.digest(text.toByteArray())
-        val sb = StringBuffer()
-        for (i in byteData.indices) {
-            sb.append(((byteData[i] and 0xff) + 0x100).toString(16).substring(1))
+
+        val md = MessageDigest.getInstance("SHA-512")
+        val digest = md.digest(text.toByteArray())
+        val sb = StringBuilder()
+        for (i in digest.indices) {
+            sb.append(((digest[i] and 0xff) + 0x100).toString(16).substring(1))
         }
         return sb.toString()
+//        println(sb)
+//        val mdText = MessageDigest.getInstance("SHA-512")
+//        val byteData = mdText.digest(text.toByteArray())
+//        val sb = StringBuffer()
+//        for (i in byteData.indices) {
+//            sb.append(((byteData[i] and 0xff) + 0x100).toString(16).substring(1))
+//        }
+//        return sb.toString()
     }
 
     @Deprecated("Deprecated in Java")

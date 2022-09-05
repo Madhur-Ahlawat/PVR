@@ -35,6 +35,7 @@ class BookingShowsTimeAdapter(
                 binding.textView96.text = this.st
                 holder.itemView.setOnClickListener {
                     val intent = Intent(context, SeatLayoutActivity::class.java)
+                    intent.putExtra("transId","")
                     context.startActivity(intent)
                 }
             }

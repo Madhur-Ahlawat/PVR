@@ -20,8 +20,8 @@ import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.food.FoodActivity
 import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.onBoarding.LandingActivity
-import com.net.pvr1.ui.otpVerify.OtpVerifyActivity
 import com.net.pvr1.utils.Constant
+import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
 
 @SuppressLint("CustomSplashScreen")
@@ -44,6 +44,7 @@ class SplashActivity : AppCompatActivity() {
         } else {
             networkDialog()
         }
+        printLog("CheckLogin--->${(preferences.getBoolean(Constant.IS_LOGIN))}")
     }
 
     private fun movedNext() {
@@ -53,8 +54,8 @@ class SplashActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             } else {
-                val intent = Intent(this@SplashActivity, FoodActivity::class.java)
-//                val intent = Intent(this@SplashActivity, LandingActivity::class.java)
+//                val intent = Intent(this@SplashActivity, FoodActivity::class.java)
+                val intent = Intent(this@SplashActivity, LandingActivity::class.java)
                 startActivity(intent)
                 finish()
             }

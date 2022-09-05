@@ -39,6 +39,8 @@ class Constant {
         const val DISTRICT = "$PACKAGE_NAME.DISTRICT"
         const val POST_CODE = "$PACKAGE_NAME.POST_CODE"
         const val STATE = "$PACKAGE_NAME.STATE"
+        const val USER_NAME = "user_name"
+        const val USER_ID = "user_id"
         const val SEAT_AVAILABEL = 1
         const val SEAT_BOOKED = 2
         const val SEAT_SELECTED = 3
@@ -150,6 +152,7 @@ class Constant {
             }
         })
     }
+
     fun extractYoutubeId(s: String): String? {
         return try {
             println("queryurl---$s")
@@ -185,11 +188,27 @@ class Constant {
         df.format(d.toDouble())
         return d.toString()
     }
+
     fun removeTrailingZeroFormater(d: Float): String? {
         return if (d == d.toLong().toFloat()) String.format("%d", d.toLong()) else {
             val df = DecimalFormat("#0.00")
             df.format(d.toDouble())
         }
     }
-}
 
+    var youtubeVideoCode: String? = null
+
+    fun getVideoCode(youtubeUrl: String) {
+        val videoCode: Array<String>
+        try {
+            videoCode = if (youtubeUrl.contains("v=")) {
+                youtubeUrl.split("v=").toTypedArray()
+            } else {
+                youtubeUrl.split("list=").toTypedArray()
+            }
+            youtubeVideoCode = videoCode[1]
+        } catch (e: ArrayIndexOutOfBoundsException) {
+
+        }
+    }
+}

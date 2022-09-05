@@ -69,6 +69,12 @@ class HomeActivity : AppCompatActivity() {
             true
         }
 
+        showOfferDialog()
+    }
+
+    private fun showOfferDialog() {
+
+
     }
 
     private fun setCurrentFragment(fragment: Fragment) =

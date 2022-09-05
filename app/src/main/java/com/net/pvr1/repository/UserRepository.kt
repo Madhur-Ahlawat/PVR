@@ -16,6 +16,7 @@ import com.net.pvr1.ui.movieDetails.response.MovieDetailsResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
+import com.net.pvr1.ui.otpVerify.response.ResisterResponse
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.seatLayout.response.SeatResponse
 import com.net.pvr1.ui.selectCity.response.SelectCityResponse
@@ -56,7 +57,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
 
     suspend fun otpVerify(mobile: String, token: String) {
         otpVerifyLiveData.postValue(NetworkResult.Loading())
-        val response = userAPI.otpVerify(mobile, token, Constant.version, Constant.platform)
+        val response = userAPI.otpVerify(mobile, token,"INDIA", Constant.version, Constant.platform)
         verifyResponse(response)
     }
 
@@ -68,6 +69,35 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             otpVerifyLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             otpVerifyLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+   //Resister
+    private val resisterLiveData = MutableLiveData<NetworkResult<ResisterResponse>>()
+    val resisterResponseLiveData: LiveData<NetworkResult<ResisterResponse>>
+        get() = resisterLiveData
+
+    suspend fun  resister(
+        hash: String,
+        email: String,
+        name: String,
+        mobile: String,
+        otp: String,
+        city: String,
+        cname: Boolean
+    ) {
+        otpVerifyLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.resister(hash,email,name,mobile,otp,city,cname, Constant.version, Constant.platform)
+        resisterResponse(response)
+    }
+
+    private fun  resisterResponse(response: Response<ResisterResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            resisterLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            resisterLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            resisterLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 
@@ -563,6 +593,38 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             foodLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             foodLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    //Summery
+    private val summerLiveData = MutableLiveData<NetworkResult<FoodResponse>>()
+    val summerResponseLiveData: LiveData<NetworkResult<FoodResponse>>
+        get() = summerLiveData
+
+    suspend fun summerLayout(
+        bookingid: String,
+        transid: String,
+        isDonate: Boolean,
+        istDonate: Boolean,
+        isSpi: String
+    ) {
+        summerLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.summery(
+            bookingid,transid,isDonate
+          , Constant.version, Constant.platform
+        )
+        summeryLayoutResponse(response)
+    }
+
+    private fun summeryLayoutResponse(response: Response<FoodResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            summerLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            summerLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            summerLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 
