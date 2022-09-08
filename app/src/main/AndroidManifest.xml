@@ -20,6 +20,12 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
         <activity
+            android:name=".ui.offer.offerDetails.OfferDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.payment.PaymentActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.summery.SummeryActivity"
             android:exported="false" />
         <activity
@@ -78,9 +84,6 @@
             android:exported="false" />
         <activity
             android:name=".ui.login.LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.resister.RegistrationActivity"
             android:exported="false" />
         <activity
             android:name=".ui.onBoarding.LandingActivity"

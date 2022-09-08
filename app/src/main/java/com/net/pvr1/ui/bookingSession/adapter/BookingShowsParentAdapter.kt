@@ -31,7 +31,7 @@ class BookingShowsParentAdapter(
 
 
                 val gridLayout3 = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
-                val bookingShowsParentAdapter = BookingShowsChildAdapter(this.childs[0].sws,context)
+                val bookingShowsParentAdapter = BookingShowsChildAdapter(this.childs[0].sws,context,)
                 binding.recyclerView7.layoutManager = gridLayout3
                 binding.recyclerView7.adapter = bookingShowsParentAdapter
                 //click

@@ -139,13 +139,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    tools:itemCount="3"
-                    tools:listitem="@layout/item_home_cinema_list"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:spanCount="2"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_home_cinema_list"
                     app:layout_constraintEnd_toEndOf="@+id/vwMain1s"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/vwMain1s"
-                    app:layout_constraintTop_toBottomOf="@+id/promotionPosition" />
+                    app:layout_constraintTop_toBottomOf="@+id/promotionPosition"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintTrailerMusic"

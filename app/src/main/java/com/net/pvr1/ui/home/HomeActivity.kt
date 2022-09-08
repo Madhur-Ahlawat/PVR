@@ -1,28 +1,46 @@
 package com.net.pvr1.ui.home
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Gravity
+import android.view.ViewGroup
+import android.view.Window
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityHomeBinding
 import com.net.pvr1.di.preference.AppPreferences
-import com.net.pvr1.ui.home.fragment.*
+import com.net.pvr1.ui.dailogs.LoaderDialog
+import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.home.adapter.HomeOfferAdapter
+import com.net.pvr1.ui.home.fragment.MoreFragment
+import com.net.pvr1.ui.home.fragment.PrivilegeFragment
 import com.net.pvr1.ui.home.fragment.cinema.CinemasFragment
 import com.net.pvr1.ui.home.fragment.commingSoon.ComingSoonFragment
 import com.net.pvr1.ui.home.fragment.home.HomeFragment
-import com.net.pvr1.ui.login.viewModel.LoginViewModel
+import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
+import com.net.pvr1.ui.offer.response.OfferResponse
 import com.net.pvr1.ui.search.searchHome.SearchHomeActivity
 import com.net.pvr1.ui.selectCity.SelectCityActivity
+import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickListenerCity {
     private lateinit var preferences: AppPreferences
     private var binding: ActivityHomeBinding? = null
-    private val authViewModel: LoginViewModel by viewModels()
+    private val authViewModel: HomeViewModel by viewModels()
+    private var loader: LoaderDialog? = null
+    private var offerResponse: ArrayList<OfferResponse.Output>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,13 +50,15 @@ class HomeActivity : AppCompatActivity() {
         preferences = AppPreferences()
         switchFragment()
 
+        authViewModel.offer("123456")
         // Select City
-       val llLocation = findViewById<LinearLayout>(R.id.llLocation)
+        val llLocation = findViewById<LinearLayout>(R.id.llLocation)
         llLocation.setOnClickListener {
             val intent = Intent(this, SelectCityActivity::class.java)
             startActivity(intent)
         }
         movedNext()
+        offerDataLoad()
     }
 
     //ClickMovedNext
@@ -47,6 +67,15 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this@HomeActivity, SearchHomeActivity::class.java)
             startActivity(intent)
             finish()
+        }
+
+        //Close Offer Alert
+        binding?.imageView78?.setOnClickListener {
+            binding?.constraintLayout55?.hide()
+        }
+
+        binding?.textView185?.setOnClickListener {
+            showOfferDialog()
         }
     }
 
@@ -68,18 +97,136 @@ class HomeActivity : AppCompatActivity() {
             }
             true
         }
-
-        showOfferDialog()
     }
 
     private fun showOfferDialog() {
+        printLog("output--->${offerResponse}")
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.offer_dialog)
+        dialog.window!!.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+        dialog.window!!.setGravity(Gravity.BOTTOM)
+        dialog.show()
 
+        val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerView26)
+        val ignore = dialog.findViewById<TextView>(R.id.textView194)
+
+        try {
+            val gridLayout =
+                GridLayoutManager(this@HomeActivity, 1, GridLayoutManager.HORIZONTAL, false)
+            recyclerView.layoutManager = LinearLayoutManager(this@HomeActivity)
+            val adapter = HomeOfferAdapter(offerResponse!!, this, this)
+            recyclerView.layoutManager = gridLayout
+            recyclerView.adapter = adapter
+
+        } catch (e: Exception) {
+            printLog("exception--->${e.message}")
+        }
+
+        ignore.setOnClickListener {
+            dialog.dismiss()
+        }
 
     }
+
+//    private fun showExperienceDialog() {
+//        val dialog = Dialog(this)
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//        dialog.setContentView(R.layout.experience_dialog)
+//        dialog.window!!.setLayout(
+//            ViewGroup.LayoutParams.MATCH_PARENT,
+//            ViewGroup.LayoutParams.WRAP_CONTENT
+//        )
+//        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+//        dialog.window!!.setGravity(Gravity.BOTTOM)
+//        dialog.show()
+//        val recyclerView= dialog.findViewById<RecyclerView>(R.id.recyclerView24)
+//        val myListData = arrayOf(
+//            ReactModel(R.drawable.experience_one),
+//            ReactModel(R.drawable.experience_two),
+//            ReactModel(R.drawable.experience_three),
+//            ReactModel(R.drawable.experience_four),
+//            ReactModel(R.drawable.experience_five)
+//        )
+//        val gridLayout =
+//            GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+//        recyclerView.layoutManager = LinearLayoutManager(this)
+//        val adapter = ExperienceReactAdapter( myListData, this,this)
+//        recyclerView.layoutManager = gridLayout
+//        recyclerView.adapter = adapter
+//
+//    }
 
     private fun setCurrentFragment(fragment: Fragment) =
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.fragment, fragment)
             commit()
         }
+
+
+    private fun offerDataLoad() {
+        authViewModel.userResponseOfferLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        printLog("output--->$")
+                        retrieveData(it.data.output)
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {
+                            },
+                            negativeClick = {
+                            })
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {
+                        },
+                        negativeClick = {
+                        })
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleasewait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+
+    private fun retrieveData(output: ArrayList<OfferResponse.Output>) {
+        printLog("output--->${output}")
+        offerResponse = output
+        if (output.isEmpty()) {
+            binding?.constraintLayout55?.hide()
+        } else {
+            binding?.constraintLayout55?.show()
+        }
+
+    }
+
+    override fun offerClick(comingSoonItem: OfferResponse.Output) {
+
+    }
+
 }

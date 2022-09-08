@@ -8,12 +8,11 @@ import javax.inject.Singleton
 
 @Singleton
 class AppPreferences @Inject constructor() {
-    var preferenceName = "PiInsite"
+    var preferenceName = "PVR"
     var preference: SharedPreferences? = null
     var editor: SharedPreferences.Editor? = null
-    val tag = "ConsultantPreferences====="
 
-    fun getInstance(): AppPreferences? {
+    fun getInstance(): AppPreferences{
         return this
     }
 
@@ -51,17 +50,6 @@ class AppPreferences @Inject constructor() {
         }
     }
 
-    /*public void putBitmap(String key,Bitmap value )
-    {
-        editor.putString(key, PCBaseActivity.encodeTobase64(value));
-        editor.commit();
-    }*/
-
-    /*public void putBitmap(String key,Bitmap value )
-    {
-        editor.putString(key, PCBaseActivity.encodeTobase64(value));
-        editor.commit();
-    }*/
     fun getBitmap(key: String?): String? {
         return if (preference != null) preference!!.getString(key, "") else ""
     }

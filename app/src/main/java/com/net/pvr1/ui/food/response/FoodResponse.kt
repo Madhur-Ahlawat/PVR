@@ -13,7 +13,7 @@ data class FoodResponse(
     data class Output(
         val aqt: Int,
         val banners: List<Any>,
-        val bestsellers: List<Bestseller>,
+        val bestsellers: ArrayList<Bestseller>,
         val c: String,
         val cat: List<Cat>,
         val cn: String,
@@ -54,7 +54,7 @@ data class FoodResponse(
                 val h: String,
                 val ho: String,
                 val i: String,
-                val id: String,
+                val id: Int,
                 val iw: String,
                 val masterItemId: Int,
                 val op: Int,

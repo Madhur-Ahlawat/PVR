@@ -1,7 +1,7 @@
 package com.net.pvr1.ui.food
 
 data class CartModel (
-    val id: String?,
+    val id: Int?,
     val title: String?,
     val image: String?,
     var quantity: Int,

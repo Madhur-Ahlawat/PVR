@@ -2,14 +2,13 @@ package com.net.pvr1.ui.home.fragment.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -24,7 +23,6 @@ import com.net.pvr1.databinding.FragmentHomeBinding
 import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.home.fragment.home.adapter.*
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
@@ -34,7 +32,6 @@ import com.net.pvr1.ui.selectCity.SelectCityActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.select_pos
 import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
 import java.util.*
 import kotlin.math.abs
@@ -75,6 +72,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         (requireActivity().findViewById(R.id.textView2) as TextView).show()
         (requireActivity().findViewById(R.id.subTitle) as TextView).show()
         (requireActivity().findViewById(R.id.txtCity) as TextView).show()
+        (requireActivity().findViewById(R.id.constraintLayout55) as ConstraintLayout).show()
         (requireActivity().findViewById(R.id.txtCity) as TextView).setOnClickListener {
             val intent = Intent(requireActivity(), SelectCityActivity::class.java)
             startActivity(intent)

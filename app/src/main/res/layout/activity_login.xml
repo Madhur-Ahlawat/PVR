@@ -49,7 +49,7 @@
                 android:layout_marginTop="63dp"
                 android:layout_marginEnd="34dp"
                 android:drawablePadding="5dp"
-                android:fontFamily="@font/helvetica_neu"
+                android:fontFamily="@font/montserrat_medium"
                 android:text="@string/skip"
                 android:textColor="@color/login_color"
                 android:textSize="@dimen/dim_h14"
@@ -62,8 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="35dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/view9"
+                app:layout_constraintStart_toStartOf="@+id/constraintLayout"
                 app:layout_constraintTop_toBottomOf="@+id/textView8"
                 app:srcCompat="@drawable/pvr_new"
                 tools:ignore="ContentDescription,ImageContrastCheck" />
@@ -94,8 +93,7 @@
                     android:id="@+id/textView9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/padding_10"
-                    android:fontFamily="@font/helvetica_neu"
+                    android:fontFamily="@font/montserrat_bold"
                     android:text="@string/verify_number"
                     android:textColor="@color/pvr_dark_black"
                     android:textSize="30sp"
@@ -106,7 +104,8 @@
                     android:id="@+id/textView10"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/montserrat_regular"
                     android:text="@string/toContinue"
                     android:textColor="@color/textColor"
                     android:textSize="14sp"
@@ -147,14 +146,13 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/textView11"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:fontFamily="@font/sf_pro_text_bold"
+                android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
                 android:text="@string/continue_txt"
                 android:textColor="@color/black"

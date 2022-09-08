@@ -51,8 +51,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
     //Otp Verify
-    private val otpVerifyLiveData = MutableLiveData<NetworkResult<LoginResponse>>()
-    val otpVerifyResponseLiveData: LiveData<NetworkResult<LoginResponse>>
+    private val otpVerifyLiveData = MutableLiveData<NetworkResult<ResisterResponse>>()
+    val otpVerifyResponseLiveData: LiveData<NetworkResult<ResisterResponse>>
         get() = otpVerifyLiveData
 
     suspend fun otpVerify(mobile: String, token: String) {
@@ -61,7 +61,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         verifyResponse(response)
     }
 
-    private fun verifyResponse(response: Response<LoginResponse>) {
+    private fun verifyResponse(response: Response<ResisterResponse>) {
         if (response.isSuccessful && response.body() != null) {
             otpVerifyLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
@@ -227,6 +227,28 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             offerLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             offerLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    //Offer Details
+    private val offerDetailsLiveData = MutableLiveData<NetworkResult<OfferResponse>>()
+    val offerDetailsResponseLiveData: LiveData<NetworkResult<OfferResponse>>
+        get() = offerDetailsLiveData
+
+    suspend fun offerDetails(id: String, did: String) {
+        giftCardLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.offerDetails(id, Constant.version, Constant.platform,did)
+        offerDetailsResponse(response)
+    }
+
+    private fun offerDetailsResponse(response: Response<OfferResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            offerDetailsLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            offerDetailsLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            offerDetailsLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 

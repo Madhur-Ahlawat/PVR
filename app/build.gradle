@@ -18,15 +18,26 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+
+
     buildTypes {
+        debug {
+//            buildConfigField "String", "API_URL", "\"https://demoapi.pvrcinemas.com/PVRCinemasCMS/api/\""  //stage
+            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/api/\""      //Prod
+            minifyEnabled false
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
         release {
+//            buildConfigField "String", "API_URL", "\"https://demoapi.pvrcinemas.com/PVRCinemasCMS/api/\""//stage
+            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/api/\""  //Prod
+            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
-
         }
     }
-
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

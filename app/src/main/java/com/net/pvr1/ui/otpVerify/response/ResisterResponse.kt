@@ -14,7 +14,7 @@ data class ResisterResponse(
         val cid: String,
         val cn: String,
         val doa: Any,
-        val dob: Any,
+        val dob: String,
         val em: String,
         val gd: String,
         val id: String,

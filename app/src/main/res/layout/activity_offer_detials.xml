@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.offer.offerDetails.OfferDetailsActivity">
+
+    <View
+        android:id="@+id/view125"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/include8"
+        app:layout_constraintEnd_toEndOf="@+id/view125"
+        app:layout_constraintStart_toStartOf="@+id/view125"
+        app:layout_constraintTop_toTopOf="@+id/view125"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/view126"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView91"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                app:layout_constraintEnd_toEndOf="@+id/view126"
+                app:layout_constraintStart_toStartOf="@+id/view126"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/backgrounds/scenic"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/imageView92"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="56dp"
+                android:src="@drawable/back"
+                app:layout_constraintStart_toStartOf="@+id/imageView91"
+                app:layout_constraintTop_toTopOf="@+id/view126"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/imageView93"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="27dp"
+                android:src="@drawable/share"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView92"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageView92"
+                tools:ignore="ContentDescription" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintBottom_toBottomOf="@+id/view126"
+                app:layout_constraintEnd_toEndOf="@+id/view126"
+                app:layout_constraintStart_toStartOf="@+id/view126"
+                app:layout_constraintTop_toBottomOf="@+id/imageView91">
+
+                <View
+                    android:id="@+id/view127"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView186"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_16sp"
+                    tools:text="99 Bestsellers offer"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/view127" />
+
+                <TextView
+                    android:id="@+id/textView187"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="@dimen/dimen_12sp"
+                    android:textColor="@color/textColorGray"
+                    android:fontFamily="@font/montserrat_regular"
+                    tools:text="Valid till 20 Aug 2022"
+                    app:layout_constraintStart_toStartOf="@+id/view127"
+                    app:layout_constraintTop_toBottomOf="@+id/textView186" />
+
+                <View
+                    android:id="@+id/view128"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@color/grayEd"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView187" />
+
+                <TextView
+                    android:id="@+id/textView188"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="@string/how_to_avail"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14sp"
+                    app:layout_constraintStart_toStartOf="@+id/view127"
+                    app:layout_constraintTop_toBottomOf="@+id/view128" />
+
+                <TextView
+                    android:id="@+id/textView189"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="@dimen/dimen_12sp"
+                    android:textColor="#B2000000"
+                    android:fontFamily="@font/montserrat_regular"
+                    tools:text="Now enjoy your favourite food and our bestsellers at    PVR only for INR 99/-
+applicable every Monday to Thursday from 9 AM to 3 PM at the cinema near you.
+T&amp;C Apply."
+                    app:layout_constraintStart_toStartOf="@+id/view127"
+                    app:layout_constraintTop_toBottomOf="@+id/textView188" />
+
+                <TextView
+                    android:id="@+id/textView190"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_16sp"
+                    android:text="@string/terms_and_conditions"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView189" />
+
+                <TextView
+                    android:id="@+id/textView191"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    tools:text="Offer is valid every Monday to Thursday from 9 AM to 3 PM only.
+Offer is valid on select dishes/products only. Please check with the cinema team at the time of purchase.
+Not applicable for group booking / special shows of Food &amp; Beverage.
+PVR have rights to withdraw / change the offer without any prior notice.
+Applicable offline only at PVR Concessions.
+Offer valid till stock last."
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView190" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <include
+        android:id="@+id/include8"
+        layout="@layout/button_next"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/view125" />
+</androidx.constraintlayout.widget.ConstraintLayout>

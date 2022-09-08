@@ -13,7 +13,7 @@ import com.net.pvr1.ui.seatLayout.SeatLayoutActivity
 
 class BookingShowsTimeAdapter(
     private var nowShowingList: List<BookingResponse.Output.Cinema.Child.Sw.S>,
-    private var context: Context,
+    private var context: Context
 ) :
     RecyclerView.Adapter<BookingShowsTimeAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemCinemaDetailsShowTimeBinding) :
@@ -36,6 +36,7 @@ class BookingShowsTimeAdapter(
                 holder.itemView.setOnClickListener {
                     val intent = Intent(context, SeatLayoutActivity::class.java)
                     intent.putExtra("transId","")
+                    intent.putExtra("ccId",this.cc)
                     context.startActivity(intent)
                 }
             }

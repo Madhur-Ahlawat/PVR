@@ -15,7 +15,7 @@ import javax.inject.Inject
 class OtpVerifyViewModel @Inject constructor(private val userRepository: UserRepository) :
     ViewModel() {
 
-    val userResponseLiveData: LiveData<NetworkResult<LoginResponse>>
+    val userResponseLiveData: LiveData<NetworkResult<ResisterResponse>>
         get() = userRepository.otpVerifyResponseLiveData
 
     fun otpVerify(mobile: String, token: String) {

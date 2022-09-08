@@ -41,7 +41,7 @@ interface UserAPI {
         @Query("cname") cName: String,
         @Query("av") version: String,
         @Query("pt") platform: String
-    ): Response<LoginResponse>
+    ): Response<ResisterResponse>
 
     @POST("v2/user/register")
     suspend fun resister(
@@ -102,6 +102,14 @@ interface UserAPI {
         @Query("did") did: String,
         @Query("av") version: String,
         @Query("pt") platform: String,
+    ): Response<OfferResponse>
+
+    @POST("deals/mdetail")
+    suspend fun offerDetails(
+        @Query("id") id: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did")did: String,
     ): Response<OfferResponse>
 
     @POST("content/cities")

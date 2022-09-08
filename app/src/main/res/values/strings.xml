@@ -36,7 +36,7 @@
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
     <string name="get_start">Get Started</string>
-    <string name="verify_number">Verify\nMobile Number</string>
+    <string name="verify_number">Verify\nPhone Number</string>
     <string name="toContinue">to continue, enter your mobile number</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="continue_txt">Continue</string>
@@ -172,6 +172,18 @@
     //Summery
     <string name="also_playing">Also playing</string>
     <string name="food_beverages">Food $ Beverages</string>
+    <string name="seat_info">Seat Info</string>
+    <string name="tickets">Tickets</string>
+    <string name="explore_apply_coupons"><![CDATA[Explore & Apply Coupons]]></string>
+    <string name="apply">Apply</string>
+    <string name="bill_details">Bill Details</string>
+    <string name="coupon">Coupon</string>
+    <string name="taxes_fees"><![CDATA[Taxes & Fees]]></string>
+    <string name="cauvery_calling">Cauvery Calling</string>
+    <string name="grand_total">Grand Total</string>
+    <string name="remove">Remove</string>
+    <string name="proceed_to_pay">Proceed to Pay</string>
+
     //Seat Layout
     <string name="max_seat_msz">You Can\'t Select More Than two Seat.</string>
     <string name="currency">₹</string>
@@ -194,7 +206,23 @@
     <string name="sub_total">Sub Total</string>
     //Offer
     <string name="new_offers_are_live">New offers are live!</string>
-//trailer
+    <string name="your_experience">Your Experience</string>
+    //trailer
     <string name="video_not_avail">Video not available</string>
+    //Payment
+    <string name="to_be_paid">To be paid</string>
+    <string name="privilege_coupons">Privilege Coupons</string>
+    //Experience
+    <string name="how_was_your_experience">How was your experience with PVR Plaza Delhi for the movie ‘Joker’.</string>
+    <string name="type_your_feedback_here">Type your feedback here...</string>
+    <string name="thank_you_for_your_feedback">Thank you\n for your feedback</string>
+    <string name="comment">Comment...</string>
+    <string name="view">View</string>
+    //Offer Details
+    <string name="how_to_avail">How to Avail</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="we_have_offers_that_n_brings_joy">We have offers that\n brings joy!</string>
+    <string name="notify">We’ll notify you as soon as the new\n offers are live in nearby theaters</string>
+    <string name="ignore">Ignore</string>
 
 </resources>

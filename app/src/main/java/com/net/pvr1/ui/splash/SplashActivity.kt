@@ -23,6 +23,7 @@ import com.net.pvr1.ui.onBoarding.LandingActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
@@ -44,7 +45,7 @@ class SplashActivity : AppCompatActivity() {
         } else {
             networkDialog()
         }
-        printLog("CheckLogin--->${(preferences.getBoolean(Constant.IS_LOGIN))}")
+        printLog("CheckLogin--->${Constant.ON_BOARDING_CLICK}")
     }
 
     private fun movedNext() {
@@ -54,10 +55,17 @@ class SplashActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             } else {
-//                val intent = Intent(this@SplashActivity, FoodActivity::class.java)
-                val intent = Intent(this@SplashActivity, LandingActivity::class.java)
-                startActivity(intent)
-                finish()
+                if (!Constant.ON_BOARDING_CLICK) {
+                val intent = Intent(this@SplashActivity, FoodActivity::class.java)
+//                val intent = Intent(this@SplashActivity, HomeActivity::class.java)
+//                    val intent = Intent(this@SplashActivity, LandingActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }else{
+                    val intent = Intent(this@SplashActivity, HomeActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }
         }
         val handler = Handler(Looper.getMainLooper())

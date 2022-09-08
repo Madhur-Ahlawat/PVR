@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.payment.PaymentActivity">
+
+    <View
+        android:id="@+id/view112"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout44"
+        android:layout_width="0dp"
+        android:layout_height="53dp"
+        app:layout_constraintEnd_toEndOf="@+id/view112"
+        app:layout_constraintStart_toStartOf="@+id/view112"
+        app:layout_constraintTop_toTopOf="@+id/view112">
+
+        <View
+            android:id="@+id/view113"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <include
+            layout="@layout/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/view113"
+            app:layout_constraintEnd_toEndOf="@+id/view113"
+            app:layout_constraintStart_toStartOf="@+id/view113"
+            app:layout_constraintTop_toTopOf="@+id/view113" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout46"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:background="#FFFDF5"
+        app:layout_constraintEnd_toEndOf="@+id/view112"
+        app:layout_constraintStart_toStartOf="@+id/view112"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout44">
+
+        <View
+            android:id="@+id/view114"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView177"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:fontFamily="@font/sf_pro_text_semi_bold"
+            android:text="@string/to_be_paid"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/view114"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView178"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="19dp"
+            android:fontFamily="@font/sf_pro_text_semi_bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/view114"
+            app:layout_constraintTop_toTopOf="@+id/view114"
+            tools:text="₹8888" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/view112"
+        app:layout_constraintStart_toStartOf="@+id/view112"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout46">
+
+        <View
+            android:id="@+id/view115"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView180"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="20dp"
+            android:textSize="@dimen/dimen_12sp"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:text="@string/privilege_coupons"
+            app:layout_constraintStart_toStartOf="@+id/view115"
+            app:layout_constraintTop_toTopOf="@+id/view115" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/view115"
+            app:layout_constraintTop_toBottomOf="@+id/textView180"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_payment_privlage" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

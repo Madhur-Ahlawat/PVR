@@ -12,7 +12,6 @@ import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.HomeActivity
-import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.otpVerify.response.ResisterResponse
 import com.net.pvr1.ui.otpVerify.viewModel.OtpVerifyViewModel
 import com.net.pvr1.utils.*
@@ -228,22 +227,28 @@ class OtpVerifyActivity : AppCompatActivity() {
     }
 
     private fun retrieveResisterData(output: ResisterResponse.Output) {
-        preferences.putBoolean(
-            Constant.IS_LOGIN, true
-        )
+        preferences.putBoolean(Constant.IS_LOGIN, true)
         preferences.putString(Constant.USER_ID,output.id)
-        preferences.putString(Constant.USER_NAME,output.cn)
+        preferences.putString(Constant.USER_NAME,output.un)
+        preferences.putString(Constant.USER_EMAIL,output.em)
+        preferences.putString(Constant.USER_MO_NUMBER,output.ph)
+        preferences.putString(Constant.USER_TOKEN,output.token)
+        preferences.putString(Constant.USER_DOB,output.dob)
+
         val intent = Intent(this@OtpVerifyActivity, HomeActivity::class.java)
         startActivity(intent)
         finish()
     }
 
-    private fun retrieveData(output: LoginResponse.Output?) {
-        preferences.putBoolean(
-            Constant.IS_LOGIN, true
-        )
-//        preferences.putString(Constant.USER_ID,output)
-//        preferences.putString(Constant.USER_NAME,output.cn)
+    private fun retrieveData(output: ResisterResponse.Output?) {
+        preferences.putBoolean( Constant.IS_LOGIN, true )
+
+        preferences.putString(Constant.USER_ID,output?.id)
+        preferences.putString(Constant.USER_NAME,output?.un)
+        preferences.putString(Constant.USER_MO_NUMBER,output?.ph)
+        preferences.putString(Constant.USER_TOKEN,output?.token)
+        preferences.putString(Constant.USER_DOB,output?.dob)
+
         val intent = Intent(this@OtpVerifyActivity, HomeActivity::class.java)
         startActivity(intent)
         finish()

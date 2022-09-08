@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.offer
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -9,11 +10,14 @@ import com.net.pvr1.databinding.ActivityOfferBinding
 import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.offer.adapter.OfferAdapter
+import com.net.pvr1.ui.offer.offerDetails.OfferDetailsActivity
 import com.net.pvr1.ui.offer.response.OfferResponse
 import com.net.pvr1.ui.offer.viewModel.OfferViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -78,14 +82,17 @@ class OfferActivity : AppCompatActivity(),OfferAdapter.Direction {
     }
 
     private fun retrieveData(output: List<OfferResponse.Output>) {
-        val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+        printLog("Details--->${output}")
+        val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
         val comingSoonMovieAdapter = OfferAdapter(output, this, this)
-        binding?.recyclerView?.layoutManager = gridLayout2
+        binding?.recyclerView?.layoutManager = gridLayout
         binding?.recyclerView?.adapter = comingSoonMovieAdapter
     }
 
     override fun offerClick(comingSoonItem: OfferResponse.Output) {
-
+        val intent = Intent(this@OfferActivity, OfferDetailsActivity::class.java)
+        intent.putExtra("id",comingSoonItem.id)
+        startActivity(intent)
     }
 
 }

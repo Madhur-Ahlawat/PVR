@@ -174,7 +174,7 @@ class BookingActivity : AppCompatActivity(),
         binding?.recyclerView10?.adapter = bookingShowsLanguageAdapter
 
         //Shows
-        val gridLayout3 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+        val gridLayout3 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
         val bookingShowsParentAdapter = BookingShowsParentAdapter(output.cinemas, this)
         binding?.recyclerView8?.layoutManager = gridLayout3
         binding?.recyclerView8?.adapter = bookingShowsParentAdapter

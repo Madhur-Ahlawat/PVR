@@ -40,8 +40,13 @@ class Constant {
         const val POST_CODE = "$PACKAGE_NAME.POST_CODE"
         const val STATE = "$PACKAGE_NAME.STATE"
         const val USER_NAME = "user_name"
+        const val USER_EMAIL = "user_email"
+        const val USER_TOKEN = "user_token"
+        const val USER_DOB = "user_dob"
+        const val USER_MO_NUMBER = "user_mo"
         const val USER_ID = "user_id"
         const val SEAT_AVAILABEL = 1
+        const val ON_BOARDING_CLICK = false
         const val SEAT_BOOKED = 2
         const val SEAT_SELECTED = 3
         const val HATCHBACK = 5

@@ -3,65 +3,116 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/transparent">
 
     <View
-        android:id="@+id/view104"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/view192"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView156"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/view104"
-        app:layout_constraintTop_toTopOf="@+id/view104" />
-
-    <TextView
-        android:id="@+id/textView157"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="@+id/view104"
-        app:layout_constraintStart_toStartOf="@+id/view104"
-        app:layout_constraintTop_toBottomOf="@+id/textView156" />
-
-    <androidx.viewpager2.widget.ViewPager2
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
-        android:layout_height="131dp"
-        app:layout_constraintEnd_toEndOf="@+id/view104"
-        app:layout_constraintStart_toStartOf="@+id/view104"
-        app:layout_constraintTop_toBottomOf="@+id/textView157" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/offer_curve"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout49"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/view192">
 
-    <TableLayout
-        android:layout_width="401dp"
-        android:layout_height="9dp"
-        app:layout_constraintEnd_toEndOf="@+id/view104"
-        app:layout_constraintStart_toStartOf="@+id/view104"
-        tools:layout_editor_absoluteY="256dp">
+        <View
+            android:id="@+id/view129"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TableRow
+        <TextView
+            android:id="@+id/textView192"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="31dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:gravity="center"
+            android:text="@string/we_have_offers_that_n_brings_joy"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/view129" />
+
+        <TextView
+            android:id="@+id/textView193"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:gravity="center"
+            android:text="@string/notify"
+            android:textColor="#3A3A3A"
+            android:textSize="@dimen/dimen_14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/view129"
+            app:layout_constraintTop_toBottomOf="@+id/textView192" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView26"
+            android:layout_width="0dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="17dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView193" />
+
+        <TableLayout
+            android:layout_width="305dp"
+            android:layout_height="9dp"
+            android:layout_marginTop="23dp"
+            app:layout_constraintEnd_toEndOf="@+id/recyclerView26"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView26"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout49"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <include
+            android:id="@+id/include"
+            layout="@layout/button_next"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </TableLayout>
+   <TextView
+       android:id="@+id/textView194"
+       app:layout_constraintBottom_toBottomOf="parent"
+       android:layout_marginBottom="@dimen/dimen_19dp"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/include"
+       android:fontFamily="@font/montserrat_bold"
+       android:textSize="@dimen/dimen_14sp"
+       android:textColor="@color/h8Point1Color"
+       android:text="@string/ignore"
+       android:textAllCaps="true"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

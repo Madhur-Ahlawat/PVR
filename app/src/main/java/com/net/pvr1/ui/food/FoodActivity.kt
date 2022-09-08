@@ -22,7 +22,6 @@ import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.adapter.*
 import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.ui.food.viewModel.FoodViewModel
-import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.summery.SummeryActivity
 import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,12 +41,14 @@ class FoodActivity : AppCompatActivity(),
     private var loader: LoaderDialog? = null
     private val cartModel: ArrayList<CartModel> = arrayListOf()
     private var filterResponse: ArrayList<FoodResponse.Output.Mfl>? = null
+    private var foodResponse: FoodResponse.Output? = null
     private var up: Boolean = false
 
     private var foodBestSellerAdapter: FoodBestSellerAdapter? = null
     private var categoryAdapter: CategoryAdapter? = null
     private var filterAdapter: FilterAdapter? = null
     private var filterBottomAdapter: FilterBottomAdapter? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,8 +57,8 @@ class FoodActivity : AppCompatActivity(),
         setContentView(view)
         preferences = AppPreferences()
         authViewModel.food(
-            "uIKPx9AqYvg=",
-            "GURM",
+            "pGnnlj1MEjb0MOKBx1EH5w==",
+            "GAUR",
             "",
             "",
             "",
@@ -78,6 +79,7 @@ class FoodActivity : AppCompatActivity(),
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        foodResponse = it.data.output
                         filterResponse = it.data.output.mfl
                         retrieveData(it.data.output)
                     } else {
@@ -157,7 +159,7 @@ class FoodActivity : AppCompatActivity(),
         if (cartModel.size == 0) {
             cartModel.add(
                 CartModel(
-                    comingSoonItem.cid.toString(),
+                    comingSoonItem.cid,
                     comingSoonItem.nm,
                     comingSoonItem.mi,
                     comingSoonItem.qt,
@@ -168,7 +170,7 @@ class FoodActivity : AppCompatActivity(),
         } else {
             if (itemExist(comingSoonItem)) {
                 for (item in cartModel) {
-                    if (item.id == comingSoonItem.cid.toString()) {
+                    if (item.id == comingSoonItem.cid) {
                         if (comingSoonItem.qt == 0) {
                             cartModel.remove(item)
                         } else {
@@ -181,7 +183,7 @@ class FoodActivity : AppCompatActivity(),
             } else {
                 cartModel.add(
                     CartModel(
-                        comingSoonItem.cid.toString(),
+                        comingSoonItem.cid,
                         comingSoonItem.nm,
                         comingSoonItem.mi,
                         comingSoonItem.qt,
@@ -196,7 +198,7 @@ class FoodActivity : AppCompatActivity(),
     // Chek Item Ability
     private fun itemExist(foodItem: FoodResponse.Output.Bestseller): Boolean {
         for (item in cartModel) {
-            if (item.id == foodItem.cid.toString()) {
+            if (item.id == foodItem.cid) {
                 return true
             }
         }
@@ -252,7 +254,7 @@ class FoodActivity : AppCompatActivity(),
         if (cartModel.size == 0) {
             cartModel.add(
                 CartModel(
-                    comingSoonItem.cid.toString(),
+                    comingSoonItem.cid,
                     comingSoonItem.nm,
                     comingSoonItem.mi,
                     comingSoonItem.qt,
@@ -263,7 +265,7 @@ class FoodActivity : AppCompatActivity(),
         } else {
             if (itemExist(comingSoonItem)) {
                 for (item in cartModel) {
-                    if (item.id == comingSoonItem.cid.toString()) {
+                    if (item.id == comingSoonItem.cid) {
                         if (comingSoonItem.qt == 0) {
                             cartModel.remove(item)
                         } else {
@@ -276,7 +278,7 @@ class FoodActivity : AppCompatActivity(),
             } else {
                 cartModel.add(
                     CartModel(
-                        comingSoonItem.cid.toString(),
+                        comingSoonItem.cid,
                         comingSoonItem.nm,
                         comingSoonItem.mi,
                         comingSoonItem.qt,
@@ -372,7 +374,7 @@ class FoodActivity : AppCompatActivity(),
         if (cartModel.size == 0) {
             cartModel.add(
                 CartModel(
-                    comingSoonItem.cid.toString(),
+                    comingSoonItem.cid,
                     comingSoonItem.nm,
                     comingSoonItem.mi,
                     comingSoonItem.qt,
@@ -383,7 +385,7 @@ class FoodActivity : AppCompatActivity(),
         } else {
             if (updateCategoryItemExist(comingSoonItem)) {
                 for (item in cartModel) {
-                    if (item.id == comingSoonItem.cid.toString()) {
+                    if (item.id == comingSoonItem.cid) {
                         if (comingSoonItem.qt == 0) {
                             cartModel.remove(item)
                         } else {
@@ -396,7 +398,7 @@ class FoodActivity : AppCompatActivity(),
             } else {
                 cartModel.add(
                     CartModel(
-                        comingSoonItem.cid.toString(),
+                        comingSoonItem.cid,
                         comingSoonItem.nm,
                         comingSoonItem.mi,
                         comingSoonItem.qt,
@@ -410,7 +412,7 @@ class FoodActivity : AppCompatActivity(),
 
     private fun updateCategoryItemExist(foodItem: FoodResponse.Output.Mfl): Boolean {
         for (item in cartModel) {
-            if (item.id == foodItem.cid.toString()) {
+            if (item.id == foodItem.cid) {
                 return true
             }
         }
@@ -630,53 +632,46 @@ class FoodActivity : AppCompatActivity(),
         }
     }
 
-    private fun updateCartFoodCartList(comingSoonItem: CartModel) {
-        if (cartModel.size == 0) {
-            cartModel.add(
-                CartModel(
-                    comingSoonItem.id,
-                    comingSoonItem.title,
-                    comingSoonItem.image,
-                    comingSoonItem.quantity,
-                    comingSoonItem.price,
-                    comingSoonItem.veg
-                )
-            )
-        } else {
-            if (updateCartItemExist(comingSoonItem)) {
-                for (item in cartModel) {
-                    if (item.id == comingSoonItem.id) {
-                        if (comingSoonItem.quantity == 0) {
-                            cartModel.remove(item)
-                        } else {
-                            item.quantity = comingSoonItem.quantity
-
-                        }
+    private fun updateCartFoodCartList(recyclerData: CartModel) {
+        try {
+            for (item in cartModel) {
+                if (item.id == recyclerData.id) {
+                    if (recyclerData.quantity == 0) {
+                        removeCartItem(item)
+                    } else {
+                        item.quantity = recyclerData.quantity
                         break
                     }
                 }
-            } else {
-                cartModel.add(
-                    CartModel(
-                        comingSoonItem.id,
-                        comingSoonItem.title,
-                        comingSoonItem.image,
-                        comingSoonItem.quantity,
-                        comingSoonItem.price,
-                        comingSoonItem.veg
-                    )
-                )
             }
+
+            updateCartMainList(recyclerData)
+        } catch (e: Exception) {
+
         }
+
     }
 
-    private fun updateCartItemExist(foodItem: CartModel): Boolean {
-        for (item in cartModel) {
-            if (item.id == foodItem.id) {
-                return true
+    private fun updateCartMainList(recyclerData: CartModel) {
+        for (item in foodResponse!!.bestsellers) {
+            if (item.cid == recyclerData.id) {
+                if (recyclerData.id == item.cid) {
+                    item.qt = recyclerData.quantity
+                }
+            }
+
+        }
+        cartData()
+        //Update Home List
+        foodBestSellerAdapter?.notifyDataSetChanged()
+    }
+
+    private fun removeCartItem(item: CartModel) {
+        for (data in cartModel) {
+            if (data.id == item.id) {
+                cartModel.remove(data)
             }
         }
-        return false
     }
 
 }

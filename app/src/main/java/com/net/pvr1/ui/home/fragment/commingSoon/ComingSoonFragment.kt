@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -52,6 +53,8 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
         (requireActivity().findViewById(R.id.textView2) as TextView).hide()
         (requireActivity().findViewById(R.id.subTitle) as TextView).hide()
         (requireActivity().findViewById(R.id.txtCity) as TextView).hide()
+        (requireActivity().findViewById(R.id.constraintLayout55) as ConstraintLayout).hide()
+
         comingSoonApi()
         movedNext()
     }

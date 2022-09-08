@@ -6,7 +6,7 @@ data class OfferResponse(
     val code: Int,
     val minversion: Any,
     val msg: String,
-    val output: List<Output>,
+    val output: ArrayList<Output>,
     val result: String,
     val version: Any
 ):Serializable{
