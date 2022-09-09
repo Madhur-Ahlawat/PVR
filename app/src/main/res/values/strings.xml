@@ -224,5 +224,8 @@
     <string name="we_have_offers_that_n_brings_joy">We have offers that\n brings joy!</string>
     <string name="notify">We’ll notify you as soon as the new\n offers are live in nearby theaters</string>
     <string name="ignore">Ignore</string>
+    <string name="available">Available</string>
+    <string name="selected">Selected</string>
+    <string name="offer_applied">Offer Applied</string>
 
 </resources>

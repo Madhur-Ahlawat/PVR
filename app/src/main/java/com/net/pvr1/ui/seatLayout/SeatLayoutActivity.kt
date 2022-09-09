@@ -65,8 +65,6 @@ class SeatLayoutActivity : AppCompatActivity() {
     private var flagCount = 0
     private var posX = 0
     private var posY = 0
-    private val showSeat: PopupWindow? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,47 +72,17 @@ class SeatLayoutActivity : AppCompatActivity() {
         val view = binding?.root
         setContentView(view)
         preferences = AppPreferences()
-        authViewModel.seatLayout("DPXL", "33461", "", "", "", false, "")
+        authViewModel.seatLayout("GURM", "251572", "", "", "", false, "")
         seatLayout()
         movedNext()
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun movedNext() {
-        binding?.btnContinue?.setOnClickListener {
+        binding?.textView196?.setOnClickListener {
             val intent = Intent(this@SeatLayoutActivity, FoodActivity::class.java)
             startActivity(intent)
         }
-
-        binding?.seatInclude?.outerScroll?.setOnTouchListener { _, motionEvent ->
-            if (motionEvent.action == MotionEvent.ACTION_UP) {
-                if (showSeat != null && showSeat.isShowing) {
-                    showSeat.dismiss()
-                    flagCount = 1
-                }
-            } else {
-                if (showSeat == null || !showSeat.isShowing) {
-                    showSeats()
-                }
-            }
-            false
-        }
-
-        binding?.seatInclude?.llHorizontalScroll?.setOnTouchListener { _, motionEvent ->
-            if (motionEvent.action == MotionEvent.ACTION_UP) {
-                if (showSeat != null && showSeat.isShowing) {
-                    showSeat.dismiss()
-                    flagCount = 1
-                }
-            } else {
-                if (showSeat == null || !showSeat.isShowing) {
-                    showSeats()
-                }
-            }
-            false
-        }
-
-
     }
 
     private fun seatLayout() {
@@ -163,7 +131,7 @@ class SeatLayoutActivity : AppCompatActivity() {
     }
 
     private fun drawColumn(noOfRows: List<SeatResponse.Output.Row>) {
-        binding?.seatInclude?.llSeatlayout?.removeAllViews()
+        binding?.llSeatLayout?.removeAllViews()
         var areaName = ""
         for (i in noOfRows.indices) {
             val row: SeatResponse.Output.Row = noOfRows[i]
@@ -179,7 +147,7 @@ class SeatLayoutActivity : AppCompatActivity() {
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
                 linearLayout.layoutParams = layoutParams
-                binding?.seatInclude?.llSeatlayout?.addView(linearLayout)
+                binding?.llSeatLayout?.addView(linearLayout)
                 drawRow(linearLayout, noSeats, areaName, i)
             } else {
 
@@ -212,16 +180,16 @@ class SeatLayoutActivity : AppCompatActivity() {
                 centerLayout.orientation = LinearLayout.HORIZONTAL
                 centerLayout.layoutParams = centerLayoutParameter
                 val padding: Int = Constant().convertDpToPixel(2F, this)
-                val downButtonLeft = ImageButton(this)
+//                val downButtonLeft = ImageButton(this)
                 val layoutParameter1 = LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
-                downButtonLeft.layoutParams = layoutParameter1
-                downButtonLeft.setPadding(padding, 0, padding, 0)
-                downButtonLeft.setBackgroundColor(Color.TRANSPARENT)
-                downButtonLeft.setImageResource(R.drawable.down_arrow)
-                centerLayout.addView(downButtonLeft)
+//                downButtonLeft.layoutParams = layoutParameter1
+//                downButtonLeft.setPadding(padding, 0, padding, 0)
+//                downButtonLeft.setBackgroundColor(Color.TRANSPARENT)
+//                downButtonLeft.setImageResource(R.drawable.down_arrow)
+//                centerLayout.addView(downButtonLeft)
                 val textView = TextView(this)
                 textView.layoutParams = layoutParameter1
                 textView.gravity = Gravity.CENTER
@@ -229,14 +197,14 @@ class SeatLayoutActivity : AppCompatActivity() {
                 textView.setPadding(padding, 0, padding, 0)
                 textView.setTextAppearance(this, R.style.H1Size)
                 centerLayout.addView(textView)
-                val downButtonRight = ImageButton(this)
-                downButtonRight.layoutParams = layoutParameter1
-                downButtonRight.setPadding(padding, 0, padding, 0)
-                downButtonRight.setImageResource(R.drawable.down_arrow)
-                downButtonRight.setBackgroundColor(Color.TRANSPARENT)
-                centerLayout.addView(downButtonRight)
+//                val downButtonRight = ImageButton(this)
+//                downButtonRight.layoutParams = layoutParameter1
+//                downButtonRight.setPadding(padding, 0, padding, 0)
+//                downButtonRight.setImageResource(R.drawable.down_arrow)
+//                downButtonRight.setBackgroundColor(Color.TRANSPARENT)
+//                centerLayout.addView(downButtonRight)
                 rlLayout.addView(centerLayout)
-                binding?.seatInclude?.llSeatlayout?.addView(rlLayout)
+                binding?.llSeatLayout?.addView(rlLayout)
 
             }
         }
@@ -460,7 +428,7 @@ class SeatLayoutActivity : AppCompatActivity() {
             val margin: Int = Constant().convertDpToPixel(2F, this)
             layoutParams.setMargins(0, Constant().convertDpToPixel(2F, this), 0, margin)
             txtRowName.layoutParams = layoutParams
-            binding?.seatInclude?.llRowName?.addView(txtRowName)
+            binding?.llRowName?.addView(txtRowName)
         } else {
 
             //Area partial_layout design ==================
@@ -479,7 +447,7 @@ class SeatLayoutActivity : AppCompatActivity() {
             layoutParams.setMargins(0, Constant().convertDpToPixel(4F, this), 0, margin)
             txtRowName.layoutParams = layoutParams
             txtRowName.text = rowName
-            binding?.seatInclude?.llRowName?.addView(txtRowName)
+            binding?.llRowName?.addView(txtRowName)
         }
     }
 
@@ -1246,48 +1214,48 @@ class SeatLayoutActivity : AppCompatActivity() {
             }
         }
         if (noOfSeatsSelected.size == 0) {
-            if (!isDit) binding?.txtSelectedSeat?.text =
-                "No Seats Selected" else binding?.txtSelectedSeat?.text =
+            if (!isDit) binding?.textView195?.text =
+                "No Seats Selected" else binding?.textView195?.text =
                 "No Vehicle Slots Selected"
         }
         calculatePrice()
     }
 
     private fun calculatePrice() {
-        binding?.txtSelectedSeat?.text = ""
+        binding?.textView195?.text = ""
         if (noOfSeatsSelected.size > 0) {
-            binding?.btnContinue?.isClickable = true
-            binding?.btnContinue?.setTextColor(Color.parseColor("#000000"))
-            binding?.btnContinue?.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                0,
-                R.drawable.ic_bright,
-                0
-            )
-            binding?.txtSelectedSeat?.text = ""
+            binding?.textView195?.isClickable = true
+            binding?.textView195?.setTextColor(Color.parseColor("#000000"))
+//            binding?.textView195?.setCompoundDrawablesWithIntrinsicBounds(
+//                0,
+//                0,
+//                R.drawable.ic_bright,
+//                0
+//            )
+            binding?.textView196?.text = ""
             if (noOfSeatsSelected.size == 1) {
-                binding?.btitem?.text = noOfSeatsSelected.size.toString() + " Seat Selected"
-                if (isDit) binding?.btitem?.text =
+                binding?.textView196?.text = noOfSeatsSelected.size.toString() + " Seat Selected"
+                if (isDit) binding?.textView196?.text =
                     noOfSeatsSelected.size.toString() + " Vehicle Slot Selected"
             } else {
-                binding?.btitem?.text = noOfSeatsSelected.size.toString() + " Seats Selected"
-                if (isDit) binding?.btitem?.text =
+                binding?.textView196?.text = noOfSeatsSelected.size.toString() + " Seats Selected"
+                if (isDit) binding?.textView196?.text =
                     noOfSeatsSelected.size.toString() + " Vehicle Slots Selected"
             }
         } else {
-            binding?.btnContinue?.text = "PAY "+getString(R.string.currency);
-            binding?.btnContinue?.isClickable = false
-            binding?.btnContinue?.setTextColor(Color.parseColor("#80000000"))
-            binding?.btnContinue?.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                0,
-                R.drawable.ic_right,
-                0
-            )
-            if (!isDit) binding?.txtSelectedSeat?.text =
-                "No Seats Selected" else binding?.txtSelectedSeat?.text =
+            binding?.textView195?.text = "PAY "+getString(R.string.currency);
+            binding?.textView195?.isClickable = false
+            binding?.textView195?.setTextColor(Color.parseColor("#80000000"))
+//            binding?.textView195?.setCompoundDrawablesWithIntrinsicBounds(
+//                0,
+//                0,
+//                R.drawable.ic_right,
+//                0
+//            )
+            if (!isDit) binding?.textView195?.text =
+                "No Seats Selected" else binding?.textView196?.text =
                 "No Vehicle Slots Selected"
-            binding?.btitem?.text = ""
+//            binding?.btitem?.text = ""
         }
         var totalPrice = 0f
         val selectSeat = ArrayList<Spannable>()
@@ -1301,7 +1269,7 @@ class SeatLayoutActivity : AppCompatActivity() {
                 when (seatTagData.st) {
                     1 -> {
                         seatNo =
-                            if (binding?.txtSelectedSeat?.text.toString()
+                            if (binding?.textView195?.text.toString()
                                     .equals("", ignoreCase = true)
                             ) {
                                 "\uF101 " + seatTagData.sn
@@ -1315,11 +1283,12 @@ class SeatLayoutActivity : AppCompatActivity() {
                             seatNo.length,
                             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                         )
-                        binding?.txtSelectedSeat?.append(wordToSpan)
+                        binding?.textView195?.text=noOfSeatsSelected.size.toString()+" Seats |"
+//                        binding?.textView195?.append(wordToSpan)
                     }
                     2 -> {
                         seatNo =
-                            if (binding?.txtSelectedSeat?.text.toString()
+                            if (binding?.textView195?.text.toString()
                                     .equals("", ignoreCase = true)
                             ) {
                                 "\uF102 " + seatTagData.sn
@@ -1333,10 +1302,11 @@ class SeatLayoutActivity : AppCompatActivity() {
                             seatNo.length,
                             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                         )
-                        binding?.txtSelectedSeat?.append(wordToSpan)
+                        binding?.textView195?.text=noOfSeatsSelected.size.toString()+" Seats |"
+//                        binding?.textView195?.append(wordToSpan)
                     }
                     else -> {
-                        seatNo = if (binding?.txtSelectedSeat?.text.toString()
+                        seatNo = if (binding?.textView195?.text.toString()
                                 .equals("", ignoreCase = true)
                         ) {
                             seatTagData.sn.toString()
@@ -1350,7 +1320,8 @@ class SeatLayoutActivity : AppCompatActivity() {
                             seatNo.length,
                             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                         )
-                        binding?.txtSelectedSeat?.append(wordToSpan)
+                        binding?.textView195?.text=noOfSeatsSelected.size.toString()+" Seats |"
+//                        binding?.textView195?.append(wordToSpan)
                     }
                 }
                 selectSeat.add(wordToSpan)
@@ -1362,11 +1333,11 @@ class SeatLayoutActivity : AppCompatActivity() {
             }
         }
 
-        binding?.btnContinue?.text =
+        binding?.textView196?.text =
             "PAY " + getString(R.string.currency) + " " + Constant().removeTrailingZeroFormatter(
                 bigDecimal.toFloat()
             )
-        binding?.seatCounterLayout?.seatCounter?.text = selectSeat.size.toString()
+//        binding?.seatCounterLayout?.seatCounter?.text = selectSeat.size.toString()
         priceVal = bigDecimal.toFloat().toDouble()
     }
 
@@ -1590,37 +1561,6 @@ class SeatLayoutActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun showSeats() {
-        val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val popupView =
-            inflater.inflate(R.layout.seat_layout_small, findViewById(R.id.small_seat))
-        val moveView = popupView.findViewById(R.id.move_view) as View
-        if (flagCount == 1) {
-            moveView.x = 0f
-            moveView.y = 0f
-        }
-
-        val lineallySmall = popupView.findViewById<View>(R.id.llSeatlayout) as LinearLayout
-        val letdownSmall = popupView.findViewById<View>(R.id.llRowName) as LinearLayout
-        letdownSmall.removeAllViews()
-        lineallySmall.removeAllViews()
-        if (posX > 0 || posY > 0) {
-            moveView.x = posX.toFloat()
-            moveView.y = posY.toFloat()
-        }
-        try {
-            noOfRowsSmall?.let { drawColumnSmall(it, lineallySmall) }
-        } catch (e: java.lang.Exception) {
-        }
-        val showSeat1 = PopupWindow()
-        showSeat1.contentView = popupView
-        showSeat1.height = WindowManager.LayoutParams.WRAP_CONTENT
-        showSeat1.width = WindowManager.LayoutParams.WRAP_CONTENT
-        showSeat1.showAtLocation(popupView, Gravity.TOP or Gravity.LEFT, 50, 410)
-        showSeat1.update()
-
-
-    }
 
     private fun drawColumnSmall(
         noOfRows: List<SeatResponse.Output.Row>,

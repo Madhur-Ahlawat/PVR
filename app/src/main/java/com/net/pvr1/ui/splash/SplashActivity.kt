@@ -20,6 +20,7 @@ import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.food.FoodActivity
 import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.onBoarding.LandingActivity
+import com.net.pvr1.ui.seatLayout.SeatLayoutActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,7 +57,8 @@ class SplashActivity : AppCompatActivity() {
                 finish()
             } else {
                 if (!Constant.ON_BOARDING_CLICK) {
-                val intent = Intent(this@SplashActivity, FoodActivity::class.java)
+                val intent = Intent(this@SplashActivity, SeatLayoutActivity::class.java)
+//                val intent = Intent(this@SplashActivity, FoodActivity::class.java)
 //                val intent = Intent(this@SplashActivity, HomeActivity::class.java)
 //                    val intent = Intent(this@SplashActivity, LandingActivity::class.java)
                     startActivity(intent)
