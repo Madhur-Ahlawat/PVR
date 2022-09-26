@@ -57,10 +57,10 @@ class SplashActivity : AppCompatActivity() {
                 finish()
             } else {
                 if (!Constant.ON_BOARDING_CLICK) {
-                val intent = Intent(this@SplashActivity, SeatLayoutActivity::class.java)
+//                val intent = Intent(this@SplashActivity, SeatLayoutActivity::class.java)
 //                val intent = Intent(this@SplashActivity, FoodActivity::class.java)
 //                val intent = Intent(this@SplashActivity, HomeActivity::class.java)
-//                    val intent = Intent(this@SplashActivity, LandingActivity::class.java)
+                    val intent = Intent(this@SplashActivity, LandingActivity::class.java)
                     startActivity(intent)
                     finish()
                 }else{

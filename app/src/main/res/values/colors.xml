@@ -15,6 +15,8 @@
     <color name="darkYellow">#D59932</color>
     <color name="textColor">#908E8E</color>
     <color name="textColorGray">#7A7A7A</color>
+    <color name="showBackground">#19FFCB05</color>
+    <color name="unSelectBg">#D3D3D3</color>
 
 
     <color name="text_color_default">#303030</color>

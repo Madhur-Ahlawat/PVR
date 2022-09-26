@@ -11,31 +11,35 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.util.TypedValue
-import android.view.*
+import android.view.Gravity
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySeatLayoutBinding
 import com.net.pvr1.di.preference.AppPreferences
+import com.net.pvr1.ui.bookingSession.response.BookingResponse.Output
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.FoodActivity
-import com.net.pvr1.ui.home.HomeActivity
+import com.net.pvr1.ui.seatLayout.adapter.ShowsAdapter
 import com.net.pvr1.ui.seatLayout.response.Seat
 import com.net.pvr1.ui.seatLayout.response.SeatHC
 import com.net.pvr1.ui.seatLayout.response.SeatResponse
 import com.net.pvr1.ui.seatLayout.response.SeatTagData
 import com.net.pvr1.ui.seatLayout.viewModel.SeatLayoutViewModel
-import com.net.pvr1.utils.Constant
-import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.printLog
+import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.math.BigDecimal
 
 @AndroidEntryPoint
-class SeatLayoutActivity : AppCompatActivity() {
+class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClickListenerCity {
     private lateinit var preferences: AppPreferences
     private var binding: ActivitySeatLayoutBinding? = null
     private val authViewModel: SeatLayoutViewModel by viewModels()
@@ -62,9 +66,9 @@ class SeatLayoutActivity : AppCompatActivity() {
     private var coupleSeat = 0
     private var messageText = ""
     private var noOfRowsSmall: List<SeatResponse.Output.Row>? = null
-    private var flagCount = 0
-    private var posX = 0
-    private var posY = 0
+
+    //Shows
+    private var showsArray = ArrayList<Output.Cinema.Child.Sw.S>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +76,9 @@ class SeatLayoutActivity : AppCompatActivity() {
         val view = binding?.root
         setContentView(view)
         preferences = AppPreferences()
-        authViewModel.seatLayout("GURM", "251572", "", "", "", false, "")
+
+        showsArray = intent.getStringArrayListExtra("shows") as ArrayList<Output.Cinema.Child.Sw.S>
+        authViewModel.seatLayout("DWAR", "34192", "", "", "", false, "")
         seatLayout()
         movedNext()
     }
@@ -92,8 +98,9 @@ class SeatLayoutActivity : AppCompatActivity() {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         priceMap = it.data.output.priceList
-                        noOfRowsSmall=it.data.output.rows
+                        noOfRowsSmall = it.data.output.rows
                         drawColumn(it.data.output.rows)
+                        retrieveData(it.data.output)
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -128,6 +135,19 @@ class SeatLayoutActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun retrieveData(data: SeatResponse.Output) {
+        //title
+        binding?.textView197?.text = data.mn
+        //location
+        binding?.textView198?.text = data.cn
+        val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+        binding?.recyclerView27?.layoutManager = LinearLayoutManager(this)
+        val adapter = ShowsAdapter(showsArray, this, this)
+        binding?.recyclerView27?.layoutManager = gridLayout
+        binding?.recyclerView27?.adapter = adapter
+
     }
 
     private fun drawColumn(noOfRows: List<SeatResponse.Output.Row>) {
@@ -167,7 +187,7 @@ class SeatLayoutActivity : AppCompatActivity() {
                     val colorCodes: String = if (row.c.contains("#")) row.c else "#" + row.c
                     rlLayout.setBackgroundColor(Color.parseColor(colorCodes))
 
-                }catch (e:Exception){
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
                 val centerLayout = LinearLayout(this)
@@ -554,7 +574,7 @@ class SeatLayoutActivity : AppCompatActivity() {
                                 if (selectedSeats.size < 10) {
                                     printLog("EnterInSeat--->${selectedSeats.size}")
                                     if (selectBuddy && seat.bu) {
-                                        printLog("EnterInSeat--bu->${ seat.bu}")
+                                        printLog("EnterInSeat--bu->${seat.bu}")
 
                                         val dialog = OptionDialog(this,
                                             R.mipmap.ic_launcher,
@@ -569,7 +589,7 @@ class SeatLayoutActivity : AppCompatActivity() {
                                         dialog.show()
                                     } else {
                                         if (selectedSeats.size > 0 && seat.bu) {
-                                            printLog("EnterInSeat--bu-s>${ seat.bu}")
+                                            printLog("EnterInSeat--bu-s>${seat.bu}")
 
                                             val dialog = OptionDialog(this,
                                                 R.mipmap.ic_launcher,
@@ -584,7 +604,7 @@ class SeatLayoutActivity : AppCompatActivity() {
                                             dialog.show()
                                         } else {
                                             seat.s = Constant.SEAT_SELECTED
-                                            printLog("EnterInSeat-- seat.s->${ seat.st}size--->${noOfRowsSmall?.size}")
+                                            printLog("EnterInSeat-- seat.s->${seat.st}size--->${noOfRowsSmall?.size}")
 
                                             if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1]
                                                 .s[num2]
@@ -1209,14 +1229,41 @@ class SeatLayoutActivity : AppCompatActivity() {
                 noOfSeatsSelected.removeAt(i)
                 selectedSeats.removeAt(i)
                 selectedSeatsBox?.removeAt(i)
-                //                    selectedSeats1.remove(i);
                 break
             }
         }
         if (noOfSeatsSelected.size == 0) {
+            binding?.textView195?.hide()
+            binding?.textView196?.hide()
+            binding?.textView200?.show()
+
+            binding?.textView195?.isClickable = false
+            binding?.textView196?.isClickable = false
+            binding?.constraintLayout56?.isClickable = false
+            binding?.constraintLayout56?.setBackgroundColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.unSelectBg
+                )
+            )
             if (!isDit) binding?.textView195?.text =
-                "No Seats Selected" else binding?.textView195?.text =
+                "No Seats Selected"
+            else binding?.textView195?.text =
                 "No Vehicle Slots Selected"
+        } else {
+            binding?.textView195?.show()
+            binding?.textView196?.show()
+            binding?.textView200?.hide()
+
+            binding?.textView195?.isClickable = true
+            binding?.textView196?.isClickable = true
+            binding?.constraintLayout56?.isClickable = true
+            binding?.constraintLayout56?.setBackgroundColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.yellow
+                )
+            )
         }
         calculatePrice()
     }
@@ -1226,12 +1273,7 @@ class SeatLayoutActivity : AppCompatActivity() {
         if (noOfSeatsSelected.size > 0) {
             binding?.textView195?.isClickable = true
             binding?.textView195?.setTextColor(Color.parseColor("#000000"))
-//            binding?.textView195?.setCompoundDrawablesWithIntrinsicBounds(
-//                0,
-//                0,
-//                R.drawable.ic_bright,
-//                0
-//            )
+
             binding?.textView196?.text = ""
             if (noOfSeatsSelected.size == 1) {
                 binding?.textView196?.text = noOfSeatsSelected.size.toString() + " Seat Selected"
@@ -1242,20 +1284,36 @@ class SeatLayoutActivity : AppCompatActivity() {
                 if (isDit) binding?.textView196?.text =
                     noOfSeatsSelected.size.toString() + " Vehicle Slots Selected"
             }
+            binding?.textView195?.show()
+            binding?.textView196?.show()
+            binding?.textView200?.hide()
+
+            binding?.textView195?.isClickable = true
+            binding?.textView196?.isClickable = true
+            binding?.constraintLayout56?.isClickable = true
+            binding?.constraintLayout56?.setBackgroundColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.yellow
+                )
+            )
         } else {
-            binding?.textView195?.text = "PAY "+getString(R.string.currency);
+            binding?.textView195?.hide()
+            binding?.textView196?.hide()
+            binding?.textView200?.show()
+
             binding?.textView195?.isClickable = false
-            binding?.textView195?.setTextColor(Color.parseColor("#80000000"))
-//            binding?.textView195?.setCompoundDrawablesWithIntrinsicBounds(
-//                0,
-//                0,
-//                R.drawable.ic_right,
-//                0
-//            )
+            binding?.textView196?.isClickable = false
+            binding?.constraintLayout56?.isClickable = false
+            binding?.constraintLayout56?.setBackgroundColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.unSelectBg
+                )
+            )
             if (!isDit) binding?.textView195?.text =
                 "No Seats Selected" else binding?.textView196?.text =
                 "No Vehicle Slots Selected"
-//            binding?.btitem?.text = ""
         }
         var totalPrice = 0f
         val selectSeat = ArrayList<Spannable>()
@@ -1283,7 +1341,7 @@ class SeatLayoutActivity : AppCompatActivity() {
                             seatNo.length,
                             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                         )
-                        binding?.textView195?.text=noOfSeatsSelected.size.toString()+" Seats |"
+                        binding?.textView195?.text = noOfSeatsSelected.size.toString() + " Seats |"
 //                        binding?.textView195?.append(wordToSpan)
                     }
                     2 -> {
@@ -1302,7 +1360,7 @@ class SeatLayoutActivity : AppCompatActivity() {
                             seatNo.length,
                             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                         )
-                        binding?.textView195?.text=noOfSeatsSelected.size.toString()+" Seats |"
+                        binding?.textView195?.text = noOfSeatsSelected.size.toString() + " Seats |"
 //                        binding?.textView195?.append(wordToSpan)
                     }
                     else -> {
@@ -1320,7 +1378,7 @@ class SeatLayoutActivity : AppCompatActivity() {
                             seatNo.length,
                             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                         )
-                        binding?.textView195?.text=noOfSeatsSelected.size.toString()+" Seats |"
+                        binding?.textView195?.text = noOfSeatsSelected.size.toString() + " Seats |"
 //                        binding?.textView195?.append(wordToSpan)
                     }
                 }
@@ -1612,6 +1670,11 @@ class SeatLayoutActivity : AppCompatActivity() {
                 llColumnLayout.addView(rlLayout)
             }
         }
+    }
+
+    override fun showsClick(comingSoonItem: ArrayList<Output.Cinema.Child.Sw.S>) {
+
+
     }
 
 }

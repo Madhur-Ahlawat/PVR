@@ -81,7 +81,7 @@ data class BookingResponse(
                 data class Sw(
                     val lk: String,
                     val lng: String,
-                    val s: List<S>,
+                    val s: ArrayList<S>,
                     val tx: Any
                 ) : Serializable {
                     data class S(
@@ -108,7 +108,7 @@ data class BookingResponse(
                         val st: String,
                         val ts: Int,
                         val txt: String
-                    ) {
+                    ):Serializable {
                         data class Pr(
                             val ar: String,
                             val `as`: Int,

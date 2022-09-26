@@ -97,7 +97,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="21dp"
-            android:background="@drawable/yellow_book_curve"
+            android:background="@drawable/yellow_seat_curve"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/view132"
             app:layout_constraintStart_toStartOf="@+id/view132">
@@ -119,6 +119,7 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:textColor="@color/black"
                 android:textSize="@dimen/dimen_14sp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/view133"
                 app:layout_constraintStart_toStartOf="@+id/view133"
                 app:layout_constraintTop_toTopOf="@+id/view133"
@@ -132,11 +133,26 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:textColor="@color/black"
                 android:textSize="@dimen/dimen_14sp"
+                android:visibility="gone"
                 app:drawableEndCompat="@drawable/right_arrow"
                 app:layout_constraintBottom_toBottomOf="@+id/view133"
                 app:layout_constraintEnd_toEndOf="@+id/view133"
                 app:layout_constraintTop_toTopOf="@+id/view133"
                 tools:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView200"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_alternates_bold"
+                android:text="0 Seats"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/view133"
+                app:layout_constraintStart_toStartOf="@+id/view133"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -311,6 +327,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView27"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -384,12 +401,46 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout61"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout59">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dimen_15dp"
+            android:src="@drawable/seat_curve_img"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/montserrat_alternates_semi_bold"
+            android:text="@string/screen"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout60"
         app:layout_constraintEnd_toEndOf="@+id/view131"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout59">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout61">
 
         <View
             android:id="@+id/view141"
@@ -400,16 +451,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <ScrollView
             android:id="@+id/outerScroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
             android:background="#ffffff"
             android:scrollbars="none"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/view141"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="UselessParent">
 
             <RelativeLayout

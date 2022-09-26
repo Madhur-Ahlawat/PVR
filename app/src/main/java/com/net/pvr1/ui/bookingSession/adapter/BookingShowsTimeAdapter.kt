@@ -7,12 +7,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.databinding.ItemCinemaDetailsShowTimeBinding
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
-import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.seatLayout.SeatLayoutActivity
 
 
 class BookingShowsTimeAdapter(
-    private var nowShowingList: List<BookingResponse.Output.Cinema.Child.Sw.S>,
+    private var nowShowingList: ArrayList<BookingResponse.Output.Cinema.Child.Sw.S>,
     private var context: Context
 ) :
     RecyclerView.Adapter<BookingShowsTimeAdapter.ViewHolder>() {
@@ -36,6 +35,7 @@ class BookingShowsTimeAdapter(
                 holder.itemView.setOnClickListener {
                     val intent = Intent(context, SeatLayoutActivity::class.java)
                     intent.putExtra("transId","")
+                    intent.putExtra("shows",nowShowingList)
                     intent.putExtra("ccId",this.cc)
                     context.startActivity(intent)
                 }

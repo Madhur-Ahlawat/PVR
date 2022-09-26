@@ -227,5 +227,6 @@
     <string name="available">Available</string>
     <string name="selected">Selected</string>
     <string name="offer_applied">Offer Applied</string>
+    <string name="screen">Screen</string>
 
 </resources>
