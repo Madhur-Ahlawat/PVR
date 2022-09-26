@@ -22,8 +22,8 @@ import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.adapter.HomeOfferAdapter
-import com.net.pvr1.ui.home.fragment.MoreFragment
-import com.net.pvr1.ui.home.fragment.PrivilegeFragment
+import com.net.pvr1.ui.home.fragment.more.MoreFragment
+import com.net.pvr1.ui.home.fragment.privilege.PrivilegeFragment
 import com.net.pvr1.ui.home.fragment.cinema.CinemasFragment
 import com.net.pvr1.ui.home.fragment.commingSoon.ComingSoonFragment
 import com.net.pvr1.ui.home.fragment.home.HomeFragment

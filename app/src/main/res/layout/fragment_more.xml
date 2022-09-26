@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".ui.home.fragment.MoreFragment">
+    android:background="@color/background_color"
+    tools:context=".ui.home.fragment.more.MoreFragment">
 
     <View
         android:id="@+id/view6"
@@ -28,27 +27,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
-            <TextView
-                android:id="@+id/tvLoginButton"
-                style="@style/text_black_gift"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:background="#ffcb07"
-                android:gravity="center"
-                android:text="@string/login_register"
-                android:textAllCaps="true"
-                android:textColor="@color/pvr_dark_black"
-                android:textSize="14sp" />
-
             <include layout="@layout/loyalty_paid_member" />
-
 
             <ImageView
                 android:id="@+id/NonPvrKnowMore"
@@ -71,7 +53,7 @@
                 android:orientation="vertical"
                 android:visibility="visible">
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/myBookings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -80,11 +62,15 @@
                     android:paddingBottom="12dp">
 
                     <ImageView
+                        android:id="@+id/imageView100"
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_gravity="center"
                         android:layout_marginStart="16dp"
                         android:src="@drawable/booking_more"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         tools:ignore="ContentDescription" />
 
 
@@ -93,48 +79,36 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginStart="12dp"
-                        android:letterSpacing="0.04"
-                        android:text="@string/my_bookings"/>
+                        android:layout_marginStart="16dp"
+                        android:text="@string/movie"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageView100"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-
-                    <TextView
-                        android:id="@+id/new_txt"
-                        style="@style/NewTxtStyle"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_marginStart="7dp"
-                        android:background="@drawable/rounded_textview"
-                        android:gravity="center"
-                        android:textColor="#fafafa"
-                        android:textSize="11sp"
-                        android:visibility="visible"
-                        android:text="2"
-                        tools:ignore="HardcodedText" />
-
-
-                    <TextView
-                        android:id="@+id/tvMyBookings_new"
-                        style="@style/H1Size"
+                    <ImageView
+                        android:id="@+id/imageView99"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
-                        android:background="@drawable/yellow_curve_two"
-                        android:gravity="center"
-                        android:paddingLeft="5dp"
-                        android:paddingTop="2dp"
-                        android:paddingRight="5dp"
-                        android:paddingBottom="2dp"
-                        android:text="@string/newTxt"
-                        android:textColor="@color/pvr_dark_black"
-                        android:textSize="11sp"
-                        android:visibility="gone" />
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_bright"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
 
 
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:background="#e6e6e6" />
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/llMyPVR"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -143,11 +117,15 @@
                     android:paddingBottom="12dp">
 
                     <ImageView
+                        android:id="@+id/imageView101"
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_gravity="center"
                         android:layout_marginStart="16dp"
                         android:src="@drawable/pvr_more"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         tools:ignore="ContentDescription" />
 
 
@@ -156,29 +134,26 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginStart="12dp"
+                        android:layout_marginStart="16dp"
                         android:letterSpacing="0.04"
-                        android:text="@string/my_pvr" />
+                        android:text="@string/pvr_cares"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageView101"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-
-                    <TextView
-                        android:id="@+id/tvPVR_new"
-                        style="@style/H1Size"
+                    <ImageView
+                        android:id="@+id/imageView102"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
-                        android:background="@drawable/yellow_curve_two"
-                        android:gravity="center"
-                        android:paddingLeft="5dp"
-                        android:paddingTop="2dp"
-                        android:paddingRight="5dp"
-                        android:paddingBottom="2dp"
-                        android:text="@string/newTxt"
-                        android:visibility="gone" />
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_bright"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
 
 
-                </LinearLayout>
-
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
                     android:id="@+id/llMovieAlert"
@@ -215,7 +190,6 @@
 
                 </LinearLayout>
 
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -228,170 +202,61 @@
             </LinearLayout>
 
 
-            <LinearLayout
-                android:id="@+id/llMovies"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/llMovie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp">
+
+                <ImageView
+                    android:id="@+id/imageView103"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/movie_more"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
 
 
-                <LinearLayout
-                    android:id="@+id/llMovie"
-                    android:layout_width="match_parent"
+                <TextView
+                    style="@style/H2SizeDark"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingTop="12dp"
-                    android:paddingBottom="12dp">
-
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="16dp"
-                        android:src="@drawable/movie_more"
-                        tools:ignore="ContentDescription" />
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:letterSpacing="0.04"
+                    android:text="@string/merchandise"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView103"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
-                    <TextView
-                        style="@style/H2SizeDark"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="12dp"
-                        android:letterSpacing="0.04"
-                        android:text="@string/movies" />
-
-
-                    <TextView
-                        android:id="@+id/tvMovie_new"
-                        style="@style/H2SizeDark"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
-                        android:background="@drawable/yellow_curve_two"
-                        android:gravity="center"
-                        android:paddingLeft="5dp"
-                        android:paddingTop="2dp"
-                        android:paddingRight="5dp"
-                        android:paddingBottom="2dp"
-                        android:text="@string/newTxt"
-                        android:visibility="gone" />
-
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/llComing"
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:id="@+id/imageView104"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingTop="12dp"
-                    android:paddingBottom="12dp"
-                    android:visibility="gone">
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_bright"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
 
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="16dp"
-                        android:src="@drawable/coming_more"
-                        tools:ignore="ContentDescription" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:background="#e6e6e6" />
 
-                    <TextView
-                        style="@style/SearchText_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="12dp"
-                        android:letterSpacing="0.04"
-                        android:text="@string/coming_soon"
-                        android:textColor="@color/pvr_dark_black"
-                        android:textSize="14sp" />
-
-
-                    <TextView
-                        android:id="@+id/tvComing_new"
-                        style="@style/H1Size"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
-                        android:background="@drawable/yellow_curve_two"
-                        android:gravity="center"
-                        android:paddingLeft="5dp"
-                        android:paddingTop="2dp"
-                        android:paddingRight="5dp"
-                        android:paddingBottom="2dp"
-                        android:text="@string/newTxt"
-                        android:visibility="gone" />
-
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/llPVRCares"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingTop="12dp"
-                    android:paddingBottom="12dp"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="16dp"
-                        android:src="@drawable/pvr_cares"
-                        tools:ignore="ContentDescription" />
-
-
-                    <TextView
-                        style="@style/SearchText_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="12dp"
-                        android:letterSpacing="0.04"
-                        android:text="@string/pvr_cares"
-                        android:textColor="@color/pvr_dark_black"
-                        android:textSize="14sp" />
-
-
-                    <TextView
-                        android:id="@+id/tvCares_new"
-                        style="@style/H1Size"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
-                        android:background="@drawable/yellow_curve_two"
-                        android:gravity="center"
-                        android:paddingLeft="5dp"
-                        android:paddingTop="2dp"
-                        android:paddingRight="5dp"
-                        android:paddingBottom="2dp"
-                        android:text="@string/newTxt"
-                        android:visibility="gone" />
-
-
-                </LinearLayout>
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="16dp"
-                    android:background="#e6e6e6" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/merchandise"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -401,11 +266,15 @@
                 android:paddingBottom="12dp">
 
                 <ImageView
+                    android:id="@+id/imageView106"
                     android:layout_width="@dimen/dimen_20dp"
                     android:layout_height="@dimen/dimen_20dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="16dp"
                     android:src="@drawable/merchandise"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:tint="@color/black"
                     tools:ignore="ContentDescription" />
 
@@ -415,30 +284,36 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="16dp"
                     android:letterSpacing="0.04"
-                    android:text="@string/merchandise"/>
+                    android:text="@string/merchandise"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView106"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
-                <TextView
-                    android:id="@+id/tvMer_new"
-                    style="@style/H1Size"
+                <ImageView
+                    android:id="@+id/imageView107"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="7dp"
-                    android:background="@drawable/yellow_curve_two"
-                    android:gravity="center"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="2dp"
-                    android:paddingRight="5dp"
-                    android:paddingBottom="2dp"
-                    android:text="@string/newTxt"
-                    android:visibility="gone" />
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_bright"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:background="#e6e6e6" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/llScanQr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -447,11 +322,15 @@
                 android:paddingBottom="12dp">
 
                 <ImageView
+                    android:id="@+id/imageView108"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="16dp"
                     android:src="@drawable/scan_more"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="ContentDescription" />
 
 
@@ -460,31 +339,37 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="16dp"
                     android:letterSpacing="0.04"
-                    android:text="@string/scan_qr"/>
+                    android:text="@string/gift_cards"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView108"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-
-                <TextView
-                    android:id="@+id/tvScan_new"
-                    style="@style/H1Size"
+                <ImageView
+                    android:id="@+id/imageView109"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="7dp"
-                    android:background="@drawable/yellow_curve_two"
-                    android:gravity="center"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="2dp"
-                    android:paddingRight="5dp"
-                    android:paddingBottom="2dp"
-                    android:text="@string/newTxt"
-                    android:visibility="gone" />
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_bright"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
 
 
-            </LinearLayout>
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:background="#e6e6e6" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/giftCardClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -494,11 +379,15 @@
                 tools:ignore="UseCompoundDrawables">
 
                 <ImageView
+                    android:id="@+id/imageView110"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="16dp"
                     android:src="@drawable/gift_more"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="ContentDescription,ImageContrastCheck" />
 
                 <TextView
@@ -506,13 +395,35 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="16dp"
                     android:letterSpacing="0.04"
-                    android:text="@string/gift_cards" />
+                    android:text="@string/offers"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView110"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView111"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_bright"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
 
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:background="#e6e6e6" />
 
             <LinearLayout
                 android:id="@+id/llPvRPass"
@@ -576,7 +487,7 @@
             </LinearLayout>
 
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/Offer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -585,11 +496,15 @@
                 android:paddingBottom="12dp">
 
                 <ImageView
+                    android:id="@+id/imageView112"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="16dp"
                     android:src="@drawable/ic_offer_more"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="ContentDescription" />
 
                 <TextView
@@ -597,29 +512,33 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="16dp"
                     android:letterSpacing="0.04"
-                    android:text="@string/offers" />
+                    android:text="@string/private_screening"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView112"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
-                <TextView
-                    android:id="@+id/tvGOffers_new"
-                    style="@style/H1Size"
+                <ImageView
+                    android:id="@+id/imageView113"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="7dp"
-                    android:background="@drawable/yellow_curve_two"
-                    android:gravity="center"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="2dp"
-                    android:paddingRight="5dp"
-                    android:paddingBottom="2dp"
-                    android:text="@string/newTxt"
-                    android:visibility="gone" />
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_bright"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:background="#e6e6e6" />
 
             <LinearLayout
                 android:id="@+id/llPVRMagazine"
@@ -670,7 +589,7 @@
             </LinearLayout>
 
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/privateScreen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -680,11 +599,15 @@
                 android:visibility="visible">
 
                 <ImageView
+                    android:id="@+id/imageView115"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="16dp"
                     android:src="@drawable/video_more"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="ContentDescription" />
 
                 <TextView
@@ -692,31 +615,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="16dp"
                     android:letterSpacing="0.04"
-                    android:text="@string/private_screening"
+                    android:text="@string/movie_library"
                     android:textColor="@color/pvr_dark_black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView115"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
-                <TextView
-                    android:id="@+id/tvPrivate_new"
-                    style="@style/H1Size"
+                <ImageView
+                    android:id="@+id/imageView114"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="7dp"
-                    android:background="@drawable/yellow_curve_two"
-                    android:gravity="center"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="2dp"
-                    android:paddingRight="5dp"
-                    android:paddingBottom="2dp"
-                    android:text="@string/newTxt"
-                    android:visibility="gone" />
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_bright"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <LinearLayout
@@ -880,12 +800,19 @@
 
             </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:background="#e6e6e6" />
+
             <LinearLayout
                 android:id="@+id/termsContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="64dp"
                 android:orientation="vertical"
                 android:paddingBottom="10dp">
 
@@ -897,7 +824,7 @@
                     android:layout_marginStart="16dp"
                     android:gravity="center_vertical"
                     android:lineSpacingExtra="2sp"
-                    android:text="@string/terms_privacy"/>
+                    android:text="@string/terms_privacy" />
 
 
                 <TextView
@@ -932,6 +859,20 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvLoginButton"
+                style="@style/text_black_gift"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="#ffcb07"
+                android:gravity="center"
+                android:text="@string/login_register"
+                android:textAllCaps="true"
+                android:textColor="@color/pvr_dark_black"
+                android:textSize="14sp" />
 
         </LinearLayout>
 

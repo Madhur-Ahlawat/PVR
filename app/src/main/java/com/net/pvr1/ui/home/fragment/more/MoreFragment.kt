@@ -1,10 +1,12 @@
-package com.net.pvr1.ui.home.fragment
+package com.net.pvr1.ui.home.fragment.more
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.net.pvr1.R
@@ -17,7 +19,6 @@ import com.net.pvr1.ui.scanner.ScannerActivity
 import com.net.pvr1.ui.webView.WebViewActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.hide
-import com.net.pvr1.utils.show
 
 
 class MoreFragment : Fragment() {
@@ -33,6 +34,11 @@ class MoreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireActivity().findViewById(R.id.notify) as ImageView).hide()
+        (requireActivity().findViewById(R.id.locationBtn) as ImageView).hide()
+        (requireActivity().findViewById(R.id.textView2) as TextView).hide()
+        (requireActivity().findViewById(R.id.subTitle) as TextView).hide()
+        (requireActivity().findViewById(R.id.txtCity) as TextView).hide()
         (requireActivity().findViewById(R.id.constraintLayout55) as ConstraintLayout).hide()
 
         movedNext()

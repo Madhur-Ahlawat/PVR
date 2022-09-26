@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.home.fragment
+package com.net.pvr1.ui.home.fragment.privilege
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
