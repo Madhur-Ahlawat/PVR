@@ -228,5 +228,29 @@
     <string name="selected">Selected</string>
     <string name="offer_applied">Offer Applied</string>
     <string name="screen">Screen</string>
+    <string name="profile_completion">Profile Completion</string>
+    <string name="profile">Profile</string>
+    <string name="save">Save</string>
+    <string name="discard">Discard</string>
+    <string name="phone">Phone</string>
+    <string name="gender">Gender</string>
+    <string name="date_of_birth">Date Of Birth</string>
+    <string name="marital_status">Marital Status</string>
+    <string name="anniversary">Anniversary</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="booking_retrieval">Booking Retrieval</string>
+    <string name="movie_alerts">Movie Alerts</string>
+    <string name="my_preferences">My Preferences</string>
+    <string name="account">Account</string>
+
+    //QrCode
+    <string name="helper_activity">HelperActivity</string>
+    <string name="showing_code_in_fragment">Showing Code in Fragment</string>
+    <string name="scan_qr_code">SCAN QR CODE</string>
+    <string name="empty">---</string>
+    <string name="site_name">Site Name</string>
+    <string name="scan_a_code">Scan a QR Code</string>
+    <string name="result_not_found">Result Not Found</string>
+    <string name="show_scanner_from_fragment">Show Scanner From Fragment</string>
 
 </resources>

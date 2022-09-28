@@ -16,13 +16,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <include
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/include"
-        layout="@layout/toolbar_main"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dimen_60dp"
         app:layout_constraintStart_toStartOf="@+id/view7"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+        <include
+            android:id="@+id/includeAppBar"
+            layout="@layout/toolbar_main"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_60dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
     <FrameLayout

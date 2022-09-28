@@ -63,7 +63,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 
     //ClickMovedNext
     private fun movedNext() {
-        binding?.include?.searchBtn?.setOnClickListener {
+        binding?.includeAppBar?.searchBtn?.setOnClickListener {
             val intent = Intent(this@HomeActivity, SearchHomeActivity::class.java)
             startActivity(intent)
             finish()
