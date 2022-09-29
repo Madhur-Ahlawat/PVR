@@ -24,7 +24,6 @@ class ProfileActivity : AppCompatActivity() {
     private var loader: LoaderDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)

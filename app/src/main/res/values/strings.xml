@@ -253,4 +253,9 @@
     <string name="result_not_found">Result Not Found</string>
     <string name="show_scanner_from_fragment">Show Scanner From Fragment</string>
 
+    //genre
+    <string name="preferred_genres">Preferred Genres</string>
+    <string name="all_genres">All Genres</string>
+    <string name="select_all">Select All</string>
+
 </resources>

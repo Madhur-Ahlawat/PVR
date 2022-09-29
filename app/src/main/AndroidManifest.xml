@@ -21,6 +21,13 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
         <activity
+            android:name=".PrefrenceActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.profile.userDetails.ProfileActivity"
             android:exported="false">
             <meta-data
@@ -50,8 +57,8 @@
             android:exported="false" />
         <activity
             android:name=".ui.scanner.ScannerActivity"
-            android:screenOrientation="portrait"
             android:exported="false"
+            android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".ui.movieDetails.MovieDetailsActivity"

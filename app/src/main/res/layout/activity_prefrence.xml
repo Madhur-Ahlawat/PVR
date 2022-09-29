@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.profile.prefrence.PreferenceActivity">
+
+    <View
+        android:id="@+id/view56"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/include11"
+        layout="@layout/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dimen_60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view56" />
+
+    <View
+        android:id="@+id/view159"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/grayEd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include11" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView28"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/genre_category"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+        tools:itemCount="3"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/view159" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout80"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/background_color"
+        android:padding="@dimen/padding_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/view56"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView28">
+
+
+        <TextView
+            android:id="@+id/textView238"
+            style="@style/montBold14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/preferred_genres"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView239"
+            style="@style/montReg14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="41dp"
+            android:text="@string/preferred_genres"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView238"
+            app:layout_constraintTop_toBottomOf="@+id/textView238"
+            tools:ignore="TextContrastCheck" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:listitem="@layout/genre_parent_item"
+        tools:itemCount="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout80" />
+</androidx.constraintlayout.widget.ConstraintLayout>

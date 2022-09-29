@@ -92,9 +92,19 @@
     </style>
 
     <style name="H4SizeBold">
-        <item name="typeface">helvetica_neu_bold.otf</item>
+        <item name="typeface">montserrat_bold.ttf</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/h1color</item>
+    </style>
+    <style name="montBold14">
+        <item name="typeface">montserrat_bold.ttf</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+   <style name="montReg14">
+        <item name="typeface">montserrat_regular.ttf</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#959595</item>
     </style>
 
     <style name="H4SizeRegular">
