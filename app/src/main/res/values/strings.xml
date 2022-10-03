@@ -252,10 +252,13 @@
     <string name="scan_a_code">Scan a QR Code</string>
     <string name="result_not_found">Result Not Found</string>
     <string name="show_scanner_from_fragment">Show Scanner From Fragment</string>
-
+    //Logout
+    <string name="logout">Are you sure you want to logout?</string>
+    <string name="yes">Yes</string>
     //genre
     <string name="preferred_genres">Preferred Genres</string>
     <string name="all_genres">All Genres</string>
     <string name="select_all">Select All</string>
+    <string name="occasions">Occasions</string>
 
 </resources>

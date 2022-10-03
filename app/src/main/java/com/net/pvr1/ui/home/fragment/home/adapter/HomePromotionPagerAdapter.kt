@@ -42,24 +42,10 @@ class HomePromotionPagerAdapter(
         val obj = movies[position]
         val transfer = CompositePageTransformer()
         transfer.addTransformer(MarginPageTransformer(30))
-        transfer.addTransformer(object : com.github.islamkhsh.viewpager2.ViewPager2.PageTransformer,
-            ViewPager2.PageTransformer {
-            override fun transformPage(page: View, position: Float) {
-                rowIndex = viewpager?.currentItem!!
-                val r = 1 - abs(position)
-                //page.scaleY = (0.85f+ r*0.14f)
-                try {
-                    notifyDataSetChanged()
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-
-        })
         viewpager?.setPageTransformer(transfer)
 
         Glide.with(context)
-            .load(R.drawable.dummy_prmotion)
+            .load(obj.url)
             .error(R.drawable.dummy_prmotion)
             .into(holder.promotionImage)
 

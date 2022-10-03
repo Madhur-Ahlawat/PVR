@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class OfferDetailsActivity : AppCompatActivity() {
-    private lateinit var preferences: AppPreferences
+//    private lateinit var preferences: AppPreferences
     private var binding: ActivityOfferDetialsBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: OfferDetailsViewModel by viewModels()
@@ -29,7 +29,6 @@ class OfferDetailsActivity : AppCompatActivity() {
         binding = ActivityOfferDetialsBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        preferences = AppPreferences()
         movedNext()
         authViewModel.offerDetails(intent.getStringExtra("id").toString(),"123456")
         offerDetailsDataLoad()

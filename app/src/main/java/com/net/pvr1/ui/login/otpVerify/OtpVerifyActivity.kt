@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.otpVerify
+package com.net.pvr1.ui.login.otpVerify
 
 import android.content.Intent
 import android.content.IntentFilter
@@ -8,12 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityOtpVerifyBinding
-import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.HomeActivity
-import com.net.pvr1.ui.otpVerify.response.ResisterResponse
-import com.net.pvr1.ui.otpVerify.viewModel.OtpVerifyViewModel
+import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
+import com.net.pvr1.ui.login.otpVerify.viewModel.OtpVerifyViewModel
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.SmsBroadcastReceiver.SmsBroadcastReceiverListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,11 +20,13 @@ import okhttp3.internal.and
 import java.security.MessageDigest
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class OtpVerifyActivity : AppCompatActivity() {
-    private lateinit var preferences: AppPreferences
+    @Inject
+    lateinit var preferences: PreferenceManager
     private var binding: ActivityOtpVerifyBinding? = null
     private val authViewModel: OtpVerifyViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -41,7 +42,6 @@ class OtpVerifyActivity : AppCompatActivity() {
         binding = ActivityOtpVerifyBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        preferences = AppPreferences()
         mobile = intent.getStringExtra("mobile").toString()
         newUser = intent.getStringExtra("newUser").toString()
 
@@ -227,13 +227,12 @@ class OtpVerifyActivity : AppCompatActivity() {
     }
 
     private fun retrieveResisterData(output: ResisterResponse.Output) {
-        preferences.putBoolean(Constant.IS_LOGIN, true)
-        preferences.putString(Constant.USER_ID,output.id)
-        preferences.putString(Constant.USER_NAME,output.un)
-        preferences.putString(Constant.USER_EMAIL,output.em)
-        preferences.putString(Constant.USER_MO_NUMBER,output.ph)
-        preferences.putString(Constant.USER_TOKEN,output.token)
-        preferences.putString(Constant.USER_DOB,output.dob)
+        preferences.saveIsLogin(true)
+        output.id.let { preferences.saveUserId(it) }
+        output.un.let { preferences.saveUserName(it) }
+        output.ph.let { preferences.saveMobileNumber(it) }
+        output.token.let { preferences.saveToken(it) }
+        output.dob.let { preferences.saveDob(it) }
 
         val intent = Intent(this@OtpVerifyActivity, HomeActivity::class.java)
         startActivity(intent)
@@ -241,15 +240,15 @@ class OtpVerifyActivity : AppCompatActivity() {
     }
 
     private fun retrieveData(output: ResisterResponse.Output?) {
-        preferences.putBoolean( Constant.IS_LOGIN, true )
-
-        preferences.putString(Constant.USER_ID,output?.id)
-        preferences.putString(Constant.USER_NAME,output?.un)
-        preferences.putString(Constant.USER_MO_NUMBER,output?.ph)
-        preferences.putString(Constant.USER_TOKEN,output?.token)
-        preferences.putString(Constant.USER_DOB,output?.dob)
+        preferences.saveIsLogin(true)
+        output?.id?.let { preferences.saveUserId(it) }
+        output?.un?.let { preferences.saveUserName(it) }
+        output?.ph?.let { preferences.saveMobileNumber(it) }
+        output?.token?.let { preferences.saveToken(it) }
+        output?.dob?.let { preferences.saveDob(it) }
 
         val intent = Intent(this@OtpVerifyActivity, HomeActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
         finish()
     }
@@ -292,6 +291,13 @@ class OtpVerifyActivity : AppCompatActivity() {
         val matcher: Matcher = pattern.matcher(message)
         if (matcher.find()) {
             binding?.otpEditText?.setText(matcher.group(0)!!)
+            val otp = binding?.otpEditText?.getStringFromFields()
+            authViewModel.otpVerify(
+                mobile,
+                getHash(
+                    "$mobile|$otp"
+                )
+            )
         }
     }
 

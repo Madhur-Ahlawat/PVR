@@ -11,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PreferenceActivity : AppCompatActivity() {
-    private lateinit var preferences: AppPreferences
+//    private lateinit var preferences: AppPreferences
     private var binding: ActivityPrefrenceBinding? = null
     private val authViewModel: UserProfileViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -20,6 +20,5 @@ class PreferenceActivity : AppCompatActivity() {
         binding = ActivityPrefrenceBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        preferences = AppPreferences()
     }
 }

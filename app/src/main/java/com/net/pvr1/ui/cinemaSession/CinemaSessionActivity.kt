@@ -22,6 +22,7 @@ import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CinemaSessionActivity : AppCompatActivity(),
@@ -29,7 +30,8 @@ class CinemaSessionActivity : AppCompatActivity(),
     CinemaSessionLanguageAdapter.RecycleViewItemClickListenerCity,
     CinemaSessionCinParentAdapter.RecycleViewItemClickListenerCity,
     CinemaSessionNearTheaterAdapter.RecycleViewItemClickListenerCity {
-    private lateinit var preferences: AppPreferences
+//    @Inject
+//    lateinit var preferences: AppPreferences
     private var binding: ActivityCinemaSessionBinding? = null
     private val authViewModel: CinemaSessionViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -39,7 +41,7 @@ class CinemaSessionActivity : AppCompatActivity(),
         binding = ActivityCinemaSessionBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        preferences = AppPreferences()
+//        preferences = AppPreferences()
         //Data Load
         authViewModel.cinemaSession(
             "Delhi-NCR",

@@ -19,6 +19,7 @@ import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class BookingActivity : AppCompatActivity(),
@@ -26,7 +27,8 @@ class BookingActivity : AppCompatActivity(),
     BookingShowsLanguageAdapter.RecycleViewItemClickListenerCity,
     BookingTheatreAdapter.RecycleViewItemClickListener {
 
-    private lateinit var preferences: AppPreferences
+//    @Inject
+//    lateinit var preferences: AppPreferences
     private var binding: ActivityBookingBinding? = null
     private val authViewModel: BookingViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -36,7 +38,6 @@ class BookingActivity : AppCompatActivity(),
         binding = ActivityBookingBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        preferences = AppPreferences()
 
         authViewModel.bookingTicket(
             "Delhi-NCR",

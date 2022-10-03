@@ -41,7 +41,7 @@
         app:layout_constraintEnd_toEndOf="@+id/viewCity"
         app:layout_constraintStart_toStartOf="@+id/view7"
         app:layout_constraintTop_toTopOf="@+id/viewCity"
-        android:text="Hey! Rajat" />
+        tools:text="Hey! Rajat" />
 
     <TextView
         android:id="@+id/txtCity"

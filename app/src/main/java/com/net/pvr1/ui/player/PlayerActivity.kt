@@ -15,10 +15,12 @@ import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PlayerActivity : AppCompatActivity(), YouTubePlayer.OnInitializedListener {
-    private lateinit var preferences: AppPreferences
+//    @Inject
+//    lateinit var preferences: AppPreferences
     private var binding: ActivityPlayerBinding? = null
     private val authViewModel: PlayerViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -30,7 +32,6 @@ class PlayerActivity : AppCompatActivity(), YouTubePlayer.OnInitializedListener 
         binding = ActivityPlayerBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        preferences = AppPreferences()
         var trailerUrl = intent.getStringExtra("trailerUrl")
         getYoutubeVideoId(trailerUrl)
 

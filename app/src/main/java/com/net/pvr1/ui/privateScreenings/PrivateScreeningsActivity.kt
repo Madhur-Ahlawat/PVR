@@ -8,10 +8,12 @@ import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.privateScreenings.viewModel.PrivateScreenViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PrivateScreeningsActivity : AppCompatActivity() {
-    private lateinit var preferences: AppPreferences
+//    @Inject
+//    lateinit var preferences: AppPreferences
     private var binding: ActivityPrivateScreeningsBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: PrivateScreenViewModel by viewModels()
@@ -21,7 +23,6 @@ class PrivateScreeningsActivity : AppCompatActivity() {
         binding = ActivityPrivateScreeningsBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        preferences = AppPreferences()
         sendYourRequest()
     }
 

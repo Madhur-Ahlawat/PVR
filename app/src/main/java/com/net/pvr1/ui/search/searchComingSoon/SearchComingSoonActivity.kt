@@ -21,13 +21,14 @@ import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SearchComingSoonActivity : AppCompatActivity(),
     SearchComingSoonAdapter.RecycleViewItemClickListenerCity {
     private val REQUEST_CODE_SPEECH_INPUT = 1
 
-    private lateinit var preferences: AppPreferences
+//    @Inject lateinit var preferences: AppPreferences
     private var binding: ActivitySearchComingSoonBinding? = null
     private val authViewModel: ComingSoonSearchViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -36,7 +37,6 @@ class SearchComingSoonActivity : AppCompatActivity(),
         binding = ActivitySearchComingSoonBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        preferences = AppPreferences()
         authViewModel.cinemaSearch("Delhi-NCR", "", "", "77.04", "28.56")
         search()
         movedNext()

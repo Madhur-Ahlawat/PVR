@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,6 +12,7 @@ import android.os.ResultReceiver
 import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationCallback
@@ -21,16 +21,17 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityEnableLocationBinding
-import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.enableLocation.viewModel.EnableLocationViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.FetchAddressIntentServices
 import dagger.hilt.android.AndroidEntryPoint
 
+@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class EnableLocationActivity : AppCompatActivity() {
-    private lateinit var preferences: AppPreferences
+    //    @Inject
+//    lateinit var preferences: AppPreferences
     private var binding: ActivityEnableLocationBinding? = null
     private val authViewModel: EnableLocationViewModel by viewModels()
 
@@ -44,7 +45,6 @@ class EnableLocationActivity : AppCompatActivity() {
         binding = ActivityEnableLocationBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        preferences = AppPreferences()
         resultReceiver = AddressResultReceiver(Handler())
         movedNext()
     }

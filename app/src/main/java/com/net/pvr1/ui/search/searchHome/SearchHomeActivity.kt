@@ -21,12 +21,15 @@ import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 
+@Suppress("NAME_SHADOWING")
 @AndroidEntryPoint
 class SearchHomeActivity : AppCompatActivity(),
     SearchHomeMovieAdapter.RecycleViewItemClickListenerCity,
     SearchHomeCinemaAdapter.RecycleViewItemClickListenerCity {
-    private lateinit var preferences: AppPreferences
+//    @Inject
+//    lateinit var preferences: AppPreferences
     private var binding: ActivitySearchHomeBinding? = null
     private val authViewModel: HomeSearchViewModel by viewModels()
     private val REQUEST_CODE_SPEECH_INPUT = 1
@@ -37,7 +40,6 @@ class SearchHomeActivity : AppCompatActivity(),
         binding = ActivitySearchHomeBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        preferences = AppPreferences()
 
         authViewModel.homeSearch("Delhi-NCR", "", "", "77.04", "28.56")
 

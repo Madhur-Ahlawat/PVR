@@ -13,7 +13,7 @@ import com.net.pvr1.ui.movieDetails.response.MovieDetailsResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
-import com.net.pvr1.ui.otpVerify.response.ResisterResponse
+import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.seatLayout.response.SeatResponse
 import com.net.pvr1.ui.selectCity.response.SelectCityResponse
@@ -261,5 +261,14 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<FoodResponse>
+
+    @POST("/PVRCinemasCMS/getgiftcard1  ")
+    suspend fun giftCardMain(
+        @Query("sWidth")sWidth: String,
+        @Query("platform") platform: String,
+        @Query("infosys") infosys: String,
+        @Query("av") version: String,
+        @Query("platform") platform1: String
+    ): Response<com.net.pvr1.ui.giftCard.response.GiftCardResponse>
 
 }

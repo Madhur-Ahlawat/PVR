@@ -6,15 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
@@ -32,8 +29,10 @@ import com.net.pvr1.ui.selectCity.SelectCityActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.select_pos
 import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.RVPagerSnapFancyDecorator
 import com.net.pvr1.utils.show
 import java.util.*
+import javax.inject.Inject
 import kotlin.math.abs
 
 
@@ -46,7 +45,9 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     private var binding: FragmentHomeBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel by activityViewModels<HomeViewModel>()
-    private lateinit var preferences: AppPreferences
+
+    @Inject
+    lateinit var preferences: AppPreferences
 
     private var currentPage = 0
     private var timer: Timer? = null
@@ -65,7 +66,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        preferences = AppPreferences()
         authViewModel.home("Delhi-NCR", "", "0", "0", true, "no", "", "ALL", "ALL", "ALL", "no")
         (requireActivity().findViewById(R.id.notify) as ImageView).show()
         (requireActivity().findViewById(R.id.locationBtn) as ImageView).show()
@@ -85,30 +85,76 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     private fun movedNext() {
 
         binding?.txtTrailers?.setOnClickListener {
-            binding?.txtTrailers?.setTextColor(ContextCompat.getColor(requireActivity(), R.color.black))
-            binding?.txtMusic?.setTextColor(ContextCompat.getColor(requireActivity(), R.color.textColorGray))
-            binding?.view33?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.yellow))
-            binding?.view34?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.gray))
+            binding?.txtTrailers?.setTextColor(
+                ContextCompat.getColor(
+                    requireActivity(),
+                    R.color.black
+                )
+            )
+            binding?.txtMusic?.setTextColor(
+                ContextCompat.getColor(
+                    requireActivity(),
+                    R.color.textColorGray
+                )
+            )
+            binding?.view33?.setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.yellow
+                )
+            )
+            binding?.view34?.setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.gray
+                )
+            )
 
-            val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 1)
-            binding?.view34?.layoutParams = layoutParams
-
-            val layoutParams2 = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 2)
-            binding?.view33?.layoutParams = layoutParams2
+//            val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 1)
+//            binding?.view34?.layoutParams = layoutParams
+//
+//            val layoutParams2 = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 2)
+//            binding?.view33?.layoutParams = layoutParams2
 
         }
 
         binding?.txtMusic?.setOnClickListener {
-            binding?.txtMusic?.setTextColor(ContextCompat.getColor(requireActivity(), R.color.black))
-            binding?.txtTrailers?.setTextColor(ContextCompat.getColor(requireActivity(), R.color.textColorGray))
-            binding?.view33?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.gray))
-            binding?.view34?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.yellow))
+            binding?.txtMusic?.setTextColor(
+                ContextCompat.getColor(
+                    requireActivity(),
+                    R.color.black
+                )
+            )
+            binding?.txtTrailers?.setTextColor(
+                ContextCompat.getColor(
+                    requireActivity(),
+                    R.color.textColorGray
+                )
+            )
+            binding?.view33?.setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.gray
+                )
+            )
+            binding?.view34?.setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.yellow
+                )
+            )
 
-            val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 1)
-            binding?.view33?.layoutParams = layoutParams
+//            val width = 0f
+//            val height = 2
+//            val parms = LinearLayout.LayoutParams(width, height)
+//            binding?.view34?.layoutParams=parms
 
-            val layoutParams2 = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 2)
-            binding?.view34?.layoutParams = layoutParams2
+
+//            val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 1)
+//            binding?.view33?.layoutParams = layoutParams
+//
+//            val layoutParams2 = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 2)
+//            binding?.view34?.layoutParams = layoutParams2
 
         }
 
@@ -158,6 +204,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     }
 
+
     private fun retrieveData(output: HomeResponse.Output) {
         //Category
         val gridLayout =
@@ -168,8 +215,16 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         binding?.recyclerCinemaCat?.adapter = adapter
 
         //Slider
+        val snapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(binding?.recyclerViewSlider)
         val gridLayoutSlider =
             GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
+
+        // Decorator set-up
+        val cardWidthPixels = activity?.resources?.displayMetrics?.widthPixels?.times(0.15f)
+        val cardHintPercent = 0.15f
+        binding?.recyclerViewSlider?.addItemDecoration(RVPagerSnapFancyDecorator(cardWidthPixels, cardHintPercent))
+
         binding?.recyclerViewSlider?.layoutManager = LinearLayoutManager(context)
         val adapterSlider = HomeSliderAdapter(requireActivity(), output.mv, this)
         binding?.recyclerViewSlider?.layoutManager = gridLayoutSlider
@@ -178,35 +233,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         //Promotion
         binding?.recyclerPromotion?.adapter =
             HomePromotionPagerAdapter(requireActivity(), output.mfi, binding?.recyclerPromotion)
-//        binding?.promotionPosition?.setupWithViewPager(binding?.recyclerPromotion, true)
-        /*After setting the adapter use the timer */
-        val pagerLength = output.mv.size
-//
-//        val runnable = Runnable {
-//
-//            if (currentPage == pagerLength) {
-//                currentPage = 0
-//            }
-//            binding?.recyclerPromotion?.setCurrentItem(currentPage++, true)
-//        }
-//        val handler = Handler(Looper.getMainLooper())
-//        handler.postDelayed(runnable, 3000)
-
-//        val handler = Handler()
-//        val update = Runnable {
-//            if (currentPage == pagerLength) {
-//                currentPage = 0
-//            }
-//            binding?.recyclerPromotion?.setCurrentItem(currentPage++, true)
-//        }
-
-//        timer = Timer()
-//        timer!!.schedule(object : TimerTask() {
-//            override fun run() {
-//                handler.post(runnable)
-//            }
-//        }, delayMS, periodMS)
-
         binding?.recyclerPromotion?.offscreenPageLimit = 3
         binding?.recyclerPromotion?.clipChildren = false
         binding?.recyclerPromotion?.clipToPadding = false
@@ -228,15 +254,14 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
                 select_pos = position.toInt()
                 val r = 1 - abs(position)
-                page.scaleY = (0.85f + r * 0.14f)
+                page.scaleY = (0.5f + r * 0.14f)
             }
-
         })
+
         binding?.recyclerPromotion?.setPageTransformer(transfer)
 
         binding?.recyclerPromotion?.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
-
         })
 
         //Movies
@@ -262,6 +287,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         intent.putExtra("mid", comingSoonItem.name)
         startActivity(intent)
     }
+
 
     override fun onSliderBookClick(comingSoonItem: HomeResponse.Mv) {
         val intent = Intent(requireActivity(), MovieDetailsActivity::class.java)

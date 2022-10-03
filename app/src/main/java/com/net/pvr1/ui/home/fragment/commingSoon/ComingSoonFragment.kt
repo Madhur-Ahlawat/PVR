@@ -26,14 +26,17 @@ import com.net.pvr1.ui.search.searchCinema.SearchCinemaActivity
 import com.net.pvr1.ui.search.searchComingSoon.SearchComingSoonActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.PreferenceManager
 import com.net.pvr1.utils.hide
+import javax.inject.Inject
 
 class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListener,
     ComingSoonMovieAdapter.VideoPlay {
     private var binding: FragmentComingSoonBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel by activityViewModels<ComingSoonViewModel>()
-    private lateinit var preferences: AppPreferences
+//    @Inject
+//    lateinit var preferences: PreferenceManager
     private var checkLogin: Boolean = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,8 +48,7 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        preferences = AppPreferences()
-        checkLogin=preferences.getBoolean(Constant.IS_LOGIN)
+//        checkLogin=preferences.getIsLogin()
         authViewModel.comingSoon("Delhi-NCR", "ALL", "ALL", "")
         (requireActivity().findViewById(R.id.notify) as ImageView).hide()
         (requireActivity().findViewById(R.id.locationBtn) as ImageView).hide()

@@ -35,7 +35,7 @@ class FoodActivity : AppCompatActivity(),
     CartAdapter.RecycleViewItemClickListenerCity {
 
 
-    private lateinit var preferences: AppPreferences
+//    private lateinit var preferences: AppPreferences
     private var binding: ActivityFoodBinding? = null
     private val authViewModel: FoodViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -55,7 +55,6 @@ class FoodActivity : AppCompatActivity(),
         binding = ActivityFoodBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        preferences = AppPreferences()
         authViewModel.food(
             "pGnnlj1MEjb0MOKBx1EH5w==",
             "GAUR",

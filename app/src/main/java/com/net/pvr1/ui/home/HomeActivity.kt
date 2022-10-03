@@ -33,10 +33,12 @@ import com.net.pvr1.ui.search.searchHome.SearchHomeActivity
 import com.net.pvr1.ui.selectCity.SelectCityActivity
 import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickListenerCity {
-    private lateinit var preferences: AppPreferences
+    @Inject
+    lateinit var preferences: PreferenceManager
     private var binding: ActivityHomeBinding? = null
     private val authViewModel: HomeViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -47,10 +49,11 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         binding = ActivityHomeBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        preferences = AppPreferences()
         switchFragment()
 
         authViewModel.offer("123456")
+        //setUserName
+        binding?.includeAppBar?.textView2?.text= preferences.getUserName()
         // Select City
         val llLocation = findViewById<LinearLayout>(R.id.llLocation)
         llLocation.setOnClickListener {

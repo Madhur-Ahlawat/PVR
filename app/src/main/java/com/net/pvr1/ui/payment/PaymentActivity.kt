@@ -9,10 +9,12 @@ import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.player.viewModel.PlayerViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PaymentActivity : AppCompatActivity() {
-    private lateinit var preferences: AppPreferences
+//    @Inject
+//    lateinit var preferences: AppPreferences
     private var binding: ActivityPaymentBinding? = null
     private val authViewModel: PlayerViewModel by viewModels()
     private var loader: LoaderDialog? = null

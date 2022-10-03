@@ -23,7 +23,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySeatLayoutBinding
-import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.bookingSession.response.BookingResponse.Output
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
@@ -40,7 +39,8 @@ import java.math.BigDecimal
 
 @AndroidEntryPoint
 class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClickListenerCity {
-    private lateinit var preferences: AppPreferences
+    //    @Inject
+//    lateinit var preferences: AppPreferences
     private var binding: ActivitySeatLayoutBinding? = null
     private val authViewModel: SeatLayoutViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -75,7 +75,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         binding = ActivitySeatLayoutBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        preferences = AppPreferences()
 
         showsArray = intent.getStringArrayListExtra("shows") as ArrayList<Output.Cinema.Child.Sw.S>
         authViewModel.seatLayout("DWAR", "34192", "", "", "", false, "")

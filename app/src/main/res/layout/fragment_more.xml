@@ -103,17 +103,20 @@
                 android:visibility="visible">
 
                 <include
+                    android:id="@+id/profileDetails"
                     layout="@layout/account_completion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <include
+                    android:id="@+id/login"
                     layout="@layout/more_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="visible" />
 
                 <include
+                    android:id="@+id/logout"
                     layout="@layout/more_logout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />

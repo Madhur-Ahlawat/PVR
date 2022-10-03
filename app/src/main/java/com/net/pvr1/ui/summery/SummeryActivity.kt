@@ -12,10 +12,12 @@ import com.net.pvr1.ui.summery.viewModel.SummeryViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SummeryActivity : AppCompatActivity() {
-    private lateinit var preferences: AppPreferences
+//    @Inject
+//    lateinit var preferences: AppPreferences
     private var binding: ActivitySummeryBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: SummeryViewModel by viewModels()
@@ -25,7 +27,6 @@ class SummeryActivity : AppCompatActivity() {
         binding = ActivitySummeryBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        preferences = AppPreferences()
         summeryDetails()
         authViewModel.summery(
             "PACD220000338907",

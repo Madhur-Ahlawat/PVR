@@ -39,6 +39,7 @@ class Constant {
         const val DISTRICT = "$PACKAGE_NAME.DISTRICT"
         const val POST_CODE = "$PACKAGE_NAME.POST_CODE"
         const val STATE = "$PACKAGE_NAME.STATE"
+        const val PREFS_TOKEN_FILE = "prefs_token_file"
         const val USER_NAME = "user_name"
         const val USER_EMAIL = "user_email"
         const val USER_TOKEN = "user_token"

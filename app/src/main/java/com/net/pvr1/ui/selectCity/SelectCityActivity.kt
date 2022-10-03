@@ -21,13 +21,15 @@ import com.net.pvr1.utils.NetworkResult
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewItemClickListener,
     OtherCityAdapter.RecycleViewItemClickListenerCity,
     SelectCityAdapter.RecycleViewItemClickListenerSelectCity {
-    private lateinit var preferences: AppPreferences
+//    @Inject
+//    lateinit var preferences: AppPreferences
     private var binding: ActivitySelectCityBinding? = null
     private var loader: LoaderDialog? = null
     private val selectCityViewModel: SelectCityViewModel by viewModels()
@@ -40,7 +42,6 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         binding = ActivitySelectCityBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        preferences = AppPreferences()
         selectCityViewModel.selectCity("28.679079", "77.069710", "0", "no", "no")
         selectCity()
         movedNext()
@@ -132,7 +133,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         binding?.searchCity?.isFocusable = false
         binding?.searchCity?.isClickable = false
         binding?.txtSelectedCity?.text = city[position].name
-        preferences.putString(Constant.CITY_NAME, city[position].name)
+//        preferences.putString(Constant.CITY_NAME, city[position].name)
         binding?.recyclerViewSearchCity?.hide()
         binding?.consSelectCity?.show()
         binding?.consSelectedLocation?.show()
@@ -169,7 +170,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
     ) {
         binding?.consSelectedLocation?.show()
         binding?.txtSelectedCity?.text = city[position].name
-        preferences.putString(Constant.CITY_NAME, city[position].name)
+//        preferences.putString(Constant.CITY_NAME, city[position].name)
     }
 
     override fun onItemClickCityImgCity(
@@ -178,7 +179,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
     ) {
         binding?.consSelectedLocation?.show()
         binding?.txtSelectedCity?.text = city[position].name
-        preferences.putString(Constant.CITY_NAME, city[position].name)
+//        preferences.putString(Constant.CITY_NAME, city[position].name)
 
     }
 

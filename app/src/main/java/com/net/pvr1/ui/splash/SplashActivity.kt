@@ -22,6 +22,7 @@ import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.onBoarding.LandingActivity
 import com.net.pvr1.ui.seatLayout.SeatLayoutActivity
 import com.net.pvr1.utils.Constant
+import com.net.pvr1.utils.PreferenceManager
 import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -29,7 +30,8 @@ import javax.inject.Inject
 @SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
-    private lateinit var preferences: AppPreferences
+    @Inject
+    lateinit var preferences: PreferenceManager
     private var binding: ActivitySplashBinding? = null
     private var networkDialog: Dialog? = null
 
@@ -38,7 +40,6 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        preferences = AppPreferences()
 
         //Check interNet Connection
         if (isConnected()) {
@@ -46,20 +47,17 @@ class SplashActivity : AppCompatActivity() {
         } else {
             networkDialog()
         }
-        printLog("CheckLogin--->${Constant.ON_BOARDING_CLICK}")
+        printLog("CheckLogin--->${preferences.getUserName()}---->${preferences.getIsLogin()}")
     }
 
     private fun movedNext() {
         val runnable = Runnable {
-            if (preferences.getBoolean(Constant.IS_LOGIN)) {
+            if (preferences.getIsLogin()) {
                 val intent = Intent(this@SplashActivity, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {
                 if (!Constant.ON_BOARDING_CLICK) {
-//                val intent = Intent(this@SplashActivity, SeatLayoutActivity::class.java)
-//                val intent = Intent(this@SplashActivity, FoodActivity::class.java)
-//                val intent = Intent(this@SplashActivity, HomeActivity::class.java)
                     val intent = Intent(this@SplashActivity, LandingActivity::class.java)
                     startActivity(intent)
                     finish()

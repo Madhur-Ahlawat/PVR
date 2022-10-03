@@ -22,13 +22,15 @@ import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SearchCinemaActivity : AppCompatActivity(),
     SearchHomeCinemaAdapter.RecycleViewItemClickListenerCity {
     private val REQUEST_CODE_SPEECH_INPUT = 1
 
-    private lateinit var preferences: AppPreferences
+//    @Inject
+//    lateinit var preferences: AppPreferences
     private var binding: ActivitySearchCinemaBinding? = null
     private val authViewModel: CinemaSearchViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -37,7 +39,6 @@ class SearchCinemaActivity : AppCompatActivity(),
         binding = ActivitySearchCinemaBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        preferences = AppPreferences()
         authViewModel.cinemaSearch("Delhi-NCR", "", "", "77.04", "28.56")
         search()
         movedNext()

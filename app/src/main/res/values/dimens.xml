@@ -433,7 +433,7 @@
 
 
     <dimen name="viewpager_next_item_visible">-90dp</dimen>
-    <dimen name="viewpager_current_item_horizontal_margin">42dp</dimen>
+    <dimen name="viewpager_current_item_horizontal_margin">50dp</dimen>
 
     <dimen name="barcode_reticle_stroke_width">4dp</dimen>
     <dimen name="barcode_reticle_corner_radius">8dp</dimen>

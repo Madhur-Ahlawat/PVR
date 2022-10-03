@@ -11,13 +11,26 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.net.pvr1.R
 import com.net.pvr1.databinding.FragmentMoreBinding
+import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.giftCard.GiftCardActivity
+import com.net.pvr1.ui.login.LoginActivity
+import com.net.pvr1.ui.myBookings.MyBookingsActivity
+import com.net.pvr1.ui.offer.OfferActivity
+import com.net.pvr1.ui.privateScreenings.PrivateScreeningsActivity
+import com.net.pvr1.ui.profile.userDetails.ProfileActivity
 import com.net.pvr1.ui.scanner.ScannerActivity
+import com.net.pvr1.ui.webView.WebViewActivity
+import com.net.pvr1.utils.Constant
+import com.net.pvr1.utils.PreferenceManager
 import com.net.pvr1.utils.hide
+import javax.inject.Inject
 
 
 class MoreFragment : Fragment() {
     private var binding: FragmentMoreBinding? = null
 
+    @Inject
+    lateinit var preferences: PreferenceManager
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,6 +42,7 @@ class MoreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        preferences = PreferenceManager(requireActivity())
         (requireActivity().findViewById(R.id.notify) as ImageView).hide()
         (requireActivity().findViewById(R.id.locationBtn) as ImageView).hide()
         (requireActivity().findViewById(R.id.textView2) as TextView).hide()
@@ -36,58 +50,80 @@ class MoreFragment : Fragment() {
         (requireActivity().findViewById(R.id.txtCity) as TextView).hide()
         (requireActivity().findViewById(R.id.include) as ConstraintLayout).hide()
         (requireActivity().findViewById(R.id.constraintLayout55) as ConstraintLayout).hide()
+        //SetName
+        binding?.profileDetails?.textView205?.text = preferences.getUserName()
+
         movedNext()
     }
 
-//Ui ClickAction
+    //Ui ClickAction
     private fun movedNext() {
-//
+
+        //Account
+        binding?.profileDetails?.textView206?.setOnClickListener {
+            val intent = Intent(requireContext(), ProfileActivity::class.java)
+            startActivity(intent)
+        }
+
 //        //MyBookings
-//        binding?.myBookings?.setOnClickListener {
-//            val intent = Intent(requireContext(), MyBookingsActivity::class.java)
-//            startActivity(intent)
-//        }
+        binding?.login?.constraintLayout70?.setOnClickListener {
+            val intent = Intent(requireContext(), MyBookingsActivity::class.java)
+            startActivity(intent)
+        }
 //        //Merchandise
-//        binding?.merchandise?.setOnClickListener {
-//            val intent = Intent(requireContext(), WebViewActivity::class.java)
-//            intent.putExtra("title", "Return to App")
-//            intent.putExtra("from", "more")
-//            intent.putExtra("getUrl", Constant.merchandise)
-//            startActivity(intent)
-//        }
-//
-//        //Terms And Condition
-//        binding?.merchandise?.setOnClickListener {
-//            val intent = Intent(requireContext(), WebViewActivity::class.java)
-//            intent.putExtra("title", "Return to App")
-//            intent.putExtra("from", "more")
-//            intent.putExtra("getUrl", Constant.merchandise)
-//            startActivity(intent)
-//        }
-//
+        binding?.logout?.constraintLayout79?.setOnClickListener {
+            val intent = Intent(requireContext(), WebViewActivity::class.java)
+            intent.putExtra("title", "Return to App")
+            intent.putExtra("from", "more")
+            intent.putExtra("getUrl", Constant.merchandise)
+            startActivity(intent)
+        }
+
 //        //Offers
-//        binding?.Offer?.setOnClickListener {
-//            val intent = Intent(requireContext(), OfferActivity::class.java)
-//            startActivity(intent)
-//        }
-//
+        binding?.logout?.constraintLayout78?.setOnClickListener {
+            val intent = Intent(requireContext(), OfferActivity::class.java)
+            startActivity(intent)
+        }
+
 //        //GiftCard
-//        binding?.giftCardClick?.setOnClickListener {
-//            val intent = Intent(requireContext(), GiftCardActivity::class.java)
-//            startActivity(intent)
-//        }
+        binding?.logout?.constraintLayout77?.setOnClickListener {
+            val intent = Intent(requireContext(), GiftCardActivity::class.java)
+            startActivity(intent)
+        }
 //
 //        //Private Screen
-//        binding?.privateScreen?.setOnClickListener {
-//            val intent = Intent(requireContext(), PrivateScreeningsActivity::class.java)
-//            startActivity(intent)
-//        }
-//
+        binding?.logout?.constraintLayout79?.setOnClickListener {
+            val intent = Intent(requireContext(), PrivateScreeningsActivity::class.java)
+            startActivity(intent)
+        }
 //        //ScanQr
         binding?.imageView101?.setOnClickListener {
             val intent = Intent(requireContext(), ScannerActivity::class.java)
             startActivity(intent)
         }
+        //LogOut
+
+        binding?.tvSignOut?.setOnClickListener {
+            logOut()
+        }
+    }
+
+    private fun logOut() {
+        val dialog = OptionDialog(requireActivity(),
+            R.mipmap.ic_launcher_foreground,
+            R.string.app_name,
+            getString(R.string.logout),
+            positiveBtnText = R.string.yes,
+            negativeBtnText = R.string.no,
+            positiveClick = {
+                preferences.clearData()
+                val intent = Intent(requireActivity(), LoginActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+            },
+            negativeClick = {
+            })
+        dialog.show()
     }
 
 }

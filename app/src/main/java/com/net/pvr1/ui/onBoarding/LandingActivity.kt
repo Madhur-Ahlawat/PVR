@@ -16,10 +16,12 @@ import com.net.pvr1.utils.Constant.Companion.ON_BOARDING_CLICK
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LandingActivity : AppCompatActivity() {
-    private lateinit var preferences: AppPreferences
+//    @Inject
+//    lateinit var preferences: AppPreferences
     private var binding: ActivityLandingBinding? = null
     private var layouts: IntArray? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +29,6 @@ class LandingActivity : AppCompatActivity() {
         binding = ActivityLandingBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        preferences = AppPreferences()
         slider()
         movedNext()
     }

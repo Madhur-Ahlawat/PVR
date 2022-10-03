@@ -20,6 +20,7 @@ import com.net.pvr1.ui.movieDetails.viewModel.MovieDetailsViewModel
 import com.net.pvr1.ui.player.PlayerActivity
 import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MovieDetailsActivity : AppCompatActivity(),
@@ -30,7 +31,8 @@ class MovieDetailsActivity : AppCompatActivity(),
     TrailerTrsAdapter.RecycleViewItemClickListener,
     MusicVideoTrsAdapter.RecycleViewItemClickListener {
 
-    private lateinit var preferences: AppPreferences
+//    @Inject
+//    lateinit var preferences: AppPreferences
     private var binding: ActivityMovieDetailsBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: MovieDetailsViewModel by viewModels()
@@ -39,7 +41,6 @@ class MovieDetailsActivity : AppCompatActivity(),
         binding = ActivityMovieDetailsBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        preferences = AppPreferences()
         movieDetails()
         authViewModel.movieDetails(
             "Delhi-NCR",

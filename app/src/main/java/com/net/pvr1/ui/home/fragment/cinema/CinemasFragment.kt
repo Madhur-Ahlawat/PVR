@@ -25,12 +25,14 @@ import com.net.pvr1.ui.search.searchCinema.SearchCinemaActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import com.net.pvr1.utils.hide
+import javax.inject.Inject
 
 class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Location {
     private var binding: FragmentCinemasBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel by activityViewModels<CinemaViewModel>()
-    private lateinit var preferences: AppPreferences
+    @Inject
+    lateinit var preferences: AppPreferences
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,7 +44,7 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        preferences = AppPreferences()
+//        preferences = AppPreferences()
         authViewModel.cinema("Delhi-NCR", "0.0", "0.0", "", "")
         (requireActivity().findViewById(R.id.notify) as ImageView).hide()
         (requireActivity().findViewById(R.id.constraintLayout55) as ConstraintLayout).hide()

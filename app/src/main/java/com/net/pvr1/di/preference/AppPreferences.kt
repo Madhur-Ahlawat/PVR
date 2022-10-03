@@ -3,18 +3,15 @@ package com.net.pvr1.di.preference
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
+import dagger.Provides
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
-class AppPreferences @Inject constructor() {
+class AppPreferences @Inject constructor(@ApplicationContext context: Context) {
     var preferenceName = "PVR"
     var preference: SharedPreferences? = null
     var editor: SharedPreferences.Editor? = null
-
-    fun getInstance(): AppPreferences{
-        return this
-    }
 
     //create context in app module for using dagger in shared Preferecees
     @SuppressLint("CommitPrefEdits")
@@ -36,22 +33,12 @@ class AppPreferences @Inject constructor() {
         }
     }
 
-    fun clearString(key: String?) {
-        if (editor != null) {
-            editor!!.remove(key)
-            editor!!.commit()
-        }
-    }
 
     fun putString(key: String?, value: String?) {
         if (editor != null) {
             editor!!.putString(key, value)
             editor!!.commit()
         }
-    }
-
-    fun getBitmap(key: String?): String? {
-        return if (preference != null) preference!!.getString(key, "") else ""
     }
 
     fun putInt(key: String?, value: Int) {
@@ -76,23 +63,6 @@ class AppPreferences @Inject constructor() {
     fun getString(key: String?): String? {
         return if (preference != null) preference!!.getString(key, "") else ""
     }
-
-    fun getInt(key: String?): Int {
-        return if (preference != null) preference!!.getInt(key, 0) else 0
-    }
-
-
-    fun putLong(key: String?, value: Long?) {
-        if (editor != null) {
-            editor!!.putLong(key, value!!)
-            editor!!.commit()
-        }
-    }
-
-    fun getLong(key: String?): Long {
-        return if (preference != null) preference!!.getLong(key, 0) else 0
-    }
-
 
 }
 

@@ -1,45 +1,46 @@
-package com.net.pvr1.ui.offer
+package com.net.pvr1.ui.giftCard.activateGiftCard
 
-import android.content.Intent
-import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.util.DisplayMetrics
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.net.pvr1.R
-import com.net.pvr1.databinding.ActivityOfferBinding
-import com.net.pvr1.di.preference.AppPreferences
+import com.net.pvr1.databinding.ActivityActivateGiftCardBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.home.HomeActivity
-import com.net.pvr1.ui.offer.adapter.OfferAdapter
-import com.net.pvr1.ui.offer.offerDetails.OfferDetailsActivity
-import com.net.pvr1.ui.offer.response.OfferResponse
-import com.net.pvr1.ui.offer.viewModel.OfferViewModel
+import com.net.pvr1.ui.giftCard.activateGiftCard.adapter.ActivateGiftCardAdapter
+import com.net.pvr1.ui.giftCard.activateGiftCard.viewModel.ActivateGiftCardViewModel
+import com.net.pvr1.ui.giftCard.response.GiftCardResponse
+import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
+@Suppress("DEPRECATION")
 @AndroidEntryPoint
-class OfferActivity : AppCompatActivity(),OfferAdapter.Direction {
-//    @Inject
-//    lateinit var preferences: AppPreferences
-    private var binding: ActivityOfferBinding? = null
+class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.RecycleViewItemClickListener{
+    private var binding: ActivityActivateGiftCardBinding? = null
     private var loader: LoaderDialog? = null
-    private val authViewModel: OfferViewModel by viewModels()
+    private val authViewModel: ActivateGiftCardViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityOfferBinding.inflate(layoutInflater, null, false)
+        binding = ActivityActivateGiftCardBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        offerDataLoad()
-        authViewModel.offer("123456")
+        binding?.include12?.titleCommonToolbar?.text = "Activate Gift Card"
+
+        //Screen Width
+        val displayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        val width = displayMetrics.widthPixels
+        val height = displayMetrics.heightPixels
+        authViewModel.offer(width.toString(), "")
+        activateGiftCard()
 
     }
-
-    private fun offerDataLoad() {
+    private fun activateGiftCard() {
         authViewModel.userResponseLiveData.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
@@ -82,18 +83,16 @@ class OfferActivity : AppCompatActivity(),OfferAdapter.Direction {
         }
     }
 
-    private fun retrieveData(output: List<OfferResponse.Output>) {
-        printLog("Details--->${output}")
-        val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        val comingSoonMovieAdapter = OfferAdapter(output, this, this)
-        binding?.recyclerView?.layoutManager = gridLayout
-        binding?.recyclerView?.adapter = comingSoonMovieAdapter
+    private fun retrieveData(output: GiftCardResponse.Output) {
+        val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+        val giftCardMainAdapter2 = ActivateGiftCardAdapter(output.giftCards,  this, this)
+        binding?.recyclerView30?.layoutManager = gridLayout2
+        binding?.recyclerView30?.adapter = giftCardMainAdapter2
+
     }
 
-    override fun offerClick(comingSoonItem: OfferResponse.Output) {
-        val intent = Intent(this@OfferActivity, OfferDetailsActivity::class.java)
-        intent.putExtra("id",comingSoonItem.id)
-        startActivity(intent)
+    override fun activateGiftCard(comingSoonItem: CinemaResponse.Output.C) {
+
     }
 
 }

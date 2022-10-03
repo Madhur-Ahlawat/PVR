@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.otpVerify.response
+package com.net.pvr1.ui.login.otpVerify.response
 
 import java.io.Serializable
 

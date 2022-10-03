@@ -34,6 +34,8 @@ class HomeSliderAdapter(
             .load(comingSoonItem.i)
             .error(R.drawable.app_icon)
             .into(holder.image)
+        val pos = position + 1
+        holder.position.text = pos.toString() + "/" + nowShowingList.size
 
         holder.time.text = comingSoonItem.lc
         holder.book.setOnClickListener {

@@ -12,10 +12,12 @@ import com.net.pvr1.ui.dailogs.LoaderDialog
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONException
 import org.json.JSONObject
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ScannerActivity : AppCompatActivity() {
-    private lateinit var preferences: AppPreferences
+//    @Inject
+//    lateinit var preferences: AppPreferences
     private var binding: ActivityScannerBinding? = null
     private var loader: LoaderDialog? = null
     private var qrScanIntegrator: IntentIntegrator? = null

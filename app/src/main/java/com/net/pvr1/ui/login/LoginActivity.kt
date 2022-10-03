@@ -20,16 +20,18 @@ import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.login.viewModel.LoginViewModel
-import com.net.pvr1.ui.otpVerify.OtpVerifyActivity
+import com.net.pvr1.ui.login.otpVerify.OtpVerifyActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.SUCCESS_CODE
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
-    private lateinit var preferences: AppPreferences
+//    @Inject
+//    lateinit var preferences: AppPreferences
     private var binding: ActivityLoginBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: LoginViewModel by viewModels()
@@ -40,7 +42,6 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        preferences = AppPreferences()
         movedNext()
 
         //Auto Show Mobile Number

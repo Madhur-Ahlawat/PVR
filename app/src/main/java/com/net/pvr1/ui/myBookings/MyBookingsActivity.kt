@@ -20,10 +20,12 @@ import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.Direction {
-    private lateinit var preferences: AppPreferences
+//    @Inject
+//    lateinit var preferences: AppPreferences
     private var binding: ActivityMyBookingBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: MyBookingViewModel by viewModels()
@@ -33,7 +35,6 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.Direction {
         binding = ActivityMyBookingBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        preferences = AppPreferences()
         movedNext()
     }
 
