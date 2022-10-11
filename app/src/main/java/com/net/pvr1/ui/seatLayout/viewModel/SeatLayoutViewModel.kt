@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SeatLayoutViewModel @Inject constructor(private val userRepository: UserRepository) :
     ViewModel() {
-
+    //SeatLayout
     val userResponseLiveData: LiveData<NetworkResult<SeatResponse>>
         get() = userRepository.seatResponseLiveData
 
@@ -30,5 +30,26 @@ class SeatLayoutViewModel @Inject constructor(private val userRepository: UserRe
             userRepository.seatLayout(cinemacode,sessionid,dtmsource,partnerid,cdate,bundle,isSpi)
         }
     }
+    //reserve Seat
+    val reserveSeatResponseLiveData: LiveData<NetworkResult<SeatResponse>>
+        get() = userRepository.reserveSeatResponseLiveData
+    fun reserveSeat(
+        reserve: String
+    ) {
+        viewModelScope.launch {
+            userRepository.reserveSeatLayout(reserve)
+        }
+    }
+    //initTrans
+    val initTransResponseLiveData: LiveData<NetworkResult<SeatResponse>>
+        get() = userRepository.initTransSeatResponseLiveData
 
+    fun initTransSeat(
+        cinemacode: String,
+        sessionid: String
+    ) {
+        viewModelScope.launch {
+            userRepository.initTransSeatLayout(cinemacode,sessionid)
+        }
+    }
 }

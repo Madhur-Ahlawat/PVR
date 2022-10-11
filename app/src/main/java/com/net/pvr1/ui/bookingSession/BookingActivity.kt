@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityBookingBinding
-import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.bookingSession.adapter.BookingShowsDaysAdapter
 import com.net.pvr1.ui.bookingSession.adapter.BookingShowsLanguageAdapter
 import com.net.pvr1.ui.bookingSession.adapter.BookingShowsParentAdapter
@@ -19,7 +18,6 @@ import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class BookingActivity : AppCompatActivity(),

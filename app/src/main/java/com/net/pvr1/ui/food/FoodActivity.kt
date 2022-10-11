@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityFoodBinding
-import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.adapter.*
@@ -25,6 +24,7 @@ import com.net.pvr1.ui.food.viewModel.FoodViewModel
 import com.net.pvr1.ui.summery.SummeryActivity
 import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class FoodActivity : AppCompatActivity(),
@@ -34,8 +34,8 @@ class FoodActivity : AppCompatActivity(),
     FilterBottomAdapter.RecycleViewItemClickListenerCity,
     CartAdapter.RecycleViewItemClickListenerCity {
 
-
-//    private lateinit var preferences: AppPreferences
+    @Inject
+    lateinit var preferences: PreferenceManager
     private var binding: ActivityFoodBinding? = null
     private val authViewModel: FoodViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -56,8 +56,8 @@ class FoodActivity : AppCompatActivity(),
         val view = binding?.root
         setContentView(view)
         authViewModel.food(
-            "pGnnlj1MEjb0MOKBx1EH5w==",
-            "GAUR",
+            preferences.getUserId().toString(),
+            intent.getStringExtra("cinemaId").toString(),
             "",
             "",
             "",
@@ -89,6 +89,7 @@ class FoodActivity : AppCompatActivity(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
                             positiveClick = {
+                              finish()
                             },
                             negativeClick = {
                             })
@@ -646,7 +647,7 @@ class FoodActivity : AppCompatActivity(),
 
             updateCartMainList(recyclerData)
         } catch (e: Exception) {
-
+            e.printStackTrace()
         }
 
     }

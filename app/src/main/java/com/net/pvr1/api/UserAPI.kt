@@ -235,6 +235,32 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<SeatResponse>
 
+    @POST("trans/getseatlayoutnew/{cinemacode}/{sessionid}")
+    suspend fun reserveSeatLayout(
+        @Path("reserve") reserve: String,
+        @Path("qr") qr: String,
+        @Query("srilanka") srilanka: String,
+        @Query("isSpi") isSpi: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<SeatResponse>
+
+    @POST("api/trans/initTrans/{cinemacode}/{sessionid}")
+    suspend fun initTransSeatLayout(
+        @Path("cinemacode") cinemacode: String,
+        @Path("sessionid") sessionid: String,
+        @Query("dtmsource") dtmsource: String,
+        @Query("partnerid") partnerid: String,
+        @Query("screenid") screenid: String,
+        @Query("adultSeats") adultSeats: String,
+        @Query("childSeats") childSeats: String,
+        @Query("oldBookingId") oldBookingId: String,
+        @Query("isMembersDay") isMembersDay: String,
+        @Query("isSpi") isSpi: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<SeatResponse>
+
     @POST("v2/food/getfoods")
     suspend fun food(
         @Query("userid") userid: String,

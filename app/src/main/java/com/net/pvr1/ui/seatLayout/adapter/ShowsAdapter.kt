@@ -40,7 +40,7 @@ class ShowsAdapter(
                 holder.itemView.setOnClickListener {
                     itemCount = position
                     notifyDataSetChanged()
-                    listener.showsClick(nowShowingList)
+                    listener.showsClick(this.sid)
 
                 }
                 if (position == itemCount) {
@@ -83,7 +83,7 @@ class ShowsAdapter(
 
 
     interface RecycleViewItemClickListenerCity {
-        fun showsClick(comingSoonItem: ArrayList<BookingResponse.Output.Cinema.Child.Sw.S>)
+        fun showsClick(comingSoonItem: Int)
     }
 
 }

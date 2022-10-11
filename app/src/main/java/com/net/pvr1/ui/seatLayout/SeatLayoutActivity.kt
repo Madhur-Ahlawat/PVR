@@ -39,17 +39,10 @@ import java.math.BigDecimal
 
 @AndroidEntryPoint
 class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClickListenerCity {
-    //    @Inject
-//    lateinit var preferences: AppPreferences
     private var binding: ActivitySeatLayoutBinding? = null
     private val authViewModel: SeatLayoutViewModel by viewModels()
     private var loader: LoaderDialog? = null
-    private var priceMap: Map<String, SeatResponse.Output.PriceList.Price>? = null
-    private var selectedSeats = ArrayList<Seat>()
-    private var noOfSeatsSelected = ArrayList<SeatTagData>()
-    private var isDit = false
-    private var selectedSeatsBox: ArrayList<SeatHC>? = null
-    private var selectedSeats1: ArrayList<SeatHC>? = null
+
     private var selectBuddy = false
     private var hcSeat = false
     private var hcSeat1 = false
@@ -65,8 +58,15 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     private var seatsN: ArrayList<String>? = null
     private var coupleSeat = 0
     private var messageText = ""
+    private var cinemaCode = ""
+    private var sessionId = ""
+    private var isDit = false
     private var noOfRowsSmall: List<SeatResponse.Output.Row>? = null
-
+    private var priceMap: Map<String, SeatResponse.Output.PriceList.Price>? = null
+    private var selectedSeats = ArrayList<Seat>()
+    private var noOfSeatsSelected = ArrayList<SeatTagData>()
+    private var selectedSeatsBox: ArrayList<SeatHC>? = null
+    private var selectedSeats1: ArrayList<SeatHC>? = null
     //Shows
     private var showsArray = ArrayList<Output.Cinema.Child.Sw.S>()
 
@@ -76,20 +76,25 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         val view = binding?.root
         setContentView(view)
 
+        cinemaCode = intent.getStringExtra("cinemaId").toString()
+        sessionId = intent.getStringExtra("sessionId").toString()
         showsArray = intent.getStringArrayListExtra("shows") as ArrayList<Output.Cinema.Child.Sw.S>
-        authViewModel.seatLayout("DWAR", "34192", "", "", "", false, "")
+
+        authViewModel.seatLayout(
+            cinemaCode,
+            sessionId,
+            "",
+            "",
+            "",
+            false,
+            ""
+        )
         seatLayout()
-        movedNext()
+        reserveSeat()
+        initTrans()
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    private fun movedNext() {
-        binding?.textView196?.setOnClickListener {
-            val intent = Intent(this@SeatLayoutActivity, FoodActivity::class.java)
-            startActivity(intent)
-        }
-    }
-
+    //SeatLayout
     private fun seatLayout() {
         authViewModel.userResponseLiveData.observe(this) {
             when (it) {
@@ -108,6 +113,100 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
                             positiveClick = {
+                                finish()
+                            },
+                            negativeClick = {
+                            })
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {
+                        },
+                        negativeClick = {
+                        })
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleasewait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+
+    //reserveSeat
+    private fun reserveSeat() {
+        authViewModel.reserveSeatResponseLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+
+
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {
+                                finish()
+                            },
+                            negativeClick = {
+                            })
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {
+                        },
+                        negativeClick = {
+                        })
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleasewait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+
+    //initTrans
+    private fun initTrans() {
+        authViewModel.initTransResponseLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+
+                        authViewModel.reserveSeat("")
+
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {
+                                finish()
                             },
                             negativeClick = {
                             })
@@ -1250,6 +1349,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             else binding?.textView195?.text =
                 "No Vehicle Slots Selected"
         } else {
+
+            authViewModel.initTransSeat(cinemaCode, sessionId)
             binding?.textView195?.show()
             binding?.textView196?.show()
             binding?.textView200?.hide()
@@ -1257,6 +1358,13 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             binding?.textView195?.isClickable = true
             binding?.textView196?.isClickable = true
             binding?.constraintLayout56?.isClickable = true
+            binding?.textView196?.setOnClickListener {
+                authViewModel.initTransSeat(cinemaCode, sessionId)
+
+//                val intent = Intent(this@SeatLayoutActivity, FoodActivity::class.java)
+//                intent.putExtra("cinemaId", cinemaCode)
+//                startActivity(intent)
+            }
             binding?.constraintLayout56?.setBackgroundColor(
                 ContextCompat.getColor(
                     this,
@@ -1264,6 +1372,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 )
             )
         }
+
         calculatePrice()
     }
 
@@ -1418,6 +1527,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         try {
             keyData = seat.c as String
         } catch (e: Exception) {
+            e.printStackTrace()
         }
         val selectedSeat = Seat()
         val selectedSeat1 = SeatHC()
@@ -1618,61 +1728,18 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         dialog.show()
     }
 
+    override fun showsClick(comingSoonItem: Int) {
+        sessionId = comingSoonItem.toString()
 
-    private fun drawColumnSmall(
-        noOfRows: List<SeatResponse.Output.Row>,
-        llColumnLayout: LinearLayout
-    ) {
-        llColumnLayout.removeAllViews()
-        for (i in noOfRows.indices) {
-            val row: SeatResponse.Output.Row = noOfRows[i]
-//            val noSeats: List<S> = row.getS()
-            val noSeats: List<SeatResponse.Output.Row.S> = row.s
-            if (noSeats.isNotEmpty()) {
-                //draw extras space for row name
-//                addRowNameSmall(row.getN(), false);
-                //Draw seats ============
-                val linearLayout = LinearLayout(this)
-                linearLayout.orientation = LinearLayout.HORIZONTAL
-                val layoutParams = LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-                linearLayout.layoutParams = layoutParams
-                llColumnLayout.addView(linearLayout)
-                drawRowSmall(noSeats, linearLayout)
-            } else {
-
-                //Draw Area============
-                val rlLayout = RelativeLayout(this)
-                val layoutParams = LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    Constant().convertDpToPixel(10F, this)
-                )
-                rlLayout.layoutParams = layoutParams
-                if (row.c != "") {
-                    val colorCodes: String = if (row.c.contains("#")) row.c else "#" + row.c
-                    rlLayout.setBackgroundColor(Color.parseColor(colorCodes))
-                }
-                val centerLayout = LinearLayout(this)
-                val centerLayoutParameter = RelativeLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-                centerLayoutParameter.addRule(RelativeLayout.CENTER_IN_PARENT)
-                centerLayout.gravity = Gravity.CENTER_VERTICAL
-                centerLayout.orientation = LinearLayout.HORIZONTAL
-                centerLayout.layoutParams = centerLayoutParameter
-                val padding: Int = Constant().convertDpToPixel(1F, this)
-                printLog("$padding")
-                rlLayout.addView(centerLayout)
-                llColumnLayout.addView(rlLayout)
-            }
-        }
-    }
-
-    override fun showsClick(comingSoonItem: ArrayList<Output.Cinema.Child.Sw.S>) {
-
+        authViewModel.seatLayout(
+            cinemaCode,
+            sessionId,
+            "",
+            "",
+            "",
+            false,
+            ""
+        )
 
     }
 

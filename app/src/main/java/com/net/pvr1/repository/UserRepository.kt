@@ -549,6 +549,61 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
     }
 
+    //reserveSeat
+    private val reserveSeatLiveData = MutableLiveData<NetworkResult<SeatResponse>>()
+    val reserveSeatResponseLiveData: LiveData<NetworkResult<SeatResponse>>
+        get() = reserveSeatLiveData
+
+    suspend fun reserveSeatLayout(
+        reserve: String,
+    ) {
+        reserveSeatLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.reserveSeatLayout(
+            reserve,"no","no","no", Constant.version, Constant.platform
+        )
+        reserveSeatResponse(response)
+    }
+
+    private fun reserveSeatResponse(response: Response<SeatResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            reserveSeatLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            reserveSeatLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            reserveSeatLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    //initTrans
+    private val initTransSeatLiveData = MutableLiveData<NetworkResult<SeatResponse>>()
+    val initTransSeatResponseLiveData: LiveData<NetworkResult<SeatResponse>>
+        get() = initTransSeatLiveData
+
+    suspend fun initTransSeatLayout(
+        cinemacode: String,
+        sessionid: String
+    ) {
+        initTransSeatLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.initTransSeatLayout(
+            cinemacode,sessionid,"","","","","","","no","no", Constant.version, Constant.platform
+        )
+        initTransSeatResponse(response)
+    }
+
+    private fun initTransSeatResponse(response: Response<SeatResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            initTransSeatLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            initTransSeatLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            initTransSeatLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+
     //SeatLayout
     private val seatLiveData = MutableLiveData<NetworkResult<SeatResponse>>()
     val seatResponseLiveData: LiveData<NetworkResult<SeatResponse>>
@@ -565,7 +620,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     ) {
         seatLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.seatLayout(
-           cinemacode,sessionid,dtmsource,partnerid,cdate,bundle,isSpi, Constant.version, Constant.platform
+            cinemacode,sessionid,dtmsource,partnerid,cdate,bundle,isSpi, Constant.version, Constant.platform
         )
         seatLayoutResponse(response)
     }
@@ -580,6 +635,13 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             seatLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
+
+
+
+
+
+
+
 
     //Food
     private val foodLiveData = MutableLiveData<NetworkResult<FoodResponse>>()
