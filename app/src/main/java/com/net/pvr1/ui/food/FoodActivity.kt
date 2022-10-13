@@ -23,6 +23,8 @@ import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.ui.food.viewModel.FoodViewModel
 import com.net.pvr1.ui.summery.SummeryActivity
 import com.net.pvr1.utils.*
+import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
+import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -57,8 +59,8 @@ class FoodActivity : AppCompatActivity(),
         setContentView(view)
         authViewModel.food(
             preferences.getUserId().toString(),
-            intent.getStringExtra("cinemaId").toString(),
-            "",
+            CINEMA_ID,
+            BOOKING_ID,
             "",
             "",
             "",
@@ -151,6 +153,7 @@ class FoodActivity : AppCompatActivity(),
     private fun movedNext() {
         binding?.textView148?.setOnClickListener {
             val intent = Intent(this@FoodActivity, SummeryActivity::class.java)
+            intent.putExtra("food",cartModel)
             startActivity(intent)
         }
     }
@@ -659,7 +662,6 @@ class FoodActivity : AppCompatActivity(),
                     item.qt = recyclerData.quantity
                 }
             }
-
         }
         cartData()
         //Update Home List

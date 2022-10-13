@@ -61,7 +61,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -234,6 +234,7 @@
                         tools:text="Audi 07 - Normal" />
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView31"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="14dp"
@@ -252,11 +253,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="#F5F5F5"
+                    android:background="@color/white"
                     android:paddingStart="@dimen/dimen_24dp"
                     android:paddingTop="@dimen/dimen_20dp"
                     android:paddingEnd="@dimen/dimen_24dp"
                     android:paddingBottom="@dimen/dimen_20dp"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout40">
@@ -317,18 +319,20 @@
                         app:layout_constraintTop_toBottomOf="@+id/textView119" />
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView32"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        tools:itemCount="2"
-                        tools:listitem="@layout/summery_item_food"
                         android:orientation="vertical"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintEnd_toEndOf="@+id/view81"
                         app:layout_constraintStart_toStartOf="@+id/view81"
-                        app:layout_constraintTop_toBottomOf="@+id/textView121"/>
+                        app:layout_constraintTop_toBottomOf="@+id/textView121"
+                        tools:itemCount="2"
+                        tools:listitem="@layout/summery_item_food" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:visibility="visible"
                     android:id="@+id/constraintLayout43"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -625,38 +629,38 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="@dimen/dimen_24dp"
             android:background="@drawable/yellow_book_curve"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="@dimen/dimen_24dp">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/textView174"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/sf_pro_text_semi_bold"
                 android:textColor="@color/black"
                 android:textSize="@dimen/dimen_14sp"
-                android:fontFamily="@font/sf_pro_text_semi_bold"
-                tools:text="Pay ₹9999"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Pay ₹9999" />
 
             <TextView
                 android:id="@+id/textView175"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/padding_10"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimen_14sp"
                 android:fontFamily="@font/sf_pro_text_semi_bold"
                 android:text="@string/proceed_to_pay"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
+                app:drawableEndCompat="@drawable/right_arrow"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:drawableEndCompat="@drawable/right_arrow" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

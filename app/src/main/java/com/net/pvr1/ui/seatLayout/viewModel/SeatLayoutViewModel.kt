@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
+import com.net.pvr1.ui.seatLayout.response.InitResponse
+import com.net.pvr1.ui.seatLayout.response.ReserveSeatResponse
 import com.net.pvr1.ui.seatLayout.response.SeatResponse
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,7 +33,7 @@ class SeatLayoutViewModel @Inject constructor(private val userRepository: UserRe
         }
     }
     //reserve Seat
-    val reserveSeatResponseLiveData: LiveData<NetworkResult<SeatResponse>>
+    val reserveSeatResponseLiveData: LiveData<NetworkResult<ReserveSeatResponse>>
         get() = userRepository.reserveSeatResponseLiveData
     fun reserveSeat(
         reserve: String
@@ -41,7 +43,7 @@ class SeatLayoutViewModel @Inject constructor(private val userRepository: UserRe
         }
     }
     //initTrans
-    val initTransResponseLiveData: LiveData<NetworkResult<SeatResponse>>
+    val initTransResponseLiveData: LiveData<NetworkResult<InitResponse>>
         get() = userRepository.initTransSeatResponseLiveData
 
     fun initTransSeat(

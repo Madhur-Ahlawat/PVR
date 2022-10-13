@@ -15,8 +15,12 @@ import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
 import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
+import com.net.pvr1.ui.seatLayout.response.InitResponse
+import com.net.pvr1.ui.seatLayout.response.ReserveSeatResponse
 import com.net.pvr1.ui.seatLayout.response.SeatResponse
 import com.net.pvr1.ui.selectCity.response.SelectCityResponse
+import com.net.pvr1.ui.summery.response.AddFoodResponse
+import com.net.pvr1.ui.summery.response.SummeryResponse
 import retrofit2.Response
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -235,17 +239,17 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<SeatResponse>
 
-    @POST("trans/getseatlayoutnew/{cinemacode}/{sessionid}")
+    @POST("trans/reserveseats")
     suspend fun reserveSeatLayout(
-        @Path("reserve") reserve: String,
-        @Path("qr") qr: String,
+        @Query("reserve") reserve: String,
+        @Query("qr") qr: String,
         @Query("srilanka") srilanka: String,
         @Query("isSpi") isSpi: String,
         @Query("av") version: String,
         @Query("pt") platform: String
-    ): Response<SeatResponse>
+    ): Response<ReserveSeatResponse>
 
-    @POST("api/trans/initTrans/{cinemacode}/{sessionid}")
+    @POST("trans/initTrans/{cinemacode}/{sessionid}")
     suspend fun initTransSeatLayout(
         @Path("cinemacode") cinemacode: String,
         @Path("sessionid") sessionid: String,
@@ -259,7 +263,7 @@ interface UserAPI {
         @Query("isSpi") isSpi: String,
         @Query("av") version: String,
         @Query("pt") platform: String
-    ): Response<SeatResponse>
+    ): Response<InitResponse>
 
     @POST("v2/food/getfoods")
     suspend fun food(
@@ -279,14 +283,34 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<FoodResponse>
 
-    @POST("trans/setdonation")
+    @POST("trans/tckdetails")
     suspend fun summery(
-        @Query("bookingid") bookingid: String,
         @Query("transid") transid: String,
-        @Query("isDonate") isDonate: Boolean,
+        @Query("cinemacode") cinemacode: String,
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("qr") qr: String,
+        @Query("srilanka") srilanka: String,
+        @Query("infosys") infosys: String,
+        @Query("isSpi") isSpi: String,
+        @Query("doreq") doreq: Boolean,
+        @Query("oldBookingId") oldBookingId: String,
+        @Query("change") change: String,
         @Query("av") version: String,
         @Query("pt") platform: String
-    ): Response<FoodResponse>
+    ): Response<SummeryResponse>
+
+    @POST("trans/tckdetails")
+    suspend fun addFood(
+        @Query("foods")  foods: String,
+        @Query("transid")  transid: String,
+        @Query("cinemacode") cinemacode: String,
+        @Query("qr") qr: String,
+        @Query("infosys") infosys: String,
+        @Query("isSpi") isSpi: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<AddFoodResponse>
 
     @POST("/PVRCinemasCMS/getgiftcard1  ")
     suspend fun giftCardMain(

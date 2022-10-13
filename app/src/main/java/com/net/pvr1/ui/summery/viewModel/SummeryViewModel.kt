@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
-import com.net.pvr1.ui.food.response.FoodResponse
+import com.net.pvr1.ui.summery.response.AddFoodResponse
+import com.net.pvr1.ui.summery.response.SummeryResponse
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -12,13 +13,23 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SummeryViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
-
-    val liveDataScope: LiveData<NetworkResult<FoodResponse>>
+//Summery Details
+    val liveDataScope: LiveData<NetworkResult<SummeryResponse>>
     get() = userRepository.summerResponseLiveData
 
-    fun summery(bookingid: String,transid: String,isDonate: Boolean,istDonate: Boolean, isSpi: String) {
+    fun summery(transid: String,cinemacode: String,userid: String,bookingid: String) {
         viewModelScope.launch {
-            userRepository.summerLayout(bookingid,transid,isDonate,istDonate,isSpi)
+            userRepository.summerLayout(transid,cinemacode,userid,bookingid)
+        }
+    }
+
+    //Food
+    val foodLiveDataScope: LiveData<NetworkResult<AddFoodResponse>>
+        get() = userRepository.foodAddResponseLiveData
+
+    fun food(foods: String,transid: String,cinemacode: String) {
+        viewModelScope.launch {
+            userRepository.foodAddLayout(foods,transid,cinemacode)
         }
     }
 

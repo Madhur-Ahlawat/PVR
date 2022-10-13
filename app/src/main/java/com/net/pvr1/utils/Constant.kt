@@ -2,6 +2,8 @@ package com.net.pvr1.utils
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.provider.ContactsContract.Directory.PACKAGE_NAME
 import android.text.*
 import android.text.method.LinkMovementMethod
@@ -47,6 +49,10 @@ class Constant {
         const val USER_MO_NUMBER = "user_mo"
         const val USER_ID = "user_id"
         const val SEAT_AVAILABEL = 1
+        var TRANSACTION_ID = "0"
+        var BOOKING_ID = "0"
+        var SESSION_ID = "0"
+        var CINEMA_ID = "0"
         const val ON_BOARDING_CLICK = false
         const val SEAT_BOOKED = 2
         const val SEAT_SELECTED = 3
@@ -216,5 +222,13 @@ class Constant {
         } catch (e: ArrayIndexOutOfBoundsException) {
 
         }
+    }
+
+    fun openMap(context: Context,lat:String,lang:String){
+        val strUri =
+            "http://maps.google.com/maps?q=loc:$lat,$lang (Label which you want)"
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(strUri))
+        intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity")
+        context.startActivity(intent)
     }
 }

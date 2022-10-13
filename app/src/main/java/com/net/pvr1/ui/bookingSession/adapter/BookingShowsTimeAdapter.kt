@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.databinding.ItemCinemaDetailsShowTimeBinding
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.ui.seatLayout.SeatLayoutActivity
+import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
+import com.net.pvr1.utils.Constant.Companion.SESSION_ID
 
 
 class BookingShowsTimeAdapter(
@@ -34,6 +36,8 @@ class BookingShowsTimeAdapter(
                 println("sessionId--->${this.sid}")
                 //Language
                 binding.textView96.text = this.st
+                SESSION_ID=this.sid.toString()
+                CINEMA_ID= ccid
                 holder.itemView.setOnClickListener {
                     val intent = Intent(context, SeatLayoutActivity::class.java)
                     intent.putExtra("transId","")

@@ -53,6 +53,7 @@ android {
     kapt {
         correctErrorTypes true
     }
+    namespace 'com.net.pvr1'
 
 }
 
@@ -135,4 +136,11 @@ dependencies {
     // QrCodeScanner
     implementation "com.journeyapps:zxing-android-embedded:4.2.0"
     //Carousel
+
+    //Moshi
+    implementation("com.squareup.moshi:moshi-kotlin:1.9.2")
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.9.2")
+//Flexbox
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
+
 }

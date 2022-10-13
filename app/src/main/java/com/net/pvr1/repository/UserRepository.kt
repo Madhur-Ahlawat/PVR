@@ -11,15 +11,19 @@ import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
+import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
 import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.movieDetails.response.MovieDetailsResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
-import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
+import com.net.pvr1.ui.seatLayout.response.InitResponse
+import com.net.pvr1.ui.seatLayout.response.ReserveSeatResponse
 import com.net.pvr1.ui.seatLayout.response.SeatResponse
 import com.net.pvr1.ui.selectCity.response.SelectCityResponse
+import com.net.pvr1.ui.summery.response.AddFoodResponse
+import com.net.pvr1.ui.summery.response.SummeryResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import org.json.JSONObject
@@ -57,7 +61,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
 
     suspend fun otpVerify(mobile: String, token: String) {
         otpVerifyLiveData.postValue(NetworkResult.Loading())
-        val response = userAPI.otpVerify(mobile, token,"INDIA", Constant.version, Constant.platform)
+        val response =
+            userAPI.otpVerify(mobile, token, "INDIA", Constant.version, Constant.platform)
         verifyResponse(response)
     }
 
@@ -71,12 +76,13 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             otpVerifyLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
-   //Resister
+
+    //Resister
     private val resisterLiveData = MutableLiveData<NetworkResult<ResisterResponse>>()
     val resisterResponseLiveData: LiveData<NetworkResult<ResisterResponse>>
         get() = resisterLiveData
 
-    suspend fun  resister(
+    suspend fun resister(
         hash: String,
         email: String,
         name: String,
@@ -86,11 +92,21 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         cname: Boolean
     ) {
         otpVerifyLiveData.postValue(NetworkResult.Loading())
-        val response = userAPI.resister(hash,email,name,mobile,otp,city,cname, Constant.version, Constant.platform)
+        val response = userAPI.resister(
+            hash,
+            email,
+            name,
+            mobile,
+            otp,
+            city,
+            cname,
+            Constant.version,
+            Constant.platform
+        )
         resisterResponse(response)
     }
 
-    private fun  resisterResponse(response: Response<ResisterResponse>) {
+    private fun resisterResponse(response: Response<ResisterResponse>) {
         if (response.isSuccessful && response.body() != null) {
             resisterLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
@@ -237,7 +253,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
 
     suspend fun offerDetails(id: String, did: String) {
         offerDetailsLiveData.postValue(NetworkResult.Loading())
-        val response = userAPI.offerDetails(id, Constant.version, Constant.platform,did)
+        val response = userAPI.offerDetails(id, Constant.version, Constant.platform, did)
         offerDetailsResponse(response)
     }
 
@@ -550,8 +566,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
     //reserveSeat
-    private val reserveSeatLiveData = MutableLiveData<NetworkResult<SeatResponse>>()
-    val reserveSeatResponseLiveData: LiveData<NetworkResult<SeatResponse>>
+    private val reserveSeatLiveData = MutableLiveData<NetworkResult<ReserveSeatResponse>>()
+    val reserveSeatResponseLiveData: LiveData<NetworkResult<ReserveSeatResponse>>
         get() = reserveSeatLiveData
 
     suspend fun reserveSeatLayout(
@@ -559,12 +575,12 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     ) {
         reserveSeatLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.reserveSeatLayout(
-            reserve,"no","no","no", Constant.version, Constant.platform
+            reserve, "no", "no", "no", Constant.version, Constant.platform
         )
         reserveSeatResponse(response)
     }
 
-    private fun reserveSeatResponse(response: Response<SeatResponse>) {
+    private fun reserveSeatResponse(response: Response<ReserveSeatResponse>) {
         if (response.isSuccessful && response.body() != null) {
             reserveSeatLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
@@ -576,8 +592,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
     //initTrans
-    private val initTransSeatLiveData = MutableLiveData<NetworkResult<SeatResponse>>()
-    val initTransSeatResponseLiveData: LiveData<NetworkResult<SeatResponse>>
+    private val initTransSeatLiveData = MutableLiveData<NetworkResult<InitResponse>>()
+    val initTransSeatResponseLiveData: LiveData<NetworkResult<InitResponse>>
         get() = initTransSeatLiveData
 
     suspend fun initTransSeatLayout(
@@ -586,12 +602,23 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     ) {
         initTransSeatLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.initTransSeatLayout(
-            cinemacode,sessionid,"","","","","","","no","no", Constant.version, Constant.platform
+            cinemacode,
+            sessionid,
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "no",
+            "no",
+            Constant.version,
+            Constant.platform
         )
         initTransSeatResponse(response)
     }
 
-    private fun initTransSeatResponse(response: Response<SeatResponse>) {
+    private fun initTransSeatResponse(response: Response<InitResponse>) {
         if (response.isSuccessful && response.body() != null) {
             initTransSeatLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
@@ -601,7 +628,6 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             initTransSeatLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
-
 
 
     //SeatLayout
@@ -620,7 +646,15 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     ) {
         seatLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.seatLayout(
-            cinemacode,sessionid,dtmsource,partnerid,cdate,bundle,isSpi, Constant.version, Constant.platform
+            cinemacode,
+            sessionid,
+            dtmsource,
+            partnerid,
+            cdate,
+            bundle,
+            isSpi,
+            Constant.version,
+            Constant.platform
         )
         seatLayoutResponse(response)
     }
@@ -635,12 +669,6 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             seatLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
-
-
-
-
-
-
 
 
     //Food
@@ -664,7 +692,20 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     ) {
         seatLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.food(
-           userid,ccode,bookingid,cbookid,transid,type,audi,seat,city,qr,iserv,isSpi, Constant.version, Constant.platform
+            userid,
+            ccode,
+            bookingid,
+            cbookid,
+            transid,
+            type,
+            audi,
+            seat,
+            city,
+            qr,
+            iserv,
+            isSpi,
+            Constant.version,
+            Constant.platform
         )
         foodLayoutResponse(response)
     }
@@ -682,26 +723,36 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
 
 
     //Summery
-    private val summerLiveData = MutableLiveData<NetworkResult<FoodResponse>>()
-    val summerResponseLiveData: LiveData<NetworkResult<FoodResponse>>
+    private val summerLiveData = MutableLiveData<NetworkResult<SummeryResponse>>()
+    val summerResponseLiveData: LiveData<NetworkResult<SummeryResponse>>
         get() = summerLiveData
 
     suspend fun summerLayout(
-        bookingid: String,
         transid: String,
-        isDonate: Boolean,
-        istDonate: Boolean,
-        isSpi: String
+        cinemacode: String,
+        userid: String,
+        bookingid: String
     ) {
         summerLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.summery(
-            bookingid,transid,isDonate
-          , Constant.version, Constant.platform
+            transid,
+            cinemacode,
+            userid,
+            bookingid,
+            "no",
+            "no",
+            "",
+            "NO",
+            false,
+            "",
+            "",
+            Constant.version,
+            Constant.platform
         )
         summeryLayoutResponse(response)
     }
 
-    private fun summeryLayoutResponse(response: Response<FoodResponse>) {
+    private fun summeryLayoutResponse(response: Response<SummeryResponse>) {
         if (response.isSuccessful && response.body() != null) {
             summerLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
@@ -713,15 +764,41 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
 
+    //Food Reserve
+    private val foodAddLiveData = MutableLiveData<NetworkResult<AddFoodResponse>>()
+    val foodAddResponseLiveData: LiveData<NetworkResult<AddFoodResponse>>
+        get() = foodAddLiveData
+
+    suspend fun foodAddLayout(foods: String, transid: String, cinemacode: String) {
+        foodAddLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.addFood(foods,transid,cinemacode,"no","","",Constant.version,Constant.platform
+        )
+        foodAddLayoutResponse(response)
+    }
+
+    private fun foodAddLayoutResponse(response: Response<AddFoodResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            foodAddLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            foodAddLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            foodAddLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
     //GiftCardMain
 
-    private val giftCardMainLiveData = MutableLiveData<NetworkResult<com.net.pvr1.ui.giftCard.response.GiftCardResponse>>()
+    private val giftCardMainLiveData =
+        MutableLiveData<NetworkResult<com.net.pvr1.ui.giftCard.response.GiftCardResponse>>()
     val giftCardMainResponseLiveData: LiveData<NetworkResult<com.net.pvr1.ui.giftCard.response.GiftCardResponse>>
         get() = giftCardMainLiveData
+
     suspend fun giftCardMainLayout(sWidth: String, infosys: String) {
         giftCardMainLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.giftCardMain(
-            sWidth,Constant.platform,infosys,Constant.version,Constant.platform
+            sWidth, Constant.platform, infosys, Constant.version, Constant.platform
         )
         giftCardMainLayoutResponse(response)
     }

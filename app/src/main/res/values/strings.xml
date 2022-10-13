@@ -260,5 +260,6 @@
     <string name="all_genres">All Genres</string>
     <string name="select_all">Select All</string>
     <string name="occasions">Occasions</string>
+    <string name="_0_seats">0 Seats</string>
 
 </resources>

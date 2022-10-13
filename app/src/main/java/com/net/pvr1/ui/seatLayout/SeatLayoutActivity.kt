@@ -1,6 +1,5 @@
 package com.net.pvr1.ui.seatLayout
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
@@ -15,12 +14,16 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySeatLayoutBinding
 import com.net.pvr1.ui.bookingSession.response.BookingResponse.Output
@@ -28,15 +31,20 @@ import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.FoodActivity
 import com.net.pvr1.ui.seatLayout.adapter.ShowsAdapter
-import com.net.pvr1.ui.seatLayout.response.Seat
-import com.net.pvr1.ui.seatLayout.response.SeatHC
-import com.net.pvr1.ui.seatLayout.response.SeatResponse
-import com.net.pvr1.ui.seatLayout.response.SeatTagData
+import com.net.pvr1.ui.seatLayout.request.ReserveSeatRequest
+import com.net.pvr1.ui.seatLayout.response.*
 import com.net.pvr1.ui.seatLayout.viewModel.SeatLayoutViewModel
+import com.net.pvr1.ui.summery.SummeryActivity
 import com.net.pvr1.utils.*
+import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
+import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
+import com.net.pvr1.utils.Constant.Companion.SESSION_ID
+import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
 import dagger.hilt.android.AndroidEntryPoint
 import java.math.BigDecimal
 
+
+@Suppress("DEPRECATION", "NAME_SHADOWING")
 @AndroidEntryPoint
 class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClickListenerCity {
     private var binding: ActivitySeatLayoutBinding? = null
@@ -67,8 +75,10 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     private var noOfSeatsSelected = ArrayList<SeatTagData>()
     private var selectedSeatsBox: ArrayList<SeatHC>? = null
     private var selectedSeats1: ArrayList<SeatHC>? = null
+
     //Shows
     private var showsArray = ArrayList<Output.Cinema.Child.Sw.S>()
+    private var selectSeatPriceCode = ArrayList<ReserveSeatRequest.Seat>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +90,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         sessionId = intent.getStringExtra("sessionId").toString()
         showsArray = intent.getStringArrayListExtra("shows") as ArrayList<Output.Cinema.Child.Sw.S>
 
+        printLog("session--->${SESSION_ID}--->CinemaId--->${CINEMA_ID}")
         authViewModel.seatLayout(
             cinemaCode,
             sessionId,
@@ -150,6 +161,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
 
+                        retrieverReserveSeatData(it.data.output)
 
                     } else {
                         val dialog = OptionDialog(this,
@@ -188,6 +200,16 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         }
     }
 
+    private fun retrieverReserveSeatData(output: ReserveSeatResponse.Output) {
+        BOOKING_ID = output.bookingid
+        if (output.nf == "true") {
+            startActivity(Intent(this, FoodActivity::class.java))
+        } else {
+            startActivity(Intent(this, SummeryActivity::class.java))
+        }
+
+    }
+
     //initTrans
     private fun initTrans() {
         authViewModel.initTransResponseLiveData.observe(this) {
@@ -195,9 +217,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-
-                        authViewModel.reserveSeat("")
-
+                        retrieverInitData(it.data.output)
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -233,6 +253,28 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 }
             }
         }
+    }
+
+    //InitResponse
+    private fun retrieverInitData(output: InitResponse.Output) {
+        TRANSACTION_ID = output.transid
+        for (item in selectedSeats) {
+            val price = item.priceCode
+            val seatId = item.seatBookingId
+            println("price--->${price}--->${seatId}")
+            selectSeatPriceCode.add(
+                ReserveSeatRequest.Seat(
+                    price.toString(),
+                    seatId.toString()
+                )
+            )
+        }
+        val reserve = ReserveSeatRequest(cinemaCode, selectSeatPriceCode, sessionId, output.transid)
+        val gson = Gson()
+        val mMineUserEntity = gson.toJson(reserve, ReserveSeatRequest::class.java)
+        println("request--->${mMineUserEntity}")
+        authViewModel.reserveSeat(mMineUserEntity)
+
     }
 
     private fun retrieveData(data: SeatResponse.Output) {
@@ -566,48 +608,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             txtRowName.layoutParams = layoutParams
             txtRowName.text = rowName
             binding?.llRowName?.addView(txtRowName)
-        }
-    }
-
-    private fun drawRowSmall(noSeats: List<SeatResponse.Output.Row.S>, llDrawRow: LinearLayout) {
-        for (i in noSeats.indices) {
-            val seat: SeatResponse.Output.Row.S = noSeats[i]
-            if (seat.b != "") {
-                val seatView = ImageButton(this)
-                seatView.setBackgroundColor(Color.WHITE)
-                val layoutParams = LinearLayout.LayoutParams(10, 10)
-                val margin: Int = Constant().convertDpToPixel(1F, this)
-                layoutParams.setMargins(margin, margin, margin, margin)
-                seatView.layoutParams = layoutParams
-                when (seat.s) {
-                    Constant.SEAT_AVAILABEL, Constant.HATCHBACK, Constant.SUV, Constant.BIKE -> {
-                        seatView.setImageResource(R.drawable.group)
-                    }
-                    Constant.SEAT_SELECTED, Constant.SEAT_SELECTED_HATCHBACK, Constant.SEAT_SELECTED_SUV, Constant.SEAT_SELECTED_BIKE -> {
-                        seatView.setBackgroundColor(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.pvr_yellow
-                            )
-                        )
-                    }
-                    Constant.SEAT_BOOKED -> {
-                        seatView.setImageResource(R.drawable.occupied)
-                    }
-                    else -> {
-                        seatView.setBackgroundColor(Color.TRANSPARENT)
-                    }
-                }
-                llDrawRow.addView(seatView)
-            } else {
-                val seatView = ImageButton(this)
-                val layoutParams = LinearLayout.LayoutParams(10, 10)
-                seatView.layoutParams = layoutParams
-                val margin: Int = Constant().convertDpToPixel(1F, this)
-                layoutParams.setMargins(margin, margin, margin, margin)
-                seatView.setBackgroundColor(Color.TRANSPARENT)
-                llDrawRow.addView(seatView)
-            }
         }
     }
 
@@ -1350,7 +1350,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 "No Vehicle Slots Selected"
         } else {
 
-            authViewModel.initTransSeat(cinemaCode, sessionId)
             binding?.textView195?.show()
             binding?.textView196?.show()
             binding?.textView200?.hide()
@@ -1358,12 +1357,9 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             binding?.textView195?.isClickable = true
             binding?.textView196?.isClickable = true
             binding?.constraintLayout56?.isClickable = true
+
             binding?.textView196?.setOnClickListener {
                 authViewModel.initTransSeat(cinemaCode, sessionId)
-
-//                val intent = Intent(this@SeatLayoutActivity, FoodActivity::class.java)
-//                intent.putExtra("cinemaId", cinemaCode)
-//                startActivity(intent)
             }
             binding?.constraintLayout56?.setBackgroundColor(
                 ContextCompat.getColor(
@@ -1396,6 +1392,9 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             binding?.textView196?.show()
             binding?.textView200?.hide()
 
+            binding?.textView196?.setOnClickListener {
+                authViewModel.initTransSeat(cinemaCode, sessionId)
+            }
             binding?.textView195?.isClickable = true
             binding?.textView196?.isClickable = true
             binding?.constraintLayout56?.isClickable = true
@@ -1603,7 +1602,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                     })
                 dialog.show()
             }
-            println("select_buddy=========1==$selectBuddy")
+            printLog("select_buddy=1==$selectBuddy")
             if (selectBuddy) {
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,

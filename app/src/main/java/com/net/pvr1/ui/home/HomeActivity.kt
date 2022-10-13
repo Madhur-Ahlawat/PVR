@@ -134,44 +134,13 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         ignore.setOnClickListener {
             dialog.dismiss()
         }
-
     }
-
-//    private fun showExperienceDialog() {
-//        val dialog = Dialog(this)
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//        dialog.setContentView(R.layout.experience_dialog)
-//        dialog.window!!.setLayout(
-//            ViewGroup.LayoutParams.MATCH_PARENT,
-//            ViewGroup.LayoutParams.WRAP_CONTENT
-//        )
-//        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
-//        dialog.window!!.setGravity(Gravity.BOTTOM)
-//        dialog.show()
-//        val recyclerView= dialog.findViewById<RecyclerView>(R.id.recyclerView24)
-//        val myListData = arrayOf(
-//            ReactModel(R.drawable.experience_one),
-//            ReactModel(R.drawable.experience_two),
-//            ReactModel(R.drawable.experience_three),
-//            ReactModel(R.drawable.experience_four),
-//            ReactModel(R.drawable.experience_five)
-//        )
-//        val gridLayout =
-//            GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-//        recyclerView.layoutManager = LinearLayoutManager(this)
-//        val adapter = ExperienceReactAdapter( myListData, this,this)
-//        recyclerView.layoutManager = gridLayout
-//        recyclerView.adapter = adapter
-//
-//    }
 
     private fun setCurrentFragment(fragment: Fragment) =
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.fragment, fragment)
             commit()
         }
-
 
     private fun offerDataLoad() {
         authViewModel.userResponseOfferLiveData.observe(this) {

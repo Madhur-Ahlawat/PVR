@@ -25,8 +25,8 @@
 
         <ImageView
             android:id="@+id/imageView80"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dimen_25dp"
+            android:layout_height="@dimen/dimen_25dp"
             app:layout_constraintBottom_toBottomOf="@+id/view106"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view106"
@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/sf_pro_text_medium"
-            android:text="₹8888"
+            tools:text="₹8888"
             android:textColor="@color/black"
             android:textSize="@dimen/dimen_14sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -67,9 +67,9 @@
             android:layout_marginEnd="13dp"
             android:background="@drawable/summery_food_curve"
             android:paddingStart="4.5dp"
-            android:paddingTop="@dimen/dimen_9dp"
+            android:paddingTop="@dimen/dimen_5dp"
             android:paddingEnd="4.5dp"
-            android:paddingBottom="@dimen/dimen_9dp"
+            android:paddingBottom="@dimen/dimen_5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textView123"
             app:layout_constraintTop_toTopOf="parent">
@@ -101,7 +101,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/minus_ic" />
+                app:srcCompat="@drawable/minus_ic"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/textView124"
