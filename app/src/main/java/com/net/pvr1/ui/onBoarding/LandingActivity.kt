@@ -10,9 +10,9 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityLandingBinding
-import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.utils.Constant.Companion.ON_BOARDING_CLICK
+import com.net.pvr1.utils.PreferenceManager
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,8 +20,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class LandingActivity : AppCompatActivity() {
-//    @Inject
-//    lateinit var preferences: AppPreferences
+    @Inject
+    lateinit var preferences: PreferenceManager
     private var binding: ActivityLandingBinding? = null
     private var layouts: IntArray? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,8 +61,8 @@ class LandingActivity : AppCompatActivity() {
         layouts = intArrayOf(
             R.layout.onboarding_layout_one,
             R.layout.onboarding_layout_two,
-            R.layout.onboarding_layout_three
-//            R.layout.onboarding_layout_one
+            R.layout.onboarding_layout_three,
+            R.layout.onboarding_layout_four
         )
 
         val myViewPagerAdapter = MyViewPagerAdapter(layouts!!, this)
@@ -87,15 +87,15 @@ class LandingActivity : AppCompatActivity() {
 
                     2 -> {
                         binding?.tvPrev?.show()
-                        binding?.tvNext?.hide()
+                        binding?.tvNext?.show()
                         binding?.changeText?.text = getString(R.string.onboard_txt3)
                     }
 
-//                    3 -> {
-//                        binding?.tvSkip?.show()
-//                        binding?.tvNext?.hide()
-//                        binding?.changeText?.text=getString(R.string.add_note)
-//                    }
+                    3 -> {
+                        binding?.tvPrev?.show()
+                        binding?.tvNext?.hide()
+                        binding?.changeText?.text = getString(R.string.onboard_txt4)
+                    }
                 }
             }
 

@@ -16,6 +16,9 @@
     <string name="txt_login_header">Welcome Back!</string>
     <string name="txt_login_subheader">Login to access your notes</string>
     <string name="txt_login">Login</string>
+    <string name="checkNumber">Mobile Number Should We 10 Digit</string>
+    <string name="exitApp">Are You Sure You want to exit</string>
+
     <string name="txt_error_message">%1$S*</string>
     <string name="note_title">Title</string>
     <string name="txt_title_hint">Write your title</string>
@@ -49,6 +52,7 @@
     <string name="onboard_txt1">Limitless movie watching\n experience!</string>
     <string name="onboard_txt2">Delicious food &amp; beverage \n choices</string>
     <string name="onboard_txt3">Seamless ticket booking \n &amp; rewards</string>
+    <string name="onboard_txt4">Enroll in our Privilege\n program to earn points &amp;\n vouchers  </string>
     <string name="ok" tools:ignore="Typos">Ok</string>
     <string name="pleasewait">Please Wait for this process.....</string>
     <string name="no">No</string>
@@ -93,6 +97,7 @@
     <string name="directions">Directions</string>
     <string name="dots">•</string>
     <string name="shows">Shows</string>
+    <string name="loginCinema">Login to add Theatre to your\n Favorites?</string>
     //MyBookings
     <string name="ticket_food">Tickets &amp; Food</string>
     <string name="resend_text">Resend</string>
@@ -261,5 +266,10 @@
     <string name="select_all">Select All</string>
     <string name="occasions">Occasions</string>
     <string name="_0_seats">0 Seats</string>
+    //Booking Retrival
+    <string name="booking_retrival">Booking Retrival</string>
+    <string name="enter_Booking_ID">Enter Booking ID </string>
+    <string name="booking_txt">We’ll notify as soon as the booking\n opens up in your preferred theaters</string>
+    <string name="search_theater">Search theater</string>
 
 </resources>

@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.net.pvr1.ui.login
 
 import android.app.PendingIntent
@@ -5,7 +7,7 @@ import android.content.Intent
 import android.content.IntentSender.SendIntentException
 import android.os.Bundle
 import android.text.TextUtils
-import android.widget.Toast
+import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.credentials.Credential
@@ -14,24 +16,25 @@ import com.google.android.gms.auth.api.credentials.CredentialsApi
 import com.google.android.gms.auth.api.credentials.HintRequest
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityLoginBinding
-import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.HomeActivity
+import com.net.pvr1.ui.login.otpVerify.OtpVerifyActivity
 import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.login.viewModel.LoginViewModel
-import com.net.pvr1.ui.login.otpVerify.OtpVerifyActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.SUCCESS_CODE
 import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
+@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
-//    @Inject
-//    lateinit var preferences: AppPreferences
+    @Inject
+    lateinit var preferences: PreferenceManager
     private var binding: ActivityLoginBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: LoginViewModel by viewModels()
@@ -67,11 +70,45 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun movedNext() {
+
+        binding?.mobileNumber?.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                //do here your stuff f
+                val mobile = binding?.mobileNumber?.text.toString()
+                if (!TextUtils.isEmpty(mobile) && mobile.length != 10) {
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        getString(R.string.checkNumber),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {
+                        },
+                        negativeClick = {
+                        })
+                    dialog.show()
+                } else {
+                    authViewModel.loginMobileUser(mobile, "", "INDIA")
+                }
+                true
+            } else false
+        }
+
         binding?.textView11?.setOnClickListener {
             val mobile = binding?.mobileNumber?.text.toString()
             if (!TextUtils.isEmpty(mobile) && mobile.length != 10) {
-                Toast.makeText(this, "Mobile Number Should We 10 Digit", Toast.LENGTH_SHORT)
-                    .show()
+                val dialog = OptionDialog(this,
+                    R.mipmap.ic_launcher,
+                    R.string.app_name,
+                    getString(R.string.checkNumber),
+                    positiveBtnText = R.string.ok,
+                    negativeBtnText = R.string.no,
+                    positiveClick = {
+                    },
+                    negativeClick = {
+                    })
+                dialog.show()
+
             } else {
                 authViewModel.loginMobileUser(mobile, "", "INDIA")
             }
@@ -151,7 +188,7 @@ class LoginActivity : AppCompatActivity() {
         if (requestCode == CREDENTIAL_PICKER_REQUEST && resultCode == RESULT_OK) {
             // Obtain the phone number from the result
             val credentials: Credential = data?.getParcelableExtra(Credential.EXTRA_KEY)!!
-            binding?.mobileNumber?.setText(credentials.id.substring(3)) //get the selected phone number
+            binding?.mobileNumber?.setText(credentials.id.substring(5)) //get the selected phone number
             //Do what ever you want to do with your selected phone number here
         } else if (requestCode == CREDENTIAL_PICKER_REQUEST && resultCode == CredentialsApi.ACTIVITY_RESULT_NO_HINTS_AVAILABLE) {
             // *** No phone numbers available ***

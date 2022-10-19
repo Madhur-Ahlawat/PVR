@@ -6,8 +6,10 @@ import com.net.pvr1.ui.cinemaSession.response.CinemaNearTheaterResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
+import com.net.pvr1.ui.home.fragment.cinema.response.PreferenceResponse
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
+import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
 import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.movieDetails.response.MovieDetailsResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
@@ -80,6 +82,17 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<CinemaResponse>
+
+    @POST("user/setprefrenences")
+    suspend fun cinemaPreference(
+        @Query("userid") userid: String,
+        @Query("id") id: String,
+        @Query("is_like")  is_like: Boolean,
+        @Query("type")  type: String,
+        @Query("did")   did: String,
+        @Query("av")   version: String,
+        @Query("pt")   platform: String
+    ): Response<PreferenceResponse>
 
     @POST("history/giftcard")
     suspend fun giftCard(
@@ -312,13 +325,24 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<AddFoodResponse>
 
-    @POST("/PVRCinemasCMS/getgiftcard1  ")
+    @POST("/PVRCinemasCMS/getgiftcard1")
     suspend fun giftCardMain(
         @Query("sWidth")sWidth: String,
         @Query("platform") platform: String,
         @Query("infosys") infosys: String,
         @Query("av") version: String,
-        @Query("platform") platform1: String
-    ): Response<com.net.pvr1.ui.giftCard.response.GiftCardResponse>
+        @Query("pt") platform1: String
+    ): Response<GiftCardResponse>
+
+    @POST("content/alltheater")
+    suspend fun bookingRetrieval(
+        @Query("city")  city: String,
+        @Query("lat")  lat: String,
+        @Query("lng")  lng: String,
+        @Query("userid")  userid: String,
+        @Query("searchtxt")  searchtxt: String,
+        @Query("av")  version: String,
+        @Query("pt") platform: String
+    ): Response<BookingRetrievalResponse>
 
 }

@@ -16,17 +16,15 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySplashBinding
-import com.net.pvr1.di.preference.AppPreferences
-import com.net.pvr1.ui.food.FoodActivity
 import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.onBoarding.LandingActivity
-import com.net.pvr1.ui.seatLayout.SeatLayoutActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.PreferenceManager
 import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@Suppress("DEPRECATION")
 @SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
@@ -61,7 +59,7 @@ class SplashActivity : AppCompatActivity() {
                     val intent = Intent(this@SplashActivity, LandingActivity::class.java)
                     startActivity(intent)
                     finish()
-                }else{
+                } else {
                     val intent = Intent(this@SplashActivity, HomeActivity::class.java)
                     startActivity(intent)
                     finish()

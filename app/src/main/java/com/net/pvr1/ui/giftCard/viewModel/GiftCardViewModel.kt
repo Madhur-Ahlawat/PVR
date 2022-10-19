@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class GiftCardViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
 
-    val userResponseLiveData: LiveData<NetworkResult<GiftCardResponse>>
+    val userResponseLiveData: LiveData<NetworkResult<com.net.pvr1.ui.myBookings.response.GiftCardResponse>>
     get() = userRepository.giftCardMainResponseLiveData
 
     fun offer(sWidth:String,infosys:String) {

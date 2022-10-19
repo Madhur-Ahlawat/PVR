@@ -13,6 +13,7 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.FragmentMoreBinding
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.giftCard.GiftCardActivity
+import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.BookingRetrievalActivity
 import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.ui.myBookings.MyBookingsActivity
 import com.net.pvr1.ui.offer.OfferActivity
@@ -23,9 +24,10 @@ import com.net.pvr1.ui.webView.WebViewActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.PreferenceManager
 import com.net.pvr1.utils.hide
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class MoreFragment : Fragment() {
     private var binding: FragmentMoreBinding? = null
 
@@ -101,8 +103,12 @@ class MoreFragment : Fragment() {
             val intent = Intent(requireContext(), ScannerActivity::class.java)
             startActivity(intent)
         }
+//Booking Retrieval
+        binding?.login?.constraintLayout71?.setOnClickListener {
+            val intent = Intent(requireContext(), BookingRetrievalActivity::class.java)
+            startActivity(intent)
+        }
         //LogOut
-
         binding?.tvSignOut?.setOnClickListener {
             logOut()
         }

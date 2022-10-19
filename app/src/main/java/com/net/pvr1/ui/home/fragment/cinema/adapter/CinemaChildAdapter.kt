@@ -9,13 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
-import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 
 
 class CinemaChildAdapter(
     private var nowShowingList: List<CinemaResponse.Output.C.M>,
     private var context: Context,
-    private var listener: CinemaAdapter,
+    private var listener: CinemaResponse.Output.C,
 ) :
     RecyclerView.Adapter<CinemaChildAdapter.MyViewHolderNowShowing>() {
 

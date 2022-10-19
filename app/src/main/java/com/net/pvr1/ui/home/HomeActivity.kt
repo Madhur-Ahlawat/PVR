@@ -18,22 +18,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityHomeBinding
-import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.adapter.HomeOfferAdapter
-import com.net.pvr1.ui.home.fragment.more.MoreFragment
-import com.net.pvr1.ui.home.fragment.privilege.PrivilegeFragment
 import com.net.pvr1.ui.home.fragment.cinema.CinemasFragment
 import com.net.pvr1.ui.home.fragment.commingSoon.ComingSoonFragment
 import com.net.pvr1.ui.home.fragment.home.HomeFragment
 import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
+import com.net.pvr1.ui.home.fragment.more.MoreFragment
+import com.net.pvr1.ui.home.fragment.privilege.PrivilegeFragment
 import com.net.pvr1.ui.offer.response.OfferResponse
 import com.net.pvr1.ui.search.searchHome.SearchHomeActivity
 import com.net.pvr1.ui.selectCity.SelectCityActivity
 import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickListenerCity {
@@ -199,6 +199,29 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 
     override fun offerClick(comingSoonItem: OfferResponse.Output) {
 
+    }
+
+    override fun onBackPressed() {
+        if (binding?.bottomNavigationView?.selectedItemId == R.id.homeFragment) {
+//            val dialog = OptionDialog(this,
+//                R.mipmap.ic_launcher,
+//                R.string.app_name,
+//                getString(R.string.exitApp),
+//                positiveBtnText = R.string.ok,
+//                negativeBtnText = R.string.no,
+//                positiveClick = {
+//
+//                },
+//                negativeClick = {
+//
+//                })
+//            dialog.show()
+            super.onBackPressed()
+            finish()
+
+        } else {
+            binding?.bottomNavigationView?.selectedItemId = R.id.homeFragment
+        }
     }
 
 }

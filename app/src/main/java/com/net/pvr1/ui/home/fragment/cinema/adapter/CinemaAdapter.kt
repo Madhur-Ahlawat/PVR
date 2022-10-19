@@ -1,69 +1,119 @@
 package com.net.pvr1.ui.home.fragment.cinema.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
+import com.net.pvr1.databinding.CinemaItemBinding
+import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
+import com.net.pvr1.ui.login.LoginActivity
+import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.toast
 
 
 class CinemaAdapter(
     private var nowShowingList: List<CinemaResponse.Output.C>,
     private var context: Context,
     private var listener: Direction,
+    private var preference: SetPreference,
     private var location: Location,
+    private var isLogin: Boolean=false,
 ) :
-    RecyclerView.Adapter<CinemaAdapter.MyViewHolderNowShowing>() {
+    RecyclerView.Adapter<CinemaAdapter.ViewHolder>() {
+    inner class ViewHolder(val binding: CinemaItemBinding) : RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderNowShowing {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.cinema_item, parent, false)
-        return MyViewHolderNowShowing(view)
+    private var rowIndex: Boolean = false
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = CinemaItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: MyViewHolderNowShowing, position: Int) {
-        val cinemaItem = nowShowingList[position]
+    override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
+        with(holder) {
+            with(nowShowingList[position]) {
+                //title
+                binding.cinemaName.text = this.n
+                //type
+                binding.multipleCinema.text = this.mc
+                //address
+                binding.cinemaLocation.text = this.ad
+                //Shows
+                binding.tvShows.text = this.sc.toString() + " " + context.getString(R.string.shows)
+                //Distance
+                binding.tvDistance.text = this.d
+                //Image
+                Glide.with(context)
+                    .load(this.imob)
+                    .error(R.drawable.app_icon)
+                    .into(binding.cinemaImg)
 
-        //title
-        holder.title.text = cinemaItem.n
-        //type
-        holder.multipleCinema.text = cinemaItem.mc
-        //address
-        holder.cinemaLocation.text = cinemaItem.ad
-        //Shows
-        holder.show.text = cinemaItem.sc.toString()+" "+context.getString(R.string.shows)
-        //Distance
-        holder.distance.text = cinemaItem.d
-        //Image
-        Glide.with(context)
-            .load(cinemaItem.imob)
-            .error(R.drawable.app_icon)
-            .into(holder.image)
+                if (this.m.isNotEmpty()) {
+                    //Call Child Adapter
+                    val gridLayout2 =
+                        GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
+                    val comingSoonMovieAdapter = CinemaChildAdapter(this.m, context, this)
+                    binding.llMovieList.layoutManager = gridLayout2
+                    binding.llMovieList.adapter = comingSoonMovieAdapter
+                } else {
+                    binding.llMovieList.hide()
+                }
 
-        //Call Child Adapter
-        val gridLayout2 = GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
-        val comingSoonMovieAdapter = CinemaChildAdapter(cinemaItem.m,context, this)
-        holder.movieList.layoutManager = gridLayout2
-        holder.movieList.adapter = comingSoonMovieAdapter
 
-        //Direction
-        holder.direction.setOnClickListener {
-            listener.onDirectionClick(cinemaItem)
+                binding.cbFav.setOnClickListener {
+                    if (isLogin) {
+                        if (!rowIndex){
+                            rowIndex
+                            context.toast("true")
+                            binding.cbFav.setImageResource(R.drawable.ic_un_favourite_theatre)
+                            preference.onPreferenceClick(this,rowIndex)
+
+                        }else {
+                            rowIndex= false
+                            context.toast("false")
+                            binding.cbFav.setImageResource(R.drawable.ic_favourite_theatre)
+                            preference.onPreferenceClick(this,rowIndex)
+                        }
+
+                    } else {
+                        val dialog = OptionDialog(context,
+                            R.mipmap.ic_launcher_foreground,
+                            R.string.app_name,
+                            context.getString(R.string.loginCinema),
+                            positiveBtnText = R.string.yes,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {
+                                val intent = Intent(context, LoginActivity::class.java)
+                                context.startActivity(intent)
+                            },
+                            negativeClick = {
+                            })
+                        dialog.show()
+                        context.toast("logout")
+                    }
+
+                }
+
+                //Direction
+                binding.llLocation.setOnClickListener {
+                    listener.onDirectionClick(this)
+                }
+
+                //Kilometer
+                binding.shows.setOnClickListener {
+                    location.onLocationClick(this)
+                }
+                //Kilometer
+                binding.kiloMeter.setOnClickListener {
+                    location.onLocationClick(this)
+                }
+            }
         }
-
-        //Kilometer
-        holder.kiloMeter.setOnClickListener {
-            location.onLocationClick(cinemaItem)
-        }
-
 
     }
 
@@ -71,28 +121,17 @@ class CinemaAdapter(
         return if (nowShowingList.isNotEmpty()) nowShowingList.size else 0
     }
 
-    class MyViewHolderNowShowing(view: View) : RecyclerView.ViewHolder(view) {
-        var title: TextView = view.findViewById(R.id.cinemaName)
-        var image: ImageView = view.findViewById(R.id.cinemaImg)
-        var checkFev: CheckBox = view.findViewById(R.id.cbFav)
-        var multipleCinema: TextView = view.findViewById(R.id.multipleCinema)
-        var cinemaLocation: TextView = view.findViewById(R.id.cinemaLocation)
-        var imageLocation: ImageView = view.findViewById(R.id.ivLocation)
-        var parking: LinearLayout = view.findViewById(R.id.parking)
-        var food: LinearLayout = view.findViewById(R.id.food)
-        var metro: LinearLayout = view.findViewById(R.id.metro)
-        var kiloMeter: LinearLayout = view.findViewById(R.id.kiloMeter)
-        var direction: LinearLayout = view.findViewById(R.id.llLocation)
-        var show: TextView = view.findViewById(R.id.tvShows)
-        var distance: TextView = view.findViewById(R.id.tvDistance)
-        var movieList: RecyclerView = view.findViewById(R.id.llMovieList)
-    }
-
     interface Direction {
         fun onDirectionClick(comingSoonItem: CinemaResponse.Output.C)
     }
+
     interface Location {
         fun onLocationClick(comingSoonItem: CinemaResponse.Output.C)
     }
+
+    interface SetPreference {
+        fun onPreferenceClick(comingSoonItem: CinemaResponse.Output.C, rowIndex: Boolean)
+    }
+
 
 }

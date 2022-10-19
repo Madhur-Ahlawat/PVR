@@ -206,29 +206,36 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
 
     private fun retrieveData(output: HomeResponse.Output) {
-        //Category
-        val gridLayout =
-            GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
-        binding?.recyclerCinemaCat?.layoutManager = LinearLayoutManager(context)
-        val adapter = HomeCinemaCategoryAdapter(requireActivity(), output.mfi, this)
-        binding?.recyclerCinemaCat?.layoutManager = gridLayout
-        binding?.recyclerCinemaCat?.adapter = adapter
+        if (isAdded){
+            //Category
+            val gridLayout =
+                GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
+            binding?.recyclerCinemaCat?.layoutManager = LinearLayoutManager(context)
+            val adapter = HomeCinemaCategoryAdapter(requireActivity(), output.mfi, this)
+            binding?.recyclerCinemaCat?.layoutManager = gridLayout
+            binding?.recyclerCinemaCat?.adapter = adapter
+
+        }
 
         //Slider
-        val snapHelper = PagerSnapHelper()
-        snapHelper.attachToRecyclerView(binding?.recyclerViewSlider)
-        val gridLayoutSlider =
-            GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
 
-        // Decorator set-up
-        val cardWidthPixels = activity?.resources?.displayMetrics?.widthPixels?.times(0.15f)
-        val cardHintPercent = 0.15f
-        binding?.recyclerViewSlider?.addItemDecoration(RVPagerSnapFancyDecorator(cardWidthPixels, cardHintPercent))
+            binding?.recyclerViewSlider?.onFlingListener = null
+            val snapHelper = PagerSnapHelper()
+            snapHelper.attachToRecyclerView(binding?.recyclerViewSlider)
+            val gridLayoutSlider =
+                GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
 
-        binding?.recyclerViewSlider?.layoutManager = LinearLayoutManager(context)
-        val adapterSlider = HomeSliderAdapter(requireActivity(), output.mv, this)
-        binding?.recyclerViewSlider?.layoutManager = gridLayoutSlider
-        binding?.recyclerViewSlider?.adapter = adapterSlider
+            // Decorator set-up
+            val cardWidthPixels = activity?.resources?.displayMetrics?.widthPixels?.times(0.15f)
+            val cardHintPercent = 0.15f
+            binding?.recyclerViewSlider?.addItemDecoration(RVPagerSnapFancyDecorator(cardWidthPixels, cardHintPercent))
+
+            binding?.recyclerViewSlider?.layoutManager = LinearLayoutManager(context)
+            val adapterSlider = HomeSliderAdapter(requireActivity(), output.mv, this)
+            binding?.recyclerViewSlider?.layoutManager = gridLayoutSlider
+            binding?.recyclerViewSlider?.adapter = adapterSlider
+
+
 
         //Promotion
         binding?.recyclerPromotion?.adapter =
