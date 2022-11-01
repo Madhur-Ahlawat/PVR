@@ -189,11 +189,11 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     private fun retrieveData(output: ArrayList<OfferResponse.Output>) {
         printLog("output--->${output}")
         offerResponse = output
-        if (output.isEmpty()) {
-            binding?.constraintLayout55?.hide()
-        } else {
-            binding?.constraintLayout55?.show()
-        }
+//        if (output.isEmpty()) {
+//            binding?.constraintLayout55?.hide()
+//        } else {
+//            binding?.constraintLayout55?.show()
+//        }
 
     }
 

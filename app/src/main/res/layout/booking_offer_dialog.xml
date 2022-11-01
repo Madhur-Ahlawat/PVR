@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent">
+
+    <View
+        android:id="@+id/view32"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/dimen_24dp"
+        android:paddingEnd="@dimen/dimen_24dp"
+        android:background="@drawable/bottom_corner"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view32">
+
+        <View
+            android:id="@+id/view166"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout85">
+
+
+            <View
+                android:id="@+id/view169"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView266"
+                android:layout_width="@dimen/dimen_100dp"
+                android:layout_height="@dimen/dimen_50dp"
+                android:background="@drawable/btn_yellow_curve"
+                android:backgroundTint="@color/grayEd"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center"
+                android:text="@string/skip"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/view169"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/view169" />
+
+            <TextView
+                android:id="@+id/textView267"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dimen_50dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/btn_yellow_curve"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center"
+                android:text="@string/apply_offer"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView266"
+                app:layout_constraintTop_toTopOf="@+id/view169" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/textView256"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="@dimen/dimen_18sp"
+            android:textColor="@color/black"
+            tools:text="An offer like never before!"
+            app:layout_constraintEnd_toEndOf="@+id/view166"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view167" />
+
+        <View
+            android:id="@+id/view167"
+            android:layout_width="28dp"
+            android:layout_height="5dp"
+            android:layout_marginTop="17dp"
+            android:background="@color/unSelectBg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView108"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:adjustViewBounds="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView256"
+            tools:srcCompat="@tools:sample/backgrounds/scenic"
+            tools:ignore="ContentDescription" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout85"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            app:layout_constraintEnd_toEndOf="@+id/view166"
+            app:layout_constraintStart_toStartOf="@+id/view166"
+            app:layout_constraintTop_toBottomOf="@+id/imageView108">
+
+            <View
+                android:id="@+id/view168"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView257"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="@string/ticket"
+                android:textColor="@color/textColorGray"
+                android:textSize="@dimen/dimen_12sp"
+                app:layout_constraintStart_toStartOf="@+id/view168"
+                app:layout_constraintTop_toTopOf="@+id/view168"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/textView258"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="@dimen/dimen_14sp"
+                android:fontFamily="@font/montserrat_regular"
+                android:textColor="@color/black"
+                tools:text="₹500"
+                app:layout_constraintStart_toStartOf="@+id/view168"
+                app:layout_constraintTop_toBottomOf="@+id/textView257" />
+
+            <TextView
+                android:id="@+id/textView259"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="@dimen/dimen_12sp"
+                android:fontFamily="@font/montserrat_regular"
+                android:textColor="@color/black"
+                android:text="@string/onwards"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView258" />
+
+            <TextView
+                android:id="@+id/textView260"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="26dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="@string/plus"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView258"
+                app:layout_constraintStart_toEndOf="@+id/textView258"
+                app:layout_constraintTop_toTopOf="@+id/textView258" />
+
+            <TextView
+                android:id="@+id/textView261"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView260"
+                app:layout_constraintStart_toEndOf="@+id/textView260"
+                app:layout_constraintTop_toTopOf="@+id/textView260"
+                tools:text="₹150" />
+
+            <TextView
+                android:id="@+id/textView262"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="@string/food"
+                android:textColor="@color/textColorGray"
+                android:textSize="@dimen/dimen_12sp"
+                app:layout_constraintEnd_toEndOf="@+id/textView261"
+                app:layout_constraintStart_toStartOf="@+id/textView261"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/textView263"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="@string/offer_price"
+                android:textColor="@color/textColorGray"
+                android:textSize="@dimen/dimen_12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView262"
+                app:layout_constraintStart_toEndOf="@+id/textView269"
+                app:layout_constraintTop_toTopOf="@+id/view168"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/textView264"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
+                android:textColor="@color/textColorGray"
+                android:textSize="@dimen/dimen_14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView261"
+                app:layout_constraintStart_toStartOf="@+id/textView263"
+                app:layout_constraintTop_toTopOf="@+id/textView261"
+                tools:ignore="TextContrastCheck"
+                tools:text="₹650" />
+
+            <TextView
+                android:id="@+id/textView265"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="@dimen/dimen_12sp"
+                android:fontFamily="@font/montserrat_regular"
+                android:textColor="@color/black"
+                android:text="@string/onwards"
+                app:layout_constraintStart_toStartOf="@+id/textView264"
+                app:layout_constraintTop_toBottomOf="@+id/textView264" />
+
+            <TextView
+                android:id="@+id/textView268"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
+                android:fontFamily="@font/montserrat_bold"
+                tools:text="₹410"
+                app:layout_constraintBottom_toBottomOf="@+id/textView264"
+                app:layout_constraintStart_toEndOf="@+id/textView264"
+                app:layout_constraintTop_toTopOf="@+id/textView264" />
+
+            <TextView
+                android:id="@+id/textView269"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:textSize="@dimen/dimen_14sp"
+                android:fontFamily="@font/montserrat_regular"
+                android:textColor="@color/black"
+                android:text="@string/equal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView261"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

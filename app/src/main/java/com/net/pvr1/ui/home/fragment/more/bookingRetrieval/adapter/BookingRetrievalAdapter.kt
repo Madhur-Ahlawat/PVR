@@ -40,15 +40,15 @@ class BookingRetrievalAdapter(
                 binding.imageView107.setOnClickListener {
                     binding.recyclerView33.show()
                 }
-                if (this.childs.size >0) {
+                if (this.childs.isNotEmpty()) {
                     binding.imageView107.hide()
                 } else {
                     binding.imageView107.show()
-
                 }
+
                 //Recycler
                 val gridLayout3 = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
-                val bookingShowsParentAdapter = BookingRetrievalChildAdapter(this, this.childs)
+                val bookingShowsParentAdapter = BookingRetrievalChildAdapter(context, this.childs)
                 binding.recyclerView33.layoutManager = gridLayout3
                 binding.recyclerView33.adapter = bookingShowsParentAdapter
                 //click

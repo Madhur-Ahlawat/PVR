@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.movieDetails.adapter
+package com.net.pvr1.ui.movieDetails.commingSoon.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,36 +9,42 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
-import com.net.pvr1.ui.movieDetails.response.MovieDetailsResponse
+import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
+import com.net.pvr1.utils.Constant
+import com.net.pvr1.utils.hide
 
 
-class CastAdapter(
-    private var nowShowingList: List<MovieDetailsResponse.Mb.Cast>,
+class TrailerTrsAdapter(
+    private var nowShowingList: List<MovieDetailsResponse.Trs>,
     private var context: Context,
     private var listener: RecycleViewItemClickListener,
 ) :
-    RecyclerView.Adapter<CastAdapter.MyViewHolderNowShowing>() {
+    RecyclerView.Adapter<TrailerTrsAdapter.MyViewHolderNowShowing>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderNowShowing {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_details_cast, parent, false)
+            .inflate(R.layout.item_home_trailer, parent, false)
         return MyViewHolderNowShowing(view)
     }
 
     override fun onBindViewHolder(holder: MyViewHolderNowShowing, position: Int) {
         val cinemaItem = nowShowingList[position]
         //title
-        holder.title.isSelected = true
-        holder.title.text =cinemaItem.name
+        holder.title.text =cinemaItem.t
         //subTitle
-        holder.description.text =cinemaItem.character
-        //Click
+        holder.subTitle.hide()
+        holder.subTitle.text =cinemaItem.d
+
+        //moreDetails
         holder.itemView.setOnClickListener {
-            listener.castClick(cinemaItem)
+            listener.trailerTrsClick(cinemaItem)
         }
+        val videoId = Constant().extractYoutubeId(cinemaItem.u)
+        val imageUrl = "http://img.youtube.com/vi/" + videoId.toString() + "/mqdefault.jpg" //
+
         //Image
             Glide.with(context)
-            .load("https://"+cinemaItem.poster)
+            .load(imageUrl)
             .error(R.drawable.app_icon)
             .into(holder.image)
     }
@@ -48,13 +54,14 @@ class CastAdapter(
     }
 
     class MyViewHolderNowShowing(view: View) : RecyclerView.ViewHolder(view) {
-        var title: TextView = view.findViewById(R.id.textView54)
-        var description: TextView = view.findViewById(R.id.textView80)
-        var image: ImageView = view.findViewById(R.id.imageView30)
+        var title: TextView = view.findViewById(R.id.textView37)
+        var subTitle: TextView = view.findViewById(R.id.textView38)
+        var image: ImageView = view.findViewById(R.id.imageView11)
+        var play: ImageView = view.findViewById(R.id.imageView12)
     }
 
     interface RecycleViewItemClickListener {
-        fun castClick(comingSoonItem: MovieDetailsResponse.Mb.Cast)
+        fun trailerTrsClick(comingSoonItem: MovieDetailsResponse.Trs)
     }
 
 }

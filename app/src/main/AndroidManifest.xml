@@ -6,17 +6,33 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <uses-feature android:name="android.hardware.camera.any" />
+
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
-        android:name="com.net.pvr1.NoteApplication"
+        android:name=".NoteApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
+        <activity
+            android:name=".MainActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.movieDetails.nowShowing.NowShowingActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".ui.home.fragment.more.bookingRetrieval.BookingRetrievalActivity"
             android:exported="false">
@@ -72,7 +88,7 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ui.movieDetails.MovieDetailsActivity"
+            android:name=".ui.movieDetails.commingSoon.ComingSoonActivity"
             android:exported="false" />
         <activity
             android:name=".ui.selectCity.SelectCityActivity"
@@ -84,7 +100,7 @@
             android:name=".ui.search.searchCinema.SearchCinemaActivity"
             android:exported="false" />
         <activity
-            android:name="com.net.pvr1.ui.search.searchHome.SearchHomeActivity"
+            android:name=".ui.search.searchHome.SearchHomeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.enableLocation.EnableLocationActivity"
@@ -117,7 +133,7 @@
             android:name=".ui.onBoarding.LandingActivity"
             android:exported="false" />
         <activity
-            android:name="com.net.pvr1.ui.splash.SplashActivity"
+            android:name=".ui.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

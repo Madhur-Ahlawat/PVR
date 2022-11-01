@@ -19,7 +19,7 @@ data class BookingResponse(
         val cinemas: List<Cinema>,
         val ct: List<String>,
         val d: String,
-        val dys: List<Dy>,
+        val dys: ArrayList<Dy>,
         val gnr: String,
         val icn: List<String>,
         val img: List<String>,

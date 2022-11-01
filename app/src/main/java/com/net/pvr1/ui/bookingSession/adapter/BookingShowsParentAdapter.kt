@@ -32,8 +32,6 @@ class BookingShowsParentAdapter(
                 //Language
                 binding.textView105.text=this.cn
                 //Recycler
-
-
                 if (rowIndex==position){
                     binding.recyclerView7.show()
                 }else{

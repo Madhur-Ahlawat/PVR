@@ -11,19 +11,23 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.*
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.net.pvr1.R
 import com.net.pvr1.databinding.FragmentHomeBinding
 import com.net.pvr1.di.preference.AppPreferences
+import com.net.pvr1.ui.bookingSession.BookingActivity
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.home.adapter.*
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
-import com.net.pvr1.ui.movieDetails.MovieDetailsActivity
+import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingActivity
 import com.net.pvr1.ui.player.PlayerActivity
 import com.net.pvr1.ui.selectCity.SelectCityActivity
 import com.net.pvr1.utils.Constant
@@ -31,7 +35,6 @@ import com.net.pvr1.utils.Constant.Companion.select_pos
 import com.net.pvr1.utils.NetworkResult
 import com.net.pvr1.utils.RVPagerSnapFancyDecorator
 import com.net.pvr1.utils.show
-import java.util.*
 import javax.inject.Inject
 import kotlin.math.abs
 
@@ -48,11 +51,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     @Inject
     lateinit var preferences: AppPreferences
-
-    private var currentPage = 0
-    private var timer: Timer? = null
-    private val delayMS: Long = 3000 //delay in milliseconds before task is to be executed
-    private val periodMS: Long = 3000 // time in milliseconds between successive task executions.
 
 
     override fun onCreateView(
@@ -144,19 +142,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 )
             )
 
-//            val width = 0f
-//            val height = 2
-//            val parms = LinearLayout.LayoutParams(width, height)
-//            binding?.view34?.layoutParams=parms
-
-
-//            val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 1)
-//            binding?.view33?.layoutParams = layoutParams
-//
-//            val layoutParams2 = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 2)
-//            binding?.view34?.layoutParams = layoutParams2
-
-        }
+                   }
 
     }
 
@@ -206,7 +192,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
 
     private fun retrieveData(output: HomeResponse.Output) {
-        if (isAdded){
+        if (isAdded) {
             //Category
             val gridLayout =
                 GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
@@ -218,6 +204,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         }
 
         //Slider
+        if (isAdded) {
 
             binding?.recyclerViewSlider?.onFlingListener = null
             val snapHelper = PagerSnapHelper()
@@ -228,7 +215,12 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             // Decorator set-up
             val cardWidthPixels = activity?.resources?.displayMetrics?.widthPixels?.times(0.15f)
             val cardHintPercent = 0.15f
-            binding?.recyclerViewSlider?.addItemDecoration(RVPagerSnapFancyDecorator(cardWidthPixels, cardHintPercent))
+            binding?.recyclerViewSlider?.addItemDecoration(
+                RVPagerSnapFancyDecorator(
+                    cardWidthPixels,
+                    cardHintPercent
+                )
+            )
 
             binding?.recyclerViewSlider?.layoutManager = LinearLayoutManager(context)
             val adapterSlider = HomeSliderAdapter(requireActivity(), output.mv, this)
@@ -236,7 +228,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             binding?.recyclerViewSlider?.adapter = adapterSlider
 
 
-
+        }
         //Promotion
         binding?.recyclerPromotion?.adapter =
             HomePromotionPagerAdapter(requireActivity(), output.mfi, binding?.recyclerPromotion)
@@ -290,28 +282,35 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     override fun onCategoryClick(comingSoonItem: HomeResponse.Mfi) {
-        val intent = Intent(requireActivity(), MovieDetailsActivity::class.java)
+        val intent = Intent(requireActivity(), NowShowingActivity::class.java)
         intent.putExtra("mid", comingSoonItem.name)
         startActivity(intent)
     }
 
 
     override fun onSliderBookClick(comingSoonItem: HomeResponse.Mv) {
-        val intent = Intent(requireActivity(), MovieDetailsActivity::class.java)
+        val intent = Intent(requireActivity(), NowShowingActivity::class.java)
         intent.putExtra("mid", comingSoonItem.id)
         startActivity(intent)
     }
 
     override fun onPromotionClick(comingSoonItem: HomeResponse.Mfi) {
-        val intent = Intent(requireActivity(), MovieDetailsActivity::class.java)
+        val intent = Intent(requireActivity(), NowShowingActivity::class.java)
         intent.putExtra("mid", comingSoonItem.name)
         startActivity(intent)
     }
 
     override fun onMoviesClick(comingSoonItem: HomeResponse.Mv) {
-        val intent = Intent(requireActivity(), MovieDetailsActivity::class.java)
+        val intent = Intent(requireActivity(), NowShowingActivity::class.java)
         intent.putExtra("mid", comingSoonItem.id)
         startActivity(intent)
+    }
+
+    override fun onBookClick(comingSoonItem: HomeResponse.Mv) {
+        val intent = Intent(requireActivity(), BookingActivity::class.java)
+        intent.putExtra("mid", comingSoonItem.id)
+        startActivity(intent)
+
     }
 
     override fun onTrailerClick(comingSoonItem: HomeResponse.Mv) {

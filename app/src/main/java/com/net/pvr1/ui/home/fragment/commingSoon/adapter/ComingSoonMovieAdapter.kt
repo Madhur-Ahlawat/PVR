@@ -54,7 +54,7 @@ class ComingSoonMovieAdapter(
         }
 //        Video Play Click
         holder.itemView.setOnClickListener {
-            listener.onDateClick(comingSoonItem.videoUrl)
+            listener.onDateClick(comingSoonItem)
         }
 
         //Manage Bookmark
@@ -122,7 +122,7 @@ class ComingSoonMovieAdapter(
     }
 
     interface VideoPlay {
-        fun onDateClick(comingSoonItem: String)
+        fun onDateClick(comingSoonItem: CommingSoonResponse.Output.Movy)
     }
 
     private fun censorLanguage(

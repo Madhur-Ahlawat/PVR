@@ -15,22 +15,22 @@ import com.net.pvr1.ui.bookingSession.response.BookingTheatreResponse
 import com.net.pvr1.ui.bookingSession.viewModel.BookingViewModel
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.utils.Constant
-import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class BookingActivity : AppCompatActivity(),
     BookingShowsDaysAdapter.RecycleViewItemClickListenerCity,
     BookingShowsLanguageAdapter.RecycleViewItemClickListenerCity,
     BookingTheatreAdapter.RecycleViewItemClickListener {
-
-//    @Inject
-//    lateinit var preferences: AppPreferences
+    @Inject
+    lateinit var preferences: PreferenceManager
     private var binding: ActivityBookingBinding? = null
     private val authViewModel: BookingViewModel by viewModels()
     private var loader: LoaderDialog? = null
-
+    private var daySessionResponse: BookingResponse.Output? = null
+    private var daysClick:Boolean=false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBookingBinding.inflate(layoutInflater, null, false)
@@ -50,8 +50,8 @@ class BookingActivity : AppCompatActivity(),
 
         authViewModel.bookingTheatre(
             "Delhi-NCR",
-            "192",
-            "0",
+            intent.getStringExtra("cid").toString(),
+            preferences.getUserId().toString(),
             intent.getStringExtra("mid").toString(),
             "no"
         )
@@ -66,6 +66,9 @@ class BookingActivity : AppCompatActivity(),
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        if (!daysClick) {
+                            daySessionResponse=it.data.output
+                        }
                         retrieveData(it.data.output)
                     } else {
                         val dialog = OptionDialog(this,
@@ -148,39 +151,57 @@ class BookingActivity : AppCompatActivity(),
 
 
     private fun retrieveTheatreData(output: BookingTheatreResponse.Output) {
-        val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-        val bookingTheatreAdapter = BookingTheatreAdapter(output.m, this, this)
-        binding?.recyclerView12?.layoutManager = gridLayout2
-        binding?.recyclerView12?.adapter = bookingTheatreAdapter
-
+        if (output.m.isEmpty()) {
+            binding?.constraintLayout83?.hide()
+        } else {
+            binding?.constraintLayout83?.show()
+            val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+            val bookingTheatreAdapter = BookingTheatreAdapter(output.m, this, this)
+            binding?.recyclerView12?.layoutManager = gridLayout2
+            binding?.recyclerView12?.adapter = bookingTheatreAdapter
+        }
     }
 
     private fun retrieveData(output: BookingResponse.Output) {
-        //MovieName
-        binding?.textView103?.text = output.nm
-        //genre
-        binding?.textView104?.text = output.gnr
-        //recycler Days
-        val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-        val bookingShowsDaysAdapter = BookingShowsDaysAdapter(output.dys, this, this)
-        binding?.recyclerView9?.layoutManager = gridLayout2
-        binding?.recyclerView9?.adapter = bookingShowsDaysAdapter
+        printLog("ShowsData--->${output.cinemas}")
+            if (!daysClick) {
+                //MovieName
+                binding?.textView103?.text = daySessionResponse?.nm
+                //genre
+                binding?.textView104?.text = daySessionResponse?.gnr
+                //recycler Days
+                val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+                val bookingShowsDaysAdapter =
+                    BookingShowsDaysAdapter(daySessionResponse?.dys!!, this, this)
+                binding?.recyclerView9?.layoutManager = gridLayout2
+                binding?.recyclerView9?.adapter = bookingShowsDaysAdapter
+                //recycler Language
+                val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+                val bookingShowsLanguageAdapter = BookingShowsLanguageAdapter(daySessionResponse?.lngs!!, this, this)
+                binding?.recyclerView10?.layoutManager = gridLayout
+                binding?.recyclerView10?.adapter = bookingShowsLanguageAdapter
+            }
+            //Shows
+            val gridLayout3 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+            val bookingShowsParentAdapter = BookingShowsParentAdapter(output.cinemas, this)
+            binding?.recyclerView8?.layoutManager = gridLayout3
+            binding?.recyclerView8?.adapter = bookingShowsParentAdapter
 
-        //recycler Language
-        val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-        val bookingShowsLanguageAdapter = BookingShowsLanguageAdapter(output.lngs, this, this)
-        binding?.recyclerView10?.layoutManager = gridLayout
-        binding?.recyclerView10?.adapter = bookingShowsLanguageAdapter
-
-        //Shows
-        val gridLayout3 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        val bookingShowsParentAdapter = BookingShowsParentAdapter(output.cinemas, this)
-        binding?.recyclerView8?.layoutManager = gridLayout3
-        binding?.recyclerView8?.adapter = bookingShowsParentAdapter
     }
 
-    override fun dateClick(comingSoonItem: BookingResponse.Output.Dy) {
-
+    override fun showsDaysClick(comingSoonItem: BookingResponse.Output.Dy) {
+        printLog("DaysClick--->${comingSoonItem}")
+        daysClick=true
+        authViewModel.bookingTicket(
+            "Delhi-NCR",
+            intent.getStringExtra("mid").toString(),
+            "0",
+            "0",
+            comingSoonItem.dt,
+            "no",
+            "no",
+            ""
+        )
     }
 
     override fun languageClick(comingSoonItem: String) {

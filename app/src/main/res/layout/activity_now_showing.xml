@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.movieDetails.commingSoon.ComingSoonActivity">
+    tools:context=".ui.movieDetails.nowShowing.NowShowingActivity">
 
     <View
         android:id="@+id/view39"
@@ -148,162 +148,154 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView56" />
 
-                <TextView
-                    android:id="@+id/textView57"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3"
                     android:layout_marginTop="20dp"
-                    android:fontFamily="@font/sf_pro_text_regular"
-                    android:text="@string/release_date"
-                    android:textColor="@color/textColorGray"
-                    android:textSize="@dimen/dimen_12sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view43" />
+                    app:layout_constraintTop_toBottomOf="@+id/view43">
 
-                <TextView
-                    android:id="@+id/textView58"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/sf_pro_text_regular"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dimen_14sp"
-                    app:layout_constraintStart_toStartOf="@+id/textView57"
-                    app:layout_constraintTop_toBottomOf="@+id/textView57"
-                    tools:text="Mar 04, 2022" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/textView59"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="55dp"
-                    android:fontFamily="@font/sf_pro_text_regular"
-                    android:text="@string/available_in"
-                    android:textColor="@color/textColorGray"
-                    android:textSize="@dimen/dimen_12sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView57"
-                    app:layout_constraintStart_toEndOf="@+id/textView57"
-                    app:layout_constraintTop_toTopOf="@+id/textView57" />
+                        <TextView
+                            android:id="@+id/textView57"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:text="@string/censor_rating"
+                            android:textColor="@color/textColorGray"
+                            android:textSize="@dimen/dimen_12sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/textView60"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sf_pro_text_regular"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dimen_14sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView58"
-                    app:layout_constraintStart_toStartOf="@+id/textView59"
-                    app:layout_constraintTop_toTopOf="@+id/textView58"
-                    tools:text="English, Hindi" />
+                        <TextView
+                            android:id="@+id/textView58"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/textView57"
+                            app:layout_constraintTop_toBottomOf="@+id/textView57"
+                            tools:text="Mar 04, 2022" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/textView59"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:text="@string/duration"
+                            android:textColor="@color/textColorGray"
+                            android:textSize="@dimen/dimen_12sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"  />
+
+                        <TextView
+                            android:id="@+id/textView60"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_14sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView59"
+                            tools:text="English, Hindi" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/textView251"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:text="@string/release_date"
+                            android:textColor="@color/textColorGray"
+                            android:textSize="@dimen/dimen_12sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"  />
+
+                        <TextView
+                            android:id="@+id/textView252"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_14sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView251"
+                            tools:text="English, Hindi" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout11"
+                    android:id="@+id/availableLang"
                     android:layout_width="0dp"
-                    android:layout_height="178dp"
-                    android:layout_marginTop="24dp"
-                    android:background="@drawable/ic_rectangle_gradient_pinnk"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:layout_weight="1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView58">
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-                    <View
-                        android:id="@+id/view44"
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/textView253"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:text="@string/available_in"
+                        android:textColor="@color/textColorGray"
+                        android:textSize="@dimen/dimen_12sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
-                        android:id="@+id/imageView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/view44"
-                        app:srcCompat="@drawable/details_food_placeholder"
-                        tools:ignore="ContentDescription" />
-
                     <TextView
-                        android:id="@+id/textView61"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="20dp"
-                        android:background="@color/black"
-                        android:fontFamily="@font/sf_pro_text_regular"
-                        android:paddingStart="@dimen/padding_10"
-                        android:paddingTop="@dimen/dimen_2dp"
-                        android:paddingEnd="@dimen/padding_10"
-                        android:paddingBottom="@dimen/dimen_2dp"
-                        android:text="@string/new_txt"
-                        android:textColor="@color/yellow"
-                        android:textSize="@dimen/dimen_12sp"
-                        app:layout_constraintStart_toStartOf="@+id/view44"
-                        app:layout_constraintTop_toTopOf="@+id/view44" />
-
-                    <TextView
-                        android:id="@+id/textView62"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:fontFamily="@font/montserrat_alternates_bold"
-                        android:text="@string/releasing_in_9_days"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/dimen_16sp"
-                        app:layout_constraintStart_toStartOf="@+id/textView61"
-                        app:layout_constraintTop_toBottomOf="@+id/textView61" />
-
-                    <TextView
-                        android:id="@+id/textView63"
+                        android:id="@+id/textView254"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/sf_pro_text_regular"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/dimen_12sp"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView31"
-                        app:layout_constraintStart_toStartOf="@+id/textView62"
-                        app:layout_constraintTop_toBottomOf="@+id/textView62"
-                        tools:text="Get notifiedas as soon as movie booking opens up in your city" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/yellow_book_curve"
-                        app:layout_constraintStart_toStartOf="@+id/textView63"
-                        app:layout_constraintTop_toBottomOf="@+id/textView63">
-
-                        <ImageView
-                            android:id="@+id/imageView32"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/bell"
-                            tools:ignore="ContentDescription" />
-
-                        <TextView
-                            android:id="@+id/textView64"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:fontFamily="@font/sf_pro_text_bold"
-                            android:text="@string/set_alert"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/dimen_12sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/imageView32"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/imageView32"
-                            app:layout_constraintTop_toTopOf="@+id/imageView32" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
+                        android:textSize="@dimen/dimen_14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView253"
+                        tools:text="Mar 04, 2022" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/constraintLayout11"
+                    android:layout_width="0dp"
+                    android:layout_height="178dp"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/availableLang" />
+
 
                 <View
                     android:id="@+id/view45"
@@ -405,12 +397,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/view50"
                     app:layout_constraintTop_toBottomOf="@+id/textView68"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="3"
-                    android:orientation="horizontal"
                     tools:listitem="@layout/item_details_cast" />
 
                 <View
@@ -458,12 +450,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
                     android:orientation="horizontal"
-                    tools:itemCount="3"
-                    tools:listitem="@layout/item_details_music"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/view52"
-                    app:layout_constraintTop_toBottomOf="@+id/textView69" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView69"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_details_music" />
 
                 <TextView
                     android:id="@+id/textView70"

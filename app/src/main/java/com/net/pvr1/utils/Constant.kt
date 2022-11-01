@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.provider.ContactsContract.Directory.PACKAGE_NAME
+import android.provider.Settings
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ForegroundColorSpan
@@ -17,6 +18,7 @@ import java.net.URL
 import java.text.DecimalFormat
 
 
+@Suppress("DEPRECATION")
 class Constant {
 
     companion object {
@@ -65,6 +67,10 @@ class Constant {
         const val BIKE = 7
         const val BIKE_SEAT_BOOKED = 8
 
+    }
+
+    fun getDeviceId(context: Activity): String {
+        return Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
     }
 
 

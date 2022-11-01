@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.movieDetails.response
+package com.net.pvr1.ui.movieDetails.nowShowing.response
 
 import java.io.Serializable
 

@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.movieDetails.adapter
+package com.net.pvr1.ui.movieDetails.nowShowing.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,15 +9,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
-import com.net.pvr1.ui.movieDetails.response.MovieDetailsResponse
+import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
+import com.net.pvr1.utils.Constant
 
 
-class MusicVideoAdapter(
-    private var nowShowingList: List<MovieDetailsResponse.Mb.Crew.Role>,
+class MusicVideoTrsAdapter(
+    private var nowShowingList: List<MovieDetailsResponse.Trs>,
     private var context: Context,
     private var listener: RecycleViewItemClickListener,
 ) :
-    RecyclerView.Adapter<MusicVideoAdapter.MyViewHolderNowShowing>() {
+    RecyclerView.Adapter<MusicVideoTrsAdapter.MyViewHolderNowShowing>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderNowShowing {
         val view = LayoutInflater.from(parent.context)
@@ -28,16 +29,19 @@ class MusicVideoAdapter(
     override fun onBindViewHolder(holder: MyViewHolderNowShowing, position: Int) {
         val cinemaItem = nowShowingList[position]
         //title
-        holder.title.text =cinemaItem.name
+        holder.title.text =cinemaItem.t
         //subTitle
-        holder.subTitle.text =cinemaItem.role
+        holder.subTitle.text =cinemaItem.d
         //moreDetails
         holder.play.setOnClickListener {
-            listener.musicVideo(cinemaItem)
+            listener.musicVideoTrsClick(cinemaItem)
         }
+        val videoId = Constant().extractYoutubeId(cinemaItem.u)
+        val imageUrl = "https://img.youtube.com/vi/" + videoId.toString() + "/mqdefault.jpg" //
+
         //Image
             Glide.with(context)
-            .load(cinemaItem.poster)
+            .load(imageUrl)
             .error(R.drawable.app_icon)
             .into(holder.image)
     }
@@ -54,7 +58,7 @@ class MusicVideoAdapter(
     }
 
     interface RecycleViewItemClickListener {
-        fun musicVideo(comingSoonItem: MovieDetailsResponse.Mb.Crew.Role)
+        fun musicVideoTrsClick(comingSoonItem: MovieDetailsResponse.Trs)
     }
 
 }

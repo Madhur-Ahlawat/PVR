@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.movieDetails.adapter
+package com.net.pvr1.ui.movieDetails.nowShowing.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
-import com.net.pvr1.ui.movieDetails.response.MovieDetailsResponse
+import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 
 
 class CrewAdapter(

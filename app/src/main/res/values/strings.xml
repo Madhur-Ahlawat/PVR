@@ -147,6 +147,8 @@
     //MovieDetails
     <string name="book_now">Book Now</string>
     <string name="release_date">Release Date</string>
+    <string name="duration">Duration</string>
+    <string name="censor_rating">Censor Rating</string>
     <string name="available_in">Available in</string>
     <string name="releasing_in_9_days">Releasing in 9 Days</string>
     <string name="set_alert">Set Alert</string>
@@ -271,5 +273,13 @@
     <string name="enter_Booking_ID">Enter Booking ID </string>
     <string name="booking_txt">We’ll notify as soon as the booking\n opens up in your preferred theaters</string>
     <string name="search_theater">Search theater</string>
+    <string name="apply_offer">Apply Offer</string>
+    <string name="ticket">Ticket</string>
+    <string name="food">Food</string>
+    <string name="offer_price">Offer Price</string>
+    <string name="onwards">Onwards</string>
+    <string name="plus">+</string>
+    <string name="equal">=</string>
+
 
 </resources>

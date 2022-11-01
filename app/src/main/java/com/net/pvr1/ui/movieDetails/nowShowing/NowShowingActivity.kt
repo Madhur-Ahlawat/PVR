@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.movieDetails
+package com.net.pvr1.ui.movieDetails.nowShowing
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,37 +8,34 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.net.pvr1.BuildConfig
 import com.net.pvr1.R
-import com.net.pvr1.databinding.ActivityMovieDetailsBinding
-import com.net.pvr1.di.preference.AppPreferences
+import com.net.pvr1.databinding.ActivityNowShowingBinding
 import com.net.pvr1.ui.bookingSession.BookingActivity
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.home.HomeActivity
-import com.net.pvr1.ui.movieDetails.adapter.*
-import com.net.pvr1.ui.movieDetails.response.MovieDetailsResponse
-import com.net.pvr1.ui.movieDetails.viewModel.MovieDetailsViewModel
+import com.net.pvr1.ui.movieDetails.nowShowing.adapter.*
+import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
+import com.net.pvr1.ui.movieDetails.nowShowing.viewModel.MovieDetailsViewModel
 import com.net.pvr1.ui.player.PlayerActivity
-import com.net.pvr1.utils.*
+import com.net.pvr1.utils.Constant
+import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.show
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class MovieDetailsActivity : AppCompatActivity(),
+class NowShowingActivity : AppCompatActivity(),
     CastAdapter.RecycleViewItemClickListener,
     CrewAdapter.RecycleViewItemClickListener,
     MusicVideoAdapter.RecycleViewItemClickListener,
     TrailerAdapter.RecycleViewItemClickListener,
     TrailerTrsAdapter.RecycleViewItemClickListener,
     MusicVideoTrsAdapter.RecycleViewItemClickListener {
-
-//    @Inject
-//    lateinit var preferences: AppPreferences
-    private var binding: ActivityMovieDetailsBinding? = null
+    private var binding: ActivityNowShowingBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: MovieDetailsViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMovieDetailsBinding.inflate(layoutInflater, null, false)
+        binding = ActivityNowShowingBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
         movieDetails()
@@ -106,13 +103,13 @@ class MovieDetailsActivity : AppCompatActivity(),
             .error(R.drawable.app_icon)
             .into(binding?.imageView26!!)
         //Trailer
-        if (output.t.isNullOrEmpty()) {
+        if (output.t.isEmpty()) {
             binding?.imageView29?.hide()
         } else {
             binding?.imageView29?.show()
         }
         binding?.imageView29?.setOnClickListener {
-            val intent = Intent(this@MovieDetailsActivity, PlayerActivity::class.java)
+            val intent = Intent(this@NowShowingActivity, PlayerActivity::class.java)
             intent.putExtra("trailerUrl", output.t)
             startActivity(intent)
         }
@@ -137,8 +134,14 @@ class MovieDetailsActivity : AppCompatActivity(),
         binding?.textView55?.text = output.n
         //Genre
         binding?.textView56?.text = output.genre
+        //Censor
+        binding?.textView58?.text = output.c
+        //Duration
+        binding?.textView59?.text = output.l
         //Release Data
-        binding?.textView58?.text = output.mopeningdate
+        binding?.textView252?.text = output.mopeningdate
+        //Avail in
+        binding?.textView254?.text = output.lngs.joinToString { it }
         //Language
         val commaSeparatedString = output.lngs.joinToString { it }
         binding?.textView60?.text = commaSeparatedString
@@ -155,9 +158,16 @@ class MovieDetailsActivity : AppCompatActivity(),
         binding?.textView79?.text = output.p
         //MovedNext
         binding?.include?.textView5?.setOnClickListener {
-            val intent = Intent(this@MovieDetailsActivity, BookingActivity::class.java)
+            val intent = Intent(this@NowShowingActivity, BookingActivity::class.java)
             intent.putExtra("mid", output.id)
+            intent.putExtra("cid", output.c)
             startActivity(intent)
+        }
+        //Place Holder
+        if (output.ph.isEmpty()) {
+            binding?.constraintLayout11?.hide()
+        } else {
+            binding?.constraintLayout11?.show()
         }
         //Cast
         val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)

@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.home.fragment.more.bookingRetrieval.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,7 +10,7 @@ import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetri
 
 
 class BookingRetrievalChildAdapter(
-    private var context: BookingRetrievalResponse.Output.C,
+    private var context: Context,
     private var nowShowingList: List<BookingRetrievalResponse.Output.Child>,
 //    private var listener:RecycleViewItemClickListener
 ) :

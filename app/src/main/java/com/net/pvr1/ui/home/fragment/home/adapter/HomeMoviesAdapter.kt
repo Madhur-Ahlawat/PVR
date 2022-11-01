@@ -46,9 +46,15 @@ class HomeMoviesAdapter(
             holder.dots.show()
         }
         holder.language.text=comingSoonItem.sh
-        holder.book.setOnClickListener {
+        //Movie Click
+        holder.image.setOnClickListener {
             listener.onMoviesClick(comingSoonItem)
         }
+        //Book Click
+        holder.book.setOnClickListener {
+            listener.onBookClick(comingSoonItem)
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -68,6 +74,7 @@ class HomeMoviesAdapter(
 
     interface RecycleViewItemClickListener {
         fun onMoviesClick(comingSoonItem: HomeResponse.Mv)
+        fun onBookClick(comingSoonItem: HomeResponse.Mv)
     }
 
 }

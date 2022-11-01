@@ -11,7 +11,7 @@ import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
 import com.net.pvr1.ui.login.response.LoginResponse
-import com.net.pvr1.ui.movieDetails.response.MovieDetailsResponse
+import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
@@ -21,6 +21,7 @@ import com.net.pvr1.ui.seatLayout.response.InitResponse
 import com.net.pvr1.ui.seatLayout.response.ReserveSeatResponse
 import com.net.pvr1.ui.seatLayout.response.SeatResponse
 import com.net.pvr1.ui.selectCity.response.SelectCityResponse
+import com.net.pvr1.ui.splash.response.SplashResponse
 import com.net.pvr1.ui.summery.response.AddFoodResponse
 import com.net.pvr1.ui.summery.response.SummeryResponse
 import retrofit2.Response
@@ -182,6 +183,16 @@ interface UserAPI {
         @Query("srilanka") srilanka: String
     ): Response<MovieDetailsResponse>
 
+    @POST("v1/movie-alert/get-alert")
+    suspend fun commingSoon(
+        @Query("userid") userid: String,
+        @Query("city") city: String,
+        @Query("mcode") mcode: String,
+        @Query("did") did: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<MovieDetailsResponse>
+
     @POST("content/csessionsfilters")
     suspend fun cinemaSession(
         @Query("city") city: String,
@@ -312,6 +323,15 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<SummeryResponse>
+
+
+    @POST("content/splashtxt")
+    suspend fun splash(
+        @Query("city") city: String,
+        @Query("isSpi") isSpi: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<SplashResponse>
 
     @POST("trans/tckdetails")
     suspend fun addFood(

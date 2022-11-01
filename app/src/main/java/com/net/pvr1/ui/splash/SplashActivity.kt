@@ -13,12 +13,19 @@ import android.view.Gravity
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.net.pvr1.MainActivity
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySplashBinding
+import com.net.pvr1.ui.dailogs.LoaderDialog
+import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.onBoarding.LandingActivity
+import com.net.pvr1.ui.splash.response.SplashResponse
+import com.net.pvr1.ui.splash.viewModel.SplashViewModel
 import com.net.pvr1.utils.Constant
+import com.net.pvr1.utils.NetworkResult
 import com.net.pvr1.utils.PreferenceManager
 import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,6 +39,8 @@ class SplashActivity : AppCompatActivity() {
     lateinit var preferences: PreferenceManager
     private var binding: ActivitySplashBinding? = null
     private var networkDialog: Dialog? = null
+    private val authViewModel: SplashViewModel by viewModels()
+    private var loader: LoaderDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +54,8 @@ class SplashActivity : AppCompatActivity() {
         } else {
             networkDialog()
         }
+        summeryDetails()
+        authViewModel.splash("Delhi-NCR")
         printLog("CheckLogin--->${preferences.getUserName()}---->${preferences.getIsLogin()}")
     }
 
@@ -52,6 +63,7 @@ class SplashActivity : AppCompatActivity() {
         val runnable = Runnable {
             if (preferences.getIsLogin()) {
                 val intent = Intent(this@SplashActivity, HomeActivity::class.java)
+//                val intent = Intent(this@SplashActivity, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {
@@ -108,6 +120,56 @@ class SplashActivity : AppCompatActivity() {
         restart?.setOnClickListener {
             recreate()
         }
+    }
+
+
+    //Splash
+    private fun summeryDetails() {
+        authViewModel.liveDataScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        retrieveData(it.data.output)
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {
+                            },
+                            negativeClick = {
+                            })
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {
+                        },
+                        negativeClick = {
+                        })
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleasewait)
+                    loader?.show(this.supportFragmentManager, null)
+                }
+            }
+        }
+
+    }
+
+    private fun retrieveData(output: SplashResponse.Output) {
+
     }
 
 }

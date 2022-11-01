@@ -15,7 +15,7 @@ import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
 import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
 import com.net.pvr1.ui.login.response.LoginResponse
-import com.net.pvr1.ui.movieDetails.response.MovieDetailsResponse
+import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
@@ -24,6 +24,7 @@ import com.net.pvr1.ui.seatLayout.response.InitResponse
 import com.net.pvr1.ui.seatLayout.response.ReserveSeatResponse
 import com.net.pvr1.ui.seatLayout.response.SeatResponse
 import com.net.pvr1.ui.selectCity.response.SelectCityResponse
+import com.net.pvr1.ui.splash.response.SplashResponse
 import com.net.pvr1.ui.summery.response.AddFoodResponse
 import com.net.pvr1.ui.summery.response.SummeryResponse
 import com.net.pvr1.utils.Constant
@@ -451,6 +452,41 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
     }
 
+    //CommingSoon
+    private val commingSoonLiveData = MutableLiveData<NetworkResult<MovieDetailsResponse>>()
+    val commingSoonResponseLiveData: LiveData<NetworkResult<MovieDetailsResponse>>
+        get() = commingSoonLiveData
+
+    suspend fun commingSoonData(
+        userid: String,
+        city: String,
+        mcode: String,
+        did: String
+    ) {
+        movieDetailsLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.commingSoon(
+            userid,
+            city,
+            mcode,
+            did,
+            Constant.version,
+            Constant.platform
+        )
+        commingSoonResponse(response)
+    }
+
+    private fun commingSoonResponse(response: Response<MovieDetailsResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            commingSoonLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            commingSoonLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            commingSoonLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
     //CinemaSession
     private val cinemaSessionLiveData = MutableLiveData<NetworkResult<CinemaSessionResponse>>()
     val cinemaSessionResponseLiveData: LiveData<NetworkResult<CinemaSessionResponse>>
@@ -796,6 +832,36 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
 
+    //Splash
+    private val splashLiveData = MutableLiveData<NetworkResult<SplashResponse>>()
+    val splashResponseLiveData: LiveData<NetworkResult<SplashResponse>>
+        get() = splashLiveData
+
+    suspend fun splashLayout(
+        city: String
+    ) {
+        splashLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.splash(
+            city,
+            "NO",
+            Constant.version,
+            Constant.platform
+        )
+        splashLayoutResponse(response)
+    }
+
+    private fun splashLayoutResponse(response: Response<SplashResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            splashLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            splashLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            splashLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
     //Food Reserve
     private val foodAddLiveData = MutableLiveData<NetworkResult<AddFoodResponse>>()
     val foodAddResponseLiveData: LiveData<NetworkResult<AddFoodResponse>>
@@ -861,7 +927,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         searchtxt: String
     ) {
         bookingRetrievalLiveData.postValue(NetworkResult.Loading())
-        val response = userAPI.bookingRetrieval(city,lat, lng,userid,searchtxt,Constant.version,Constant.platform
+        val response = userAPI.bookingRetrieval(
+            city, lat, lng, userid, searchtxt, Constant.version, Constant.platform
         )
         bookingRetrievalLayoutResponse(response)
     }
