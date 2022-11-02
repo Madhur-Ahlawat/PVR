@@ -461,7 +461,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/outerScroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -511,7 +511,7 @@
 
                 </LinearLayout>
             </RelativeLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

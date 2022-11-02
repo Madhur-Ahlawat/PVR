@@ -165,6 +165,8 @@ class BookingActivity : AppCompatActivity(),
     private fun retrieveData(output: BookingResponse.Output) {
         printLog("ShowsData--->${output.cinemas}")
             if (!daysClick) {
+                Constant.OfferDialogImage =output.mih
+
                 //MovieName
                 binding?.textView103?.text = daySessionResponse?.nm
                 //genre

@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.summery
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -14,29 +15,26 @@ import com.net.pvr1.databinding.ActivitySummeryBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.CartModel
-import com.net.pvr1.ui.food.adapter.FoodBestSellerAdapter
 import com.net.pvr1.ui.seatLayout.adapter.AddFoodCartAdapter
 import com.net.pvr1.ui.summery.adapter.SeatListAdapter
 import com.net.pvr1.ui.summery.response.SummeryResponse
 import com.net.pvr1.ui.summery.viewModel.SummeryViewModel
-import com.net.pvr1.utils.Constant
+import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
-import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.PreferenceManager
-import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SummeryActivity : AppCompatActivity(),AddFoodCartAdapter.RecycleViewItemClickListenerCity {
+class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemClickListenerCity {
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivitySummeryBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: SummeryViewModel by viewModels()
     private var cartModel: ArrayList<CartModel> = arrayListOf()
+    private var itemDescription: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,15 +42,12 @@ class SummeryActivity : AppCompatActivity(),AddFoodCartAdapter.RecycleViewItemCl
         val view = binding?.root
         setContentView(view)
         summeryDetails()
-        cartModel = intent.getStringArrayListExtra("food") as ArrayList<CartModel>
-        printLog("foodSummery--->${cartModel}")
+        try {
+            cartModel = intent.getStringArrayListExtra("food") as ArrayList<CartModel>
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
-        //CartFood
-        val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        val foodBestSellerAdapter = AddFoodCartAdapter(cartModel,this,  this)
-        binding?.recyclerView32?.layoutManager = layoutManagerCrew
-        binding?.recyclerView32?.adapter = foodBestSellerAdapter
-        binding?.recyclerView32?.setHasFixedSize(true)
 
         authViewModel.summery(
             TRANSACTION_ID,
@@ -61,16 +56,134 @@ class SummeryActivity : AppCompatActivity(),AddFoodCartAdapter.RecycleViewItemCl
             BOOKING_ID
         )
         movedNext()
+        foodCart()
+        saveFood()
+        seatWithFood()
+    }
+
+    //CartFood
+    private fun foodCart() {
+        if (cartModel.isNotEmpty()) {
+            binding?.recyclerView32?.show()
+            val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+            val foodBestSellerAdapter = AddFoodCartAdapter(cartModel, this, this)
+            binding?.recyclerView32?.layoutManager = layoutManagerCrew
+            binding?.recyclerView32?.adapter = foodBestSellerAdapter
+            binding?.recyclerView32?.setHasFixedSize(true)
+        } else {
+            binding?.recyclerView32?.hide()
+        }
     }
 
     private fun movedNext() {
-        binding?.textView175?.setOnClickListener {
-            authViewModel.food(
-                "",
-                TRANSACTION_ID,
-                CINEMA_ID
-            )
+        //saveFood
+//        binding?.textView175?.setOnClickListener {
+//            //Only Seat Condition
+//            authViewModel.food(
+//                preferences.getUserId().toString(),
+//                CINEMA_ID,
+//                "",
+//                "",
+//                "",
+//                "",
+//                "",
+//                "",
+//                "",
+//                "",
+//                "no",
+//                "no",
+//                "no")
+//        }
+    }
+
+    //seatWithFood
+    private fun seatWithFood() {
+        authViewModel.seatWithFoodDataScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+//                        retrieveData(it.data.output)
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {
+                            },
+                            negativeClick = {
+                            })
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {
+                        },
+                        negativeClick = {
+                        })
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleasewait)
+                    loader?.show(this.supportFragmentManager, null)
+                }
+            }
         }
+
+    }
+
+    //saveFood
+    private fun saveFood() {
+        authViewModel.foodLiveDataScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+//                        retrieveData(it.data.output)
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {
+                            },
+                            negativeClick = {
+                            })
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {
+                        },
+                        negativeClick = {
+                        })
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleasewait)
+                    loader?.show(this.supportFragmentManager, null)
+                }
+            }
+        }
+
     }
 
     //SummeryDetails
@@ -118,7 +231,39 @@ class SummeryActivity : AppCompatActivity(),AddFoodCartAdapter.RecycleViewItemCl
 
     }
 
+    @SuppressLint("SetTextI18n")
     private fun retrieveData(output: SummeryResponse.Output) {
+        //movie Details
+        binding?.textView111?.text =
+            output.cen + getString(R.string.bullet) + output.lg + getString(R.string.bullet) + output.fmt
+        //audi
+        binding?.textView115?.text = output.audi + "-" + output.st
+        //ticket
+        binding?.textView119?.text = output.f[0].it[0].n
+        //price
+        binding?.textView120?.text = getString(R.string.currency) + output.f[0].it[0].v
+        //sub total
+        binding?.textView168?.text = ""
+        //coupon
+        binding?.textView169?.text = ""
+        //taxes fee
+        binding?.textView170?.text = output.f[1].v
+        //Convenience fee
+        binding?.textView272?.text = output.f[1].it[0].v
+        //Convenience Heading
+        binding?.textView270?.text = output.f[1].it[0].n
+        //gst
+        binding?.textView273?.text = output.f[1].it[1].v
+        //gst Heading
+        binding?.textView271?.text = output.f[1].it[1].n
+        //cavery calling
+        binding?.textView171?.text = ""
+        //2/ticket calling
+        binding?.textView172?.text = ""
+//        grand total
+        binding?.textView172?.text = getString(R.string.currency) + output.a
+//       pay
+        binding?.textView174?.text = getString(R.string.currency) + output.a + " |"
         //Image
         Glide.with(this)
             .load(output.im)
@@ -143,6 +288,20 @@ class SummeryActivity : AppCompatActivity(),AddFoodCartAdapter.RecycleViewItemCl
         binding?.recyclerView31?.setHasFixedSize(true)
         binding?.recyclerView31?.layoutManager = layoutManager
         binding?.recyclerView31?.adapter = adapter
+
+        //seatWithFood
+        binding?.textView175?.setOnClickListener {
+            cartModel.forEachIndexed { index, food ->
+                itemDescription = if (index == 0) {
+                    food.veg.toString() + "|" + food.id + "|" + food.quantity +
+                            "|" + food.price + "|" + food.title
+                } else {
+                    itemDescription + "#" + food.veg + "|" + food.id + "|" + food.quantity +
+                            "|" + food.price + "|" + food.title
+                }
+            }
+            authViewModel.seatWithFood(itemDescription, TRANSACTION_ID, CINEMA_ID, "no", "", "no")
+        }
     }
 
     override fun increaseFoodClick(comingSoonItem: CartModel) {
@@ -188,6 +347,7 @@ class SummeryActivity : AppCompatActivity(),AddFoodCartAdapter.RecycleViewItemCl
         }
 
     }
+
     private fun updateCartFoodCartList(recyclerData: CartModel) {
         try {
             for (item in cartModel) {

@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.TextView
 import com.net.pvr1.R
+import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import java.net.MalformedURLException
 import java.net.URL
 import java.text.DecimalFormat
@@ -52,6 +53,7 @@ class Constant {
         const val USER_ID = "user_id"
         const val SEAT_AVAILABEL = 1
         var TRANSACTION_ID = "0"
+        var OfferDialogImage = "0"
         var BOOKING_ID = "0"
         var SESSION_ID = "0"
         var CINEMA_ID = "0"
@@ -66,6 +68,7 @@ class Constant {
         const val SUV = 6
         const val BIKE = 7
         const val BIKE_SEAT_BOOKED = 8
+        var PrivilegeHomeResponseConst:PrivilegeHomeResponse.Output? =null
 
     }
 

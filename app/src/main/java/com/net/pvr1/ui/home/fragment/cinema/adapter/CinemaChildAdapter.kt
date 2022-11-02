@@ -1,6 +1,7 @@
 package com.net.pvr1.ui.home.fragment.cinema.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
+import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingActivity
 
 
 class CinemaChildAdapter(
@@ -32,10 +34,11 @@ class CinemaChildAdapter(
             .load(comingSoonItem.i)
             .error(R.drawable.app_icon)
             .into(holder.image)
-//        holder.itemView.setOnClickListener {
-//            listener.onCinemaClick(comingSoonItem.videoUrl)
-//
-//        }
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, NowShowingActivity::class.java)
+            intent.putExtra("mid", comingSoonItem.m)
+            context.startActivity(intent)
+        }
 
     }
 
@@ -47,9 +50,4 @@ class CinemaChildAdapter(
         var image: ImageView = view.findViewById(R.id.imageLandingScreen)
 
     }
-
-    interface CinemaClick {
-        fun onCinemaClick(comingSoonItem: String)
-    }
-
 }

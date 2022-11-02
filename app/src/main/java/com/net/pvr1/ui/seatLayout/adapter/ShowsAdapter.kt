@@ -18,7 +18,8 @@ import com.net.pvr1.utils.show
 
 class ShowsAdapter(
     private var nowShowingList: ArrayList<BookingResponse.Output.Cinema.Child.Sw.S>,
-    private var context: Context, private var listener: RecycleViewItemClickListenerCity
+    private var context: Context,
+    private var listener: RecycleViewItemClickListenerCity
 ) :
     RecyclerView.Adapter<ShowsAdapter.ViewHolder>() {
     private var itemCount = 0

@@ -12,14 +12,15 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SummeryViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
-//Summery Details
+class SummeryViewModel @Inject constructor(private val userRepository: UserRepository) :
+    ViewModel() {
+    //Summery Details
     val liveDataScope: LiveData<NetworkResult<SummeryResponse>>
-    get() = userRepository.summerResponseLiveData
+        get() = userRepository.summerResponseLiveData
 
-    fun summery(transid: String,cinemacode: String,userid: String,bookingid: String) {
+    fun summery(transid: String, cinemacode: String, userid: String, bookingid: String) {
         viewModelScope.launch {
-            userRepository.summerLayout(transid,cinemacode,userid,bookingid)
+            userRepository.summerLayout(transid, cinemacode, userid, bookingid)
         }
     }
 
@@ -27,10 +28,46 @@ class SummeryViewModel @Inject constructor(private val userRepository: UserRepos
     val foodLiveDataScope: LiveData<NetworkResult<AddFoodResponse>>
         get() = userRepository.foodAddResponseLiveData
 
-    fun food(foods: String,transid: String,cinemacode: String) {
+    fun food(
+        userid: String,
+        cinemacode: String,
+        fb_totalprice: String,
+        fb_itemStrDescription: String,
+        pickupdate: String,
+        cbookid: String,
+        audi: String,
+        seat: String,
+        type: String,
+        infosys: String,
+        qr: String,
+        isSpi: String,
+        srilanka: String,
+    ) {
         viewModelScope.launch {
-            userRepository.foodAddLayout(foods,transid,cinemacode)
+            userRepository.foodAddLayout(
+                cinemacode,
+                fb_totalprice,
+                fb_itemStrDescription,
+                pickupdate,
+                cbookid,
+                audi,
+                seat,
+                type,
+                infosys,
+                qr,
+                isSpi,
+                srilanka
+            )
         }
     }
 
+    //seatWithFood
+    val seatWithFoodDataScope: LiveData<NetworkResult<SummeryResponse>>
+        get() = userRepository.seatWithFoodResponseLiveData
+
+    fun seatWithFood(foods: String, transid: String, cinemacode: String, qr: String, infosys: String, isSpi: String) {
+        viewModelScope.launch {
+            userRepository.seatWithFoodLayout(foods, transid, cinemacode, qr,infosys,isSpi)
+        }
+    }
 }

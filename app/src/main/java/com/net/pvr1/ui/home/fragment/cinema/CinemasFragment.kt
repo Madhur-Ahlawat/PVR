@@ -157,8 +157,8 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
-                    loader?.show(requireActivity().supportFragmentManager, null)
+//                    loader = LoaderDialog(R.string.pleasewait)
+//                    loader?.show(requireActivity().supportFragmentManager, null)
                 }
             }
         }

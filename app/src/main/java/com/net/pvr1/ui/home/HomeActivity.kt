@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -15,7 +16,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityHomeBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
@@ -27,23 +30,26 @@ import com.net.pvr1.ui.home.fragment.home.HomeFragment
 import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
 import com.net.pvr1.ui.home.fragment.more.MoreFragment
 import com.net.pvr1.ui.home.fragment.privilege.PrivilegeFragment
+import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeHomeAdapter
+import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
 import com.net.pvr1.ui.search.searchHome.SearchHomeActivity
 import com.net.pvr1.ui.selectCity.SelectCityActivity
 import com.net.pvr1.utils.*
+import com.net.pvr1.utils.Constant.Companion.PrivilegeHomeResponseConst
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickListenerCity {
+class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickListenerCity,
+    PrivilegeHomeAdapter.RecycleViewItemClickListener {
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityHomeBinding? = null
     private val authViewModel: HomeViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var offerResponse: ArrayList<OfferResponse.Output>? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater, null, false)
@@ -53,19 +59,23 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 
         authViewModel.offer("123456")
         //setUserName
-        binding?.includeAppBar?.textView2?.text= preferences.getUserName()
+        binding?.includeAppBar?.textView2?.text = preferences.getUserName()
+
+        authViewModel.privilegeHome(preferences.geMobileNumber().toString(), "")
+        movedNext()
+        offerDataLoad()
+        privilegeDataLoad()
+    }
+
+    //ClickMovedNext
+    private fun movedNext() {
         // Select City
         val llLocation = findViewById<LinearLayout>(R.id.llLocation)
         llLocation.setOnClickListener {
             val intent = Intent(this, SelectCityActivity::class.java)
             startActivity(intent)
         }
-        movedNext()
-        offerDataLoad()
-    }
 
-    //ClickMovedNext
-    private fun movedNext() {
         binding?.includeAppBar?.searchBtn?.setOnClickListener {
             val intent = Intent(this@HomeActivity, SearchHomeActivity::class.java)
             startActivity(intent)
@@ -103,7 +113,6 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     }
 
     private fun showOfferDialog() {
-        printLog("output--->${offerResponse}")
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.offer_dialog)
@@ -126,14 +135,45 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
             val adapter = HomeOfferAdapter(offerResponse!!, this, this)
             recyclerView.layoutManager = gridLayout
             recyclerView.adapter = adapter
-
         } catch (e: Exception) {
-            printLog("exception--->${e.message}")
+            e.printStackTrace()
         }
 
         ignore.setOnClickListener {
             dialog.dismiss()
         }
+    }
+
+    private fun privilegeDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.privilege_dialog)
+        dialog.window!!.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+        dialog.window!!.setGravity(Gravity.BOTTOM)
+        dialog.show()
+
+        val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerView34)
+        val icon = dialog.findViewById<ImageView>(R.id.imageView109)
+        //icon
+        Glide.with(this)
+            .load(PrivilegeHomeResponseConst?.pinfo?.get(0)?.plogo)
+            .into(icon)
+// add pager behavior
+        // add pager behavior
+        val snapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(recyclerView)
+        val gridLayout =
+            GridLayoutManager(this@HomeActivity, 1, GridLayoutManager.HORIZONTAL, false)
+        recyclerView.layoutManager = LinearLayoutManager(this@HomeActivity)
+        val adapter = PrivilegeHomeAdapter(PrivilegeHomeResponseConst?.pinfo!!, this, this)
+        recyclerView.layoutManager = gridLayout
+        recyclerView.adapter = adapter
+        recyclerView.addItemDecoration(LinePagerIndicatorDecoration())
     }
 
     private fun setCurrentFragment(fragment: Fragment) =
@@ -186,6 +226,54 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         }
     }
 
+    private fun privilegeDataLoad() {
+        authViewModel.privilegeHomeResponseLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        privilegeRetrieveData(it.data.output)
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {
+                            },
+                            negativeClick = {
+                            })
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {
+                        },
+                        negativeClick = {
+                        })
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleasewait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+
+    private fun privilegeRetrieveData(output: PrivilegeHomeResponse.Output) {
+        PrivilegeHomeResponseConst = output
+        privilegeDialog()
+    }
+
     private fun retrieveData(output: ArrayList<OfferResponse.Output>) {
         printLog("output--->${output}")
         offerResponse = output
@@ -203,25 +291,28 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 
     override fun onBackPressed() {
         if (binding?.bottomNavigationView?.selectedItemId == R.id.homeFragment) {
-//            val dialog = OptionDialog(this,
-//                R.mipmap.ic_launcher,
-//                R.string.app_name,
-//                getString(R.string.exitApp),
-//                positiveBtnText = R.string.ok,
-//                negativeBtnText = R.string.no,
-//                positiveClick = {
-//
-//                },
-//                negativeClick = {
-//
-//                })
-//            dialog.show()
-            super.onBackPressed()
+            val dialog = OptionDialog(this,
+                R.mipmap.ic_launcher,
+                R.string.app_name,
+                getString(R.string.exitApp),
+                positiveBtnText = R.string.ok,
+                negativeBtnText = R.string.no,
+                positiveClick = {
+
+                },
+                negativeClick = {
+
+                })
+            dialog.show()
             finish()
 
         } else {
             binding?.bottomNavigationView?.selectedItemId = R.id.homeFragment
         }
+    }
+
+    override fun privilegeHomeClick(comingSoonItem: PrivilegeHomeResponse.Output.Pinfo) {
+
     }
 
 }

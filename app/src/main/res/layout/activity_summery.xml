@@ -109,8 +109,8 @@
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cardView7"
-                        android:layout_width="60dp"
-                        android:layout_height="89dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         app:cardCornerRadius="@dimen/dimen_3dp"
                         app:cardUseCompatPadding="true"
                         app:layout_constraintStart_toStartOf="@+id/view78"
@@ -118,8 +118,9 @@
 
                         <ImageView
                             android:id="@+id/imageView59"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             tools:ignore="ContentDescription"
                             tools:srcCompat="@tools:sample/avatars" />
@@ -332,7 +333,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:id="@+id/constraintLayout43"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -412,7 +413,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:paddingStart="@dimen/dimen_24dp"
                     android:paddingTop="@dimen/dimen_20dp"
@@ -425,8 +426,8 @@
 
                     <View
                         android:id="@+id/view110"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
@@ -481,6 +482,52 @@
                         app:layout_constraintStart_toStartOf="@+id/view110"
                         app:layout_constraintTop_toBottomOf="@+id/textView163" />
 
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/taxes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintEnd_toEndOf="@+id/textView171"
+                        app:layout_constraintStart_toStartOf="@+id/view110"
+                        app:layout_constraintTop_toBottomOf="@+id/textView164">
+
+
+                        <TextView
+                            android:id="@+id/textView270"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/convenince_fee"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textView271"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/gst"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView270" />
+
+                        <TextView
+                            android:id="@+id/textView272"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="TextView"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView270"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/textView270" />
+
+                        <TextView
+                            android:id="@+id/textView273"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="TextView"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView271"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView270" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                     <ImageView
                         android:id="@+id/line"
                         android:layout_width="match_parent"
@@ -489,7 +536,7 @@
                         android:src="@drawable/line"
                         app:layout_constraintEnd_toEndOf="@+id/textView171"
                         app:layout_constraintStart_toStartOf="@+id/view110"
-                        app:layout_constraintTop_toBottomOf="@+id/textView164"
+                        app:layout_constraintTop_toBottomOf="@+id/taxes"
                         tools:ignore="ContentDescription" />
 
                     <TextView

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -63,21 +64,23 @@ class CinemaAdapter(
                 } else {
                     binding.llMovieList.hide()
                 }
-
+                if (this.l=="true"){
+                    binding.cbFav.setImageResource(R.drawable.ic_favourite_theatre)
+                }else{
+                    binding.cbFav.setImageResource(R.drawable.ic_un_favourite_theatre)
+                }
 
                 binding.cbFav.setOnClickListener {
                     if (isLogin) {
-                        if (!rowIndex){
-                            rowIndex
-                            context.toast("true")
+                        if (rowIndex==true){
+                            rowIndex=false
                             binding.cbFav.setImageResource(R.drawable.ic_un_favourite_theatre)
-                            preference.onPreferenceClick(this,rowIndex)
+                            preference.onPreferenceClick(this,false)
 
                         }else {
-                            rowIndex= false
-                            context.toast("false")
+                            rowIndex= true
                             binding.cbFav.setImageResource(R.drawable.ic_favourite_theatre)
-                            preference.onPreferenceClick(this,rowIndex)
+                            preference.onPreferenceClick(this,true)
                         }
 
                     } else {

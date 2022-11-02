@@ -26,7 +26,7 @@ data class CinemaResponse(
             val imob: String,
             val iwb: List<String>,
             val iwt: String,
-            val l: Boolean,
+            val l: String,
             val lang: String,
             val lat: String,
             val m: List<M>,

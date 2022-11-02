@@ -15,7 +15,7 @@ import com.net.pvr1.utils.printLog
 class HomeOfferAdapter(
     private var nowShowingList: List<OfferResponse.Output>,
     private var context: Context,
-    private var listener: RecycleViewItemClickListenerCity,
+    private var listener: RecycleViewItemClickListenerCity
 ) :
     RecyclerView.Adapter<HomeOfferAdapter.MyViewHolderNowShowing>() {
 

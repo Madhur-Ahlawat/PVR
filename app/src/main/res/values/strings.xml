@@ -178,7 +178,7 @@
     <string name="also_close_to">Also close to</string>
     //Summery
     <string name="also_playing">Also playing</string>
-    <string name="food_beverages">Food $ Beverages</string>
+    <string name="food_beverages">Food &amp; Beverages</string>
     <string name="seat_info">Seat Info</string>
     <string name="tickets">Tickets</string>
     <string name="explore_apply_coupons"><![CDATA[Explore & Apply Coupons]]></string>
@@ -194,6 +194,7 @@
     //Seat Layout
     <string name="max_seat_msz">You Can\'t Select More Than two Seat.</string>
     <string name="currency">₹</string>
+    <string name="bullet">\u25CF</string>
     <string name="screen_this_way">SCREEN</string>
     <string name="your_seats">Selected</string>
     <string name="vacant">Vacant</string>
@@ -280,6 +281,8 @@
     <string name="onwards">Onwards</string>
     <string name="plus">+</string>
     <string name="equal">=</string>
+    <string name="gst">GST</string>
+    <string name="convenince_fee">Convenince fee</string>
 
 
 </resources>

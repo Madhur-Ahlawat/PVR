@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.seatLayout
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
@@ -26,7 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySeatLayoutBinding
-import com.net.pvr1.ui.bookingSession.response.BookingResponse.Output
+import com.net.pvr1.ui.bookingSession.response.BookingResponse.Output.*
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.FoodActivity
@@ -66,10 +67,9 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     private var seatsN: ArrayList<String>? = null
     private var coupleSeat = 0
     private var messageText = ""
-    private var cinemaCode = ""
     private var sessionId = ""
     private var isDit = false
-    private var noOfRowsSmall: List<SeatResponse.Output.Row>? = null
+    private var noOfRowsSmall: ArrayList<SeatResponse.Output.Row>? = null
     private var priceMap: Map<String, SeatResponse.Output.PriceList.Price>? = null
     private var selectedSeats = ArrayList<Seat>()
     private var noOfSeatsSelected = ArrayList<SeatTagData>()
@@ -77,7 +77,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     private var selectedSeats1: ArrayList<SeatHC>? = null
 
     //Shows
-    private var showsArray = ArrayList<Output.Cinema.Child.Sw.S>()
+    private var showsArray = ArrayList<Cinema.Child.Sw.S>()
     private var selectSeatPriceCode = ArrayList<ReserveSeatRequest.Seat>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,15 +85,12 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         binding = ActivitySeatLayoutBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+        showsArray = intent.getStringArrayListExtra("shows") as ArrayList<Cinema.Child.Sw.S>
 
-        cinemaCode = intent.getStringExtra("cinemaId").toString()
-        sessionId = intent.getStringExtra("sessionId").toString()
-        showsArray = intent.getStringArrayListExtra("shows") as ArrayList<Output.Cinema.Child.Sw.S>
-
-        printLog("session--->${SESSION_ID}--->CinemaId--->${CINEMA_ID}")
+        sessionId = SESSION_ID
         authViewModel.seatLayout(
-            cinemaCode,
-            sessionId,
+            CINEMA_ID,
+            SESSION_ID,
             "",
             "",
             "",
@@ -103,6 +100,17 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         seatLayout()
         reserveSeat()
         initTrans()
+        shows()
+    }
+
+    //Shows
+    private fun shows() {
+        val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+        binding?.recyclerView27?.layoutManager = LinearLayoutManager(this)
+        val adapter = ShowsAdapter(showsArray, this, this)
+        binding?.recyclerView27?.layoutManager = gridLayout
+        binding?.recyclerView27?.adapter = adapter
+
     }
 
     //SeatLayout
@@ -269,7 +277,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 )
             )
         }
-        val reserve = ReserveSeatRequest(cinemaCode, selectSeatPriceCode, sessionId, output.transid)
+
+        val reserve = ReserveSeatRequest(CINEMA_ID, selectSeatPriceCode, sessionId, output.transid)
         val gson = Gson()
         val mMineUserEntity = gson.toJson(reserve, ReserveSeatRequest::class.java)
         println("request--->${mMineUserEntity}")
@@ -282,12 +291,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         binding?.textView197?.text = data.mn
         //location
         binding?.textView198?.text = data.cn
-        val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-        binding?.recyclerView27?.layoutManager = LinearLayoutManager(this)
-        val adapter = ShowsAdapter(showsArray, this, this)
-        binding?.recyclerView27?.layoutManager = gridLayout
-        binding?.recyclerView27?.adapter = adapter
-
     }
 
     private fun drawColumn(noOfRows: List<SeatResponse.Output.Row>) {
@@ -428,7 +431,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                         }
                         else -> {
                             seatView.setBackgroundResource(R.drawable.ic_vacant)
-                            seatView.text = seat.sn.replace("[^\\d.]", "")
+                            seatView.text = seat.sn.replace("[^\\d.]".toRegex(), "")
                         }
                     }
                     seatView.setTextColor(
@@ -672,8 +675,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                 if (selectedSeats.size < 10) {
                                     printLog("EnterInSeat--->${selectedSeats.size}")
                                     if (selectBuddy && seat.bu) {
-                                        printLog("EnterInSeat--bu->${seat.bu}")
-
                                         val dialog = OptionDialog(this,
                                             R.mipmap.ic_launcher,
                                             R.string.app_name,
@@ -687,8 +688,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                         dialog.show()
                                     } else {
                                         if (selectedSeats.size > 0 && seat.bu) {
-                                            printLog("EnterInSeat--bu-s>${seat.bu}")
-
                                             val dialog = OptionDialog(this,
                                                 R.mipmap.ic_launcher,
                                                 R.string.app_name,
@@ -753,7 +752,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
                 } else if (seat.s == Constant.SEAT_SELECTED) {
                     if (seat.st == 1 && !flagHc) {
-                        removeHC(this, seatView)
+                        removeHC(this)
                     } else {
                         seat.s = Constant.SEAT_AVAILABEL
                         when (seat.st) {
@@ -1174,7 +1173,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                     }
                 } else if (seat.s == Constant.SEAT_SELECTED_HATCHBACK) {
                     if (seat.st == 1 && !flagHc) {
-                        removeHC(this, seatView)
+                        removeHC(this)
                     } else {
                         seat.s = Constant.HATCHBACK
                         when (seat.st) {
@@ -1219,7 +1218,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                     }
                 } else if (seat.s == Constant.SEAT_SELECTED_BIKE) {
                     if (seat.st == 1 && !flagHc) {
-                        removeHC(this, seatView)
+                        removeHC(this)
                     } else {
                         seat.s = Constant.BIKE
                         when (seat.st) {
@@ -1264,7 +1263,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                     }
                 } else if (seat.s == Constant.SEAT_SELECTED_SUV) {
                     if (seat.st == 1 && !flagHc) {
-                        removeHC(this, seatView)
+                        removeHC(this)
                     } else {
                         seat.s = Constant.SUV
                         when (seat.st) {
@@ -1314,6 +1313,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun removeSelectedSeats(seat: SeatTagData) {
         for (i in selectedSeats.indices) {
             if (seat.b.equals(selectedSeats[i].seatBookingId)) {
@@ -1338,18 +1338,19 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             binding?.textView195?.isClickable = false
             binding?.textView196?.isClickable = false
             binding?.constraintLayout56?.isClickable = false
+
             binding?.constraintLayout56?.setBackgroundColor(
                 ContextCompat.getColor(
                     this,
                     R.color.unSelectBg
                 )
             )
+
             if (!isDit) binding?.textView195?.text =
                 "No Seats Selected"
             else binding?.textView195?.text =
                 "No Vehicle Slots Selected"
         } else {
-
             binding?.textView195?.show()
             binding?.textView196?.show()
             binding?.textView200?.hide()
@@ -1359,7 +1360,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             binding?.constraintLayout56?.isClickable = true
 
             binding?.textView196?.setOnClickListener {
-                authViewModel.initTransSeat(cinemaCode, sessionId)
+                authViewModel.initTransSeat(CINEMA_ID, sessionId)
             }
             binding?.constraintLayout56?.setBackgroundColor(
                 ContextCompat.getColor(
@@ -1372,6 +1373,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         calculatePrice()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun calculatePrice() {
         binding?.textView195?.text = ""
         if (noOfSeatsSelected.size > 0) {
@@ -1393,7 +1395,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             binding?.textView200?.hide()
 
             binding?.textView196?.setOnClickListener {
-                authViewModel.initTransSeat(cinemaCode, sessionId)
+                authViewModel.initTransSeat(CINEMA_ID, sessionId)
             }
             binding?.textView195?.isClickable = true
             binding?.textView196?.isClickable = true
@@ -1546,6 +1548,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         calculatePrice()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun buttonClicked(context: Activity, seatView: TextView, num1: Int, num2: Int) {
         // custom dialog
         val messagePcTextView: TextView
@@ -1692,7 +1695,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         dialog.show()
     }
 
-    private fun removeHC(context: Activity, seatView: TextView) {
+    @SuppressLint("SetTextI18n")
+    private fun removeHC(context: Activity) {
         // custom dialog
         val messagePcTextView: TextView
         val titleText: TextView
@@ -1709,7 +1713,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         )
         dialog.window!!.setGravity(Gravity.CENTER)
         dialog.setTitle("")
-        val seat = seatView.tag as SeatTagData
         messagePcTextView = dialog.findViewById<View>(R.id.message) as TextView
         titleText = dialog.findViewById<View>(R.id.titleText) as TextView
         icon = dialog.findViewById<View>(R.id.icon) as ImageView
@@ -1729,9 +1732,9 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
     override fun showsClick(comingSoonItem: Int) {
         sessionId = comingSoonItem.toString()
-
+        binding?.llRowName?.removeAllViews()
         authViewModel.seatLayout(
-            cinemaCode,
+            CINEMA_ID,
             sessionId,
             "",
             "",
@@ -1739,7 +1742,5 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             false,
             ""
         )
-
     }
-
 }

@@ -16,10 +16,7 @@ import com.net.pvr1.ui.movieDetails.nowShowing.adapter.*
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.ui.movieDetails.nowShowing.viewModel.MovieDetailsViewModel
 import com.net.pvr1.ui.player.PlayerActivity
-import com.net.pvr1.utils.Constant
-import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.hide
-import com.net.pvr1.utils.show
+import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -49,7 +46,6 @@ class NowShowingActivity : AppCompatActivity(),
             "no",
             "no"
         )
-
     }
 
     private fun movieDetails() {

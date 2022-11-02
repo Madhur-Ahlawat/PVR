@@ -97,7 +97,7 @@
             android:fontFamily="@font/montserrat_bold"
             android:textSize="@dimen/dimen_18sp"
             android:textColor="@color/black"
-            tools:text="An offer like never before!"
+            android:text="An offer like never before!"
             app:layout_constraintEnd_toEndOf="@+id/view166"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view167" />

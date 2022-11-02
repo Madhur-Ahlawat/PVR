@@ -10,6 +10,7 @@ import com.net.pvr1.ui.home.fragment.cinema.response.PreferenceResponse
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
+import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
@@ -157,6 +158,14 @@ interface UserAPI {
         @Query("spShow") spShow: String,
         @Query("isSpi") isSpi: String,
     ): Response<HomeResponse>
+
+    @POST("loyalty/home")
+    suspend fun privilegeHome(
+        @Query("mobile") mobile: String,
+        @Query("city") city: String,
+        @Query("av") av: String,
+        @Query("pt") pt: String
+    ): Response<PrivilegeHomeResponse>
 
     @POST("content/search")
     suspend fun homeSearch(
@@ -324,6 +333,18 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<SummeryResponse>
 
+ @POST("trans/setfood")
+    suspend fun ticketWithFood(
+     @Query("foods")   foods: String,
+     @Query("transid")   transid: String,
+     @Query("cinemacode")   cinemacode: String,
+     @Query("qr")  qr: String,
+     @Query("infosys")  infosys: String,
+     @Query("isSpi") isSpi: String,
+     @Query("av") version: String,
+     @Query("pt") platform: String
+ ): Response<SummeryResponse>
+
 
     @POST("content/splashtxt")
     suspend fun splash(
@@ -333,16 +354,22 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<SplashResponse>
 
-    @POST("trans/tckdetails")
+    @POST("food/savefoods")
     suspend fun addFood(
-        @Query("foods")  foods: String,
-        @Query("transid")  transid: String,
-        @Query("cinemacode") cinemacode: String,
-        @Query("qr") qr: String,
+        @Query("cinemacode")  cinemacode: String,
+        @Query("fb_totalprice") fb_totalprice: String,
+        @Query("fb_itemStrDescription") fb_itemStrDescription: String,
+        @Query("pickupdate") pickupdate: String,
+        @Query("cbookid") cbookid: String,
+        @Query("audi") audi: String,
+        @Query("seat") seat: String,
+        @Query("type") type: String,
         @Query("infosys") infosys: String,
-        @Query("isSpi") isSpi: String,
-        @Query("av") version: String,
-        @Query("pt") platform: String
+        @Query("qr") qr: String,
+        @Query("isSpi")  isSpi: String,
+        @Query("srilanka")  srilanka: String,
+        @Query("av")   version: String,
+        @Query("pt")   platform: String
     ): Response<AddFoodResponse>
 
     @POST("/PVRCinemasCMS/getgiftcard1")

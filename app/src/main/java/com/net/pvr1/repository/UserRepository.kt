@@ -13,6 +13,7 @@ import com.net.pvr1.ui.home.fragment.cinema.response.PreferenceResponse
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
+import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
 import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
@@ -373,6 +374,32 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             homeLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
+
+    // Privilege Home
+    private val privilegeHomeLiveData = MutableLiveData<NetworkResult<PrivilegeHomeResponse>>()
+    val privilegeHomeResponseLiveData: LiveData<NetworkResult<PrivilegeHomeResponse>>
+        get() = privilegeHomeLiveData
+
+    suspend fun privilegeHomeData(mobile: String, city: String) {
+        privilegeHomeLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.privilegeHome(
+            mobile,
+            city, Constant.version, Constant.platform
+        )
+        privilegeHomeResponse(response)
+    }
+
+    private fun privilegeHomeResponse(response: Response<PrivilegeHomeResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            privilegeHomeLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            privilegeHomeLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            privilegeHomeLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
 
     //Search
     private val homeSearchLiveData = MutableLiveData<NetworkResult<HomeSearchResponse>>()
@@ -832,6 +859,45 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
 
+    //Seat With Food
+    private val seatWithFoodLiveData = MutableLiveData<NetworkResult<SummeryResponse>>()
+    val seatWithFoodResponseLiveData: LiveData<NetworkResult<SummeryResponse>>
+        get() = seatWithFoodLiveData
+
+    suspend fun seatWithFoodLayout(
+        foods: String,
+        transid: String,
+        cinemacode: String,
+        qr: String,
+        infosys: String,
+        isSpi: String
+    ) {
+        seatWithFoodLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.ticketWithFood(
+            foods,
+            transid,
+            cinemacode,
+            qr,
+            infosys,
+            isSpi,
+            Constant.version,
+            Constant.platform
+        )
+        seatWithFoodLayoutResponse(response)
+    }
+
+    private fun seatWithFoodLayoutResponse(response: Response<SummeryResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            seatWithFoodLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            seatWithFoodLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            seatWithFoodLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
     //Splash
     private val splashLiveData = MutableLiveData<NetworkResult<SplashResponse>>()
     val splashResponseLiveData: LiveData<NetworkResult<SplashResponse>>
@@ -867,10 +933,36 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     val foodAddResponseLiveData: LiveData<NetworkResult<AddFoodResponse>>
         get() = foodAddLiveData
 
-    suspend fun foodAddLayout(foods: String, transid: String, cinemacode: String) {
+    suspend fun foodAddLayout(
+        cinemacode: String,
+        fb_totalprice: String,
+        fb_itemStrDescription: String,
+        pickupdate: String,
+        cbookid: String,
+        audi: String,
+        seat: String,
+        type: String,
+        infosys: String,
+        qr: String,
+        isSpi: String,
+        srilanka: String
+    ) {
         foodAddLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.addFood(
-            foods, transid, cinemacode, "no", "", "", Constant.version, Constant.platform
+            cinemacode,
+            fb_totalprice,
+            fb_itemStrDescription,
+            pickupdate,
+            cbookid,
+            audi,
+            seat,
+            type,
+            infosys,
+            qr,
+            isSpi,
+            srilanka,
+            Constant.version,
+            Constant.platform
         )
         foodAddLayoutResponse(response)
     }

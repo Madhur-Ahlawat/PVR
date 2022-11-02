@@ -63,7 +63,6 @@ class SplashActivity : AppCompatActivity() {
         val runnable = Runnable {
             if (preferences.getIsLogin()) {
                 val intent = Intent(this@SplashActivity, HomeActivity::class.java)
-//                val intent = Intent(this@SplashActivity, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {
