@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="@dimen/dimen_30dp"
+    android:background="@drawable/border_gray"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_30dp"
+        android:layout_marginTop="@dimen/dimen_30dp"
+        android:layout_marginEnd="@dimen/dimen_30dp"
+        android:gravity="center"
+        android:lineSpacingExtra="@dimen/dimen_5dp"
+        tools:text="Applicable currently for bookings made in Pune, Lucknow &amp; City"
+        android:textColor="#B3FFFFFF"
+        android:textSize="12sp" />
+
+    <View
+        android:layout_width="@dimen/dimen_20dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="#4DFFFFFF" />
+
+  <TextView
+        android:id="@id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_30dp"
+        android:layout_marginEnd="@dimen/dimen_30dp"
+        android:gravity="center"
+        android:lineSpacingExtra="@dimen/dimen_5dp"
+      tools:text="Only one booking is covered by Passport under a booking session"
+        android:textColor="#B3FFFFFF"
+        android:textSize="12sp" />
+
+    <View
+        android:layout_width="@dimen/dimen_20dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="#4DFFFFFF" />
+
+    <TextView
+        android:id="@+id/text4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_30dp"
+        android:layout_marginEnd="@dimen/dimen_30dp"
+        android:gravity="center"
+        android:lineSpacingExtra="@dimen/dimen_5dp"
+        tools:text="Ticket price limit is INR 400. If ticket price is more than INR 400, the difference shall be payable by patron"
+        android:textColor="#B3FFFFFF"
+        android:textSize="12sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="#4DFFFFFF" />
+
+    <TextView
+        android:id="@+id/faqBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_30dp"
+        android:drawablePadding="@dimen/dimen_5dp"
+        android:gravity="center"
+        tools:text="FAQs"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        app:drawableEndCompat="@drawable/ic_arrow_right_white" />
+
+</LinearLayout>

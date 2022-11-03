@@ -56,21 +56,12 @@
             android:layout_marginEnd="50dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/view129"
             app:layout_constraintTop_toBottomOf="@+id/imageView109"
             tools:itemCount="2"
             tools:listitem="@layout/privilege_home_item" />
-
-        <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/recyclerView34"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerView34"/>
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -84,12 +75,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-
         <include
             android:id="@+id/include"
             layout="@layout/button_next"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

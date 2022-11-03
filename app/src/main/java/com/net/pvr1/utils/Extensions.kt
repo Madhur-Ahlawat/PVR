@@ -16,7 +16,6 @@ fun Context?.toast(@SuppressLint("SupportAnnotationUsage") @StringRes resId: Str
 }
 fun Context?.printLog(@SuppressLint("SupportAnnotationUsage") @StringRes log: String?) {
     Log.d(TAG, log.toString())
-
 }
 
 fun View.show() {

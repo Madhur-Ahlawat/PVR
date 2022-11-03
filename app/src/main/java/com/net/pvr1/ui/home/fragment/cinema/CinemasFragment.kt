@@ -20,10 +20,7 @@ import com.net.pvr1.ui.home.fragment.cinema.adapter.CinemaAdapter
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.cinema.viewModel.CinemaViewModel
 import com.net.pvr1.ui.search.searchCinema.SearchCinemaActivity
-import com.net.pvr1.utils.Constant
-import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.PreferenceManager
-import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -117,29 +114,30 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        val dialog = OptionDialog(requireActivity(),
-                            R.mipmap.ic_launcher,
-                            R.string.app_name,
-                            it.data.msg,
-                            positiveBtnText = R.string.ok,
-                            negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
-                        dialog.show()
-                    } else {
-                        val dialog = OptionDialog(requireActivity(),
-                            R.mipmap.ic_launcher,
-                            R.string.app_name,
-                            it.data?.msg.toString(),
-                            positiveBtnText = R.string.ok,
-                            negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
-                        dialog.show()
+                        context.printLog(it.data.msg)
+//                        val dialog = OptionDialog(requireActivity(),
+//                            R.mipmap.ic_launcher,
+//                            R.string.app_name,
+//                            it.data.msg,
+//                            positiveBtnText = R.string.ok,
+//                            negativeBtnText = R.string.no,
+//                            positiveClick = {
+//                            },
+//                            negativeClick = {
+//                            })
+//                        dialog.show()
+//                    } else {
+//                        val dialog = OptionDialog(requireActivity(),
+//                            R.mipmap.ic_launcher,
+//                            R.string.app_name,
+//                            it.data?.msg.toString(),
+//                            positiveBtnText = R.string.ok,
+//                            negativeBtnText = R.string.no,
+//                            positiveClick = {
+//                            },
+//                            negativeClick = {
+//                            })
+//                        dialog.show()
                     }
                 }
                 is NetworkResult.Error -> {

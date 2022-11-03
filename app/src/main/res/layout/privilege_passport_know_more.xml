@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/llFirstCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="15dp"
+                android:orientation="vertical"
+                android:visibility="visible"
+                android:weightSum="2">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="105dp"
+                    android:layout_weight="1">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="105dp"
+                            android:layout_margin="@dimen/dimen_5dp"
+                            android:layout_weight="1"
+                            android:outlineSpotShadowColor="@color/transparent1"
+                            app:cardBackgroundColor="#99000000"
+                            app:cardCornerRadius="@dimen/padding_10"
+                            app:cardUseCompatPadding="true"
+                            app:contentPadding="@dimen/dimen_12dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            tools:ignore="UnusedAttribute">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="45dp"
+                                    android:layout_height="45dp"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginEnd="26dp"
+                                    android:src="@drawable/earn_privilege"
+                                    android:visibility="gone"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintLeft_toRightOf="@+id/ivEarnPoint"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:ignore="ContentDescription" />
+
+                                <ImageView
+                                    android:id="@+id/ivEarnPoint"
+                                    android:layout_width="51dp"
+                                    android:layout_height="44dp"
+                                    android:layout_marginTop="12dp"
+                                    android:src="@drawable/earn_points"
+                                    android:visibility="gone"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:ignore="ContentDescription" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_centerVertical="true"
+                                    android:orientation="vertical"
+                                    tools:ignore="RelativeOverlap">
+
+                                    <TextView
+                                        android:id="@+id/visitText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/padding_10"
+                                        android:textColor="@color/white"
+                                        android:textSize="14sp"
+                                        app:layout_constraintTop_toBottomOf="@id/ivEarnPoint"
+                                        tools:ignore="TooDeepLayout"
+                                        tools:text="1x Visit a Day" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/padding_10"
+                                        android:textColor="@color/white"
+                                        android:textSize="12sp"
+                                        app:layout_constraintTop_toBottomOf="@id/ivEarnPoint"
+                                        tools:text="Monday to Thursday" />
+
+                                </LinearLayout>
+
+
+                                <ImageView
+                                    android:layout_width="@dimen/dimen_60dp"
+                                    android:layout_height="@dimen/dimen_60dp"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:padding="@dimen/dimen_2dp"
+                                    android:src="@drawable/privilege_date"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:ignore="ContentDescription" />
+
+                            </RelativeLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="105dp"
+                    android:layout_weight="1">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="105dp"
+                            android:layout_margin="@dimen/dimen_5dp"
+                            android:layout_weight="1"
+                            android:outlineSpotShadowColor="@color/transparent1"
+                            app:cardBackgroundColor="#99000000"
+                            app:cardCornerRadius="@dimen/padding_10"
+                            app:cardUseCompatPadding="true"
+                            app:contentPadding="@dimen/dimen_12dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            tools:ignore="UnusedAttribute">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="45dp"
+                                    android:layout_height="45dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginEnd="26dp"
+                                    android:background="@drawable/oval"
+                                    android:visibility="gone"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:ignore="ContentDescription" />
+
+                                <ImageView
+                                    android:layout_width="51dp"
+                                    android:layout_height="44dp"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:src="@drawable/redeem_privilege"
+                                    android:visibility="gone"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:ignore="ContentDescription" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_centerVertical="true"
+                                    android:orientation="vertical"
+                                    tools:ignore="RelativeOverlap">
+
+                                    <TextView
+                                        android:id="@+id/top_text"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/padding_10"
+                                        android:textColor="@color/white"
+                                        android:textSize="14sp"
+                                        tools:text="Total 30 visits allowed" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/padding_10"
+                                        android:textColor="@color/white"
+                                        android:textSize="12sp"
+                                        tools:text="90 days validity" />
+                                </LinearLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="@dimen/dimen_60dp"
+                                    android:layout_height="@dimen/dimen_60dp"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/visitCount"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginBottom="-5dp"
+                                            android:gravity="center"
+                                            android:textAllCaps="true"
+                                            android:textColor="@color/white"
+                                            android:textSize="20sp"
+                                            tools:text="30" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="-5dp"
+                                            android:gravity="center"
+                                            android:textAllCaps="true"
+                                            android:textColor="@color/white"
+                                            android:textSize="@dimen/dimen_13sp"
+                                            tools:text="Visits" />
+                                    </LinearLayout>
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:src="@drawable/privilege_visit"
+                                        tools:ignore="ContentDescription" />
+
+                                </RelativeLayout>
+
+
+                            </RelativeLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:orientation="vertical"
+                android:visibility="visible"
+                android:weightSum="2">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="105dp"
+                    android:layout_weight="1">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="105dp"
+                            android:layout_margin="@dimen/dimen_5dp"
+                            android:layout_weight="1"
+                            android:outlineSpotShadowColor="@color/transparent1"
+                            app:cardBackgroundColor="#99000000"
+                            app:cardCornerRadius="@dimen/padding_10"
+                            app:cardUseCompatPadding="true"
+                            app:contentPadding="@dimen/padding_10"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            tools:ignore="UnusedAttribute">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="45dp"
+                                    android:layout_height="45dp"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginEnd="26dp"
+                                    android:src="@drawable/earn_privilege"
+                                    android:visibility="gone"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:ignore="ContentDescription" />
+
+
+                                <ImageView
+                                    android:layout_width="51dp"
+                                    android:layout_height="44dp"
+                                    android:layout_marginTop="12dp"
+                                    android:src="@drawable/earn_points"
+                                    android:visibility="gone"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:ignore="ContentDescription" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_centerVertical="true"
+                                    android:orientation="vertical"
+                                    tools:ignore="RelativeOverlap">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/padding_10"
+                                        android:textColor="@color/white"
+                                        android:textSize="14sp"
+                                        tools:text="Online only Movie pass" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/padding_10"
+                                        android:text="@string/book_using_pvr_mobile_app_or_website"
+                                        android:textColor="@color/white"
+                                        android:textSize="12sp" />
+
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="@dimen/dimen_60dp"
+                                    android:layout_height="@dimen/dimen_60dp"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="@dimen/dimen_30dp"
+                                    android:layout_marginTop="@dimen/dimen_8dp"
+                                    android:src="@drawable/privilege_book"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:ignore="ContentDescription" />
+
+                            </RelativeLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="105dp"
+                    android:layout_weight="1"
+                    android:visibility="gone">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="105dp"
+                            android:layout_margin="@dimen/dimen_5dp"
+                            android:layout_weight="1"
+                            android:outlineSpotShadowColor="@color/transparent1"
+                            app:cardBackgroundColor="#99000000"
+                            app:cardCornerRadius="@dimen/padding_10"
+                            app:cardUseCompatPadding="true"
+                            app:contentPadding="@dimen/dimen_12dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            tools:ignore="UnusedAttribute">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="45dp"
+                                    android:layout_height="45dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginEnd="26dp"
+                                    android:background="@drawable/oval"
+                                    android:visibility="gone"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintLeft_toRightOf="@+id/ivRedeem"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:ignore="ContentDescription" />
+
+                                <ImageView
+                                    android:id="@+id/ivRedeem"
+                                    android:layout_width="51dp"
+                                    android:layout_height="44dp"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:src="@drawable/redeem_privilege"
+                                    android:visibility="gone"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:ignore="ContentDescription" />
+
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    tools:ignore="RelativeOverlap">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/padding_10"
+                                        android:textColor="@color/white"
+                                        android:textSize="14sp"
+                                        tools:text="Online Only Movie Pass" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/padding_10"
+                                        android:text="@string/book_using_pvr_mobile_app_or_website"
+                                        android:textColor="@color/white"
+                                        android:textSize="12sp" />
+
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="@dimen/dimen_50dp"
+                                    android:layout_height="@dimen/dimen_50dp"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="@dimen/dimen_30dp"
+                                    android:src="@drawable/privilege_subs"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:ignore="ContentDescription" />
+
+                            </RelativeLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvWithPvr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            tools:text="Joining Benefits" />
+
+        <View
+            android:layout_width="60dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/padding_10"
+            android:layout_marginBottom="@dimen/padding_10"
+            android:background="@color/pvr_yellow" />
+
+        <ImageView
+            android:layout_width="@dimen/dimen_30dp"
+            android:layout_height="@dimen/dimen_30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:src="@drawable/privilege_star"
+            android:visibility="gone"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/dimen_40dp"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:layout_marginEnd="@dimen/dimen_40dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            tools:text="Food &amp; Beverages Voucher Worth INR 200" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/dimen_40dp"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:layout_marginEnd="@dimen/dimen_40dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            tools:text="(On spend of INR 800 get a discount of INR 200)" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:src="@drawable/privilege_logo"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/dimen_40dp"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:layout_marginEnd="@dimen/dimen_40dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            tools:text="You will be auto-enrolled into PVR Privilege Program. In case already a member, you shall continue to avail all the benefits of the Privilege Program" />
+
+        <ImageView
+            android:layout_width="@dimen/dimen_30dp"
+            android:layout_height="@dimen/dimen_30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:src="@drawable/privilege_star"
+            android:visibility="gone"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/dimen_40dp"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:layout_marginEnd="@dimen/dimen_40dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:visibility="gone"
+            tools:text="Earn Privilege points @ 5% on spending for the purchase of additional tickets* (points not issued for Tickets purchased using the Passport voucher)" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/tvTerms2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="12dp"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:visibility="gone"
+            app:buttonTint="@color/pvr_yellow"
+            tools:text="I agree to the terms &amp; conditions" />
+
+        <include layout="@layout/privilege_text_dialog" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

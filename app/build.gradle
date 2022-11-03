@@ -142,8 +142,8 @@ dependencies {
     kapt("com.squareup.moshi:moshi-kotlin-codegen:1.9.2")
 //Flexbox
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
-    //recycler Indicator
-    implementation "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.0.6"
-
+   //round Image
+    implementation "com.joooonho:selectableroundedimageview:1.0.1."
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
 }

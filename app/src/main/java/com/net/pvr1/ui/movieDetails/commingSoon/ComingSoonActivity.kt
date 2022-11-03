@@ -36,12 +36,12 @@ class ComingSoonActivity : AppCompatActivity(),
         setContentView(view)
         movieDetails()
 
-
+//        Constant().getDeviceId(this)
         authViewModel.movieDetails(
-            preferences.getUserId().toString(),
-            "Delhi-NCR",
-            intent.getStringExtra("mid").toString(),
-            Constant().getDeviceId(this)
+            "pGnnlj1MEjb0MOKBx1EH5w==",
+            "",
+            "NHO00019313",
+            ""
         )
     }
 

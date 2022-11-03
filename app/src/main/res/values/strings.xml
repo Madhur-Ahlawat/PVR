@@ -283,6 +283,23 @@
     <string name="equal">=</string>
     <string name="gst">GST</string>
     <string name="convenince_fee">Convenince fee</string>
+    //privilege
+    <string name="tap_to_expand">Tap to\nExpand</string>
+    <string name="available_visits">Available Visits:</string>
+    <string name="pvr_with_string">With PVR Privilege membership you get</string>
+    <string name="know_more"><u>Know more</u></string>
+    <string name="earn_points_amp_vouchers"><![CDATA[Earn points & vouchers]]></string>
+    <string name="redeem_your_rewards">Redeem your rewards</string>
+    <string name="invites_to_special_screenings">Invites to special screenings</string>
+    <string name="free_large_popcorn">Free Large\nPopcorn</string>
+    <string name="salted_on_your_first_visit_after_joining">Salted on your first\nvisit after joining</string>
+    <string name="_5_points_on_spends">5% Points on spends</string>
+    <string name="i_agree_to_the_terms_amp_conditions"><![CDATA[I agree to the terms & conditions]]></string>
+    <string name="all_tickets_food_and_beverage_purchases">all tickets, food and beverage purchases</string>
+    <string name="earn_more_rewards_n_10_points_on_every_100_with">Earn more rewards\n (10 points on every ₹100) with</string>
+    <string name="pvr_privilege">PVR Privilege+</string>
+    <string name="book_using_pvr_mobile_app_or_website">Book using PVR mobile\napp or website</string>
+    <string name="pvr_privilege_join">JOIN PVR PRIVILEGE</string>
 
 
 </resources>
