@@ -288,9 +288,9 @@
     <string name="available_visits">Available Visits:</string>
     <string name="pvr_with_string">With PVR Privilege membership you get</string>
     <string name="know_more"><u>Know more</u></string>
-    <string name="earn_points_amp_vouchers"><![CDATA[Earn points & vouchers]]></string>
-    <string name="redeem_your_rewards">Redeem your rewards</string>
-    <string name="invites_to_special_screenings">Invites to special screenings</string>
+    <string name="earn_points_amp_vouchers">Earn points &amp;\n vouchers</string>
+    <string name="redeem_your_rewards">Redeem your\n rewards</string>
+    <string name="invites_to_special_screenings">Invites to special\n screenings</string>
     <string name="free_large_popcorn">Free Large\nPopcorn</string>
     <string name="salted_on_your_first_visit_after_joining">Salted on your first\nvisit after joining</string>
     <string name="_5_points_on_spends">5% Points on spends</string>
@@ -300,6 +300,21 @@
     <string name="pvr_privilege">PVR Privilege+</string>
     <string name="book_using_pvr_mobile_app_or_website">Book using PVR mobile\napp or website</string>
     <string name="pvr_privilege_join">JOIN PVR PRIVILEGE</string>
+    <string name="unlock_card">Unlock Card</string>
+    <string name="signIn">SIGN IN</string>
+    <string name="pvr_passport">PVR Passport</string>
+    <string name="book_movie">Book Movie</string>
+    <string name="how_work"><u>How it works?</u></string>
+    <string name="faq"><u>FAQs</u></string>
+    <string name="vouchers_text">Vouchers</string>
+    <string name="history_text">History</string>
+    <string name="check_usage">Check Usage</string>
+    <string name="p1TxtOne">Salted</string>
+    <string name="p1TxtTwo">all tickets,food and beverage purchases</string>
+    <string name="p2TxtOne"> </string>
+    <string name="p2TxtTwo"> </string>
+    <string name="p3TxtOne">Salted on your first visit after joining</string>
+    <string name="p3TxtTwo">on Tickets &amp; Food items</string>
 
 
 </resources>

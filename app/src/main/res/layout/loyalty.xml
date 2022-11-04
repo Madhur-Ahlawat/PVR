@@ -358,11 +358,9 @@
                                 android:layout_marginTop="@dimen/dimen_5dp"
                                 android:layout_marginRight="5dp"
                                 android:paddingEnd="@dimen/padding_10"
-                                android:text="@string/salted_on_your_first_visit_after_joining"
+                                tools:text="@string/salted_on_your_first_visit_after_joining"
                                 android:textColor="@color/pvr_yellow"
-                                android:textSize="12sp"
-
-                                />
+                                android:textSize="12sp"/>
 
                         </LinearLayout>
 
@@ -428,7 +426,6 @@
                                 android:textColor="@color/white"
                                 android:textSize="14sp" />
 
-
                             <TextView
                                 android:id="@+id/points"
                                 android:layout_width="match_parent"
@@ -437,7 +434,7 @@
                                 android:layout_marginTop="@dimen/dimen_5dp"
                                 android:layout_marginRight="5dp"
                                 android:paddingEnd="@dimen/padding_10"
-                                android:text="@string/all_tickets_food_and_beverage_purchases"
+                                tools:text="@string/all_tickets_food_and_beverage_purchases"
                                 android:textColor="@color/pvr_yellow"
                                 android:textSize="12sp" />
 
@@ -548,12 +545,9 @@
                 android:textColor="@color/yellow"
                 android:textSize="18sp"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/ivEarnPoint"
-
-                />
+                app:layout_constraintTop_toBottomOf="@id/ivEarnPoint"/>
 
         </LinearLayout>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -61,7 +61,8 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         //setUserName
         binding?.includeAppBar?.textView2?.text = preferences.getUserName()
 
-        authViewModel.privilegeHome(preferences.geMobileNumber().toString(), "")
+        authViewModel.privilegeHome("", "Delhi-NCR")
+//        authViewModel.privilegeHome(preferences.geMobileNumber().toString(), "Delhi-NCR")
         movedNext()
         offerDataLoad()
         privilegeDataLoad()
@@ -163,14 +164,15 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         Glide.with(this)
             .load(PrivilegeHomeResponseConst?.pinfo?.get(0)?.plogo)
             .into(icon)
-// add pager behavior
+        println("PrivilegeHomeResponseConst--->${PrivilegeHomeResponseConst?.pinfo?.size}")
+
         // add pager behavior
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(recyclerView)
         val gridLayout =
             GridLayoutManager(this@HomeActivity, 1, GridLayoutManager.HORIZONTAL, false)
         recyclerView.layoutManager = LinearLayoutManager(this@HomeActivity)
-        val adapter = PrivilegeHomeAdapter(PrivilegeHomeResponseConst?.pinfo!!, this, this)
+        val adapter = PrivilegeHomeAdapter(PrivilegeHomeResponseConst?.pinfo!!, this,0, this)
         recyclerView.layoutManager = gridLayout
         recyclerView.adapter = adapter
         recyclerView.addItemDecoration(LinePagerIndicatorDecoration())
@@ -275,14 +277,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     }
 
     private fun retrieveData(output: ArrayList<OfferResponse.Output>) {
-        printLog("output--->${output}")
         offerResponse = output
-//        if (output.isEmpty()) {
-//            binding?.constraintLayout55?.hide()
-//        } else {
-//            binding?.constraintLayout55?.show()
-//        }
-
     }
 
     override fun offerClick(comingSoonItem: OfferResponse.Output) {

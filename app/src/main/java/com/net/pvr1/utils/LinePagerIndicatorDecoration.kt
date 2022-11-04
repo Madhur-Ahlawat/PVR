@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.LinearLayoutManager
 
 class LinePagerIndicatorDecoration : ItemDecoration() {
-    private val colorActive = -0x1000000
+    private val colorActive = -0x00D9D9D9
     private val colorInactive = 0x00000000
 
     /**

@@ -9,11 +9,14 @@ import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.PrivilegeHomeItemBinding
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
+import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.show
 
 
 class PrivilegeHomeAdapter(
     private var nowShowingList: List<PrivilegeHomeResponse.Output.Pinfo>,
     private var context: Context,
+    private var type: Int,
     private var listener: RecycleViewItemClickListener
 ) :
     RecyclerView.Adapter<PrivilegeHomeAdapter.ViewHolder>() {
@@ -35,6 +38,14 @@ class PrivilegeHomeAdapter(
                     .load(this.pi)
                     .error(R.drawable.app_icon)
                     .into(binding.imageView110)
+                if(type==1){
+                    binding.textView274.hide()
+                    binding.textView275.hide()
+                }else{
+
+                    binding.textView274.show()
+                    binding.textView275.show()
+                }
                 //title
                 binding.textView274.text=this.ph
                 //desc

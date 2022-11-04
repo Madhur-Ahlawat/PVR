@@ -161,5 +161,10 @@
         <item name="colorControlHighlight">@color/black</item>
     </style>
 
+    //Horizontal progress bar
+    <style name="CustomProgressBarHorizontal" parent="android:Widget.ProgressBar.Horizontal">
+        <item name="android:minHeight">200dp</item>
+        <item name="android:maxHeight">200dp</item>
 
+    </style>
 </resources>

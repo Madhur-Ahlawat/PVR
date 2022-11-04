@@ -143,7 +143,7 @@ dependencies {
 //Flexbox
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
    //round Image
-    implementation "com.joooonho:selectableroundedimageview:1.0.1."
+//    implementation "com.joooonho:selectableroundedimageview:1.0.1."
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
 }

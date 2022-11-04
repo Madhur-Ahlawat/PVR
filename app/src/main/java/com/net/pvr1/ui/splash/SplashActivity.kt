@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Handler
@@ -21,6 +22,7 @@ import com.net.pvr1.databinding.ActivitySplashBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.HomeActivity
+import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.ui.onBoarding.LandingActivity
 import com.net.pvr1.ui.splash.response.SplashResponse
 import com.net.pvr1.ui.splash.viewModel.SplashViewModel
@@ -41,12 +43,19 @@ class SplashActivity : AppCompatActivity() {
     private var networkDialog: Dialog? = null
     private val authViewModel: SplashViewModel by viewModels()
     private var loader: LoaderDialog? = null
+    val MyPREFERENCES = "MyPrefs"
+    var sharedpreferences: SharedPreferences? = null
+    val OnBoardingClick = "Name"
+    private var clickOnBoarding:Boolean=false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+        //OnBoarding Click Check
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE)
+        clickOnBoarding= sharedpreferences?.getBoolean(OnBoardingClick, false)!!
 
         //Check interNet Connection
         if (isConnected()) {
@@ -66,12 +75,12 @@ class SplashActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             } else {
-                if (!Constant.ON_BOARDING_CLICK) {
+                if (!clickOnBoarding) {
                     val intent = Intent(this@SplashActivity, LandingActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {
-                    val intent = Intent(this@SplashActivity, HomeActivity::class.java)
+                    val intent = Intent(this@SplashActivity, LoginActivity::class.java)
                     startActivity(intent)
                     finish()
                 }

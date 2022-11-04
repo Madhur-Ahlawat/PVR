@@ -17,7 +17,7 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView2"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@+id/tvTerms1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,24 +50,45 @@
                 tools:itemCount="3"
                 tools:listitem="@layout/privilege_cards" />
 
-            <include
-                android:id="@+id/include15"
-                layout="@layout/loyalty"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerView35" />
+                app:layout_constraintTop_toBottomOf="@+id/recyclerView35"
+                android:id="@+id/include15">
+                <include
+                    android:id="@+id/include15Logout"
+                    layout="@layout/loyalty"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <include
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/include16"
-                layout="@layout/privilege_passport_know_more"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/include15" />
+                app:layout_constraintTop_toBottomOf="@+id/include15" >
+
+                <include
+                    layout="@layout/privilege_passport_know_more"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -81,13 +102,13 @@
         android:layout_centerInParent="true"
         android:button="@drawable/checked_filter_selector"
         android:gravity="center_vertical"
-        android:text="I agree to the terms &amp; conditions"
+        android:text="@string/i_agree_to_the_terms_amp_conditions"
         android:textColor="@color/white"
         android:textSize="14sp"
         app:buttonTint="@color/yellow"
+        app:layout_constraintBottom_toTopOf="@+id/tvEnroll"
         app:layout_constraintEnd_toEndOf="@+id/view172"
-        app:layout_constraintStart_toStartOf="@+id/view172"
-        app:layout_constraintTop_toBottomOf="@+id/nestedScrollView2" />
+        app:layout_constraintStart_toStartOf="@+id/view172" />
 
 
     <TextView
@@ -105,7 +126,6 @@
         android:textSize="22sp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTerms1"
         tools:layout_editor_absoluteX="32dp" />
 
 

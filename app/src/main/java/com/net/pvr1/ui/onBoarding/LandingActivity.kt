@@ -1,6 +1,8 @@
 package com.net.pvr1.ui.onBoarding
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,11 +26,16 @@ class LandingActivity : AppCompatActivity() {
     lateinit var preferences: PreferenceManager
     private var binding: ActivityLandingBinding? = null
     private var layouts: IntArray? = null
+    val MyPREFERENCES = "MyPrefs"
+    var sharedpreferences: SharedPreferences? = null
+    val OnBoardingClick = "Name"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLandingBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE)
+
         slider()
         movedNext()
     }
@@ -43,6 +50,9 @@ class LandingActivity : AppCompatActivity() {
         }
 
         binding?.movedToNext?.setOnClickListener {
+            val editor = sharedpreferences?.edit()
+            editor?.putBoolean(OnBoardingClick, true)
+            editor?.commit()
             val intent = Intent(this@LandingActivity, LoginActivity::class.java)
             ON_BOARDING_CLICK
             startActivity(intent)
