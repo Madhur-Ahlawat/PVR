@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.net.pvr1.R
 import com.net.pvr1.databinding.ItemCinemaDetailsShowsBinding
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 
@@ -14,6 +15,8 @@ class CinemaSessionDaysAdapter(
     private var listener:RecycleViewItemClickListenerCity,
 ) :
     RecyclerView.Adapter<CinemaSessionDaysAdapter.ViewHolder>() {
+
+    private var rowIndex = 0;
     inner class ViewHolder(val binding: ItemCinemaDetailsShowsBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -22,14 +25,23 @@ class CinemaSessionDaysAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if (position == rowIndex){
+            holder.itemView.setBackgroundResource(R.drawable.bottom_bar_yellow)
+        }else{
+            holder.itemView.setBackgroundResource(0)
+        }
         with(holder){
             with(nowShowingList[position]){
                 //Date
                 binding.textView88.text=this.d
                 //Name
-                binding.textView89.text=this.wdf
+                binding.textView89.text=this.wd
                 //click
-                holder.itemView.setOnClickListener {listener.dateClick(this)  }
+                holder.itemView.setOnClickListener {
+                    rowIndex = position
+                    listener.dateClick(this)
+                    notifyDataSetChanged()
+                }
             }
         }
 

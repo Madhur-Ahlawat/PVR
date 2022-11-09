@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/imageView10"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/dimen_36dp"
+        android:layout_height="@dimen/dimen_25dp"
         android:layout_marginEnd="8dp"
         android:adjustViewBounds="true"
         android:visibility="visible"
@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription,ImageContrastCheck"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@drawable/format_placeholder" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/btText"

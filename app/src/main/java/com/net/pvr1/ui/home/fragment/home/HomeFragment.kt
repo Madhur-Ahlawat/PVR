@@ -5,19 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.CompositePageTransformer
-import androidx.viewpager2.widget.MarginPageTransformer
-import androidx.viewpager2.widget.ViewPager2
 import com.net.pvr1.R
 import com.net.pvr1.databinding.FragmentHomeBinding
 import com.net.pvr1.di.preference.AppPreferences
@@ -29,14 +22,9 @@ import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
 import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingActivity
 import com.net.pvr1.ui.player.PlayerActivity
-import com.net.pvr1.ui.selectCity.SelectCityActivity
 import com.net.pvr1.utils.Constant
-import com.net.pvr1.utils.Constant.Companion.select_pos
 import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.RVPagerSnapFancyDecorator
-import com.net.pvr1.utils.show
 import javax.inject.Inject
-import kotlin.math.abs
 
 
 class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickListener,
@@ -65,16 +53,16 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         authViewModel.home("Delhi-NCR", "", "0", "0", true, "no", "", "ALL", "ALL", "ALL", "no")
-        (requireActivity().findViewById(R.id.notify) as ImageView).show()
-        (requireActivity().findViewById(R.id.locationBtn) as ImageView).show()
-        (requireActivity().findViewById(R.id.textView2) as TextView).show()
-        (requireActivity().findViewById(R.id.subTitle) as TextView).show()
-        (requireActivity().findViewById(R.id.txtCity) as TextView).show()
-        (requireActivity().findViewById(R.id.constraintLayout55) as ConstraintLayout).show()
-        (requireActivity().findViewById(R.id.txtCity) as TextView).setOnClickListener {
-            val intent = Intent(requireActivity(), SelectCityActivity::class.java)
-            startActivity(intent)
-        }
+//        (requireActivity().findViewById(R.id.notify) as ImageView).show()
+//        (requireActivity().findViewById(R.id.locationBtn) as ImageView).show()
+//        (requireActivity().findViewById(R.id.textView2) as TextView).show()
+//        (requireActivity().findViewById(R.id.subTitle) as TextView).show()
+//        (requireActivity().findViewById(R.id.txtCity) as TextView).show()
+//        (requireActivity().findViewById(R.id.constraintLayout55) as ConstraintLayout).show()
+//        (requireActivity().findViewById(R.id.txtCity) as TextView).setOnClickListener {
+//            val intent = Intent(requireActivity(), SelectCityActivity::class.java)
+//            startActivity(intent)
+//        }
 
         movedNext()
         homeApi()
@@ -212,15 +200,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             val gridLayoutSlider =
                 GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
 
-            // Decorator set-up
-            val cardWidthPixels = activity?.resources?.displayMetrics?.widthPixels?.times(0.15f)
-            val cardHintPercent = 0.15f
-            binding?.recyclerViewSlider?.addItemDecoration(
-                RVPagerSnapFancyDecorator(
-                    cardWidthPixels,
-                    cardHintPercent
-                )
-            )
 
             binding?.recyclerViewSlider?.layoutManager = LinearLayoutManager(context)
             val adapterSlider = HomeSliderAdapter(requireActivity(), output.mv, this)
@@ -230,38 +209,12 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
         }
         //Promotion
+        val gridLayoutSlider =
+            GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
+        binding?.recyclerPromotion?.layoutManager = gridLayoutSlider
         binding?.recyclerPromotion?.adapter =
-            HomePromotionPagerAdapter(requireActivity(), output.mfi, binding?.recyclerPromotion)
-        binding?.recyclerPromotion?.offscreenPageLimit = 3
-        binding?.recyclerPromotion?.clipChildren = false
-        binding?.recyclerPromotion?.clipToPadding = false
-        binding?.recyclerPromotion?.getChildAt(0)?.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
-        val transfer = CompositePageTransformer()
+            PromotionAdapter(requireActivity(), output.ph, binding?.recyclerPromotion)
 
-        val nextItemVisiblePx = resources.getDimension(R.dimen.viewpager_next_item_visible)
-        val currentItemHorizontalMarginPx =
-            resources.getDimension(R.dimen.viewpager_current_item_horizontal_margin)
-        val pageTranslationX = nextItemVisiblePx + currentItemHorizontalMarginPx
-
-
-        transfer.addTransformer(MarginPageTransformer(40))
-        transfer.addTransformer(object : com.github.islamkhsh.viewpager2.ViewPager2.PageTransformer,
-            ViewPager2.PageTransformer {
-            override fun transformPage(page: View, position: Float) {
-                // println("rowIndex---->1-$position")
-                page.translationX = -pageTranslationX * position
-
-                select_pos = position.toInt()
-                val r = 1 - abs(position)
-                page.scaleY = (0.5f + r * 0.14f)
-            }
-        })
-
-        binding?.recyclerPromotion?.setPageTransformer(transfer)
-
-        binding?.recyclerPromotion?.registerOnPageChangeCallback(object :
-            ViewPager2.OnPageChangeCallback() {
-        })
 
         //Movies
         val gridLayoutMovies =

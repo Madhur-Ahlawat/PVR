@@ -44,11 +44,7 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        preferences = AppPreferences()
         authViewModel.cinema("Delhi-NCR", "0.0", "0.0", "", "")
-
-        (requireActivity().findViewById(R.id.notify) as ImageView).hide()
-        (requireActivity().findViewById(R.id.constraintLayout55) as ConstraintLayout).hide()
         cinemaApi()
         setPreference()
         movedNext()

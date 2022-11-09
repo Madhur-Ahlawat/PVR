@@ -47,12 +47,12 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         authViewModel.comingSoon("Delhi-NCR", "ALL", "ALL", "")
-        (requireActivity().findViewById(R.id.notify) as ImageView).hide()
-        (requireActivity().findViewById(R.id.locationBtn) as ImageView).hide()
-        (requireActivity().findViewById(R.id.textView2) as TextView).hide()
-        (requireActivity().findViewById(R.id.subTitle) as TextView).hide()
-        (requireActivity().findViewById(R.id.txtCity) as TextView).hide()
-        (requireActivity().findViewById(R.id.constraintLayout55) as ConstraintLayout).hide()
+//        (requireActivity().findViewById(R.id.notify) as ImageView).hide()
+//        (requireActivity().findViewById(R.id.locationBtn) as ImageView).hide()
+//        (requireActivity().findViewById(R.id.textView2) as TextView).hide()
+//        (requireActivity().findViewById(R.id.subTitle) as TextView).hide()
+//        (requireActivity().findViewById(R.id.txtCity) as TextView).hide()
+//        (requireActivity().findViewById(R.id.constraintLayout55) as ConstraintLayout).hide()
         comingSoonApi()
         movedNext()
     }

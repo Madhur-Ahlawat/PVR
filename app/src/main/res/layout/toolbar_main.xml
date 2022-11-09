@@ -5,155 +5,148 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dimen_60dp"
-    android:paddingStart="@dimen/padding_10"
-    android:paddingEnd="@dimen/padding_10"
+    android:elevation="@dimen/padding_10"
     android:background="@color/white">
 
-    <View
-        android:id="@+id/view7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_50dp"
+        android:paddingStart="@dimen/padding_10"
+        android:paddingEnd="@dimen/padding_10"
+        app:layout_constraintBottom_toTopOf="@+id/imageView113"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-
-        android:id="@+id/viewCity"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/dimen_40dp"
-        android:layout_marginEnd="@dimen/dimen_8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/constraintLayout6"
-        app:layout_constraintStart_toStartOf="@+id/view7"
-        app:layout_constraintTop_toTopOf="@+id/view7" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:textColor="@color/pvr_dark_black"
-        android:textSize="@dimen/dimen_16sp"
-        app:layout_constraintEnd_toEndOf="@+id/viewCity"
-        app:layout_constraintStart_toStartOf="@+id/view7"
-        app:layout_constraintTop_toTopOf="@+id/viewCity"
-        tools:text="Hey! Rajat" />
-
-    <TextView
-        android:id="@+id/txtCity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:textColor="@color/pvr_dark_black"
-        android:textSize="@dimen/dimen_12sp"
-        android:drawablePadding="@dimen/dimen_8dp"
-        app:layout_constraintEnd_toEndOf="@+id/textView2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        android:text="Delhi NCR"
-        app:drawableEndCompat="@drawable/right_arrow" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout6"
-        android:layout_width="180dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/view7"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/searchBtn"
+        <View
+            android:id="@+id/view7"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/lNotification"
-            android:background="@android:color/transparent"
-            android:paddingLeft="@dimen/common_header_padding"
-            android:paddingRight="@dimen/common_header_padding"
-            android:src="@drawable/search"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/lNotification"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-        <LinearLayout
-            android:id="@+id/lNotification"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/llLocation"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/common_header_padding"
-            android:paddingRight="@dimen/common_header_padding"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/scanQr"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:id="@+id/notify"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_notification"
-                android:visibility="visible"
-                tools:ignore="ContentDescription,ImageContrastCheck" />
-
-            <TextView
-                android:id="@+id/counter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="-18dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/yellow_circle"
-                android:gravity="center"
-                android:textColor="@color/pvr_dark_gray"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:visibility="visible"
-                tools:ignore="TextContrastCheck"
-                tools:text="2" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/scanQr"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingLeft="@dimen/common_header_padding"
-            android:paddingRight="@dimen/common_header_padding"
-            android:visibility="gone"
-            app:layout_constraintEnd_toStartOf="@+id/llLocation">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/qr_code_new"
-                android:visibility="visible"
-                tools:ignore="ContentDescription" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:paddingStart="@dimen/common_header_padding"
-            android:paddingEnd="@dimen/dimen_2dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+
+            android:id="@+id/viewCity"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_marginEnd="@dimen/dimen_8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/constraintLayout6"
+            app:layout_constraintStart_toStartOf="@+id/view7"
+            app:layout_constraintTop_toTopOf="@+id/view7" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:textColor="@color/pvr_dark_black"
+            android:textSize="@dimen/dimen_16sp"
+            app:layout_constraintEnd_toEndOf="@+id/viewCity"
+            app:layout_constraintStart_toStartOf="@+id/view7"
+            app:layout_constraintTop_toTopOf="@+id/viewCity"
+            tools:text="Hey! Rajat" />
+
+        <TextView
+            android:id="@+id/txtCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/dimen_3dp"
+            android:drawablePadding="@dimen/dimen_8dp"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:text="Delhi NCR"
+            android:textColor="@color/pvr_dark_black"
+            android:textSize="@dimen/dimen_12sp"
+            app:drawableEndCompat="@drawable/right_arrow"
+            app:layout_constraintEnd_toEndOf="@+id/textView2"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout6"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/view7"
             app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/searchBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/lNotification"
+                android:background="@android:color/transparent"
+                android:paddingLeft="@dimen/common_header_padding"
+                android:paddingRight="@dimen/common_header_padding"
+                android:src="@drawable/search"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/lNotification"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+            <LinearLayout
+                android:id="@+id/lNotification"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/common_header_padding"
+                android:paddingRight="@dimen/common_header_padding"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/scanQr"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:id="@+id/notify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_notification"
+                    android:visibility="visible"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/counter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="-18dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/yellow_circle"
+                    android:gravity="center"
+                    android:textColor="@color/pvr_dark_gray"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:visibility="visible"
+                    tools:ignore="TextContrastCheck"
+                    tools:text="2" />
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/scanQr"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:paddingLeft="@dimen/common_header_padding"
+                android:paddingRight="@dimen/common_header_padding"
+                android:src="@drawable/qr_code_scan"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/locationBtn"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
 
 
             <ImageButton
@@ -161,25 +154,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
-                android:src="@drawable/location"
+                android:paddingStart="@dimen/common_header_padding"
+                android:paddingEnd="@dimen/dimen_2dp"
+                android:src="@drawable/profile_home"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/subTitle"
-                android:layout_width="45dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="@dimen/common_hear_subtitle_margin"
-                android:ellipsize="marquee"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/dim_h4"
-                tools:ignore="TextContrastCheck"
-                android:text="Delhi" />
-
-        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/imageView113"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bottomshadow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    
 </androidx.constraintlayout.widget.ConstraintLayout>

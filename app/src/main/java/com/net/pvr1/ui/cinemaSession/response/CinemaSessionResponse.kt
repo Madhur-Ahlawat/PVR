@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.cinemaSession.response
 
+import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import java.io.Serializable
 
 data class CinemaSessionResponse(
@@ -39,8 +40,8 @@ data class CinemaSessionResponse(
         val oua: String,
         val par: Boolean,
         val ph: String,
-        val phd: List<Any>,
-        val pu: List<Any>,
+        val phd: List<HomeResponse.Ph>,
+        val pu: List<HomeResponse.Ph>,
         val s: String
     ) : Serializable {
         data class Bd(

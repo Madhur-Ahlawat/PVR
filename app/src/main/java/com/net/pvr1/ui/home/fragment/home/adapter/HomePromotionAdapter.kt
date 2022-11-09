@@ -49,7 +49,7 @@ class HomePromotionAdapter(
     }
 
     class MyViewHolderNowShowing(view: View) : RecyclerView.ViewHolder(view) {
-        var image: ImageView = view.findViewById(R.id.imageView15)
+        var image: ImageView = view.findViewById(R.id.sliderImg)
     }
 
     interface RecycleViewItemClickListener {

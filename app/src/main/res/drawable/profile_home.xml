@@ -1,0 +1,40 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="30dp"
+    android:height="30dp"
+    android:viewportWidth="30"
+    android:viewportHeight="30">
+  <path
+      android:strokeWidth="1"
+      android:pathData="M15,15m-14.5,0a14.5,14.5 0,1 1,29 0a14.5,14.5 0,1 1,-29 0"
+      android:strokeColor="#FFCB05">
+    <aapt:attr name="android:fillColor">
+      <gradient 
+          android:startX="15"
+          android:startY="0"
+          android:endX="15"
+          android:endY="30"
+          android:type="linear">
+        <item android:offset="0" android:color="#FF626262"/>
+        <item android:offset="1" android:color="#FF000000"/>
+      </gradient>
+    </aapt:attr>
+  </path>
+  <group>
+    <clip-path
+        android:pathData="M8,8h14v14h-14z"/>
+    <path
+        android:pathData="M19.667,20.833H10.333V19.667C10.333,18.893 10.641,18.151 11.188,17.604C11.734,17.058 12.476,16.75 13.25,16.75H16.75C17.524,16.75 18.265,17.058 18.812,17.604C19.359,18.151 19.667,18.893 19.667,19.667V20.833ZM15,15.583C14.54,15.583 14.085,15.493 13.66,15.317C13.236,15.141 12.85,14.883 12.525,14.558C12.2,14.233 11.942,13.847 11.766,13.423C11.59,12.998 11.5,12.543 11.5,12.083C11.5,11.624 11.59,11.169 11.766,10.744C11.942,10.319 12.2,9.934 12.525,9.609C12.85,9.284 13.236,9.026 13.66,8.85C14.085,8.674 14.54,8.583 15,8.583C15.928,8.583 16.818,8.952 17.475,9.609C18.131,10.265 18.5,11.155 18.5,12.083C18.5,13.012 18.131,13.902 17.475,14.558C16.818,15.215 15.928,15.583 15,15.583Z"
+        android:fillColor="#ffffff"/>
+  </group>
+  <path
+      android:pathData="M24,6m-6,0a6,6 0,1 1,12 0a6,6 0,1 1,-12 0"
+      android:fillColor="#020204"/>
+  <group>
+    <clip-path
+        android:pathData="M19.999,2h8v8h-8z"/>
+    <path
+        android:pathData="M23.999,7.756L26.059,8.999L25.512,6.656L27.332,5.079L24.935,4.876L23.999,2.666L23.062,4.876L20.666,5.079L22.486,6.656L21.939,8.999L23.999,7.756Z"
+        android:fillColor="#FFCB05"/>
+  </group>
+</vector>

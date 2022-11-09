@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -58,7 +57,7 @@ class CinemaAdapter(
                     //Call Child Adapter
                     val gridLayout2 =
                         GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
-                    val comingSoonMovieAdapter = CinemaChildAdapter(this.m, context, this)
+                    val comingSoonMovieAdapter = CinemaMovieAdapter(this.m, context, this)
                     binding.llMovieList.layoutManager = gridLayout2
                     binding.llMovieList.adapter = comingSoonMovieAdapter
                 } else {
@@ -108,7 +107,7 @@ class CinemaAdapter(
                 }
 
                 //Kilometer
-                binding.shows.setOnClickListener {
+                holder.itemView.setOnClickListener {
                     location.onLocationClick(this)
                 }
                 //Kilometer

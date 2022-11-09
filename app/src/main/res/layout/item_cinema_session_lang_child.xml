@@ -9,7 +9,7 @@
         android:id="@+id/textView95"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/sf_pro_text_medium"
         android:textColor="@color/textColorGray"
         android:textSize="@dimen/dimen_12sp"

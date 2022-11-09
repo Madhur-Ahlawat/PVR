@@ -1,6 +1,8 @@
 package com.net.pvr1.ui.home.fragment.home.adapter
 
+import android.app.Activity
 import android.content.Context
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,22 +15,31 @@ import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 
 
 class HomeSliderAdapter(
-    private var context: Context,
+    private var context: Activity,
     private var nowShowingList: List<HomeResponse.Mv>,
     private var listener: RecycleViewItemClickListener,
 
     ) :
     RecyclerView.Adapter<HomeSliderAdapter.MyViewHolderNowShowing>() {
 
+   private val displayMetrics = DisplayMetrics()
+   private var screenWidth = 0
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderNowShowing {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_home_slider, parent, false)
+        context.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        screenWidth = displayMetrics.widthPixels
         return MyViewHolderNowShowing(view)
     }
 
     override fun onBindViewHolder(holder: MyViewHolderNowShowing, position: Int) {
         val comingSoonItem = nowShowingList[position]
-
+        val lp = holder.itemView.layoutParams
+        lp.height = lp.height
+        lp.width = ((screenWidth-40)/1.17f).toInt()
+        holder.itemView.layoutParams = lp
         //Image
         Glide.with(context)
             .load(comingSoonItem.i)

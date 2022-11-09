@@ -45,13 +45,13 @@ class MoreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         preferences = PreferenceManager(requireActivity())
-        (requireActivity().findViewById(R.id.notify) as ImageView).hide()
-        (requireActivity().findViewById(R.id.locationBtn) as ImageView).hide()
-        (requireActivity().findViewById(R.id.textView2) as TextView).hide()
-        (requireActivity().findViewById(R.id.subTitle) as TextView).hide()
-        (requireActivity().findViewById(R.id.txtCity) as TextView).hide()
-        (requireActivity().findViewById(R.id.include) as ConstraintLayout).hide()
-        (requireActivity().findViewById(R.id.constraintLayout55) as ConstraintLayout).hide()
+//        (requireActivity().findViewById(R.id.notify) as ImageView).hide()
+//        (requireActivity().findViewById(R.id.locationBtn) as ImageView).hide()
+//        (requireActivity().findViewById(R.id.textView2) as TextView).hide()
+//        (requireActivity().findViewById(R.id.subTitle) as TextView).hide()
+//        (requireActivity().findViewById(R.id.txtCity) as TextView).hide()
+//        (requireActivity().findViewById(R.id.include) as ConstraintLayout).hide()
+//        (requireActivity().findViewById(R.id.constraintLayout55) as ConstraintLayout).hide()
         //SetName
         binding?.profileDetails?.textView205?.text = preferences.getUserName()
 

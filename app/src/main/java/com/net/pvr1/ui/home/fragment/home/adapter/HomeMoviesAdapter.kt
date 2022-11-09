@@ -33,7 +33,7 @@ class HomeMoviesAdapter(
 
         //Image
         Glide.with(context)
-            .load(comingSoonItem.i)
+            .load(comingSoonItem.miv)
             .error(R.drawable.app_icon)
             .into(holder.image)
 

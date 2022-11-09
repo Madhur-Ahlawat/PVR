@@ -46,7 +46,7 @@
                     android:id="@+id/recyclerCinemaCat"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_20dp"
+                    android:layout_marginTop="@dimen/dimen_15dp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="@+id/vwMain1s"
@@ -61,7 +61,7 @@
                     android:id="@+id/quickBook"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dimen_60dp"
-                    android:layout_marginTop="@dimen/dimen_20dp"
+                    android:layout_marginTop="@dimen/dimen_15dp"
                     android:background="@drawable/bg_quick_book"
                     app:layout_constraintEnd_toEndOf="@+id/vwMain1s"
                     app:layout_constraintStart_toStartOf="@+id/vwMain1s"
@@ -100,7 +100,7 @@
                     android:id="@+id/recyclerViewSlider"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="@dimen/dimen_15dp"
                     tools:itemCount="3"
                     tools:listitem="@layout/item_home_slider"
                     android:orientation="horizontal"
@@ -109,13 +109,11 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/quickBook" />
 
-                <androidx.viewpager2.widget.ViewPager2
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerPromotion"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/dimen_60dp"
+                    android:layout_height="wrap_content"
                     android:background="@color/transparent"
-                    android:paddingStart="35dp"
-                    android:paddingEnd="35dp"
                     android:layout_marginTop="@dimen/dimen_20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

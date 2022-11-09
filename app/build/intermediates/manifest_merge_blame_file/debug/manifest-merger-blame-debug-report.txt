@@ -1,0 +1,545 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.net.pvr1"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+8-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="33" />
+9-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+11-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:5:5-81
+11-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:5:22-78
+12    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+12-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:6:5-79
+12-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:6:22-76
+13    <uses-permission android:name="android.permission.INTERNET" />
+13-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:7:5-67
+13-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:7:22-64
+14    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+14-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:8:5-79
+14-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:8:22-76
+15
+16    <uses-feature android:name="android.hardware.camera.any" />
+16-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:10:5-64
+16-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:10:19-61
+17
+18    <uses-permission android:name="android.permission.CAMERA" />
+18-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:12:5-65
+18-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:12:22-62
+19
+20    <!-- Don't require camera, as this requires a rear camera. This allows it to work on the Nexus 7 -->
+21    <uses-feature
+21-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:25:5-27:36
+22        android:name="android.hardware.camera"
+22-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:26:9-47
+23        android:required="false" />
+23-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:27:9-33
+24    <uses-feature
+24-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:28:5-30:36
+25        android:name="android.hardware.camera.front"
+25-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:29:9-53
+26        android:required="false" /> <!-- TODO replace above two with next line after Android 4.2 -->
+26-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:30:9-33
+27    <!-- <uses-feature android:name="android.hardware.camera.any"/> -->
+28    <uses-feature
+28-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:33:5-35:36
+29        android:name="android.hardware.camera.autofocus"
+29-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:34:9-57
+30        android:required="false" />
+30-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:35:9-33
+31    <uses-feature
+31-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:36:5-38:36
+32        android:name="android.hardware.camera.flash"
+32-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:37:9-53
+33        android:required="false" />
+33-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:38:9-33
+34    <uses-feature
+34-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:39:5-41:36
+35        android:name="android.hardware.screen.landscape"
+35-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:40:9-57
+36        android:required="false" />
+36-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:41:9-33
+37    <uses-feature
+37-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:42:5-44:36
+38        android:name="android.hardware.wifi"
+38-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:43:9-45
+39        android:required="false" />
+39-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:44:9-33
+40
+41    <permission
+41-->[androidx.core:core:1.9.0] /Users/wemonde/.gradle/caches/transforms-3/a9a4d23f7bfa372ccd3155c0d35509ec/transformed/core-1.9.0/AndroidManifest.xml:22:5-24:47
+42        android:name="com.net.pvr1.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+42-->[androidx.core:core:1.9.0] /Users/wemonde/.gradle/caches/transforms-3/a9a4d23f7bfa372ccd3155c0d35509ec/transformed/core-1.9.0/AndroidManifest.xml:23:9-81
+43        android:protectionLevel="signature" />
+43-->[androidx.core:core:1.9.0] /Users/wemonde/.gradle/caches/transforms-3/a9a4d23f7bfa372ccd3155c0d35509ec/transformed/core-1.9.0/AndroidManifest.xml:24:9-44
+44
+45    <uses-permission android:name="com.net.pvr1.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+45-->[androidx.core:core:1.9.0] /Users/wemonde/.gradle/caches/transforms-3/a9a4d23f7bfa372ccd3155c0d35509ec/transformed/core-1.9.0/AndroidManifest.xml:26:5-97
+45-->[androidx.core:core:1.9.0] /Users/wemonde/.gradle/caches/transforms-3/a9a4d23f7bfa372ccd3155c0d35509ec/transformed/core-1.9.0/AndroidManifest.xml:26:22-94
+46
+47    <application
+47-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:14:5-191:19
+48        android:name="com.net.pvr1.NoteApplication"
+48-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:15:9-40
+49        android:allowBackup="true"
+49-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:16:9-35
+50        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+50-->[androidx.core:core:1.9.0] /Users/wemonde/.gradle/caches/transforms-3/a9a4d23f7bfa372ccd3155c0d35509ec/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
+51        android:debuggable="true"
+52        android:extractNativeLibs="false"
+53        android:icon="@mipmap/ic_launcher"
+53-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:17:9-43
+54        android:label="@string/app_name"
+54-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:18:9-41
+55        android:roundIcon="@mipmap/ic_launcher_round"
+55-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:19:9-54
+56        android:supportsRtl="true"
+56-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:20:9-35
+57        android:testOnly="true"
+58        android:theme="@style/NoActionBar" >
+58-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:21:9-43
+59        <activity
+59-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:22:9-29:20
+60            android:name="com.net.pvr1.PrivilegeLogInActivity"
+60-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:23:13-51
+61            android:exported="false"
+61-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:24:13-37
+62            android:screenOrientation="portrait" >
+62-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:25:13-49
+63            <meta-data
+63-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:26:13-28:36
+64                android:name="android.app.lib_name"
+64-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:27:17-52
+65                android:value="" />
+65-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:28:17-33
+66        </activity>
+67        <activity
+67-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:30:9-37:20
+68            android:name="com.net.pvr1.MainActivity"
+68-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:31:13-41
+69            android:exported="false"
+69-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:32:13-37
+70            android:screenOrientation="portrait" >
+70-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:33:13-49
+71            <meta-data
+71-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:26:13-28:36
+72                android:name="android.app.lib_name"
+72-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:27:17-52
+73                android:value="" />
+73-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:28:17-33
+74        </activity>
+75        <activity
+75-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:38:9-45:20
+76            android:name="com.net.pvr1.ui.movieDetails.nowShowing.NowShowingActivity"
+76-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:39:13-74
+77            android:exported="false"
+77-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:40:13-37
+78            android:screenOrientation="portrait" >
+78-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:41:13-49
+79            <meta-data
+79-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:26:13-28:36
+80                android:name="android.app.lib_name"
+80-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:27:17-52
+81                android:value="" />
+81-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:28:17-33
+82        </activity>
+83        <activity
+83-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:46:9-53:20
+84            android:name="com.net.pvr1.ui.home.fragment.more.bookingRetrieval.BookingRetrievalActivity"
+84-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:47:13-92
+85            android:exported="false"
+85-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:48:13-37
+86            android:screenOrientation="portrait" >
+86-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:49:13-49
+87            <meta-data
+87-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:26:13-28:36
+88                android:name="android.app.lib_name"
+88-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:27:17-52
+89                android:value="" />
+89-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:28:17-33
+90        </activity>
+91        <activity
+91-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:54:9-61:20
+92            android:name="com.net.pvr1.ui.giftCard.activateGiftCard.ActivateGiftCardActivity"
+92-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:55:13-82
+93            android:exported="false"
+93-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:56:13-37
+94            android:screenOrientation="portrait" >
+94-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:57:13-49
+95            <meta-data
+95-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:26:13-28:36
+96                android:name="android.app.lib_name"
+96-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:27:17-52
+97                android:value="" />
+97-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:28:17-33
+98        </activity>
+99        <activity
+99-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:62:9-69:20
+100            android:name="com.net.pvr1.ui.profile.prefrence.PreferenceActivity"
+100-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:63:13-68
+101            android:exported="false"
+101-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:64:13-37
+102            android:screenOrientation="portrait" >
+102-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:65:13-49
+103            <meta-data
+103-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:26:13-28:36
+104                android:name="android.app.lib_name"
+104-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:27:17-52
+105                android:value="" />
+105-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:28:17-33
+106        </activity>
+107        <activity
+107-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:70:9-77:20
+108            android:name="com.net.pvr1.ui.profile.userDetails.ProfileActivity"
+108-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:71:13-67
+109            android:exported="false"
+109-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:72:13-37
+110            android:screenOrientation="portrait" >
+110-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:73:13-49
+111            <meta-data
+111-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:26:13-28:36
+112                android:name="android.app.lib_name"
+112-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:27:17-52
+113                android:value="" />
+113-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:28:17-33
+114        </activity>
+115        <activity
+115-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:78:9-81:51
+116            android:name="com.net.pvr1.ui.offer.offerDetails.OfferDetailsActivity"
+116-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:79:13-71
+117            android:exported="false"
+117-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:80:13-37
+118            android:screenOrientation="portrait" />
+118-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:81:13-49
+119        <activity
+119-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:82:9-85:51
+120            android:name="com.net.pvr1.ui.payment.PaymentActivity"
+120-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:83:13-55
+121            android:exported="false"
+121-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:84:13-37
+122            android:screenOrientation="portrait" />
+122-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:85:13-49
+123        <activity
+123-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:86:9-89:51
+124            android:name="com.net.pvr1.ui.summery.SummeryActivity"
+124-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:87:13-55
+125            android:exported="false"
+125-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:88:13-37
+126            android:screenOrientation="portrait" />
+126-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:89:13-49
+127        <activity
+127-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:90:9-93:51
+128            android:name="com.net.pvr1.ui.seatLayout.SeatLayoutActivity"
+128-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:91:13-61
+129            android:exported="false"
+129-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:92:13-37
+130            android:screenOrientation="portrait" />
+130-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:93:13-49
+131        <activity
+131-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:94:9-97:51
+132            android:name="com.net.pvr1.ui.food.FoodActivity"
+132-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:95:13-49
+133            android:exported="false"
+133-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:96:13-37
+134            android:screenOrientation="portrait" />
+134-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:97:13-49
+135        <activity
+135-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:98:9-101:51
+136            android:name="com.net.pvr1.ui.bookingSession.BookingActivity"
+136-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:99:13-62
+137            android:exported="false"
+137-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:100:13-37
+138            android:screenOrientation="portrait" />
+138-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:101:13-49
+139        <activity
+139-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:102:9-105:51
+140            android:name="com.net.pvr1.ui.cinemaSession.CinemaSessionActivity"
+140-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:103:13-67
+141            android:exported="false"
+141-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:104:13-37
+142            android:screenOrientation="portrait" />
+142-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:105:13-49
+143        <activity
+143-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:106:9-110:56
+144            android:name="com.net.pvr1.ui.scanner.ScannerActivity"
+144-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:107:13-55
+145            android:exported="false"
+145-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:108:13-37
+146            android:screenOrientation="portrait" />
+146-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:109:13-49
+147        <activity
+147-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:111:9-114:51
+148            android:name="com.net.pvr1.ui.movieDetails.commingSoon.ComingSoonActivity"
+148-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:112:13-75
+149            android:exported="false"
+149-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:113:13-37
+150            android:screenOrientation="portrait" />
+150-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:114:13-49
+151        <activity
+151-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:115:9-118:51
+152            android:name="com.net.pvr1.ui.selectCity.SelectCityActivity"
+152-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:116:13-61
+153            android:exported="false"
+153-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:117:13-37
+154            android:screenOrientation="portrait" />
+154-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:118:13-49
+155        <activity
+155-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:119:9-122:51
+156            android:name="com.net.pvr1.ui.search.searchComingSoon.SearchComingSoonActivity"
+156-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:120:13-80
+157            android:exported="false"
+157-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:121:13-37
+158            android:screenOrientation="portrait" />
+158-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:122:13-49
+159        <activity
+159-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:123:9-126:51
+160            android:name="com.net.pvr1.ui.search.searchCinema.SearchCinemaActivity"
+160-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:124:13-72
+161            android:exported="false"
+161-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:125:13-37
+162            android:screenOrientation="portrait" />
+162-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:126:13-49
+163        <activity
+163-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:127:9-130:51
+164            android:name="com.net.pvr1.ui.search.searchHome.SearchHomeActivity"
+164-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:128:13-68
+165            android:exported="false"
+165-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:129:13-37
+166            android:screenOrientation="portrait" />
+166-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:130:13-49
+167        <activity
+167-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:131:9-134:51
+168            android:name="com.net.pvr1.ui.enableLocation.EnableLocationActivity"
+168-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:132:13-69
+169            android:exported="false"
+169-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:133:13-37
+170            android:screenOrientation="portrait" />
+170-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:134:13-49
+171        <activity
+171-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:135:9-138:51
+172            android:name="com.net.pvr1.ui.player.PlayerActivity"
+172-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:136:13-53
+173            android:exported="false"
+173-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:137:13-37
+174            android:screenOrientation="portrait" />
+174-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:138:13-49
+175        <activity
+175-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:139:9-142:51
+176            android:name="com.net.pvr1.ui.privateScreenings.PrivateScreeningsActivity"
+176-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:140:13-75
+177            android:exported="false"
+177-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:141:13-37
+178            android:screenOrientation="portrait" />
+178-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:142:13-49
+179        <activity
+179-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:143:9-146:51
+180            android:name="com.net.pvr1.ui.giftCard.GiftCardActivity"
+180-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:144:13-57
+181            android:exported="false"
+181-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:145:13-37
+182            android:screenOrientation="portrait" />
+182-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:146:13-49
+183        <activity
+183-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:147:9-150:51
+184            android:name="com.net.pvr1.ui.offer.OfferActivity"
+184-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:148:13-51
+185            android:exported="false"
+185-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:149:13-37
+186            android:screenOrientation="portrait" />
+186-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:150:13-49
+187        <activity
+187-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:151:9-154:51
+188            android:name="com.net.pvr1.ui.webView.WebViewActivity"
+188-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:152:13-55
+189            android:exported="false"
+189-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:153:13-37
+190            android:screenOrientation="portrait" />
+190-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:154:13-49
+191        <activity
+191-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:155:9-158:51
+192            android:name="com.net.pvr1.ui.myBookings.MyBookingsActivity"
+192-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:156:13-61
+193            android:exported="false"
+193-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:157:13-37
+194            android:screenOrientation="portrait" />
+194-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:158:13-49
+195        <activity
+195-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:159:9-162:51
+196            android:name="com.net.pvr1.ui.login.otpVerify.OtpVerifyActivity"
+196-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:160:13-65
+197            android:exported="false"
+197-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:161:13-37
+198            android:screenOrientation="portrait" />
+198-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:162:13-49
+199        <activity
+199-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:163:9-166:51
+200            android:name="com.net.pvr1.ui.login.LoginActivity"
+200-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:164:13-51
+201            android:exported="false"
+201-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:165:13-37
+202            android:screenOrientation="portrait" />
+202-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:166:13-49
+203        <activity
+203-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:167:9-170:51
+204            android:name="com.net.pvr1.ui.onBoarding.LandingActivity"
+204-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:168:13-58
+205            android:exported="false"
+205-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:169:13-37
+206            android:screenOrientation="portrait" />
+206-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:170:13-49
+207        <activity
+207-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:171:9-180:20
+208            android:name="com.net.pvr1.ui.splash.SplashActivity"
+208-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:172:13-53
+209            android:exported="true"
+209-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:173:13-36
+210            android:screenOrientation="portrait" >
+210-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:174:13-49
+211            <intent-filter>
+211-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:175:13-179:29
+212                <action android:name="android.intent.action.MAIN" />
+212-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:176:17-69
+212-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:176:25-66
+213
+214                <category android:name="android.intent.category.LAUNCHER" />
+214-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:178:17-77
+214-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:178:27-74
+215            </intent-filter>
+216        </activity>
+217        <activity
+217-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:181:9-184:51
+218            android:name="com.net.pvr1.ui.home.HomeActivity"
+218-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:182:13-49
+219            android:exported="true"
+219-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:183:13-36
+220            android:screenOrientation="portrait" />
+220-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:184:13-49
+221
+222        <service android:name="com.net.pvr1.utils.FetchAddressIntentServices" />
+222-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:186:9-69
+222-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:186:18-66
+223
+224        <meta-data
+224-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:188:9-190:57
+225            android:name="preloaded_fonts"
+225-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:189:13-43
+226            android:resource="@array/preloaded_fonts" />
+226-->/Users/wemonde/Documents/WemondeProjects/b2c-pvr-android/app/src/main/AndroidManifest.xml:190:13-54
+227
+228        <activity
+228-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:47:9-53:63
+229            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+229-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:48:13-74
+230            android:clearTaskOnLaunch="true"
+230-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:49:13-45
+231            android:screenOrientation="sensorLandscape"
+231-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:50:13-56
+232            android:stateNotNeeded="true"
+232-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:51:13-42
+233            android:theme="@style/zxing_CaptureTheme"
+233-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:52:13-54
+234            android:windowSoftInputMode="stateAlwaysHidden" />
+234-->[com.journeyapps:zxing-android-embedded:4.2.0] /Users/wemonde/.gradle/caches/transforms-3/361f135947b647fdaa1c7a6ae8b69aa5/transformed/jetified-zxing-android-embedded-4.2.0/AndroidManifest.xml:53:13-60
+235        <activity
+235-->[com.google.android.gms:play-services-auth:20.3.0] /Users/wemonde/.gradle/caches/transforms-3/cf6f21db7273578ceab0d9c77a6fe4ee/transformed/jetified-play-services-auth-20.3.0/AndroidManifest.xml:23:9-27:75
+236            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+236-->[com.google.android.gms:play-services-auth:20.3.0] /Users/wemonde/.gradle/caches/transforms-3/cf6f21db7273578ceab0d9c77a6fe4ee/transformed/jetified-play-services-auth-20.3.0/AndroidManifest.xml:24:13-93
+237            android:excludeFromRecents="true"
+237-->[com.google.android.gms:play-services-auth:20.3.0] /Users/wemonde/.gradle/caches/transforms-3/cf6f21db7273578ceab0d9c77a6fe4ee/transformed/jetified-play-services-auth-20.3.0/AndroidManifest.xml:25:13-46
+238            android:exported="false"
+238-->[com.google.android.gms:play-services-auth:20.3.0] /Users/wemonde/.gradle/caches/transforms-3/cf6f21db7273578ceab0d9c77a6fe4ee/transformed/jetified-play-services-auth-20.3.0/AndroidManifest.xml:26:13-37
+239            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+239-->[com.google.android.gms:play-services-auth:20.3.0] /Users/wemonde/.gradle/caches/transforms-3/cf6f21db7273578ceab0d9c77a6fe4ee/transformed/jetified-play-services-auth-20.3.0/AndroidManifest.xml:27:13-72
+240        <!--
+241            Service handling Google Sign-In user revocation. For apps that do not integrate with
+242            Google Sign-In, this service will never be started.
+243        -->
+244        <service
+244-->[com.google.android.gms:play-services-auth:20.3.0] /Users/wemonde/.gradle/caches/transforms-3/cf6f21db7273578ceab0d9c77a6fe4ee/transformed/jetified-play-services-auth-20.3.0/AndroidManifest.xml:33:9-37:51
+245            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+245-->[com.google.android.gms:play-services-auth:20.3.0] /Users/wemonde/.gradle/caches/transforms-3/cf6f21db7273578ceab0d9c77a6fe4ee/transformed/jetified-play-services-auth-20.3.0/AndroidManifest.xml:34:13-89
+246            android:exported="true"
+246-->[com.google.android.gms:play-services-auth:20.3.0] /Users/wemonde/.gradle/caches/transforms-3/cf6f21db7273578ceab0d9c77a6fe4ee/transformed/jetified-play-services-auth-20.3.0/AndroidManifest.xml:35:13-36
+247            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+247-->[com.google.android.gms:play-services-auth:20.3.0] /Users/wemonde/.gradle/caches/transforms-3/cf6f21db7273578ceab0d9c77a6fe4ee/transformed/jetified-play-services-auth-20.3.0/AndroidManifest.xml:36:13-107
+248            android:visibleToInstantApps="true" />
+248-->[com.google.android.gms:play-services-auth:20.3.0] /Users/wemonde/.gradle/caches/transforms-3/cf6f21db7273578ceab0d9c77a6fe4ee/transformed/jetified-play-services-auth-20.3.0/AndroidManifest.xml:37:13-48
+249
+250        <activity
+250-->[com.google.android.gms:play-services-base:18.1.0] /Users/wemonde/.gradle/caches/transforms-3/95357119bf5086c7d01de23526bd5a99/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:20:9-22:45
+251            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+251-->[com.google.android.gms:play-services-base:18.1.0] /Users/wemonde/.gradle/caches/transforms-3/95357119bf5086c7d01de23526bd5a99/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:20:19-85
+252            android:exported="false"
+252-->[com.google.android.gms:play-services-base:18.1.0] /Users/wemonde/.gradle/caches/transforms-3/95357119bf5086c7d01de23526bd5a99/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:22:19-43
+253            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+253-->[com.google.android.gms:play-services-base:18.1.0] /Users/wemonde/.gradle/caches/transforms-3/95357119bf5086c7d01de23526bd5a99/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:21:19-78
+254
+255        <meta-data
+255-->[com.google.android.gms:play-services-basement:18.1.0] /Users/wemonde/.gradle/caches/transforms-3/38bab36254d18912dfbbfdb25380b036/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:21:9-23:69
+256            android:name="com.google.android.gms.version"
+256-->[com.google.android.gms:play-services-basement:18.1.0] /Users/wemonde/.gradle/caches/transforms-3/38bab36254d18912dfbbfdb25380b036/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:22:13-58
+257            android:value="@integer/google_play_services_version" />
+257-->[com.google.android.gms:play-services-basement:18.1.0] /Users/wemonde/.gradle/caches/transforms-3/38bab36254d18912dfbbfdb25380b036/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:23:13-66
+258        <!--
+259        Service for holding metadata. Cannot be instantiated.
+260        Metadata will be merged from other manifests.
+261        -->
+262        <service
+262-->[androidx.camera:camera-core:1.1.0] /Users/wemonde/.gradle/caches/transforms-3/c2a4748496a8d491c67e48ee38b69a53/transformed/jetified-camera-core-1.1.0/AndroidManifest.xml:31:9-35:78
+263            android:name="androidx.camera.core.impl.MetadataHolderService"
+263-->[androidx.camera:camera-core:1.1.0] /Users/wemonde/.gradle/caches/transforms-3/c2a4748496a8d491c67e48ee38b69a53/transformed/jetified-camera-core-1.1.0/AndroidManifest.xml:32:13-75
+264            android:enabled="false"
+264-->[androidx.camera:camera-core:1.1.0] /Users/wemonde/.gradle/caches/transforms-3/c2a4748496a8d491c67e48ee38b69a53/transformed/jetified-camera-core-1.1.0/AndroidManifest.xml:33:13-36
+265            android:exported="false" />
+265-->[androidx.camera:camera-core:1.1.0] /Users/wemonde/.gradle/caches/transforms-3/c2a4748496a8d491c67e48ee38b69a53/transformed/jetified-camera-core-1.1.0/AndroidManifest.xml:34:13-37
+266
+267        <provider
+267-->[androidx.emoji2:emoji2:1.2.0] /Users/wemonde/.gradle/caches/transforms-3/ae120d44887847463e05f49db6c1cd66/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+268            android:name="androidx.startup.InitializationProvider"
+268-->[androidx.emoji2:emoji2:1.2.0] /Users/wemonde/.gradle/caches/transforms-3/ae120d44887847463e05f49db6c1cd66/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
+269            android:authorities="com.net.pvr1.androidx-startup"
+269-->[androidx.emoji2:emoji2:1.2.0] /Users/wemonde/.gradle/caches/transforms-3/ae120d44887847463e05f49db6c1cd66/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
+270            android:exported="false" >
+270-->[androidx.emoji2:emoji2:1.2.0] /Users/wemonde/.gradle/caches/transforms-3/ae120d44887847463e05f49db6c1cd66/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
+271            <meta-data
+271-->[androidx.emoji2:emoji2:1.2.0] /Users/wemonde/.gradle/caches/transforms-3/ae120d44887847463e05f49db6c1cd66/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+272                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+272-->[androidx.emoji2:emoji2:1.2.0] /Users/wemonde/.gradle/caches/transforms-3/ae120d44887847463e05f49db6c1cd66/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
+273                android:value="androidx.startup" />
+273-->[androidx.emoji2:emoji2:1.2.0] /Users/wemonde/.gradle/caches/transforms-3/ae120d44887847463e05f49db6c1cd66/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
+274            <meta-data
+274-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/wemonde/.gradle/caches/transforms-3/dc99b958e1929fc27fc3f37fcf720fa3/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:31:13-33:52
+275                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+275-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/wemonde/.gradle/caches/transforms-3/dc99b958e1929fc27fc3f37fcf720fa3/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:32:17-78
+276                android:value="androidx.startup" />
+276-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/wemonde/.gradle/caches/transforms-3/dc99b958e1929fc27fc3f37fcf720fa3/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:33:17-49
+277        </provider>
+278
+279        <uses-library
+279-->[androidx.window:window:1.0.0] /Users/wemonde/.gradle/caches/transforms-3/4178e47256f9e58fe5532701b33f2f17/transformed/jetified-window-1.0.0/AndroidManifest.xml:25:9-27:40
+280            android:name="androidx.window.extensions"
+280-->[androidx.window:window:1.0.0] /Users/wemonde/.gradle/caches/transforms-3/4178e47256f9e58fe5532701b33f2f17/transformed/jetified-window-1.0.0/AndroidManifest.xml:26:13-54
+281            android:required="false" />
+281-->[androidx.window:window:1.0.0] /Users/wemonde/.gradle/caches/transforms-3/4178e47256f9e58fe5532701b33f2f17/transformed/jetified-window-1.0.0/AndroidManifest.xml:27:13-37
+282        <uses-library
+282-->[androidx.window:window:1.0.0] /Users/wemonde/.gradle/caches/transforms-3/4178e47256f9e58fe5532701b33f2f17/transformed/jetified-window-1.0.0/AndroidManifest.xml:28:9-30:40
+283            android:name="androidx.window.sidecar"
+283-->[androidx.window:window:1.0.0] /Users/wemonde/.gradle/caches/transforms-3/4178e47256f9e58fe5532701b33f2f17/transformed/jetified-window-1.0.0/AndroidManifest.xml:29:13-51
+284            android:required="false" />
+284-->[androidx.window:window:1.0.0] /Users/wemonde/.gradle/caches/transforms-3/4178e47256f9e58fe5532701b33f2f17/transformed/jetified-window-1.0.0/AndroidManifest.xml:30:13-37
+285
+286        <service
+286-->[androidx.room:room-runtime:2.4.3] /Users/wemonde/.gradle/caches/transforms-3/5b30a05bea5559dad38160dd8decb1d9/transformed/room-runtime-2.4.3/AndroidManifest.xml:25:9-28:40
+287            android:name="androidx.room.MultiInstanceInvalidationService"
+287-->[androidx.room:room-runtime:2.4.3] /Users/wemonde/.gradle/caches/transforms-3/5b30a05bea5559dad38160dd8decb1d9/transformed/room-runtime-2.4.3/AndroidManifest.xml:26:13-74
+288            android:directBootAware="true"
+288-->[androidx.room:room-runtime:2.4.3] /Users/wemonde/.gradle/caches/transforms-3/5b30a05bea5559dad38160dd8decb1d9/transformed/room-runtime-2.4.3/AndroidManifest.xml:27:13-43
+289            android:exported="false" />
+289-->[androidx.room:room-runtime:2.4.3] /Users/wemonde/.gradle/caches/transforms-3/5b30a05bea5559dad38160dd8decb1d9/transformed/room-runtime-2.4.3/AndroidManifest.xml:28:13-37
+290    </application>
+291
+292</manifest>

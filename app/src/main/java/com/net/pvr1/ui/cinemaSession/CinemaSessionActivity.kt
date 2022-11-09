@@ -19,6 +19,7 @@ import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.cinemaSession.viewModel.CinemaSessionViewModel
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.home.fragment.home.adapter.PromotionAdapter
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
@@ -195,9 +196,10 @@ class CinemaSessionActivity : AppCompatActivity(),
         binding?.recyclerView13?.layoutManager = gridLayout2
         binding?.recyclerView13?.adapter = cinemaSessionDaysAdapter
 
-        //recycler Language
+        //Pramotion
+        println("output.phd--->"+output.phd.size)
         val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-        val cinemaSessionLanguageAdapter = CinemaSessionLanguageAdapter(output.lngs, this, this)
+        val cinemaSessionLanguageAdapter = PromotionAdapter(this, output.phd, binding?.recyclerView14)
         binding?.recyclerView14?.layoutManager = gridLayout
         binding?.recyclerView14?.adapter = cinemaSessionLanguageAdapter
 
@@ -205,11 +207,13 @@ class CinemaSessionActivity : AppCompatActivity(),
         val gridLayout3 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
         val cinemaSessionCinParentAdapter =
             CinemaSessionCinParentAdapter(output.childs, this, this)
-        binding?.recyclerView14?.layoutManager = gridLayout3
-        binding?.recyclerView14?.adapter = cinemaSessionCinParentAdapter
+        binding?.recyclerView15?.layoutManager = gridLayout3
+        binding?.recyclerView15?.adapter = cinemaSessionCinParentAdapter
 
 
         binding?.textView99?.text = output.cn
+
+
 
     }
 

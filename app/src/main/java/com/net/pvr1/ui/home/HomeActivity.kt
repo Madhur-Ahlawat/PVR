@@ -71,8 +71,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     //ClickMovedNext
     private fun movedNext() {
         // Select City
-        val llLocation = findViewById<LinearLayout>(R.id.llLocation)
-        llLocation.setOnClickListener {
+        binding?.includeAppBar?.txtCity?.setOnClickListener {
             val intent = Intent(this, SelectCityActivity::class.java)
             startActivity(intent)
         }
