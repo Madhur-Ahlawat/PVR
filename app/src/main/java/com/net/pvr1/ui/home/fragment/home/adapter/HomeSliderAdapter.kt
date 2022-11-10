@@ -14,6 +14,7 @@ import com.net.pvr1.R
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 
 
+@Suppress("DEPRECATION")
 class HomeSliderAdapter(
     private var context: Activity,
     private var nowShowingList: List<HomeResponse.Mv>,

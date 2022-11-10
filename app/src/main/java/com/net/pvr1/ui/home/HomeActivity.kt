@@ -9,7 +9,6 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -30,7 +29,7 @@ import com.net.pvr1.ui.home.fragment.home.HomeFragment
 import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
 import com.net.pvr1.ui.home.fragment.more.MoreFragment
 import com.net.pvr1.ui.home.fragment.privilege.PrivilegeFragment
-import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeHomeAdapter
+import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeHomeDialogAdapter
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
 import com.net.pvr1.ui.search.searchHome.SearchHomeActivity
@@ -43,7 +42,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickListenerCity,
-    PrivilegeHomeAdapter.RecycleViewItemClickListener {
+    PrivilegeHomeDialogAdapter.RecycleViewItemClickListener {
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityHomeBinding? = null
@@ -163,7 +162,6 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         Glide.with(this)
             .load(PrivilegeHomeResponseConst?.pinfo?.get(0)?.plogo)
             .into(icon)
-        println("PrivilegeHomeResponseConst--->${PrivilegeHomeResponseConst?.pinfo?.size}")
 
         // add pager behavior
         val snapHelper = PagerSnapHelper()
@@ -171,7 +169,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         val gridLayout =
             GridLayoutManager(this@HomeActivity, 1, GridLayoutManager.HORIZONTAL, false)
         recyclerView.layoutManager = LinearLayoutManager(this@HomeActivity)
-        val adapter = PrivilegeHomeAdapter(PrivilegeHomeResponseConst?.pinfo!!, this,0, this)
+        val adapter = PrivilegeHomeDialogAdapter(PrivilegeHomeResponseConst?.pinfo!!, this,0, this)
         recyclerView.layoutManager = gridLayout
         recyclerView.adapter = adapter
         recyclerView.addItemDecoration(LinePagerIndicatorDecoration())

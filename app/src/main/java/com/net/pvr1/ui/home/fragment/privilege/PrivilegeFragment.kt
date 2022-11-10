@@ -4,26 +4,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
-import com.net.pvr1.R
+import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.databinding.FragmentPrivilegeBinding
-import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeHomeAdapter
-import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
+import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeTypeAdapter
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.PrivilegeHomeResponseConst
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PrivilegeFragment : Fragment(), PrivilegeHomeAdapter.RecycleViewItemClickListener {
+class PrivilegeFragment : Fragment(), PrivilegeTypeAdapter.RecycleViewItemClickListener {
     private var binding: FragmentPrivilegeBinding? = null
 
     @Inject
     lateinit var preferences: PreferenceManager
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,43 +52,42 @@ class PrivilegeFragment : Fragment(), PrivilegeHomeAdapter.RecycleViewItemClickL
         binding?.recyclerView35?.layoutManager =
             LinearLayoutManager(requireActivity())
         val adapter =
-            PrivilegeHomeAdapter(PrivilegeHomeResponseConst?.pinfo!!, requireActivity(), 1, this)
+            PrivilegeTypeAdapter(PrivilegeHomeResponseConst?.pinfo!!, requireActivity(),this,binding?.recyclerView35)
         binding?.recyclerView35?.layoutManager = gridLayout
         binding?.recyclerView35?.adapter = adapter
     }
 
-    override fun privilegeHomeClick(comingSoonItem: PrivilegeHomeResponse.Output.Pinfo) {
-        requireActivity().printLog("checkLog--->${comingSoonItem.ptype}")
-        Toast.makeText(requireActivity(), comingSoonItem.ptype, Toast.LENGTH_SHORT).show()
+    override fun privilegeHomeClick(comingSoonItem: RecyclerView.OnScrollListener) {
+//        Toast.makeText(requireActivity(), comingSoonItem.ptype, Toast.LENGTH_SHORT).show()
 
-        when (comingSoonItem.ptype) {
-            "P" -> {
-                Toast.makeText(requireActivity(), comingSoonItem.ptype, Toast.LENGTH_SHORT).show()
-                binding?.include15?.show()
-                binding?.include16?.hide()
-                binding?.include15Logout?.salted?.text =
-                    requireActivity().getString(R.string.p1TxtOne)
-                //points
-                binding?.include15Logout?.points?.text =
-                    requireActivity().getString(R.string.p2TxtOne)
-            }
-            "PP" -> {
-                Toast.makeText(requireActivity(), comingSoonItem.ptype, Toast.LENGTH_SHORT).show()
-
-                binding?.include15?.hide()
-                binding?.include16?.show()
-                binding?.include15Logout?.salted?.text = ""
-                //points
-                binding?.include15Logout?.points?.text = ""
-            }
-            "PPP" -> {
-                Toast.makeText(requireActivity(), comingSoonItem.ptype, Toast.LENGTH_SHORT).show()
-                binding?.include15Logout?.salted?.text =
-                    requireActivity().getString(R.string.p3TxtOne)
-                //points
-                binding?.include15Logout?.points?.text =
-                    requireActivity().getString(R.string.p3TxtOne)
-            }
-        }
+//        when (comingSoonItem.ptype) {
+//            "P" -> {
+//                Toast.makeText(requireActivity(), comingSoonItem.ptype, Toast.LENGTH_SHORT).show()
+//                binding?.include15?.show()
+//                binding?.include16?.hide()
+//                binding?.include15Logout?.salted?.text =
+//                    requireActivity().getString(R.string.p1TxtOne)
+//                //points
+//                binding?.include15Logout?.points?.text =
+//                    requireActivity().getString(R.string.p2TxtOne)
+//            }
+//            "PP" -> {
+//                Toast.makeText(requireActivity(), comingSoonItem.ptype, Toast.LENGTH_SHORT).show()
+//
+//                binding?.include15?.hide()
+//                binding?.include16?.show()
+//                binding?.include15Logout?.salted?.text = ""
+//                //points
+//                binding?.include15Logout?.points?.text = ""
+//            }
+//            "PPP" -> {
+//                Toast.makeText(requireActivity(), comingSoonItem.ptype, Toast.LENGTH_SHORT).show()
+//                binding?.include15Logout?.salted?.text =
+//                    requireActivity().getString(R.string.p3TxtOne)
+//                //points
+//                binding?.include15Logout?.points?.text =
+//                    requireActivity().getString(R.string.p3TxtOne)
+//            }
+//        }
     }
 }
