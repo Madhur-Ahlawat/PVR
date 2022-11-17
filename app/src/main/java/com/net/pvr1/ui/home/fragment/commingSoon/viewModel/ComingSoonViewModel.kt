@@ -24,15 +24,4 @@ class ComingSoonViewModel @Inject constructor(private val userRepository: UserRe
     }
 
 
-    //Activity ComingSoon
-    val movieDetailsLiveData: LiveData<NetworkResult<MovieDetailsResponse>>
-        get() = userRepository.commingSoonResponseLiveData
-
-    fun movieDetails(userid: String,city: String,mcode: String,did: String) {
-        viewModelScope.launch {
-            userRepository.commingSoonData(userid,city,mcode,did)
-        }
-    }
-
-
 }

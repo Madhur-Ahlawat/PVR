@@ -12,7 +12,6 @@ import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetri
 class BookingRetrievalChildAdapter(
     private var context: Context,
     private var nowShowingList: List<BookingRetrievalResponse.Output.Child>,
-//    private var listener:RecycleViewItemClickListener
 ) :
     RecyclerView.Adapter<BookingRetrievalChildAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: RetrivalItemChildBinding) : RecyclerView.ViewHolder(binding.root)

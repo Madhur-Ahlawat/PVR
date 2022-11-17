@@ -3,6 +3,7 @@ package com.net.pvr1.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.provider.ContactsContract.Directory.PACKAGE_NAME
 import android.provider.Settings
@@ -13,6 +14,7 @@ import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.TextView
 import com.net.pvr1.R
+import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import java.net.MalformedURLException
 import java.net.URL
@@ -69,6 +71,7 @@ class Constant {
         const val BIKE = 7
         const val BIKE_SEAT_BOOKED = 8
         var PrivilegeHomeResponseConst:PrivilegeHomeResponse.Output? =null
+        var PlaceHolder:HomeResponse.Output? = null
 
     }
 
@@ -102,7 +105,7 @@ class Constant {
     private fun addClickablePartTextViewResizable(
         strSpanned: Spanned, tv: TextView,
         maxLine: Int, spanableText: String, viewMore: Boolean
-    ): SpannableStringBuilder? {
+    ): SpannableStringBuilder{
         val str = strSpanned.toString()
         val ssb = SpannableStringBuilder(strSpanned)
         if (str.contains(spanableText)) {
@@ -113,11 +116,13 @@ class Constant {
                         tv.setText(tv.tag.toString(), TextView.BufferType.SPANNABLE)
                         tv.invalidate()
                         makeTextViewResizable(tv, -1, "See Less", false)
+                        tv.setTextColor(Color.parseColor("#000000"))
                     } else {
                         tv.layoutParams = tv.layoutParams
                         tv.setText(tv.tag.toString(), TextView.BufferType.SPANNABLE)
                         tv.invalidate()
                         makeTextViewResizable(tv, 4, ".. See More", true)
+                        tv.setTextColor(Color.parseColor("#000000"))
                     }
                 }
             }, str.indexOf(spanableText), str.indexOf(spanableText) + spanableText.length, 0)
@@ -176,7 +181,6 @@ class Constant {
 
     fun extractYoutubeId(s: String): String? {
         return try {
-            println("queryurl---$s")
             var query: String? = null
             try {
                 query = URL(s).query

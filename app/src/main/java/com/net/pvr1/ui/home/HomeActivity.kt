@@ -24,7 +24,7 @@ import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.adapter.HomeOfferAdapter
 import com.net.pvr1.ui.home.fragment.cinema.CinemasFragment
-import com.net.pvr1.ui.home.fragment.commingSoon.ComingSoonFragment
+import com.net.pvr1.ui.home.fragment.commingSoon.ComingSoonActivity
 import com.net.pvr1.ui.home.fragment.home.HomeFragment
 import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
 import com.net.pvr1.ui.home.fragment.more.MoreFragment
@@ -55,13 +55,11 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         val view = binding?.root
         setContentView(view)
         switchFragment()
-
         authViewModel.offer("123456")
         //setUserName
         binding?.includeAppBar?.textView2?.text = preferences.getUserName()
 
-        authViewModel.privilegeHome("", "Delhi-NCR")
-//        authViewModel.privilegeHome(preferences.geMobileNumber().toString(), "Delhi-NCR")
+        authViewModel.privilegeHome(preferences.geMobileNumber().toString(), "Delhi-NCR")
         movedNext()
         offerDataLoad()
         privilegeDataLoad()
@@ -81,6 +79,14 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
             finish()
         }
 
+        //Coming Soon for Testing
+
+        // Select City
+        binding?.includeAppBar?.notify?.setOnClickListener {
+            val intent = Intent(this, ComingSoonActivity::class.java)
+            startActivity(intent)
+        }
+
         //Close Offer Alert
         binding?.imageView78?.setOnClickListener {
             binding?.constraintLayout55?.hide()
@@ -95,7 +101,6 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         val firstFragment = HomeFragment()
         val secondFragment = CinemasFragment()
         val thirdFragment = PrivilegeFragment()
-        val fourthFragment = ComingSoonFragment()
         val fifthFragment = MoreFragment()
 
         setCurrentFragment(firstFragment)
@@ -104,7 +109,6 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                 R.id.homeFragment -> setCurrentFragment(firstFragment)
                 R.id.cinemaFragment -> setCurrentFragment(secondFragment)
                 R.id.privilegeFragment -> setCurrentFragment(thirdFragment)
-                R.id.comingSoonFragment -> setCurrentFragment(fourthFragment)
                 R.id.moreFragment -> setCurrentFragment(fifthFragment)
             }
             true
@@ -280,6 +284,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     override fun offerClick(comingSoonItem: OfferResponse.Output) {
 
     }
+
 
     override fun onBackPressed() {
         if (binding?.bottomNavigationView?.selectedItemId == R.id.homeFragment) {

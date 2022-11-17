@@ -23,6 +23,7 @@ import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
 import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingActivity
 import com.net.pvr1.ui.player.PlayerActivity
 import com.net.pvr1.utils.Constant
+import com.net.pvr1.utils.Constant.Companion.PlaceHolder
 import com.net.pvr1.utils.NetworkResult
 import javax.inject.Inject
 
@@ -36,10 +37,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     private var binding: FragmentHomeBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel by activityViewModels<HomeViewModel>()
-
     @Inject
     lateinit var preferences: AppPreferences
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -95,12 +94,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                     R.color.gray
                 )
             )
-
-//            val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 1)
-//            binding?.view34?.layoutParams = layoutParams
-//
-//            val layoutParams2 = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 2)
-//            binding?.view33?.layoutParams = layoutParams2
 
         }
 
@@ -180,6 +173,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
 
     private fun retrieveData(output: HomeResponse.Output) {
+        PlaceHolder= output
         if (isAdded) {
             //Category
             val gridLayout =
@@ -213,7 +207,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
         binding?.recyclerPromotion?.layoutManager = gridLayoutSlider
         binding?.recyclerPromotion?.adapter =
-            PromotionAdapter(requireActivity(), output.ph, binding?.recyclerPromotion)
+            PromotionAdapter(requireActivity(), output.ph)
 
 
         //Movies

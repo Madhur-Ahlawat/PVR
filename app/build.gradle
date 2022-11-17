@@ -22,7 +22,9 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField "String", "API_URL", "\"https://demoapi.pvrcinemas.com/PVRCinemasCMS/api/\""//stage
+            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/api/\""//Prod
+
+//            buildConfigField "String", "API_URL", "\"https://demoapi.pvrcinemas.com/PVRCinemasCMS/api/\""//stage
             minifyEnabled false
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

@@ -15,17 +15,12 @@ import com.net.pvr1.R
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.utils.Constant
 
-
+@Suppress("DEPRECATION")
 class PromotionAdapter(
     private val context: Activity,
     private val movies: List<HomeResponse.Ph>,
-    private val viewpager: RecyclerView?
 ) : RecyclerView.Adapter<PromotionAdapter.MovieViewHolder>() {
-
-
     private var displayMetrics = DisplayMetrics()
-
-    private var rowIndex = 0
     private var screenWidth = 0
     override fun getItemCount() = movies.size
 

@@ -485,17 +485,16 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         get() = commingSoonLiveData
 
     suspend fun commingSoonData(
+        type: String,
         userid: String,
         city: String,
-        mcode: String,
-        did: String
-    ) {
+        mcode: String) {
         movieDetailsLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.commingSoon(
+            type,
             userid,
             city,
             mcode,
-            did,
             Constant.version,
             Constant.platform
         )
@@ -510,6 +509,42 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             commingSoonLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             commingSoonLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+
+    //Movie Alert
+    private val movieAlertLiveData = MutableLiveData<NetworkResult<MovieDetailsResponse>>()
+    val movieAlertResponseLiveData: LiveData<NetworkResult<MovieDetailsResponse>>
+        get() = movieAlertLiveData
+
+    suspend fun movieAlertData(
+        userid: String,
+        city: String,
+        mcode: String,
+        did: String
+    ) {
+        movieAlertLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.movieAlert(
+            userid,
+            city,
+            mcode,
+            did,
+            Constant.version,
+            Constant.platform
+        )
+        movieAlertResponse(response)
+    }
+
+    private fun movieAlertResponse(response: Response<MovieDetailsResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            movieAlertLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            movieAlertLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            movieAlertLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 

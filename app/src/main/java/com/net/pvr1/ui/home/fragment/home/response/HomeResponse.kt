@@ -23,7 +23,7 @@ data class HomeResponse(
         val mspecial: List<Any>,
         val msps: List<Any>,
         val mv: List<Mv>,
-        val ph: List<Ph>,
+        val ph: ArrayList<Ph>,
         val pu: List<Pu>,
         val rm: Rm,
         val vban: Any

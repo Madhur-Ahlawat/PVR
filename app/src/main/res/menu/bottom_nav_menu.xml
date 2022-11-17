@@ -15,10 +15,6 @@
         android:icon="@drawable/privilege_grey"/>
 
     <item
-        android:id="@+id/comingSoonFragment"
-        android:title="@string/comingSoon"
-        android:icon="@drawable/commingsoon_grey"/>
-    <item
         android:id="@+id/moreFragment"
         android:title="@string/more"
         android:icon="@drawable/more_grey"/>

@@ -192,8 +192,19 @@ interface UserAPI {
         @Query("srilanka") srilanka: String
     ): Response<MovieDetailsResponse>
 
-    @POST("v1/movie-alert/get-alert")
+    @POST("content/getmovie")
     suspend fun commingSoon(
+        @Query("type") type: String,
+        @Query("userid") userid: String,
+        @Query("city") city: String,
+        @Query("mid") mcode: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<MovieDetailsResponse>
+
+
+    @POST("v1/movie-alert/get-alert")
+    suspend fun movieAlert(
         @Query("userid") userid: String,
         @Query("city") city: String,
         @Query("mcode") mcode: String,

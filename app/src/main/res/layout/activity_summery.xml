@@ -119,8 +119,8 @@
                         <ImageView
                             android:id="@+id/imageView59"
                             android:scaleType="centerCrop"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="130dp"
+                            android:layout_height="140dp"
                             android:adjustViewBounds="true"
                             tools:ignore="ContentDescription"
                             tools:srcCompat="@tools:sample/avatars" />
@@ -333,7 +333,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:id="@+id/constraintLayout43"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -375,7 +375,8 @@
                         app:layout_constraintBottom_toBottomOf="@+id/textView125"
                         app:layout_constraintEnd_toEndOf="@+id/view109"
                         app:layout_constraintTop_toTopOf="@+id/textView125"
-                        app:srcCompat="@drawable/right_move" />
+                        app:srcCompat="@drawable/right_move"
+                        tools:ignore="ContentDescription" />
 
                     <ImageView
                         android:id="@+id/imageView84"
@@ -475,16 +476,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
+                        android:drawablePadding="@dimen/padding_10"
                         android:fontFamily="@font/sf_pro_text_medium"
                         android:text="@string/taxes_fees"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimen_14sp"
                         app:layout_constraintStart_toStartOf="@+id/view110"
-                        app:layout_constraintTop_toBottomOf="@+id/textView163" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView163"
+                        app:drawableEndCompat="@drawable/arrow_down" />
 
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/taxes"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"

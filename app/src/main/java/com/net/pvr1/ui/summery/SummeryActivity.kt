@@ -1,6 +1,7 @@
 package com.net.pvr1.ui.summery
 
 import android.annotation.SuppressLint
+import android.graphics.Paint
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -65,6 +66,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     private fun foodCart() {
         if (cartModel.isNotEmpty()) {
             binding?.recyclerView32?.show()
+            binding?.textView121?.show()
             val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
             val foodBestSellerAdapter = AddFoodCartAdapter(cartModel, this, this)
             binding?.recyclerView32?.layoutManager = layoutManagerCrew
@@ -72,6 +74,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             binding?.recyclerView32?.setHasFixedSize(true)
         } else {
             binding?.recyclerView32?.hide()
+            binding?.textView121?.hide()
         }
     }
 
@@ -277,6 +280,8 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         binding?.imageView60?.setOnClickListener {
             Constant().openMap(this, "28.5723921", "77.0449214")
         }
+        //total seat
+        binding?.textView166?.text = output.seat.size.toString() + "/" + getString(R.string.ticket)
         //audi
         binding?.textView115?.text = output.audi
         //seat
@@ -288,6 +293,15 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         binding?.recyclerView31?.setHasFixedSize(true)
         binding?.recyclerView31?.layoutManager = layoutManager
         binding?.recyclerView31?.adapter = adapter
+
+        //taxes UnderLine
+        binding?.textView164?.paintFlags =
+            binding?.textView164!!.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+
+        //Show taxes
+        binding?.textView164?.setOnClickListener {
+            binding?.taxes?.show()
+        }
 
         //seatWithFood
         binding?.textView175?.setOnClickListener {

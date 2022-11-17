@@ -196,10 +196,10 @@ class CinemaSessionActivity : AppCompatActivity(),
         binding?.recyclerView13?.layoutManager = gridLayout2
         binding?.recyclerView13?.adapter = cinemaSessionDaysAdapter
 
-        //Pramotion
+        //Promotion
         println("output.phd--->"+output.phd.size)
         val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-        val cinemaSessionLanguageAdapter = PromotionAdapter(this, output.phd, binding?.recyclerView14)
+        val cinemaSessionLanguageAdapter = PromotionAdapter(this, output.phd)
         binding?.recyclerView14?.layoutManager = gridLayout
         binding?.recyclerView14?.adapter = cinemaSessionLanguageAdapter
 

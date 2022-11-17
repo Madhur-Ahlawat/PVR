@@ -12,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
+@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

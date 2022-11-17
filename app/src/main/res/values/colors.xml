@@ -7,6 +7,7 @@
     <color name="grayEd">#EDE8E9</color>
 
     <color name="white">#ffffff</color>
+    <color name="background">#F5F5F5</color>
     <color name="transparent_black">#00000000</color>
     <color name="multiBackground">#f7f7f7</color>
     <color name="yellow">#FFCB07</color>

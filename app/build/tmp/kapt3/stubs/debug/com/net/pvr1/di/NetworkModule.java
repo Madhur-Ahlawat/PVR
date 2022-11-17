@@ -3,7 +3,6 @@ package com.net.pvr1.di;
 import com.net.pvr1.BuildConfig;
 import com.net.pvr1.api.AuthInterceptor;
 import com.net.pvr1.api.UserAPI;
-import com.net.pvr1.utils.Constants;
 import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
