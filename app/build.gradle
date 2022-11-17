@@ -22,16 +22,14 @@ android {
 
     buildTypes {
         debug {
-//            buildConfigField "String", "API_URL", "\"https://demoapi.pvrcinemas.com/PVRCinemasCMS/api/\""  //stage
-            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/api/\""      //Prod
+            buildConfigField "String", "API_URL", "\"https://demoapi.pvrcinemas.com/PVRCinemasCMS/api/\""//stage
             minifyEnabled false
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
         }
         release {
-//            buildConfigField "String", "API_URL", "\"https://demoapi.pvrcinemas.com/PVRCinemasCMS/api/\""//stage
-            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/api/\""  //Prod
+            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/api/\""//Prod
             debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -70,8 +68,8 @@ dependencies {
     implementation 'androidx.camera:camera-core:1.1.0'
     //noinspection GradleDynamicVersion
     testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
 //Hilt
     def hilt_version = "2.42"
@@ -109,7 +107,7 @@ dependencies {
 
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 //Otp View
-    implementation 'com.github.KevinSchildhorn:OTPView:0.2.2'
+    implementation 'com.github.KevinSchildhorn:OTPView:0.2.5'
 
     //GifImageView
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.23'
@@ -130,22 +128,17 @@ dependencies {
     // Slider
     implementation 'com.github.IslamKhSh:CardSlider:1.0.1'
     //Location
-    implementation 'com.google.android.gms:play-services-location:21.0.0'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
     //Circle Image View
     implementation 'com.mikhaellopez:circularimageview:4.3.0'
     // QrCodeScanner
     implementation "com.journeyapps:zxing-android-embedded:4.2.0"
-    //Carousel
-
     //Moshi
     implementation("com.squareup.moshi:moshi-kotlin:1.9.2")
     kapt("com.squareup.moshi:moshi-kotlin-codegen:1.9.2")
 //Flexbox
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
    //round Image
-//    implementation "com.joooonho:selectableroundedimageview:1.0.1."
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.joooonho:selectableroundedimageview:1.0.1'
-
-
 }

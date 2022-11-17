@@ -11,12 +11,12 @@ import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
+import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
 import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
-import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.seatLayout.response.InitResponse
 import com.net.pvr1.ui.seatLayout.response.ReserveSeatResponse
@@ -89,11 +89,11 @@ interface UserAPI {
     suspend fun cinemaPreference(
         @Query("userid") userid: String,
         @Query("id") id: String,
-        @Query("is_like")  is_like: Boolean,
-        @Query("type")  type: String,
-        @Query("did")   did: String,
-        @Query("av")   version: String,
-        @Query("pt")   platform: String
+        @Query("is_like") is_like: Boolean,
+        @Query("type") type: String,
+        @Query("did") did: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
     ): Response<PreferenceResponse>
 
     @POST("history/giftcard")
@@ -128,7 +128,7 @@ interface UserAPI {
         @Query("id") id: String,
         @Query("av") version: String,
         @Query("pt") platform: String,
-        @Query("did")did: String,
+        @Query("did") did: String,
     ): Response<OfferResponse>
 
     @POST("content/cities")
@@ -333,17 +333,17 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<SummeryResponse>
 
- @POST("trans/setfood")
+    @POST("trans/setfood")
     suspend fun ticketWithFood(
-     @Query("foods")   foods: String,
-     @Query("transid")   transid: String,
-     @Query("cinemacode")   cinemacode: String,
-     @Query("qr")  qr: String,
-     @Query("infosys")  infosys: String,
-     @Query("isSpi") isSpi: String,
-     @Query("av") version: String,
-     @Query("pt") platform: String
- ): Response<SummeryResponse>
+        @Query("foods") foods: String,
+        @Query("transid") transid: String,
+        @Query("cinemacode") cinemacode: String,
+        @Query("qr") qr: String,
+        @Query("infosys") infosys: String,
+        @Query("isSpi") isSpi: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<SummeryResponse>
 
 
     @POST("content/splashtxt")
@@ -356,7 +356,7 @@ interface UserAPI {
 
     @POST("food/savefoods")
     suspend fun addFood(
-        @Query("cinemacode")  cinemacode: String,
+        @Query("cinemacode") cinemacode: String,
         @Query("fb_totalprice") fb_totalprice: String,
         @Query("fb_itemStrDescription") fb_itemStrDescription: String,
         @Query("pickupdate") pickupdate: String,
@@ -366,15 +366,15 @@ interface UserAPI {
         @Query("type") type: String,
         @Query("infosys") infosys: String,
         @Query("qr") qr: String,
-        @Query("isSpi")  isSpi: String,
-        @Query("srilanka")  srilanka: String,
-        @Query("av")   version: String,
-        @Query("pt")   platform: String
+        @Query("isSpi") isSpi: String,
+        @Query("srilanka") srilanka: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
     ): Response<AddFoodResponse>
 
     @POST("/PVRCinemasCMS/getgiftcard1")
     suspend fun giftCardMain(
-        @Query("sWidth")sWidth: String,
+        @Query("sWidth") sWidth: String,
         @Query("platform") platform: String,
         @Query("infosys") infosys: String,
         @Query("av") version: String,
@@ -383,12 +383,12 @@ interface UserAPI {
 
     @POST("content/alltheater")
     suspend fun bookingRetrieval(
-        @Query("city")  city: String,
-        @Query("lat")  lat: String,
-        @Query("lng")  lng: String,
-        @Query("userid")  userid: String,
-        @Query("searchtxt")  searchtxt: String,
-        @Query("av")  version: String,
+        @Query("city") city: String,
+        @Query("lat") lat: String,
+        @Query("lng") lng: String,
+        @Query("userid") userid: String,
+        @Query("searchtxt") searchtxt: String,
+        @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<BookingRetrievalResponse>
 
