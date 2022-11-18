@@ -20,14 +20,14 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
         <activity
-            android:name=".CouponsActivity"
+            android:name=".ui.summery.coupons.CouponsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".WatchListActivity"
+            android:name=".ui.watchList.WatchListActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

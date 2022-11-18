@@ -318,6 +318,11 @@
     <string name="select_theaters">Select Theaters</string>
     <string name="any_theater_in_the_city">Any theater in the city</string>
     <string name="we_ll_notify">We’ll notify as soon as the booking\nopens up in your preferred theaters</string>
+    <string name="promocode">Promocode</string>
+    <string name="offer_details">Offer Details</string>
+    <string name="enable_whatsapp_notification">Enable Whatsapp notification to get notified on Whatsapp</string>
+    <string name="we_ll_notify_as_soon_as_the_booking">We’ll notify as soon as the booking\nopens up in your preferred theaters</string>
+    <string name="alert_has_been_successfully_set">Alert has been\nsuccessfully set!</string>
     //Set Alert
 
 

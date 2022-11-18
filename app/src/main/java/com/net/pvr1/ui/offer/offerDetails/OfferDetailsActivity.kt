@@ -30,17 +30,23 @@ class OfferDetailsActivity : AppCompatActivity() {
         val view = binding?.root
         setContentView(view)
         movedNext()
-        authViewModel.offerDetails(intent.getStringExtra("id").toString(),"123456")
+        authViewModel.offerDetails(intent.getStringExtra("id").toString(),Constant().getDeviceId(this))
         offerDetailsDataLoad()
     }
 
     private fun movedNext() {
+        //Back Press
         binding?.imageView92?.setOnClickListener {
             finish()
         }
 
-        binding?.include8?.textView5?.setOnClickListener {
-            startActivity(Intent(this@OfferDetailsActivity,OfferActivity::class.java))
+        //Share
+        binding?.imageView93?.setOnClickListener {
+            val shareIntent = Intent()
+            shareIntent.action = Intent.ACTION_SEND
+            shareIntent.type="text/plain"
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+            startActivity(Intent.createChooser(shareIntent,getString(R.string.app_name)))
         }
     }
 

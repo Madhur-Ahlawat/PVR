@@ -55,14 +55,13 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         val view = binding?.root
         setContentView(view)
         switchFragment()
-        authViewModel.offer("123456")
+        authViewModel.offer(Constant().getDeviceId(this))
+        offerDataLoad()
         //setUserName
         binding?.includeAppBar?.textView2?.text = preferences.getUserName()
-
         authViewModel.privilegeHome(preferences.geMobileNumber().toString(), "Delhi-NCR")
-        movedNext()
-        offerDataLoad()
         privilegeDataLoad()
+        movedNext()
     }
 
     //ClickMovedNext
@@ -191,7 +190,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        printLog("output--->$")
+                        printLog("output--->${it.data.output}")
                         retrieveData(it.data.output)
                     } else {
                         val dialog = OptionDialog(this,
@@ -274,11 +273,13 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 
     private fun privilegeRetrieveData(output: PrivilegeHomeResponse.Output) {
         PrivilegeHomeResponseConst = output
-        privilegeDialog()
+//        privilegeDialog()
     }
 
     private fun retrieveData(output: ArrayList<OfferResponse.Output>) {
         offerResponse = output
+        printLog("offer--->${output}")
+        showOfferDialog()
     }
 
     override fun offerClick(comingSoonItem: OfferResponse.Output) {
@@ -295,10 +296,8 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                 positiveBtnText = R.string.ok,
                 negativeBtnText = R.string.no,
                 positiveClick = {
-
                 },
                 negativeClick = {
-
                 })
             dialog.show()
             finish()

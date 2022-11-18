@@ -37,6 +37,8 @@ class SetAlertActivity : AppCompatActivity(), AlertTheaterAdapter.RecycleViewIte
         authViewModel.allTheater("Chennai", "", "", preferences.getUserId().toString(), "")
         allTheater()
         movedNext()
+
+//        alert_dialog
     }
 
     private fun movedNext() {

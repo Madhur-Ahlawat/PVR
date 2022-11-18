@@ -18,13 +18,12 @@ import com.net.pvr1.ui.offer.viewModel.OfferViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import com.net.pvr1.utils.printLog
+import com.net.pvr1.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class OfferActivity : AppCompatActivity(),OfferAdapter.Direction {
-//    @Inject
-//    lateinit var preferences: AppPreferences
     private var binding: ActivityOfferBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: OfferViewModel by viewModels()
@@ -34,17 +33,20 @@ class OfferActivity : AppCompatActivity(),OfferAdapter.Direction {
         binding = ActivityOfferBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+        authViewModel.offer(Constant().getDeviceId(this))
         offerDataLoad()
-        authViewModel.offer("123456")
-
     }
 
     private fun offerDataLoad() {
+        toast("Offer Come2")
+
         authViewModel.userResponseLiveData.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
+
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+
                         retrieveData(it.data.output)
                     } else {
                         val dialog = OptionDialog(this,
@@ -82,8 +84,8 @@ class OfferActivity : AppCompatActivity(),OfferAdapter.Direction {
         }
     }
 
-    private fun retrieveData(output: List<OfferResponse.Output>) {
-        printLog("Details--->${output}")
+    private fun retrieveData(output: ArrayList<OfferResponse.Output>) {
+        printLog("offerResponse--->${output}")
         val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
         val comingSoonMovieAdapter = OfferAdapter(output, this, this)
         binding?.recyclerView?.layoutManager = gridLayout

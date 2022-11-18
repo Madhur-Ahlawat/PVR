@@ -2,14 +2,13 @@ package com.net.pvr1.ui.offer.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.net.pvr1.R
+import com.net.pvr1.databinding.OfferItemBinding
 import com.net.pvr1.ui.offer.response.OfferResponse
+import com.net.pvr1.utils.Util
 
 
 class OfferAdapter(
@@ -17,44 +16,65 @@ class OfferAdapter(
     private var context: Context,
     private var listener: Direction,
 ) :
-    RecyclerView.Adapter<OfferAdapter.MyViewHolderNowShowing>() {
+    RecyclerView.Adapter<OfferAdapter.ViewHolder>() {
+    private var screenWidth = 0
+    private val type: String? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderNowShowing {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.layout_offer_item, parent, false)
-        return MyViewHolderNowShowing(view)
+    inner class ViewHolder(val binding: OfferItemBinding) : RecyclerView.ViewHolder(binding.root)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = OfferItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        screenWidth = context.resources.displayMetrics.widthPixels
+
+        return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: MyViewHolderNowShowing, position: Int) {
-        val cinemaItem = nowShowingList[position]
-        //title
-        holder.title.text =cinemaItem.t
-        //subTitle
-        holder.subTitle.text =cinemaItem.c
-        //valid
-        holder.validTill.text =context.getString(R.string.validTill)+cinemaItem.vt
-        //moreDetails
-        holder.moreDetails.setOnClickListener {
-            listener.offerClick(cinemaItem)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        with(holder) {
+            with(nowShowingList[position]) {
+                if (!type.equals("N", ignoreCase = true)) {
+                    if (nowShowingList.size == 1) {
+                        val itemWidth = ((screenWidth - 8) * 0.88f).toInt()
+                        val layoutParams = ConstraintLayout.LayoutParams(
+                            itemWidth,
+                            ConstraintLayout.LayoutParams.WRAP_CONTENT
+                        )
+                        holder.itemView.layoutParams = layoutParams
+                    } else {
+                        val itemWidth = (screenWidth * 0.80f).toInt()
+                        val layoutParams = ConstraintLayout.LayoutParams(
+                            itemWidth,
+                            ConstraintLayout.LayoutParams.WRAP_CONTENT
+                        )
+                        holder.itemView.layoutParams = layoutParams
+                    }
+                } else {
+                    val layoutParams = ConstraintLayout.LayoutParams(
+                        ConstraintLayout.LayoutParams.MATCH_PARENT,
+                        ConstraintLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    layoutParams.leftMargin = Util.convertDpToPixel(12F, context)
+                    layoutParams.rightMargin = Util.convertDpToPixel(12F, context)
+                    layoutParams.bottomMargin = Util.convertDpToPixel(1F, context)
+                    layoutParams.topMargin = Util.convertDpToPixel(6F, context)
+                    holder.itemView.layoutParams = layoutParams
+                }
+
+                binding.name.text = this.c
+                binding.expiry.text = "Valid till " + this.vt
+                Glide.with(context)
+                    .load(this.image)
+                    .into(binding.offerImg)
+
+            }
+
         }
-        //Image
-            Glide.with(context)
-            .load(cinemaItem.i)
-            .error(R.drawable.app_icon)
-            .into(holder.image)
     }
 
     override fun getItemCount(): Int {
         return if (nowShowingList.isNotEmpty()) nowShowingList.size else 0
     }
 
-    class MyViewHolderNowShowing(view: View) : RecyclerView.ViewHolder(view) {
-        var title: TextView = view.findViewById(R.id.tvOfferTitle)
-        var subTitle: TextView = view.findViewById(R.id.tvOfferSubTitle)
-        var validTill: TextView = view.findViewById(R.id.valid)
-        var moreDetails: TextView = view.findViewById(R.id.moreDetails)
-        var image: ImageView = view.findViewById(R.id.offerImg)
-    }
 
     interface Direction {
         fun offerClick(comingSoonItem: OfferResponse.Output)

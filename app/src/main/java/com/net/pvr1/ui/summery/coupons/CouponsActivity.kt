@@ -22,5 +22,7 @@ class CouponsActivity : AppCompatActivity() {
         binding = ActivityCouponsBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
+        //coupons_dialog
     }
 }
