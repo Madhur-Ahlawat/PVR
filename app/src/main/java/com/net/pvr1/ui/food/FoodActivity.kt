@@ -1,7 +1,10 @@
 package com.net.pvr1.ui.food
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
@@ -12,7 +15,6 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityFoodBinding
@@ -45,11 +47,11 @@ class FoodActivity : AppCompatActivity(),
     private var filterResponse: ArrayList<FoodResponse.Output.Mfl>? = null
     private var foodResponse: FoodResponse.Output? = null
     private var up: Boolean = false
-
     private var foodBestSellerAdapter: FoodBestSellerAdapter? = null
     private var categoryAdapter: CategoryAdapter? = null
     private var filterAdapter: FilterAdapter? = null
     private var filterBottomAdapter: FilterBottomAdapter? = null
+    private var masterId: String? = "0"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -91,7 +93,7 @@ class FoodActivity : AppCompatActivity(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
                             positiveClick = {
-                              finish()
+                                finish()
                             },
                             negativeClick = {
                             })
@@ -135,6 +137,13 @@ class FoodActivity : AppCompatActivity(),
         binding?.recyclerView20?.adapter = categoryAdapter
         binding?.recyclerView20?.setHasFixedSize(true)
 
+        //Sub Category
+        val layoutManagerCrew2 = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
+        filterAdapter = FilterAdapter(getFilterCategoryList(output.cat[0].name), this, this)
+        binding?.recyclerView21?.adapter = filterAdapter
+        binding?.recyclerView21?.setHasFixedSize(true)
+        binding?.recyclerView21?.layoutManager = layoutManagerCrew2
+
     }
 
     override fun foodBestImageClick(comingSoonItem: FoodResponse.Output.Bestseller) {
@@ -142,6 +151,7 @@ class FoodActivity : AppCompatActivity(),
     }
 
     override fun addFood(comingSoonItem: FoodResponse.Output.Bestseller, position: Int) {
+        masterId = comingSoonItem.mid.toString()
         var num = comingSoonItem.qt
         num += 1
         comingSoonItem.qt = num
@@ -153,7 +163,7 @@ class FoodActivity : AppCompatActivity(),
     private fun movedNext() {
         binding?.textView148?.setOnClickListener {
             val intent = Intent(this@FoodActivity, SummeryActivity::class.java)
-            intent.putExtra("food",cartModel)
+            intent.putExtra("food", cartModel)
             startActivity(intent)
         }
     }
@@ -167,7 +177,9 @@ class FoodActivity : AppCompatActivity(),
                     comingSoonItem.mi,
                     comingSoonItem.qt,
                     comingSoonItem.dp,
-                    comingSoonItem.veg
+                    comingSoonItem.veg,
+                    comingSoonItem.r[0].ho,
+                    comingSoonItem.mid.toString(),
                 )
             )
         } else {
@@ -191,7 +203,9 @@ class FoodActivity : AppCompatActivity(),
                         comingSoonItem.mi,
                         comingSoonItem.qt,
                         comingSoonItem.dp,
-                        comingSoonItem.veg
+                        comingSoonItem.veg,
+                        comingSoonItem.r[0].ho,
+                        comingSoonItem.mid.toString()
                     )
                 )
             }
@@ -253,6 +267,12 @@ class FoodActivity : AppCompatActivity(),
         }
     }
 
+    override fun bestSellerDialog(
+        comingSoonItem: List<FoodResponse.Output.Bestseller.R>,title: String
+    ) {
+        bottomDialog(comingSoonItem, title)
+    }
+
     private fun updateHomeCartList(comingSoonItem: FoodResponse.Output.Bestseller) {
         if (cartModel.size == 0) {
             cartModel.add(
@@ -262,7 +282,9 @@ class FoodActivity : AppCompatActivity(),
                     comingSoonItem.mi,
                     comingSoonItem.qt,
                     comingSoonItem.dp,
-                    comingSoonItem.veg
+                    comingSoonItem.veg,
+                    comingSoonItem.r[0].ho,
+                    comingSoonItem.mid.toString()
                 )
             )
         } else {
@@ -286,20 +308,21 @@ class FoodActivity : AppCompatActivity(),
                         comingSoonItem.mi,
                         comingSoonItem.qt,
                         comingSoonItem.dp,
-                        comingSoonItem.veg
+                        comingSoonItem.veg,
+                        comingSoonItem.r[0].ho,
+                        comingSoonItem.mid.toString()
                     )
                 )
             }
         }
-//        foodHomePrice (cartModel)
     }
 
     override fun categoryClick(comingSoonItem: FoodResponse.Output.Cat) {
+        val layoutManagerCrew = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
         filterAdapter = FilterAdapter(getFilterCategoryList(comingSoonItem.name), this, this)
         binding?.recyclerView21?.adapter = filterAdapter
-        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding?.recyclerView21?.setHasFixedSize(true)
-        binding?.recyclerView21?.layoutManager = layoutManager
+        binding?.recyclerView21?.layoutManager = layoutManagerCrew
     }
 
     private fun getFilterCategoryList(
@@ -382,7 +405,9 @@ class FoodActivity : AppCompatActivity(),
                     comingSoonItem.mi,
                     comingSoonItem.qt,
                     comingSoonItem.dp,
-                    comingSoonItem.veg
+                    comingSoonItem.veg,
+                    comingSoonItem.r[0].ho,
+                    comingSoonItem.mid.toString()
                 )
             )
         } else {
@@ -406,7 +431,9 @@ class FoodActivity : AppCompatActivity(),
                         comingSoonItem.mi,
                         comingSoonItem.qt,
                         comingSoonItem.dp,
-                        comingSoonItem.veg
+                        comingSoonItem.veg,
+                        comingSoonItem.r[0].ho,
+                        comingSoonItem.mid.toString()
                     )
                 )
             }
@@ -432,6 +459,8 @@ class FoodActivity : AppCompatActivity(),
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
         dialog.window!!.setGravity(Gravity.BOTTOM)
         dialog.show()
 
@@ -517,7 +546,9 @@ class FoodActivity : AppCompatActivity(),
                     comingSoonItem.i,
                     comingSoonItem.qt,
                     comingSoonItem.dp,
-                    comingSoonItem.veg
+                    comingSoonItem.veg,
+                    comingSoonItem.ho,
+                    masterId!!
                 )
             )
         } else {
@@ -541,7 +572,9 @@ class FoodActivity : AppCompatActivity(),
                         comingSoonItem.i,
                         comingSoonItem.qt,
                         comingSoonItem.dp,
-                        comingSoonItem.veg
+                        comingSoonItem.veg,
+                        comingSoonItem.ho,
+                        masterId!!
                     )
                 )
             }
@@ -557,9 +590,9 @@ class FoodActivity : AppCompatActivity(),
         return false
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun cartData() {
         printLog("cartUpdate--->")
-
         foodBestSellerAdapter?.notifyDataSetChanged()
         categoryAdapter?.notifyDataSetChanged()
         filterAdapter?.notifyDataSetChanged()

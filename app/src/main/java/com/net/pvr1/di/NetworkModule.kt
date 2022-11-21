@@ -26,6 +26,7 @@ class NetworkModule {
     fun providesRetrofit(): Retrofit.Builder {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
+//            .baseUrl("https://api1.pvrcinemas.com/PVRCinemasCMS/api/")
             .addConverterFactory(GsonConverterFactory.create())
     }
 

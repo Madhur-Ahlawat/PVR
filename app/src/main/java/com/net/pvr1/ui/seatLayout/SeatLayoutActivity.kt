@@ -86,6 +86,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         val view = binding?.root
         setContentView(view)
         showsArray = intent.getStringArrayListExtra("shows") as ArrayList<Cinema.Child.Sw.S>
+        printLog("shows---->${showsArray}")
 
         sessionId = SESSION_ID
         authViewModel.seatLayout(

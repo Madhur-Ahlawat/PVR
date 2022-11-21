@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
-import com.net.pvr1.databinding.ItemFoodFilterBinding
+import com.net.pvr1.databinding.ItemFoodBinding
 import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.hide
@@ -21,11 +21,11 @@ class FilterAdapter(
     private var listener: RecycleViewItemClickListenerCity,
 ) :
     RecyclerView.Adapter<FilterAdapter.ViewHolder>() {
-    inner class ViewHolder(val binding: ItemFoodFilterBinding) :
+    inner class ViewHolder(val binding: ItemFoodBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemFoodFilterBinding.inflate(
+        val binding = ItemFoodBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -41,56 +41,56 @@ class FilterAdapter(
                 Glide.with(context)
                     .load(this.mi)
                     .error(R.drawable.app_icon)
-                    .into(binding.imageView68)
+                    .into(binding.imageView65)
 
                 //title
-                binding.textView139.text = this.nm
+                binding.textView132.text = this.nm
                 //price
                 val price: String = Constant().removeTrailingZeroFormater(this.dp.toFloat())!!
-                binding.textView140.text = context.resources.getString(R.string.currency) + price
+                binding.textView133.text = context.resources.getString(R.string.currency) + price
 
 
                 //SubTract
-                binding.include9.plus.setOnClickListener {
+                binding.uiPlusMinus.plus.setOnClickListener {
                     listener.categoryFoodPlus(this, position)
                     notifyDataSetChanged()
                 }
                 //Add
-                binding.include9.minus.setOnClickListener {
+                binding.uiPlusMinus.minus.setOnClickListener {
                     listener.categoryFoodMinus(this, position)
                     notifyDataSetChanged()
                 }
 
                 if (this.r.size > 1) {
-                    binding.textView142.show()
-                    binding.textView141.setOnClickListener {
+                    binding.textView134.show()
+                    binding.textView135.setOnClickListener {
                         listener.categoryFoodDialog(this.r, this.nm)
                     }
                 } else {
-                    binding.textView142.invisible()
-                    binding.textView141.setOnClickListener {
-                        binding.constraintLayout32.show()
-                        binding.textView141.hide()
+                    binding.textView134.invisible()
+                    binding.textView135.setOnClickListener {
+                        binding.consAddUi.show()
+                        binding.textView134.hide()
                         listener.categoryFoodClick(this)
                     }
 
                 }
                 if (this.veg) {
-                    binding.imageView70.setImageDrawable(context.getDrawable(R.drawable.veg_ic))
+                    binding.imageView69.setImageDrawable(context.getDrawable(R.drawable.veg_ic))
                 } else {
-                    binding.imageView70.setImageDrawable(context.getDrawable(R.drawable.nonveg_ic))
+                    binding.imageView69.setImageDrawable(context.getDrawable(R.drawable.nonveg_ic))
                 }
                 //UiShowHide
                 if (this.qt > 0) {
-                    binding.constraintLayout32.show()
-                    binding.textView141.hide()
+                    binding.consAddUi.show()
+                    binding.textView135.hide()
                 } else {
-                    binding.constraintLayout32.hide()
-                    binding.textView141.show()
+                    binding.consAddUi.hide()
+                    binding.textView135.show()
                 }
 
                 //quantity
-                binding.include9.foodCount.text = this.qt.toString()
+                binding.uiPlusMinus.foodCount.text = this.qt.toString()
 
 
             }

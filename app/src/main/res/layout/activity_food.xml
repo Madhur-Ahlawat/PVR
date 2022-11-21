@@ -172,12 +172,13 @@
                     android:textSize="@dimen/dimen_18sp"
                     app:layout_constraintStart_toStartOf="@+id/view89"
                     app:layout_constraintTop_toTopOf="@+id/view89"
-                    tools:text="Your Happy Place" />
+                    android:text="@string/your_happy_place" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView20"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="@+id/view89"
@@ -191,13 +192,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:spanCount="2"
+                    tools:itemCount="2"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:layout_constraintBottom_toBottomOf="@+id/view89"
                     app:layout_constraintEnd_toEndOf="@+id/view89"
                     app:layout_constraintStart_toStartOf="@+id/view89"
                     app:layout_constraintTop_toBottomOf="@+id/recyclerView20"
-                    tools:itemCount="3"
-                    tools:listitem="@layout/item_food_filter" />
+                    tools:listitem="@layout/item_food" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

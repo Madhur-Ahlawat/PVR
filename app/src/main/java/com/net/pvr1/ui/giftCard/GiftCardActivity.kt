@@ -49,7 +49,6 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
         binding?.include6?.btnBack?.setOnClickListener {
             finish()
         }
-        toast("Print")
     }
 
 

@@ -17,25 +17,26 @@ import com.net.pvr1.ui.offer.response.OfferResponse
 import com.net.pvr1.ui.offer.viewModel.OfferViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.PreferenceManager
 import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class OfferActivity : AppCompatActivity(),OfferAdapter.Direction {
-//    @Inject
-//    lateinit var preferences: AppPreferences
+    @Inject
+    lateinit var preferences: PreferenceManager
     private var binding: ActivityOfferBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: OfferViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOfferBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
         offerDataLoad()
-        authViewModel.offer("123456")
+        binding?.include4?.textView108?.text=getString(R.string.offers)
+        authViewModel.offer(Constant().getDeviceId(this))
 
     }
 
