@@ -1,17 +1,13 @@
 package com.net.pvr1.ui.offer.offerDetails;
 
 import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
 import com.net.pvr1.R;
-import com.net.pvr1.databinding.ActivityOfferBinding;
 import com.net.pvr1.databinding.ActivityOfferDetialsBinding;
-import com.net.pvr1.di.preference.AppPreferences;
 import com.net.pvr1.ui.dailogs.LoaderDialog;
 import com.net.pvr1.ui.dailogs.OptionDialog;
-import com.net.pvr1.ui.offer.OfferActivity;
 import com.net.pvr1.ui.offer.offerDetails.viewModel.OfferDetailsViewModel;
-import com.net.pvr1.ui.offer.viewModel.OfferViewModel;
 import com.net.pvr1.utils.Constant;
 import com.net.pvr1.utils.NetworkResult;
 import dagger.hilt.android.AndroidEntryPoint;

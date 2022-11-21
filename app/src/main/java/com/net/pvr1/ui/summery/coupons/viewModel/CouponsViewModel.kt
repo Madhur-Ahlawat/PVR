@@ -61,13 +61,4 @@ class CouponsViewModel @Inject constructor(private val userRepository: UserRepos
         }
     }
 
-    //seatWithFood
-    val seatWithFoodDataScope: LiveData<NetworkResult<SummeryResponse>>
-        get() = userRepository.seatWithFoodResponseLiveData
-
-    fun seatWithFood(foods: String, transid: String, cinemacode: String, qr: String, infosys: String, isSpi: String) {
-        viewModelScope.launch {
-            userRepository.seatWithFoodLayout(foods, transid, cinemacode, qr,infosys,isSpi)
-        }
-    }
 }

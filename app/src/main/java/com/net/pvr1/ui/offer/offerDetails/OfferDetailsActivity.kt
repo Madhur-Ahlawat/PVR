@@ -1,25 +1,21 @@
 package com.net.pvr1.ui.offer.offerDetails
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.net.pvr1.R
-import com.net.pvr1.databinding.ActivityOfferBinding
 import com.net.pvr1.databinding.ActivityOfferDetialsBinding
-import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.offer.OfferActivity
 import com.net.pvr1.ui.offer.offerDetails.viewModel.OfferDetailsViewModel
-import com.net.pvr1.ui.offer.viewModel.OfferViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class OfferDetailsActivity : AppCompatActivity() {
-//    private lateinit var preferences: AppPreferences
+    //    private lateinit var preferences: AppPreferences
     private var binding: ActivityOfferDetialsBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: OfferDetailsViewModel by viewModels()
@@ -30,7 +26,10 @@ class OfferDetailsActivity : AppCompatActivity() {
         val view = binding?.root
         setContentView(view)
         movedNext()
-        authViewModel.offerDetails(intent.getStringExtra("id").toString(),Constant().getDeviceId(this))
+        authViewModel.offerDetails(
+            intent.getStringExtra("id").toString(),
+            Constant().getDeviceId(this)
+        )
         offerDetailsDataLoad()
     }
 
@@ -44,9 +43,9 @@ class OfferDetailsActivity : AppCompatActivity() {
         binding?.imageView93?.setOnClickListener {
             val shareIntent = Intent()
             shareIntent.action = Intent.ACTION_SEND
-            shareIntent.type="text/plain"
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
-            startActivity(Intent.createChooser(shareIntent,getString(R.string.app_name)))
+            shareIntent.type = "text/plain"
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.")
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.app_name)))
         }
     }
 

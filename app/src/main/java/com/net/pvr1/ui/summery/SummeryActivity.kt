@@ -315,7 +315,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                             "|" + food.price + "|" + food.ho+"|"+food.mid
                 }
             }
-            authViewModel.seatWithFood(itemDescription, TRANSACTION_ID, CINEMA_ID, "no", "", "no")
+            authViewModel.seatWithFood(itemDescription, TRANSACTION_ID, CINEMA_ID, "no", "", "no",output.seats,output.audi)
         }
     }
 

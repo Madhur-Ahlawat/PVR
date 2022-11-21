@@ -19,6 +19,7 @@ import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
+import com.net.pvr1.ui.offer.response.MOfferResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.seatLayout.response.InitResponse
@@ -280,6 +281,29 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
     }
 
+    //Offer List
+    private val mOfferListLiveData = MutableLiveData<NetworkResult<MOfferResponse>>()
+    val mOfferListResponseLiveData: LiveData<NetworkResult<MOfferResponse>>
+        get() = mOfferListLiveData
+
+    suspend fun mOfferList(did: String, city: String) {
+        mOfferListLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.mOfferList(did,city, Constant.version, Constant.platform)
+        mOfferListResponse(response)
+    }
+
+    private fun mOfferListResponse(response: Response<MOfferResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            mOfferListLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            mOfferListLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            mOfferListLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
     //Offer Details
     private val offerDetailsLiveData = MutableLiveData<NetworkResult<OfferResponse>>()
     val offerDetailsResponseLiveData: LiveData<NetworkResult<OfferResponse>>
@@ -488,7 +512,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         type: String,
         userid: String,
         city: String,
-        mcode: String) {
+        mcode: String
+    ) {
         movieDetailsLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.commingSoon(
             type,
@@ -511,7 +536,6 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             commingSoonLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
-
 
 
     //Movie Alert
@@ -905,7 +929,9 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         cinemacode: String,
         qr: String,
         infosys: String,
-        isSpi: String
+        isSpi: String,
+        seat: String,
+        audi: String
     ) {
         seatWithFoodLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.ticketWithFood(
@@ -916,7 +942,9 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             infosys,
             isSpi,
             Constant.version,
-            Constant.platform
+            Constant.platform,
+            seat,
+            audi
         )
         seatWithFoodLayoutResponse(response)
     }

@@ -65,9 +65,9 @@ class SummeryViewModel @Inject constructor(private val userRepository: UserRepos
     val seatWithFoodDataScope: LiveData<NetworkResult<SummeryResponse>>
         get() = userRepository.seatWithFoodResponseLiveData
 
-    fun seatWithFood(foods: String, transid: String, cinemacode: String, qr: String, infosys: String, isSpi: String) {
+    fun seatWithFood(foods: String, transid: String, cinemacode: String, qr: String, infosys: String, isSpi: String, seat: String, audi: String) {
         viewModelScope.launch {
-            userRepository.seatWithFoodLayout(foods, transid, cinemacode, qr,infosys,isSpi)
+            userRepository.seatWithFoodLayout(foods, transid, cinemacode, qr,infosys,isSpi,seat,audi)
         }
     }
 }

@@ -56,7 +56,7 @@ public final class FoodBestSellerAdapter extends androidx.recyclerview.widget.Re
         }
     }
     
-    @kotlin.Metadata(mv = {1, 7, 1}, k = 1, d1 = {"\u0000\u001e\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0000\n\u0002\u0010\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\b\n\u0002\b\u0004\bf\u0018\u00002\u00020\u0001J\u0018\u0010\u0002\u001a\u00020\u00032\u0006\u0010\u0004\u001a\u00020\u00052\u0006\u0010\u0006\u001a\u00020\u0007H&J\u0018\u0010\b\u001a\u00020\u00032\u0006\u0010\u0004\u001a\u00020\u00052\u0006\u0010\u0006\u001a\u00020\u0007H&J\u0018\u0010\t\u001a\u00020\u00032\u0006\u0010\u0004\u001a\u00020\u00052\u0006\u0010\u0006\u001a\u00020\u0007H&J\u0010\u0010\n\u001a\u00020\u00032\u0006\u0010\u0004\u001a\u00020\u0005H&\u00a8\u0006\u000b"}, d2 = {"Lcom/net/pvr1/ui/food/adapter/FoodBestSellerAdapter$RecycleViewItemClickListenerCity;", "", "addFood", "", "comingSoonItem", "Lcom/net/pvr1/ui/food/response/FoodResponse$Output$Bestseller;", "position", "", "addFoodMinus", "addFoodPlus", "foodBestImageClick", "app_debug"})
+    @kotlin.Metadata(mv = {1, 7, 1}, k = 1, d1 = {"\u0000.\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0000\n\u0002\u0010\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\b\n\u0002\b\u0003\n\u0002\u0010 \n\u0002\u0018\u0002\n\u0002\u0010\u000e\n\u0002\b\u0002\bf\u0018\u00002\u00020\u0001J\u0018\u0010\u0002\u001a\u00020\u00032\u0006\u0010\u0004\u001a\u00020\u00052\u0006\u0010\u0006\u001a\u00020\u0007H&J\u0018\u0010\b\u001a\u00020\u00032\u0006\u0010\u0004\u001a\u00020\u00052\u0006\u0010\u0006\u001a\u00020\u0007H&J\u0018\u0010\t\u001a\u00020\u00032\u0006\u0010\u0004\u001a\u00020\u00052\u0006\u0010\u0006\u001a\u00020\u0007H&J\u001e\u0010\n\u001a\u00020\u00032\f\u0010\u0004\u001a\b\u0012\u0004\u0012\u00020\f0\u000b2\u0006\u0010\u0006\u001a\u00020\rH&J\u0010\u0010\u000e\u001a\u00020\u00032\u0006\u0010\u0004\u001a\u00020\u0005H&\u00a8\u0006\u000f"}, d2 = {"Lcom/net/pvr1/ui/food/adapter/FoodBestSellerAdapter$RecycleViewItemClickListenerCity;", "", "addFood", "", "comingSoonItem", "Lcom/net/pvr1/ui/food/response/FoodResponse$Output$Bestseller;", "position", "", "addFoodMinus", "addFoodPlus", "bestSellerDialog", "", "Lcom/net/pvr1/ui/food/response/FoodResponse$Output$Bestseller$R;", "", "foodBestImageClick", "app_debug"})
     public static abstract interface RecycleViewItemClickListenerCity {
         
         public abstract void foodBestImageClick(@org.jetbrains.annotations.NotNull()
@@ -70,5 +70,9 @@ public final class FoodBestSellerAdapter extends androidx.recyclerview.widget.Re
         
         public abstract void addFoodMinus(@org.jetbrains.annotations.NotNull()
         com.net.pvr1.ui.food.response.FoodResponse.Output.Bestseller comingSoonItem, int position);
+        
+        public abstract void bestSellerDialog(@org.jetbrains.annotations.NotNull()
+        java.util.List<com.net.pvr1.ui.food.response.FoodResponse.Output.Bestseller.R> comingSoonItem, @org.jetbrains.annotations.NotNull()
+        java.lang.String position);
     }
 }

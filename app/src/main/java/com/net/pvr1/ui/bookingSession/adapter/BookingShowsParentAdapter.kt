@@ -15,7 +15,6 @@ import com.net.pvr1.utils.show
 class BookingShowsParentAdapter(
     private var nowShowingList: List<BookingResponse.Output.Cinema>,
     private var context: Context
-//    private var listener:RecycleViewItemClickListenerCity,
 ) :
     RecyclerView.Adapter<BookingShowsParentAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemBookingSessionCinemaLocationBinding) : RecyclerView.ViewHolder(binding.root)

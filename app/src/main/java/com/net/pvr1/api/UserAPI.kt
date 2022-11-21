@@ -16,6 +16,7 @@ import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
+import com.net.pvr1.ui.offer.response.MOfferResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.seatLayout.response.InitResponse
@@ -122,6 +123,15 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String,
     ): Response<OfferResponse>
+
+
+    @POST("deals/moffers")
+    suspend fun mOfferList(
+        @Query("did") did: String,
+        @Query("city") city: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+    ): Response<MOfferResponse>
 
     @POST("deals/mdetail")
     suspend fun offerDetails(
@@ -353,7 +363,9 @@ interface UserAPI {
         @Query("infosys") infosys: String,
         @Query("isSpi") isSpi: String,
         @Query("av") version: String,
-        @Query("pt") platform: String
+        @Query("pt") platform: String,
+        @Query("seat")  seat: String,
+        @Query("audi")   audi: String
     ): Response<SummeryResponse>
 
 

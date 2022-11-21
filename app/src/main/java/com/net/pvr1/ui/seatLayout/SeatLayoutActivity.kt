@@ -28,6 +28,7 @@ import com.google.gson.Gson
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySeatLayoutBinding
 import com.net.pvr1.ui.bookingSession.response.BookingResponse.Output.*
+import com.net.pvr1.ui.bookingSession.response.BookingResponse.Output.Cinema.*
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.FoodActivity
@@ -77,7 +78,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     private var selectedSeats1: ArrayList<SeatHC>? = null
 
     //Shows
-    private var showsArray = ArrayList<Cinema.Child.Sw.S>()
+    private var showsArray = ArrayList<Child.Sw.S>()
     private var selectSeatPriceCode = ArrayList<ReserveSeatRequest.Seat>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,9 +86,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         binding = ActivitySeatLayoutBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        showsArray = intent.getStringArrayListExtra("shows") as ArrayList<Cinema.Child.Sw.S>
+        showsArray = intent.getStringArrayListExtra("shows") as ArrayList<Child.Sw.S>
         printLog("shows---->${showsArray}")
-
         sessionId = SESSION_ID
         authViewModel.seatLayout(
             CINEMA_ID,
@@ -1340,12 +1340,13 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             binding?.textView196?.isClickable = false
             binding?.constraintLayout56?.isClickable = false
 
-            binding?.constraintLayout56?.setBackgroundColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.unSelectBg
-                )
-            )
+            binding?.constraintLayout56?.setBackgroundResource(R.drawable.yellow_seat_curve)
+//            binding?.constraintLayout56?.setBackgroundColor(
+//                ContextCompat.getColor(
+//                    this,
+//                    R.color.unSelectBg
+//                )
+//            )
 
             if (!isDit) binding?.textView195?.text =
                 "No Seats Selected"
@@ -1363,12 +1364,13 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             binding?.textView196?.setOnClickListener {
                 authViewModel.initTransSeat(CINEMA_ID, sessionId)
             }
-            binding?.constraintLayout56?.setBackgroundColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.yellow
-                )
-            )
+            binding?.constraintLayout56?.setBackgroundResource(R.drawable.btn_yellow_curve)
+//            binding?.constraintLayout56?.setBackgroundColor(
+//                ContextCompat.getColor(
+//                    this,
+//                    R.color.yellow
+//                )
+//            )
         }
 
         calculatePrice()
@@ -1401,12 +1403,14 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             binding?.textView195?.isClickable = true
             binding?.textView196?.isClickable = true
             binding?.constraintLayout56?.isClickable = true
-            binding?.constraintLayout56?.setBackgroundColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.yellow
-                )
-            )
+            binding?.constraintLayout56?.setBackgroundResource(R.drawable.btn_yellow_curve)
+
+//            binding?.constraintLayout56?.setBackgroundColor(
+//                ContextCompat.getColor(
+//                    this,
+//                    R.color.yellow
+//                )
+//            )
         } else {
             binding?.textView195?.hide()
             binding?.textView196?.hide()
@@ -1415,12 +1419,14 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             binding?.textView195?.isClickable = false
             binding?.textView196?.isClickable = false
             binding?.constraintLayout56?.isClickable = false
-            binding?.constraintLayout56?.setBackgroundColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.unSelectBg
-                )
-            )
+            binding?.constraintLayout56?.setBackgroundResource(R.drawable.yellow_seat_curve)
+
+//            binding?.constraintLayout56?.setBackgroundColor(
+//                ContextCompat.getColor(
+//                    this,
+//                    R.color.unSelectBg
+//                )
+//            )
             if (!isDit) binding?.textView195?.text =
                 "No Seats Selected" else binding?.textView196?.text =
                 "No Vehicle Slots Selected"

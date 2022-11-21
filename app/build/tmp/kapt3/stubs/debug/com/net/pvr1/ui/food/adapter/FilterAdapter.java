@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.net.pvr1.R;
-import com.net.pvr1.databinding.ItemFoodFilterBinding;
+import com.net.pvr1.databinding.ItemFoodBinding;
 import com.net.pvr1.ui.food.response.FoodResponse;
 import com.net.pvr1.utils.Constant;
 
@@ -40,18 +40,18 @@ public final class FilterAdapter extends androidx.recyclerview.widget.RecyclerVi
         return 0;
     }
     
-    @kotlin.Metadata(mv = {1, 7, 1}, k = 1, d1 = {"\u0000\u0012\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0004\b\u0086\u0004\u0018\u00002\u00020\u0001B\r\u0012\u0006\u0010\u0002\u001a\u00020\u0003\u00a2\u0006\u0002\u0010\u0004R\u0011\u0010\u0002\u001a\u00020\u0003\u00a2\u0006\b\n\u0000\u001a\u0004\b\u0005\u0010\u0006\u00a8\u0006\u0007"}, d2 = {"Lcom/net/pvr1/ui/food/adapter/FilterAdapter$ViewHolder;", "Landroidx/recyclerview/widget/RecyclerView$ViewHolder;", "binding", "Lcom/net/pvr1/databinding/ItemFoodFilterBinding;", "(Lcom/net/pvr1/ui/food/adapter/FilterAdapter;Lcom/net/pvr1/databinding/ItemFoodFilterBinding;)V", "getBinding", "()Lcom/net/pvr1/databinding/ItemFoodFilterBinding;", "app_debug"})
+    @kotlin.Metadata(mv = {1, 7, 1}, k = 1, d1 = {"\u0000\u0012\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0004\b\u0086\u0004\u0018\u00002\u00020\u0001B\r\u0012\u0006\u0010\u0002\u001a\u00020\u0003\u00a2\u0006\u0002\u0010\u0004R\u0011\u0010\u0002\u001a\u00020\u0003\u00a2\u0006\b\n\u0000\u001a\u0004\b\u0005\u0010\u0006\u00a8\u0006\u0007"}, d2 = {"Lcom/net/pvr1/ui/food/adapter/FilterAdapter$ViewHolder;", "Landroidx/recyclerview/widget/RecyclerView$ViewHolder;", "binding", "Lcom/net/pvr1/databinding/ItemFoodBinding;", "(Lcom/net/pvr1/ui/food/adapter/FilterAdapter;Lcom/net/pvr1/databinding/ItemFoodBinding;)V", "getBinding", "()Lcom/net/pvr1/databinding/ItemFoodBinding;", "app_debug"})
     public final class ViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder {
         @org.jetbrains.annotations.NotNull()
-        private final com.net.pvr1.databinding.ItemFoodFilterBinding binding = null;
+        private final com.net.pvr1.databinding.ItemFoodBinding binding = null;
         
         public ViewHolder(@org.jetbrains.annotations.NotNull()
-        com.net.pvr1.databinding.ItemFoodFilterBinding binding) {
+        com.net.pvr1.databinding.ItemFoodBinding binding) {
             super(null);
         }
         
         @org.jetbrains.annotations.NotNull()
-        public final com.net.pvr1.databinding.ItemFoodFilterBinding getBinding() {
+        public final com.net.pvr1.databinding.ItemFoodBinding getBinding() {
             return null;
         }
     }
