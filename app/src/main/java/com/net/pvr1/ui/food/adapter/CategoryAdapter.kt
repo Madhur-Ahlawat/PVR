@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.food.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ItemFoodPlaceBinding
 import com.net.pvr1.ui.food.response.FoodResponse
+
 //category
 
 class CategoryAdapter(
@@ -16,6 +18,8 @@ class CategoryAdapter(
     private var listener: RecycleViewItemClickListenerCity,
 ) :
     RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+    private var rowIndex = 0
+
     inner class ViewHolder(val binding: ItemFoodPlaceBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -28,7 +32,7 @@ class CategoryAdapter(
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
                 //Image
@@ -36,11 +40,18 @@ class CategoryAdapter(
                     .load(this.i)
                     .error(R.drawable.app_icon)
                     .into(binding.imageView66)
+                if (rowIndex == position) {
+                    binding.imageView66.borderColor = context.getColor(R.color.yellow)
+                } else {
+                    binding.imageView66.borderColor = context.getColor(R.color.gray)
+                }
 
                 //Name
-                binding.textView136.text=this.name
+                binding.textView136.text = this.name
                 holder.itemView.setOnClickListener {
+                    rowIndex = position
                     listener.categoryClick(this)
+                    notifyDataSetChanged()
                 }
             }
         }

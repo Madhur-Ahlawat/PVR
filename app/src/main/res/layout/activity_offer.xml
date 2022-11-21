@@ -15,14 +15,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <include
-        android:id="@+id/include4"
-        layout="@layout/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/dimen_60dp"
-        app:layout_constraintEnd_toEndOf="@+id/view22"
-        app:layout_constraintStart_toStartOf="@+id/view22"
-        app:layout_constraintTop_toTopOf="@+id/view22" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout89"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            android:id="@+id/include4"
+            layout="@layout/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/textView24"
@@ -33,7 +43,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/featured_offers"
         app:layout_constraintStart_toStartOf="@+id/view22"
-        app:layout_constraintTop_toBottomOf="@+id/include4" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout89" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

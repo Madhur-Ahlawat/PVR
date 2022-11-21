@@ -45,6 +45,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         summeryDetails()
         try {
             cartModel = intent.getStringArrayListExtra("food") as ArrayList<CartModel>
+            printLog("exception--->${cartModel}")
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -307,11 +308,11 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         binding?.textView175?.setOnClickListener {
             cartModel.forEachIndexed { index, food ->
                 itemDescription = if (index == 0) {
-                    food.veg.toString() + "|" + food.id + "|" + food.quantity +
-                            "|" + food.price + "|" + food.title
+                    food.title+ "|" + food.id + "|" + food.quantity +
+                            "|" + food.price + "|" + food.ho+"|"+food.mid
                 } else {
-                    itemDescription + "#" + food.veg + "|" + food.id + "|" + food.quantity +
-                            "|" + food.price + "|" + food.title
+                    itemDescription + "#" +   food.title+ "|" + food.id + "|" + food.quantity +
+                            "|" + food.price + "|" + food.ho+"|"+food.mid
                 }
             }
             authViewModel.seatWithFood(itemDescription, TRANSACTION_ID, CINEMA_ID, "no", "", "no")

@@ -7,4 +7,6 @@ data class CartModel (
     var quantity: Int,
     val price: Int,
     val veg: Boolean,
+    val ho: String,
+    val mid: String,
 ):java.io.Serializable

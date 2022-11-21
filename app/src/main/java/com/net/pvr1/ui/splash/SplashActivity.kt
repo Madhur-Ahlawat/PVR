@@ -21,6 +21,7 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySplashBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.food.FoodActivity
 import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.ui.onBoarding.LandingActivity
@@ -71,6 +72,7 @@ class SplashActivity : AppCompatActivity() {
     private fun movedNext() {
         val runnable = Runnable {
             if (preferences.getIsLogin()) {
+//                val intent = Intent(this@SplashActivity, FoodActivity::class.java)
                 val intent = Intent(this@SplashActivity, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
