@@ -341,5 +341,22 @@
     <string name="your_message_should_have_at_least_15_characters">Your message should have at least 15 characters</string>
     //Set Alert
 
+    //ContactUs
+    <string name="enterMobile">Please Enter Your Mobile</string>
+    <string name="enterComment">Please Enter Your Comment</string>
+    <string name="trending_movies">trending movies</string>
+    <string name="cinema_near_your">Cinemas near you</string>
+    <string name="ticket_cancellation">Ticket Cancellation</string>
+    <string name="view_terms_conditions">View Terms &amp; Conditions</string>
+    <string name="_100_refund_on_f_b"><![CDATA[100% Refund on F&B]]></string>
+    <string name="up_to_75_refund_for_tickets">Up to 75% Refund for Tickets</string>
+    <string name="cancel_msg">75% refund until 2 hours before show start time.\n \n50% refund between 2 hours and 20 minutes before show start time.</string>
+    <string name="alert_refund_msg">*Refund not available for Convenience fees, Vouchers, Gift Cards, Taxes etc.\n \n *No Cancellation within 20 minutes of show start time.</string>
+    <string name="items">Items</string>
+    <string name="order_snack">Order Snacks</string>
+    <string name="bestsellers">Bestsellers</string>
+    <string name="veg">Veg</string>
+    <string name="non_veg">Non Veg</string>
+
 
 </resources>

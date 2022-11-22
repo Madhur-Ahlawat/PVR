@@ -4,7 +4,9 @@ import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.ui.bookingSession.response.BookingTheatreResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaNearTheaterResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
+import com.net.pvr1.ui.contactUs.response.ContactUsResponse
 import com.net.pvr1.ui.food.response.FoodResponse
+import com.net.pvr1.ui.formats.response.FormatResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.PreferenceResponse
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
@@ -42,6 +44,18 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<LoginResponse>
+
+    @POST("contactus")
+    suspend fun contactUs(
+        @Query("comment")  comment: String,
+        @Query("email")  email: String,
+        @Query("mobile") mobile: String,
+        @Query("did") did: String,
+        @Query("mobile") isSpi: String,
+        @Query("ctype")  ctype: String,
+        @Query("av") version: String,
+        @Query("pt")  platform: String
+    ): Response<ContactUsResponse>
 
     @POST("v2/user/verify")
     suspend fun otpVerify(
@@ -353,6 +367,15 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<SummeryResponse>
+
+    @POST("content/specialcine")
+    suspend fun formats(
+        @Query("type")   type: String,
+        @Query("city")  city: String,
+        @Query("isSpi")  isSpi: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<FormatResponse>
 
     @POST("trans/setfood")
     suspend fun ticketWithFood(

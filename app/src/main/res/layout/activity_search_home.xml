@@ -53,10 +53,11 @@
             tools:ignore="ContentDescription" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/editText"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/transparent1"
+            android:imeOptions="actionDone"
             android:ellipsize="end"
             android:ems="10"
             android:hint="@string/search_hint_text"
@@ -85,7 +86,8 @@
         app:layout_constraintEnd_toStartOf="@+id/constraintLayout7"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/constraintLayout7"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        app:tint="@color/black" />
 
 
     <LinearLayout
@@ -93,51 +95,95 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:background="@drawable/tab_parrent"
         android:orientation="horizontal"
         android:visibility="visible"
-        android:layout_marginStart="@dimen/dimen_40dp"
-        android:layout_marginEnd="@dimen/dimen_40dp"
+        android:layout_marginStart="@dimen/dimen_24dp"
+        android:layout_marginEnd="@dimen/dimen_24dp"
         app:layout_constraintEnd_toEndOf="@+id/view36"
         app:layout_constraintStart_toStartOf="@+id/view36"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout7">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout7"
+        tools:ignore="DisableBaselineAlignment">
 
-        <TextView
-            android:id="@+id/moviesBtn"
-            android:fontFamily="@font/helvetica_neu_bold"
-            android:textSize="@dimen/dimen_16sp"
+        <LinearLayout
+            android:id="@+id/linearLayout7"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center_vertical|center_horizontal"
-            android:background="@drawable/tab_button2_color"
-            android:text="@string/movies"
-            android:textColor="@drawable/tab_text_color" />
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/moviesBtn"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:textSize="@dimen/dimen_12sp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="@string/movies"
+                android:textColor="@drawable/tab_text_color"
+                tools:ignore="NestedWeights" />
 
+            <View
+                android:id="@+id/viewMovie"
+                android:background="@color/yellow"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2dp"/>
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/theatresBtn"
-            android:fontFamily="@font/helvetica_neu_bold"
-            android:textSize="@dimen/dimen_16sp"
-            android:gravity="center_vertical|center_horizontal"
+        <LinearLayout
+            android:id="@+id/linearLayout8"
             android:layout_width="0dp"
-            android:minHeight="@dimen/dimen_36dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/tab_button_color"
-            android:text="@string/cinemas"
-            android:textColor="@drawable/tab_text_color" />
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/cinema"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:textSize="@dimen/dimen_12sp"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_width="match_parent"
+                android:minHeight="@dimen/dimen_36dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/cinemas"
+                android:textColor="@color/textColorGray"
+                tools:ignore="NestedWeights" />
+
+            <View
+                android:id="@+id/viewCinema"
+                android:background="@color/grayEd"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2dp"/>
+
+        </LinearLayout>
+
+
+
+
 
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-       android:id="@+id/movieRecycler"
+        android:id="@+id/movieRecycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/view36"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView302" />
+
+    <TextView
+        android:id="@+id/textView302"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/sf_pro_text_regular"
+        android:textSize="@dimen/dimen_14sp"
+        android:textAllCaps="true"
+        android:text="@string/trending_movies"
+        app:layout_constraintStart_toStartOf="@+id/movieRecycler"
         app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
 

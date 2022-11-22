@@ -12,9 +12,8 @@ import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 
 
 class CinemaSessionChildAdapter(
-    private var nowShowingList: List<CinemaSessionResponse.Child.Mv>,
+    private var nowShowingList: ArrayList<CinemaSessionResponse.Child.Mv>,
     private var context: Context
-//    private var listener:RecycleViewItemClickListenerCity,
 ) :
     RecyclerView.Adapter<CinemaSessionChildAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemCinemaSessionMovieDetailsBinding) :

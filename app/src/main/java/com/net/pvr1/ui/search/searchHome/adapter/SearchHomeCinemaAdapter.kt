@@ -31,8 +31,12 @@ class SearchHomeCinemaAdapter(
         holder.address.text = selectCityItemList.ad
         holder.distance.text = selectCityItemList.length
 
-        holder.direction.setOnClickListener {
+        holder.itemView.setOnClickListener {
             listner.onSearchCinema(selectCityItemList)
+        }
+        holder.direction.setOnClickListener {
+            listner.onSearchCinemaDirection(selectCityItemList)
+
         }
 
     }
@@ -50,5 +54,6 @@ class SearchHomeCinemaAdapter(
 
     interface RecycleViewItemClickListenerCity {
         fun onSearchCinema(selectCityItemList: HomeSearchResponse.Output.T)
+        fun onSearchCinemaDirection(selectCityItemList: HomeSearchResponse.Output.T)
     }
 }

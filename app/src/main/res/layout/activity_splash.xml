@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.splash.SplashActivity"
-    android:background="@drawable/splash_back">
+    android:background="@color/yellow">
 
     <View
         android:id="@+id/view"
@@ -25,6 +25,7 @@
         app:layout_constraintStart_toStartOf="@+id/view"
         app:layout_constraintTop_toTopOf="@+id/view"
         app:srcCompat="@drawable/splash_icon"
-        tools:ignore="ContentDescription,ImageContrastCheck" />
+        tools:ignore="ContentDescription,ImageContrastCheck"
+        app:tint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

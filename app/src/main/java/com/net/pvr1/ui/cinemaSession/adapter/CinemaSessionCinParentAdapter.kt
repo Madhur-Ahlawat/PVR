@@ -21,7 +21,6 @@ class CinemaSessionCinParentAdapter(
     RecyclerView.Adapter<CinemaSessionCinParentAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemCinemaDetailsMoviesBinding) :
         RecyclerView.ViewHolder(binding.root)
-
     private var rowIndex = 0
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemCinemaDetailsMoviesBinding.inflate(
@@ -43,10 +42,6 @@ class CinemaSessionCinParentAdapter(
                 binding.recyclerView16.layoutManager = gridLayout
                 binding.recyclerView16.adapter = cinemaSessionCinemasChildAdapter
 
-                holder.itemView.setOnClickListener {
-                    rowIndex = position
-                    notifyDataSetChanged()
-                }
 
                 if (rowIndex == position) {
                     binding.imageView51.setImageResource(R.drawable.arrow_up)
@@ -56,8 +51,13 @@ class CinemaSessionCinParentAdapter(
                     binding.imageView51.setImageResource(R.drawable.arrow_down)
                     binding.constraintLayout26.hide()
                 }
+                binding.imageView51.setOnClickListener {
+                    rowIndex = position
+                    notifyDataSetChanged()
+                }
                 //click
                 holder.itemView.setOnClickListener { listener.cinemaClick(this) }
+
             }
         }
 

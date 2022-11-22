@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.flexbox.*
 import com.net.pvr1.databinding.ItemBookingSessionCinemaLanguageBinding
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
 
@@ -34,10 +35,16 @@ class BookingShowsChildAdapter(
                 //Language  .lng+this.lk
                 binding.textView106.text = this.sws[0].lng + this.sws[0].lk
                 //Recycler
-                val gridLayout3 = GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
+
+                val layoutManager = FlexboxLayoutManager(context)
+                layoutManager.flexWrap = FlexWrap.WRAP
+                layoutManager.flexDirection = FlexDirection.ROW
+                layoutManager.justifyContent = JustifyContent.FLEX_START
+                layoutManager.alignItems = AlignItems.FLEX_START
+
                 val bookingShowsParentAdapter =
                     this.sws[0].s?.let { BookingShowsTimeAdapter(it, context, this.ccid) }
-                binding.recyclerView11.layoutManager = gridLayout3
+                binding.recyclerView11.layoutManager = layoutManager
                 binding.recyclerView11.adapter = bookingShowsParentAdapter
             }
         }

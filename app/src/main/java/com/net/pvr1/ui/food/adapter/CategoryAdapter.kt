@@ -13,7 +13,7 @@ import com.net.pvr1.ui.food.response.FoodResponse
 //category
 
 class CategoryAdapter(
-    private var nowShowingList: List<FoodResponse.Output.Cat>,
+    private var nowShowingList: ArrayList<FoodResponse.Output.Cat>,
     private var context: Context,
     private var listener: RecycleViewItemClickListenerCity,
 ) :
@@ -36,10 +36,18 @@ class CategoryAdapter(
         with(holder) {
             with(nowShowingList[position]) {
                 //Image
-                Glide.with(context)
-                    .load(this.i)
-                    .error(R.drawable.app_icon)
-                    .into(binding.imageView66)
+                if (this.name=="ALL"){
+                    Glide.with(context)
+                        .load(R.drawable.food_all)
+                        .error(R.drawable.food_all)
+                        .into(binding.imageView66)
+                }else{
+
+                    Glide.with(context)
+                        .load(this.i)
+                        .error(R.drawable.app_icon)
+                        .into(binding.imageView66)
+                }
                 if (rowIndex == position) {
                     binding.imageView66.borderColor = context.getColor(R.color.yellow)
                 } else {

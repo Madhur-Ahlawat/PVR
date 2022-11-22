@@ -57,6 +57,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         switchFragment()
         authViewModel.offer(Constant().getDeviceId(this))
         offerDataLoad()
+        println("userId--->${preferences.getUserId()}")
         //setUserName
         binding?.includeAppBar?.textView2?.text = preferences.getUserName()
         authViewModel.privilegeHome(preferences.geMobileNumber().toString(), "Delhi-NCR")

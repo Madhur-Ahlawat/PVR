@@ -7,7 +7,9 @@ import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.ui.bookingSession.response.BookingTheatreResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaNearTheaterResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
+import com.net.pvr1.ui.contactUs.response.ContactUsResponse
 import com.net.pvr1.ui.food.response.FoodResponse
+import com.net.pvr1.ui.formats.response.FormatResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.PreferenceResponse
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
@@ -56,6 +58,44 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             _userResponseLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             _userResponseLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    //ContactUs
+    private val contactUsLiveData = MutableLiveData<NetworkResult<ContactUsResponse>>()
+    val contactUsResponseLiveData: LiveData<NetworkResult<ContactUsResponse>>
+        get() = contactUsLiveData
+
+    suspend fun contactUsUser(
+        comment: String,
+        email: String,
+        mobile: String,
+        did: String,
+        isSpi: String,
+        ctype: String
+    ) {
+        contactUsLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.contactUs(
+            comment,
+            email,
+            mobile,
+            did,
+            isSpi,
+            ctype,
+            Constant.version,
+            Constant.platform
+        )
+        contactUs(response)
+    }
+
+    private fun contactUs(response: Response<ContactUsResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            contactUsLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            contactUsLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            contactUsLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 
@@ -288,7 +328,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
 
     suspend fun mOfferList(did: String, city: String) {
         mOfferListLiveData.postValue(NetworkResult.Loading())
-        val response = userAPI.mOfferList(did,city, Constant.version, Constant.platform)
+        val response = userAPI.mOfferList(did, city, Constant.version, Constant.platform)
         mOfferListResponse(response)
     }
 
@@ -887,7 +927,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         userid: String,
         bookingid: String
     ) {
-        summerLiveData.postValue(NetworkResult.Loading())
+        formatsLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.summery(
             transid,
             cinemacode,
@@ -914,6 +954,35 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             summerLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             summerLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    //formats
+    private val formatsLiveData = MutableLiveData<NetworkResult<FormatResponse>>()
+    val formatsResponseLiveData: LiveData<NetworkResult<FormatResponse>>
+        get() = formatsLiveData
+
+    suspend fun formatsLayout(type: String, city: String, isSpi: String) {
+        summerLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.formats(
+            type,
+            city,
+            isSpi,
+            Constant.version,
+            Constant.platform
+        )
+        formatsLayoutResponse(response)
+    }
+
+    private fun formatsLayoutResponse(response: Response<FormatResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            formatsLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            formatsLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            formatsLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 

@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityCinemaSessionBinding
@@ -22,6 +23,8 @@ import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.home.adapter.PromotionAdapter
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.PreferenceManager
+import com.net.pvr1.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -31,8 +34,8 @@ class CinemaSessionActivity : AppCompatActivity(),
     CinemaSessionLanguageAdapter.RecycleViewItemClickListenerCity,
     CinemaSessionCinParentAdapter.RecycleViewItemClickListenerCity,
     CinemaSessionNearTheaterAdapter.RecycleViewItemClickListenerCity {
-//    @Inject
-//    lateinit var preferences: AppPreferences
+    @Inject
+    lateinit var preferences: PreferenceManager
     private var binding: ActivityCinemaSessionBinding? = null
     private val authViewModel: CinemaSessionViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -42,14 +45,12 @@ class CinemaSessionActivity : AppCompatActivity(),
         binding = ActivityCinemaSessionBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-//        preferences = AppPreferences()
-        //Data Load
         authViewModel.cinemaSession(
             "Delhi-NCR",
             intent.getStringExtra("cid").toString(),
             intent.getStringExtra("lat").toString(),
             intent.getStringExtra("lang").toString(),
-            "0",
+            preferences.getUserId().toString(),
             "NA",
             "ALL",
             "ALL",
@@ -157,6 +158,8 @@ class CinemaSessionActivity : AppCompatActivity(),
 
     private fun retrieveTheaterData(output: CinemaNearTheaterResponse.Output) {
         //recycler Cinemas
+        val snapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(binding?.recyclerView18)
         val gridLayout4 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
         val cinemaSessionNearTheaterAdapter =
             CinemaSessionNearTheaterAdapter(output.c, this, this)
@@ -238,9 +241,6 @@ class CinemaSessionActivity : AppCompatActivity(),
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(strUri))
         intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity")
         startActivity(intent)
-
-
-
     }
 
 }

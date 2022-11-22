@@ -14,70 +14,74 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:paddingStart="@dimen/dimen_20dp"
         android:paddingTop="@dimen/dimen_20dp"
-        android:paddingEnd="@dimen/dimen_20dp"
         android:paddingBottom="@dimen/padding_10">
 
-        <ImageView
-            android:id="@+id/imageView25"
-            android:layout_width="@dimen/dimen_55dp"
-            android:layout_height="78dp"
-            android:adjustViewBounds="true"
-            android:layout_centerVertical="true"
-            android:src="@color/placeholder_bg"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView13"
+            android:layout_width="@dimen/dimen_60dp"
+            android:layout_height="90dp"
+            app:cardUseCompatPadding="true"
+            app:cardCornerRadius="@dimen/dimen_3dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription,ImageContrastCheck" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageView25"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:layout_centerVertical="true"
+                android:src="@color/placeholder_bg"
+                tools:ignore="ContentDescription,ImageContrastCheck" />
+
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:orientation="vertical"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="@dimen/dimen_5dp"
+            android:layout_marginStart="@dimen/dimen_16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView25"
+            app:layout_constraintStart_toEndOf="@+id/cardView13"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/textView47"
-                style="@style/H12Size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="10dp"
                 android:gravity="center_vertical"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
-                android:textSize="@dimen/dimen_16sp"
+                android:fontFamily="@font/montserrat_bold"
+                android:textSize="@dimen/dimen_14sp"
                 tools:text="Pvr Gurgaon" />
 
             <TextView
                 android:id="@+id/textView48"
-                style="@style/H1Size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="10dp"
                 android:gravity="center_vertical"
                 android:textAllCaps="false"
-                android:textColor="#6B6B6B"
-                android:textSize="@dimen/dimen_14sp"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_12sp"
                 tools:text="Pvr Gurgaon" />
 
             <TextView
                 android:id="@+id/textView49"
-                style="@style/H1Size"
-                android:layout_width="match_parent"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_12sp"                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="10dp"
                 android:gravity="center_vertical"
                 android:textAllCaps="false"
-                android:textColor="#6B6B6B"
-                android:textSize="@dimen/dimen_14sp"
                 tools:text="Pvr Gurgaon" />
 
         </LinearLayout>
@@ -91,7 +95,7 @@
         android:layout_gravity="bottom"
         android:layout_marginTop="10dp"
         android:background="#e6e6e6"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

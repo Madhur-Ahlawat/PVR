@@ -15,7 +15,7 @@ data class FoodResponse(
         val banners: List<Any>,
         val bestsellers: ArrayList<Bestseller>,
         val c: String,
-        val cat: List<Cat>,
+        val cat: ArrayList<Cat>,
         val cn: String,
         val fimg: String,
         val h1: String,

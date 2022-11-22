@@ -72,6 +72,7 @@ class Constant {
         const val BIKE_SEAT_BOOKED = 8
         var PrivilegeHomeResponseConst:PrivilegeHomeResponse.Output? =null
         var PlaceHolder:HomeResponse.Output? = null
+        var DECIFORMAT = DecimalFormat("0.000")
 
     }
 
@@ -243,5 +244,11 @@ class Constant {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(strUri))
         intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity")
         context.startActivity(intent)
+    }
+
+    fun getURLForResource(resourceId: Int): String? {
+        //use BuildConfig.APPLICATION_ID instead of R.class.getPackage().getName() if both are not same
+        return Uri.parse("android.resource://" + android.R::class.java.getPackage().name + "/" + resourceId)
+            .toString()
     }
 }

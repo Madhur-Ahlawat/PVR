@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.search.searchHome.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -24,21 +25,20 @@ class SearchHomeMovieAdapter(
         return MyViewHolderNowShowing(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolderNowShowing, position: Int) {
-
         val selectCityItemList = selectCityList[position]
         holder.title.text = selectCityItemList.n
         holder.language.text = selectCityItemList.length + " | " + selectCityItemList.genre
         holder.timeCategory.text = selectCityItemList.n
         //Image
         Glide.with(context)
-            .load(selectCityItemList.iwt)
+            .load(selectCityItemList.im)
             .error(R.drawable.app_icon)
             .into(holder.image)
 
         holder.itemView.setOnClickListener {
-            listner.onSearchMovie(selectCityList)
-
+            listner.onSearchMovie(selectCityItemList)
         }
 
     }
@@ -55,6 +55,6 @@ class SearchHomeMovieAdapter(
     }
 
     interface RecycleViewItemClickListenerCity {
-        fun onSearchMovie(selectCityList: List<HomeSearchResponse.Output.M>)
+        fun onSearchMovie(selectCityList: HomeSearchResponse.Output.M)
     }
 }

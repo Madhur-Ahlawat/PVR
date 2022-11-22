@@ -6,9 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-feature android:name="android.hardware.camera.any" />
-
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -20,23 +18,20 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
         <activity
-            android:name=".ContactUsActivity"
+            android:name=".ui.contactUs.ContactUsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".FormatsActivity"
+            android:name=".ui.formats.FormatsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
-            android:name=".ui.login.FormatsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_formats" />
+
         <activity
             android:name=".ui.summery.coupons.CouponsActivity"
             android:exported="false">

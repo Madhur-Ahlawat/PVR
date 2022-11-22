@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -17,6 +18,7 @@ import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.bookingSession.BookingActivity
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.formats.FormatsActivity
 import com.net.pvr1.ui.home.fragment.home.adapter.*
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
@@ -229,8 +231,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     override fun onCategoryClick(comingSoonItem: HomeResponse.Mfi) {
-        val intent = Intent(requireActivity(), NowShowingActivity::class.java)
-        intent.putExtra("mid", comingSoonItem.name)
+        val intent = Intent(requireActivity(), FormatsActivity::class.java)
+        intent.putExtra("format", comingSoonItem.name)
         startActivity(intent)
     }
 

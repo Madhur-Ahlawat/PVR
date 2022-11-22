@@ -38,11 +38,16 @@ class CartAdapter(
                 // TotalPrice
                 calculateQt= this.quantity
                 totalPrice= calculateQt*this.price
-                val price: String = Constant().removeTrailingZeroFormater(totalPrice.toFloat())!!
-                binding.textView153.text = context.resources.getString(R.string.currency) + price
+                //total price
+                binding.textView153.text = "₹ " + Constant.DECIFORMAT.format(totalPrice / 100.0)
+
+//                val price: String = Constant().removeTrailingZeroFormater(totalPrice.toFloat())!!
+//                binding.textView153.text = context.resources.getString(R.string.currency) + price
                 // ProductPrice
-                val price2: String = Constant().removeTrailingZeroFormater(this.price.toFloat())!!
-                binding.textView152.text = context.resources.getString(R.string.currency) + price2
+//                val price2: String = Constant().removeTrailingZeroFormater(this.price.toFloat())!!
+//                binding.textView152.text = context.resources.getString(R.string.currency) + price2
+                binding.textView152.text = "₹ " + Constant.DECIFORMAT.format(this.price / 100.0)
+
 
                 //quantity
                 binding.textView154.text = this.quantity.toString()

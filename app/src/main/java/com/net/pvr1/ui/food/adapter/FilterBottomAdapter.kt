@@ -44,8 +44,9 @@ class FilterBottomAdapter(
                 //title
                 binding.textView144.text = this.h
                 //price
-                val price: String = Constant().removeTrailingZeroFormater(this.dp.toFloat())!!
-                binding.textView145.text = context.resources.getString(R.string.currency) + price
+//                val price: String = Constant().removeTrailingZeroFormater(this.dp.toFloat())!!
+//                binding.textView145.text = context.resources.getString(R.string.currency) + price
+                binding.textView145.text = "₹ " + Constant.DECIFORMAT.format(this.dp / 100.0)
 
 
                 //SubTract

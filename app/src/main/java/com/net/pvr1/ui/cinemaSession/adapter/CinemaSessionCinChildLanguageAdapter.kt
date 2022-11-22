@@ -3,16 +3,15 @@ package com.net.pvr1.ui.cinemaSession.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.flexbox.*
 import com.net.pvr1.databinding.ItemCinemaSessionLangChildBinding
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 
 
 class CinemaSessionCinChildLanguageAdapter(
-    private var nowShowingList: List<CinemaSessionResponse.Child.Mv.Ml>,
+    private var nowShowingList: ArrayList<CinemaSessionResponse.Child.Mv.Ml>,
     private var context: Context
-//    private var listener:RecycleViewItemClickListenerCity,
 ) :
     RecyclerView.Adapter<CinemaSessionCinChildLanguageAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemCinemaSessionLangChildBinding) :
@@ -33,12 +32,15 @@ class CinemaSessionCinChildLanguageAdapter(
                 //title
                 binding.textView95.text = this.lng
                 //RecyclerView
-                val cinemaSessionLanguageAdapter = CinemaSessionTimeAdapter(this.s, context, )
-                binding.recyclerView6.layoutManager = GridLayoutManager(context, 3)
+                val layoutManager = FlexboxLayoutManager(context)
+                layoutManager.flexWrap = FlexWrap.WRAP
+                layoutManager.flexDirection = FlexDirection.ROW
+                layoutManager.justifyContent = JustifyContent.FLEX_START
+                layoutManager.alignItems = AlignItems.FLEX_START
+                val cinemaSessionLanguageAdapter = CinemaSessionTimeAdapter(this.s, context)
+                binding.recyclerView6.layoutManager = layoutManager
                 binding.recyclerView6.adapter = cinemaSessionLanguageAdapter
 
-                //click
-//                holder.itemView.setOnClickListener {listener.dateClick(this)  }
             }
         }
 
@@ -48,9 +50,5 @@ class CinemaSessionCinChildLanguageAdapter(
         return if (nowShowingList.isNotEmpty()) nowShowingList.size else 0
     }
 
-
-    interface RecycleViewItemClickListenerCity {
-        fun dateClick(comingSoonItem: CinemaSessionResponse.Output.Bd)
-    }
 
 }

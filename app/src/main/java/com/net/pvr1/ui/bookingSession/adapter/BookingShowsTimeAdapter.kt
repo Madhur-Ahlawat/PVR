@@ -84,10 +84,7 @@ class BookingShowsTimeAdapter(
                             sidText = this.sid.toString()
                             ccText = this.cc
                             val intent = Intent(context, SeatLayoutActivity::class.java)
-                            intent.putExtra("sessionId", sidText)
-                            intent.putExtra("cinemaId", ccid)
                             intent.putExtra("shows", nowShowingList)
-                            intent.putExtra("ccId", ccText)
                             context.startActivity(intent)
 
                         }

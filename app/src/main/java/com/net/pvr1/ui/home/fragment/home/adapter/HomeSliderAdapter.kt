@@ -22,7 +22,6 @@ class HomeSliderAdapter(
 
     ) :
     RecyclerView.Adapter<HomeSliderAdapter.MyViewHolderNowShowing>() {
-
    private val displayMetrics = DisplayMetrics()
    private var screenWidth = 0
 

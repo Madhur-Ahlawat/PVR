@@ -1,18 +1,23 @@
 package com.net.pvr1.ui.cinemaSession.adapter
 
 import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.databinding.ItemCinemaDetailsShowTimeBinding
-import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
+import com.net.pvr1.ui.seatLayout.SeatLayoutActivity
+import com.net.pvr1.utils.Constant
+import com.net.pvr1.utils.printLog
 
 
 class CinemaSessionTimeAdapter(
-    private var nowShowingList: List<CinemaSessionResponse.Child.Mv.Ml.S>,
-    private var context: Context,
-) :
+    private var nowShowingList: ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>,
+    private var context: Context) :
     RecyclerView.Adapter<CinemaSessionTimeAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemCinemaDetailsShowTimeBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -31,6 +36,33 @@ class CinemaSessionTimeAdapter(
             with(nowShowingList[position]) {
                 //Language
                 binding.textView96.text = this.st
+                val colorCode = "#" + this.cc
+
+                binding.textView96.setTextColor(Color.parseColor(colorCode))
+                binding.imageView48.setColorFilter(Color.parseColor(colorCode))
+                binding.imageView49.setColorFilter(Color.parseColor(colorCode))
+
+
+                val alpha = 10 //between 0-255
+                val alphaColor = ColorUtils.setAlphaComponent(Color.parseColor(colorCode), alpha)
+                val alphaNew2 = alphaColor.toString().substring(0, alphaColor.toString().length - 1)
+                val alphaNew3 = "#$alphaNew2"
+                context.printLog("colorCode--->${alphaNew2}")
+                val gd = GradientDrawable()
+                gd.setColor(Color.parseColor(alphaNew3))
+                gd.cornerRadius = 10f
+                gd.setStroke(2, Color.parseColor(colorCode))
+                binding.cardView10.setBackgroundDrawable(gd)
+
+                Constant.SESSION_ID = this.sid.toString()
+                Constant.CINEMA_ID = cc
+
+                holder.itemView.setOnClickListener {
+                    val intent = Intent(context, SeatLayoutActivity::class.java)
+                    intent.putExtra("shows", nowShowingList)
+                    context.startActivity(intent)
+
+                }
             }
         }
 
@@ -41,8 +73,5 @@ class CinemaSessionTimeAdapter(
     }
 
 
-    interface RecycleViewItemClickListenerCity {
-        fun languageClick(comingSoonItem: BookingResponse.Output.Cinema)
-    }
 
 }

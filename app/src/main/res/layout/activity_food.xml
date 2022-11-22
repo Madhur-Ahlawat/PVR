@@ -34,41 +34,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView64"
-            android:layout_width="7dp"
-            android:layout_height="16dp"
-            android:layout_marginStart="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/view84"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/back"
-            app:tint="@color/black"
-            tools:ignore="ContentDescription" />
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toTopOf="@+id/view84"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView130"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/yellow_book_curve"
-            android:text="@string/continue_txt"
-            android:textAllCaps="true"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/view84"
-            app:layout_constraintTop_toTopOf="@+id/view84" />
-
-        <TextView
-            android:id="@+id/textView131"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView64"
-            app:layout_constraintStart_toEndOf="@+id/imageView64"
-            app:layout_constraintTop_toTopOf="@+id/imageView64"
-            tools:text="Order Snacks" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -115,32 +91,73 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/textView137"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sf_pro_text_bold"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dimen_18sp"
-                    app:layout_constraintStart_toStartOf="@+id/view88"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="BestSellers" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView19"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="12dp"
                     android:layout_marginEnd="8dp"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:layout_constraintBottom_toBottomOf="@+id/view88"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView137"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout108"
                     app:spanCount="2"
                     tools:itemCount="2"
                     tools:listitem="@layout/item_food" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout108"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/recyclerView19"
+                    app:layout_constraintTop_toTopOf="@+id/view88">
+
+                    <TextView
+                        android:id="@+id/textView130"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="24dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="@string/bestsellers"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Switch
+                        android:id="@+id/switch2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:text="@string/veg"
+                        android:textColor="@color/black"
+
+                        android:textSize="@dimen/dimen_14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView130"
+                        app:layout_constraintEnd_toStartOf="@+id/switch3"
+                        app:layout_constraintTop_toTopOf="@+id/textView130"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                    <Switch
+                        android:id="@+id/switch3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:text="@string/non_veg"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/switch2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/switch2"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -168,11 +185,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sf_pro_text_bold"
+                    android:text="@string/your_happy_place"
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimen_18sp"
                     app:layout_constraintStart_toStartOf="@+id/view89"
-                    app:layout_constraintTop_toTopOf="@+id/view89"
-                    android:text="@string/your_happy_place" />
+                    app:layout_constraintTop_toTopOf="@+id/view89" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView20"
@@ -192,14 +209,15 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:spanCount="2"
-                    tools:itemCount="2"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:layout_constraintBottom_toBottomOf="@+id/view89"
                     app:layout_constraintEnd_toEndOf="@+id/view89"
                     app:layout_constraintStart_toStartOf="@+id/view89"
                     app:layout_constraintTop_toBottomOf="@+id/recyclerView20"
+                    app:spanCount="2"
+                    tools:itemCount="2"
                     tools:listitem="@layout/item_food" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -252,7 +270,9 @@
             android:id="@+id/constraintLayout35"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_50dp"
-            android:background="@color/yellow"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/curve_ui"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -278,8 +298,7 @@
                 android:textSize="@dimen/dimen_14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/view100"
-                app:layout_constraintTop_toTopOf="@+id/view100"
-                app:drawableEndCompat="@drawable/right_arrow" />
+                app:layout_constraintTop_toTopOf="@+id/view100" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout34"
@@ -308,70 +327,54 @@
                     android:layout_marginTop="@dimen/dimen_10dp"
                     android:background="@drawable/ic_oval_2"
                     android:gravity="center"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/dimen_11sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="2" />
+                    app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView
                 android:id="@+id/imageView74"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 android:padding="@dimen/padding_10"
-                android:layout_marginStart="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/constraintLayout34"
-                app:layout_constraintStart_toEndOf="@+id/constraintLayout34"
+                app:layout_constraintStart_toEndOf="@+id/textView149"
                 app:layout_constraintTop_toTopOf="@+id/constraintLayout34"
                 app:srcCompat="@drawable/arrow_down"
                 tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/textView149"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView74"
+                app:layout_constraintStart_toEndOf="@+id/constraintLayout34"
+                app:layout_constraintTop_toTopOf="@+id/imageView74"
+                tools:text="4 Items" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout36"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="wrap_content"
             android:background="@color/background_color"
             app:layout_constraintEnd_toEndOf="@+id/constraintLayout35"
             app:layout_constraintStart_toStartOf="@+id/constraintLayout35"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout35">
 
-            <View
-                android:id="@+id/view101"
-                android:layout_width="wrap_content"
+            <include
+                android:id="@+id/include24"
+                layout="@layout/button_next"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-            <TextView
-                android:id="@+id/textView149"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:fontFamily="@font/sf_pro_text_bold"
-                android:text="@string/sub_total"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimen_14sp"
-                app:layout_constraintBottom_toBottomOf="@+id/view101"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/textView150"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:fontFamily="@font/sf_pro_text_bold"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimen_14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/view101"
-                tools:text="1760" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView

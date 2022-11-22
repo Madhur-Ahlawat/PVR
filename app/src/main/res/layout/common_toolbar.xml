@@ -16,22 +16,19 @@
         android:paddingLeft="@dimen/toolbar_left_right_padding"
         android:paddingRight="@dimen/toolbar_left_right_padding"
         android:src="@drawable/back"
-        tools:ignore="ContentDescription"
-        app:tint="@color/black" />
+        app:tint="@color/black"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/titleCommonToolbar"
         style="@style/H4SizeBold"
+        android:textAlignment="textStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_toStartOf="@+id/subTitle"
         android:layout_toEndOf="@+id/btnBack"
-        android:ellipsize="marquee"
-        android:gravity="end"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:scrollHorizontally="true"
-        android:singleLine="true" />
+        android:ellipsize="marquee" />
 
     <TextView
         android:id="@+id/subTitle"

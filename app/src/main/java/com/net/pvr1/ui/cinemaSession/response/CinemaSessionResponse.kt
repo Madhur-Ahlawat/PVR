@@ -59,7 +59,7 @@ data class CinemaSessionResponse(
         val fmt: List<String>,
         val hc: Boolean,
         val i: Any,
-        val mvs: List<Mv>,
+        val mvs: ArrayList<Mv>,
         val sc: Int
     ) : Serializable {
         data class Mv(
@@ -69,14 +69,14 @@ data class CinemaSessionResponse(
             val mcensor: String,
             val mih: String,
             val miv: String,
-            val ml: List<Ml>,
+            val ml: ArrayList<Ml>,
             val mlength: String,
             val mn: String
         ) : Serializable {
             data class Ml(
                 val lk: String,
                 val lng: String,
-                val s: List<S>,
+                val s: ArrayList<S>,
                 val tx: Any
             ) : Serializable {
                 data class S(
@@ -94,7 +94,7 @@ data class CinemaSessionResponse(
                     val mdt: Any,
                     val mn: Any,
                     val pg: String,
-                    val prs: List<Pr>,
+                    val prs: ArrayList<Pr>,
                     val sd: Long,
                     val sh: String,
                     val sid: Int,

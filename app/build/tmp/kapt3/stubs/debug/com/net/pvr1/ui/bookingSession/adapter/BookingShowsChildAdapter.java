@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.flexbox.*;
 import com.net.pvr1.databinding.ItemBookingSessionCinemaLanguageBinding;
 import com.net.pvr1.ui.bookingSession.response.BookingResponse;
 

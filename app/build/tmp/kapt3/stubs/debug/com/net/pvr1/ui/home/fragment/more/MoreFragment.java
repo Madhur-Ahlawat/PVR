@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import com.net.pvr1.R;
 import com.net.pvr1.databinding.FragmentMoreBinding;
+import com.net.pvr1.ui.contactUs.ContactUsActivity;
 import com.net.pvr1.ui.dailogs.OptionDialog;
 import com.net.pvr1.ui.giftCard.GiftCardActivity;
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.BookingRetrievalActivity;

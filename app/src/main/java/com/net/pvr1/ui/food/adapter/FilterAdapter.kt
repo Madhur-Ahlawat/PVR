@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.food.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -33,6 +34,7 @@ class FilterAdapter(
         return ViewHolder(binding)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
@@ -46,8 +48,10 @@ class FilterAdapter(
                 //title
                 binding.textView132.text = this.nm
                 //price
-                val price: String = Constant().removeTrailingZeroFormater(this.dp.toFloat())!!
-                binding.textView133.text = context.resources.getString(R.string.currency) + price
+                binding.textView133.text = "₹ " + Constant.DECIFORMAT.format(this.dp / 100.0)
+
+//                val price: String = Constant().removeTrailingZeroFormater(this.dp.toFloat())!!
+//                binding.textView133.text = context.resources.getString(R.string.currency) + price
 
 
                 //SubTract

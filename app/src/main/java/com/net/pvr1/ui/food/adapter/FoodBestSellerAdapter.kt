@@ -39,8 +39,10 @@ class FoodBestSellerAdapter(
                 binding.textView132.text = this.nm
 
                 //price
-                val price: String = Constant().removeTrailingZeroFormater(this.dp.toFloat())!!
-                binding.textView133.text = context.resources.getString(R.string.currency) + price
+//                val price: String = Constant().removeTrailingZeroFormater(this.dp.toFloat())!!
+//                binding.textView133.text = context.resources.getString(R.string.currency) + price
+                binding.textView133.text = "₹ " + Constant.DECIFORMAT.format(this.dp / 100.0)
+
 
                 if (this.r.size > 1) {
                     binding.textView134.show()

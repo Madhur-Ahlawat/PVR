@@ -1,6 +1,8 @@
 package com.net.pvr1.ui.cinemaSession.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,15 +11,18 @@ import com.net.pvr1.R;
 import com.net.pvr1.databinding.ItemCinemaDetailsCinemasBinding;
 import com.net.pvr1.ui.cinemaSession.response.CinemaNearTheaterResponse;
 
-@kotlin.Metadata(mv = {1, 7, 1}, k = 1, d1 = {"\u0000<\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010 \n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\b\n\u0000\n\u0002\u0010\u0002\n\u0002\b\u0004\n\u0002\u0018\u0002\n\u0002\b\u0004\u0018\u00002\f\u0012\b\u0012\u00060\u0002R\u00020\u00000\u0001:\u0002\u0015\u0016B#\u0012\f\u0010\u0003\u001a\b\u0012\u0004\u0012\u00020\u00050\u0004\u0012\u0006\u0010\u0006\u001a\u00020\u0007\u0012\u0006\u0010\b\u001a\u00020\t\u00a2\u0006\u0002\u0010\nJ\b\u0010\u000b\u001a\u00020\fH\u0016J\u001c\u0010\r\u001a\u00020\u000e2\n\u0010\u000f\u001a\u00060\u0002R\u00020\u00002\u0006\u0010\u0010\u001a\u00020\fH\u0016J\u001c\u0010\u0011\u001a\u00060\u0002R\u00020\u00002\u0006\u0010\u0012\u001a\u00020\u00132\u0006\u0010\u0014\u001a\u00020\fH\u0016R\u000e\u0010\u0006\u001a\u00020\u0007X\u0082\u000e\u00a2\u0006\u0002\n\u0000R\u000e\u0010\b\u001a\u00020\tX\u0082\u000e\u00a2\u0006\u0002\n\u0000R\u0014\u0010\u0003\u001a\b\u0012\u0004\u0012\u00020\u00050\u0004X\u0082\u000e\u00a2\u0006\u0002\n\u0000\u00a8\u0006\u0017"}, d2 = {"Lcom/net/pvr1/ui/cinemaSession/adapter/CinemaSessionNearTheaterAdapter;", "Landroidx/recyclerview/widget/RecyclerView$Adapter;", "Lcom/net/pvr1/ui/cinemaSession/adapter/CinemaSessionNearTheaterAdapter$ViewHolder;", "nowShowingList", "", "Lcom/net/pvr1/ui/cinemaSession/response/CinemaNearTheaterResponse$Output$C;", "context", "Landroid/content/Context;", "listener", "Lcom/net/pvr1/ui/cinemaSession/adapter/CinemaSessionNearTheaterAdapter$RecycleViewItemClickListenerCity;", "(Ljava/util/List;Landroid/content/Context;Lcom/net/pvr1/ui/cinemaSession/adapter/CinemaSessionNearTheaterAdapter$RecycleViewItemClickListenerCity;)V", "getItemCount", "", "onBindViewHolder", "", "holder", "position", "onCreateViewHolder", "parent", "Landroid/view/ViewGroup;", "viewType", "RecycleViewItemClickListenerCity", "ViewHolder", "app_debug"})
+@kotlin.Suppress(names = {"DEPRECATION"})
+@kotlin.Metadata(mv = {1, 7, 1}, k = 1, d1 = {"\u0000D\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010 \n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\b\n\u0002\b\u0002\n\u0002\u0010\u0002\n\u0002\b\u0004\n\u0002\u0018\u0002\n\u0002\b\u0004\u0018\u00002\f\u0012\b\u0012\u00060\u0002R\u00020\u00000\u0001:\u0002\u0018\u0019B#\u0012\f\u0010\u0003\u001a\b\u0012\u0004\u0012\u00020\u00050\u0004\u0012\u0006\u0010\u0006\u001a\u00020\u0007\u0012\u0006\u0010\b\u001a\u00020\t\u00a2\u0006\u0002\u0010\nJ\b\u0010\u000f\u001a\u00020\u000eH\u0016J\u001c\u0010\u0010\u001a\u00020\u00112\n\u0010\u0012\u001a\u00060\u0002R\u00020\u00002\u0006\u0010\u0013\u001a\u00020\u000eH\u0016J\u001c\u0010\u0014\u001a\u00060\u0002R\u00020\u00002\u0006\u0010\u0015\u001a\u00020\u00162\u0006\u0010\u0017\u001a\u00020\u000eH\u0016R\u000e\u0010\u0006\u001a\u00020\u0007X\u0082\u000e\u00a2\u0006\u0002\n\u0000R\u000e\u0010\u000b\u001a\u00020\fX\u0082\u0004\u00a2\u0006\u0002\n\u0000R\u000e\u0010\b\u001a\u00020\tX\u0082\u000e\u00a2\u0006\u0002\n\u0000R\u0014\u0010\u0003\u001a\b\u0012\u0004\u0012\u00020\u00050\u0004X\u0082\u000e\u00a2\u0006\u0002\n\u0000R\u000e\u0010\r\u001a\u00020\u000eX\u0082\u000e\u00a2\u0006\u0002\n\u0000\u00a8\u0006\u001a"}, d2 = {"Lcom/net/pvr1/ui/cinemaSession/adapter/CinemaSessionNearTheaterAdapter;", "Landroidx/recyclerview/widget/RecyclerView$Adapter;", "Lcom/net/pvr1/ui/cinemaSession/adapter/CinemaSessionNearTheaterAdapter$ViewHolder;", "nowShowingList", "", "Lcom/net/pvr1/ui/cinemaSession/response/CinemaNearTheaterResponse$Output$C;", "context", "Landroid/app/Activity;", "listener", "Lcom/net/pvr1/ui/cinemaSession/adapter/CinemaSessionNearTheaterAdapter$RecycleViewItemClickListenerCity;", "(Ljava/util/List;Landroid/app/Activity;Lcom/net/pvr1/ui/cinemaSession/adapter/CinemaSessionNearTheaterAdapter$RecycleViewItemClickListenerCity;)V", "displayMetrics", "Landroid/util/DisplayMetrics;", "screenWidth", "", "getItemCount", "onBindViewHolder", "", "holder", "position", "onCreateViewHolder", "parent", "Landroid/view/ViewGroup;", "viewType", "RecycleViewItemClickListenerCity", "ViewHolder", "app_debug"})
 public final class CinemaSessionNearTheaterAdapter extends androidx.recyclerview.widget.RecyclerView.Adapter<com.net.pvr1.ui.cinemaSession.adapter.CinemaSessionNearTheaterAdapter.ViewHolder> {
     private java.util.List<com.net.pvr1.ui.cinemaSession.response.CinemaNearTheaterResponse.Output.C> nowShowingList;
-    private android.content.Context context;
+    private android.app.Activity context;
     private com.net.pvr1.ui.cinemaSession.adapter.CinemaSessionNearTheaterAdapter.RecycleViewItemClickListenerCity listener;
+    private final android.util.DisplayMetrics displayMetrics = null;
+    private int screenWidth = 0;
     
     public CinemaSessionNearTheaterAdapter(@org.jetbrains.annotations.NotNull()
     java.util.List<com.net.pvr1.ui.cinemaSession.response.CinemaNearTheaterResponse.Output.C> nowShowingList, @org.jetbrains.annotations.NotNull()
-    android.content.Context context, @org.jetbrains.annotations.NotNull()
+    android.app.Activity context, @org.jetbrains.annotations.NotNull()
     com.net.pvr1.ui.cinemaSession.adapter.CinemaSessionNearTheaterAdapter.RecycleViewItemClickListenerCity listener) {
         super();
     }

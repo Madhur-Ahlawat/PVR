@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.webView
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.net.http.SslError
 import android.os.Bundle
@@ -23,9 +24,19 @@ class WebViewActivity : AppCompatActivity() {
         from = intent.getStringExtra("from").toString()
         title = intent.getStringExtra("title").toString()
         get = intent.getStringExtra("getUrl").toString()
+        println("webUrl--->${get}")
+        binding?.include3?.textView108?.text= title
+        movedNext()
         loadWebData(get)
     }
 
+    private fun movedNext() {
+        binding?.include3?.imageView58?.setOnClickListener {
+            onBackPressed()
+        }
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
     private fun loadWebData(url: String) {
         try {
             binding?.webView?.loadUrl(url)
@@ -39,6 +50,7 @@ class WebViewActivity : AppCompatActivity() {
                 ), "Android"
             )
         } catch (exception: Exception) {
+            println("exception--->${exception.message}")
             exception.printStackTrace()
         }
         binding?.webView?.webViewClient = object : WebViewClient() {

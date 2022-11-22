@@ -46,7 +46,7 @@ class HomeCinemaCategoryAdapter(
                 .into(holder.image)
         }
 
-        holder.image.setOnClickListener {
+        holder.itemView.setOnClickListener {
             listener.onCategoryClick(comingSoonItem)
         }
     }

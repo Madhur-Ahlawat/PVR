@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySearchCinemaBinding
-import com.net.pvr1.di.preference.AppPreferences
+import com.net.pvr1.ui.cinemaSession.CinemaSessionActivity
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.search.searchCinema.viewModel.CinemaSearchViewModel
@@ -22,14 +22,13 @@ import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class SearchCinemaActivity : AppCompatActivity(),
     SearchHomeCinemaAdapter.RecycleViewItemClickListenerCity {
     private val REQUEST_CODE_SPEECH_INPUT = 1
 
-//    @Inject
+    //    @Inject
 //    lateinit var preferences: AppPreferences
     private var binding: ActivitySearchCinemaBinding? = null
     private val authViewModel: CinemaSearchViewModel by viewModels()
@@ -144,6 +143,7 @@ class SearchCinemaActivity : AppCompatActivity(),
     @Deprecated("Deprecated in Java")
     @Override
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_SPEECH_INPUT) {
             if (resultCode == RESULT_OK && data != null) {
 
@@ -161,6 +161,15 @@ class SearchCinemaActivity : AppCompatActivity(),
 
 
     override fun onSearchCinema(selectCityItemList: HomeSearchResponse.Output.T) {
+        val intent = Intent(this, CinemaSessionActivity::class.java)
+        intent.putExtra("cid", selectCityItemList.id)
+        intent.putExtra("lat", selectCityItemList.lat)
+        intent.putExtra("lang", selectCityItemList.lng)
+        startActivity(intent)
+
+    }
+
+    override fun onSearchCinemaDirection(selectCityItemList: HomeSearchResponse.Output.T) {
         val lat = selectCityItemList.lat
         val lang = selectCityItemList.lng
         val strUri =

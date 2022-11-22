@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Spannable
@@ -87,7 +88,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         val view = binding?.root
         setContentView(view)
         showsArray = intent.getStringArrayListExtra("shows") as ArrayList<Child.Sw.S>
-        printLog("shows---->${showsArray}")
         sessionId = SESSION_ID
         authViewModel.seatLayout(
             CINEMA_ID,
@@ -102,6 +102,27 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         reserveSeat()
         initTrans()
         shows()
+        movedNext()
+    }
+
+    private fun movedNext() {
+        //Alert Dialog
+        binding?.imageView97?.setOnClickListener {
+            val dialog = Dialog(this)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setContentView(R.layout.seat_layout_dilog)
+            dialog.window!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+
+            val privacy = dialog.findViewById<TextView>(R.id.textView304)
+            privacy.paintFlags = privacy.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+            dialog.window!!.setGravity(Gravity.BOTTOM)
+            dialog.show()
+        }
     }
 
     //Shows

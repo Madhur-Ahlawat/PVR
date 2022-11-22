@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
+import com.net.pvr1.ui.formats.response.FormatResponse
 import com.net.pvr1.ui.summery.response.AddFoodResponse
 import com.net.pvr1.ui.summery.response.SummeryResponse
 import com.net.pvr1.utils.NetworkResult
@@ -15,12 +16,12 @@ import javax.inject.Inject
 class FormatsViewModel @Inject constructor(private val userRepository: UserRepository) :
     ViewModel() {
     //formats Details
-    val liveDataScope: LiveData<NetworkResult<SummeryResponse>>
-        get() = userRepository.summerResponseLiveData
+    val liveDataScope: LiveData<NetworkResult<FormatResponse>>
+        get() = userRepository.formatsResponseLiveData
 
-    fun summery(transid: String, cinemacode: String, userid: String, bookingid: String) {
+    fun formats(type: String, city: String, isSpi: String) {
         viewModelScope.launch {
-            userRepository.summerLayout(transid, cinemacode, userid, bookingid)
+            userRepository.formatsLayout(type, city, isSpi)
         }
     }
 

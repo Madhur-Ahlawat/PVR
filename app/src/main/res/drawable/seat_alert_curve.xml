@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+    <stroke android:width="1dp"
+        android:color="@color/pvr_filter_text_bg"
+        />
+
+    <solid android:color="#F8F8F8"/>
+
+    <corners
+        android:bottomLeftRadius="6dp"
+        android:bottomRightRadius="6dp"
+        android:topLeftRadius="6dp"
+        android:topRightRadius="6dp" />
+
+    <padding android:left="@dimen/dimen_21dp"
+        android:right="@dimen/dimen_21dp"
+        android:top="@dimen/dimen_22dp"
+        android:bottom="@dimen/dimen_22dp"/>
+</shape>
