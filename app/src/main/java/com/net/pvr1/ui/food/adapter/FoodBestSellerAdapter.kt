@@ -37,31 +37,21 @@ class FoodBestSellerAdapter(
             with(nowShowingList[position]) {
                 //title
                 binding.textView132.text = this.nm
-
-                //price
-//                val price: String = Constant().removeTrailingZeroFormater(this.dp.toFloat())!!
-//                binding.textView133.text = context.resources.getString(R.string.currency) + price
                 binding.textView133.text = "₹ " + Constant.DECIFORMAT.format(this.dp / 100.0)
-
 
                 if (this.r.size > 1) {
                     binding.textView134.show()
                     binding.textView135.hide()
                     binding.textView135.setOnClickListener {
-                        listener.bestSellerDialog(this.r, this.nm)
+                        listener.bestSellerDialogAddFood(this.r, this.nm)
                     }
                 } else {
                     binding.textView134.invisible()
                     binding.textView135.setOnClickListener {
+                        listener.addFood(this, position)
                         binding.consAddUi.show()
-                        binding.textView134.hide()
-                        //AddFood
-//                        binding.textView135.setOnClickListener {
-                            listener.addFood(this, position)
-                            binding.consAddUi.show()
-                            binding.textView135.hide()
-                            notifyDataSetChanged()
-//                        }
+                        binding.textView135.hide()
+                        notifyDataSetChanged()
                     }
 
                 }
@@ -84,7 +74,6 @@ class FoodBestSellerAdapter(
 
                 binding.imageView65.setOnClickListener {
                     listener.foodBestImageClick(this)
-                    notifyDataSetChanged()
                 }
 
                 //SubTract
@@ -95,7 +84,6 @@ class FoodBestSellerAdapter(
                 //Add
                 binding.uiPlusMinus.minus.setOnClickListener {
                     listener.addFoodMinus(this, position)
-
                     notifyDataSetChanged()
                 }
                 //UiShowHide
@@ -122,7 +110,10 @@ class FoodBestSellerAdapter(
         fun addFood(comingSoonItem: FoodResponse.Output.Bestseller, position: Int)
         fun addFoodPlus(comingSoonItem: FoodResponse.Output.Bestseller, position: Int)
         fun addFoodMinus(comingSoonItem: FoodResponse.Output.Bestseller, position: Int)
-        fun bestSellerDialog(comingSoonItem: List<FoodResponse.Output.Bestseller.R>, position: String)
+        fun bestSellerDialogAddFood(
+            comingSoonItem: List<FoodResponse.Output.Bestseller.R>,
+            position: String
+        )
     }
 
 }

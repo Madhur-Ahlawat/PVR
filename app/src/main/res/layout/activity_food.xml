@@ -138,12 +138,12 @@
                         android:fontFamily="@font/sf_pro_text_regular"
                         android:text="@string/veg"
                         android:textColor="@color/black"
-
                         android:textSize="@dimen/dimen_14sp"
+                        android:thumbTint="@color/white"
                         app:layout_constraintBottom_toBottomOf="@+id/textView130"
                         app:layout_constraintEnd_toStartOf="@+id/switch3"
                         app:layout_constraintTop_toTopOf="@+id/textView130"
-                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                        tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
 
                     <Switch
                         android:id="@+id/switch3"
@@ -153,10 +153,11 @@
                         android:text="@string/non_veg"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimen_14sp"
+                        android:thumbTint="@color/white"
                         app:layout_constraintBottom_toBottomOf="@+id/switch2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/switch2"
-                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                        tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -250,7 +251,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/view92"
                     app:layout_constraintTop_toTopOf="@+id/view92"
-                    tools:itemCount="3"
+                    tools:itemCount="1"
                     tools:listitem="@layout/item_food_promotion" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -260,7 +261,7 @@
         android:id="@+id/constraintLayout30"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/view83"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -322,11 +323,12 @@
 
                 <TextView
                     android:id="@id/textView151"
-                    android:layout_width="@dimen/dimen_15dp"
-                    android:layout_height="@dimen/dimen_15dp"
-                    android:layout_marginTop="@dimen/dimen_10dp"
+                    android:layout_width="@dimen/dimen_10dp"
+                    android:layout_height="@dimen/dimen_10dp"
                     android:background="@drawable/ic_oval_2"
                     android:gravity="center"
+                    android:layout_marginBottom="-8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/imageView73"
                     app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 

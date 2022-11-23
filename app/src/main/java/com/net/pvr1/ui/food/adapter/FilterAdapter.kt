@@ -74,7 +74,7 @@ class FilterAdapter(
                     binding.textView134.invisible()
                     binding.textView135.setOnClickListener {
                         binding.consAddUi.show()
-                        binding.textView134.hide()
+                        binding.textView135.hide()
                         listener.categoryFoodClick(this)
                     }
 
