@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityFoodBinding
 import com.net.pvr1.databinding.FoodBottomAddFoodBinding
+import com.net.pvr1.databinding.FoodCartDialogBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.adapter.*
@@ -80,7 +81,6 @@ class FoodActivity : AppCompatActivity(),
 //            "no",
 //            "no"
 //        )
-
 
         authViewModel.food(
             preferences.getUserId().toString(),
@@ -183,6 +183,7 @@ class FoodActivity : AppCompatActivity(),
 
         binding?.toolbar?.textView108?.text = getString(R.string.order_snack)
         binding?.include24?.textView5?.text = getString(R.string.submit)
+        binding?.include24?.textView5?.text = getString(R.string.proceed)
         binding?.include24?.textView5?.setOnClickListener {
             val intent = Intent(this@FoodActivity, SummeryActivity::class.java)
             intent.putExtra("food", cartModel)
@@ -207,14 +208,18 @@ class FoodActivity : AppCompatActivity(),
                 val layoutManagerCrew =
                     GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
                 foodBestSellerAdapter =
-                    FoodBestSellerAdapter(getFilterBestSellerList(true, menuType,bestSellerType), this, this)
+                    FoodBestSellerAdapter(
+                        getFilterBestSellerList(true, menuType, bestSellerType),
+                        this,
+                        this
+                    )
                 binding?.recyclerView19?.layoutManager = layoutManagerCrew
                 binding?.recyclerView19?.adapter = foodBestSellerAdapter
                 binding?.recyclerView19?.setHasFixedSize(true)
 
             } else {
                 if (binding?.switch2?.isChecked == false && binding?.switch3?.isChecked == false) {
-                    bestSellerType="ALL"
+                    bestSellerType = "ALL"
                     menuType = 0
                     val layoutManagerCrew2 =
                         GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
@@ -228,11 +233,13 @@ class FoodActivity : AppCompatActivity(),
                     val layoutManagerCrew =
                         GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
                     foodBestSellerAdapter =
-                        FoodBestSellerAdapter(getFilterBestSellerList(
-                            true,
-                            menuType,
-                            bestSellerType
-                        ), this, this)
+                        FoodBestSellerAdapter(
+                            getFilterBestSellerList(
+                                true,
+                                menuType,
+                                bestSellerType
+                            ), this, this
+                        )
                     binding?.recyclerView19?.layoutManager = layoutManagerCrew
                     binding?.recyclerView19?.adapter = foodBestSellerAdapter
                     binding?.recyclerView19?.setHasFixedSize(true)
@@ -245,7 +252,7 @@ class FoodActivity : AppCompatActivity(),
             if (isChecked) {
                 menuType = 2
                 binding?.switch2?.isChecked = false
-                bestSellerType="Veg"
+                bestSellerType = "Veg"
 
                 val layoutManagerCrew2 =
                     GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
@@ -259,7 +266,11 @@ class FoodActivity : AppCompatActivity(),
                 val layoutManagerCrew =
                     GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
                 foodBestSellerAdapter =
-                    FoodBestSellerAdapter(getFilterBestSellerList(true, menuType, bestSellerType), this, this)
+                    FoodBestSellerAdapter(
+                        getFilterBestSellerList(true, menuType, bestSellerType),
+                        this,
+                        this
+                    )
                 binding?.recyclerView19?.layoutManager = layoutManagerCrew
                 binding?.recyclerView19?.adapter = foodBestSellerAdapter
                 binding?.recyclerView19?.setHasFixedSize(true)
@@ -267,7 +278,7 @@ class FoodActivity : AppCompatActivity(),
 
             } else {
                 if (binding?.switch2?.isChecked == false && binding?.switch3?.isChecked == false) {
-                    bestSellerType="ALL"
+                    bestSellerType = "ALL"
 
                     menuType = 0
                     val layoutManagerCrew2 =
@@ -283,11 +294,13 @@ class FoodActivity : AppCompatActivity(),
                     val layoutManagerCrew =
                         GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
                     foodBestSellerAdapter =
-                        FoodBestSellerAdapter(getFilterBestSellerList(
-                            true,
-                            menuType,
-                            bestSellerType
-                        ), this, this)
+                        FoodBestSellerAdapter(
+                            getFilterBestSellerList(
+                                true,
+                                menuType,
+                                bestSellerType
+                            ), this, this
+                        )
                     binding?.recyclerView19?.layoutManager = layoutManagerCrew
                     binding?.recyclerView19?.adapter = foodBestSellerAdapter
                     binding?.recyclerView19?.setHasFixedSize(true)
@@ -546,11 +559,11 @@ class FoodActivity : AppCompatActivity(),
         val categoryFilterNew = ArrayList<FoodResponse.Output.Bestseller>()
         when (menuType) {
             0 -> {
-                if (bestSellerType=="ALL"){
+                if (bestSellerType == "ALL") {
                     for (data in catFilterBestSeller) {
-                         categoryFilterNew.add(data)
+                        categoryFilterNew.add(data)
                     }
-                }else{
+                } else {
                     for (data in catFilterBestSeller) {
                         if (data.veg == category)
                             categoryFilterNew.add(data)
@@ -559,13 +572,13 @@ class FoodActivity : AppCompatActivity(),
 
             }
             1 -> {
-                if (bestSellerType=="ALL") {
+                if (bestSellerType == "ALL") {
                     for (data in catFilterBestSeller) {
 //                        if (data.veg == category && data.veg) {
-                            categoryFilterNew.add(data)
+                        categoryFilterNew.add(data)
 //                        }
                     }
-                }else{
+                } else {
                     for (data in catFilterBestSeller) {
                         if (data.veg == category && data.veg) {
                             categoryFilterNew.add(data)
@@ -576,13 +589,13 @@ class FoodActivity : AppCompatActivity(),
 
             }
             2 -> {
-                if (bestSellerType=="ALL") {
+                if (bestSellerType == "ALL") {
                     for (data in catFilterBestSeller) {
 //                        if (!data.veg == category && !data.veg) {
-                            categoryFilterNew.add(data)
+                        categoryFilterNew.add(data)
 //                        }
                     }
-                }else{
+                } else {
                     for (data in catFilterBestSeller) {
                         if (!data.veg == category && !data.veg) {
                             categoryFilterNew.add(data)
@@ -592,12 +605,12 @@ class FoodActivity : AppCompatActivity(),
 
             }
             else -> {
-                if (bestSellerType=="ALL") {
+                if (bestSellerType == "ALL") {
                     for (data in catFilterBestSeller) {
 //                        if (data.veg == category)
-                            categoryFilterNew.add(data)
+                        categoryFilterNew.add(data)
                     }
-                }else{
+                } else {
                     for (data in catFilterBestSeller) {
                         if (data.veg == category)
                             categoryFilterNew.add(data)
@@ -845,123 +858,183 @@ class FoodActivity : AppCompatActivity(),
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged", "UseCompatLoadingForDrawables", "SetTextI18n")
     private fun cartData() {
         foodBestSellerAdapter?.notifyDataSetChanged()
         categoryAdapter?.notifyDataSetChanged()
         filterAdapter?.notifyDataSetChanged()
         allFoodAdapter?.notifyDataSetChanged()
         filterBottomAdapter?.notifyDataSetChanged()
+        binding?.imageView74?.setImageDrawable(this.getDrawable(R.drawable.arrow_up))
+
         if (cartModel.isEmpty()) {
             binding?.constraintLayout30?.hide()
         } else {
-            binding?.imageView74?.setOnClickListener {
-                if (up) {
-                    up = false
-                    binding?.imageView74?.setImageDrawable(this.getDrawable(R.drawable.arrow_up))
-                    binding?.recyclerView23?.show()
-                } else {
-                    up = true
-                    binding?.imageView74?.setImageDrawable(this.getDrawable(R.drawable.arrow_down))
-                    binding?.recyclerView23?.hide()
-                }
-            }
-
-            //calculate Price
-            binding?.textView148?.text = ""
-
-            //total Price
-            itemCheckPriceCart = calculateTotal()
-            binding?.textView148?.text =
-                "₹ " + Constant.DECIFORMAT.format(itemCheckPriceCart / 100.0)
-
-            binding?.textView149?.text = cartModel.size.toString() + " " + getString(R.string.items)
             binding?.constraintLayout30?.show()
-            val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-            val cartAdapter = CartAdapter(cartModel, this, this)
-            binding?.recyclerView23?.layoutManager = layoutManager
-            binding?.recyclerView23?.adapter = cartAdapter
-        }
+            binding?.imageView74?.setOnClickListener {
+                cartDialog()
+            }
 
+        //total Price
+        itemCheckPriceCart = calculateTotal()
+        binding?.textView148?.text =
+            getString(R.string.currency) + Constant.DECIFORMAT.format(itemCheckPriceCart / 100.0)
+
+        binding?.textView149?.text = cartModel.size.toString() + " " + getString(R.string.items)
+        binding?.constraintLayout30?.show()
 
     }
 
-    private fun updateCartFoodCartList(recyclerData: CartModel) {
-        try {
-            for (item in cartModel) {
-                if (item.id == recyclerData.id) {
-                    if (recyclerData.quantity == 0) {
-                        removeCartItem(item)
-                    } else {
-                        item.quantity = recyclerData.quantity
-                        break
-                    }
-                }
-            }
+}
 
-            updateCartMainList(recyclerData)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
 
+@SuppressLint("SetTextI18n", "UseCompatLoadingForDrawables")
+private fun cartDialog() {
+    val dialog = Dialog(this)
+    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    val inflater = LayoutInflater.from(this)
+    val bindingBottom = FoodCartDialogBinding.inflate(inflater)
+    dialog.setContentView(bindingBottom.root)
+    dialog.window!!.setLayout(
+        ViewGroup.LayoutParams.MATCH_PARENT,
+        ViewGroup.LayoutParams.WRAP_CONTENT
+    )
+
+    bindingBottom.include26.textView5.text = getString(R.string.proceed)
+    dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+    dialog.window!!.setGravity(Gravity.BOTTOM)
+    dialog.show()
+    //total Items
+
+    bindingBottom.textView149.text = cartModel.size.toString() + " " + getString(R.string.items)
+    //total Price
+    itemCheckPriceCart = calculateTotal()
+    bindingBottom.textView148.text =
+        getString(R.string.currency) + Constant.DECIFORMAT.format(itemCheckPriceCart / 100.0)
+
+    //dismiss
+    bindingBottom.imageView74.setImageDrawable(this.getDrawable(R.drawable.arrow_down))
+
+    bindingBottom.imageView74.setOnClickListener {
+        dialog.dismiss()
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private fun updateCartMainList(recyclerData: CartModel) {
-        for (item in foodResponse!!.bestsellers) {
-            if (item.cid == recyclerData.id) {
-                if (recyclerData.id == item.cid) {
-                    item.qt = recyclerData.quantity
+    bindingBottom.include26.textView5.setOnClickListener {
+        val intent = Intent(this@FoodActivity, SummeryActivity::class.java)
+        intent.putExtra("food", cartModel)
+        startActivity(intent)
+    }
+
+    val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+    val cartAdapter = CartAdapter(cartModel, this, this)
+    bindingBottom.recyclerView41.layoutManager = layoutManager
+    bindingBottom.recyclerView41.adapter = cartAdapter
+}
+
+private fun updateCartFoodCartList(recyclerData: CartModel) {
+    try {
+        for (item in cartModel) {
+            if (item.id == recyclerData.id) {
+                if (recyclerData.quantity == 0) {
+                    removeCartItem(item)
+                } else {
+                    item.quantity = recyclerData.quantity
+                    break
                 }
             }
         }
+
+        updateCartMainList(recyclerData)
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+
+}
+
+@SuppressLint("NotifyDataSetChanged")
+private fun updateCartMainList(recyclerData: CartModel) {
+    for (item in foodResponse!!.bestsellers) {
+        if (item.cid == recyclerData.id) {
+            if (recyclerData.id == item.cid) {
+                item.qt = recyclerData.quantity
+            }
+        }
+    }
+    cartData()
+    //Update Home List
+    foodBestSellerAdapter?.notifyDataSetChanged()
+}
+
+private fun bottomDialogCart(
+    comingSoonItem: List<FoodResponse.Output.Bestseller.R>, titleTxt: String
+) {
+    val dialog = Dialog(this)
+    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialog.setContentView(R.layout.food_bottom_dialog)
+    dialog.window!!.setLayout(
+        ViewGroup.LayoutParams.MATCH_PARENT,
+        ViewGroup.LayoutParams.WRAP_CONTENT
+    )
+    dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+    dialog.window!!.setGravity(Gravity.BOTTOM)
+    dialog.show()
+
+    val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerView22)
+    val cancel = dialog.findViewById<ImageView>(R.id.imageView71)
+    val proceed = dialog.findViewById<TextView>(R.id.textView5)
+    val title = dialog.findViewById<TextView>(R.id.textView143)
+
+    val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+    filterBottomAdapter = FilterBottomAdapter(comingSoonItem, this, this)
+    recyclerView.layoutManager = layoutManager
+    recyclerView.adapter = filterBottomAdapter
+
+    title.text = titleTxt
+    proceed.text = getString(R.string.proceed)
+    cancel.setOnClickListener {
+        dialog.dismiss()
+    }
+    proceed.setOnClickListener {
         cartData()
-        //Update Home List
-        foodBestSellerAdapter?.notifyDataSetChanged()
+        dialog.dismiss()
     }
+}
 
-    private fun bottomDialogCart(
-        comingSoonItem: List<FoodResponse.Output.Bestseller.R>, titleTxt: String
-    ) {
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.food_bottom_dialog)
-        dialog.window!!.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+// All  Food Mfl Action Manage
+override fun allFoodImageClick(comingSoonItem: FoodResponse.Output.Mfl) {
+    bottomDialogAllFood(comingSoonItem)
+}
+
+private fun updateCategoryFoodCartList(comingSoonItem: FoodResponse.Output.Mfl) {
+    if (cartModel.size == 0) {
+        cartModel.add(
+            CartModel(
+                comingSoonItem.cid,
+                comingSoonItem.nm,
+                comingSoonItem.mi,
+                comingSoonItem.qt,
+                comingSoonItem.dp,
+                comingSoonItem.veg,
+                comingSoonItem.r[0].ho,
+                comingSoonItem.mid.toString()
+            )
         )
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
-        dialog.window!!.setGravity(Gravity.BOTTOM)
-        dialog.show()
+    } else {
+        if (updateCategoryItemExist(comingSoonItem)) {
+            for (item in cartModel) {
+                if (item.id == comingSoonItem.cid) {
+                    if (comingSoonItem.qt == 0) {
+                        cartModel.remove(item)
+                    } else {
+                        item.quantity = comingSoonItem.qt
 
-        val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerView22)
-        val cancel = dialog.findViewById<ImageView>(R.id.imageView71)
-        val proceed = dialog.findViewById<TextView>(R.id.textView5)
-        val title = dialog.findViewById<TextView>(R.id.textView143)
-
-        val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        filterBottomAdapter = FilterBottomAdapter(comingSoonItem, this, this)
-        recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = filterBottomAdapter
-
-        title.text = titleTxt
-        proceed.text = getString(R.string.proceed)
-        cancel.setOnClickListener {
-            dialog.dismiss()
-        }
-        proceed.setOnClickListener {
-            cartData()
-            dialog.dismiss()
-        }
-    }
-
-    // All  Food Mfl Action Manage
-    override fun allFoodImageClick(comingSoonItem: FoodResponse.Output.Mfl) {
-        bottomDialogAllFood(comingSoonItem)
-    }
-
-    private fun updateCategoryFoodCartList(comingSoonItem: FoodResponse.Output.Mfl) {
-        if (cartModel.size == 0) {
+                    }
+                    break
+                }
+            }
+        } else {
             cartModel.add(
                 CartModel(
                     comingSoonItem.cid,
@@ -974,198 +1047,131 @@ class FoodActivity : AppCompatActivity(),
                     comingSoonItem.mid.toString()
                 )
             )
-        } else {
-            if (updateCategoryItemExist(comingSoonItem)) {
-                for (item in cartModel) {
-                    if (item.id == comingSoonItem.cid) {
-                        if (comingSoonItem.qt == 0) {
-                            cartModel.remove(item)
-                        } else {
-                            item.quantity = comingSoonItem.qt
-
-                        }
-                        break
-                    }
-                }
-            } else {
-                cartModel.add(
-                    CartModel(
-                        comingSoonItem.cid,
-                        comingSoonItem.nm,
-                        comingSoonItem.mi,
-                        comingSoonItem.qt,
-                        comingSoonItem.dp,
-                        comingSoonItem.veg,
-                        comingSoonItem.r[0].ho,
-                        comingSoonItem.mid.toString()
-                    )
-                )
-            }
         }
     }
+}
 
-    private fun updateCategoryItemExist(foodItem: FoodResponse.Output.Mfl): Boolean {
-        for (item in cartModel) {
-            if (item.id == foodItem.cid) {
-                return true
-            }
+private fun updateCategoryItemExist(foodItem: FoodResponse.Output.Mfl): Boolean {
+    for (item in cartModel) {
+        if (item.id == foodItem.cid) {
+            return true
         }
-        return false
     }
+    return false
+}
 
-    override fun allFoodClick(comingSoonItem: FoodResponse.Output.Mfl) {
-        var num = comingSoonItem.qt
+override fun allFoodClick(comingSoonItem: FoodResponse.Output.Mfl) {
+    var num = comingSoonItem.qt
+    num += 1
+    comingSoonItem.qt = num
+    updateCategoryFoodCartList(comingSoonItem)
+    cartData()
+}
+
+override fun allFoodPlus(comingSoonItem: FoodResponse.Output.Mfl, position: Int) {
+    var num = comingSoonItem.qt
+    if (num > 10 || num == 10) {
+        val dialog = OptionDialog(this,
+            R.mipmap.ic_launcher,
+            R.string.app_name,
+            getString(R.string.max_item_msz),
+            positiveBtnText = R.string.ok,
+            negativeBtnText = R.string.no,
+            positiveClick = {
+            },
+            negativeClick = {
+            })
+        dialog.show()
+    } else {
         num += 1
         comingSoonItem.qt = num
-        updateCategoryFoodCartList(comingSoonItem)
         cartData()
+        updateCategoryFoodCartList(comingSoonItem)
     }
+}
 
-    override fun allFoodPlus(comingSoonItem: FoodResponse.Output.Mfl, position: Int) {
-        var num = comingSoonItem.qt
-        if (num > 10 || num == 10) {
-            val dialog = OptionDialog(this,
-                R.mipmap.ic_launcher,
-                R.string.app_name,
-                getString(R.string.max_item_msz),
-                positiveBtnText = R.string.ok,
-                negativeBtnText = R.string.no,
-                positiveClick = {
-                },
-                negativeClick = {
-                })
-            dialog.show()
-        } else {
-            num += 1
-            comingSoonItem.qt = num
-            cartData()
-            updateCategoryFoodCartList(comingSoonItem)
-        }
+override fun allFoodMinus(comingSoonItem: FoodResponse.Output.Mfl, position: Int) {
+    var num = comingSoonItem.qt
+    if (num < 0 || num == 0) {
+        val dialog = OptionDialog(this,
+            R.mipmap.ic_launcher,
+            R.string.app_name,
+            getString(R.string.min_item_msz),
+            positiveBtnText = R.string.ok,
+            negativeBtnText = R.string.no,
+            positiveClick = {
+            },
+            negativeClick = {
+            })
+        dialog.show()
+    } else {
+        num -= 1
+        comingSoonItem.qt = num
+        cartData()
+        updateCategoryFoodCartList(comingSoonItem)
     }
+}
 
-    override fun allFoodMinus(comingSoonItem: FoodResponse.Output.Mfl, position: Int) {
-        var num = comingSoonItem.qt
-        if (num < 0 || num == 0) {
-            val dialog = OptionDialog(this,
-                R.mipmap.ic_launcher,
-                R.string.app_name,
-                getString(R.string.min_item_msz),
-                positiveBtnText = R.string.ok,
-                negativeBtnText = R.string.no,
-                positiveClick = {
-                },
-                negativeClick = {
-                })
-            dialog.show()
-        } else {
-            num -= 1
-            comingSoonItem.qt = num
-            cartData()
-            updateCategoryFoodCartList(comingSoonItem)
-        }
-    }
-
-    //Mfl All Food
-    private fun getFilterAllMfl(
-        category: Boolean,
-        menuType: Int,
-        name: String
-    ): ArrayList<FoodResponse.Output.Mfl> {
-        val categoryFilterNew = ArrayList<FoodResponse.Output.Mfl>()
-        when (menuType) {
-            0 -> {
-                if (name == "ALL") {
-                    for (data in catFilter) {
-                        categoryFilterNew.add(data)
-                    }
-                } else {
-                    for (data in catFilter) {
-                        if (data.ctn == name) {
-                            categoryFilterNew.add(data)
-                        }
-                    }
-                }
-
-            }
-            1 -> {
+//Mfl All Food
+private fun getFilterAllMfl(
+    category: Boolean,
+    menuType: Int,
+    name: String
+): ArrayList<FoodResponse.Output.Mfl> {
+    val categoryFilterNew = ArrayList<FoodResponse.Output.Mfl>()
+    when (menuType) {
+        0 -> {
+            if (name == "ALL") {
                 for (data in catFilter) {
-                    if (name == "ALL") {
-                        if (data.veg == category && data.veg) {
-                            categoryFilterNew.add(data)
-                        }
-                    } else {
-                        if (data.ctn == name) {
-                            if (data.veg == category && data.veg) {
-                                categoryFilterNew.add(data)
-                            }
-                        }
-                    }
+                    categoryFilterNew.add(data)
                 }
-            }
-            2 -> {
+            } else {
                 for (data in catFilter) {
-                    if (name == "ALL") {
-                        if (!data.veg == category && !data.veg) {
-                            categoryFilterNew.add(data)
-                        }
-                    } else {
-                        if (data.ctn == name) {
-                            if (!data.veg == category && !data.veg) {
-                                categoryFilterNew.add(data)
-                            }
-                        }
-                    }
-
-                }
-            }
-            else -> {
-                for (data in catFilter) {
-                    if (name == "ALL") {
-                        if (data.veg == category)
-                            categoryFilterNew.add(data)
-                    }
                     if (data.ctn == name) {
-                        if (data.veg == category)
-                            categoryFilterNew.add(data)
+                        categoryFilterNew.add(data)
                     }
-
                 }
-
             }
 
         }
-        return categoryFilterNew
-    }
-
-    //Mfl All Food
-    private fun getFilterCategoryList(
-        category: Boolean,
-        menuType: Int
-    ): ArrayList<FoodResponse.Output.Mfl> {
-        val categoryFilterNew = ArrayList<FoodResponse.Output.Mfl>()
-        when (menuType) {
-            0 -> {
-                for (data in catFilter) {
-                    if (data.veg == category)
-                        categoryFilterNew.add(data)
-                }
-            }
-            1 -> {
-                for (data in catFilter) {
+        1 -> {
+            for (data in catFilter) {
+                if (name == "ALL") {
                     if (data.veg == category && data.veg) {
                         categoryFilterNew.add(data)
                     }
-                }
-            }
-            2 -> {
-                for (data in catFilter) {
-                    if (data.veg == category && !data.veg) {
-                        categoryFilterNew.add(data)
+                } else {
+                    if (data.ctn == name) {
+                        if (data.veg == category && data.veg) {
+                            categoryFilterNew.add(data)
+                        }
                     }
                 }
             }
-            else -> {
-                for (data in catFilter) {
+        }
+        2 -> {
+            for (data in catFilter) {
+                if (name == "ALL") {
+                    if (!data.veg == category && !data.veg) {
+                        categoryFilterNew.add(data)
+                    }
+                } else {
+                    if (data.ctn == name) {
+                        if (!data.veg == category && !data.veg) {
+                            categoryFilterNew.add(data)
+                        }
+                    }
+                }
+
+            }
+        }
+        else -> {
+            for (data in catFilter) {
+                if (name == "ALL") {
+                    if (data.veg == category)
+                        categoryFilterNew.add(data)
+                }
+                if (data.ctn == name) {
                     if (data.veg == category)
                         categoryFilterNew.add(data)
                 }
@@ -1173,18 +1179,120 @@ class FoodActivity : AppCompatActivity(),
             }
 
         }
-        return categoryFilterNew
-    }
 
-    override fun categoryFoodClick(comingSoonItem: FoodResponse.Output.Mfl) {
-        var num = comingSoonItem.qt
+    }
+    return categoryFilterNew
+}
+
+//Mfl All Food
+override fun categoryFoodClick(comingSoonItem: FoodResponse.Output.Mfl) {
+    var num = comingSoonItem.qt
+    num += 1
+    comingSoonItem.qt = num
+    updateCategoryFoodCartList(comingSoonItem)
+    cartData()
+}
+
+override fun categoryFoodPlus(comingSoonItem: FoodResponse.Output.Mfl, position: Int) {
+    var num = comingSoonItem.qt
+    if (num > 10 || num == 10) {
+        val dialog = OptionDialog(this,
+            R.mipmap.ic_launcher,
+            R.string.app_name,
+            getString(R.string.max_item_msz),
+            positiveBtnText = R.string.ok,
+            negativeBtnText = R.string.no,
+            positiveClick = {
+            },
+            negativeClick = {
+            })
+        dialog.show()
+    } else {
         num += 1
         comingSoonItem.qt = num
-        updateCategoryFoodCartList(comingSoonItem)
         cartData()
+        updateCategoryFoodCartList(comingSoonItem)
+    }
+}
+
+override fun categoryFoodMinus(comingSoonItem: FoodResponse.Output.Mfl, position: Int) {
+    var num = comingSoonItem.qt
+    if (num < 0 || num == 0) {
+        val dialog = OptionDialog(this,
+            R.mipmap.ic_launcher,
+            R.string.app_name,
+            getString(R.string.min_item_msz),
+            positiveBtnText = R.string.ok,
+            negativeBtnText = R.string.no,
+            positiveClick = {
+            },
+            negativeClick = {
+            })
+        dialog.show()
+    } else {
+        num -= 1
+        comingSoonItem.qt = num
+        cartData()
+        updateCategoryFoodCartList(comingSoonItem)
+    }
+}
+
+@SuppressLint("SetTextI18n")
+private fun bottomDialogAllFood(comingSoonItem: FoodResponse.Output.Mfl) {
+    val dialog = Dialog(this)
+    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    val inflater = LayoutInflater.from(this)
+    val bindingBottom = FoodBottomAddFoodBinding.inflate(inflater)
+    dialog.setContentView(bindingBottom.root)
+    dialog.window?.setLayout(
+        ViewGroup.LayoutParams.MATCH_PARENT,
+        ViewGroup.LayoutParams.WRAP_CONTENT
+    )
+    dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+    dialog.window?.setGravity(Gravity.BOTTOM)
+    dialog.show()
+
+    //Image View
+    Glide.with(this)
+        .load(comingSoonItem.mi)
+        .error(R.drawable.app_icon)
+        .into(bindingBottom.imageView64)
+
+//        //title
+    bindingBottom.textView137.text = comingSoonItem.nm
+//        //price
+    bindingBottom.textView150.text =
+        getString(R.string.currency) + " " + Constant.DECIFORMAT.format(comingSoonItem.dp / 100.0)
+//manageUI
+    if (comingSoonItem.qt != 0) {
+        bindingBottom.textView309.hide()
+        bindingBottom.consAddUi.show()
+        bindingBottom.uiPlusMinus.foodCount.text = comingSoonItem.qt.toString()
+    } else {
+        bindingBottom.textView309.show()
+        bindingBottom.consAddUi.hide()
     }
 
-    override fun categoryFoodPlus(comingSoonItem: FoodResponse.Output.Mfl, position: Int) {
+    bindingBottom.textView309.setOnClickListener {
+        if (comingSoonItem.r.size > 1) {
+            dialog.dismiss()
+            bottomDialogCart(comingSoonItem.r, comingSoonItem.nm)
+        } else {
+            var num = comingSoonItem.qt
+            num += 1
+            comingSoonItem.qt = num
+            updateCategoryFoodCartList(comingSoonItem)
+            cartData()
+            bindingBottom.uiPlusMinus.foodCount.text = num.toString()
+
+            bindingBottom.textView309.hide()
+            bindingBottom.consAddUi.show()
+        }
+    }
+
+    //Add Food
+    bindingBottom.uiPlusMinus.plus.setOnClickListener {
         var num = comingSoonItem.qt
         if (num > 10 || num == 10) {
             val dialog = OptionDialog(this,
@@ -1206,7 +1314,8 @@ class FoodActivity : AppCompatActivity(),
         }
     }
 
-    override fun categoryFoodMinus(comingSoonItem: FoodResponse.Output.Mfl, position: Int) {
+    // Subtract Food
+    bindingBottom.uiPlusMinus.minus.setOnClickListener {
         var num = comingSoonItem.qt
         if (num < 0 || num == 0) {
             val dialog = OptionDialog(this,
@@ -1228,107 +1337,6 @@ class FoodActivity : AppCompatActivity(),
         }
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun bottomDialogAllFood(comingSoonItem: FoodResponse.Output.Mfl) {
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.food_bottom_add_food)
-        val inflater = LayoutInflater.from(this)
-        val bindingBottom = FoodBottomAddFoodBinding.inflate(inflater)
-        dialog.setContentView(bindingBottom.root)
-        dialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
-        dialog.window?.setGravity(Gravity.BOTTOM)
-        dialog.show()
-
-        //Image View
-        Glide.with(this)
-            .load(comingSoonItem.mi)
-            .error(R.drawable.app_icon)
-            .into(bindingBottom.imageView64)
-
-//        //title
-        bindingBottom.textView137.text = comingSoonItem.nm
-//        //price
-        bindingBottom.textView150.text =
-            getString(R.string.currency) + " " + Constant.DECIFORMAT.format(comingSoonItem.dp / 100.0)
-//manageUI
-        if (comingSoonItem.qt != 0) {
-            bindingBottom.textView309.hide()
-            bindingBottom.consAddUi.show()
-            bindingBottom.uiPlusMinus.foodCount.text = comingSoonItem.qt.toString()
-        } else {
-            bindingBottom.textView309.show()
-            bindingBottom.consAddUi.hide()
-        }
-
-        bindingBottom.textView309.setOnClickListener {
-            if (comingSoonItem.r.size > 1) {
-                dialog.dismiss()
-                bottomDialogCart(comingSoonItem.r, comingSoonItem.nm)
-            } else {
-                var num = comingSoonItem.qt
-                num += 1
-                comingSoonItem.qt = num
-                updateCategoryFoodCartList(comingSoonItem)
-                cartData()
-                bindingBottom.uiPlusMinus.foodCount.text = num.toString()
-
-                bindingBottom.textView309.hide()
-                bindingBottom.consAddUi.show()
-            }
-        }
-
-        //Add Food
-        bindingBottom.uiPlusMinus.plus.setOnClickListener {
-            var num = comingSoonItem.qt
-            if (num > 10 || num == 10) {
-                val dialog = OptionDialog(this,
-                    R.mipmap.ic_launcher,
-                    R.string.app_name,
-                    getString(R.string.max_item_msz),
-                    positiveBtnText = R.string.ok,
-                    negativeBtnText = R.string.no,
-                    positiveClick = {
-                    },
-                    negativeClick = {
-                    })
-                dialog.show()
-            } else {
-                num += 1
-                comingSoonItem.qt = num
-                cartData()
-                updateCategoryFoodCartList(comingSoonItem)
-            }
-        }
-
-        // Subtract Food
-        bindingBottom.uiPlusMinus.minus.setOnClickListener {
-            var num = comingSoonItem.qt
-            if (num < 0 || num == 0) {
-                val dialog = OptionDialog(this,
-                    R.mipmap.ic_launcher,
-                    R.string.app_name,
-                    getString(R.string.min_item_msz),
-                    positiveBtnText = R.string.ok,
-                    negativeBtnText = R.string.no,
-                    positiveClick = {
-                    },
-                    negativeClick = {
-                    })
-                dialog.show()
-            } else {
-                num -= 1
-                comingSoonItem.qt = num
-                cartData()
-                updateCategoryFoodCartList(comingSoonItem)
-            }
-        }
-
-    }
+}
 
 }

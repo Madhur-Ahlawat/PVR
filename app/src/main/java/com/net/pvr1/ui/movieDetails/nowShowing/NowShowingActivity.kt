@@ -143,7 +143,7 @@ class NowShowingActivity : AppCompatActivity(),
         binding?.textView60?.text = commaSeparatedString
         //Description
         binding?.textView66?.text = output.p
-        binding?.textView66?.let { Constant().makeTextViewResizable(it, 4, "See More", true) }
+        binding?.textView66?.let { Constant().makeTextViewResizable(it, 4, "..read more", true) }
         //FilmType
         binding?.textView75?.text = output.tag
         //Language

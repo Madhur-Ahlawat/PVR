@@ -12,6 +12,7 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import com.net.pvr1.R
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
@@ -115,15 +116,15 @@ class Constant {
                     if (viewMore) {
                         tv.layoutParams = tv.layoutParams
                         tv.setText(tv.tag.toString(), TextView.BufferType.SPANNABLE)
-                        tv.invalidate()
-                        makeTextViewResizable(tv, -1, "See Less", false)
                         tv.setTextColor(Color.parseColor("#000000"))
+                        tv.invalidate()
+                        makeTextViewResizable(tv, -1, "..read less", false)
                     } else {
                         tv.layoutParams = tv.layoutParams
+                        tv.setTextColor(Color.parseColor("#000000"))
                         tv.setText(tv.tag.toString(), TextView.BufferType.SPANNABLE)
                         tv.invalidate()
-                        makeTextViewResizable(tv, 4, ".. See More", true)
-                        tv.setTextColor(Color.parseColor("#000000"))
+                        makeTextViewResizable(tv, 4, "..read more", true)
                     }
                 }
             }, str.indexOf(spanableText), str.indexOf(spanableText) + spanableText.length, 0)
@@ -135,6 +136,7 @@ class Constant {
         if (tv.tag == null) {
             tv.tag = tv.text
         }
+
         val vto = tv.viewTreeObserver
         vto.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
             override fun onGlobalLayout() {
@@ -152,6 +154,8 @@ class Constant {
                             viewMore
                         ), TextView.BufferType.SPANNABLE
                     )
+                    tv.setTextColor(Color.parseColor("#000000"));
+
                 } else if (maxLine > 0 && tv.lineCount >= maxLine) {
                     val lineEndIndex = tv.layout.getLineEnd(maxLine - 1)
                     val text = tv.text.subSequence(0, lineEndIndex - expandText.length + 1)
@@ -164,6 +168,8 @@ class Constant {
                             viewMore
                         ), TextView.BufferType.SPANNABLE
                     )
+                    tv.setTextColor(Color.parseColor("#000000"));
+
                 } else {
                     val lineEndIndex = tv.layout.getLineEnd(tv.layout.lineCount - 1)
                     val text = tv.text.subSequence(0, lineEndIndex).toString() + " " + expandText
@@ -175,6 +181,8 @@ class Constant {
                             viewMore
                         ), TextView.BufferType.SPANNABLE
                     )
+                    tv.setTextColor(Color.parseColor("#000000"));
+
                 }
             }
         })
@@ -250,5 +258,19 @@ class Constant {
         //use BuildConfig.APPLICATION_ID instead of R.class.getPackage().getName() if both are not same
         return Uri.parse("android.resource://" + android.R::class.java.getPackage().name + "/" + resourceId)
             .toString()
+    }
+
+
+
+    fun hideKeyboard(activity: Activity) {
+        val inputMethodManager = activity.getSystemService(
+            Activity.INPUT_METHOD_SERVICE
+        ) as InputMethodManager
+        if (inputMethodManager.isAcceptingText) {
+            inputMethodManager.hideSoftInputFromWindow(
+                activity.currentFocus!!.windowToken,
+                0
+            )
+        }
     }
 }

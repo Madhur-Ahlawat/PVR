@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.onBoarding
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -26,9 +27,9 @@ class LandingActivity : AppCompatActivity() {
     lateinit var preferences: PreferenceManager
     private var binding: ActivityLandingBinding? = null
     private var layouts: IntArray? = null
-    val MyPREFERENCES = "MyPrefs"
-    var sharedpreferences: SharedPreferences? = null
-    val OnBoardingClick = "Name"
+    private   val MyPREFERENCES = "MyPrefs"
+    private var sharedpreferences: SharedPreferences? = null
+    private val OnBoardingClick = "Name"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLandingBinding.inflate(layoutInflater, null, false)
@@ -41,6 +42,7 @@ class LandingActivity : AppCompatActivity() {
     }
 
     //Moved To Next Page
+    @SuppressLint("ApplySharedPref")
     private fun movedNext() {
         binding?.tvNext?.setOnClickListener {
             binding?.viewPager?.setCurrentItem(getItem(+1), true)

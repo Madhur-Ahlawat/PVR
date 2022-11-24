@@ -246,6 +246,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="@+id/view92"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -261,7 +262,8 @@
         android:id="@+id/constraintLayout30"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:background="@color/white"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/view83"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -272,6 +274,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_50dp"
             android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
             android:background="@drawable/curve_ui"
             app:layout_constraintEnd_toEndOf="parent"
@@ -325,19 +328,19 @@
                     android:id="@id/textView151"
                     android:layout_width="@dimen/dimen_10dp"
                     android:layout_height="@dimen/dimen_10dp"
+                    android:layout_marginBottom="-8dp"
                     android:background="@drawable/ic_oval_2"
                     android:gravity="center"
-                    android:layout_marginBottom="-8dp"
                     app:layout_constraintBottom_toTopOf="@+id/imageView73"
                     app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView
                 android:id="@+id/imageView74"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dimen_20dp"
+                android:layout_height="20dp"
                 android:layout_marginStart="4dp"
-                android:padding="@dimen/padding_10"
+                android:adjustViewBounds="true"
                 app:layout_constraintBottom_toBottomOf="@+id/constraintLayout34"
                 app:layout_constraintStart_toEndOf="@+id/textView149"
                 app:layout_constraintTop_toTopOf="@+id/constraintLayout34"
@@ -373,20 +376,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView23"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout36" />
+        <!--        <androidx.recyclerview.widget.RecyclerView-->
+        <!--            android:id="@+id/recyclerView23"-->
+        <!--            android:visibility="gone"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/constraintLayout36" />-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

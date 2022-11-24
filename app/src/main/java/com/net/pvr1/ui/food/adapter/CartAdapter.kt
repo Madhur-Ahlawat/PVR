@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ItemFoodCartBinding
 import com.net.pvr1.ui.food.CartModel
@@ -39,29 +40,24 @@ class CartAdapter(
                 calculateQt= this.quantity
                 totalPrice= calculateQt*this.price
                 //total price
-                binding.textView153.text = "₹ " + Constant.DECIFORMAT.format(totalPrice / 100.0)
-
-//                val price: String = Constant().removeTrailingZeroFormater(totalPrice.toFloat())!!
-//                binding.textView153.text = context.resources.getString(R.string.currency) + price
-                // ProductPrice
-//                val price2: String = Constant().removeTrailingZeroFormater(this.price.toFloat())!!
-//                binding.textView152.text = context.resources.getString(R.string.currency) + price2
                 binding.textView152.text = "₹ " + Constant.DECIFORMAT.format(this.price / 100.0)
 
+//                binding.textView152.text = "₹ " + Constant.DECIFORMAT.format(this.price / 100.0)
+                Glide.with(context).load(this.image).into(binding.imageView146);
 
                 //quantity
-                binding.textView154.text = this.quantity.toString()
+                binding.include25.foodCount.text=this.quantity.toString()
 
                 //FoodQuantity
                 binding.textView151.text = this.quantity.toString()
 
                 //SubTract
-                binding.imageView77.setOnClickListener {
+                binding.include25.minus.setOnClickListener {
                     listener.cartFoodMinus(this, position)
                     notifyDataSetChanged()
                 }
                 //Add
-                binding.imageView76.setOnClickListener {
+                binding.include25.plus.setOnClickListener {
                     listener.cartFoodPlus(this, position)
                     notifyDataSetChanged()
                 }

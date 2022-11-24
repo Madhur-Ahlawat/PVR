@@ -60,7 +60,9 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         println("userId--->${preferences.getUserId()}")
         //setUserName
         binding?.includeAppBar?.textView2?.text = preferences.getUserName()
-        authViewModel.privilegeHome(preferences.geMobileNumber().toString(), "Delhi-NCR")
+        if (preferences.getIsLogin()){
+            authViewModel.privilegeHome(preferences.geMobileNumber().toString(), "Delhi-NCR")
+        }
         privilegeDataLoad()
         movedNext()
     }

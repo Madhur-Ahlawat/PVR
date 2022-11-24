@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
+import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.show
 
 
 class CastAdapter(
@@ -31,7 +33,12 @@ class CastAdapter(
         holder.title.isSelected = true
         holder.title.text =cinemaItem.name
         //subTitle
-        holder.description.text =cinemaItem.character
+        if (cinemaItem.character==""){
+            holder.description.hide()
+        }else{
+            holder.description.show()
+            holder.description.text =cinemaItem.character
+        }
         //Click
         holder.itemView.setOnClickListener {
             listener.castClick(cinemaItem)

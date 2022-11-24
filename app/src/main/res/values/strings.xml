@@ -16,7 +16,7 @@
     <string name="txt_login_header">Welcome Back!</string>
     <string name="txt_login_subheader">Login to access your notes</string>
     <string name="txt_login">Login</string>
-    <string name="checkNumber">Mobile Number Should We 10 Digit</string>
+    <string name="checkNumber">Mobile Number Should Be 10 Digit</string>
     <string name="exitApp">Are You Sure You want to exit</string>
 
     <string name="txt_error_message">%1$S*</string>
@@ -36,19 +36,19 @@
     <string name="onBoarding_three_txt"><![CDATA[Effortless Food &\nBeverage choices]]></string>
     <string name="onBoarding_three_four">Limitless movie watching\nexperiences!</string>
     <string name="get_started">Get Started</string>
-    <string name="next">NEXT</string>
-    <string name="skip">SKIP</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
     <string name="get_start">Get Started</string>
     <string name="verify_number">Verify\nPhone Number</string>
     <string name="toContinue">to continue, enter your mobile number</string>
-    <string name="mobile_number">Mobile Number</string>
+    <string name="mobile_number">Phone Number</string>
     <string name="continue_txt">Continue</string>
     <string name="verify_code">Verify\nOTP Code</string>
     <string name="sentCode">We’ve sent a code to your mobile number</string>
     <string name="resend_otp">Resend OTP</string>
     <string name="submit">Submit</string>
     <string name="keep_info_safe">We promise to keep your information safe</string>
-    <string name="prev">PREV</string>
+    <string name="prev">Prev</string>
     <string name="onboard_txt1">Limitless movie watching\n experience!</string>
     <string name="onboard_txt2">Delicious food &amp; beverage \n choices</string>
     <string name="onboard_txt3">Seamless ticket booking \n &amp; rewards</string>

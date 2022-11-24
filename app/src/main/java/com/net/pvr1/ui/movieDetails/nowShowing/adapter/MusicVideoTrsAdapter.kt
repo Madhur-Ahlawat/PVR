@@ -11,6 +11,8 @@ import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.utils.Constant
+import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.show
 
 
 class MusicVideoTrsAdapter(
@@ -31,7 +33,12 @@ class MusicVideoTrsAdapter(
         //title
         holder.title.text =cinemaItem.t
         //subTitle
-        holder.subTitle.text =cinemaItem.d
+        if (cinemaItem.d==""){
+            holder.subTitle.hide()
+        }else{
+            holder.subTitle.show()
+            holder.subTitle.text =cinemaItem.d
+        }
         //moreDetails
         holder.play.setOnClickListener {
             listener.musicVideoTrsClick(cinemaItem)

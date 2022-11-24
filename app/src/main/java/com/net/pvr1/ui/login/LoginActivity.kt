@@ -26,6 +26,7 @@ import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.SUCCESS_CODE
 import com.net.pvr1.utils.NetworkResult
 import com.net.pvr1.utils.PreferenceManager
+import com.net.pvr1.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -96,7 +97,7 @@ class LoginActivity : AppCompatActivity() {
 
         binding?.textView11?.setOnClickListener {
             val mobile = binding?.mobileNumber?.text.toString()
-            if (!TextUtils.isEmpty(mobile) && mobile.length != 10) {
+            if (TextUtils.isEmpty(mobile) && mobile.length != 10) {
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
                     R.string.app_name,
@@ -117,6 +118,13 @@ class LoginActivity : AppCompatActivity() {
         binding?.textView8?.setOnClickListener {
             val intent = Intent(this@LoginActivity, HomeActivity::class.java)
             startActivity(intent)
+        }
+// OutSide Click
+        binding?.loginClick?.setOnClickListener {
+            binding?.textInputLayout?.isSelected=false
+            binding?.mobileNumber?.isFocusableInTouchMode = false
+            binding?.textInputLayout?.isFocusableInTouchMode = false
+            Constant().hideKeyboard(this)
         }
         loginApi()
     }
@@ -192,17 +200,17 @@ class LoginActivity : AppCompatActivity() {
             //Do what ever you want to do with your selected phone number here
         } else if (requestCode == CREDENTIAL_PICKER_REQUEST && resultCode == CredentialsApi.ACTIVITY_RESULT_NO_HINTS_AVAILABLE) {
             // *** No phone numbers available ***
-            val dialog = OptionDialog(this,
-                R.mipmap.ic_launcher,
-                R.string.app_name,
-                getString(R.string.mobileNotAvailable),
-                positiveBtnText = R.string.ok,
-                negativeBtnText = R.string.no,
-                positiveClick = {
-                },
-                negativeClick = {
-                })
-            dialog.show()
+//            val dialog = OptionDialog(this,
+//                R.mipmap.ic_launcher,
+//                R.string.app_name,
+//                getString(R.string.mobileNotAvailable),
+//                positiveBtnText = R.string.ok,
+//                negativeBtnText = R.string.no,
+//                positiveClick = {
+//                },
+//                negativeClick = {
+//                })
+//            dialog.show()
         }
     }
 }

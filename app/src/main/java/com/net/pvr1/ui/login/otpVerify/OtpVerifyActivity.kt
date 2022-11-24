@@ -46,9 +46,9 @@ class OtpVerifyActivity : AppCompatActivity() {
         newUser = intent.getStringExtra("newUser").toString()
 
         if (newUser == "false") {
-            binding?.textView15?.text = "Submit"
+            binding?.textView15?.text = getString(R.string.continue_txt)
         } else {
-            binding?.textView15?.text = "Continue"
+            binding?.textView15?.text = getString(R.string.submit)
         }
         startSmsUserConsent()
         movedNext()

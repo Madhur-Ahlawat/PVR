@@ -11,7 +11,7 @@ open class MySpannable(isUnderline: Boolean) : ClickableSpan() {
     private var isUnderline = true
     override fun updateDrawState(ds: TextPaint) {
         ds.isUnderlineText = isUnderline
-        ds.color = Color.parseColor("#1b76d3")
+        ds.color = Color.parseColor("#000000")
     }
 
     override fun onClick(widget: View) {}

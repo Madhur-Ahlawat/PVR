@@ -167,4 +167,24 @@
         <item name="android:maxHeight">200dp</item>
 
     </style>
+
+
+
+    <style name="styledBlackTilEditText">
+        <item name="android:theme">@style/StyledblackTilEditTextTheme</item>
+    </style>
+
+    <style name="StyledblackTilEditTextTheme">
+        <item name="android:imeOptions">actionNext</item>
+        <item name="android:singleLine">true</item>
+        <item name="colorControlNormal">#636363</item>
+        <item name="background">@null</item>
+        <item name="colorControlActivated">#636363</item>
+        <item name="android:textColorPrimary">#636363</item>
+        <item name="android:textSize">@dimen/register</item>
+        <item name="android:textColorHint">#636363</item>
+        <item name="colorAccent">#636363</item>
+    </style>
+
+
 </resources>

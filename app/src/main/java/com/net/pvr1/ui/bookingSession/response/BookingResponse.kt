@@ -2,6 +2,7 @@ package com.net.pvr1.ui.bookingSession.response
 
 import java.io.Serializable
 
+
 data class BookingResponse(
     val code: Int,
     val minversion: Any,
