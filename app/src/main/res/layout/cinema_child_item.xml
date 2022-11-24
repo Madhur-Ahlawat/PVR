@@ -13,6 +13,7 @@
         android:id="@+id/imageLandingScreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:srcCompat="@tools:sample/avatars"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,5 +22,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription,ImageContrastCheck" />
+
 
 </androidx.cardview.widget.CardView>

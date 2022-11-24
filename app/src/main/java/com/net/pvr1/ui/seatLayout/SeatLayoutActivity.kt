@@ -30,9 +30,11 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySeatLayoutBinding
 import com.net.pvr1.ui.bookingSession.response.BookingResponse.Output.*
 import com.net.pvr1.ui.bookingSession.response.BookingResponse.Output.Cinema.*
+import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.FoodActivity
+import com.net.pvr1.ui.seatLayout.adapter.CinemaShowsAdapter
 import com.net.pvr1.ui.seatLayout.adapter.ShowsAdapter
 import com.net.pvr1.ui.seatLayout.request.ReserveSeatRequest
 import com.net.pvr1.ui.seatLayout.response.*
@@ -49,7 +51,7 @@ import java.math.BigDecimal
 
 @Suppress("DEPRECATION", "NAME_SHADOWING")
 @AndroidEntryPoint
-class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClickListenerCity {
+class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClickListenerCity ,CinemaShowsAdapter.RecycleViewItemClickListener{
     private var binding: ActivitySeatLayoutBinding? = null
     private val authViewModel: SeatLayoutViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -82,13 +84,26 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     private var showsArray = ArrayList<Child.Sw.S>()
     private var selectSeatPriceCode = ArrayList<ReserveSeatRequest.Seat>()
 
+    //Cinema Session
+    private var cinemaSessionShows = ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySeatLayoutBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        showsArray = intent.getStringArrayListExtra("shows") as ArrayList<Child.Sw.S>
-        sessionId = SESSION_ID
+        //from Movie
+        if (intent.getStringExtra("from")=="cinema"){
+            cinemaSessionShows =
+                intent.getSerializableExtra("CinemaShows") as ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>
+            cinemaShows()
+        }else{
+            showsArray = intent.getSerializableExtra("shows") as ArrayList<Child.Sw.S>
+            shows()
+        }
+        //from Shows
+            sessionId = SESSION_ID
         authViewModel.seatLayout(
             CINEMA_ID,
             SESSION_ID,
@@ -101,7 +116,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         seatLayout()
         reserveSeat()
         initTrans()
-        shows()
         movedNext()
     }
 
@@ -127,9 +141,20 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
     //Shows
     private fun shows() {
+        val itemPosition=intent.getStringExtra("clickPosition")
+        val position=itemPosition?.toInt()
         val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
         binding?.recyclerView27?.layoutManager = LinearLayoutManager(this)
-        val adapter = ShowsAdapter(showsArray, this, this)
+        val adapter = ShowsAdapter(showsArray, this, this, position)
+        binding?.recyclerView27?.layoutManager = gridLayout
+        binding?.recyclerView27?.adapter = adapter
+
+    }
+    //From Cinema
+  private fun cinemaShows() {
+        val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+        binding?.recyclerView27?.layoutManager = LinearLayoutManager(this)
+        val adapter = CinemaShowsAdapter(cinemaSessionShows, this, this)
         binding?.recyclerView27?.layoutManager = gridLayout
         binding?.recyclerView27?.adapter = adapter
 
@@ -1759,6 +1784,20 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     }
 
     override fun showsClick(comingSoonItem: Int) {
+        sessionId = comingSoonItem.toString()
+        binding?.llRowName?.removeAllViews()
+        authViewModel.seatLayout(
+            CINEMA_ID,
+            sessionId,
+            "",
+            "",
+            "",
+            false,
+            ""
+        )
+    }
+
+    override fun cinemaShowsClick(comingSoonItem: Int) {
         sessionId = comingSoonItem.toString()
         binding?.llRowName?.removeAllViews()
         authViewModel.seatLayout(

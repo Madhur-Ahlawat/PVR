@@ -71,7 +71,7 @@ class CinemaAdapter(
 
                 binding.cbFav.setOnClickListener {
                     if (isLogin) {
-                        if (rowIndex==true){
+                        if (rowIndex){
                             rowIndex=false
                             binding.cbFav.setImageResource(R.drawable.ic_un_favourite_theatre)
                             preference.onPreferenceClick(this,false)
@@ -134,6 +134,5 @@ class CinemaAdapter(
     interface SetPreference {
         fun onPreferenceClick(comingSoonItem: CinemaResponse.Output.C, rowIndex: Boolean)
     }
-
 
 }

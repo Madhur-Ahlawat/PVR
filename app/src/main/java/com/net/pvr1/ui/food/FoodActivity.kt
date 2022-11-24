@@ -29,6 +29,8 @@ import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.ui.food.viewModel.FoodViewModel
 import com.net.pvr1.ui.summery.SummeryActivity
 import com.net.pvr1.utils.*
+import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
+import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -67,25 +69,10 @@ class FoodActivity : AppCompatActivity(),
         binding = ActivityFoodBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-//        authViewModel.food(
-//            preferences.getUserId().toString(),
-//            CINEMA_ID,
-//            BOOKING_ID,
-//            "",
-//            "",
-//            "",
-//            "",
-//            "",
-//            "",
-//            "no",
-//            "no",
-//            "no"
-//        )
-
         authViewModel.food(
             preferences.getUserId().toString(),
-            "GURM",
-            "GURM220009921660",
+            CINEMA_ID,
+            BOOKING_ID,
             "",
             "",
             "",
@@ -96,6 +83,21 @@ class FoodActivity : AppCompatActivity(),
             "no",
             "no"
         )
+
+//        authViewModel.food(
+//            preferences.getUserId().toString(),
+//            "GURM",
+//            "GURM220009921660",
+//            "",
+//            "",
+//            "",
+//            "",
+//            "",
+//            "",
+//            "no",
+//            "no",
+//            "no"
+//        )
 
         movedNext()
         foodDetails()

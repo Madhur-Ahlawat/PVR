@@ -11,19 +11,18 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
 import com.net.pvr1.databinding.SeatShowTimeItemBinding
-import com.net.pvr1.ui.bookingSession.response.BookingResponse
+import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.utils.invisible
 import com.net.pvr1.utils.show
 
 
-class ShowsAdapter(
-    private var nowShowingList: ArrayList<BookingResponse.Output.Cinema.Child.Sw.S>,
+class CinemaShowsAdapter(
+    private var nowShowingList: ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>,
     private var context: Context,
-    private var listener: RecycleViewItemClickListenerCity,
-    private val position: Int?
+    private var listener: RecycleViewItemClickListener
 ) :
-    RecyclerView.Adapter<ShowsAdapter.ViewHolder>() {
-    private var itemCount = position
+    RecyclerView.Adapter<CinemaShowsAdapter.ViewHolder>() {
+    private var itemCount = 0
 
     inner class ViewHolder(val binding: SeatShowTimeItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -44,9 +43,8 @@ class ShowsAdapter(
                 //click
                 holder.itemView.setOnClickListener {
                     itemCount = position
+                    listener.cinemaShowsClick(this.sid)
                     notifyDataSetChanged()
-                    listener.showsClick(this.sid)
-
                 }
                 if (position == itemCount) {
                     binding.textView199.setTextColor(ContextCompat.getColor(context, R.color.black))
@@ -79,7 +77,6 @@ class ShowsAdapter(
             }
         }
 
-
     }
 
     override fun getItemCount(): Int {
@@ -87,8 +84,8 @@ class ShowsAdapter(
     }
 
 
-    interface RecycleViewItemClickListenerCity {
-        fun showsClick(comingSoonItem: Int)
+    interface RecycleViewItemClickListener {
+        fun cinemaShowsClick(comingSoonItem: Int)
     }
 
 }

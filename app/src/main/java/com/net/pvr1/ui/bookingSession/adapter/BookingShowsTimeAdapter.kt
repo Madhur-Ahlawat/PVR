@@ -25,6 +25,7 @@ import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr1.utils.Constant.Companion.OfferDialogImage
 import com.net.pvr1.utils.Constant.Companion.SESSION_ID
 import com.net.pvr1.utils.printLog
+import com.net.pvr1.utils.toast
 import kotlin.math.roundToInt
 
 
@@ -38,6 +39,7 @@ class BookingShowsTimeAdapter(
     inner class ViewHolder(val binding: ItemCinemaDetailsShowTimeBinding) :
         RecyclerView.ViewHolder(binding.root)
 
+    private  var rowIndex:Int=0
     private var sidText: String = ""
     private var ccText: String = ""
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -77,6 +79,8 @@ class BookingShowsTimeAdapter(
                 CINEMA_ID = ccid
 
                 holder.itemView.setOnClickListener {
+                    rowIndex=position
+                    notifyDataSetChanged()
                     if (this.ss != 0 && this.ss != 3) {
                         if (this.ba) {
                             showOfferDialog()
@@ -84,6 +88,7 @@ class BookingShowsTimeAdapter(
                             sidText = this.sid.toString()
                             ccText = this.cc
                             val intent = Intent(context, SeatLayoutActivity::class.java)
+                            intent.putExtra("clickPosition", rowIndex.toString())
                             intent.putExtra("shows", nowShowingList)
                             context.startActivity(intent)
 
@@ -150,11 +155,8 @@ class BookingShowsTimeAdapter(
         }
         applyOffer.setOnClickListener {
             val intent = Intent(context, SeatLayoutActivity::class.java)
-            intent.putExtra("transId", "")
-            intent.putExtra("sessionId", sidText)
-            intent.putExtra("cinemaId", ccid)
+            intent.putExtra("clickPosition", rowIndex.toString())
             intent.putExtra("shows", nowShowingList)
-            intent.putExtra("ccId", ccText)
             context.startActivity(intent)
         }
     }
