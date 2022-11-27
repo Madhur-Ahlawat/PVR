@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.food.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,6 +10,8 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ItemFoodCartBinding
 import com.net.pvr1.ui.food.CartModel
 import com.net.pvr1.utils.Constant
+import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.show
 
 //category
 
@@ -31,6 +34,7 @@ class CartAdapter(
         return ViewHolder(binding)
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
@@ -40,7 +44,7 @@ class CartAdapter(
                 calculateQt= this.quantity
                 totalPrice= calculateQt*this.price
                 //total price
-                binding.textView152.text = "₹ " + Constant.DECIFORMAT.format(this.price / 100.0)
+                binding.textView153.text = context.getString(R.string.currency)+" "+ Constant.DECIFORMAT.format(this.price / 100.0)
 
 //                binding.textView152.text = "₹ " + Constant.DECIFORMAT.format(this.price / 100.0)
                 Glide.with(context).load(this.image).into(binding.imageView146);
@@ -60,6 +64,15 @@ class CartAdapter(
                 binding.include25.plus.setOnClickListener {
                     listener.cartFoodPlus(this, position)
                     notifyDataSetChanged()
+                }
+
+//                UiShowHide
+                if (this.quantity > 0) {
+                    binding.constraintLayout33.show()
+                    binding.textView146.hide()
+                } else {
+                    binding.constraintLayout33.hide()
+                    binding.textView146.show()
                 }
 
                 if (this.veg) {

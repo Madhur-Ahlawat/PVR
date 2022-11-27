@@ -1,6 +1,5 @@
 package com.net.pvr1.ui.food.adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -14,14 +13,13 @@ import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.invisible
 import com.net.pvr1.utils.show
 
-//category
 
-class FilterAdapter(
-    private var nowShowingList: ArrayList<FoodResponse.Output.Mfl>,
+class SubFoodBestSellerAdapter(
+    private var nowShowingList: List<FoodResponse.Output.Bestseller>,
     private var context: Context,
     private var listener: RecycleViewItemClickListenerCity,
 ) :
-    RecyclerView.Adapter<FilterAdapter.ViewHolder>() {
+    RecyclerView.Adapter<SubFoodBestSellerAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemFoodBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -34,10 +32,36 @@ class FilterAdapter(
         return ViewHolder(binding)
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
+                //title
+                binding.textView132.text = this.nm
+                binding.textView133.text = "₹ " + Constant.DECIFORMAT.format(this.dp / 100.0)
+
+                if (this.r.size > 1) {
+                    binding.textView134.show()
+                    binding.textView135.hide()
+                    binding.textView135.setOnClickListener {
+                        listener.bestSellerDialogAddFood(this.r, this.nm)
+                    }
+                } else {
+                    binding.textView134.invisible()
+                    binding.textView135.setOnClickListener {
+                        listener.addFood(this, position)
+                        binding.consAddUi.show()
+                        binding.textView135.hide()
+                        notifyDataSetChanged()
+                    }
+
+                }
+
+                //fssai
+                if (this.veg) {
+                    binding.imageView69.setImageDrawable(context.getDrawable(R.drawable.veg_ic))
+                } else {
+                    binding.imageView69.setImageDrawable(context.getDrawable(R.drawable.nonveg_ic))
+                }
 
                 //Image
                 Glide.with(context)
@@ -45,46 +69,25 @@ class FilterAdapter(
                     .error(R.drawable.app_icon)
                     .into(binding.imageView65)
 
-                //title
-                binding.textView132.text = this.nm
-                //price
-                binding.textView133.text = "₹ " + Constant.DECIFORMAT.format(this.dp / 100.0)
+                //quantity
+                binding.uiPlusMinus.foodCount.text = this.qt.toString()
 
-//                val price: String = Constant().removeTrailingZeroFormater(this.dp.toFloat())!!
-//                binding.textView133.text = context.resources.getString(R.string.currency) + price
-
+                binding.imageView65.setOnClickListener {
+                    listener.foodBestImageClick(this)
+                }
 
                 //SubTract
                 binding.uiPlusMinus.plus.setOnClickListener {
-                    listener.categoryFoodPlus(this, position)
+                    listener.addFoodPlus(this, position)
                     notifyDataSetChanged()
                 }
                 //Add
                 binding.uiPlusMinus.minus.setOnClickListener {
-                    listener.categoryFoodMinus(this, position)
+                    listener.addFoodMinus(this, position)
                     notifyDataSetChanged()
                 }
-
-                if (this.r.size > 1) {
-                    binding.textView134.show()
-                    binding.textView135.setOnClickListener {
-                        listener.categoryFoodDialog(this.r, this.nm)
-                    }
-                } else {
-                    binding.textView134.invisible()
-                    binding.textView135.setOnClickListener {
-                        binding.consAddUi.show()
-                        binding.textView135.hide()
-                        listener.categoryFoodClick(this)
-                    }
-
-                }
-                if (this.veg) {
-                    binding.imageView69.setImageDrawable(context.getDrawable(R.drawable.veg_ic))
-                } else {
-                    binding.imageView69.setImageDrawable(context.getDrawable(R.drawable.nonveg_ic))
-                }
                 //UiShowHide
+
                 if (this.qt > 0) {
                     binding.consAddUi.show()
                     binding.textView135.hide()
@@ -92,11 +95,6 @@ class FilterAdapter(
                     binding.consAddUi.hide()
                     binding.textView135.show()
                 }
-
-                //quantity
-                binding.uiPlusMinus.foodCount.text = this.qt.toString()
-
-
             }
         }
 
@@ -108,12 +106,13 @@ class FilterAdapter(
 
 
     interface RecycleViewItemClickListenerCity {
-        fun categoryFoodClick(comingSoonItem: FoodResponse.Output.Mfl)
-        fun categoryFoodPlus(comingSoonItem: FoodResponse.Output.Mfl, position: Int)
-        fun categoryFoodMinus(comingSoonItem: FoodResponse.Output.Mfl, position: Int)
-        fun categoryFoodDialog(
+        fun foodBestImageClick(comingSoonItem: FoodResponse.Output.Bestseller)
+        fun addFood(comingSoonItem: FoodResponse.Output.Bestseller, position: Int)
+        fun addFoodPlus(comingSoonItem: FoodResponse.Output.Bestseller, position: Int)
+        fun addFoodMinus(comingSoonItem: FoodResponse.Output.Bestseller, position: Int)
+        fun bestSellerDialogAddFood(
             comingSoonItem: List<FoodResponse.Output.Bestseller.R>,
-            title: String
+            position: String
         )
     }
 

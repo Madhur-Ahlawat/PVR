@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             tools:itemCount="2"
-            tools:listitem="@layout/item_food_bottom"
+            tools:listitem="@layout/item_food_cart"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout31"
             app:layout_constraintEnd_toEndOf="@+id/view96"
             app:layout_constraintStart_toStartOf="@+id/view96"

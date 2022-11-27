@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.food.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import com.net.pvr1.databinding.ItemFoodBinding
 import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.invisible
 import com.net.pvr1.utils.show
 
 //category
@@ -32,28 +34,60 @@ class AllFoodAdapter(
         return ViewHolder(binding)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
+
                 //Image
                 Glide.with(context)
                     .load(this.mi)
                     .error(R.drawable.app_icon)
                     .into(binding.imageView65)
 
-                //quantity
-                binding.uiPlusMinus.foodCount.text = this.qt.toString()
                 //title
                 binding.textView132.text = this.nm
                 //price
-                binding.textView133.text = context.getString(R.string.currency)+" "+ Constant.DECIFORMAT.format(this.dp / 100.0)
-                // Veg Check
+                binding.textView133.text = "₹ " + Constant.DECIFORMAT.format(this.dp / 100.0)
+
+//                val price: String = Constant().removeTrailingZeroFormater(this.dp.toFloat())!!
+//                binding.textView133.text = context.resources.getString(R.string.currency) + price
+
+
+                //SubTract
+                binding.uiPlusMinus.plus.setOnClickListener {
+                    listener.categoryFoodPlus(this, position)
+                    notifyDataSetChanged()
+                }
+                //Add
+                binding.uiPlusMinus.minus.setOnClickListener {
+                    listener.categoryFoodMinus(this, position)
+                    notifyDataSetChanged()
+                }
+
+                binding.imageView65.setOnClickListener {
+                    listener.categoryFoodImageClick(this)
+                }
+
+                if (this.r.size > 1) {
+                    binding.textView134.show()
+                    binding.textView135.setOnClickListener {
+                        listener.categoryFoodDialog(this.r, this.nm)
+                    }
+                } else {
+                    binding.textView134.invisible()
+                    binding.textView135.setOnClickListener {
+                        binding.consAddUi.show()
+                        binding.textView135.hide()
+                        listener.categoryFoodClick(this)
+                    }
+
+                }
                 if (this.veg) {
                     binding.imageView69.setImageDrawable(context.getDrawable(R.drawable.veg_ic))
                 } else {
                     binding.imageView69.setImageDrawable(context.getDrawable(R.drawable.nonveg_ic))
                 }
-
                 //UiShowHide
                 if (this.qt > 0) {
                     binding.consAddUi.show()
@@ -63,38 +97,11 @@ class AllFoodAdapter(
                     binding.textView135.show()
                 }
 
-                //Add
-                binding.uiPlusMinus.plus.setOnClickListener {
-                    listener.allFoodPlus(this, position)
-                    notifyDataSetChanged()
-                }
-                //SubTract
-                binding.uiPlusMinus.minus.setOnClickListener {
-                    listener.allFoodMinus(this, position)
-                    notifyDataSetChanged()
-                }
-                binding.imageView65.setOnClickListener {
-                    listener.allFoodImageClick(this)
-                }
+                //quantity
+                binding.uiPlusMinus.foodCount.text = this.qt.toString()
 
 
-                if (this.r.size > 1) {
-                    binding.textView134.show()
-                    binding.textView135.setOnClickListener {
-                        listener.allFoodDialog(this.r, this.nm)
-                        notifyDataSetChanged()
-                    }
-                } else {
-                    binding.textView134.hide()
-                    binding.textView135.setOnClickListener {
-                        binding.consAddUi.show()
-                        binding.textView135.hide()
-                        listener.allFoodClick(this)
-                        notifyDataSetChanged()
-                    }
-
-                }
-              }
+            }
         }
 
     }
@@ -105,11 +112,11 @@ class AllFoodAdapter(
 
 
     interface RecycleViewItemClickListenerCity {
-        fun allFoodImageClick(comingSoonItem: FoodResponse.Output.Mfl)
-        fun allFoodClick(comingSoonItem: FoodResponse.Output.Mfl)
-        fun allFoodPlus(comingSoonItem: FoodResponse.Output.Mfl, position: Int)
-        fun allFoodMinus(comingSoonItem: FoodResponse.Output.Mfl, position: Int)
-        fun allFoodDialog(
+        fun categoryFoodClick(comingSoonItem: FoodResponse.Output.Mfl)
+        fun categoryFoodImageClick(comingSoonItem: FoodResponse.Output.Mfl)
+        fun categoryFoodPlus(comingSoonItem: FoodResponse.Output.Mfl, position: Int)
+        fun categoryFoodMinus(comingSoonItem: FoodResponse.Output.Mfl, position: Int)
+        fun categoryFoodDialog(
             comingSoonItem: List<FoodResponse.Output.Bestseller.R>,
             title: String
         )

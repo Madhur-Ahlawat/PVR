@@ -51,7 +51,7 @@ class CategoryAdapter(
                 if (rowIndex == position) {
                     binding.imageView66.borderColor = context.getColor(R.color.yellow)
                 } else {
-                    binding.imageView66.borderColor = context.getColor(R.color.gray)
+                    binding.imageView66.borderColor = context.getColor(R.color.grayEd)
                 }
 
                 //Name

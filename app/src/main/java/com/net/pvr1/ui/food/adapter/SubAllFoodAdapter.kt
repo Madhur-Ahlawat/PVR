@@ -6,24 +6,23 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
-import com.net.pvr1.databinding.ItemFoodBottomBinding
-import com.net.pvr1.databinding.ItemFoodFilterBinding
+import com.net.pvr1.databinding.ItemFoodCartBinding
 import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
 
-class FilterBottomAdapter(
+class SubAllFoodAdapter(
     private var nowShowingList: List<FoodResponse.Output.Bestseller.R>,
     private var context: Context,
     private var listener: RecycleViewItemClickListenerCity,
 ) :
-    RecyclerView.Adapter<FilterBottomAdapter.ViewHolder>() {
-    inner class ViewHolder(val binding: ItemFoodBottomBinding) :
+    RecyclerView.Adapter<SubAllFoodAdapter.ViewHolder>() {
+    inner class ViewHolder(val binding: ItemFoodCartBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemFoodBottomBinding.inflate(
+        val binding = ItemFoodCartBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -39,23 +38,22 @@ class FilterBottomAdapter(
                 Glide.with(context)
                     .load(this.i)
                     .error(R.drawable.app_icon)
-                    .into(binding.imageView72)
+                    .into(binding.imageView146)
 
                 //title
-                binding.textView144.text = this.h
+                binding.textView147.text = this.h
+
                 //price
-//                val price: String = Constant().removeTrailingZeroFormater(this.dp.toFloat())!!
-//                binding.textView145.text = context.resources.getString(R.string.currency) + price
-                binding.textView145.text = "₹ " + Constant.DECIFORMAT.format(this.dp / 100.0)
+                binding.textView153.text =context.getString(R.string.currency)+" " + Constant.DECIFORMAT.format(this.dp / 100.0)
 
 
                 //SubTract
-                binding.include10.plus.setOnClickListener {
+                binding.include25.plus.setOnClickListener {
                     listener.filterBtFoodPlus(this)
                     notifyDataSetChanged()
                 }
                 //Add
-                binding.include10.minus.setOnClickListener {
+                binding.include25.minus.setOnClickListener {
                     listener.filterBtFoodMinus(this)
                     notifyDataSetChanged()
                 }
@@ -75,7 +73,7 @@ class FilterBottomAdapter(
                     binding.textView146.show()
                 }
                 //quantity
-                binding.include10.foodCount.text = this.qt.toString()
+                binding.include25.foodCount.text = this.qt.toString()
 
             }
         }

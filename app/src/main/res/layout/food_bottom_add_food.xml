@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/transparent" >
+    android:background="@color/transparent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -40,19 +40,48 @@
             android:id="@+id/cardView14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="3dp"
+            app:cardCornerRadius="8dp"
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="@+id/view101"
             app:layout_constraintStart_toStartOf="@+id/view101"
             app:layout_constraintTop_toTopOf="@+id/view101">
 
-            <ImageView
-                android:id="@+id/imageView64"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                tools:ignore="ContentDescription"
-                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView64"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    tools:ignore="ContentDescription"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_8dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="2dp"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageView69"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        app:srcCompat="@drawable/food_icon"
+                        tools:ignore="ContentDescription" />
+
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
 
@@ -61,6 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/view101"
             app:layout_constraintTop_toTopOf="@+id/textView137">
 
@@ -68,10 +98,13 @@
                 android:id="@+id/textView309"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
                 android:background="@drawable/food_book_curve"
                 android:fontFamily="@font/sf_pro_text_bold"
                 android:gravity="center"
+                android:paddingStart="34dp"
+                android:paddingTop="@dimen/dimen_5dp"
+                android:paddingEnd="34dp"
+                android:paddingBottom="@dimen/dimen_5dp"
                 android:text="@string/add"
                 android:textAlignment="center"
                 android:textAllCaps="true"
@@ -88,15 +121,19 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <include
                     android:id="@+id/uiPlusMinus"
                     layout="@layout/food_layout_add"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -107,6 +144,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:fontFamily="@font/montserrat_bold"
             android:textColor="@color/black"
             android:textSize="@dimen/dimen_16sp"
@@ -121,11 +159,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/sf_pro_text_bold"
-            tools:text="₹287"
             android:textColor="@color/black"
             android:textSize="@dimen/dimen_16sp"
             app:layout_constraintStart_toStartOf="@+id/textView137"
-            app:layout_constraintTop_toBottomOf="@+id/textView137" />
+            app:layout_constraintTop_toBottomOf="@+id/textView137"
+            tools:text="₹287" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

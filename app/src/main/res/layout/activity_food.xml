@@ -130,7 +130,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <Switch
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/switch2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -138,14 +138,17 @@
                         android:fontFamily="@font/sf_pro_text_regular"
                         android:text="@string/veg"
                         android:textColor="@color/black"
+                        android:thumb="@drawable/thumb_selector"
+                        app:track="@drawable/track_selector"
                         android:textSize="@dimen/dimen_14sp"
+                        app:switchPadding="6dp"
                         android:thumbTint="@color/white"
                         app:layout_constraintBottom_toBottomOf="@+id/textView130"
                         app:layout_constraintEnd_toStartOf="@+id/switch3"
                         app:layout_constraintTop_toTopOf="@+id/textView130"
                         tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
 
-                    <Switch
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/switch3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -154,6 +157,9 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimen_14sp"
                         android:thumbTint="@color/white"
+                        android:thumb="@drawable/thumb_selector"
+                        app:track="@drawable/track_selector"
+                        app:switchPadding="6dp"
                         app:layout_constraintBottom_toBottomOf="@+id/switch2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/switch2"

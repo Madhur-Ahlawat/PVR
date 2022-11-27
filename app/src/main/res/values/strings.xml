@@ -208,7 +208,8 @@
     //Food
     <string name="add">ADD</string>
     <string name="customize">Customize</string>
-    <string name="max_item_msz">You can only order 10 items at a time.</string>
+    <string name="max_item_msz">You can only order </string>
+    <string name="items_a_time">items at a time.</string>
     <string name="min_item_msz">You can only order 0 items at a time.</string>
     <string name="proceed">Proceed</string>
     <string name="sub_total">Sub Total</string>
@@ -355,8 +356,8 @@
     <string name="items">Items</string>
     <string name="order_snack">Order Snacks</string>
     <string name="bestsellers">Bestsellers</string>
-    <string name="veg">Veg</string>
-    <string name="non_veg">Non Veg</string>
+    <string name="veg">Veg  </string>
+    <string name="non_veg">Non Veg  </string>
 
 
 </resources>
