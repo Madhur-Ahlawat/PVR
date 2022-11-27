@@ -122,6 +122,70 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
     }
 
+    //Voucher
+    private val voucherLiveData = MutableLiveData<NetworkResult<ResisterResponse>>()
+    val voucherResponseLiveData: LiveData<NetworkResult<ResisterResponse>>
+        get() = voucherLiveData
+
+    suspend fun voucher(
+        mobile: String,
+        userid: String,
+        city: String,
+        status: String,
+        pay: String,
+        did: String,
+        timestamp: String
+    ) {
+        otpVerifyLiveData.postValue(NetworkResult.Loading())
+        val response =
+            userAPI.voucher(mobile, userid, city,status,pay,did,timestamp, Constant.version, Constant.platform)
+        voucherResponse(response)
+    }
+
+    private fun voucherResponse(response: Response<ResisterResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            voucherLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            voucherLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            voucherLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    //payMode
+    private val payModeLiveData = MutableLiveData<NetworkResult<ResisterResponse>>()
+    val payModeResponseLiveData: LiveData<NetworkResult<ResisterResponse>>
+        get() = payModeLiveData
+
+    suspend fun payMode(
+        cinemacode: String,
+        booktype: String,
+        userid: String,
+        mobile: String,
+        type: String,
+        isSpi: String,
+        srilanka: String,
+        unpaid: Boolean
+    ) {
+        payModeLiveData.postValue(NetworkResult.Loading())
+        val response =
+            userAPI.payMode(cinemacode,booktype,userid,mobile,type,isSpi,srilanka,unpaid, Constant.version, Constant.platform)
+        payModeResponse(response)
+    }
+
+    private fun payModeResponse(response: Response<ResisterResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            payModeLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            payModeLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            payModeLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
     //Resister
     private val resisterLiveData = MutableLiveData<NetworkResult<ResisterResponse>>()
     val resisterResponseLiveData: LiveData<NetworkResult<ResisterResponse>>
@@ -996,6 +1060,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         foods: String,
         transid: String,
         cinemacode: String,
+        userId: String,
         qr: String,
         infosys: String,
         isSpi: String,
@@ -1007,6 +1072,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             foods,
             transid,
             cinemacode,
+            userId,
             qr,
             infosys,
             isSpi,

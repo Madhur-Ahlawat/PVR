@@ -25,6 +25,7 @@
     <color name="bg_fb_btn">#3b5999</color>
     <color name="bg_google_btn">#dc4e41</color>
     <color name="dark_slate_gray">#2F4F4F</color>
+    <color name="gray_payment">#808190</color>
 
     <color name="gray_2">#AFAFAF</color>
     <color name="gray_1">#C0C0C0</color>

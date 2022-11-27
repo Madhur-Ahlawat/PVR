@@ -47,14 +47,14 @@ interface UserAPI {
 
     @POST("contactus")
     suspend fun contactUs(
-        @Query("comment")  comment: String,
-        @Query("email")  email: String,
+        @Query("comment") comment: String,
+        @Query("email") email: String,
         @Query("mobile") mobile: String,
         @Query("did") did: String,
         @Query("mobile") isSpi: String,
-        @Query("ctype")  ctype: String,
+        @Query("ctype") ctype: String,
         @Query("av") version: String,
-        @Query("pt")  platform: String
+        @Query("pt") platform: String
     ): Response<ContactUsResponse>
 
     @POST("v2/user/verify")
@@ -62,6 +62,33 @@ interface UserAPI {
         @Query("mobile") mobile: String,
         @Header("X-Token") token: String,
         @Query("cname") cName: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<ResisterResponse>
+
+    @POST("loyalty/vouchers")
+    suspend fun voucher(
+        @Query("mobile") mobile: String,
+        @Query("userid") userid: String,
+        @Query("city") city: String,
+        @Query("status") status: String,
+        @Query("pay") pay: String,
+        @Query("did") did: String,
+        @Query("timestamp") timestamp: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<ResisterResponse>
+
+    @POST("trans/getpaymode")
+    suspend fun payMode(
+        @Query("cinemacode") cinemacode: String,
+        @Query("booktype") booktype: String,
+        @Query("userid") userid: String,
+        @Query("av") mobile: String,
+        @Query("mobile") type: String,
+        @Query("isSpi") isSpi: String,
+        @Query("srilanka") srilanka: String,
+        @Query("unpaid") unpaid: Boolean,
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<ResisterResponse>
@@ -370,9 +397,9 @@ interface UserAPI {
 
     @POST("content/specialcine")
     suspend fun formats(
-        @Query("type")   type: String,
-        @Query("city")  city: String,
-        @Query("isSpi")  isSpi: String,
+        @Query("type") type: String,
+        @Query("city") city: String,
+        @Query("isSpi") isSpi: String,
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<FormatResponse>
@@ -382,15 +409,15 @@ interface UserAPI {
         @Query("foods") foods: String,
         @Query("transid") transid: String,
         @Query("cinemacode") cinemacode: String,
+        @Query("userid") userId: String,
         @Query("qr") qr: String,
         @Query("infosys") infosys: String,
         @Query("isSpi") isSpi: String,
         @Query("av") version: String,
         @Query("pt") platform: String,
-        @Query("seat")  seat: String,
-        @Query("audi")   audi: String
+        @Query("seat") seat: String,
+        @Query("audi") audi: String
     ): Response<SummeryResponse>
-
 
     @POST("content/splashtxt")
     suspend fun splash(

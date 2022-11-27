@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.profile.prefrence.PreferenceActivity">
+    tools:context=".ui.home.fragment.more.prefrence.PreferenceActivity">
 
     <View
         android:id="@+id/view56"
@@ -39,7 +39,6 @@
         android:layout_height="wrap_content"
         tools:listitem="@layout/genre_category"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-
         tools:itemCount="3"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/view159" />
