@@ -115,6 +115,10 @@
                     android:layout_height="wrap_content"
                     android:background="@color/transparent"
                     android:layout_marginTop="@dimen/dimen_20dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/item_home_prmotion"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/recyclerViewSlider" />

@@ -13,8 +13,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class PreferenceActivity : AppCompatActivity() {
-    @Inject
-    private lateinit var preferences: PreferenceManager
+//    @Inject
+//    private lateinit var preferences: PreferenceManager
     private var binding: ActivityPrefrenceBinding? = null
     private val authViewModel: UserProfileViewModel by viewModels()
     private var loader: LoaderDialog? = null

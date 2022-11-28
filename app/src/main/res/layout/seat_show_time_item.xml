@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +26,7 @@
         <View
             android:id="@+id/view137"
             android:layout_width="0dp"
-            android:layout_height="2dp"
+            android:layout_height="3dp"
             android:background="@color/yellow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,8 +41,8 @@
             android:orientation="horizontal"
             android:paddingTop="@dimen/dimen_16dp"
             android:paddingBottom="@dimen/dimen_16dp"
-            android:paddingStart="@dimen/dimen_10dp"
-            android:paddingEnd="@dimen/dimen_17dp"
+            android:paddingStart="@dimen/dimen_17dp"
+            android:paddingEnd="@dimen/dimen_10dp"
             app:layout_constraintBottom_toTopOf="@+id/view137"
             app:layout_constraintEnd_toEndOf="@+id/view135"
             app:layout_constraintStart_toStartOf="@+id/view135"
@@ -58,11 +58,13 @@
                 tools:text="09:40" />
 
             <TextView
+
                 android:id="@+id/textView255"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_marginStart="@dimen/dimen_5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="7dp"
                 android:fontFamily="@font/montserrat_regular"
                 android:textColor="@color/black"
                 android:textSize="@dimen/dimen_12sp"

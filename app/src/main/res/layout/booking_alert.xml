@@ -1,0 +1,643 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/view97"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottom_corner"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:id="@+id/view167"
+            android:layout_width="28dp"
+            android:layout_height="5dp"
+            android:layout_marginTop="17dp"
+            android:background="@color/unSelectBg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view98"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_24dp"
+            android:orientation="vertical"
+            app:cardBackgroundColor="#F9F9F9"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="@dimen/dimen_4dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view167">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/llMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gray_border">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/topView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/cinemaImg"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/mgf"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/image_gradient"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/relativeLayout2"
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+
+                        <TextView
+                            android:id="@+id/cinemaName"
+                            style="@style/H4SizeBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="8dp"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toTopOf="@+id/multipleCinema"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            tools:ignore="TextContrastCheck"
+                            tools:text="PVR Opulent Ghaziabad" />
+
+
+                        <TextView
+                            android:id="@+id/multipleCinema"
+                            style="@style/H4SizeBold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignStart="@+id/cinemaName"
+                            android:layout_marginBottom="24dp"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toTopOf="@+id/cinemaLocation"
+                            app:layout_constraintEnd_toEndOf="@+id/cinemaName"
+                            app:layout_constraintStart_toStartOf="@+id/cinemaName"
+                            tools:text="Multiple Formats" />
+
+
+                        <TextView
+                            android:id="@+id/cinemaLocation"
+                            style="@style/H4SizeBold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:ellipsize="end"
+                            android:lineSpacingExtra="3dp"
+                            android:maxLines="2"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            tools:text="Plot No. 3, M-Block, Sector 18, NOIDA - 201301, UP" />
+
+
+                        <ImageView
+                            android:id="@+id/ivLocation"
+                            android:layout_width="16dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="10dp"
+                            android:src="@drawable/location"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/multipleCinema"
+                            tools:ignore="ContentDescription" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:id="@+id/types"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/topView"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="10dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/topView">
+
+                    <LinearLayout
+                        android:id="@+id/parking"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="24dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen_35dp"
+                            android:layout_height="@dimen/dimen_35dp"
+                            android:layout_gravity="center"
+                            android:adjustViewBounds="true"
+                            android:padding="@dimen/dimen_5dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_parking"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            style="@style/H2SizeDark"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="2dp"
+                            android:text="@string/parking" />
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/food"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="24dp"
+                        android:orientation="vertical"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen_35dp"
+                            android:layout_height="@dimen/dimen_35dp"
+                            android:layout_gravity="center"
+                            android:adjustViewBounds="true"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_food_icon"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            style="@style/H2SizeDark"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="2dp"
+                            android:text="@string/f_amp_b" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/metro"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="24dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen_35dp"
+                            android:layout_height="@dimen/dimen_35dp"
+                            android:layout_gravity="center"
+                            android:adjustViewBounds="true"
+                            android:padding="@dimen/dimen_5dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_metro"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            style="@style/H2SizeDark"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="2dp"
+                            android:text="@string/metro" />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/llMovie"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/types">
+
+
+                    <TextView
+                        android:id="@+id/movieFirst"
+                        style="@style/H1Size"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="#1d51ca"
+                        android:textSize="14sp"
+                        android:visibility="gone"
+                        tools:text="Akash" />
+
+
+                    <TextView
+                        android:id="@+id/secDots"
+                        style="@style/H1Size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dots"
+                        android:textColor="@color/gray_color"
+                        android:textSize="12sp"
+                        android:visibility="gone" />
+
+
+                    <TextView
+                        android:id="@+id/movieSecond"
+                        style="@style/H1Size"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="#1d51ca"
+                        android:textSize="14sp"
+                        android:visibility="gone"
+                        tools:text="Akash" />
+
+
+                    <TextView
+                        android:id="@+id/thirdDots"
+                        style="@style/H1Size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dots"
+                        android:textColor="@color/gray_color"
+                        android:textSize="12sp"
+                        android:visibility="gone" />
+
+
+                    <TextView
+                        android:id="@+id/movieThird"
+                        style="@style/H1Size"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="#1d51ca"
+                        android:textSize="14sp"
+                        android:visibility="gone"
+                        tools:text="Akash" />
+
+
+                    <TextView
+                        android:id="@+id/movieNext"
+                        style="@style/H1Size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/all_theatres_padding_textview"
+                        android:background="@drawable/shape_gold_border"
+                        android:paddingLeft="4dp"
+                        android:paddingTop="2dp"
+                        android:paddingRight="4dp"
+                        android:paddingBottom="2dp"
+                        android:textColor="#1d51ca"
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        tools:text="+6" />
+
+
+                </LinearLayout>
+
+
+                <View
+                    android:id="@+id/View_"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/gray_new"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/llMovie" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:id="@+id/bottomView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_5dp"
+            android:layout_marginEnd="@dimen/dimen_5dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/dimen_20dp"
+            android:paddingBottom="@dimen/dimen_20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView9"
+            tools:ignore="DisableBaselineAlignment">
+
+            <LinearLayout
+                android:id="@+id/shows"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_slideshow"
+                    tools:ignore="ContentDescription" />
+
+
+                <TextView
+                    android:id="@+id/tvShows"
+                    style="@style/H1Size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="7dp"
+                    android:textColor="@color/pvr_dark_black"
+                    tools:text="40 Shows" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/kiloMeter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/location"
+                    tools:ignore="ContentDescription" />
+
+
+                <TextView
+                    android:id="@+id/tvDistance"
+                    style="@style/H1Size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="7dp"
+                    android:textColor="@color/pvr_dark_black"
+                    tools:text="3.5 Km away" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_direction_new"
+                    tools:ignore="ContentDescription" />
+
+
+                <TextView
+                    style="@style/H1Size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="7dp"
+                    android:text="@string/directions" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view207"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/grayEd"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bottomView" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout32"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/booking_alert"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view207">
+
+            <View
+                android:id="@+id/view208"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView72"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="@+id/view208"
+                app:layout_constraintTop_toTopOf="@+id/view208"
+                app:srcCompat="@drawable/bagger_icon" />
+
+            <TextView
+                android:id="@+id/textView141"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:fontFamily="@font/sf_pro_text_semi_bold"
+                android:text="No Baggage Counter"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView72"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView72"
+                app:layout_constraintTop_toTopOf="@+id/imageView72" />
+
+            <View
+                android:id="@+id/view209"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginTop="17dp"
+                android:background="@color/grayEd"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView141" />
+
+            <TextView
+                android:id="@+id/textView142"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="14dp"
+                android:layout_marginBottom="14dp"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:text="Dear Patron, baggage counter is not available at this location. Inconvenience caused is deeply regretted"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/view208"
+                app:layout_constraintTop_toBottomOf="@+id/view209" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/booking_alert"
+            app:layout_constraintEnd_toEndOf="@+id/view98"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout32"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout32">
+
+            <ImageView
+                android:id="@+id/imageView76"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:layout_marginTop="17dp"
+                android:layout_marginBottom="17dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/car"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/textView144"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
+                android:fontFamily="@font/sf_pro_text_semi_bold"
+                android:text="@string/book_ola"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView76"
+                app:layout_constraintEnd_toStartOf="@+id/textView145"
+                app:layout_constraintStart_toEndOf="@+id/imageView76"
+                app:layout_constraintTop_toTopOf="@+id/imageView76" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/textView145"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardUseCompatPadding="true"
+                app:cardBackgroundColor="@color/yellow"
+                app:cardCornerRadius="@dimen/dimen_50dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_14dp"
+                    android:layout_marginStart="@dimen/dimen_14dp"
+                    android:layout_marginBottom="@dimen/dimen_10dp"
+                    android:layout_marginTop="@dimen/dimen_10dp"
+                    android:fontFamily="@font/sf_pro_text_semi_bold"
+                    android:text="@string/quick_book"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14sp" />
+
+
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

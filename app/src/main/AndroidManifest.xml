@@ -210,7 +210,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.onBoarding.LandingActivity"
+            android:name=".ui.splash.onBoarding.LandingActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

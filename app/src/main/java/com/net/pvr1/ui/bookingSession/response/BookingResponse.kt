@@ -35,7 +35,7 @@ data class BookingResponse(
         val nm: String,
         val od: String,
         val p: String,
-        val ph: List<Any>,
+        val ph: ArrayList<Ph>,
         val prs: Prs,
         val pu: List<Any>,
         val rt: String,
@@ -47,6 +47,22 @@ data class BookingResponse(
         val vdo: String,
         val wib: String
     ) : Serializable {
+        data class Ph(
+            val buttonText: String,
+            val cities: String,
+            val i: String,
+            val id: Int,
+            val location: String,
+            val name: String,
+            val platform: String,
+            val priority: Int,
+            val redirectView: String,
+            val redirect_url: String,
+            val screen: String,
+            val text: String,
+            val trailerUrl: String,
+            val type: String
+        ):Serializable
         data class Cinema(
             val add: String,
             val cf: Boolean,

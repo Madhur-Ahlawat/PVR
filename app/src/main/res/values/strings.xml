@@ -358,6 +358,8 @@
     <string name="bestsellers">Bestsellers</string>
     <string name="veg">Veg  </string>
     <string name="non_veg">Non Veg  </string>
+    <string name="all_theaters">All Theaters</string>
+    <string name="book_ola">Book OLA</string>
 
 
 </resources>

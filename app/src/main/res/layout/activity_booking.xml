@@ -57,7 +57,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageView54"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_un_favourite_theatre"
+            app:srcCompat="@drawable/search"
             app:tint="@color/black"
             tools:ignore="ContentDescription" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -108,25 +108,27 @@
 
                 <TextView
                     android:id="@+id/textView103"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_alternates_bold"
                     android:textColor="@color/black"
                     android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="@+id/view70"
                     app:layout_constraintStart_toStartOf="@+id/view70"
                     app:layout_constraintTop_toTopOf="@+id/view70"
                     tools:text="The Batman" />
 
                 <TextView
                     android:id="@+id/textView104"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="20dp"
-                    android:fontFamily="@font/sf_pro_text_regular"
+                    android:fontFamily="@font/sf_pro_text_medium"
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimen_14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/view70"
                     app:layout_constraintStart_toStartOf="@+id/view70"
                     app:layout_constraintTop_toBottomOf="@+id/textView103"
                     tools:text="DRAMA" />
@@ -185,6 +187,7 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView10"
+                    android:visibility="gone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -202,17 +205,17 @@
                 android:id="@+id/recyclerView8"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout22"
-                tools:itemCount="1"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerView23"
+                tools:itemCount="1"
                 tools:listitem="@layout/item_booking_session_cinema_location" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout83"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 app:layout_constraintEnd_toEndOf="@+id/recyclerView8"
@@ -257,6 +260,19 @@
                     tools:itemCount="3"
                     tools:listitem="@layout/item_booking_session_cinema_movies" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView23"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="2"
+                tools:listitem="@layout/item_home_prmotion"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout21" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

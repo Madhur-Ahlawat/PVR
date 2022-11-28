@@ -5,26 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="@dimen/dimen_24dp"
-    android:paddingEnd="@dimen/dimen_24dp"
-    android:paddingTop="@dimen/dimen_24dp">
+    android:paddingTop="@dimen/dimen_24dp"
+    android:paddingEnd="@dimen/dimen_24dp">
 
 
     <TextView
         android:id="@+id/textView240"
+        android:fontFamily="@font/montserrat_bold"
+        android:textSize="@dimen/dimen_14sp"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/montBold14"
         android:text="@string/all_genres"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView241"
+        android:fontFamily="@font/sf_pro_text_regular"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/montReg14"
-        android:textSize="@dimen/dimen_12sp"
         android:text="@string/select_all"
+        android:textSize="@dimen/dimen_12sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView240"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView240" />
@@ -33,10 +36,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        tools:listitem="@layout/genre_child_item"
-        tools:itemCount="3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView240" />
+        app:layout_constraintTop_toBottomOf="@+id/textView240"
+        tools:itemCount="3"
+        tools:listitem="@layout/genre_child_item" />
 </androidx.constraintlayout.widget.ConstraintLayout>

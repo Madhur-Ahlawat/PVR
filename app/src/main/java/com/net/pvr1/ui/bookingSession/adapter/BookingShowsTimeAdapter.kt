@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.bookingSession.adapter
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -51,10 +52,9 @@ class BookingShowsTimeAdapter(
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
-                context.printLog("sessionId--->${this.cc}")
                 val colorCode = "#" + this.cc
 
                 binding.textView96.setTextColor(Color.parseColor(colorCode))
@@ -151,12 +151,20 @@ class BookingShowsTimeAdapter(
 
 
         skip.setOnClickListener {
-            dialog.dismiss()
+            val intent = Intent(context, SeatLayoutActivity::class.java)
+            intent.putExtra("clickPosition", rowIndex.toString())
+            intent.putExtra("shows", nowShowingList)
+            intent.putExtra("skip", "true")
+            context.startActivity(intent)
+
         }
+
+
         applyOffer.setOnClickListener {
             val intent = Intent(context, SeatLayoutActivity::class.java)
             intent.putExtra("clickPosition", rowIndex.toString())
             intent.putExtra("shows", nowShowingList)
+            intent.putExtra("skip", "false")
             context.startActivity(intent)
         }
     }

@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.onBoarding
+package com.net.pvr1.ui.splash.onBoarding
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -33,7 +33,7 @@ class LandingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLandingBinding.inflate(layoutInflater, null, false)
-        val view = binding?.root
+        val view = binding?.rzzoot
         setContentView(view)
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE)
 
