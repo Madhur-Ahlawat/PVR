@@ -12,7 +12,6 @@ import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
 
-
 class CinemaSessionCinParentAdapter(
     private var nowShowingList: List<CinemaSessionResponse.Child>,
     private var context: Context,

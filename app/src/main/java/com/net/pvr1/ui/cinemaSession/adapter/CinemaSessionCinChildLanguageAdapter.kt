@@ -21,8 +21,7 @@ class CinemaSessionCinChildLanguageAdapter(
         val binding = ItemCinemaSessionLangChildBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
-            false
-        )
+            false)
         return ViewHolder(binding)
     }
 
@@ -31,6 +30,7 @@ class CinemaSessionCinChildLanguageAdapter(
             with(nowShowingList[position]) {
                 //title
                 binding.textView95.text = this.lng
+                println("session--------->${this.lng}")
                 //RecyclerView
                 val layoutManager = FlexboxLayoutManager(context)
                 layoutManager.flexWrap = FlexWrap.WRAP

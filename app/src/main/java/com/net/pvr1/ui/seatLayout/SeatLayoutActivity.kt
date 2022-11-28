@@ -2,6 +2,7 @@ package com.net.pvr1.ui.seatLayout
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -48,7 +49,6 @@ import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
 import dagger.hilt.android.AndroidEntryPoint
 import java.math.BigDecimal
 
-
 @Suppress("DEPRECATION", "NAME_SHADOWING")
 @AndroidEntryPoint
 class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClickListenerCity ,CinemaShowsAdapter.RecycleViewItemClickListener{
@@ -86,6 +86,9 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
     //Cinema Session
     private var cinemaSessionShows = ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>()
+
+    var textTermsAndCondition:TextView? = null
+    var tncValue = 1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -131,12 +134,29 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             )
 
             val privacy = dialog.findViewById<TextView>(R.id.textView304)
+            val btnName = dialog.findViewById<TextView>(R.id.textView5)
             privacy.paintFlags = privacy.paintFlags or Paint.UNDERLINE_TEXT_FLAG
             dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
             dialog.window!!.setGravity(Gravity.BOTTOM)
+
+            btnName.text = getString(R.string.okay)
             dialog.show()
         }
+
+   // back btn
+        binding?.imageView95?.setOnClickListener {
+            onBackPressed()
+        }
+
+        // Share data
+        binding?.imageView96?.setOnClickListener {
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.type = "text/plain"
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "http://codepath.com")
+            startActivity(Intent.createChooser(shareIntent, "Share link using"))
+        }
+
     }
 
     //Shows
@@ -167,6 +187,20 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+
+                        if (tncValue == 1) {
+                            if (it.data.output.tnc == "") {
+                                tncValue = 1
+                            } else {
+                                seatTandCDialog()
+
+                                textTermsAndCondition?.text = it.data.output.tnc
+                                println("tnc12 ------>${it.data.output.tnc}")
+                                println("tnc121 ------>${textTermsAndCondition?.text}")
+                                tncValue = 2
+                            }
+                        }
+
                         priceMap = it.data.output.priceList
                         noOfRowsSmall = it.data.output.rows
                         drawColumn(it.data.output.rows)
@@ -365,6 +399,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 addRowName("", true)
                 //update area
                 areaName = row.n
+                println("areaName12-------->${areaName}")
+                println("noSeats12-------->${noSeats}")
 
                 //Draw Area============
                 val rlLayout = RelativeLayout(this)
@@ -376,6 +412,9 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 try {
                     val colorCodes: String = if (row.c.contains("#")) row.c else "#" + row.c
                     rlLayout.setBackgroundColor(Color.parseColor(colorCodes))
+
+                    println("seatColorCode-------->${row.c}")
+                    println("seatColorCode1-------->${colorCodes}")
 
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -418,6 +457,32 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
             }
         }
+    }
+
+    private fun seatTandCDialog(){
+        val builder = AlertDialog.Builder(this,R.style.CustomAlertDialog)
+            .create()
+
+        val window: Window? = builder.getWindow()
+        window?.setGravity(Gravity.BOTTOM)
+        val view = layoutInflater.inflate(R.layout.seat_t_c_dialog_layout,null)
+        val btnName = view.findViewById<TextView>(R.id.textView5)
+        textTermsAndCondition = view.findViewById<TextView>(R.id.textTermsAndCondition)
+        builder.setView(view)
+
+
+//        val lines = tncs.split("|".toRegex())
+//        textTermsAndCondition?.text = tncs
+
+        btnName.text = getString(R.string.accept)
+
+        btnName.setOnClickListener {
+            builder.dismiss()
+        }
+
+        builder.setCanceledOnTouchOutside(false)
+        builder.show()
+
     }
 
     private fun drawRow(
@@ -783,7 +848,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                     val dialog = OptionDialog(this,
                                         R.mipmap.ic_launcher,
                                         R.string.app_name,
-                                        getString(R.string.max_seat_msz),
+                                        getString(R.string.max_seat_msz1),
                                         positiveBtnText = R.string.ok,
                                         negativeBtnText = R.string.no,
                                         positiveClick = {

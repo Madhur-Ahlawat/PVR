@@ -39,6 +39,7 @@ class FoodActivity : AppCompatActivity(),
     AllFoodAdapter.RecycleViewItemClickListenerCity,
     SubAllFoodAdapter.RecycleViewItemClickListenerCity,
     CartAdapter.RecycleViewItemClickListenerCity{
+
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityFoodBinding? = null
@@ -114,6 +115,9 @@ class FoodActivity : AppCompatActivity(),
                         catFilter = it.data.output.mfl
                         catFilterBestSeller = it.data.output.bestsellers
                         retrieveData(it.data.output)
+
+                        println("foodLimit1 ------>${foodLimit}--->${foodResponse}")
+
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -402,6 +406,8 @@ class FoodActivity : AppCompatActivity(),
 
     override fun addFoodPlus(comingSoonItem: FoodResponse.Output.Bestseller, position: Int) {
         var num = comingSoonItem.qt
+
+        println("num123------>${num}------->${foodLimit}")
         if (num > foodLimit || num == foodLimit) {
             val dialog = OptionDialog(this,
                 R.mipmap.ic_launcher,
