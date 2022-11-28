@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.food.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -32,6 +33,7 @@ class SubFoodBestSellerAdapter(
         return ViewHolder(binding)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
@@ -81,13 +83,14 @@ class SubFoodBestSellerAdapter(
                     listener.addFoodPlus(this, position)
                     notifyDataSetChanged()
                 }
+
                 //Add
                 binding.uiPlusMinus.minus.setOnClickListener {
                     listener.addFoodMinus(this, position)
                     notifyDataSetChanged()
                 }
-                //UiShowHide
 
+                //UiShowHide
                 if (this.qt > 0) {
                     binding.consAddUi.show()
                     binding.textView135.hide()

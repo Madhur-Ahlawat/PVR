@@ -186,5 +186,9 @@
         <item name="colorAccent">#636363</item>
     </style>
 
+    // custom alert dialog
+    <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/bg_alert_seattc</item>
+    </style>
 
 </resources>

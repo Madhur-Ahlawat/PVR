@@ -193,6 +193,7 @@
 
     //Seat Layout
     <string name="max_seat_msz">You Can\'t Select More Than two Seat.</string>
+    <string name="max_seat_msz1">You can only book 10 tickets at a time.</string>
     <string name="currency">₹</string>
     <string name="bullet">\u25CF</string>
     <string name="screen_this_way">SCREEN</string>
@@ -358,6 +359,9 @@
     <string name="bestsellers">Bestsellers</string>
     <string name="veg">Veg  </string>
     <string name="non_veg">Non Veg  </string>
+    <string name="okay">Okay</string>
+    <string name="accept">Accept</string>
+    <string name="terms_amp_conditions"><![CDATA[Terms & Conditions]]></string>
 
 
 </resources>
