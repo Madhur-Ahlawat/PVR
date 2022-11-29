@@ -17,6 +17,7 @@
     <string name="txt_login_subheader">Login to access your notes</string>
     <string name="txt_login">Login</string>
     <string name="checkNumber">Mobile Number Should Be 10 Digit</string>
+    <string name="enterMobileNo"> Please Enter Your Mobile Number</string>
     <string name="exitApp">Are You Sure You want to exit</string>
 
     <string name="txt_error_message">%1$S*</string>
@@ -364,6 +365,5 @@
     <string name="okay">Okay</string>
     <string name="accept">Accept</string>
     <string name="terms_amp_conditions"><![CDATA[Terms & Conditions]]></string>
-
 
 </resources>

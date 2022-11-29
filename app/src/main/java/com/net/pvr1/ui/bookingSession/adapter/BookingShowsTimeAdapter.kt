@@ -25,7 +25,9 @@ import com.net.pvr1.ui.seatLayout.SeatLayoutActivity
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr1.utils.Constant.Companion.OfferDialogImage
 import com.net.pvr1.utils.Constant.Companion.SESSION_ID
+import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.printLog
+import com.net.pvr1.utils.show
 import com.net.pvr1.utils.toast
 import kotlin.math.roundToInt
 
@@ -77,6 +79,13 @@ class BookingShowsTimeAdapter(
                 binding.textView96.text = this.st
                 SESSION_ID = this.sid.toString()
                 CINEMA_ID = ccid
+
+                //Handicap
+                if (this.hc){
+                    binding.imageView48.show()
+                }else{
+                    binding.imageView48.hide()
+                }
 
                 holder.itemView.setOnClickListener {
                     rowIndex=position

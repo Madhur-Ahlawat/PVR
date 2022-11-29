@@ -71,8 +71,7 @@ class OtpVerifyActivity : AppCompatActivity() {
     private fun movedNext() {
         binding?.textView15?.setOnClickListener {
             val otp = binding?.otpEditText?.getStringFromFields()
-            printLog("otp--->${otp}")
-            if (otp == "null") {
+            if (binding?.otpEditText?.getStringFromFields()?.contains("null") == true) {
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
                     R.string.app_name,

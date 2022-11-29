@@ -33,10 +33,9 @@ class LandingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLandingBinding.inflate(layoutInflater, null, false)
-        val view = binding?.rzzoot
+        val view = binding?.root
         setContentView(view)
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE)
-
         slider()
         movedNext()
     }

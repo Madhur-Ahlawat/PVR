@@ -12,11 +12,11 @@
         android:id="@+id/view206"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@drawable/bottom_onboard_corner"
+        app:layout_constraintBottom_toBottomOf="@+id/viewPager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/bottom_onboard_corner"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout37" />
+        app:layout_constraintTop_toTopOf="parent" />
     <View
         android:id="@+id/view2"
         android:layout_width="wrap_content"
@@ -39,15 +39,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:foregroundGravity="center"
-        android:layout_marginBottom="@dimen/dimen_50dp"
-        app:layout_constraintBottom_toBottomOf="@+id/view206"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout37"
         app:layout_constraintEnd_toEndOf="@+id/view2"
         app:layout_constraintStart_toStartOf="@+id/view2"
         app:layout_constraintTop_toTopOf="@+id/view2"
-        tools:ignore="SpeakableTextPresentCheck">
-
-
-    </androidx.viewpager.widget.ViewPager>
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout37"
@@ -62,7 +58,7 @@
         <TextView
             android:id="@+id/change_text"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dimen_100dp"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/dimen_30dp"
             android:fontFamily="@font/montserrat_bold"

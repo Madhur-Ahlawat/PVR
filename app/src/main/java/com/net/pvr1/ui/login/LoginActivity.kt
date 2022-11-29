@@ -26,7 +26,6 @@ import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.SUCCESS_CODE
 import com.net.pvr1.utils.NetworkResult
 import com.net.pvr1.utils.PreferenceManager
-import com.net.pvr1.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -76,7 +75,19 @@ class LoginActivity : AppCompatActivity() {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 //do here your stuff f
                 val mobile = binding?.mobileNumber?.text.toString()
-                if (!TextUtils.isEmpty(mobile) && mobile.length != 10) {
+                if (mobile == "") {
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        getString(R.string.enterMobileNo),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {
+                        },
+                        negativeClick = {
+                        })
+                    dialog.show()
+                } else if (!TextUtils.isEmpty(mobile) && mobile.length != 10) {
                     val dialog = OptionDialog(this,
                         R.mipmap.ic_launcher,
                         R.string.app_name,
@@ -96,8 +107,21 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding?.textView11?.setOnClickListener {
+            //do here your stuff f
             val mobile = binding?.mobileNumber?.text.toString()
-            if (TextUtils.isEmpty(mobile) && mobile.length != 10) {
+            if (mobile == "") {
+                val dialog = OptionDialog(this,
+                    R.mipmap.ic_launcher,
+                    R.string.app_name,
+                    getString(R.string.enterMobileNo),
+                    positiveBtnText = R.string.ok,
+                    negativeBtnText = R.string.no,
+                    positiveClick = {
+                    },
+                    negativeClick = {
+                    })
+                dialog.show()
+            } else if (!TextUtils.isEmpty(mobile) && mobile.length != 10) {
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
                     R.string.app_name,
@@ -109,7 +133,6 @@ class LoginActivity : AppCompatActivity() {
                     negativeClick = {
                     })
                 dialog.show()
-
             } else {
                 authViewModel.loginMobileUser(mobile, "", "INDIA")
             }
@@ -121,7 +144,7 @@ class LoginActivity : AppCompatActivity() {
         }
 // OutSide Click
         binding?.loginClick?.setOnClickListener {
-            binding?.textInputLayout?.isSelected=false
+            binding?.textInputLayout?.isSelected = false
             binding?.mobileNumber?.isFocusableInTouchMode = false
             binding?.textInputLayout?.isFocusableInTouchMode = false
             Constant().hideKeyboard(this)

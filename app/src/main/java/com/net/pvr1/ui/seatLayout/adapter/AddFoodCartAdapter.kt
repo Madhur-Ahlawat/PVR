@@ -36,7 +36,8 @@ class AddFoodCartAdapter(
                 //quantity
                 binding.textView124.text = this.quantity.toString()
                 //price
-                binding.textView123.text=this.price.toString()
+                binding.textView123.text=  context.getString(R.string.currency) +this.price.toString()
+
                 if (this.veg) {
                     Glide.with(context).load(R.drawable.veg_ic).into(binding.imageView80)
                 } else {
