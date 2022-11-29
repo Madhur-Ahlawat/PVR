@@ -50,8 +50,8 @@
 
     <TextView
         android:id="@+id/textView37"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="295dp"
+        android:layout_height="24dp"
         android:layout_marginTop="10.45dp"
         android:fontFamily="@font/sf_pro_text_semi_bold"
         android:lineSpacingExtra="0.25dp"

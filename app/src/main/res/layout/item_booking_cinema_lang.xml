@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/sf_pro_text_semi_bold"
         android:textColor="@color/black"
+        android:layout_marginStart="@dimen/dimen_24dp"
         android:textSize="@dimen/dimen_14sp"
         tools:text="Hindi - 3D, 4Dx"
         app:layout_constraintStart_toStartOf="parent"

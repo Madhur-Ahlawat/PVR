@@ -51,6 +51,7 @@ class BookingShowsDaysAdapter(
 
                 if (position == itemCount) {
                     binding.textView199.setTextColor(ContextCompat.getColor(context, R.color.black))
+                    binding.textView255.setTextColor(ContextCompat.getColor(context, R.color.black))
                     binding.linearLayout.setBackgroundColor(
                         ContextCompat.getColor(
                             context,
@@ -63,9 +64,8 @@ class BookingShowsDaysAdapter(
                     binding.textView199.typeface = heavy
 
                 } else {
-                    binding.textView199.setTextColor(
-                        ContextCompat.getColor(context, R.color.textColorGray)
-                    )
+                    binding.textView199.setTextColor(ContextCompat.getColor(context, R.color.textColorGray))
+                    binding.textView255.setTextColor(ContextCompat.getColor(context, R.color.gray_1))
                     binding.linearLayout.setBackgroundColor(
                         ContextCompat.getColor(
                             context,

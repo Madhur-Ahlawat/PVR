@@ -55,6 +55,8 @@ class NowShowingActivity : AppCompatActivity(),
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         retrieveData(it.data.output)
+//                        trailerlist = it.data.output.mb.trailers
+                        
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -132,15 +134,18 @@ class NowShowingActivity : AppCompatActivity(),
         binding?.textView56?.text = output.genre
         //Censor
         binding?.textView58?.text = output.c
+
         //Duration
-        binding?.textView59?.text = output.l
+//        binding?.textView59?.text = output.l
+        binding?.textView60?.text = output.l
+
         //Release Data
-        binding?.textView252?.text = output.mopeningdate
+        binding?.textView252?.text = output.rt
         //Avail in
         binding?.textView254?.text = output.lngs.joinToString { it }
         //Language
         val commaSeparatedString = output.lngs.joinToString { it }
-        binding?.textView60?.text = commaSeparatedString
+
         //Description
         binding?.textView66?.text = output.p
         binding?.textView66?.let { Constant().makeTextViewResizable(it, 4, "..read more", true) }

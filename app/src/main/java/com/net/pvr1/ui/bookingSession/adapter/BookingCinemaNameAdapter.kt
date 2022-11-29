@@ -14,7 +14,6 @@ import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
 
-
 class BookingCinemaNameAdapter(
     private var nowShowingList: List<BookingResponse.Output.Cinema.Child>,
     private var context: Context,
@@ -40,18 +39,31 @@ class BookingCinemaNameAdapter(
                 //Language  .lng+this.lk
                 binding.textView106.text = this.ccn
 
-                binding.imageView56.setOnClickListener {
-                    if (binding.recyclerView11.visibility == View.GONE) {
-                        binding.recyclerView11.show()
-                        binding.imageView56.setImageResource(R.drawable.arrow_up)
-                    } else {
-                        binding.imageView56.setImageResource(R.drawable.arrow_down)
+                if (this.ccn == ""){
+                    binding.textView106.hide()
+                    binding.imageView56.hide()
+                    binding.recyclerView11.show()
+                    binding.imageView56.setImageResource(R.drawable.arrow_up)
 
-                        binding.recyclerView11.hide()
-                    }
-//                    rowIndex=position
-                    notifyDataSetChanged()
                 }
+//                    binding.textView106.show()
+//                    binding.imageView56.show()
+//                    binding.recyclerView11.hide()
+                    binding.imageView56.setImageResource(R.drawable.arrow_up)
+                    binding.imageView56.setOnClickListener {
+                        if (binding.recyclerView11.visibility == View.GONE) {
+                            binding.recyclerView11.show()
+                            binding.imageView56.setImageResource(R.drawable.arrow_up)
+                        } else {
+                            binding.imageView56.setImageResource(R.drawable.arrow_down)
+
+                            binding.recyclerView11.hide()
+                        }
+//                    rowIndex=position
+                        notifyDataSetChanged()
+                    }
+
+
 
                 //Recycler
                 val layoutManager =
