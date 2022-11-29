@@ -50,10 +50,21 @@ class AllFoodAdapter(
                 //price
                 binding.textView133.text = "₹ " + Constant.DECIFORMAT.format(this.dp / 100.0)
 
-//                val price: String = Constant().removeTrailingZeroFormater(this.dp.toFloat())!!
-//                binding.textView133.text = context.resources.getString(R.string.currency) + price
+                if (this.r.size > 1) {
+                    binding.textView134.show()
+                    binding.textView135.setOnClickListener {
+                        listener.categoryFoodDialog(this.r, this.nm)
+                    }
+                } else {
+                    binding.textView134.invisible()
+                    binding.textView135.setOnClickListener {
+                        binding.consAddUi.show()
+                        binding.textView135.hide()
+                        listener.categoryFoodClick(this)
+                        notifyDataSetChanged()
+                    }
 
-
+                }
                 //SubTract
                 binding.uiPlusMinus.plus.setOnClickListener {
                     listener.categoryFoodPlus(this, position)
@@ -68,21 +79,6 @@ class AllFoodAdapter(
                 binding.imageView65.setOnClickListener {
                     listener.categoryFoodImageClick(this)
                 }
-
-                if (this.r.size > 1) {
-                    binding.textView134.show()
-                    binding.textView135.setOnClickListener {
-                        listener.categoryFoodDialog(this.r, this.nm)
-                    }
-                } else {
-                    binding.textView134.invisible()
-                    binding.textView135.setOnClickListener {
-                        binding.consAddUi.show()
-                        binding.textView135.hide()
-                        listener.categoryFoodClick(this)
-                    }
-
-                }
                 if (this.veg) {
                     binding.imageView69.setImageDrawable(context.getDrawable(R.drawable.veg_ic))
                 } else {
@@ -96,11 +92,8 @@ class AllFoodAdapter(
                     binding.consAddUi.hide()
                     binding.textView135.show()
                 }
-
                 //quantity
                 binding.uiPlusMinus.foodCount.text = this.qt.toString()
-
-
             }
         }
 

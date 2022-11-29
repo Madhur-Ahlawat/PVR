@@ -30,7 +30,7 @@
             android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/consTandC"
+                android:id="@+id/consTerms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -46,7 +46,6 @@
                     android:fontFamily="@font/sf_pro_text_regular"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/dimen_12sp"
-
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="terms and conditions text" />

@@ -2,17 +2,13 @@
     <solid android:color="@color/yellow"/>
     <stroke android:width="3dp"
         android:color="@color/yellow" />
+
     <corners
         android:radius="3dp"/>
-<!--    <padding-->
-<!--        android:left="26dp"-->
-<!--        android:top="7dp"-->
-<!--        android:right="26dp"-->
-<!--        android:bottom="7dp" />-->
 
     <padding
-        android:bottom="7dp"
+        android:bottom="6dp"
         android:left="26dp"
         android:right="26dp"
-        android:top="7dp" />
+        android:top="6dp" />
 </shape>

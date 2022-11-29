@@ -28,7 +28,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView8"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="130dp"
             app:cardUseCompatPadding="true"
             app:cardCornerRadius="@dimen/dimen_8dp"
             app:layout_constraintEnd_toEndOf="@+id/view85"
@@ -53,7 +53,8 @@
                 <ImageView
                     android:id="@+id/imageView65"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
                     android:adjustViewBounds="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -96,6 +97,7 @@
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="@dimen/dimen_14sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/cardView8"
             app:layout_constraintTop_toBottomOf="@+id/cardView8"
             tools:text="PVR CAFE" />
@@ -127,12 +129,10 @@
         <TextView
             android:id="@+id/textView135"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="38dp"
             android:layout_marginTop="10dp"
             android:paddingStart="34dp"
             android:paddingEnd="34dp"
-            android:paddingTop="@dimen/dimen_5dp"
-            android:paddingBottom="@dimen/dimen_5dp"
             android:background="@drawable/food_book_curve"
             android:fontFamily="@font/sf_pro_text_bold"
             android:gravity="center"
@@ -148,18 +148,22 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/consAddUi"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dimen_38dp"
             android:layout_marginTop="10dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView133"
             app:layout_constraintTop_toBottomOf="@+id/textView133">
 
             <include
                 android:id="@+id/uiPlusMinus"
                 layout="@layout/food_layout_add"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp" />
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

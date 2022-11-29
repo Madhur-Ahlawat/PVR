@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,7 +20,6 @@ import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityFoodBinding
 import com.net.pvr1.databinding.FoodBottomAddFoodBinding
-import com.net.pvr1.databinding.FoodCartDialogBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.adapter.*
@@ -34,10 +32,10 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class FoodActivity : AppCompatActivity(),
-    SubFoodBestSellerAdapter.RecycleViewItemClickListenerCity,
+    BestSellerFoodAdapter.RecycleViewItemClickListenerCity,
     CategoryAdapter.RecycleViewItemClickListenerCity,
     AllFoodAdapter.RecycleViewItemClickListenerCity,
-    SubAllFoodAdapter.RecycleViewItemClickListenerCity,
+    BottomFoodAdapter.RecycleViewItemClickListenerCity,
     CartAdapter.RecycleViewItemClickListenerCity{
 
     @Inject
@@ -51,13 +49,14 @@ class FoodActivity : AppCompatActivity(),
     private var catFilterBestSeller = ArrayList<FoodResponse.Output.Bestseller>()
     private var foodResponse: FoodResponse.Output? = null
     private var foodResponseCategory: ArrayList<FoodResponse.Output.Cat> = arrayListOf()
-    private var subFoodBestSellerAdapter: SubFoodBestSellerAdapter? = null
-    private var subAllFoodAdapter: SubAllFoodAdapter? = null
+    private var bestSellerFoodAdapter: BestSellerFoodAdapter? = null
+    private var bottomFoodAdapter: BottomFoodAdapter? = null
     private var allFoodAdapter: AllFoodAdapter? = null
     private var masterId: String? = "0"
     private var categoryName: String = "ALL"
     private var itemCheckPriceCart: Int = 0
     private var menuType = 0
+    private var cartShow = false
     private var bestSellerType: String = "ALL"
 
     //foodLimit
@@ -115,9 +114,6 @@ class FoodActivity : AppCompatActivity(),
                         catFilter = it.data.output.mfl
                         catFilterBestSeller = it.data.output.bestsellers
                         retrieveData(it.data.output)
-
-                        println("foodLimit1 ------>${foodLimit}--->${foodResponse}")
-
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -157,12 +153,11 @@ class FoodActivity : AppCompatActivity(),
     }
 
     private fun retrieveData(output: FoodResponse.Output) {
-        printLog("bestseller--->${output.bestsellers.size}")
         //Food
         val layoutManagerCrew = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
-        subFoodBestSellerAdapter = SubFoodBestSellerAdapter(output.bestsellers, this, this)
+        bestSellerFoodAdapter = BestSellerFoodAdapter(output.bestsellers, this, this)
         binding?.recyclerView19?.layoutManager = layoutManagerCrew
-        binding?.recyclerView19?.adapter = subFoodBestSellerAdapter
+        binding?.recyclerView19?.adapter = bestSellerFoodAdapter
         binding?.recyclerView19?.setHasFixedSize(true)
 
         //Category
@@ -197,7 +192,7 @@ class FoodActivity : AppCompatActivity(),
         }
 
         //veg
-        binding?.switch2?.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding?.switch2?.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 menuType = 1
                 binding?.switch3?.isChecked = false
@@ -213,14 +208,14 @@ class FoodActivity : AppCompatActivity(),
 //                catFilterBestSeller
                 val layoutManagerCrew =
                     GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
-                subFoodBestSellerAdapter =
-                    SubFoodBestSellerAdapter(
+                bestSellerFoodAdapter =
+                    BestSellerFoodAdapter(
                         getFilterBestSellerList(true, menuType, bestSellerType),
                         this,
                         this
                     )
                 binding?.recyclerView19?.layoutManager = layoutManagerCrew
-                binding?.recyclerView19?.adapter = subFoodBestSellerAdapter
+                binding?.recyclerView19?.adapter = bestSellerFoodAdapter
                 binding?.recyclerView19?.setHasFixedSize(true)
 
             } else {
@@ -238,8 +233,8 @@ class FoodActivity : AppCompatActivity(),
 //                catFilterBestSeller
                     val layoutManagerCrew =
                         GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
-                    subFoodBestSellerAdapter =
-                        SubFoodBestSellerAdapter(
+                    bestSellerFoodAdapter =
+                        BestSellerFoodAdapter(
                             getFilterBestSellerList(
                                 true,
                                 menuType,
@@ -247,7 +242,7 @@ class FoodActivity : AppCompatActivity(),
                             ), this, this
                         )
                     binding?.recyclerView19?.layoutManager = layoutManagerCrew
-                    binding?.recyclerView19?.adapter = subFoodBestSellerAdapter
+                    binding?.recyclerView19?.adapter = bestSellerFoodAdapter
                     binding?.recyclerView19?.setHasFixedSize(true)
 
                 }
@@ -271,14 +266,14 @@ class FoodActivity : AppCompatActivity(),
                 //catFilterBestSeller
                 val layoutManagerCrew =
                     GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
-                subFoodBestSellerAdapter =
-                    SubFoodBestSellerAdapter(
+                bestSellerFoodAdapter =
+                    BestSellerFoodAdapter(
                         getFilterBestSellerList(true, menuType, bestSellerType),
                         this,
                         this
                     )
                 binding?.recyclerView19?.layoutManager = layoutManagerCrew
-                binding?.recyclerView19?.adapter = subFoodBestSellerAdapter
+                binding?.recyclerView19?.adapter = bestSellerFoodAdapter
                 binding?.recyclerView19?.setHasFixedSize(true)
 
 
@@ -298,8 +293,8 @@ class FoodActivity : AppCompatActivity(),
 //                catFilterBestSeller
                     val layoutManagerCrew =
                         GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
-                    subFoodBestSellerAdapter =
-                        SubFoodBestSellerAdapter(
+                    bestSellerFoodAdapter =
+                        BestSellerFoodAdapter(
                             getFilterBestSellerList(
                                 true,
                                 menuType,
@@ -307,7 +302,7 @@ class FoodActivity : AppCompatActivity(),
                             ), this, this
                         )
                     binding?.recyclerView19?.layoutManager = layoutManagerCrew
-                    binding?.recyclerView19?.adapter = subFoodBestSellerAdapter
+                    binding?.recyclerView19?.adapter = bestSellerFoodAdapter
                     binding?.recyclerView19?.setHasFixedSize(true)
 
                 }
@@ -406,8 +401,6 @@ class FoodActivity : AppCompatActivity(),
 
     override fun addFoodPlus(comingSoonItem: FoodResponse.Output.Bestseller, position: Int) {
         var num = comingSoonItem.qt
-
-        println("num123------>${num}------->${foodLimit}")
         if (num > foodLimit || num == foodLimit) {
             val dialog = OptionDialog(this,
                 R.mipmap.ic_launcher,
@@ -423,12 +416,12 @@ class FoodActivity : AppCompatActivity(),
         } else {
             num += 1
             comingSoonItem.qt = num
-            cartData()
             updateHomeCartList(comingSoonItem)
+            cartData()
         }
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "UseCompatLoadingForDrawables")
     private fun bottomDialogAddFood(comingSoonItem: FoodResponse.Output.Bestseller) {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -509,8 +502,8 @@ class FoodActivity : AppCompatActivity(),
                 comingSoonItem.qt = num
 
                 bindingBottom.uiPlusMinus.foodCount.text = num.toString()
-                cartData()
                 updateHomeCartList(comingSoonItem)
+                cartData()
             }
         }
         // Subtract Food
@@ -536,8 +529,8 @@ class FoodActivity : AppCompatActivity(),
                     bindingBottom.textView309.show()
                     bindingBottom.consAddUi.hide()
                 }
-                cartData()
                 updateHomeCartList(comingSoonItem)
+                cartData()
             }
         }
 
@@ -557,12 +550,11 @@ class FoodActivity : AppCompatActivity(),
                 negativeClick = {
                 })
             dialog.show()
-            Toast.makeText(this, "sorry", Toast.LENGTH_LONG).show()
         } else {
             num -= 1
             comingSoonItem.qt = num
-            cartData()
             updateHomeCartList(comingSoonItem)
+            cartData()
         }
     }
 
@@ -584,14 +576,11 @@ class FoodActivity : AppCompatActivity(),
                             categoryFilterNew.add(data)
                     }
                 }
-
             }
             1 -> {
                 if (bestSellerType == "ALL") {
                     for (data in catFilterBestSeller) {
-//                        if (data.veg == category && data.veg) {
                         categoryFilterNew.add(data)
-//                        }
                     }
                 } else {
                     for (data in catFilterBestSeller) {
@@ -600,15 +589,11 @@ class FoodActivity : AppCompatActivity(),
                         }
                     }
                 }
-
-
             }
             2 -> {
                 if (bestSellerType == "ALL") {
                     for (data in catFilterBestSeller) {
-//                        if (!data.veg == category && !data.veg) {
                         categoryFilterNew.add(data)
-//                        }
                     }
                 } else {
                     for (data in catFilterBestSeller) {
@@ -622,7 +607,6 @@ class FoodActivity : AppCompatActivity(),
             else -> {
                 if (bestSellerType == "ALL") {
                     for (data in catFilterBestSeller) {
-//                        if (data.veg == category)
                         categoryFilterNew.add(data)
                     }
                 } else {
@@ -702,8 +686,8 @@ class FoodActivity : AppCompatActivity(),
         var num = comingSoonItem.qt
         num += 1
         comingSoonItem.qt = num
-        cartData()
         updateBottomFoodCartList(comingSoonItem)
+        cartData()
     }
 
     override fun filterBtFoodPlus(comingSoonItem: FoodResponse.Output.Bestseller.R) {
@@ -723,12 +707,13 @@ class FoodActivity : AppCompatActivity(),
         } else {
             num += 1
             comingSoonItem.qt = num
-            cartData()
             updateBottomFoodCartList(comingSoonItem)
+            cartData()
         }
     }
 
     override fun filterBtFoodMinus(comingSoonItem: FoodResponse.Output.Bestseller.R) {
+        toast("1")
         var num = comingSoonItem.qt
         if (num < 0 || num == 0) {
             val dialog = OptionDialog(this,
@@ -745,8 +730,8 @@ class FoodActivity : AppCompatActivity(),
         } else {
             num -= 1
             comingSoonItem.qt = num
-            cartData()
             updateBottomFoodCartList(comingSoonItem)
+            cartData()
         }
     }
 
@@ -867,73 +852,39 @@ class FoodActivity : AppCompatActivity(),
 
     @SuppressLint("NotifyDataSetChanged", "UseCompatLoadingForDrawables", "SetTextI18n")
     private fun cartData() {
-        subFoodBestSellerAdapter?.notifyDataSetChanged()
-        subAllFoodAdapter?.notifyDataSetChanged()
+        bestSellerFoodAdapter?.notifyDataSetChanged()
+        bottomFoodAdapter?.notifyDataSetChanged()
         allFoodAdapter?.notifyDataSetChanged()
-        binding?.imageView74?.setImageDrawable(this.getDrawable(R.drawable.arrow_up))
 
         if (cartModel.isEmpty()) {
             binding?.constraintLayout30?.hide()
         } else {
             binding?.constraintLayout30?.show()
             binding?.imageView74?.setOnClickListener {
-                cartDialog()
+                cartShow = if (cartShow){
+                    binding?.imageView74?.setImageDrawable(this.getDrawable(R.drawable.arrow_up))
+                    binding?.constraintLayout112?.show()
+                    false
+                }else{
+                    binding?.imageView74?.setImageDrawable(this.getDrawable(R.drawable.arrow_down))
+                    binding?.constraintLayout112?.hide()
+                    true
+                }
+
             }
 
             //total Price
             itemCheckPriceCart = calculateTotal()
             binding?.textView148?.text =
                 getString(R.string.currency) + Constant.DECIFORMAT.format(itemCheckPriceCart / 100.0)
-
             binding?.textView149?.text = cartModel.size.toString() + " " + getString(R.string.items)
             binding?.constraintLayout30?.show()
+            val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+            val cartAdapter = CartAdapter(cartModel, this, this)
+            binding?.recyclerView41?.layoutManager = layoutManager
+            binding?.recyclerView41?.adapter = cartAdapter
 
         }
-
-    }
-
-
-    @SuppressLint("SetTextI18n", "UseCompatLoadingForDrawables")
-    private fun cartDialog() {
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        val inflater = LayoutInflater.from(this)
-        val bindingBottom = FoodCartDialogBinding.inflate(inflater)
-        dialog.setContentView(bindingBottom.root)
-        dialog.window!!.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-
-        bindingBottom.include26.textView5.text = getString(R.string.proceed)
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
-        dialog.window!!.setGravity(Gravity.BOTTOM)
-        dialog.show()
-        //total Items
-        bindingBottom.textView149.text = cartModel.size.toString() + " " + getString(R.string.items)
-        //total Price
-        itemCheckPriceCart = calculateTotal()
-        bindingBottom.textView148.text =
-            getString(R.string.currency) + Constant.DECIFORMAT.format(itemCheckPriceCart / 100.0)
-
-        //dismiss
-        bindingBottom.imageView74.setImageDrawable(this.getDrawable(R.drawable.arrow_down))
-
-        bindingBottom.imageView74.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        bindingBottom.include26.textView5.setOnClickListener {
-            val intent = Intent(this@FoodActivity, SummeryActivity::class.java)
-            intent.putExtra("food", cartModel)
-            startActivity(intent)
-        }
-
-        val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        val cartAdapter = CartAdapter(cartModel, this, this)
-        bindingBottom.recyclerView41.layoutManager = layoutManager
-        bindingBottom.recyclerView41.adapter = cartAdapter
     }
 
     private fun updateCartFoodCartList(recyclerData: CartModel) {
@@ -968,41 +919,7 @@ class FoodActivity : AppCompatActivity(),
         cartData()
     }
 
-    private fun bottomDialogCart(
-        comingSoonItem: List<FoodResponse.Output.Bestseller.R>, titleTxt: String
-    ) {
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.food_bottom_dialog)
-        dialog.window!!.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
-        dialog.window!!.setGravity(Gravity.BOTTOM)
-        dialog.show()
 
-        val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerView22)
-        val cancel = dialog.findViewById<ImageView>(R.id.imageView71)
-        val proceed = dialog.findViewById<TextView>(R.id.textView5)
-        val title = dialog.findViewById<TextView>(R.id.textView143)
-
-        val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        subAllFoodAdapter = SubAllFoodAdapter(comingSoonItem, this, this)
-        recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = subAllFoodAdapter
-
-        title.text = titleTxt
-        proceed.text = getString(R.string.proceed)
-        cancel.setOnClickListener {
-            dialog.dismiss()
-        }
-        proceed.setOnClickListener {
-            cartData()
-            dialog.dismiss()
-        }
-    }
 
     // All  Food Mfl Action Manage
 
@@ -1136,8 +1053,8 @@ class FoodActivity : AppCompatActivity(),
         var num = comingSoonItem.qt
         num += 1
         comingSoonItem.qt = num
-        cartData()
         updateCategoryFoodCartList(comingSoonItem)
+        cartData()
     }
 
     override fun categoryFoodImageClick(comingSoonItem: FoodResponse.Output.Mfl) {
@@ -1161,8 +1078,8 @@ class FoodActivity : AppCompatActivity(),
         } else {
             num += 1
             comingSoonItem.qt = num
-            cartData()
             updateCategoryFoodCartList(comingSoonItem)
+            cartData()
         }
     }
 
@@ -1183,12 +1100,12 @@ class FoodActivity : AppCompatActivity(),
         } else {
             num -= 1
             comingSoonItem.qt = num
-            cartData()
             updateCategoryFoodCartList(comingSoonItem)
+            cartData()
         }
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "UseCompatLoadingForDrawables")
     private fun bottomDialogAllFood(comingSoonItem: FoodResponse.Output.Mfl) {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -1266,8 +1183,8 @@ class FoodActivity : AppCompatActivity(),
                 num += 1
                 comingSoonItem.qt = num
                 bindingBottom.uiPlusMinus.foodCount.text = num.toString()
-                cartData()
                 updateCategoryFoodCartList(comingSoonItem)
+                cartData()
             }
         }
 
@@ -1295,11 +1212,45 @@ class FoodActivity : AppCompatActivity(),
                     bindingBottom.textView309.show()
                     bindingBottom.consAddUi.hide()
                 }
-                cartData()
                 updateCategoryFoodCartList(comingSoonItem)
+                cartData()
             }
         }
 
     }
+    private fun bottomDialogCart(
+        comingSoonItem: List<FoodResponse.Output.Bestseller.R>, titleTxt: String
+    ) {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.food_bottom_dialog)
+        dialog.window!!.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+        dialog.window!!.setGravity(Gravity.BOTTOM)
+        dialog.show()
 
+        val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerView22)
+        val cancel = dialog.findViewById<ImageView>(R.id.imageView71)
+        val proceed = dialog.findViewById<TextView>(R.id.textView5)
+        val title = dialog.findViewById<TextView>(R.id.textView143)
+
+        val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+        bottomFoodAdapter = BottomFoodAdapter(comingSoonItem, this, this)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = bottomFoodAdapter
+
+        title.text = titleTxt
+        proceed.text = getString(R.string.proceed)
+        cancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        proceed.setOnClickListener {
+            cartData()
+            dialog.dismiss()
+        }
+    }
 }

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/addUi"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="38dp"
     android:background="@drawable/food_yellow_curve"
     android:orientation="vertical">
 

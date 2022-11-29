@@ -15,12 +15,12 @@ import com.net.pvr1.utils.invisible
 import com.net.pvr1.utils.show
 
 
-class SubFoodBestSellerAdapter(
+class BestSellerFoodAdapter(
     private var nowShowingList: List<FoodResponse.Output.Bestseller>,
     private var context: Context,
     private var listener: RecycleViewItemClickListenerCity,
 ) :
-    RecyclerView.Adapter<SubFoodBestSellerAdapter.ViewHolder>() {
+    RecyclerView.Adapter<BestSellerFoodAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemFoodBinding) :
         RecyclerView.ViewHolder(binding.root)
 

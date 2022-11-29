@@ -13,12 +13,12 @@ import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
 
-class SubAllFoodAdapter(
+class BottomFoodAdapter(
     private var nowShowingList: List<FoodResponse.Output.Bestseller.R>,
     private var context: Context,
     private var listener: RecycleViewItemClickListenerCity,
 ) :
-    RecyclerView.Adapter<SubAllFoodAdapter.ViewHolder>() {
+    RecyclerView.Adapter<BottomFoodAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemFoodCartBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -49,12 +49,12 @@ class SubAllFoodAdapter(
                 binding.textView153.text =context.getString(R.string.currency)+" " + Constant.DECIFORMAT.format(this.dp / 100.0)
 
 
-                //SubTract
+                //Add
                 binding.include25.plus.setOnClickListener {
                     listener.filterBtFoodPlus(this)
                     notifyDataSetChanged()
                 }
-                //Add
+                //SubTract
                 binding.include25.minus.setOnClickListener {
                     listener.filterBtFoodMinus(this)
                     notifyDataSetChanged()

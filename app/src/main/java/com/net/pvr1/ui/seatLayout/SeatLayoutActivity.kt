@@ -192,11 +192,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                             if (it.data.output.tnc == "") {
                                 tncValue = 1
                             } else {
-                                seatTandCDialog()
-
+                                seatTermsDialog()
                                 textTermsAndCondition?.text = it.data.output.tnc
-                                println("tnc12 ------>${it.data.output.tnc}")
-                                println("tnc121 ------>${textTermsAndCondition?.text}")
                                 tncValue = 2
                             }
                         }
@@ -459,21 +456,16 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         }
     }
 
-    private fun seatTandCDialog(){
+    private fun seatTermsDialog(){
         val builder = AlertDialog.Builder(this,R.style.CustomAlertDialog)
             .create()
 
-        val window: Window? = builder.getWindow()
+        val window: Window? = builder.window
         window?.setGravity(Gravity.BOTTOM)
         val view = layoutInflater.inflate(R.layout.seat_t_c_dialog_layout,null)
         val btnName = view.findViewById<TextView>(R.id.textView5)
-        textTermsAndCondition = view.findViewById<TextView>(R.id.textTermsAndCondition)
+        textTermsAndCondition = view.findViewById(R.id.textTermsAndCondition)
         builder.setView(view)
-
-
-//        val lines = tncs.split("|".toRegex())
-//        textTermsAndCondition?.text = tncs
-
         btnName.text = getString(R.string.accept)
 
         btnName.setOnClickListener {

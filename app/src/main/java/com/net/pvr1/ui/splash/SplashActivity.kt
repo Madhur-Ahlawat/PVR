@@ -66,14 +66,13 @@ class SplashActivity : AppCompatActivity() {
         }
         summeryDetails()
         authViewModel.splash("Delhi-NCR")
-        printLog("CheckLogin--->${preferences.getUserName()}---->${preferences.getIsLogin()}")
     }
 
     private fun movedNext() {
         val runnable = Runnable {
             if (preferences.getIsLogin()) {
-//                val intent = Intent(this@SplashActivity, FoodActivity::class.java)
-                val intent = Intent(this@SplashActivity, HomeActivity::class.java)
+                val intent = Intent(this@SplashActivity, FoodActivity::class.java)
+//                val intent = Intent(this@SplashActivity, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {
