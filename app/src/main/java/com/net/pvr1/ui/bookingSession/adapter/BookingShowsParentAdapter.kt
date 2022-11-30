@@ -11,7 +11,9 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ItemBookingSessionCinemaLocationBinding
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.printLog
 import com.net.pvr1.utils.show
+import com.net.pvr1.utils.toast
 
 
 class BookingShowsParentAdapter(
@@ -40,6 +42,8 @@ class BookingShowsParentAdapter(
                 //Recycler
 
                 binding.imageView56.setOnClickListener {
+                    context.printLog("size--->${this.childs[0].sws.size}")
+
                     if (binding.recyclerView7.visibility == View.GONE) {
                         binding.recyclerView7.show()
                         binding.imageView56.setImageResource(R.drawable.arrow_up)
@@ -48,6 +52,17 @@ class BookingShowsParentAdapter(
                         binding.recyclerView7.hide()
                     }
                 }
+
+
+//                context.printLog("size--->${this.sws.size}")
+//
+//                if (this.sws.size==1){
+//                    binding.recyclerView11.hide()
+//                    binding.constraintLayout23.hide()
+//                }else{
+//                    context.toast("hello")
+//                    binding.recyclerView11.show()
+//                }
                 val gridLayout3 = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
                 val bookingShowsParentAdapter = BookingCinemaNameAdapter(this.childs, context)
                 binding.recyclerView7.layoutManager = gridLayout3

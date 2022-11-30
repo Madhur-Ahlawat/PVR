@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.bookingSession
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -34,6 +35,7 @@ class BookingActivity : AppCompatActivity(),
     BookingTheatreAdapter.RecycleViewItemClickListener,
     BookingPlaceHolderAdapter.RecycleViewItemClickListenerCity,
     BookingShowsParentAdapter.RecycleViewItemClickListener {
+
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityBookingBinding? = null
@@ -180,6 +182,7 @@ class BookingActivity : AppCompatActivity(),
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun retrieveData(output: BookingResponse.Output) {
         printLog("ShowsData--->${output.cinemas}")
         if (!daysClick) {
@@ -257,6 +260,7 @@ class BookingActivity : AppCompatActivity(),
     }
 
     private fun bookingAlert(comingSoonItem: BookingResponse.Output.Cinema) {
+        printLog("$comingSoonItem")
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.booking_alert)

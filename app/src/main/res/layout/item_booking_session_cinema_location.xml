@@ -82,7 +82,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:visibility="visible"
+            android:visibility="gone"
             android:id="@+id/recyclerView7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

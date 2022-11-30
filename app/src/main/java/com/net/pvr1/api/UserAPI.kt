@@ -20,6 +20,7 @@ import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.offer.response.MOfferResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
+import com.net.pvr1.ui.payment.response.PaymentResponse
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.seatLayout.response.InitResponse
 import com.net.pvr1.ui.seatLayout.response.ReserveSeatResponse
@@ -84,14 +85,14 @@ interface UserAPI {
         @Query("cinemacode") cinemacode: String,
         @Query("booktype") booktype: String,
         @Query("userid") userid: String,
-        @Query("av") mobile: String,
-        @Query("mobile") type: String,
+        @Query("mobile") mobile: String,
+        @Query("type") type: String,
         @Query("isSpi") isSpi: String,
         @Query("srilanka") srilanka: String,
         @Query("unpaid") unpaid: Boolean,
         @Query("av") version: String,
         @Query("pt") platform: String
-    ): Response<ResisterResponse>
+    ): Response<PaymentResponse>
 
     @POST("v2/user/register")
     suspend fun resister(

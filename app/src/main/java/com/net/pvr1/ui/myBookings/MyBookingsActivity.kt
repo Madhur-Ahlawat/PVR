@@ -18,14 +18,15 @@ import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.myBookings.viewModel.MyBookingViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.PreferenceManager
 import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.Direction {
-//    @Inject
-//    lateinit var preferences: AppPreferences
+    @Inject
+    lateinit var preferences: PreferenceManager
     private var binding: ActivityMyBookingBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: MyBookingViewModel by viewModels()

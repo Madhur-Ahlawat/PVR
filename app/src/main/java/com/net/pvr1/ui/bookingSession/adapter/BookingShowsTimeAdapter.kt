@@ -99,6 +99,7 @@ class BookingShowsTimeAdapter(
                             val intent = Intent(context, SeatLayoutActivity::class.java)
                             intent.putExtra("clickPosition", rowIndex.toString())
                             intent.putExtra("shows", nowShowingList)
+                            intent.putExtra("skip", "true")
                             context.startActivity(intent)
 
                         }
@@ -157,9 +158,11 @@ class BookingShowsTimeAdapter(
         food.text = context.getString(R.string.currency) + progressDialog[0].bv
         offerPrice.text = context.getString(R.string.currency) + offerPriceText
         totalPrice.text = context.getString(R.string.currency) + progressDialog[0].bp
+        val discountPrice=offerPriceText - progressDialog[0].bp.toInt()
 
 
         skip.setOnClickListener {
+            dialog.dismiss()
             val intent = Intent(context, SeatLayoutActivity::class.java)
             intent.putExtra("clickPosition", rowIndex.toString())
             intent.putExtra("shows", nowShowingList)
@@ -168,11 +171,12 @@ class BookingShowsTimeAdapter(
 
         }
 
-
         applyOffer.setOnClickListener {
+            dialog.dismiss()
             val intent = Intent(context, SeatLayoutActivity::class.java)
             intent.putExtra("clickPosition", rowIndex.toString())
             intent.putExtra("shows", nowShowingList)
+            intent.putExtra("discountPrice", discountPrice.toString())
             intent.putExtra("skip", "false")
             context.startActivity(intent)
         }

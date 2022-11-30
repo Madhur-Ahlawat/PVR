@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.SummeryItemFoodBinding
 import com.net.pvr1.ui.food.CartModel
+import com.net.pvr1.utils.Constant
 
 
 class AddFoodCartAdapter(
@@ -34,20 +35,20 @@ class AddFoodCartAdapter(
                 //Language
                 binding.textView122.text = this.title
                 //quantity
-                binding.textView124.text = this.quantity.toString()
+                binding.uiPlusMinus.foodCount.text= this.quantity.toString()
                 //price
-                binding.textView123.text=  context.getString(R.string.currency) +this.price.toString()
+                binding.textView123.text=  context.getString(R.string.currency) + Constant.DECIFORMAT.format(this.price / 100.0)
 
                 if (this.veg) {
                     Glide.with(context).load(R.drawable.veg_ic).into(binding.imageView80)
                 } else {
                     Glide.with(context).load(R.drawable.nonveg_ic).into(binding.imageView80)
                 }
-                binding.imageView81.setOnClickListener {
+                binding.uiPlusMinus.minus.setOnClickListener {
                     listener.increaseFoodClick(this)
                     notifyDataSetChanged()
                 }
-                binding.imageView82.setOnClickListener {
+                binding.uiPlusMinus.plus.setOnClickListener {
                     listener.decreaseFoodClick(this)
                     notifyDataSetChanged()
                 }

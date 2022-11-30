@@ -2,7 +2,6 @@ package com.net.pvr1.ui.seatLayout
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -51,7 +50,8 @@ import java.math.BigDecimal
 
 @Suppress("DEPRECATION", "NAME_SHADOWING")
 @AndroidEntryPoint
-class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClickListenerCity ,CinemaShowsAdapter.RecycleViewItemClickListener{
+class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClickListenerCity,
+    CinemaShowsAdapter.RecycleViewItemClickListener {
     private var binding: ActivitySeatLayoutBinding? = null
     private val authViewModel: SeatLayoutViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -87,8 +87,10 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     //Cinema Session
     private var cinemaSessionShows = ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>()
 
-    var textTermsAndCondition:TextView? = null
-    var tncValue = 1
+    private var textTermsAndCondition: TextView? = null
+    private var tncValue = 1
+    private var offerEnable = false
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,25 +99,54 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         val view = binding?.root
         setContentView(view)
         //from Movie
-        if (intent.getStringExtra("from")=="cinema"){
+        if (intent.getStringExtra("from") == "cinema") {
             cinemaSessionShows =
                 intent.getSerializableExtra("CinemaShows") as ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>
             cinemaShows()
-        }else{
+        } else {
             showsArray = intent.getSerializableExtra("shows") as ArrayList<Child.Sw.S>
             shows()
         }
+
+// manage offer
+        if (intent.getStringExtra("skip").toString() == "false") {
+            binding?.constraintLayout60?.show()
+            binding?.textView202?.text="(You’ll save ${getString(R.string.currency)}  ${intent.getStringExtra("discountPrice").toString()})"
+            offerEnable=true
+        } else {
+            binding?.constraintLayout60?.hide()
+            offerEnable= false
+        }
+
+        //Remove Offer
+        binding?.textView203?.setOnClickListener {
+            binding?.llRowName?.removeAllViews()
+            offerEnable= false
+            toast("$offerEnable")
+            binding?.constraintLayout60?.hide()
+            authViewModel.seatLayout(
+                CINEMA_ID,
+                SESSION_ID,
+                "",
+                "",
+                "",
+                offerEnable,
+                ""
+            )
+        }
         //from Shows
-            sessionId = SESSION_ID
+        sessionId = SESSION_ID
+
         authViewModel.seatLayout(
             CINEMA_ID,
             SESSION_ID,
             "",
             "",
             "",
-            false,
+            offerEnable,
             ""
         )
+
         seatLayout()
         reserveSeat()
         initTrans()
@@ -144,7 +175,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             dialog.show()
         }
 
-   // back btn
+        // back btn
         binding?.imageView95?.setOnClickListener {
             onBackPressed()
         }
@@ -161,8 +192,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
     //Shows
     private fun shows() {
-        val itemPosition=intent.getStringExtra("clickPosition")
-        val position=itemPosition?.toInt()
+        val itemPosition = intent.getStringExtra("clickPosition")
+        val position = itemPosition?.toInt()
         val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
         binding?.recyclerView27?.layoutManager = LinearLayoutManager(this)
         val adapter = ShowsAdapter(showsArray, this, this, position)
@@ -170,8 +201,9 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         binding?.recyclerView27?.adapter = adapter
 
     }
+
     //From Cinema
-  private fun cinemaShows() {
+    private fun cinemaShows() {
         val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
         binding?.recyclerView27?.layoutManager = LinearLayoutManager(this)
         val adapter = CinemaShowsAdapter(cinemaSessionShows, this, this)
@@ -396,8 +428,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 addRowName("", true)
                 //update area
                 areaName = row.n
-                println("areaName12-------->${areaName}")
-                println("noSeats12-------->${noSeats}")
 
                 //Draw Area============
                 val rlLayout = RelativeLayout(this)
@@ -409,9 +439,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 try {
                     val colorCodes: String = if (row.c.contains("#")) row.c else "#" + row.c
                     rlLayout.setBackgroundColor(Color.parseColor(colorCodes))
-
-                    println("seatColorCode-------->${row.c}")
-                    println("seatColorCode1-------->${colorCodes}")
 
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -426,16 +453,10 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 centerLayout.orientation = LinearLayout.HORIZONTAL
                 centerLayout.layoutParams = centerLayoutParameter
                 val padding: Int = Constant().convertDpToPixel(2F, this)
-//                val downButtonLeft = ImageButton(this)
                 val layoutParameter1 = LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
-//                downButtonLeft.layoutParams = layoutParameter1
-//                downButtonLeft.setPadding(padding, 0, padding, 0)
-//                downButtonLeft.setBackgroundColor(Color.TRANSPARENT)
-//                downButtonLeft.setImageResource(R.drawable.down_arrow)
-//                centerLayout.addView(downButtonLeft)
                 val textView = TextView(this)
                 textView.layoutParams = layoutParameter1
                 textView.gravity = Gravity.CENTER
@@ -443,12 +464,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 textView.setPadding(padding, 0, padding, 0)
                 textView.setTextAppearance(this, R.style.H1Size)
                 centerLayout.addView(textView)
-//                val downButtonRight = ImageButton(this)
-//                downButtonRight.layoutParams = layoutParameter1
-//                downButtonRight.setPadding(padding, 0, padding, 0)
-//                downButtonRight.setImageResource(R.drawable.down_arrow)
-//                downButtonRight.setBackgroundColor(Color.TRANSPARENT)
-//                centerLayout.addView(downButtonRight)
                 rlLayout.addView(centerLayout)
                 binding?.llSeatLayout?.addView(rlLayout)
 
@@ -456,24 +471,27 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         }
     }
 
-    private fun seatTermsDialog(){
-        val builder = AlertDialog.Builder(this,R.style.CustomAlertDialog)
-            .create()
+    private fun seatTermsDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.seat_t_c_dialog_layout)
+        dialog.window!!.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+        dialog.window!!.setGravity(Gravity.BOTTOM)
+        dialog.show()
+        dialog.setCanceledOnTouchOutside(false)
 
-        val window: Window? = builder.window
-        window?.setGravity(Gravity.BOTTOM)
-        val view = layoutInflater.inflate(R.layout.seat_t_c_dialog_layout,null)
-        val btnName = view.findViewById<TextView>(R.id.textView5)
-        textTermsAndCondition = view.findViewById(R.id.textTermsAndCondition)
-        builder.setView(view)
+        val btnName = dialog.findViewById<TextView>(R.id.textView5)
+        textTermsAndCondition = dialog.findViewById(R.id.textTermsAndCondition)
         btnName.text = getString(R.string.accept)
 
         btnName.setOnClickListener {
-            builder.dismiss()
+            dialog.dismiss()
         }
-
-        builder.setCanceledOnTouchOutside(false)
-        builder.show()
 
     }
 
@@ -560,9 +578,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                     seatView.setBackgroundResource(R.drawable.ic_selected)
                     if (isDit) seatView.setBackgroundResource(R.drawable.ic_selected_car)
                 } else if (seat.s == Constant.SEAT_BOOKED) {
-                    /*  System.out.println("seats=========="+seats_n.contains(seat.getSn()));
-                    System.out.println("seats=========="+(seat.getSn()));
-                    System.out.println("seats=========="+seats_n);*/
                     if (seatsN != null && seatsN!!.size > 0 && seatsN!!.contains(seat.sn)) {
                         when (seat.st) {
                             1 -> {

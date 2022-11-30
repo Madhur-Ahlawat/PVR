@@ -27,6 +27,7 @@ import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.ui.splash.onBoarding.LandingActivity
 import com.net.pvr1.ui.splash.response.SplashResponse
 import com.net.pvr1.ui.splash.viewModel.SplashViewModel
+import com.net.pvr1.ui.summery.SummeryActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import com.net.pvr1.utils.PreferenceManager
@@ -71,8 +72,9 @@ class SplashActivity : AppCompatActivity() {
     private fun movedNext() {
         val runnable = Runnable {
             if (preferences.getIsLogin()) {
-                val intent = Intent(this@SplashActivity, FoodActivity::class.java)
-//                val intent = Intent(this@SplashActivity, HomeActivity::class.java)
+//                val intent = Intent(this@SplashActivity, FoodActivity::class.java)
+//                val intent = Intent(this@SplashActivity, SummeryActivity::class.java)
+                val intent = Intent(this@SplashActivity, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {
