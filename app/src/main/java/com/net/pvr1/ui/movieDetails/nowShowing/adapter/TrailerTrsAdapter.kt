@@ -19,7 +19,7 @@ import com.net.pvr1.utils.printLog
 
 
 class TrailerTrsAdapter(
-    private var nowShowingList: List<MovieDetailsResponse.Trs>,
+    private var nowShowingList: ArrayList<MovieDetailsResponse.Trs>,
     private var context: Context,
     private var listener: RecycleViewItemClickListener,
 ) :

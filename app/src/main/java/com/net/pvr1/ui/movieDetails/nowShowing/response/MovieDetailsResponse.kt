@@ -42,7 +42,7 @@ data class MovieDetailsResponse(
         val su: String,
         val t: String,
         val tag: String,
-        val trs: List<Trs>,
+        val trs: ArrayList<Trs>,
         val ul: Boolean,
         val wib: String,
         val wit: String

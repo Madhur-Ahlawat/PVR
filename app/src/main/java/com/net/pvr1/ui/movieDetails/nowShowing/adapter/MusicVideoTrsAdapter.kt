@@ -16,7 +16,7 @@ import com.net.pvr1.utils.show
 
 
 class MusicVideoTrsAdapter(
-    private var nowShowingList: List<MovieDetailsResponse.Trs>,
+    private var nowShowingList: ArrayList<MovieDetailsResponse.Trs>,
     private var context: Context,
     private var listener: RecycleViewItemClickListener,
 ) :

@@ -22,9 +22,9 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/api/\""//Prod
+//            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/api/\""//Prod
 
-//            buildConfigField "String", "API_URL", "\"https://demoapi.pvrcinemas.com/PVRCinemasCMS/api/\""//stage
+            buildConfigField "String", "API_URL", "\"https://demoapi.pvrcinemas.com/PVRCinemasCMS/api/\""//stage
             minifyEnabled false
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -143,4 +143,13 @@ dependencies {
    //round Image
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.joooonho:selectableroundedimageview:1.0.1'
+
+    // map
+
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'com.google.android.libraries.places:places:2.6.0'
+
+    implementation 'com.google.android.gms:play-services-location:20.0.0'
+
+    implementation "com.karumi:dexter:5.0.0"
 }

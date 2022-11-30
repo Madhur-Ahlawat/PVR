@@ -18,11 +18,11 @@ import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
 
 
+@Suppress("DEPRECATION")
 class SelectCityAdapter(
     private var selectCityList: ArrayList<SelectCityResponse.Output.Pc>,
     private var context: Activity,
-    var listner: RecycleViewItemClickListenerSelectCity,
-) :
+    var listner: RecycleViewItemClickListenerSelectCity ) :
     RecyclerView.Adapter<SelectCityAdapter.MyViewHolderNowShowing>() {
     private var rowIndex = 0
     private var width = 0
@@ -39,6 +39,7 @@ class SelectCityAdapter(
         return MyViewHolderNowShowing(view)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(
         holder: MyViewHolderNowShowing,
         @SuppressLint("RecyclerView") position: Int

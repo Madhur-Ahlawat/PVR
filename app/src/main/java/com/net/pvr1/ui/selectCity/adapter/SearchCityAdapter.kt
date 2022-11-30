@@ -5,10 +5,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.PermissionRequest
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.karumi.dexter.PermissionToken
 import com.net.pvr1.R
 import com.net.pvr1.ui.selectCity.response.SelectCityResponse
 import java.util.*
@@ -49,6 +51,10 @@ class SearchCityAdapter(
 
     interface RecycleViewItemClickListener {
         fun onItemClickCitySearch(city: ArrayList<SelectCityResponse.Output.Ot>, position: Int)
+        fun onPermissionRationaleShouldBeShown(
+            permission: PermissionRequest?,
+            token: PermissionToken?
+        )
     }
 
     override fun getFilter(): Filter {

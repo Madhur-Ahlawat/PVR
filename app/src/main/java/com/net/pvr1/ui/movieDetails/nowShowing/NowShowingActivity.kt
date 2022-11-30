@@ -95,6 +95,8 @@ class NowShowingActivity : AppCompatActivity(),
     }
 
     private fun retrieveData(output: MovieDetailsResponse.Output) {
+
+
         //Image
         Glide.with(this)
             .load(output.wit)
@@ -182,11 +184,24 @@ class NowShowingActivity : AppCompatActivity(),
         binding?.recyclerCrew?.layoutManager = layoutManagerCrew
         binding?.recyclerCrew?.adapter = crewAdapter
 
+        //condition check for Trailer and Music video
+        val trailerList:ArrayList<MovieDetailsResponse.Trs> = ArrayList()
+        val musicVideoList:ArrayList<MovieDetailsResponse.Trs> = ArrayList()
+
+        for (item in output.trs){
+            if (item.ty == "MUSIC"){
+                musicVideoList.addAll(output.trs)
+            }else{
+                trailerList.addAll(output.trs)
+            }
+        }
+
+
         //trailer
-        if (output.trs != null) {
+        if (trailerList.size != 0) {
             val layoutManagerTrailer =
                 GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-            val trailerAdapter = TrailerTrsAdapter(output.trs, this, this)
+            val trailerAdapter = TrailerTrsAdapter(trailerList, this, this)
             binding?.recyclerView5?.layoutManager = layoutManagerTrailer
             binding?.recyclerView5?.adapter = trailerAdapter
         } else {
@@ -198,10 +213,10 @@ class NowShowingActivity : AppCompatActivity(),
         }
 
 //        //MusicVideo
-        if (output.trs != null) {
+        if (musicVideoList.size != 0) {
             val layoutManagerTrailer =
                 GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-            val trailerAdapter = MusicVideoTrsAdapter(output.trs, this, this)
+            val trailerAdapter = MusicVideoTrsAdapter(musicVideoList, this, this)
             binding?.recyclerMusic?.layoutManager = layoutManagerTrailer
             binding?.recyclerMusic?.adapter = trailerAdapter
         } else {
