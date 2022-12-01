@@ -276,6 +276,7 @@ class OtpVerifyActivity : AppCompatActivity() {
     @Deprecated("Deprecated in Java")
     @Override
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == User_Content) {
             if (resultCode == RESULT_OK && data != null) {
                 //That gives all message to us.

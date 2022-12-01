@@ -12,7 +12,9 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ItemBookingSessionCinemaLanguageBinding
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.printLog
 import com.net.pvr1.utils.show
+import com.net.pvr1.utils.toast
 
 class BookingCinemaNameAdapter(
     private var nowShowingList: List<BookingResponse.Output.Cinema.Child>,
@@ -46,11 +48,9 @@ class BookingCinemaNameAdapter(
                     binding.imageView56.setImageResource(R.drawable.arrow_up)
 
                 }
-//                    binding.textView106.show()
-//                    binding.imageView56.show()
-//                    binding.recyclerView11.hide()
                     binding.imageView56.setImageResource(R.drawable.arrow_up)
                     binding.imageView56.setOnClickListener {
+
                         if (binding.recyclerView11.visibility == View.GONE) {
                             binding.recyclerView11.show()
                             binding.imageView56.setImageResource(R.drawable.arrow_up)
@@ -59,10 +59,8 @@ class BookingCinemaNameAdapter(
 
                             binding.recyclerView11.hide()
                         }
-//                    rowIndex=position
                         notifyDataSetChanged()
                     }
-
 
 
                 //Recycler

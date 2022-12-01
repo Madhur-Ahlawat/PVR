@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
 import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
+import com.net.pvr1.ui.payment.response.PaymentResponse
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -32,7 +33,7 @@ class PaymentViewModel @Inject constructor(private val userRepository: UserRepos
     }
 
     //payMode
-    val payModeResponseLiveData: LiveData<NetworkResult<ResisterResponse>>
+    val payModeResponseLiveData: LiveData<NetworkResult<PaymentResponse>>
         get() = userRepository.payModeResponseLiveData
 
     fun payMode(

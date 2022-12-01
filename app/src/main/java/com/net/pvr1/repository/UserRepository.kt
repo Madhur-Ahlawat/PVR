@@ -23,6 +23,7 @@ import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.offer.response.MOfferResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
+import com.net.pvr1.ui.payment.response.PaymentResponse
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.seatLayout.response.InitResponse
 import com.net.pvr1.ui.seatLayout.response.ReserveSeatResponse
@@ -154,8 +155,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
     //payMode
-    private val payModeLiveData = MutableLiveData<NetworkResult<ResisterResponse>>()
-    val payModeResponseLiveData: LiveData<NetworkResult<ResisterResponse>>
+    private val payModeLiveData = MutableLiveData<NetworkResult<PaymentResponse>>()
+    val payModeResponseLiveData: LiveData<NetworkResult<PaymentResponse>>
         get() = payModeLiveData
 
     suspend fun payMode(
@@ -174,7 +175,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         payModeResponse(response)
     }
 
-    private fun payModeResponse(response: Response<ResisterResponse>) {
+    private fun payModeResponse(response: Response<PaymentResponse>) {
         if (response.isSuccessful && response.body() != null) {
             payModeLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {

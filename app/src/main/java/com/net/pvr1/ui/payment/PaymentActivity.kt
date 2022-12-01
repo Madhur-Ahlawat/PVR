@@ -7,8 +7,8 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityPaymentBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.payment.response.PaymentResponse
 import com.net.pvr1.ui.payment.viewModel.PaymentViewModel
-import com.net.pvr1.ui.player.viewModel.PlayerViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr1.utils.Constant.Companion.CITY
@@ -30,9 +30,26 @@ class PaymentActivity : AppCompatActivity() {
         val view = binding?.root
         setContentView(view)
         //voucher
-        authViewModel.voucher(preferences.geMobileNumber().toString(),preferences.getUserId().toString(),CITY,"","",Constant().getDeviceId(this),"")
+        authViewModel.voucher(
+            preferences.getToken().toString(),
+            preferences.getUserId().toString(),
+            CITY,
+            "",
+            "false",
+            Constant().getDeviceId(this),
+            ""
+        )
         //payMode
-        authViewModel.payMode(CINEMA_ID,"",preferences.getUserId().toString(),preferences.geMobileNumber().toString(),"","no","",false)
+        authViewModel.payMode(
+            CINEMA_ID,
+            "BOOKING",
+            preferences.getUserId().toString(),
+            preferences.geMobileNumber().toString(),
+            "",
+            "no",
+            "",
+            false
+        )
         voucherDataLoad()
         payModeDataLoad()
     }
@@ -86,7 +103,7 @@ class PaymentActivity : AppCompatActivity() {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-
+                        retrieveData(it.data.output)
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -121,6 +138,10 @@ class PaymentActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun retrieveData(output: PaymentResponse.Output) {
+
     }
 
 }

@@ -28,7 +28,6 @@ class ShowsAdapter(
     inner class ViewHolder(val binding: SeatShowTimeItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
             SeatShowTimeItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -40,7 +39,7 @@ class ShowsAdapter(
         with(holder) {
             with(nowShowingList[position]) {
                 //Language
-                binding.textView199.text = this.et
+                binding.textView199.text = this.st
                 //click
                 holder.itemView.setOnClickListener {
                     itemCount = position

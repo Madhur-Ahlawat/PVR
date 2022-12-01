@@ -60,6 +60,7 @@ class CinemaSessionTimeAdapter(
                 holder.itemView.setOnClickListener {
                     val intent = Intent(context, SeatLayoutActivity::class.java)
                     intent.putExtra("from", "cinema")
+                    intent.putExtra("skip", "true")
                     intent.putExtra("CinemaShows", nowShowingList)
                     context.startActivity(intent)
 
