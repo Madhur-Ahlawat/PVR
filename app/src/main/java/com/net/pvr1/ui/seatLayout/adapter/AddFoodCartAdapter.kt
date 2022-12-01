@@ -17,8 +17,6 @@ class AddFoodCartAdapter(
     private var context: Context, private var listener: RecycleViewItemClickListenerCity
 ) :
     RecyclerView.Adapter<AddFoodCartAdapter.ViewHolder>() {
-    private var itemCount = 0
-
     inner class ViewHolder(val binding: SummeryItemFoodBinding) :
         RecyclerView.ViewHolder(binding.root)
 

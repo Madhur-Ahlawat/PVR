@@ -20,6 +20,7 @@ import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.offer.response.MOfferResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
+import com.net.pvr1.ui.payment.response.CouponResponse
 import com.net.pvr1.ui.payment.response.PaymentResponse
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.seatLayout.response.InitResponse
@@ -67,18 +68,16 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<ResisterResponse>
 
-    @POST("loyalty/vouchers")
-    suspend fun voucher(
+    @POST("loyalty/getcoupons")
+    suspend fun getCoupons(
         @Query("mobile") mobile: String,
-        @Query("userid") userid: String,
         @Query("city") city: String,
         @Query("status") status: String,
-        @Query("pay") pay: String,
+        @Query("pay") pay: Boolean,
         @Query("did") did: String,
-        @Query("timestamp") timestamp: String,
         @Query("av") version: String,
         @Query("pt") platform: String
-    ): Response<ResisterResponse>
+    ): Response<CouponResponse>
 
     @POST("trans/getpaymode")
     suspend fun payMode(
@@ -304,9 +303,10 @@ interface UserAPI {
     @POST("content/movietheater")
     suspend fun bookingTheatre(
         @Query("city") city: String,
-        @Query("cid") mid: String,
+        @Query("cid") cid: String,
         @Query("userid") lat: String,
-        @Query("mid") lng: String,
+        @Query("mid") mid: String,
+        @Query("mlanguage") lng: String,
         @Query("av") version: String,
         @Query("pt") platform: String,
         @Query("isSpi") isSpi: String

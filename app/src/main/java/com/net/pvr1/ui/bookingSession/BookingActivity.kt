@@ -43,6 +43,7 @@ class BookingActivity : AppCompatActivity(),
     private var loader: LoaderDialog? = null
     private var daySessionResponse: BookingResponse.Output? = null
     private var daysClick: Boolean = false
+    private var cinemaId: ArrayList<String> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBookingBinding.inflate(layoutInflater, null, false)
@@ -58,14 +59,6 @@ class BookingActivity : AppCompatActivity(),
             "no",
             "no",
             ""
-        )
-
-        authViewModel.bookingTheatre(
-            "Delhi-NCR",
-            intent.getStringExtra("cid").toString(),
-            preferences.getUserId().toString(),
-            intent.getStringExtra("mid").toString(),
-            "no"
         )
 
         movedNext()
@@ -170,7 +163,6 @@ class BookingActivity : AppCompatActivity(),
 
 
     private fun retrieveTheatreData(output: BookingTheatreResponse.Output) {
-        printLog("output---->${output.m}")
         if (output.m.isEmpty()) {
             binding?.constraintLayout83?.hide()
         } else {
@@ -184,7 +176,7 @@ class BookingActivity : AppCompatActivity(),
 
     @SuppressLint("SetTextI18n")
     private fun retrieveData(output: BookingResponse.Output) {
-        printLog("ShowsData--->${output.cinemas}")
+
         if (!daysClick) {
             Constant.OfferDialogImage = output.mih
             //MovieName
@@ -195,13 +187,15 @@ class BookingActivity : AppCompatActivity(),
 
             //genre
             binding?.textView104?.text =
-                daySessionResponse?.gnr+" " + getString(R.string.dots)+" " + language
+                daySessionResponse?.gnr + " " + getString(R.string.dots) + " " + language
+
             //recycler Days
             val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
             val bookingShowsDaysAdapter =
                 BookingShowsDaysAdapter(daySessionResponse?.dys!!, this, this)
             binding?.recyclerView9?.layoutManager = gridLayout2
             binding?.recyclerView9?.adapter = bookingShowsDaysAdapter
+
             //recycler Language
             binding?.recyclerView10?.hide()
             val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
@@ -210,6 +204,7 @@ class BookingActivity : AppCompatActivity(),
             binding?.recyclerView10?.layoutManager = gridLayout
             binding?.recyclerView10?.adapter = bookingShowsLanguageAdapter
         }
+
         //Shows
         val gridLayout3 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
         val bookingShowsParentAdapter = BookingShowsParentAdapter(output.cinemas, this, this)
@@ -219,12 +214,28 @@ class BookingActivity : AppCompatActivity(),
         //placeHolder
         printLog("placeHolder--->${output.ph}")
         if (output.ph.isNotEmpty()) {
+            binding?.recyclerView23?.show()
             val gridLayout4 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
             val bookingPlaceHolderAdapter = BookingPlaceHolderAdapter(output.ph, this, this)
             binding?.recyclerView23?.layoutManager = gridLayout4
             binding?.recyclerView23?.adapter = bookingPlaceHolderAdapter
-
+        } else {
+            binding?.recyclerView23?.hide()
         }
+
+        for (data in output.cinemas) {
+            cinemaId.add(data.cid.toString())
+        }
+        val string: String = java.lang.String.join(",", cinemaId)
+
+        authViewModel.bookingTheatre(
+            "Delhi-NCR",
+            string,
+            preferences.getUserId().toString(),
+            intent.getStringExtra("mid").toString(),
+            "HINDI",
+            "no"
+        )
     }
 
     override fun showsDaysClick(comingSoonItem: BookingResponse.Output.Dy) {

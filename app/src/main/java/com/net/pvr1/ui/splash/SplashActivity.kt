@@ -24,6 +24,7 @@ import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.FoodActivity
 import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.login.LoginActivity
+import com.net.pvr1.ui.payment.PaymentActivity
 import com.net.pvr1.ui.splash.onBoarding.LandingActivity
 import com.net.pvr1.ui.splash.response.SplashResponse
 import com.net.pvr1.ui.splash.viewModel.SplashViewModel
@@ -72,6 +73,7 @@ class SplashActivity : AppCompatActivity() {
         val runnable = Runnable {
             if (preferences.getIsLogin()) {
 //                val intent = Intent(this@SplashActivity, FoodActivity::class.java)
+//                val intent = Intent(this@SplashActivity, PaymentActivity::class.java)
                 val intent = Intent(this@SplashActivity, HomeActivity::class.java)
                 startActivity(intent)
                 finish()

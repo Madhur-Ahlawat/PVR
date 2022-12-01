@@ -41,28 +41,15 @@ class BookingCinemaNameAdapter(
                 //Language  .lng+this.lk
                 binding.textView106.text = this.ccn
 
-                if (this.ccn == ""){
-                    binding.textView106.hide()
-                    binding.imageView56.hide()
-                    binding.recyclerView11.show()
-                    binding.imageView56.setImageResource(R.drawable.arrow_up)
-
-                }
-                    binding.imageView56.setImageResource(R.drawable.arrow_up)
-                    binding.imageView56.setOnClickListener {
-
-                        if (binding.recyclerView11.visibility == View.GONE) {
-                            binding.recyclerView11.show()
-                            binding.imageView56.setImageResource(R.drawable.arrow_up)
-                        } else {
-                            binding.imageView56.setImageResource(R.drawable.arrow_down)
-
-                            binding.recyclerView11.hide()
-                        }
-                        notifyDataSetChanged()
+                binding.constraintLayout111.setOnClickListener {
+                    if (binding.recyclerView11.visibility == View.GONE) {
+                        binding.recyclerView11.show()
+                        binding.imageView56.setImageResource(R.drawable.arrow_up)
+                    } else {
+                        binding.imageView56.setImageResource(R.drawable.arrow_down)
+                        binding.recyclerView11.hide()
                     }
-
-
+                }
                 //Recycler
                 val layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -70,7 +57,6 @@ class BookingCinemaNameAdapter(
                     BookingCinemaLangAdapter(this.sws, context, this.ccid)
                 binding.recyclerView11.layoutManager = layoutManager
                 binding.recyclerView11.adapter = bookingShowsParentAdapter
-
             }
         }
 

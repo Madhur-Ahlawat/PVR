@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:background="@color/background_color">
+    android:background="@color/white"
+    android:layout_marginTop="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout121"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="7dp"
@@ -61,7 +62,8 @@
                     app:layout_constraintBottom_toBottomOf="@+id/textView105"
                     app:layout_constraintStart_toEndOf="@+id/textView105"
                     app:layout_constraintTop_toTopOf="@+id/textView105"
-                    app:srcCompat="@drawable/alert" />
+                    app:srcCompat="@drawable/alert"
+                    tools:ignore="ContentDescription" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -95,4 +97,13 @@
             tools:listitem="@layout/item_booking_session_cinema_language" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout121"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/line_seprator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_10dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

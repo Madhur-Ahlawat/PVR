@@ -13,8 +13,8 @@ data class PaymentResponse(
         val ca_a: Boolean,
         val dc: Boolean,
         val dcinfo: String,
-        val gateway: List<Gateway>,
-        val offers: List<Offer>
+        val gateway: ArrayList<Gateway>,
+        val offers: ArrayList<Offer>
     ) : java.io.Serializable {
         data class Binoffer(
             val c: String,

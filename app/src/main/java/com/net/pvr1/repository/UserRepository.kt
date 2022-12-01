@@ -23,6 +23,7 @@ import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.offer.response.MOfferResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
+import com.net.pvr1.ui.payment.response.CouponResponse
 import com.net.pvr1.ui.payment.response.PaymentResponse
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.seatLayout.response.InitResponse
@@ -123,34 +124,26 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
     }
 
-    //Voucher
-    private val voucherLiveData = MutableLiveData<NetworkResult<ResisterResponse>>()
-    val voucherResponseLiveData: LiveData<NetworkResult<ResisterResponse>>
-        get() = voucherLiveData
+    //getcoupons
+    private val couponsLiveData = MutableLiveData<NetworkResult<CouponResponse>>()
+    val couponsResponseLiveData: LiveData<NetworkResult<CouponResponse>>
+        get() = couponsLiveData
 
-    suspend fun voucher(
-        mobile: String,
-        userid: String,
-        city: String,
-        status: String,
-        pay: String,
-        did: String,
-        timestamp: String
-    ) {
+    suspend fun coupons(mobile: String, city: String, status: String, pay: Boolean, did: String) {
         otpVerifyLiveData.postValue(NetworkResult.Loading())
         val response =
-            userAPI.voucher(mobile, userid, city,status,pay,did,timestamp, Constant.version, Constant.platform)
-        voucherResponse(response)
+            userAPI.getCoupons(mobile, city,status,pay,did,Constant.version, Constant.platform)
+        couponsResponse(response)
     }
 
-    private fun voucherResponse(response: Response<ResisterResponse>) {
+    private fun couponsResponse(response: Response<CouponResponse>) {
         if (response.isSuccessful && response.body() != null) {
-            voucherLiveData.postValue(NetworkResult.Success(response.body()!!))
+            couponsLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
             val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
-            voucherLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            couponsLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
-            voucherLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+            couponsLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 
@@ -780,11 +773,12 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         cid: String,
         userid: String,
         mid: String,
+        lng: String,
         isSpi: String
     ) {
         cinemaSessionLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.bookingTheatre(
-            city, cid, userid, mid, Constant.version, Constant.platform, isSpi
+            city, cid, userid, mid,lng, Constant.version, Constant.platform, isSpi
         )
         bookingTheatreResponse(response)
     }

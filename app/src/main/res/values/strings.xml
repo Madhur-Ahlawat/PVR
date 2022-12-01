@@ -377,5 +377,19 @@
     <string name="on_food_beverages"><![CDATA[on Food & Beverages]]></string>
     <string name="_100">100%</string>
     <string name="pay">Pay</string>
-
+    <string name="low_success_rate">Low success Rate</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="wallets">Wallets</string>
+    <string name="payment">Payment</string>
+    <string name="other_payment_method">Other Payment Method</string>
+    <string name="pvr_exclusives">PVR EXCLUSIVES</string>
+    Redeem
+    <string name="redeem">Reedem</string>
+    <string name="card_number">Card Number</string>
+    <string name="valid_through_mm_yy">Valid Through (MM/YY)</string>
+    <string name="cvv">CVV</string>
+    <string name="name_on_card">Name on Card</string>
+    <string name="card_nickname">Card Nickname</string>
+    <string name="securely_save_this_card_for_future_use">Securely save this card for future use</string>
+    <string name="pay_via_card">Pay Via Card</string>
 </resources>

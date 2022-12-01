@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.payment.cardDetails.CardDetailsActivity">
+
+    <View
+        android:id="@+id/view94"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/include27"
+        layout="@layout/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dimen_56dp"
+        app:layout_constraintEnd_toEndOf="@+id/view94"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout95"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#FFFDF5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include27">
+
+
+        <View
+            android:id="@+id/view178"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view179"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/grayEd"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view180"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/grayEd"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/textView286"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/sf_pro_text_semi_bold"
+            android:text="@string/to_be_paid"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/view180"
+            app:layout_constraintStart_toStartOf="@+id/view178"
+            app:layout_constraintTop_toBottomOf="@+id/view179" />
+
+        <TextView
+            android:id="@+id/textView287"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/sf_pro_text_medium"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/view180"
+            app:layout_constraintEnd_toEndOf="@+id/view178"
+            app:layout_constraintTop_toBottomOf="@+id/view179"
+            tools:text="₹8888" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout120"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/view94"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout95">
+
+        <View
+            android:id="@+id/view221"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <RelativeLayout
+            android:id="@+id/mobileLayout"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_70dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/text_curve"
+            android:gravity="center"
+            android:paddingStart="@dimen/dimen_10dp"
+            android:paddingTop="@dimen/dimen_8dp"
+            android:paddingEnd="@dimen/dimen_5dp"
+            android:paddingBottom="@dimen/dimen_5dp"
+            app:layout_constraintEnd_toEndOf="@+id/view221"
+            app:layout_constraintStart_toStartOf="@+id/view221"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
+                style="@style/styledBlackTilEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="-8dp"
+                android:hint="@string/card_number"
+                app:boxBackgroundColor="@color/transparent"
+                app:boxStrokeColor="@color/transparent"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:endIconMode="custom"
+                app:errorEnabled="false"
+                app:hintTextColor="@color/textColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <EditText
+                    android:id="@+id/mobileNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:digits="1234567890"
+                    android:fontFamily="@font/sf_pro_text_bold"
+                    android:gravity="bottom"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:maxLength="12"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/textColor"
+                    android:textSize="12sp"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck"
+                    android:importantForAutofill="no" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout11"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            app:layout_constraintEnd_toEndOf="@+id/view221"
+            app:layout_constraintStart_toStartOf="@+id/view221"
+            app:layout_constraintTop_toBottomOf="@+id/mobileLayout"
+            android:baselineAligned="false">
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout3"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dimen_70dp"
+                android:layout_weight="1.2"
+                android:background="@drawable/text_curve"
+                android:gravity="center"
+                android:paddingStart="@dimen/dimen_10dp"
+                android:paddingTop="@dimen/dimen_8dp"
+                android:paddingEnd="@dimen/dimen_5dp"
+                android:paddingBottom="@dimen/dimen_5dp"
+                app:layout_constraintEnd_toEndOf="@+id/view221"
+                app:layout_constraintStart_toStartOf="@+id/view221"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout5"
+                    style="@style/styledBlackTilEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="-8dp"
+
+                    android:hint="@string/valid_through_mm_yy"
+                    app:boxBackgroundColor="@color/transparent"
+                    app:boxStrokeColor="@color/transparent"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:endIconMode="custom"
+                    app:errorEnabled="false"
+                    app:hintTextColor="@color/textColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <EditText
+                        android:id="@+id/monthYear"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:digits="1234567890"
+                        android:fontFamily="@font/sf_pro_text_bold"
+                        android:gravity="bottom"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:maxLength="5"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/textColor"
+                        android:textSize="12sp"
+                        tools:ignore="LabelFor,SpeakableTextPresentCheck"
+                        android:importantForAutofill="no" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout4"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dimen_70dp"
+                android:layout_marginStart="@dimen/dimen_20dp"
+                android:layout_weight="0.8"
+                android:background="@drawable/text_curve"
+                android:gravity="center"
+                android:paddingStart="@dimen/dimen_10dp"
+                android:paddingTop="@dimen/dimen_8dp"
+                android:paddingEnd="@dimen/dimen_5dp"
+                android:paddingBottom="@dimen/dimen_5dp"
+                app:layout_constraintEnd_toEndOf="@+id/view221"
+                app:layout_constraintStart_toStartOf="@+id/view221"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout6"
+                    style="@style/styledBlackTilEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="-8dp"
+                    android:hint="@string/cvv"
+                    app:boxBackgroundColor="@color/transparent"
+                    app:boxStrokeColor="@color/transparent"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:endIconMode="custom"
+                    app:errorEnabled="false"
+                    app:hintTextColor="@color/textColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <EditText
+                        android:id="@+id/cvv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:digits="1234567890"
+                        android:fontFamily="@font/sf_pro_text_bold"
+                        android:gravity="bottom"
+                        android:imeOptions="actionNext"
+                        android:inputType="phone"
+                        android:maxLength="1"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/textColor"
+                        android:textSize="12sp"
+                        tools:ignore="LabelFor,SpeakableTextPresentCheck"
+                        android:importantForAutofill="no" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout5"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_70dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/text_curve"
+            android:gravity="center"
+            android:paddingStart="@dimen/dimen_10dp"
+            android:paddingTop="@dimen/dimen_8dp"
+            android:paddingEnd="@dimen/dimen_5dp"
+            android:paddingBottom="@dimen/dimen_5dp"
+            app:layout_constraintEnd_toEndOf="@+id/view221"
+            app:layout_constraintStart_toStartOf="@+id/view221"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout11">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout7"
+                style="@style/styledBlackTilEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="-8dp"
+                android:hint="@string/name_on_card"
+                app:boxBackgroundColor="@color/transparent"
+                app:boxStrokeColor="@color/transparent"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:endIconMode="custom"
+                app:errorEnabled="false"
+                app:hintTextColor="@color/textColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <EditText
+                    android:id="@+id/nameOnCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:digits="1234567890"
+                    android:fontFamily="@font/sf_pro_text_bold"
+                    android:gravity="bottom"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:maxLength="10"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/textColor"
+                    android:textSize="12sp"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck"
+                    android:importantForAutofill="no" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout6"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_70dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/text_curve"
+            android:gravity="center"
+            android:paddingStart="@dimen/dimen_10dp"
+            android:paddingTop="@dimen/dimen_8dp"
+            android:paddingEnd="@dimen/dimen_5dp"
+            android:paddingBottom="@dimen/dimen_5dp"
+            app:layout_constraintEnd_toEndOf="@+id/view221"
+            app:layout_constraintStart_toStartOf="@+id/view221"
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayout5">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout8"
+                style="@style/styledBlackTilEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="-8dp"
+                android:hint="@string/card_nickname"
+                app:boxBackgroundColor="@color/transparent"
+                app:boxStrokeColor="@color/transparent"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:endIconMode="custom"
+                app:errorEnabled="false"
+                app:hintTextColor="@color/textColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <EditText
+                    android:id="@+id/cardNickName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:digits="1234567890"
+                    android:fontFamily="@font/sf_pro_text_bold"
+                    android:gravity="bottom"
+                    android:imeOptions="actionDone"
+                    android:inputType="phone"
+                    android:maxLength="10"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/textColor"
+                    android:textSize="12sp"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck"
+                    android:importantForAutofill="no" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </RelativeLayout>
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:paddingStart="@dimen/dimen_15dp"
+            android:paddingEnd="2dp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_14sp"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:text="@string/securely_save_this_card_for_future_use"
+            app:layout_constraintEnd_toEndOf="@+id/view221"
+            app:layout_constraintStart_toStartOf="@+id/relativeLayout5"
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayout6" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/include28"
+        layout="@layout/button_next"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout120" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

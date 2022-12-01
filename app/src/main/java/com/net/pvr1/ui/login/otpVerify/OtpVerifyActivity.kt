@@ -263,14 +263,7 @@ class OtpVerifyActivity : AppCompatActivity() {
             sb.append(((digest[i] and 0xff) + 0x100).toString(16).substring(1))
         }
         return sb.toString()
-//        println(sb)
-//        val mdText = MessageDigest.getInstance("SHA-512")
-//        val byteData = mdText.digest(text.toByteArray())
-//        val sb = StringBuffer()
-//        for (i in byteData.indices) {
-//            sb.append(((byteData[i] and 0xff) + 0x100).toString(16).substring(1))
-//        }
-//        return sb.toString()
+
     }
 
     @Deprecated("Deprecated in Java")

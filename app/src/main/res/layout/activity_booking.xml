@@ -206,12 +206,13 @@
                 android:id="@+id/recyclerView8"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
+                android:background="@color/white"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recyclerView23"
-                tools:itemCount="1"
+                tools:itemCount="3"
                 tools:listitem="@layout/item_booking_session_cinema_location" />
 
             <androidx.constraintlayout.widget.ConstraintLayout

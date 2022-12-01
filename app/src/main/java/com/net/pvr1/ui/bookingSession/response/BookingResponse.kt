@@ -17,7 +17,7 @@ data class BookingResponse(
         val ca: String,
         val cd: String,
         val cert: String,
-        val cinemas: List<Cinema>,
+        val cinemas: ArrayList<Cinema>,
         val ct: List<String>,
         val d: String,
         val dys: ArrayList<Dy>,
@@ -66,7 +66,7 @@ data class BookingResponse(
         data class Cinema(
             val add: String,
             val cf: Boolean,
-            val childs: List<Child>,
+            val childs: ArrayList<Child>,
             val cid: Int,
             val cn: String,
             val dst: Int,

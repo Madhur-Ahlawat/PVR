@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
 import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
+import com.net.pvr1.ui.payment.response.CouponResponse
 import com.net.pvr1.ui.payment.response.PaymentResponse
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,27 +15,24 @@ import javax.inject.Inject
 @HiltViewModel
 class PaymentViewModel @Inject constructor(private val userRepository: UserRepository) :
     ViewModel() {
-    //voucher
-    val userResponseLiveData: LiveData<NetworkResult<ResisterResponse>>
-        get() = userRepository.voucherResponseLiveData
 
-    fun voucher(
+    //voucher
+    val userResponseLiveData: LiveData<NetworkResult<CouponResponse>> get() = userRepository.couponsResponseLiveData
+
+    fun coupons(
         mobile: String,
-        userid: String,
         city: String,
         status: String,
-        pay: String,
-        did: String,
-        timestamp: String
+        pay: Boolean,
+        did: String
     ) {
         viewModelScope.launch {
-            userRepository.voucher(mobile, userid, city, status, pay, did, timestamp)
+            userRepository.coupons(mobile, city, status, pay, did)
         }
     }
 
     //payMode
-    val payModeResponseLiveData: LiveData<NetworkResult<PaymentResponse>>
-        get() = userRepository.payModeResponseLiveData
+    val payResponseLiveData: LiveData<NetworkResult<PaymentResponse>> get() = userRepository.payModeResponseLiveData
 
     fun payMode(
         cinemacode: String,
@@ -47,7 +45,17 @@ class PaymentViewModel @Inject constructor(private val userRepository: UserRepos
         unpaid: Boolean
     ) {
         viewModelScope.launch {
-            userRepository.payMode(cinemacode, booktype, userid, mobile, type, isSpi, srilanka,unpaid)
+            userRepository.payMode(
+                cinemacode,
+                booktype,
+                userid,
+                mobile,
+                type,
+                isSpi,
+                srilanka,
+                unpaid
+            )
         }
     }
+
 }
