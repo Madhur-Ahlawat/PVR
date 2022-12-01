@@ -234,6 +234,7 @@ class OtpVerifyActivity : AppCompatActivity() {
         output.token.let { preferences.saveToken(it) }
         output.dob.let { preferences.saveDob(it) }
 
+
         val intent = Intent(this@OtpVerifyActivity, HomeActivity::class.java)
         startActivity(intent)
         finish()

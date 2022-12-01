@@ -22,6 +22,7 @@ import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.login.otpVerify.OtpVerifyActivity
 import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.login.viewModel.LoginViewModel
+import com.net.pvr1.ui.selectCity.SelectCityActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.SUCCESS_CODE
 import com.net.pvr1.utils.NetworkResult
@@ -139,8 +140,16 @@ class LoginActivity : AppCompatActivity() {
         }
         //Skip
         binding?.textView8?.setOnClickListener {
-            val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-            startActivity(intent)
+            if (preferences.getCityName() == "") {
+                val intent = Intent(this@LoginActivity, SelectCityActivity::class.java)
+                startActivity(intent)
+                finish()
+            }else{
+//                val intent = Intent(this@SplashActivity, FoodActivity::class.java)
+                val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
 // OutSide Click
         binding?.loginClick?.setOnClickListener {

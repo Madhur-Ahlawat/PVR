@@ -6,23 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.PermissionRequest
-import android.widget.Filter
-import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.karumi.dexter.PermissionToken
 import com.net.pvr1.R
 import com.net.pvr1.ui.selectCity.response.SelectCityResponse
-import java.util.*
-import kotlin.collections.ArrayList
 
 class SearchCityAdapter(
     private var selectCityList: ArrayList<SelectCityResponse.Output.Ot>,
-    var cityList: ArrayList<Any>,
-    val filteredList: ArrayList<Any>?,
-    private var context: Context,
-    var listner : RecycleViewItemClickListener) :
-    RecyclerView.Adapter<SearchCityAdapter.MyViewHolderSearchCity>(), Filterable {
+     var context: Context,
+    var listner: RecycleViewItemClickListener) : RecyclerView.Adapter<SearchCityAdapter.MyViewHolderSearchCity>() {
+
+    var mContext = context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderSearchCity {
         val view = LayoutInflater.from(parent.context)
@@ -31,7 +26,6 @@ class SearchCityAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolderSearchCity, position: Int) {
-
         val selectCityItemList = selectCityList[position]
         holder.otherCityName.text = selectCityItemList.name
 
@@ -51,55 +45,17 @@ class SearchCityAdapter(
 
     interface RecycleViewItemClickListener {
         fun onItemClickCitySearch(city: ArrayList<SelectCityResponse.Output.Ot>, position: Int)
-        fun onPermissionRationaleShouldBeShown(
-            permission: PermissionRequest?,
-            token: PermissionToken?
-        )
+
     }
 
-    override fun getFilter(): Filter {
-        return UserFilter(this, cityList, selectCityList)
-    }
-
-    private class UserFilter(
-        private val adapter: SearchCityAdapter,
-        var originalList: ArrayList<Any>,
-        var otList: ArrayList<SelectCityResponse.Output.Ot>
-    ) : Filter() {
-
-        val filteredList = ArrayList<Any>()
-        override fun performFiltering(constraint: CharSequence): FilterResults {
-            filteredList.clear()
-            val results = FilterResults()
-            if (constraint.isEmpty()) {
-                filteredList.addAll(originalList)
-            } else {
-                for (obj in otList) {
-                    if (obj is SelectCityResponse.Output.Ot) {
-                        val city = obj
-                        if (city.name.lowercase(Locale.getDefault())
-                                .contains(constraint.toString().lowercase(Locale.getDefault()))
-                        ) filteredList.add(city)
-                    }
-                }
-            }
-            results.values = filteredList
-            results.count = filteredList.size
-            return results
-        }
-
-        @SuppressLint("NotifyDataSetChanged")
-        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-            adapter.filteredList!!.clear()
-            if (constraint==""){
-                adapter.filteredList.addAll(originalList)
-            }else{
-                adapter.filteredList.addAll(results?.values as (java.util.ArrayList<*>))
-            }
-            println("constraint${filteredList+originalList.size}")
-            adapter.notifyDataSetChanged()
-        }
-
+    // method for filtering our recyclerview items.
+    @SuppressLint("NotifyDataSetChanged")
+    fun filterList(filterList: ArrayList<SelectCityResponse.Output.Ot>) {
+        // below line is to add our filtered
+        selectCityList = filterList
+        // below line is to notify our adapter
+        // as change in recycler view data.
+        notifyDataSetChanged()
     }
 
 

@@ -27,9 +27,11 @@ import com.net.pvr1.ui.player.PlayerActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.PlaceHolder
 import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.PreferenceManager
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickListener,
     HomeSliderAdapter.RecycleViewItemClickListener,
     HomePromotionAdapter.RecycleViewItemClickListener,
@@ -39,8 +41,9 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     private var binding: FragmentHomeBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel by activityViewModels<HomeViewModel>()
+
     @Inject
-    lateinit var preferences: AppPreferences
+    lateinit var preferences: PreferenceManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +56,9 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        authViewModel.home("Delhi-NCR", "", "0", "0", true, "no", "", "ALL", "ALL", "ALL", "no")
+//        authViewModel.home("Delhi-NCR", "", "0", "0", true, "no", "","ALL", "ALL", "ALL", "no")
+        authViewModel.home(preferences.getCityName(), "", preferences.getUserId(), preferences.geMobileNumber(), true, "no", "", "ALL", "ALL", "ALL", "no")
+
 //        (requireActivity().findViewById(R.id.notify) as ImageView).show()
 //        (requireActivity().findViewById(R.id.locationBtn) as ImageView).show()
 //        (requireActivity().findViewById(R.id.textView2) as TextView).show()
@@ -135,6 +140,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+
                         retrieveData(it.data.output)
                     } else {
                         val dialog = OptionDialog(requireActivity(),

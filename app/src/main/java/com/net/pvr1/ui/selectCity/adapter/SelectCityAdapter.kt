@@ -61,6 +61,7 @@ class SelectCityAdapter(
         } else {
             holder.clickOhk.hide()
         }
+
         holder.itemView.setOnClickListener {
             rowIndex = position
             listner.onItemClickCityImgCity(selectCityList, position)

@@ -39,7 +39,6 @@ import com.net.pvr1.utils.Constant.Companion.PrivilegeHomeResponseConst
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickListenerCity,
     PrivilegeHomeDialogAdapter.RecycleViewItemClickListener {
@@ -63,6 +62,9 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         if (preferences.getIsLogin()){
             authViewModel.privilegeHome(preferences.geMobileNumber().toString(), "Delhi-NCR")
         }
+
+        binding?.includeAppBar?.txtCity?.text = preferences.getCityName()
+
         privilegeDataLoad()
         movedNext()
     }
