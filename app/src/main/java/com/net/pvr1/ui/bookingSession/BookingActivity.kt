@@ -258,6 +258,10 @@ class BookingActivity : AppCompatActivity(),
     }
 
     override fun theatreClick(comingSoonItem: BookingTheatreResponse.Output.M) {
+        val intent = Intent(this, BookingActivity::class.java)
+        intent.putExtra("mid", comingSoonItem.m)
+        startActivity(intent)
+        finish()
 
     }
 
