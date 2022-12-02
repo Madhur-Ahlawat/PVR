@@ -9,24 +9,32 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
 import com.net.pvr1.ui.selectCity.response.SelectCityResponse
-import kotlin.collections.ArrayList
 
 class OtherCityAdapter(
     private var selectCityList: ArrayList<SelectCityResponse.Output.Ot>,
-    private var context: Context,
-    var listner: RecycleViewItemClickListenerCity
-) :
-    RecyclerView.Adapter<OtherCityAdapter.MyViewHolderNowShowing>() {
+    private var selectCityListCC: SelectCityResponse.Output.Cc,
+    private var mContext: Context,
+    private var listner: RecycleViewItemClickListenerCity
+) : RecyclerView.Adapter<OtherCityAdapter.MyViewHolderNowShowing>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderNowShowing {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.select_other_city_item_layout, parent, false)
+            .inflate(R.layout.select_dialog_city_item_layout, parent, false)
         return MyViewHolderNowShowing(view)
     }
 
     override fun onBindViewHolder(holder: MyViewHolderNowShowing, position: Int) {
         val selectCityItemList = selectCityList[position]
         holder.otherCityName.text = selectCityItemList.name
+
+        if (selectCityListCC.name == selectCityItemList.name) {
+            holder.otherCityName.paintFlags =
+                holder.otherCityName.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        } else {
+            holder.otherCityName.paintFlags =
+                holder.otherCityName.paintFlags
+        }
 
         holder.itemView.setOnClickListener {
             listner.onItemClickCityOtherCity(selectCityList, position)

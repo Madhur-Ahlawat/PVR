@@ -25,13 +25,17 @@ import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.enableLocation.viewModel.EnableLocationViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.FetchAddressIntentServices
+import com.net.pvr1.utils.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
 class EnableLocationActivity : AppCompatActivity() {
-    //    @Inject
-//    lateinit var preferences: AppPreferences
+
+    @Inject
+    lateinit var preferences: PreferenceManager
+
     private var binding: ActivityEnableLocationBinding? = null
     private val authViewModel: EnableLocationViewModel by viewModels()
 
@@ -103,6 +107,10 @@ class EnableLocationActivity : AppCompatActivity() {
                         latitude = locationResult.locations[latestIndex].latitude.toString()
                         longitude = locationResult.locations[latestIndex].longitude.toString()
 
+
+                        preferences.latData(latitude)
+                        preferences.langData(longitude)
+
                         val location = Location("providerNA")
                         location.longitude = longitude.toDouble()
                         location.latitude = latitude.toDouble()
@@ -132,6 +140,8 @@ class EnableLocationActivity : AppCompatActivity() {
                 val district = resultData.getString(Constant.DISTRICT)
                 val country = resultData.getString(Constant.COUNTRY)
                 val postcode = resultData.getString(Constant.POST_CODE)
+
+//                preferences.cityName(locaity)
             }
         }
     }

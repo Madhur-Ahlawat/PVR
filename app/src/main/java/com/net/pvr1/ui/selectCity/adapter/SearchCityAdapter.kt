@@ -2,6 +2,7 @@ package com.net.pvr1.ui.selectCity.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.net.pvr1.ui.selectCity.response.SelectCityResponse
 
 class SearchCityAdapter(
     private var selectCityList: ArrayList<SelectCityResponse.Output.Ot>,
+    private var selectCityListCC: SelectCityResponse.Output.Cc,
      var context: Context,
     var listner: RecycleViewItemClickListener) : RecyclerView.Adapter<SearchCityAdapter.MyViewHolderSearchCity>() {
 
@@ -29,8 +31,19 @@ class SearchCityAdapter(
         val selectCityItemList = selectCityList[position]
         holder.otherCityName.text = selectCityItemList.name
 
+        if (selectCityListCC.name == selectCityItemList.name){
+            holder.otherCityName.paintFlags =
+                holder.otherCityName.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        }else{
+
+        }
+
         holder.otherCityName.setOnClickListener {
             listner.onItemClickCitySearch(selectCityList, position)
+
+            holder.otherCityName.paintFlags =
+                holder.otherCityName.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+
         }
 
     }

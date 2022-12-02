@@ -2,6 +2,7 @@ package com.net.pvr1.ui.selectCity.adapter
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.graphics.Paint
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
@@ -17,10 +18,10 @@ import com.net.pvr1.ui.selectCity.response.SelectCityResponse
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
 
-
 @Suppress("DEPRECATION")
 class SelectCityAdapter(
     private var selectCityList: ArrayList<SelectCityResponse.Output.Pc>,
+    private var selectCityListCC: SelectCityResponse.Output.Cc,
     private var context: Activity,
     var listner: RecycleViewItemClickListenerSelectCity ) :
     RecyclerView.Adapter<SelectCityAdapter.MyViewHolderNowShowing>() {
@@ -40,10 +41,7 @@ class SelectCityAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun onBindViewHolder(
-        holder: MyViewHolderNowShowing,
-        @SuppressLint("RecyclerView") position: Int
-    ) {
+    override fun onBindViewHolder(holder: MyViewHolderNowShowing, @SuppressLint("RecyclerView") position: Int) {
         val selectCityItemList = selectCityList[position]
         setWidth = width / 2 - 5
         setHeight = height / 2 - 60
@@ -52,13 +50,13 @@ class SelectCityAdapter(
         holder.cityName.text = selectCityItemList.name
         //Image
         Glide.with(context)
-            .load(selectCityItemList.image)
+            .load(selectCityItemList.imageR)
             .error(R.drawable.app_icon)
             .into(holder.imageSelectCity)
 
-        if (rowIndex == position) {
+        if (selectCityListCC.name == selectCityItemList.name){
             holder.clickOhk.show()
-        } else {
+        }else{
             holder.clickOhk.hide()
         }
 

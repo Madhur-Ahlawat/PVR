@@ -72,6 +72,7 @@ data class SelectCityResponse(
 
         data class Pc(
             val image: String,
+            val imageR: String,
             val lat: String,
             val lng: String,
             val name: String,

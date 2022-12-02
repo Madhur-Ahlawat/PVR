@@ -1,11 +1,19 @@
 package com.net.pvr1.ui.selectCity
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Gravity
@@ -19,24 +27,25 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.*
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.SupportMapFragment
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySelectCityBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.food.adapter.BottomFoodAdapter
 import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.selectCity.adapter.OtherCityAdapter
+import com.net.pvr1.ui.selectCity.adapter.PopUpCityAdapter
 import com.net.pvr1.ui.selectCity.adapter.SearchCityAdapter
 import com.net.pvr1.ui.selectCity.adapter.SelectCityAdapter
 import com.net.pvr1.ui.selectCity.response.SelectCityResponse
 import com.net.pvr1.ui.selectCity.viewModel.SelectCityViewModel
 import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.IOException
 import java.util.*
 import javax.inject.Inject
 
@@ -44,7 +53,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewItemClickListener,
     OtherCityAdapter.RecycleViewItemClickListenerCity,
-    SelectCityAdapter.RecycleViewItemClickListenerSelectCity {
+    SelectCityAdapter.RecycleViewItemClickListenerSelectCity,
+    PopUpCityAdapter.RecycleViewItemClickListener1 {
 
     @Inject
     lateinit var preferences: PreferenceManager
@@ -55,26 +65,22 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
 
     private var filterCityList: ArrayList<SelectCityResponse.Output.Ot>? = null
     private var searchCityAdapter: SearchCityAdapter? = null
-    private var dataList: ArrayList<Any> = ArrayList()
+    private var list: ArrayList<String> = arrayListOf()
 
-    companion object {
-        private const val PERMISSION_REQUEST_ACCESS_LOCATION = 100
-        const val REQUEST_CHECK_SETTINGS = 43
-    }
+    private var recyclerViewDialog: RecyclerView? = null
+    private var subCities: TextView? = null
 
-    var latitude: String = ""
-    var longitude: String = ""
-    var currentAddress: String = ""
+    private lateinit var mFusedLocationClient: FusedLocationProviderClient
+    private val permissionId = 2
 
-    private lateinit var mapFragment: SupportMapFragment
-    private lateinit var googleMap: GoogleMap
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-
+    private var subCityName: TextView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySelectCityBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         selectCityViewModel.selectCity(
             preferences.getLatData(),
@@ -85,17 +91,112 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         )
         selectCity()
 
+
         binding?.searchCity?.setOnClickListener {
+
             binding?.recyclerViewSearchCity?.show()
+            binding?.consSelectedLocation?.show()
             binding?.consSelectCity?.hide()
-//            binding?.searchCity?.isFocusable = true
-//            binding?.searchCity?.isClickable = true
-//            binding?.consSelectedLocation?.hide()
+
         }
         movedNext()
 
+        binding?.imageView39?.setOnClickListener {
+            getLocation()
+            val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         // Location City Name
         binding?.txtSelectedCity?.text = preferences.getCityName()
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        val locationManager: LocationManager =
+            getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+    }
+
+    private fun checkPermissions(): Boolean {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            return true
+        }
+        return false
+    }
+
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ),
+            permissionId
+        )
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == permissionId) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                getLocation()
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission", "SetTextI18n")
+    private fun getLocation() {
+        if (checkPermissions()) {
+            if (isLocationEnabled()) {
+                mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
+                    val location: Location? = task.result
+
+                    printLog("latLong -----> ${location!!.latitude} , -->${location.latitude}")
+                    val geocoder = Geocoder(this, Locale.getDefault())
+//                        val addresses: List<Address>
+                    try {
+                        val addresses =
+                            geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                        if (addresses?.isNotEmpty()!!) {
+                            val currentAddress2 = addresses[0].getAddressLine(0)
+                            val currentAddress = addresses[0].locality
+
+                            preferences.cityName(currentAddress)
+                            preferences.latData(location.latitude.toString())
+                            preferences.langData(location.latitude.toString())
+
+                            printLog("currentAddress ----- -->${currentAddress}---->${currentAddress2}")
+                            printLog("currentAddress1 ----- -->${addresses[0].locality}")
+
+                        }
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+
+                }
+            } else {
+                Toast.makeText(this, "Please turn on location", Toast.LENGTH_LONG).show()
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivity(intent)
+            }
+        } else {
+            requestPermissions()
+        }
     }
 
     fun EditText.hideKeyboard() {
@@ -113,6 +214,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 binding?.recyclerViewSearchCity?.show()
                 binding?.consSelectCity?.hide()
+                binding?.consSelectedLocation?.show()
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -188,45 +290,46 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         city: ArrayList<SelectCityResponse.Output.Ot>,
         position: Int
     ) {
-
+        list = arrayListOf(*city[position].subcities.split(",").toTypedArray())
+        list.add(0, "All")
         binding?.searchCity?.setText("")
         binding?.txtSelectedCity?.text = city[position].name
         preferences.cityName(city[position].name)
         preferences.latData(city[position].lat)
         preferences.langData(city[position].lng)
-        val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
-        startActivity(intent)
 
-//        binding?.searchCity?.isFocusable = false
-//        binding?.searchCity?.isClickable = false
-//        binding?.txtSelectedCity?.text = city[position].name
-//        preferences.putString(Constant.CITY_NAME, city[position].name)
-//        binding?.recyclerViewSearchCity?.hide()
-//        binding?.consSelectCity?.show()
-//        binding?.consSelectedLocation?.show()
+        if (city[position].subcities.isEmpty()) {
+            val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
+            startActivity(intent)
+        } else {
+            cityDialog()
+        }
+
 
     }
 
 
     private fun retrieveData(output: SelectCityResponse.Output) {
 
+        preferences.cityNameCC(output.cc.name)
+
         filterCityList = output.ot
 
         val gridLayout2 = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
-        val otherCityAdapter = OtherCityAdapter(output.ot, this, this)
+        val otherCityAdapter = OtherCityAdapter(output.ot, output.cc, this, this)
         binding?.recyclerViewOtherCity?.layoutManager = gridLayout2
         binding?.recyclerViewOtherCity?.adapter = otherCityAdapter
 
-
         val gridLayout = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
-        val selectCityAdapter = SelectCityAdapter(output.pc, this, this)
+        val selectCityAdapter = SelectCityAdapter(output.pc, output.cc, this, this)
         binding?.recyclerCity?.layoutManager = gridLayout
         binding?.recyclerCity?.adapter = selectCityAdapter
 
         val gridLayout3 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        searchCityAdapter = SearchCityAdapter(output.ot, this, this)
+        searchCityAdapter = SearchCityAdapter(output.ot, output.cc, this, this)
         binding?.recyclerViewSearchCity?.layoutManager = gridLayout3
         binding?.recyclerViewSearchCity?.adapter = searchCityAdapter
+
     }
 
 
@@ -234,27 +337,51 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         city: ArrayList<SelectCityResponse.Output.Ot>,
         position: Int
     ) {
-//        binding?.consSelectedLocation?.show()
+
+        list = arrayListOf(*city[position].subcities.split(",").toTypedArray())
         binding?.txtSelectedCity?.text = city[position].name
         preferences.cityName(city[position].name)
         preferences.latData(city[position].lat)
         preferences.langData(city[position].lng)
-        val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
-        startActivity(intent)
+        list.add(0, "All")
+
+        println("subcities123--------->${city[position].subcities}")
+        println("subcitiesList123--------->${list}")
+
+
+        if (city[position].subcities.isEmpty()) {
+            val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
+            startActivity(intent)
+        } else {
+            cityDialog()
+        }
+
     }
 
     override fun onItemClickCityImgCity(
         city: ArrayList<SelectCityResponse.Output.Pc>,
-        position: Int) {
+        position: Int
+    ) {
+
 //      binding?.consSelectedLocation?.show()
-        cityDialog()
+//        cityDialog()
+
+        list = arrayListOf(*city[position].subcities.split(",").toTypedArray())
         binding?.txtSelectedCity?.text = city[position].name
         preferences.cityName(city[position].name)
         preferences.latData(city[position].lat)
         preferences.langData(city[position].lng)
+        list.add(0, "All")
+        println("subcities123--------->${city[position].subcities}")
+        println("subcitiesList123--------->${list}")
 
-//        val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
-//        startActivity(intent)
+
+        if (city[position].subcities.isEmpty()) {
+            val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
+            startActivity(intent)
+        } else {
+            cityDialog()
+        }
 
     }
 
@@ -275,6 +402,8 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         }
         if (filteredlist.isEmpty()) {
 
+            binding?.consSelectedLocation?.show()
+
 //            binding?.txtNoRecord?.show()
 //            binding?.recyclerView?.hide()
             // if no item is added in filtered list we are
@@ -284,6 +413,8 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
 
         } else {
 
+            binding?.consSelectedLocation?.show()
+
 //            binding?.txtNoRecord?.hide()
 //            binding?.recyclerView?.show()
             // at last we are passing that filtered
@@ -292,34 +423,54 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         }
     }
 
-   private fun cityDialog(){
+    private fun cityDialog() {
 
-       val dialog = Dialog(this)
-       dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-       dialog.setContentView(R.layout.city_select_dialog)
-       dialog.window!!.setLayout(
-           ViewGroup.LayoutParams.MATCH_PARENT,
-           ViewGroup.LayoutParams.WRAP_CONTENT
-       )
-       dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-       dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
-       dialog.window!!.setGravity(Gravity.BOTTOM)
-       dialog.show()
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.city_select_dialog)
+        dialog.window!!.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+        dialog.window!!.setGravity(Gravity.BOTTOM)
+        dialog.show()
 
-       val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerViewCityDialog)
-       val cancel = dialog.findViewById<ImageView>(R.id.imgCross)
-       val tittle = dialog.findViewById<TextView>(R.id.textView108)
+        recyclerViewDialog = dialog.findViewById(R.id.recyclerViewCityDialog)
+        val cancel = dialog.findViewById<ImageView>(R.id.imgCross)
+//        val tittle = dialog.findViewById<TextView>(R.id.textView108)
 
-//       val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-//       bottomFoodAdapter = BottomFoodAdapter(comingSoonItem, this, this)
-//       recyclerView.layoutManager = layoutManager
-//       recyclerView.adapter = bottomFoodAdapter
 
-       cancel.setOnClickListener {
-           dialog.dismiss()
-       }
+        try {
+            val gridLayout4 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+            val dialogCityAdapter = PopUpCityAdapter(list, this, this, subCityName!!)
+            recyclerViewDialog?.layoutManager = gridLayout4
+            recyclerViewDialog?.adapter = dialogCityAdapter
+        } catch (e: Exception) {
+            println("subcitiesError-------->${e.message}")
+        }
 
-   }
+        for (item in list) {
+            if (preferences.getCityName() == item) {
+                subCityName?.setBackgroundColor(ContextCompat.getColor(this, R.color.gray_1))
+            }
+        }
+
+        cancel.setOnClickListener {
+            dialog.dismiss()
+        }
+    }
+
+    override fun onItemClickCityDialog(city: ArrayList<String>, position: Int, subCity: TextView) {
+        preferences.cityName(city[position])
+        subCities = subCity
+//        subCityName = city[position]
+//        subCities?.setBackgroundColor(ContextCompat.getColor(this, R.color.gray_1))
+        val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
+        startActivity(intent)
+
+    }
 
 
 }

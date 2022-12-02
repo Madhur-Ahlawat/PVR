@@ -60,6 +60,7 @@ class Constant {
         var SESSION_ID = "0"
         var CINEMA_ID = "0"
         const val CITY = "Delhi-NCR"
+        const val CITY_CC = "City-Name"
         const val LAT = "lat"
         const val LANG = "lang"
         const val ON_BOARDING_CLICK = false
