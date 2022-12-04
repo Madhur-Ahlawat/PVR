@@ -470,7 +470,8 @@
                         app:layout_constraintBottom_toBottomOf="@+id/textView125"
                         app:layout_constraintEnd_toEndOf="@+id/view109"
                         app:layout_constraintTop_toTopOf="@+id/textView125"
-                        app:srcCompat="@drawable/right_move" />
+                        app:srcCompat="@drawable/right_move"
+                        tools:ignore="ContentDescription" />
 
                     <ImageView
                         android:id="@+id/imageView84"
@@ -480,7 +481,8 @@
                         app:layout_constraintEnd_toEndOf="@+id/view109"
                         app:layout_constraintStart_toStartOf="@+id/view109"
                         app:layout_constraintTop_toBottomOf="@+id/textView125"
-                        app:srcCompat="@drawable/line" />
+                        app:srcCompat="@drawable/line"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/textView159"
@@ -620,7 +622,7 @@
                             android:id="@+id/textView272"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
+                            tools:text="TextView"
                             app:layout_constraintBottom_toBottomOf="@+id/textView270"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/textView270" />
@@ -629,7 +631,7 @@
                             android:id="@+id/textView273"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
+                            tools:text="TextView"
                             app:layout_constraintBottom_toBottomOf="@+id/textView271"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/textView270" />
@@ -774,7 +776,8 @@
                         app:layout_constraintBottom_toBottomOf="@+id/textView164"
                         app:layout_constraintStart_toEndOf="@+id/textView164"
                         app:layout_constraintTop_toTopOf="@+id/textView164"
-                        app:srcCompat="@drawable/arrow_down" />
+                        app:srcCompat="@drawable/arrow_down"
+                        tools:ignore="ContentDescription" />
 
                     <ImageView
                         android:id="@+id/imageView147"
@@ -844,7 +847,8 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/pvr_privilege_icon_copy" />
+                            app:srcCompat="@drawable/pvr_privilege_icon_copy"
+                            tools:ignore="ContentDescription" />
 
                         <TextView
                             android:id="@+id/textView313"
@@ -853,7 +857,7 @@
                             android:layout_marginTop="6dp"
                             android:layout_marginBottom="17dp"
                             android:fontFamily="@font/sf_pro_text_regular"
-                            android:text="You will earn 190.00 Privilege Points."
+                            tools:text="You will earn 190.00 Privilege Points."
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen_14sp"
                             app:layout_constraintBottom_toBottomOf="@+id/view215"
@@ -881,7 +885,8 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="TooManyViews" />
 
                         <TextView
                             android:id="@+id/textView314"

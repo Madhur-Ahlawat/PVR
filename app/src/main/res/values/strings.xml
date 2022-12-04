@@ -392,4 +392,20 @@
     <string name="card_nickname">Card Nickname</string>
     <string name="securely_save_this_card_for_future_use">Securely save this card for future use</string>
     <string name="pay_via_card">Pay Via Card</string>
+    <string name="time">Time</string>
+    <string name="seats_info">Seats INFO</string>
+    <string name="order_id">oRDER ID</string>
+    <string name="kiosk_code">KIOSK CODE</string>
+    <string name="know_when_to_leave_for_your_movie">Know when to leave for your movie</string>
+    <string name="add_location">Add Location</string>
+    <string name="total">Total</string>
+    <string name="convenience_fee">Convenience Fee</string>
+    <string name="order_id_semi">Order ID:</string>
+    <string name="modify_booking">Modify Booking</string>
+    <string name="cancel_ticket">Cancel Ticket</string>
+    <string name="note">Note</string>
+    <string name="official_merchandise">Official Merchandise</string>
+    <string name="offers_for_you">Offers for you</string>
+    <string name="book_parking">Book Parking</string>
+    <string name="thank_you_for_choosing_pvr">Thank you for choosing PVR!</string>
 </resources>

@@ -396,6 +396,22 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<SummeryResponse>
 
+
+    @POST("trans/ticketBooked")
+    suspend fun ticketConfirmation(
+        @Query("booktype") booktype: String,
+        @Query("bookingid") bookingid: String,
+        @Query("userid") userid: String,
+        @Query("qr") qr: String,
+        @Query("srilanka") srilanka: String,
+        @Query("infosys") infosys: String,
+        @Query("isSpi") isSpi: String,
+        @Query("oldBookingId") oldBookingId: String,
+        @Query("change") change: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<SummeryResponse>
+
     @POST("content/specialcine")
     suspend fun formats(
         @Query("type") type: String,

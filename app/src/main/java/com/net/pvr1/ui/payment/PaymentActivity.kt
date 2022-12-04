@@ -154,7 +154,6 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                         catFilterPayment = it.data.output.gateway
                         retrieveData(it.data.output)
                     } else {
-                        toast("hello")
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
                             R.string.app_name,

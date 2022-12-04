@@ -1017,13 +1017,60 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
 
+    //Ticket Confirmation
+
+    private val ticketConfirmationLiveData = MutableLiveData<NetworkResult<SummeryResponse>>()
+    val ticketConfirmationResponseLiveData: LiveData<NetworkResult<SummeryResponse>>
+        get() = summerLiveData
+
+    suspend fun ticketConfirmationLiveDataLayout(
+        booktype: String,
+        bookingid: String,
+        userid: String,
+        qr: String,
+        srilanka: String,
+        infosys: String,
+        isSpi: String,
+        oldBookingId: String,
+        change: String
+    ) {
+        ticketConfirmationLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.ticketConfirmation(
+            booktype,
+            bookingid,
+            userid,
+            qr,
+            srilanka,
+            infosys,
+            isSpi,
+            oldBookingId,
+            change,
+            Constant.version,
+            Constant.platform
+        )
+        ticketConfirmationLiveDataLayoutResponse(response)
+    }
+
+    private fun ticketConfirmationLiveDataLayoutResponse(response: Response<SummeryResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            summerLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            summerLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            summerLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+
     //formats
     private val formatsLiveData = MutableLiveData<NetworkResult<FormatResponse>>()
     val formatsResponseLiveData: LiveData<NetworkResult<FormatResponse>>
         get() = formatsLiveData
 
     suspend fun formatsLayout(type: String, city: String, isSpi: String) {
-        summerLiveData.postValue(NetworkResult.Loading())
+        formatsLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.formats(
             type,
             city,
