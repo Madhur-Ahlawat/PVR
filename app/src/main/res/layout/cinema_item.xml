@@ -417,7 +417,7 @@
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/location"
+                        android:src="@drawable/location_down"
                         tools:ignore="ContentDescription" />
 
 

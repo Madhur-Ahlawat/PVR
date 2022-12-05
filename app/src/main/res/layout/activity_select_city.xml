@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -21,9 +22,11 @@
         style="@style/H4SizeBold"
         android:layout_width="wrap_content"
         android:layout_height="56dp"
+        android:fontFamily="@font/sf_pro_text_bold"
         android:layout_marginStart="24dp"
         android:gravity="center"
         android:text="@string/select_city"
+        app:layout_constraintEnd_toStartOf="@+id/imageView35"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -80,6 +83,9 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:hint="@string/search_city"
+            android:imeOptions="actionSearch"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             app:layout_constraintBottom_toBottomOf="@+id/view55"
             app:layout_constraintEnd_toStartOf="@+id/imageView39"
             app:layout_constraintStart_toEndOf="@+id/imageView38"
@@ -118,7 +124,7 @@
                     android:id="@+id/consSelectedLocation"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:layout_marginStart="@dimen/dimen_16dp"
                     android:layout_marginEnd="@dimen/dimen_16dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -156,36 +162,37 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/consSelectCity"
                     android:layout_width="0dp"
+                    android:visibility="visible"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/consSelectedLocation">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/locationImage"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:visibility="gone"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:context=".ui.selectCity.SelectCityActivity">
+<!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                        android:id="@+id/locationImage"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="0dp"-->
+<!--                        android:visibility="visible"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent"-->
+<!--                        tools:context=".ui.selectCity.SelectCityActivity">-->
 
-                        <fragment
-                            android:id="@+id/map"
-                            android:name="com.google.android.gms.maps.SupportMapFragment"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:visibility="invisible"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:context=".ui.selectCity.SelectCityActivity"
-                            tools:ignore="FragmentTagUsage" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--                        <fragment-->
+<!--                            android:id="@+id/map"-->
+<!--                            android:name="com.google.android.gms.maps.SupportMapFragment"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:visibility="invisible"-->
+<!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                            app:layout_constraintEnd_toEndOf="parent"-->
+<!--                            app:layout_constraintHorizontal_bias="0.0"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintTop_toTopOf="parent"-->
+<!--                            tools:context=".ui.selectCity.SelectCityActivity"-->
+<!--                            tools:ignore="FragmentTagUsage" />-->
+<!--                    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerCity"
@@ -195,7 +202,7 @@
                         android:layout_marginEnd="@dimen/dimen_8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/locationImage" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <View
                         android:id="@+id/vwMain"
@@ -257,13 +264,28 @@
                     android:id="@+id/recyclerViewSearchCity"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dimen_12dp"
+                    android:layout_marginStart="@dimen/dimen_20dp"
+                    android:layout_marginTop="@dimen/dimen_8dp"
+                    android:layout_marginBottom="@dimen/dimen_8dp"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/consSelectCity" />
+                    app:layout_constraintTop_toBottomOf="@+id/consSelectedLocation" />
 
+                <TextView
+                    android:id="@+id/textView124"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/dimen_16dp"
+                    android:layout_margin="@dimen/dimen_20dp"
+                    android:textColor="@color/textColor"
+                    android:visibility="gone"
+                    android:fontFamily="@font/helvetica_neu_medium"
+                    android:text="Sorry! We could not find what you were \nlooking for"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/consSelectedLocation" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

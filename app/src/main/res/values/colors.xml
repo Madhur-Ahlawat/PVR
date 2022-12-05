@@ -57,6 +57,7 @@
     <color name="filling">#D5A664</color>
     <!--Start ========seat selection color config==================Added by Rohit-->
 
+    <color name="otherCityColor">#7A7A7A</color>
     <color name="h1color">#303030</color>
     <color name="h1.1color">#FFFFFF</color>
     <color name="h2color">#000000</color>

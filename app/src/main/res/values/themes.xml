@@ -90,7 +90,7 @@
     <style name="H3Size">
         <item name="typeface">helvetica_neu_reg.otf</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/h1color</item>
+        <item name="android:textColor">@color/otherCityColor</item>
 
     </style>
 
