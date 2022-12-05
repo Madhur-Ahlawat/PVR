@@ -28,7 +28,6 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.*
@@ -54,27 +53,22 @@ import javax.inject.Inject
 class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewItemClickListener,
     OtherCityAdapter.RecycleViewItemClickListenerCity,
     SelectCityAdapter.RecycleViewItemClickListenerSelectCity,
-    PopUpCityAdapter.RecycleViewItemClickListener1 {
+    PopUpCityAdapter.RecycleViewItemClickListener {
 
     @Inject
     lateinit var preferences: PreferenceManager
-
     private var binding: ActivitySelectCityBinding? = null
     private var loader: LoaderDialog? = null
     private val selectCityViewModel: SelectCityViewModel by viewModels()
-
     private var filterCityList: ArrayList<SelectCityResponse.Output.Ot>? = null
-
-    private var ccCityList: SelectCityResponse.Output.Cc? = null
     private var searchCityAdapter: SearchCityAdapter? = null
     private var list: ArrayList<String> = arrayListOf()
 
     private var recyclerViewDialog: RecyclerView? = null
-    private var subCities: TextView? = null
-    private var tittle: TextView? = null
-
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
     private val permissionId = 2
+
+    private var cityName: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,34 +78,21 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+        cityName = preferences.getCityName()
+
+        // Location City Name
+        binding?.txtSelectedCity?.text = preferences.getCityName()
+
         selectCityViewModel.selectCity(
-            preferences.getLatData(),
-            preferences.getLangData(),
+            preferences.getLatitudeData(),
+            preferences.getLongitudeData(),
             preferences.getUserId(),
             "no",
             "no"
         )
+
         selectCity()
-
-
-        binding?.searchCity?.setOnClickListener {
-
-            binding?.recyclerViewSearchCity?.show()
-            binding?.consSelectedLocation?.show()
-            binding?.consSelectCity?.hide()
-
-        }
         movedNext()
-
-        binding?.imageView39?.setOnClickListener {
-            getLocation()
-            val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-        // Location City Name
-        binding?.txtSelectedCity?.text = preferences.getCityName()
     }
 
     private fun isLocationEnabled(): Boolean {
@@ -124,12 +105,9 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
 
     private fun checkPermissions(): Boolean {
         if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
+                this, Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             return true
@@ -139,20 +117,15 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
 
     private fun requestPermissions() {
         ActivityCompat.requestPermissions(
-            this,
-            arrayOf(
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ),
-            permissionId
+            this, arrayOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION
+            ), permissionId
         )
     }
 
     @SuppressLint("MissingSuperCall")
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<String>, grantResults: IntArray
     ) {
         if (requestCode == permissionId) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
@@ -167,23 +140,23 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             if (isLocationEnabled()) {
                 mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
                     val location: Location? = task.result
-
-                    printLog("latLong -----> ${location!!.latitude} , -->${location.latitude}")
                     val geocoder = Geocoder(this, Locale.getDefault())
-//                        val addresses: List<Address>
                     try {
                         val addresses =
-                            geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                            location?.longitude?.let {
+                                location.latitude.let { it1 ->
+                                    geocoder.getFromLocation(
+                                        it1,
+                                        it, 1)
+                                }
+                            }
                         if (addresses?.isNotEmpty()!!) {
                             val currentAddress2 = addresses[0].getAddressLine(0)
                             val currentAddress = addresses[0].locality
 
-                            preferences.cityName(currentAddress)
-                            preferences.latData(location.latitude.toString())
-                            preferences.langData(location.latitude.toString())
-
-                            printLog("currentAddress ----- -->${currentAddress}---->${currentAddress2}")
-                            printLog("currentAddress1 ----- -->${addresses[0].locality}")
+                            preferences.saveCityName(currentAddress)
+                            preferences.saveLatitudeData(location.latitude.toString())
+                            preferences.saveLongitudeData(location.latitude.toString())
 
                         }
                     } catch (e: IOException) {
@@ -208,15 +181,26 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
 
 
     private fun movedNext() {
+        binding?.imageView39?.setOnClickListener {
+            getLocation()
+            val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        binding?.searchCity?.setOnClickListener {
+            binding?.recyclerViewSearchCity?.show()
+            binding?.consSelectedLocation?.show()
+            binding?.consSelectCity?.hide()
+        }
+
         binding?.imageView35?.setOnClickListener {
             finish()
         }
 
         binding?.searchCity?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//                binding?.recyclerViewSearchCity?.show()
-//                binding?.consSelectCity?.hide()
-//                binding?.consSelectedLocation?.show()
+
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -257,10 +241,8 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -272,10 +254,8 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
@@ -287,16 +267,15 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
     }
 
     override fun onItemClickCitySearch(
-        city: ArrayList<SelectCityResponse.Output.Ot>,
-        position: Int
+        city: ArrayList<SelectCityResponse.Output.Ot>, position: Int
     ) {
         list = arrayListOf(*city[position].subcities.split(",").toTypedArray())
         list.add(0, "All")
         binding?.searchCity?.setText("")
         binding?.txtSelectedCity?.text = city[position].name
-        preferences.cityName(city[position].name)
-        preferences.latData(city[position].lat)
-        preferences.langData(city[position].lng)
+        preferences.saveCityName(city[position].name)
+        preferences.saveLatitudeData(city[position].lat)
+        preferences.saveLongitudeData(city[position].lng)
 
         if (city[position].subcities.isEmpty()) {
             val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
@@ -310,10 +289,6 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
 
 
     private fun retrieveData(output: SelectCityResponse.Output) {
-
-//        if (output.cc != null){
-//            preferences.cityNameCC(output.cc.name)
-//        }
 
         filterCityList = output.ot
 
@@ -335,19 +310,16 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
     }
 
 
-    override fun onItemClickCityOtherCity(city: ArrayList<SelectCityResponse.Output.Ot>, position: Int) {
+    override fun onItemClickCityOtherCity(
+        city: ArrayList<SelectCityResponse.Output.Ot>, position: Int
+    ) {
 
         list = arrayListOf(*city[position].subcities.split(",").toTypedArray())
         list.add(0, "All")
         binding?.txtSelectedCity?.text = city[position].name
-        preferences.cityName(city[position].name)
-        preferences.latData(city[position].lat)
-        preferences.langData(city[position].lng)
-
-
-        println("subcities123--------->${city[position].subcities}")
-        println("subcitiesList123--------->${list}")
-
+        preferences.saveCityName(city[position].name)
+        preferences.saveLatitudeData(city[position].lat)
+        preferences.saveLongitudeData(city[position].lng)
 
         if (city[position].subcities.isEmpty()) {
             val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
@@ -359,21 +331,15 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
     }
 
     override fun onItemClickCityImgCity(
-        city: ArrayList<SelectCityResponse.Output.Pc>,
-        position: Int
+        city: ArrayList<SelectCityResponse.Output.Pc>, position: Int
     ) {
-//      binding?.consSelectedLocation?.show()
-//        cityDialog()
 
         list = arrayListOf(*city[position].subcities.split(",").toTypedArray())
         list.add(0, "All")
         binding?.txtSelectedCity?.text = city[position].name
-        preferences.cityName(city[position].name)
-        preferences.latData(city[position].lat)
-        preferences.langData(city[position].lng)
-
-        println("subcities123--------->${city[position].subcities}")
-        println("subcitiesList123--------->${list}")
+        preferences.saveCityName(city[position].name)
+        preferences.saveLatitudeData(city[position].lat)
+        preferences.saveLongitudeData(city[position].lng)
 
 
         if (city[position].subcities.isEmpty()) {
@@ -386,25 +352,22 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
     }
 
     private fun filter(text: String) {
-        val filteredlist: ArrayList<SelectCityResponse.Output.Ot> = ArrayList()
+        val filtered: ArrayList<SelectCityResponse.Output.Ot> = ArrayList()
         // creating a new array list to filter our data.
         // running a for loop to compare elements.
         for (item in filterCityList!!) {
 
-            // checking if the entered string matched with any item of our recycler view.
             if (item.name.lowercase(Locale.getDefault())
                     .contains(text.lowercase(Locale.getDefault()))
             ) {
                 // if the item is matched we are
                 // adding it to our filtered list.
-                filteredlist.add(item)
+                filtered.add(item)
             }
         }
 
-        if (filteredlist.isEmpty()) {
+        if (filtered.isEmpty()) {
             binding?.consSelectedLocation?.show()
-//            binding?.txtNoRecord?.show()
-//            binding?.recyclerView?.hide()
 
             binding?.recyclerViewSearchCity?.hide()
             binding?.consSelectedLocation?.show()
@@ -412,29 +375,26 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             binding?.consSelectCity?.hide()
             Toast.makeText(this, "No Data Found..", Toast.LENGTH_SHORT).show()
 
-
         } else {
 
             binding?.recyclerViewSearchCity?.show()
             binding?.consSelectedLocation?.show()
             binding?.textView124?.hide()
             binding?.consSelectCity?.hide()
-            searchCityAdapter?.filterList(filteredlist)
+            searchCityAdapter?.filterList(filtered)
         }
     }
 
     private fun cityDialog() {
-
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.city_select_dialog)
         dialog.window!!.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
-        dialog.window!!.setGravity(Gravity.BOTTOM)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+        dialog.window?.setGravity(Gravity.BOTTOM)
         dialog.show()
 
         recyclerViewDialog = dialog.findViewById(R.id.recyclerViewCityDialog)
@@ -443,31 +403,22 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         tittle.text = preferences.getCityName()
 
         try {
-            printLog("subcitiesError1-------->${list}")
             val gridLayout4 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-            val dialogCityAdapter = PopUpCityAdapter(list, this, this)
+            val dialogCityAdapter = PopUpCityAdapter(list, this, this, cityName)
             recyclerViewDialog?.layoutManager = gridLayout4
             recyclerViewDialog?.adapter = dialogCityAdapter
         } catch (e: Exception) {
-            println("subcitiesError-------->${e.message}")
+            e.printStackTrace()
         }
-
-//        for (item in list) {
-//            if (preferences.getCityName() == item) {
-//                subCityName?.setBackgroundColor(ContextCompat.getColor(this, R.color.gray_1))
-//            }
-//        }
 
         cancel.setOnClickListener {
             dialog.dismiss()
         }
     }
 
-    override fun onItemClickCityDialog(city: ArrayList<String>, position: Int) {
-        preferences.cityName(city[position])
+    override fun onItemClickCityDialog(city: String) {
+        preferences.saveCityName(city)
         val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
         startActivity(intent)
     }
-
-
 }

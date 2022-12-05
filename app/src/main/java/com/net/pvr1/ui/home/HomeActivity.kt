@@ -56,11 +56,10 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         switchFragment()
         authViewModel.offer(Constant().getDeviceId(this))
         offerDataLoad()
-        println("userId--->${preferences.getUserId()}")
         //setUserName
         binding?.includeAppBar?.textView2?.text = preferences.getUserName()
         if (preferences.getIsLogin()){
-            authViewModel.privilegeHome(preferences.geMobileNumber().toString(), "Delhi-NCR")
+            authViewModel.privilegeHome(preferences.geMobileNumber(), preferences.getCityName())
         }
 
         binding?.includeAppBar?.txtCity?.text = preferences.getCityName()
@@ -126,13 +125,13 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.offer_dialog)
-        dialog.window!!.setLayout(
+        dialog.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
-        dialog.window!!.setGravity(Gravity.BOTTOM)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+        dialog.window?.setGravity(Gravity.BOTTOM)
         dialog.show()
 
         val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerView26)

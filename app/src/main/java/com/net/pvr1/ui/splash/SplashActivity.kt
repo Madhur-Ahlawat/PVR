@@ -30,10 +30,7 @@ import com.net.pvr1.ui.selectCity.SelectCityActivity
 import com.net.pvr1.ui.splash.onBoarding.LandingActivity
 import com.net.pvr1.ui.splash.response.SplashResponse
 import com.net.pvr1.ui.splash.viewModel.SplashViewModel
-import com.net.pvr1.utils.Constant
-import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.PreferenceManager
-import com.net.pvr1.utils.printLog
+import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -80,7 +77,7 @@ class SplashActivity : AppCompatActivity() {
         val runnable = Runnable {
             if (preferences.getIsLogin()) {
                 if (preferences.getCityName()==""){
-                    val intent = Intent(this@SplashActivity, SelectCityActivity::class.java)
+                    val intent = Intent(this@SplashActivity, EnableLocationActivity::class.java)
                     startActivity(intent)
                     finish()
                 }else{
@@ -88,9 +85,6 @@ class SplashActivity : AppCompatActivity() {
                     startActivity(intent)
                     finish()
                 }
-//                val intent = Intent(this@SplashActivity, FoodActivity::class.java)
-//                val intent = Intent(this@SplashActivity, PaymentActivity::class.java)
-
             } else {
                 if (!clickOnBoarding) {
                     val intent = Intent(this@SplashActivity, LandingActivity::class.java)

@@ -23,9 +23,11 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityEnableLocationBinding
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.enableLocation.viewModel.EnableLocationViewModel
+import com.net.pvr1.ui.selectCity.SelectCityActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.FetchAddressIntentServices
 import com.net.pvr1.utils.PreferenceManager
+import com.net.pvr1.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -46,6 +48,7 @@ class EnableLocationActivity : AppCompatActivity() {
     private var longitude: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         binding = ActivityEnableLocationBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
@@ -54,6 +57,12 @@ class EnableLocationActivity : AppCompatActivity() {
     }
 
     private fun movedNext() {
+        //not Now
+        binding?.noThanksTextView?.setOnClickListener {
+            val intent = Intent(this@EnableLocationActivity, SelectCityActivity::class.java)
+            startActivity(intent)
+        }
+
         binding?.enableLocationButton?.setOnClickListener {
             loadLocation()
         }
@@ -102,8 +111,6 @@ class EnableLocationActivity : AppCompatActivity() {
                         .removeLocationUpdates(this)
                     if (locationResult.locations.size > 0) {
                         val latestIndex = locationResult.locations.size - 1
-//                        val lati = locationResult.locations[latestlocIndex].latitude
-//                        val longi = locationResult.locations[latestlocIndex].longitude
                         latitude = locationResult.locations[latestIndex].latitude.toString()
                         longitude = locationResult.locations[latestIndex].longitude.toString()
 
@@ -115,6 +122,7 @@ class EnableLocationActivity : AppCompatActivity() {
                         location.longitude = longitude.toDouble()
                         location.latitude = latitude.toDouble()
                         fetchAddressFromLocation(location)
+
                     } else {
 
                     }
@@ -127,6 +135,10 @@ class EnableLocationActivity : AppCompatActivity() {
         intent.putExtra(Constant.RECEVIER, resultReceiver)
         intent.putExtra(Constant.LOCATION_DATA_EXTRA, location)
         startService(intent)
+
+
+        val intent2 = Intent(this@EnableLocationActivity, SelectCityActivity::class.java)
+        startActivity(intent2)
     }
 
     private class AddressResultReceiver(handler: Handler?) :
@@ -141,7 +153,7 @@ class EnableLocationActivity : AppCompatActivity() {
                 val country = resultData.getString(Constant.COUNTRY)
                 val postcode = resultData.getString(Constant.POST_CODE)
 
-//                preferences.cityName(locaity)
+                println("location---->${state}")
             }
         }
     }

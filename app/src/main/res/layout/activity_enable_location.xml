@@ -57,7 +57,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recommendationTextView"
-        app:text="@string/enable_location" />
+        android:text="@string/enable_location" />
 
 
     <TextView
@@ -73,7 +73,7 @@
 
     <TextView
         android:id="@+id/noThanksTextView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"

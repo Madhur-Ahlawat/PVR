@@ -3,7 +3,6 @@ package com.net.pvr1.utils
 import android.content.Context
 import android.content.SharedPreferences
 import com.net.pvr1.utils.Constant.Companion.CITY
-import com.net.pvr1.utils.Constant.Companion.CITY_CC
 import com.net.pvr1.utils.Constant.Companion.IS_LOGIN
 import com.net.pvr1.utils.Constant.Companion.LATITUDE
 import com.net.pvr1.utils.Constant.Companion.LONGITUDE
@@ -88,7 +87,7 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
     }
 
     //City Name
-    fun cityName(city: String) {
+    fun saveCityName(city: String) {
         editor = prefs.edit()
         editor?.putString(CITY, city)
         editor?.apply()
@@ -98,36 +97,25 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
         return prefs.getString(CITY, "").toString()
     }
 
-    //City Name CC
-    fun cityNameCC(city: String) {
-        editor = prefs.edit()
-        editor?.putString(CITY_CC, city)
-        editor?.apply()
-    }
-
-    fun getCityNameCC(): String {
-        return prefs.getString(CITY_CC, "").toString()
-    }
-
     //Lat
-    fun latData(lat: String) {
+    fun saveLatitudeData(lat: String) {
         editor = prefs.edit()
         editor?.putString(LATITUDE, lat)
         editor?.apply()
     }
 
-    fun getLatData(): String {
+    fun getLatitudeData(): String {
         return prefs.getString(LATITUDE, "").toString()
     }
 
     //Lang
-    fun langData(lang: String) {
+    fun saveLongitudeData(lang: String) {
         editor = prefs.edit()
         editor?.putString(LONGITUDE, lang)
         editor?.apply()
     }
 
-    fun getLangData(): String {
+    fun getLongitudeData(): String {
         return prefs.getString(LONGITUDE, "").toString()
     }
 
