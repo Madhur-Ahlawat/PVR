@@ -8,12 +8,13 @@ import android.os.Bundle
 import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.util.EncodingUtils
+import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityPaymentWebBinding
+import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr1.utils.Constant.Companion.BOOK_TYPE
 import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 
 @Suppress("DEPRECATION")
@@ -23,14 +24,10 @@ class PaymentWebActivity : AppCompatActivity() {
     private var from: String = ""
     private var title: String = ""
     private var get: String = ""
-
     private var bookType = ""
     private var saveCard = "0"
     private var subscriptionId = ""
     private var saveCardId = ""
-    // Specify the type of payment mode (DEBIT,CREDIT,NET_BANKING)
-
-    // Specify the type of payment mode (DEBIT,CREDIT,NET_BANKING)
     private var cvv = ""
     private var ccnumber: String? = ""
     private var expmonth: String? = ""
@@ -42,10 +39,8 @@ class PaymentWebActivity : AppCompatActivity() {
     private var currency: String? = ""
     private var token: String? = ""
 
-    var pType = ""
-    var payerAccount = ""
-
-    var webView: WebView? = null
+    private var pType = ""
+    private var payerAccount = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +51,6 @@ class PaymentWebActivity : AppCompatActivity() {
         title = intent.getStringExtra("title").toString()
         get = intent.getStringExtra("getUrl").toString()
 
-        webView = binding?.webView
         if (intent.getStringExtra("token") != null) {
             token = intent.getStringExtra("token")
         }
@@ -113,16 +107,15 @@ class PaymentWebActivity : AppCompatActivity() {
             bookType = intent.getStringExtra(BOOK_TYPE)!!
         }
 
+        getToken()
 
     }
 
-    @Throws(UnsupportedEncodingException::class)
     private fun getToken() {
-
         //CC ,DC,NB
         var urlParams = "&mid=$mid"
         urlParams = "$urlParams&amount=$amount"
-        urlParams = urlParams + "&orderId=" + BOOKING_ID
+        urlParams = "$urlParams&orderId=$BOOKING_ID"
         urlParams = "$urlParams&channelId=WAP"
         if (pType.equals("NB", ignoreCase = true)) {
             pType = "NET_BANKING"
@@ -143,16 +136,11 @@ class PaymentWebActivity : AppCompatActivity() {
         urlParams = "$urlParams&txnToken=$token"
         urlParams = "$urlParams&paymentMode=$pType"
         urlParams = "$urlParams&authMode=otp"
-        urlParams =
-            if (pType.equals(
-                    "UPI",
-                    ignoreCase = true
-                )
-            ) "$urlParams&storeInstrument=" else "$urlParams&storeInstrument=$saveCard"
+        urlParams = if (pType.equals(
+                "UPI", ignoreCase = true
+            )
+        ) "$urlParams&storeInstrument=" else "$urlParams&storeInstrument=$saveCard"
 
-
-        //urlParams= URLEncoder.encode(urlParams,"UTF-8");
-//        Pvrlog.write("==urlparam==", urlParams)
         val url = checksum
         if (subscriptionId != "") {
             var recurringparams = ""
@@ -166,14 +154,16 @@ class PaymentWebActivity : AppCompatActivity() {
 
             val cardInfo = "$saveCardId|$ccnumber|$cvv|$expmonth$expyear"
             val postData = ("&cardInfo=" + URLEncoder.encode(
-                cardInfo,
+                cardInfo, "UTF-8"
+            ) + "&paymentMode=" + URLEncoder.encode(
+                pType,
                 "UTF-8"
-            ) + "&paymentMode=" + URLEncoder.encode(pType, "UTF-8")
-                    + "&authMode=" + URLEncoder.encode(
-                "otp",
+            ) + "&authMode=" + URLEncoder.encode(
+                "otp", "UTF-8"
+            ) + "&SUBSCRIPTION_ID=" + URLEncoder.encode(
+                subscriptionId,
                 "UTF-8"
-            ) + "&SUBSCRIPTION_ID=" + URLEncoder.encode(subscriptionId, "UTF-8")
-                    + "&txnToken=" + URLEncoder.encode(token, "UTF-8"))
+            ) + "&txnToken=" + URLEncoder.encode(token, "UTF-8"))
             postRequestInWebView(url, postData)
             //            webView.postUrl(url,postData.getBytes());
 
@@ -182,12 +172,12 @@ class PaymentWebActivity : AppCompatActivity() {
 //        String furl=url+urlParams;
 
 
-        //openWebView(furl);
     }
 
     @SuppressLint("SetJavaScriptEnabled", "ObsoleteSdkInt")
     private fun postRequestInWebView(url: String, data: String) {
-        val webSettings: WebSettings? = webView?.settings
+
+        val webSettings: WebSettings? = binding?.webView?.settings
         webSettings?.javaScriptEnabled = true
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             webSettings?.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
@@ -198,94 +188,94 @@ class PaymentWebActivity : AppCompatActivity() {
         val cookieManager = CookieManager.getInstance()
         cookieManager.setAcceptCookie(true)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
+            CookieManager.getInstance().setAcceptThirdPartyCookies(binding?.webView, true)
         }
         postWebView(url, data)
+        printLog("data--->${url}--->${data}")
+
     }
 
     private fun postWebView(url: String?, data: String?) {
         data?.let { pp(url, it) }
     }
 
-    @SuppressLint("ObsoleteSdkInt")
+    @SuppressLint("ObsoleteSdkInt", "SetJavaScriptEnabled")
     fun pp(url: String?, data: String) {
-        webView?.webChromeClient = object : WebChromeClient() {}
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            printLog("--->mix${"true"}")
-            webView?.settings?.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
-        }
-        webView?.webViewClient = object : WebViewClient() {
+
+        val webSettings = binding?.webView?.settings
+        webSettings?.javaScriptEnabled = true
+        webSettings?.domStorageEnabled = true
+        binding?.webView?.settings?.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+
+        binding?.webView?.webViewClient = object : WebViewClient() {
             override fun onReceivedError(
-                view: WebView,
-                errorCode: Int,
-                description: String,
-                failingUrl: String
+                view: WebView, errorCode: Int, description: String, failingUrl: String
             ) {
-                println("$errorCode,$description,$failingUrl")
+                println("----->8$errorCode,$description,$failingUrl")
             }
 
-            override fun onPageStarted(view: WebView, url: String, favicon: Bitmap) {
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
-                //                dialog.show();
             }
 
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                printLog("1----->${url}")
-                /*URI uri = null;
-                    URL uu=null;
-                    try {
-                        uri = new URI(url);
-                        try {
-                            uu = uri.toURL();
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();
-                        }
-                    } catch (URISyntaxException e) {
-                        e.printStackTrace();
-                    }*/return if (url.contains("paytmexmobresp") || url.contains("recurring")) {
+                return if (url.contains("paytmexmobresp") || url.contains("recurring")) {
                     true
                 } else {
                     super.shouldOverrideUrlLoading(view, url)
                 }
 
-                //return true;
-                // return super.shouldOverrideUrlLoading(view, url);
-
-
-                // ...
-                // return false;
             }
 
             override fun onPageFinished(view: WebView, url: String) {
                 super.onPageFinished(view, url)
-                printLog("2----->${url}")
-
-                //                Pvrlog.write("==on page finish==", url)
                 try {
                     try {
                         if (url.contains("paytmexmobresp") || url.contains("recurring")) {
                             //                            Pvrlog.write2("==host match=true=", url)
-                            val sanitzer = UrlQuerySanitizer(url)
-                            val value = sanitzer.getValue("result")
-                            if (value.equals("fail", ignoreCase = true)) {
-                                val sanitzer1 = UrlQuerySanitizer(url)
+                            val sanitizer = UrlQuerySanitizer(url)
+                            val value = sanitizer.getValue("result")
+                            if (value == "fail") {
+                                val sanitizer1 = UrlQuerySanitizer(url)
                                 val value1 =
-                                    sanitzer1.getValue("errorStatus").replace("_".toRegex(), " ")
+                                    sanitizer1.getValue("errorStatus").replace("_".toRegex(), " ")
                                         .replace("\\+".toRegex(), " ")
                                 if (bookType.equals(
-                                        "GIFTCARD",
-                                        ignoreCase = true
+                                        "GIFTCARD", ignoreCase = true
                                     ) || bookType.equals(
-                                        "LOYALTYUNLIMITED",
-                                        ignoreCase = true
+                                        "LOYALTYUNLIMITED", ignoreCase = true
                                     ) || bookType.equals("CINE_MOVIE_PASS", ignoreCase = true)
                                 ) {
-                                    //                                    DialogClass.taskClearDialog(
-                                    //                                        context, value1,
-                                    //                                        getString(R.string.ok), "",
-                                    //                                        "", paymentType, paymentIntentData.getBookingID()
-                                    //                                    )
+
+                                    val dialog = OptionDialog(this@PaymentWebActivity,
+                                        R.mipmap.ic_launcher,
+                                        R.string.app_name,
+                                        getString(R.string.ok) + "$value1",
+                                        positiveBtnText = R.string.ok,
+                                        negativeBtnText = R.string.no,
+                                        positiveClick = {
+                                            finish()
+                                        },
+                                        negativeClick = {
+
+                                        })
+                                    dialog.show()
+
                                 } else {
+
+                                    val dialog = OptionDialog(this@PaymentWebActivity,
+                                        R.mipmap.ic_launcher,
+                                        R.string.app_name,
+                                        "$value1",
+                                        positiveBtnText = R.string.ok,
+                                        negativeBtnText = R.string.no,
+                                        positiveClick = {
+
+                                        },
+                                        negativeClick = {
+
+                                        })
+                                    dialog.show()
                                     //                                    DialogClass.taskClearDialog(
                                     //                                        context,
                                     //                                        value1,
@@ -301,7 +291,7 @@ class PaymentWebActivity : AppCompatActivity() {
                                 finish()
                             }
                         } else {
-                            //                            Pvrlog.write2("==host match=false=", "")
+                            printLog("---->")
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -310,13 +300,14 @@ class PaymentWebActivity : AppCompatActivity() {
                     e1.printStackTrace()
                 }
             }
+
+
         }
         if (data.contains("SUBSCRIPTION")) url?.let {
-            webView?.postUrl(
-                it,
-                data.toByteArray()
+            binding?.webView?.postUrl(
+                it, data.toByteArray()
             )
-        } else url?.let { webView?.postUrl(it, EncodingUtils.getBytes(data, "BASE64")) }
+        } else url?.let { binding?.webView?.postUrl(it, EncodingUtils.getBytes(data, "BASE64")) }
     }
 
 }

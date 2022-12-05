@@ -21,7 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
         <activity
-            android:name=".PaymentWebActivity"
+            android:name=".ui.payment.webView.PaymentWebActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

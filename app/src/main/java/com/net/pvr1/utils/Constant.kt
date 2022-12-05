@@ -63,7 +63,7 @@ class Constant {
         const val CITY_CC = "City-Name"
         const val LATITUDE = "lat"
         const val LONGITUDE= "lang"
-        const val BOOK_TYPE= ""
+        const val BOOK_TYPE= "BOOKING"
         const val ON_BOARDING_CLICK = false
         const val SEAT_BOOKED = 2
         const val SEAT_SELECTED = 3

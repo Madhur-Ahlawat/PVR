@@ -14,7 +14,7 @@ import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.payment.cardDetails.viewModel.CardDetailsViewModel
 import com.net.pvr1.ui.payment.response.PaytmHmacResponse
-import com.net.pvr1.ui.webView.WebViewActivity
+import com.net.pvr1.ui.payment.webView.PaymentWebActivity
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.BOOK_TYPE
 import dagger.hilt.android.AndroidEntryPoint
@@ -64,7 +64,7 @@ class CardDetailsActivity : AppCompatActivity() {
         //Proceed Bt
         binding?.include28?.textView5?.setOnClickListener {
             authViewModel.paytmHMAC(
-                preferences.getUserId().toString(),  Constant.BOOKING_ID, Constant.TRANSACTION_ID, false, binding?.cardNumber?.text.toString(), "BOOKING",paymentType, "no", "NO"
+                preferences.getUserId(),  Constant.BOOKING_ID, Constant.TRANSACTION_ID, false, binding?.cardNumber?.text.toString(), "BOOKING",paymentType, "no", "NO"
             )
         }
 
@@ -178,7 +178,7 @@ class CardDetailsActivity : AppCompatActivity() {
         expiryMonth=binding?.monthYear?.text.toString().split("/")[0]
         expiryYear=binding?.monthYear?.text.toString().split("/")[1]
 
-        val intent = Intent(this@CardDetailsActivity, WebViewActivity::class.java)
+        val intent = Intent(this@CardDetailsActivity, PaymentWebActivity::class.java)
         if (subscriptionId != "") intent.putExtra("subscriptionId", subscriptionId)
         intent.putExtra("token", output.hmackey)
         intent.putExtra("amount", output.amount)
@@ -193,6 +193,7 @@ class CardDetailsActivity : AppCompatActivity() {
             } else {
                 intent.putExtra("saveCard", "0")
             }
+
             intent.putExtra("cvv", binding?.cvv?.text.toString())
             intent.putExtra("ccnumber", binding?.cardNumber?.text.toString())
             intent.putExtra("expmonth", expiryMonth)
