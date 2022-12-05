@@ -113,7 +113,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                 R.id.homeFragment -> setCurrentFragment(firstFragment)
                 R.id.cinemaFragment -> {
                     setCurrentFragment(secondFragment)
-                    binding?.includeAppBar?.textView2?.text = getString(R.string.all_theaters1)
+                    binding?.includeAppBar?.textView2?.text = getString(R.string.all_theaters)
                 }
                 R.id.privilegeFragment -> setCurrentFragment(thirdFragment)
                 R.id.moreFragment -> setCurrentFragment(fifthFragment)

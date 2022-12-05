@@ -5,8 +5,8 @@ import android.content.SharedPreferences
 import com.net.pvr1.utils.Constant.Companion.CITY
 import com.net.pvr1.utils.Constant.Companion.CITY_CC
 import com.net.pvr1.utils.Constant.Companion.IS_LOGIN
-import com.net.pvr1.utils.Constant.Companion.LANG
-import com.net.pvr1.utils.Constant.Companion.LAT
+import com.net.pvr1.utils.Constant.Companion.LATITUDE
+import com.net.pvr1.utils.Constant.Companion.LONGITUDE
 import com.net.pvr1.utils.Constant.Companion.PREFS_TOKEN_FILE
 import com.net.pvr1.utils.Constant.Companion.USER_DOB
 import com.net.pvr1.utils.Constant.Companion.USER_ID
@@ -23,7 +23,7 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
         context.getSharedPreferences(PREFS_TOKEN_FILE, Context.MODE_PRIVATE)
 
     fun saveToken(token: String) {
-         editor = prefs.edit()
+        editor = prefs.edit()
         editor?.putString(USER_TOKEN, token)
         editor?.apply()
     }
@@ -34,7 +34,7 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
 
     //User Name
     fun saveUserName(token: String) {
-         editor = prefs.edit()
+        editor = prefs.edit()
         editor?.putString(USER_NAME, token)
         editor?.apply()
     }
@@ -42,9 +42,10 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
     fun getUserName(): String? {
         return prefs.getString(USER_NAME, null)
     }
-       //UserId
+
+    //UserId
     fun saveUserId(userId: String) {
-         editor = prefs.edit()
+        editor = prefs.edit()
         editor?.putString(USER_ID, userId)
         editor?.apply()
     }
@@ -52,6 +53,7 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
     fun getUserId(): String {
         return prefs.getString(USER_ID, "0")!!
     }
+
     //UserId
     fun saveMobileNumber(mobileNum: String) {
         val editor = prefs.edit()
@@ -64,21 +66,23 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
     }
 
     //Is Login
-     fun saveIsLogin(checkLogin:Boolean) {
-        editor= prefs.edit()
-        editor?.putBoolean(IS_LOGIN,checkLogin)
+    fun saveIsLogin(checkLogin: Boolean) {
+        editor = prefs.edit()
+        editor?.putBoolean(IS_LOGIN, checkLogin)
         editor?.apply()
-     }
+    }
 
     fun getIsLogin(): Boolean {
         return prefs.getBoolean(IS_LOGIN, false)
     }
+
     //ISaveDob
-     fun saveDob(checkLogin:String) {
-         editor= prefs.edit()
-        editor?.putString(USER_DOB,checkLogin)
+    fun saveDob(checkLogin: String) {
+        editor = prefs.edit()
+        editor?.putString(USER_DOB, checkLogin)
         editor?.apply()
-     }
+    }
+
     fun getSaveDob(): String {
         return prefs.getString(USER_DOB, null).toString()
     }
@@ -108,31 +112,30 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
     //Lat
     fun latData(lat: String) {
         editor = prefs.edit()
-        editor?.putString(LAT, lat)
+        editor?.putString(LATITUDE, lat)
         editor?.apply()
     }
 
     fun getLatData(): String {
-        return prefs.getString(LAT, "").toString()
+        return prefs.getString(LATITUDE, "").toString()
     }
 
     //Lang
     fun langData(lang: String) {
         editor = prefs.edit()
-        editor?.putString(LANG, lang)
+        editor?.putString(LONGITUDE, lang)
         editor?.apply()
     }
 
     fun getLangData(): String {
-        return prefs.getString(LANG, "").toString()
+        return prefs.getString(LONGITUDE, "").toString()
     }
-
 
 
     fun clearData() {
         if (editor != null) {
-            editor!!.clear()
-            editor!!.commit()
+            editor?.clear()
+            editor?.commit()
         }
     }
 }

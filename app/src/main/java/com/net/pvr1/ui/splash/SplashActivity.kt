@@ -21,10 +21,12 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySplashBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.enableLocation.EnableLocationActivity
 import com.net.pvr1.ui.food.FoodActivity
 import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.ui.payment.PaymentActivity
+import com.net.pvr1.ui.selectCity.SelectCityActivity
 import com.net.pvr1.ui.splash.onBoarding.LandingActivity
 import com.net.pvr1.ui.splash.response.SplashResponse
 import com.net.pvr1.ui.splash.viewModel.SplashViewModel
@@ -48,7 +50,7 @@ class SplashActivity : AppCompatActivity() {
     val MyPREFERENCES = "MyPrefs"
     var sharedpreferences: SharedPreferences? = null
     val OnBoardingClick = "Name"
-    private var clickOnBoarding:Boolean=false
+    private var clickOnBoarding: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +59,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(view)
         //OnBoarding Click Check
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE)
-        clickOnBoarding= sharedpreferences?.getBoolean(OnBoardingClick, false)!!
+        clickOnBoarding = sharedpreferences?.getBoolean(OnBoardingClick, false)!!
 
         //Check interNet Connection
         if (isConnected()) {
@@ -66,17 +68,29 @@ class SplashActivity : AppCompatActivity() {
             networkDialog()
         }
         summeryDetails()
-        authViewModel.splash("Delhi-NCR")
+        if (preferences.getCityName() == "") {
+
+            authViewModel.splash("")
+        } else {
+            authViewModel.splash(preferences.getCityName())
+        }
     }
 
     private fun movedNext() {
         val runnable = Runnable {
             if (preferences.getIsLogin()) {
+                if (preferences.getCityName()==""){
+                    val intent = Intent(this@SplashActivity, SelectCityActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }else{
+                    val intent = Intent(this@SplashActivity, HomeActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
 //                val intent = Intent(this@SplashActivity, FoodActivity::class.java)
 //                val intent = Intent(this@SplashActivity, PaymentActivity::class.java)
-                val intent = Intent(this@SplashActivity, HomeActivity::class.java)
-                startActivity(intent)
-                finish()
+
             } else {
                 if (!clickOnBoarding) {
                     val intent = Intent(this@SplashActivity, LandingActivity::class.java)
