@@ -18,10 +18,10 @@ import com.net.pvr1.ui.selectCity.response.SelectCityResponse
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
 
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION", "SENSELESS_COMPARISON")
 class SelectCityAdapter(
     private var selectCityList: ArrayList<SelectCityResponse.Output.Pc>,
-    private var selectCityListCC: SelectCityResponse.Output.Cc,
+    private var selectCityListCC: SelectCityResponse.Output,
     private var context: Activity,
     var listner: RecycleViewItemClickListenerSelectCity ) :
     RecyclerView.Adapter<SelectCityAdapter.MyViewHolderNowShowing>() {
@@ -54,11 +54,14 @@ class SelectCityAdapter(
             .error(R.drawable.app_icon)
             .into(holder.imageSelectCity)
 
-        if (selectCityListCC.name == selectCityItemList.name){
-            holder.clickOhk.show()
-        }else{
-            holder.clickOhk.hide()
+        if (selectCityListCC.cc != null){
+            if (selectCityListCC.cc.name == selectCityItemList.name){
+                holder.clickOhk.show()
+            }else{
+                holder.clickOhk.hide()
+            }
         }
+
 
         holder.itemView.setOnClickListener {
             rowIndex = position

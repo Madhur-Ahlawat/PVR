@@ -377,5 +377,7 @@
     <string name="on_food_beverages"><![CDATA[on Food & Beverages]]></string>
     <string name="_100">100%</string>
     <string name="pay">Pay</string>
+    <string name="all_theaters1">ALL THEATERS</string>
+    <string name="city_tittle">City Tittle</string>
 
 </resources>

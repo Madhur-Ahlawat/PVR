@@ -12,7 +12,7 @@ import com.net.pvr1.ui.selectCity.response.SelectCityResponse
 
 class OtherCityAdapter(
     private var selectCityList: ArrayList<SelectCityResponse.Output.Ot>,
-    private var selectCityListCC: SelectCityResponse.Output.Cc,
+    private var selectCityListCC: SelectCityResponse.Output,
     private var mContext: Context,
     private var listner: RecycleViewItemClickListenerCity
 ) : RecyclerView.Adapter<OtherCityAdapter.MyViewHolderNowShowing>() {
@@ -28,13 +28,16 @@ class OtherCityAdapter(
         val selectCityItemList = selectCityList[position]
         holder.otherCityName.text = selectCityItemList.name
 
-        if (selectCityListCC.name == selectCityItemList.name) {
-            holder.otherCityName.paintFlags =
-                holder.otherCityName.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-        } else {
-            holder.otherCityName.paintFlags =
-                holder.otherCityName.paintFlags
+        if (selectCityListCC.cc != null){
+            if (selectCityListCC.cc.name == selectCityItemList.name) {
+                holder.otherCityName.paintFlags =
+                    holder.otherCityName.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+            } else {
+                holder.otherCityName.paintFlags =
+                    holder.otherCityName.paintFlags
+            }
         }
+
 
         holder.itemView.setOnClickListener {
             listner.onItemClickCityOtherCity(selectCityList, position)

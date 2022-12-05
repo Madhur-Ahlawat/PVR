@@ -47,6 +47,8 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
         authViewModel.cinema("Delhi-NCR", "0.0", "0.0", "", "")
         cinemaApi()
         setPreference()
+
+
         movedNext()
     }
 

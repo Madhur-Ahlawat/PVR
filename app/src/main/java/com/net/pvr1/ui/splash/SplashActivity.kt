@@ -68,7 +68,15 @@ class SplashActivity : AppCompatActivity() {
             networkDialog()
         }
         summeryDetails()
-        authViewModel.splash("Delhi-NCR")
+
+        if (preferences.getCityName() == ""){
+            authViewModel.splash("")
+        }else{
+            authViewModel.splash(preferences.getCityName())
+        }
+
+
+
     }
 
     private fun movedNext() {

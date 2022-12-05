@@ -151,7 +151,8 @@ class LoginActivity : AppCompatActivity() {
                 finish()
             }
         }
-// OutSide Click
+
+    // OutSide Click
         binding?.loginClick?.setOnClickListener {
             binding?.textInputLayout?.isSelected = false
             binding?.mobileNumber?.isFocusableInTouchMode = false

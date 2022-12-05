@@ -58,7 +58,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         super.onViewCreated(view, savedInstanceState)
 //        authViewModel.home("Delhi-NCR", "", "0", "0", true, "no", "","ALL", "ALL", "ALL", "no")
         authViewModel.home(preferences.getCityName(), "", preferences.getUserId(), preferences.geMobileNumber(), true, "no", "", "ALL", "ALL", "ALL", "no")
-
+//        preferences.getCityName()
 //        (requireActivity().findViewById(R.id.notify) as ImageView).show()
 //        (requireActivity().findViewById(R.id.locationBtn) as ImageView).show()
 //        (requireActivity().findViewById(R.id.textView2) as TextView).show()

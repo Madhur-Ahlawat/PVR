@@ -13,9 +13,10 @@ import com.karumi.dexter.PermissionToken
 import com.net.pvr1.R
 import com.net.pvr1.ui.selectCity.response.SelectCityResponse
 
+@Suppress("SENSELESS_COMPARISON")
 class SearchCityAdapter(
     private var selectCityList: ArrayList<SelectCityResponse.Output.Ot>,
-    private var selectCityListCC: SelectCityResponse.Output.Cc,
+    private var selectCityListCC: SelectCityResponse.Output,
      var context: Context,
     var listner: RecycleViewItemClickListener) : RecyclerView.Adapter<SearchCityAdapter.MyViewHolderSearchCity>() {
 
@@ -31,12 +32,15 @@ class SearchCityAdapter(
         val selectCityItemList = selectCityList[position]
         holder.otherCityName.text = selectCityItemList.name
 
-        if (selectCityListCC.name == selectCityItemList.name){
-            holder.otherCityName.paintFlags =
-                holder.otherCityName.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-        }else{
+        if (selectCityListCC.cc != null){
+            if (selectCityListCC.cc.name == selectCityItemList.name){
+                holder.otherCityName.paintFlags =
+                    holder.otherCityName.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+            }else{
 
+            }
         }
+
 
         holder.otherCityName.setOnClickListener {
             listner.onItemClickCitySearch(selectCityList, position)

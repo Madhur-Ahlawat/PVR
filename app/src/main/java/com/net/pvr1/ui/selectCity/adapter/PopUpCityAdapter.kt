@@ -13,7 +13,6 @@ class PopUpCityAdapter(
     private var selectCityList: ArrayList<String>,
     private var context: Context,
     private var listner: RecycleViewItemClickListener1,
-    private var subCityName: TextView
 ) : RecyclerView.Adapter<PopUpCityAdapter.MyViewHolderSearchCity>() {
 
     var mContext = context
@@ -28,7 +27,7 @@ class PopUpCityAdapter(
         val selectCityItemList = selectCityList[position]
         holder.otherCityName.text = selectCityItemList
 
-        subCityName = holder.otherCityName
+//        subCityName = holder.otherCityName
 
 //        if (selectCityItemList==cityNameCC){
 //            holder.otherCityName.setBackgroundColor(ContextCompat.getColor(mContext, R.color.gray_1))
@@ -37,7 +36,7 @@ class PopUpCityAdapter(
 //        }
 
         holder.otherCityName.setOnClickListener {
-            listner.onItemClickCityDialog(selectCityList, position, holder.otherCityName)
+            listner.onItemClickCityDialog(selectCityList, position)
         }
 
     }
@@ -51,7 +50,7 @@ class PopUpCityAdapter(
     }
 
     interface RecycleViewItemClickListener1 {
-        fun onItemClickCityDialog(city: ArrayList<String>, position: Int, subCity: TextView)
+        fun onItemClickCityDialog(city: ArrayList<String>, position: Int)
 
     }
 
