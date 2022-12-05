@@ -27,6 +27,8 @@ import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.ui.food.viewModel.FoodViewModel
 import com.net.pvr1.ui.summery.SummeryActivity
 import com.net.pvr1.utils.*
+import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
+import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -159,6 +161,8 @@ class FoodActivity : AppCompatActivity(),
         binding?.recyclerView19?.layoutManager = layoutManagerCrew
         binding?.recyclerView19?.adapter = bestSellerFoodAdapter
         binding?.recyclerView19?.setHasFixedSize(true)
+
+        printLog("bestSeller--->${output.bestsellers}")
 
         //Category
         val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
@@ -338,7 +342,7 @@ class FoodActivity : AppCompatActivity(),
     }
 
     override fun addFood(comingSoonItem: FoodResponse.Output.Bestseller, position: Int) {
-        masterId = comingSoonItem.mid.toString()
+        masterId = comingSoonItem.r[0].id.toString()
         var num = comingSoonItem.qt
         num += 1
         comingSoonItem.qt = num
@@ -350,7 +354,7 @@ class FoodActivity : AppCompatActivity(),
         if (cartModel.size == 0) {
             cartModel.add(
                 CartModel(
-                    comingSoonItem.cid,
+                    comingSoonItem.r[0].id,
                     comingSoonItem.nm,
                     comingSoonItem.mi,
                     comingSoonItem.qt,
@@ -363,7 +367,7 @@ class FoodActivity : AppCompatActivity(),
         } else {
             if (itemExist(comingSoonItem)) {
                 for (item in cartModel) {
-                    if (item.id == comingSoonItem.cid) {
+                    if (item.id == comingSoonItem.r[0].id) {
                         if (comingSoonItem.qt == 0) {
                             cartModel.remove(item)
                         } else {
@@ -376,7 +380,7 @@ class FoodActivity : AppCompatActivity(),
             } else {
                 cartModel.add(
                     CartModel(
-                        comingSoonItem.cid,
+                        comingSoonItem.r[0].id,
                         comingSoonItem.nm,
                         comingSoonItem.mi,
                         comingSoonItem.qt,
@@ -392,7 +396,7 @@ class FoodActivity : AppCompatActivity(),
 
     private fun itemExist(foodItem: FoodResponse.Output.Bestseller): Boolean {
         for (item in cartModel) {
-            if (item.id == foodItem.cid) {
+            if (item.id == foodItem.r[0].id) {
                 return true
             }
         }
@@ -635,7 +639,7 @@ class FoodActivity : AppCompatActivity(),
         if (cartModel.size == 0) {
             cartModel.add(
                 CartModel(
-                    comingSoonItem.cid,
+                    comingSoonItem.r[0].id,
                     comingSoonItem.nm,
                     comingSoonItem.mi,
                     comingSoonItem.qt,
@@ -648,7 +652,7 @@ class FoodActivity : AppCompatActivity(),
         } else {
             if (itemExist(comingSoonItem)) {
                 for (item in cartModel) {
-                    if (item.id == comingSoonItem.cid) {
+                    if (item.id == comingSoonItem.r[0].id) {
                         if (comingSoonItem.qt == 0) {
                             cartModel.remove(item)
                         } else {
@@ -661,7 +665,7 @@ class FoodActivity : AppCompatActivity(),
             } else {
                 cartModel.add(
                     CartModel(
-                        comingSoonItem.cid,
+                        comingSoonItem.r[0].id,
                         comingSoonItem.nm,
                         comingSoonItem.mi,
                         comingSoonItem.qt,
@@ -927,7 +931,7 @@ class FoodActivity : AppCompatActivity(),
         if (cartModel.size == 0) {
             cartModel.add(
                 CartModel(
-                    comingSoonItem.cid,
+                    comingSoonItem.r[0].id,
                     comingSoonItem.nm,
                     comingSoonItem.mi,
                     comingSoonItem.qt,
@@ -940,7 +944,7 @@ class FoodActivity : AppCompatActivity(),
         } else {
             if (updateCategoryItemExist(comingSoonItem)) {
                 for (item in cartModel) {
-                    if (item.id == comingSoonItem.cid) {
+                    if (item.id == comingSoonItem.r[0].id) {
                         if (comingSoonItem.qt == 0) {
                             cartModel.remove(item)
                         } else {
@@ -953,7 +957,7 @@ class FoodActivity : AppCompatActivity(),
             } else {
                 cartModel.add(
                     CartModel(
-                        comingSoonItem.cid,
+                        comingSoonItem.r[0].id,
                         comingSoonItem.nm,
                         comingSoonItem.mi,
                         comingSoonItem.qt,

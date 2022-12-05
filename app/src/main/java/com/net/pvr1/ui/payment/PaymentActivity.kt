@@ -19,6 +19,7 @@ import com.net.pvr1.ui.payment.response.PaymentResponse
 import com.net.pvr1.ui.payment.viewModel.PaymentViewModel
 import com.net.pvr1.ui.splash.onBoarding.LandingActivity
 import com.net.pvr1.utils.*
+import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr1.utils.Constant.Companion.CITY
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -51,83 +52,84 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
 //            ""
 //        )
 //        //payMode
-//        authViewModel.payMode(
-//            CINEMA_ID,
-//            "BOOKING",
-//            preferences.getUserId().toString(),
+        authViewModel.payMode(
+            CINEMA_ID,
+            "BOOKING",
+            preferences.getUserId().toString(),
+            preferences.geMobileNumber().toString(),
+            "",
+            "no",
+            "",
+            false
+        )
+
+
+//        authViewModel.coupons(
 //            preferences.geMobileNumber().toString(),
+//            CITY,
+//            "",
+//            false,
+//            Constant().getDeviceId(this)
+//        )
+//
+//        //payMode
+//        authViewModel.payMode(
+//            "GURM",
+//            "BOOKING",
+//            "pGnnlj1MEjb0MOKBx1EH5w==",
+//            "7800049994",
 //            "",
 //            "no",
 //            "",
 //            false
 //        )
 
-
-        authViewModel.coupons(
-            preferences.geMobileNumber().toString(),
-            CITY,
-            "",
-            false,
-            Constant().getDeviceId(this)
-        )
-
-        //payMode
-        authViewModel.payMode(
-            "GURM",
-            "BOOKING",
-            "pGnnlj1MEjb0MOKBx1EH5w==",
-            "7800049994",
-            "",
-            "no",
-            "",
-            false
-        )
-        voucherDataLoad()
+//        voucherDataLoad()
         payModeDataLoad()
     }
 
-    private fun voucherDataLoad() {
-        authViewModel.userResponseLiveData.observe(this) {
-            when (it) {
-                is NetworkResult.Success -> {
-                    loader?.dismiss()
-                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        retrieveDataCoupon(it.data.output)
-                    } else {
-                        val dialog = OptionDialog(this,
-                            R.mipmap.ic_launcher,
-                            R.string.app_name,
-                            it.data?.msg.toString(),
-                            positiveBtnText = R.string.ok,
-                            negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
-                        dialog.show()
-                    }
-                }
-                is NetworkResult.Error -> {
-                    loader?.dismiss()
-                    val dialog = OptionDialog(this,
-                        R.mipmap.ic_launcher,
-                        R.string.app_name,
-                        it.message.toString(),
-                        positiveBtnText = R.string.ok,
-                        negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
-                    dialog.show()
-                }
-                is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
-                    loader?.show(supportFragmentManager, null)
-                }
-            }
-        }
-    }
+//    private fun voucherDataLoad() {
+//        authViewModel.userResponseLiveData.observe(this) {
+//            when (it) {
+//                is NetworkResult.Success -> {
+//                    loader?.dismiss()
+//                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+//                        retrieveDataCoupon(it.data.output)
+//                    } else {
+//                        val dialog = OptionDialog(this,
+//                            R.mipmap.ic_launcher,
+//                            R.string.app_name,
+//                            it.data?.msg.toString(),
+//                            positiveBtnText = R.string.ok,
+//                            negativeBtnText = R.string.no,
+//                            positiveClick = {
+//                            },
+//                            negativeClick = {
+//                            })
+//                        dialog.show()
+//                    }
+//                }
+//                is NetworkResult.Error -> {
+//                    loader?.dismiss()
+//                    val dialog = OptionDialog(this,
+//                        R.mipmap.ic_launcher,
+//                        R.string.app_name,
+//                        it.message.toString(),
+//                        positiveBtnText = R.string.ok,
+//                        negativeBtnText = R.string.no,
+//                        positiveClick = {
+//                        },
+//                        negativeClick = {
+//                        })
+//                    dialog.show()
+//                }
+//                is NetworkResult.Loading -> {
+//                    loader = LoaderDialog(R.string.pleasewait)
+//                    loader?.show(supportFragmentManager, null)
+//                }
+//            }
+//        }
+//    }
 
     private fun retrieveDataCoupon(output: ArrayList<CouponResponse.Output>) {
         if (output.isNotEmpty()) {
@@ -146,7 +148,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
     }
 
     private fun payModeDataLoad() {
-        authViewModel.payResponseLiveData.observe(this) {
+        authViewModel.payModeResponseLiveData.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
@@ -243,16 +245,21 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
 
     override fun paymentClick(comingSoonItem: PaymentResponse.Output.Gateway) {
         val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
+        intent.putExtra("ptype",comingSoonItem.id.toString())
+
         startActivity(intent)
     }
 
     override fun paymentExclusiveClick(comingSoonItem: CartModel, position: Int) {
         val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
+        intent.putExtra("ptype",comingSoonItem.id.toString())
         startActivity(intent)
     }
 
     override fun couponClick(comingSoonItem: CartModel, position: Int) {
         val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
+        intent.putExtra("ptype",comingSoonItem.id.toString())
+
         startActivity(intent)
     }
 

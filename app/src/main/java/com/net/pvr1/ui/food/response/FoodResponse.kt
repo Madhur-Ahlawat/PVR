@@ -82,7 +82,7 @@ data class FoodResponse(
             val nm: String,
             val op: Int,
             var qt: Int,
-            val r: List<Bestseller.R>,
+            val r: ArrayList<Bestseller.R>,
             val veg: Boolean
         ) : Serializable
     }

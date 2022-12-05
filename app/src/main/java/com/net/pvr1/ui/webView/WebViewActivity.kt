@@ -94,11 +94,13 @@ class WebViewActivity : AppCompatActivity() {
     }
 
     class JavaScriptInterface internal constructor(var mContext: Activity) {
-        @android.webkit.JavascriptInterface
+        @JavascriptInterface
         fun paymentResponse(response: String, pageName: String) {
 
         }
     }
+
+
 
 
 }

@@ -25,6 +25,7 @@ import com.net.pvr1.ui.offer.response.MOfferResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
 import com.net.pvr1.ui.payment.response.CouponResponse
 import com.net.pvr1.ui.payment.response.PaymentResponse
+import com.net.pvr1.ui.payment.response.PaytmHmacResponse
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.seatLayout.response.InitResponse
 import com.net.pvr1.ui.seatLayout.response.ReserveSeatResponse
@@ -32,6 +33,7 @@ import com.net.pvr1.ui.seatLayout.response.SeatResponse
 import com.net.pvr1.ui.selectCity.response.SelectCityResponse
 import com.net.pvr1.ui.splash.response.SplashResponse
 import com.net.pvr1.ui.summery.response.AddFoodResponse
+import com.net.pvr1.ui.summery.response.SetDonationResponse
 import com.net.pvr1.ui.summery.response.SummeryResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
@@ -132,9 +134,10 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     suspend fun coupons(mobile: String, city: String, status: String, pay: Boolean, did: String) {
         otpVerifyLiveData.postValue(NetworkResult.Loading())
         val response =
-            userAPI.getCoupons(mobile, city,status,pay,did,Constant.version, Constant.platform)
+            userAPI.getCoupons(mobile, city, status, pay, did, Constant.version, Constant.platform)
         couponsResponse(response)
     }
+
 
     private fun couponsResponse(response: Response<CouponResponse>) {
         if (response.isSuccessful && response.body() != null) {
@@ -144,6 +147,40 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             couponsLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             couponsLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    //paytm HMAC
+    private val paytmHmacLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val paytmHmaResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = paytmHmacLiveData
+
+    suspend fun paytmHMAC(
+        userid: String,
+        bookingid: String,
+        transid: String,
+        unpaid: Boolean,
+        cardNo: String,
+        booktype: String,
+        ptype: String,
+        isSpi: String,
+        binOffer: String
+    ) {
+        paytmHmacLiveData.postValue(NetworkResult.Loading())
+        val response =
+            userAPI.paytmHMAC(userid,bookingid,transid,unpaid,cardNo,booktype,ptype,isSpi,binOffer,Constant.version, Constant.platform)
+        paytmHmacResponse(response)
+    }
+
+    private fun paytmHmacResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            paytmHmacLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            paytmHmacLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            paytmHmacLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 
@@ -164,7 +201,18 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     ) {
         payModeLiveData.postValue(NetworkResult.Loading())
         val response =
-            userAPI.payMode(cinemacode,booktype,userid,mobile,type,isSpi,srilanka,unpaid, Constant.version, Constant.platform)
+            userAPI.payMode(
+                cinemacode,
+                booktype,
+                userid,
+                mobile,
+                type,
+                isSpi,
+                srilanka,
+                unpaid,
+                Constant.version,
+                Constant.platform
+            )
         payModeResponse(response)
     }
 
@@ -778,7 +826,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     ) {
         cinemaSessionLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.bookingTheatre(
-            city, cid, userid, mid,lng, Constant.version, Constant.platform, isSpi
+            city, cid, userid, mid, lng, Constant.version, Constant.platform, isSpi
         )
         bookingTheatreResponse(response)
     }
@@ -1052,6 +1100,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
     private fun ticketConfirmationLiveDataLayoutResponse(response: Response<SummeryResponse>) {
+
         if (response.isSuccessful && response.body() != null) {
             summerLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
@@ -1060,8 +1109,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         } else {
             summerLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
-    }
 
+    }
 
 
     //formats
@@ -1134,6 +1183,42 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             seatWithFoodLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             seatWithFoodLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    //Set Donation
+    private val setDonationLiveData = MutableLiveData<NetworkResult<SetDonationResponse>>()
+    val setDonationResponseLiveData: LiveData<NetworkResult<SetDonationResponse>>
+        get() = setDonationLiveData
+
+    suspend fun setDonationLayout(
+        bookingid: String,
+        transid: String,
+        isDonate: Boolean,
+        istDonate: Boolean,
+        isSpi: String
+    ) {
+        setDonationLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.setDonation(
+            bookingid,
+            transid,
+            isDonate,
+            istDonate,
+            isSpi,
+            Constant.version,
+            Constant.platform
+        )
+        setDonationLayoutResponse(response)
+    }
+
+    private fun setDonationLayoutResponse(response: Response<SetDonationResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            setDonationLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            setDonationLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            setDonationLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 

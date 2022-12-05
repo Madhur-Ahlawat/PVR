@@ -22,6 +22,7 @@ import com.net.pvr1.ui.offer.response.MOfferResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
 import com.net.pvr1.ui.payment.response.CouponResponse
 import com.net.pvr1.ui.payment.response.PaymentResponse
+import com.net.pvr1.ui.payment.response.PaytmHmacResponse
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.seatLayout.response.InitResponse
 import com.net.pvr1.ui.seatLayout.response.ReserveSeatResponse
@@ -29,6 +30,7 @@ import com.net.pvr1.ui.seatLayout.response.SeatResponse
 import com.net.pvr1.ui.selectCity.response.SelectCityResponse
 import com.net.pvr1.ui.splash.response.SplashResponse
 import com.net.pvr1.ui.summery.response.AddFoodResponse
+import com.net.pvr1.ui.summery.response.SetDonationResponse
 import com.net.pvr1.ui.summery.response.SummeryResponse
 import retrofit2.Response
 import retrofit2.http.Header
@@ -78,6 +80,21 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<CouponResponse>
+
+    @POST("payment/paytmex/hmac")
+    suspend fun paytmHMAC(
+        @Query("userid")  userid: String,
+        @Query("bookingid")   bookingid: String,
+        @Query("transid")  transid: String,
+        @Query("unpaid")  unpaid: Boolean,
+        @Query("cardNo")  cardNo: String,
+        @Query("booktype")  booktype: String,
+        @Query("ptype")  ptype: String,
+        @Query("isSpi")  isSpi: String,
+        @Query("binOffer") binOffer: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
 
     @POST("trans/getpaymode")
     suspend fun payMode(
@@ -435,6 +452,18 @@ interface UserAPI {
         @Query("seat") seat: String,
         @Query("audi") audi: String
     ): Response<SummeryResponse>
+
+
+  @POST("trans/setdonation")
+    suspend fun setDonation(
+      @Query("bookingid")  bookingid: String,
+      @Query("transid") transid: String,
+      @Query("isDonate") isDonate: Boolean,
+      @Query("istDonate")  istDonate: Boolean,
+      @Query("isSpi")  isSpi: String,
+      @Query("av")    version: String,
+      @Query("pt")   platform: String
+  ): Response<SetDonationResponse>
 
     @POST("content/splashtxt")
     suspend fun splash(

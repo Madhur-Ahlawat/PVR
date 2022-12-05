@@ -60,6 +60,8 @@ class Constant {
         var BOOKING_ID = "0"
         var SESSION_ID = "0"
         var CINEMA_ID = "0"
+        var BOOK_TYPE = "BOOKING"
+        var TICKET_BOOKING_DETAILS = ""
         var CITY = "Delhi-NCR"
         const val ON_BOARDING_CLICK = false
         const val SEAT_BOOKED = 2

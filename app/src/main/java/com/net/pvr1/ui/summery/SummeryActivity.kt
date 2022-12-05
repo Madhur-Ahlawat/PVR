@@ -25,6 +25,7 @@ import com.net.pvr1.databinding.ActivitySummeryBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.CartModel
+import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.ui.payment.PaymentActivity
 import com.net.pvr1.ui.seatLayout.adapter.AddFoodCartAdapter
 import com.net.pvr1.ui.summery.adapter.SeatListAdapter
@@ -53,7 +54,6 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         binding = ActivitySummeryBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        summeryDetails()
         try {
             cartModel = intent.getSerializableExtra("food") as ArrayList<CartModel>
             printLog("exception--->${cartModel}")
@@ -61,12 +61,6 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             e.printStackTrace()
         }
 
-//        authViewModel.summery(
-//            "2117926",
-//            "GURM",
-//            "H5KQhI22Y8h4DtJYuU6ZAA==",
-//            "GURM220009933900"
-//        )
         authViewModel.summery(
             TRANSACTION_ID,
             CINEMA_ID,
@@ -75,8 +69,9 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         )
         movedNext()
         foodCart()
+        summeryDetails()
         saveFood()
-        seatWithFood()
+        setDonation()
     }
 
     //CartFood
@@ -94,38 +89,23 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     }
 
     private fun movedNext() {
-        binding?.include7?.textView108?.text= getString(R.string.checkout)
+        binding?.include7?.textView108?.text = getString(R.string.checkout)
         binding?.include7?.imageView58?.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
-        //saveFood
-//        binding?.textView175?.setOnClickListener {
-//            //Only Seat Condition
-//            authViewModel.food(
-//                preferences.getUserId().toString(),
-//                CINEMA_ID,
-//                "",
-//                "",
-//                "",
-//                "",
-//                "",
-//                "",
-//                "",
-//                "",
-//                "no",
-//                "no",
-//                "no")
-//        }
     }
 
-    //seatWithFood
-    private fun seatWithFood() {
+    //saveFood
+    private fun saveFood() {
         authViewModel.seatWithFoodDataScope.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-//                        retrieveData(it.data.output)
+                        authViewModel.setDonation(
+                            BOOKING_ID,
+                            TRANSACTION_ID, true, false, "NO"
+                        )
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -134,8 +114,10 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
                             positiveClick = {
+
                             },
                             negativeClick = {
+
                             })
                         dialog.show()
                     }
@@ -163,15 +145,17 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
     }
 
-    //saveFood
-    private fun saveFood() {
-        authViewModel.foodLiveDataScope.observe(this) {
+    //Set Donation
+    private fun setDonation() {
+        authViewModel.setDonationDataScope.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+
                         val intent = Intent(this@SummeryActivity, PaymentActivity::class.java)
                         startActivity(intent)
+
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -180,12 +164,10 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
                             positiveClick = {
-                                val intent = Intent(this@SummeryActivity, PaymentActivity::class.java)
-                                startActivity(intent)
+
                             },
                             negativeClick = {
-                                val intent = Intent(this@SummeryActivity, PaymentActivity::class.java)
-                                startActivity(intent)
+
                             })
                         dialog.show()
                     }
@@ -284,7 +266,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             binding?.textView273?.text = output.f[1].it[1].v
             //gst Heading
             binding?.textView271?.text = output.f[1].it[1].n
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
@@ -295,7 +277,8 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 //        grand total
         binding?.textView173?.text = getString(R.string.currency) + output.a
 //       pay
-        binding?.textView174?.text = getString(R.string.pay)+" "+getString(R.string.currency) + output.a + " |"
+        binding?.textView174?.text =
+            getString(R.string.pay) + " " + getString(R.string.currency) + output.a + " |"
         //Image
         Glide.with(this)
             .load(output.imh)
@@ -310,11 +293,11 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             Constant().openMap(this, "28.5723921", "77.0449214")
         }
         //total seat
-        val ticketCount=output.seat.size*2
+        val ticketCount = output.seat.size * 2
         binding?.textView166?.text = ticketCount.toString() + "/" + getString(R.string.ticket)
 
         //audi
-        binding?.textView115?.text = output.audi+"-"+output.st
+        binding?.textView115?.text = output.audi + "-" + output.st
         //seat
         val layoutManager = FlexboxLayoutManager(this)
         layoutManager.flexDirection = FlexDirection.ROW
@@ -337,14 +320,14 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
         //manage taxes Shows
         binding?.imageView77?.setOnClickListener {
-            if (!showTaxes){
+            if (!showTaxes) {
                 binding?.imageView77?.setImageResource(R.drawable.arrow_down)
                 binding?.taxes?.hide()
-                showTaxes= true
-            }else{
+                showTaxes = true
+            } else {
                 binding?.imageView77?.setImageResource(R.drawable.arrow_up)
                 binding?.taxes?.show()
-                showTaxes= false
+                showTaxes = false
             }
         }
 
@@ -355,8 +338,6 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
         //seatWithFood
         binding?.textView175?.setOnClickListener {
-            val intent = Intent(this@SummeryActivity, PaymentActivity::class.java)
-            startActivity(intent)
             cartModel.forEachIndexed { index, food ->
                 itemDescription = if (index == 0) {
                     food.title + "|" + food.id + "|" + food.quantity +
@@ -366,7 +347,13 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                             "|" + food.price + "|" + food.ho + "|" + food.mid
                 }
             }
-            printLog("seat--->${itemDescription},${TRANSACTION_ID},${CINEMA_ID},${ preferences.getUserId().toString()},${output.seats},${output.audi}")
+//            printLog("seat--->${itemDescription},${TRANSACTION_ID},${CINEMA_ID},${ preferences.getUserId().toString()},${output.seats},${output.audi}")
+            printLog(
+                "seat--->${itemDescription},${TRANSACTION_ID},${CINEMA_ID},${
+                    preferences.getUserId().toString()
+                },${output.seats},${output.audi}"
+            )
+
             authViewModel.seatWithFood(
                 itemDescription,
                 TRANSACTION_ID,
@@ -378,6 +365,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                 output.seats,
                 output.audi
             )
+
         }
     }
 
@@ -395,7 +383,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         dialog.show()
         val terms = dialog.findViewById<TextView>(R.id.textView310)
         val carveryText = dialog.findViewById<TextView>(R.id.textView154)
-        carveryText?.text = Html.fromHtml(donStext,Html.FROM_HTML_MODE_LEGACY)
+        carveryText?.text = Html.fromHtml(donStext, Html.FROM_HTML_MODE_LEGACY)
         terms.paintFlags = terms.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
     }

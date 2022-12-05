@@ -33,13 +33,13 @@ class BestSellerFoodAdapter(
         return ViewHolder(binding)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+    @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
                 //title
                 binding.textView132.text = this.nm
-                binding.textView133.text = "₹ " + Constant.DECIFORMAT.format(this.dp / 100.0)
+                binding.textView133.text = context.getString(R.string.currency)+ Constant.DECIFORMAT.format(this.dp / 100.0)
 
                 if (this.r.size > 1) {
                     binding.textView134.show()
@@ -113,10 +113,7 @@ class BestSellerFoodAdapter(
         fun addFood(comingSoonItem: FoodResponse.Output.Bestseller, position: Int)
         fun addFoodPlus(comingSoonItem: FoodResponse.Output.Bestseller, position: Int)
         fun addFoodMinus(comingSoonItem: FoodResponse.Output.Bestseller, position: Int)
-        fun bestSellerDialogAddFood(
-            comingSoonItem: List<FoodResponse.Output.Bestseller.R>,
-            position: String
-        )
+        fun bestSellerDialogAddFood(comingSoonItem: List<FoodResponse.Output.Bestseller.R>, position: String )
     }
 
 }
