@@ -36,7 +36,8 @@ data class BookingRetrievalResponse(
             val n: String,
             val ns: List<Any>,
             val par: Boolean,
-            val sc: Int
+            val sc: Int,
+            var itemSelectedOrNot: Boolean = false
         ) : Serializable
 
         data class Child(

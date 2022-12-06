@@ -115,8 +115,8 @@ class EnableLocationActivity : AppCompatActivity() {
                         longitude = locationResult.locations[latestIndex].longitude.toString()
 
 
-                        preferences.latData(latitude)
-                        preferences.langData(longitude)
+                        preferences.saveLatitudeData(latitude)
+                        preferences.saveLongitudeData(longitude)
 
                         val location = Location("providerNA")
                         location.longitude = longitude.toDouble()
