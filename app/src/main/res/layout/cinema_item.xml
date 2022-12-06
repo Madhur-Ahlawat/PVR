@@ -361,7 +361,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/llMovie"/>
 
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/bottomView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -375,43 +375,49 @@
                 app:layout_constraintTop_toBottomOf="@+id/View_"
                 tools:ignore="DisableBaselineAlignment">
 
-                <LinearLayout
-                    android:id="@+id/shows"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:visibility="gone"
-                    android:orientation="horizontal"
-                    tools:ignore="UseCompoundDrawables">
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/shows"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:gravity="center"-->
+<!--                    android:visibility="gone"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    tools:ignore="UseCompoundDrawables">-->
 
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_slideshow"
-                        tools:ignore="ContentDescription" />
-
-
-                    <TextView
-                        android:id="@+id/tvShows"
-                        style="@style/H1Size"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="7dp"
-                        android:textColor="@color/pvr_dark_black"
-                        tools:text="40 Shows" />
+<!--                    <ImageView-->
+<!--                        android:layout_width="16dp"-->
+<!--                        android:layout_height="20dp"-->
+<!--                        android:src="@drawable/ic_slideshow"-->
+<!--                        tools:ignore="ContentDescription" />-->
 
 
-                </LinearLayout>
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvShows"-->
+<!--                        style="@style/H1Size"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginStart="7dp"-->
+<!--                        android:textColor="@color/pvr_dark_black"-->
+<!--                        tools:text="40 Shows" />-->
+
+
+<!--                </LinearLayout>-->
+
+<!--               android:layout_weight="1"-->
 
                 <LinearLayout
                     android:id="@+id/kiloMeter"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_marginEnd="16dp"
                     android:gravity="start"
                     android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView164"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="UseCompoundDrawables">
 
                     <ImageView
@@ -434,38 +440,49 @@
 
                 </LinearLayout>
 
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/llLocation"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:gravity="center"-->
+<!--                    android:visibility="gone"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    tools:ignore="UseCompoundDrawables">-->
 
-                <LinearLayout
-                    android:id="@+id/llLocation"
+<!--                    <ImageView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:src="@drawable/ic_direction_new"-->
+<!--                        tools:ignore="ContentDescription" />-->
+
+
+<!--                    <TextView-->
+<!--                        style="@style/H1Size"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginStart="7dp"-->
+<!--                        android:text="@string/directions" />-->
+
+<!--                </LinearLayout>-->
+
+                <ImageView
+                    android:id="@+id/imageView164"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:visibility="gone"
-                    android:orientation="horizontal"
-                    tools:ignore="UseCompoundDrawables">
+                    android:layout_gravity="end"
+                    android:padding="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/arrow_down" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_direction_new"
-                        tools:ignore="ContentDescription" />
-
-
-                    <TextView
-                        style="@style/H1Size"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="7dp"
-                        android:text="@string/directions" />
-
-                </LinearLayout>
-
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/llMovieList"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_15dp"

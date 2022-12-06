@@ -24,42 +24,6 @@ class SummeryViewModel @Inject constructor(private val userRepository: UserRepos
         }
     }
 
-//    //Food
-//    val foodLiveDataScope: LiveData<NetworkResult<AddFoodResponse>>
-//        get() = userRepository.foodAddResponseLiveData
-//
-//    fun food(
-//        userid: String,
-//        cinemacode: String,
-//        fb_totalprice: String,
-//        fb_itemStrDescription: String,
-//        pickupdate: String,
-//        cbookid: String,
-//        audi: String,
-//        seat: String,
-//        type: String,
-//        infosys: String,
-//        qr: String,
-//        isSpi: String,
-//        srilanka: String,
-//    ) {
-//        viewModelScope.launch {
-//            userRepository.foodAddLayout(
-//                cinemacode,
-//                fb_totalprice,
-//                fb_itemStrDescription,
-//                pickupdate,
-//                cbookid,
-//                audi,
-//                seat,
-//                type,
-//                infosys,
-//                qr,
-//                isSpi,
-//                srilanka
-//            )
-//        }
-//    }
 
     //seatWithFood
     val seatWithFoodDataScope: LiveData<NetworkResult<SummeryResponse>>

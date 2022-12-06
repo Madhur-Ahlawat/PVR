@@ -18,7 +18,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout44"
         android:layout_width="0dp"
-        android:layout_height="53dp"
+        android:layout_height="58dp"
         app:layout_constraintEnd_toEndOf="@+id/view112"
         app:layout_constraintStart_toStartOf="@+id/view112"
         app:layout_constraintTop_toTopOf="@+id/view112">

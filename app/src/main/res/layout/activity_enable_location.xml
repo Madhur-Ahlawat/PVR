@@ -20,13 +20,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_20dp"
-        android:layout_marginTop="@dimen/dimen_30dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="@dimen/dimen_20dp"
         android:adjustViewBounds="true"
         android:src="@drawable/enable_location"
         app:layout_constraintEnd_toEndOf="@+id/view35"
         app:layout_constraintStart_toStartOf="@+id/view35"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include32"
         tools:ignore="ContentDescription,ImageContrastCheck" />
 
 
@@ -89,4 +89,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/view35"
         tools:ignore="AllCaps" />
+
+    <include
+        android:id="@+id/include32"
+        layout="@layout/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="58dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

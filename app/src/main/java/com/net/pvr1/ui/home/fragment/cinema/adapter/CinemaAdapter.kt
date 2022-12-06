@@ -14,6 +14,7 @@ import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.show
 import com.net.pvr1.utils.toast
 
 
@@ -29,6 +30,7 @@ class CinemaAdapter(
     inner class ViewHolder(val binding: CinemaItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     private var rowIndex: Boolean = false
+    private var showList: Boolean = false
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = CinemaItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
@@ -44,7 +46,7 @@ class CinemaAdapter(
                 //address
                 binding.cinemaLocation.text = this.ad
                 //Shows
-                binding.tvShows.text = this.sc.toString() + " " + context.getString(R.string.shows)
+//                binding.tvShows.text = this.sc.toString() + " " + context.getString(R.string.shows)
                 //Distance
                 binding.tvDistance.text = this.d
                 //Image
@@ -63,11 +65,29 @@ class CinemaAdapter(
                 } else {
                     binding.llMovieList.hide()
                 }
+
                 if (this.l=="true"){
                     binding.cbFav.setImageResource(R.drawable.ic_favourite_theatre)
                 }else{
                     binding.cbFav.setImageResource(R.drawable.ic_un_favourite_theatre)
                 }
+
+                //ShoW Hide
+                binding.imageView164.setOnClickListener {
+                    if (showList){
+                        showList=false
+                        binding.llMovieList.show()
+                        binding.imageView164.setImageResource(R.drawable.arrow_up)
+
+                    }else{
+
+                        binding.llMovieList.hide()
+                        binding.imageView164.setImageResource(R.drawable.arrow_down)
+                        showList=true
+
+                    }
+                }
+
 
                 binding.cbFav.setOnClickListener {
                     if (isLogin) {
@@ -102,17 +122,17 @@ class CinemaAdapter(
                 }
 
                 //Direction
-                binding.llLocation.setOnClickListener {
-                    listener.onDirectionClick(this)
-                }
+//                binding.llLocation.setOnClickListener {
+//                    listener.onDirectionClick(this)
+//                }
 
                 //Kilometer
-                holder.itemView.setOnClickListener {
-                    location.onLocationClick(this)
+                binding.relativeLayout2.setOnClickListener {
+                    location.onCinemaClick(this)
                 }
                 //Kilometer
                 binding.kiloMeter.setOnClickListener {
-                    location.onLocationClick(this)
+                    location.onCinemaClick(this)
                 }
             }
         }
@@ -128,7 +148,7 @@ class CinemaAdapter(
     }
 
     interface Location {
-        fun onLocationClick(comingSoonItem: CinemaResponse.Output.C)
+        fun onCinemaClick(comingSoonItem: CinemaResponse.Output.C)
     }
 
     interface SetPreference {

@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.payment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -14,13 +15,14 @@ import com.net.pvr1.ui.payment.adapter.CouponAdapter
 import com.net.pvr1.ui.payment.adapter.PaymentAdapter
 import com.net.pvr1.ui.payment.adapter.PaymentExclusiveAdapter
 import com.net.pvr1.ui.payment.cardDetails.CardDetailsActivity
+import com.net.pvr1.ui.payment.mCoupon.MCouponActivity
+import com.net.pvr1.ui.payment.promoCode.PromoCodeActivity
 import com.net.pvr1.ui.payment.response.CouponResponse
 import com.net.pvr1.ui.payment.response.PaymentResponse
+import com.net.pvr1.ui.payment.starPass.StarPassActivity
 import com.net.pvr1.ui.payment.viewModel.PaymentViewModel
-import com.net.pvr1.ui.splash.onBoarding.LandingActivity
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
-import com.net.pvr1.utils.Constant.Companion.CITY
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -34,13 +36,20 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
     private val authViewModel: PaymentViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var catFilterPayment = ArrayList<PaymentResponse.Output.Gateway>()
+    private var paidAmount = ""
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPaymentBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
         binding?.include26?.textView108?.text = getString(R.string.payment)
+
+        paidAmount=intent.getStringExtra("paidAmount").toString()
+        //paidAmount
+        binding?.textView178?.text =
+            getString(R.string.pay) + " " + getString(R.string.currency) + intent.getStringExtra("paidAmount")
         //voucher
 //        authViewModel.voucher(
 //            preferences.getToken().toString(),
@@ -51,6 +60,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
 //            Constant().getDeviceId(this),
 //            ""
 //        )
+
 //        //payMode
         authViewModel.payMode(
             CINEMA_ID,
@@ -136,8 +146,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
             binding?.recyclerView46?.show()
             binding?.textView180?.show()
             val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-            val foodBestSellerAdapter =
-                CouponAdapter(output, this, this)
+            val foodBestSellerAdapter = CouponAdapter(output, this, this)
             binding?.recyclerView46?.layoutManager = layoutManagerCrew
             binding?.recyclerView46?.adapter = foodBestSellerAdapter
             binding?.recyclerView46?.setHasFixedSize(true)
@@ -162,10 +171,8 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -177,10 +184,8 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
@@ -204,7 +209,6 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         } else {
             binding?.recyclerView42?.hide()
         }
-
 
         //Other Payment Method
         if (output.gateway.isNotEmpty()) {
@@ -234,9 +238,9 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         if (output.offers.isNotEmpty()) {
             binding?.recyclerView45?.show()
             val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-            val foodBestSellerAdapter = PaymentExclusiveAdapter(output.offers, this, this)
+            val paymentExclusiveAdapter = PaymentExclusiveAdapter(output.offers, this, this)
             binding?.recyclerView45?.layoutManager = layoutManagerCrew
-            binding?.recyclerView45?.adapter = foodBestSellerAdapter
+            binding?.recyclerView45?.adapter = paymentExclusiveAdapter
             binding?.recyclerView45?.setHasFixedSize(true)
         } else {
             binding?.recyclerView45?.hide()
@@ -245,22 +249,43 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
 
     override fun paymentClick(comingSoonItem: PaymentResponse.Output.Gateway) {
         val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
-        intent.putExtra("ptype",comingSoonItem.id.toString())
+        intent.putExtra("ptype", comingSoonItem.id)
+        intent.putExtra("paidAmount", paidAmount)
 
         startActivity(intent)
     }
 
-    override fun paymentExclusiveClick(comingSoonItem: CartModel, position: Int) {
-        val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
-        intent.putExtra("ptype",comingSoonItem.id.toString())
-        startActivity(intent)
+    override fun paymentExclusiveClick(comingSoonItem: PaymentResponse.Output.Offer) {
+        when (comingSoonItem.name) {
+            "Star Pass" -> {
+                val intent = Intent(this@PaymentActivity, StarPassActivity::class.java)
+                intent.putExtra("paidAmount", paidAmount)
+                startActivity(intent)
+            }
+            "M-Coupon" -> {
+                val intent = Intent(this@PaymentActivity, MCouponActivity::class.java)
+                intent.putExtra("paidAmount", paidAmount)
+                startActivity(intent)
+            }
+            "Promocode" -> {
+                val intent = Intent(this@PaymentActivity, PromoCodeActivity::class.java)
+                intent.putExtra("paidAmount",paidAmount)
+                startActivity(intent)
+            }
+            "Hyatt Dining Club" -> {
+                val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
+                intent.putExtra("paidAmount", paidAmount)
+                startActivity(intent)
+            }
+        }
+
+
     }
 
     override fun couponClick(comingSoonItem: CartModel, position: Int) {
-        val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
-        intent.putExtra("ptype",comingSoonItem.id.toString())
-
-        startActivity(intent)
+//        val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
+////        intent.putExtra("ptype",comingSoonItem.id.toString())
+//        startActivity(intent)
     }
 
 
@@ -271,20 +296,17 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         when (category) {
             "WALLET" -> {
                 for (data in catFilterPayment) {
-                    if (data.pty == category)
-                        categoryPaymentNew.add(data)
+                    if (data.pty == category) categoryPaymentNew.add(data)
                 }
             }
             "GATEWAY" -> {
                 for (data in catFilterPayment) {
-                    if (data.pty == category)
-                        categoryPaymentNew.add(data)
+                    if (data.pty == category) categoryPaymentNew.add(data)
                 }
             }
             "PAYMENT-METHOD" -> {
                 for (data in catFilterPayment) {
-                    if (data.pty == category)
-                        categoryPaymentNew.add(data)
+                    if (data.pty == category) categoryPaymentNew.add(data)
                 }
             }
         }

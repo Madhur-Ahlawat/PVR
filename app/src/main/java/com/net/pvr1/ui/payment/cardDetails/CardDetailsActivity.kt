@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.view.View.OnFocusChangeListener
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -25,15 +26,17 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class CardDetailsActivity : AppCompatActivity() {
+    private var isNetBaking: Boolean = false
+
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityCardDetailsBinding? = null
     private val authViewModel: CardDetailsViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var saveCardId = ""
-    private  var subscriptionId = ""
-    private  var paymentType = ""
-    private  var isSavedCard = false
+    private var subscriptionId = ""
+    private var paymentType = ""
+    private var isSavedCard = false
     private var isFromNet = false
     private var isKotak = false
     private var lastInput = ""
@@ -42,14 +45,29 @@ class CardDetailsActivity : AppCompatActivity() {
     private var expiryYear = ""
 
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCardDetailsBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        paymentType=intent.getStringExtra("ptype").toString()
+        paymentType = intent.getStringExtra("ptype").toString()
+        //PaidAmount
+        binding?.textView287?.text = getString(R.string.pay) + " " + getString(R.string.currency) + intent.getStringExtra("paidAmount")
         movedNext()
         paytmHMAC()
+
+        //        amountToAdd = Util.ceilAmount(Double.parseDouble(amountToAdd));
+        if (paymentType.equals("116", ignoreCase = true)) {
+            paymentType = getString(R.string.mobikwik_addmoney_payment_type_credit_card)
+            isNetBaking = false
+        } else if (paymentType.equals("117", ignoreCase = true)) {
+            paymentType = getString(R.string.mobikwik_addmoney_payment_type_dedit_card)
+            isNetBaking = false
+        } else if (paymentType.equals("118", ignoreCase = true)) {
+            paymentType = getString(R.string.mobikwik_addmoney_payment_type_net_banking)
+            isNetBaking = true
+        }
     }
 
     private fun movedNext() {
@@ -64,29 +82,30 @@ class CardDetailsActivity : AppCompatActivity() {
         //Proceed Bt
         binding?.include28?.textView5?.setOnClickListener {
             authViewModel.paytmHMAC(
-                preferences.getUserId(),  Constant.BOOKING_ID, Constant.TRANSACTION_ID, false, binding?.cardNumber?.text.toString(), "BOOKING",paymentType, "no", "NO"
+                preferences.getUserId(),
+                Constant.BOOKING_ID,
+                Constant.TRANSACTION_ID,
+                false,
+                binding?.cardNumber?.text.toString(),
+                "BOOKING",
+                paymentType,
+                "no",
+                "NO"
             )
         }
 
         //mm//year
-        binding?.monthYear?.addTextChangedListener(object :
-            TextWatcher {
+        binding?.monthYear?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {}
 
             override fun beforeTextChanged(
-                p0: CharSequence?,
-                p1: Int,
-                p2: Int,
-                p3: Int
+                p0: CharSequence?, p1: Int, p2: Int, p3: Int
             ) {
             }
 
             @SuppressLint("SetTextI18n")
             override fun onTextChanged(
-                p0: CharSequence?,
-                start: Int,
-                removed: Int,
-                added: Int
+                p0: CharSequence?, start: Int, removed: Int, added: Int
             ) {
                 val input = p0.toString()
                 val formatter = SimpleDateFormat("MM/YY", Locale.GERMANY)
@@ -108,8 +127,7 @@ class CardDetailsActivity : AppCompatActivity() {
                         val month = Integer.parseInt(input)
                         if (month <= 12) {
                             binding?.monthYear?.setText(
-                                binding?.monthYear?.text.toString()
-                                    .substring(0, 1)
+                                binding?.monthYear?.text.toString().substring(0, 1)
                             )
                         }
                     }
@@ -144,10 +162,8 @@ class CardDetailsActivity : AppCompatActivity() {
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -159,10 +175,8 @@ class CardDetailsActivity : AppCompatActivity() {
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
@@ -175,8 +189,8 @@ class CardDetailsActivity : AppCompatActivity() {
     }
 
     private fun retrieveData(output: PaytmHmacResponse.Output) {
-        expiryMonth=binding?.monthYear?.text.toString().split("/")[0]
-        expiryYear=binding?.monthYear?.text.toString().split("/")[1]
+        expiryMonth = binding?.monthYear?.text.toString().split("/")[0]
+        expiryYear = binding?.monthYear?.text.toString().split("/")[1]
 
         val intent = Intent(this@CardDetailsActivity, PaymentWebActivity::class.java)
         if (subscriptionId != "") intent.putExtra("subscriptionId", subscriptionId)

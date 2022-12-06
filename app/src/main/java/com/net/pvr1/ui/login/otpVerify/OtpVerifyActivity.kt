@@ -53,6 +53,7 @@ class OtpVerifyActivity : AppCompatActivity() {
         }
         startSmsUserConsent()
         movedNext()
+        resendOtp()
     }
 
     //For Auto Read otp
@@ -70,6 +71,12 @@ class OtpVerifyActivity : AppCompatActivity() {
 
     //Moved Next
     private fun movedNext() {
+        //Resend Otp
+        binding?.textView14?.setOnClickListener {
+            authViewModel.loginMobileUser(mobile, preferences.getCityName(), "INDIA")
+
+        }
+        //Submit
         binding?.textView15?.setOnClickListener {
             val otp = binding?.otpEditText?.getStringFromFields()
             if (binding?.otpEditText?.getStringFromFields()?.contains("null") == true) {
@@ -140,6 +147,60 @@ class OtpVerifyActivity : AppCompatActivity() {
         otpVerify()
         registerUser()
 
+    }
+
+
+    private fun resendOtp() {
+        authViewModel.resendResponseLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data.msg,
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {
+                            },
+                            negativeClick = {
+                            })
+                        dialog.show()
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {
+                            },
+                            negativeClick = {
+                            })
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {
+                        },
+                        negativeClick = {
+                        })
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleasewait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
     }
 
     private fun otpVerify() {

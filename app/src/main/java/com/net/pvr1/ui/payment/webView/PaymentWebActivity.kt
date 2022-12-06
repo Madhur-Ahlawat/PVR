@@ -1,6 +1,7 @@
 package com.net.pvr1.ui.payment.webView
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Bitmap
 import android.net.UrlQuerySanitizer
 import android.os.Build
@@ -11,6 +12,7 @@ import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.util.Enc
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityPaymentWebBinding
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.ticketConfirmation.TicketConfirmationActivity
 import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr1.utils.Constant.Companion.BOOK_TYPE
 import com.net.pvr1.utils.printLog
@@ -74,7 +76,7 @@ class PaymentWebActivity : AppCompatActivity() {
             expmonth = intent.getStringExtra("expmonth")
         }
         if (intent.getStringExtra("expyear") != null) {
-            expyear = intent.getStringExtra("expyear")
+            expyear = "20" + intent.getStringExtra("expyear")
         }
         if (intent.getStringExtra("channelCode") != null) {
             bankname = intent.getStringExtra("channelCode")
@@ -117,6 +119,8 @@ class PaymentWebActivity : AppCompatActivity() {
         urlParams = "$urlParams&amount=$amount"
         urlParams = "$urlParams&orderId=$BOOKING_ID"
         urlParams = "$urlParams&channelId=WAP"
+        urlParams = "$urlParams&channelCode=CREDIT_CARD"
+        println("pType---->$pType")
         if (pType.equals("NB", ignoreCase = true)) {
             pType = "NET_BANKING"
             urlParams = "$urlParams&channelCode=$bankname"
@@ -133,8 +137,9 @@ class PaymentWebActivity : AppCompatActivity() {
             pType = "UPI"
             urlParams = "$urlParams&payerAccount=$payerAccount&channelCode=$bankname"
         }
+
         urlParams = "$urlParams&txnToken=$token"
-        urlParams = "$urlParams&paymentMode=$pType"
+        urlParams = "$urlParams&paymentMode=CREDIT_CARD"
         urlParams = "$urlParams&authMode=otp"
         urlParams = if (pType.equals(
                 "UPI", ignoreCase = true
@@ -150,7 +155,7 @@ class PaymentWebActivity : AppCompatActivity() {
             recurringparams = "$recurringparams&authMode=otp"
             recurringparams = "$recurringparams&SUBSCRIPTION_ID=$subscriptionId"
             recurringparams = "$recurringparams&txnToken=$token"
-            printLog("--->mix${"$recurringparams"}")
+            printLog("--->mix${recurringparams}")
 
             val cardInfo = "$saveCardId|$ccnumber|$cvv|$expmonth$expyear"
             val postData = ("&cardInfo=" + URLEncoder.encode(
@@ -208,17 +213,15 @@ class PaymentWebActivity : AppCompatActivity() {
         binding?.webView?.settings?.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
 
         binding?.webView?.webViewClient = object : WebViewClient() {
-            override fun onReceivedError(
-                view: WebView, errorCode: Int, description: String, failingUrl: String
-            ) {
-                println("----->8$errorCode,$description,$failingUrl")
-            }
+
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
             }
 
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+                printLog("shouldOverrideUrlLoading--->${url}")
+
                 return if (url.contains("paytmexmobresp") || url.contains("recurring")) {
                     true
                 } else {
@@ -229,6 +232,7 @@ class PaymentWebActivity : AppCompatActivity() {
 
             override fun onPageFinished(view: WebView, url: String) {
                 super.onPageFinished(view, url)
+                printLog("failUrl--->${url}")
                 try {
                     try {
                         if (url.contains("paytmexmobresp") || url.contains("recurring")) {
@@ -276,19 +280,13 @@ class PaymentWebActivity : AppCompatActivity() {
 
                                         })
                                     dialog.show()
-                                    //                                    DialogClass.taskClearDialog(
-                                    //                                        context,
-                                    //                                        value1,
-                                    //                                        getString(R.string.ok),
-                                    //                                        paymentIntentData.getCinemaID(),
-                                    //                                        paymentIntentData.getTransactionID(),
-                                    //                                        paymentType,
-                                    //                                        paymentIntentData.getBookingID()
-                                    //                                    )
                                 }
                             } else if (value.equals("success", ignoreCase = true)) {
-                                //                                TicketView.makeTicket(paymentIntentData, context, bookType)
-                                finish()
+                                val intent = Intent(
+                                    this@PaymentWebActivity,
+                                    TicketConfirmationActivity::class.java
+                                )
+                                startActivity(intent)
                             }
                         } else {
                             printLog("---->")

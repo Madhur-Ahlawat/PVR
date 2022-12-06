@@ -101,7 +101,7 @@ class LoginActivity : AppCompatActivity() {
                         })
                     dialog.show()
                 } else {
-                    authViewModel.loginMobileUser(mobile, "", "INDIA")
+                    authViewModel.loginMobileUser(mobile, preferences.getCityName(), "INDIA")
                 }
                 true
             } else false

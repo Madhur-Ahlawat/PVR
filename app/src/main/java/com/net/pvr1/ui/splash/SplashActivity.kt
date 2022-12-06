@@ -16,6 +16,7 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.location.LocationManagerCompat.isLocationEnabled
 import com.net.pvr1.MainActivity
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySplashBinding
@@ -26,6 +27,7 @@ import com.net.pvr1.ui.food.FoodActivity
 import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.ui.payment.PaymentActivity
+import com.net.pvr1.ui.payment.starPass.StarPassActivity
 import com.net.pvr1.ui.selectCity.SelectCityActivity
 import com.net.pvr1.ui.splash.onBoarding.LandingActivity
 import com.net.pvr1.ui.splash.response.SplashResponse
@@ -76,11 +78,17 @@ class SplashActivity : AppCompatActivity() {
     private fun movedNext() {
         val runnable = Runnable {
             if (preferences.getIsLogin()) {
-                if (preferences.getCityName()==""){
+                if (!Constant().isLocationServicesAvailable(this@SplashActivity)){
                     val intent = Intent(this@SplashActivity, EnableLocationActivity::class.java)
                     startActivity(intent)
                     finish()
+                }
+                else if (preferences.getCityName()==""){
+                    val intent = Intent(this@SplashActivity, SelectCityActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 }else{
+//                    val intent = Intent(this@SplashActivity, StarPassActivity::class.java)
                     val intent = Intent(this@SplashActivity, HomeActivity::class.java)
                     startActivity(intent)
                     finish()

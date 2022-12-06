@@ -408,4 +408,19 @@
     <string name="offers_for_you">Offers for you</string>
     <string name="book_parking">Book Parking</string>
     <string name="thank_you_for_choosing_pvr">Thank you for choosing PVR!</string>
+    <string name="star_pass_will_not_be_refunded_on_cancellation">Star Pass will not be refunded on cancellation</string>
+    <string name="couponText">*If there is an interent connectivity problem while booking the free tickets using your coupon codes and the tickets are not issued please wait for 30 minutes before trying to use the Coupon Codes again</string>
+    <string name="m_coupon_will_not_be_refunded_on_cancellation">M-Coupon will not be refunded on cancellation</string>
+    <string name="last_4_digits_of_credit_card">Last 4 digits of credit card</string>
+    <string name="last_5_digits_of_mobile_number">Last 5 digits of mobile number</string>
+    <string name="promocode_wil_not_be_refunded_for_cancellation">Promocode wil not be refunded for cancellation</string>
+    <string name="enter_promocode">Enter Promocode</string>
+
+    <string name="mobikwik_addmoney_payment_type_credit_card">CC</string>
+
+    <string name="mobikwik_addmoney_payment_type_dedit_card">DC</string>
+    <string name="mobikwik_addmoney_payment_type_net_banking">NB</string>
+    <string name="booking_history">Booking History</string>
+    <string name="enjoy_your_show">Enjoy your show</string>
+    <string name="seat_cushions_for_children_are_available_at_cinema">Seat cushions for children are available at cinema</string>
 </resources>

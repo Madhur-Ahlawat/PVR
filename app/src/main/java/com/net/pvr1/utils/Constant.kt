@@ -1,19 +1,27 @@
 package com.net.pvr1.utils
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.provider.ContactsContract.Directory.PACKAGE_NAME
 import android.provider.Settings
+import android.provider.Settings.SettingNotFoundException
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ForegroundColorSpan
+import android.util.Base64
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.net.pvr1.R
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
@@ -277,4 +285,45 @@ class Constant {
             )
         }
     }
+
+    fun isLocationServicesAvailable(context: Context): Boolean {
+        var locationMode = 0
+        val locationProviders: String
+        var isAvailable = false
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            try {
+                locationMode =
+                    Settings.Secure.getInt(context.contentResolver, Settings.Secure.LOCATION_MODE)
+            } catch (e: SettingNotFoundException) {
+                e.printStackTrace()
+            }
+            isAvailable = locationMode != Settings.Secure.LOCATION_MODE_OFF
+        } else {
+            locationProviders = Settings.Secure.getString(
+                context.contentResolver,
+                Settings.Secure.LOCATION_PROVIDERS_ALLOWED
+            )
+            isAvailable = !TextUtils.isEmpty(locationProviders)
+        }
+        val coarsePermissionCheck = ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+        val finePermissionCheck = ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+        return isAvailable && (coarsePermissionCheck || finePermissionCheck)
+    }
+
+
+    fun createQrCode(text: String): Bitmap {
+        val decodedString: ByteArray = Base64.decode(text, Base64.DEFAULT)
+        val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+//        val bmp: Bitmap = Bitmap.createBitmap(150, 150, Bitmap.Config.ARGB_8888)
+//        val buffer: ByteBuffer = ByteBuffer.wrap(decodedString)
+//        bmp.copyPixelsFromBuffer(buffer)
+        return decodedByte
+    }
+
 }

@@ -69,20 +69,17 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
     private val permissionId = 2
 
     private var cityName: String = ""
+    private var cityNameMAin: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySelectCityBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
         cityName = preferences.getCityName()
-
         // Location City Name
         binding?.txtSelectedCity?.text = preferences.getCityName()
-
         selectCityViewModel.selectCity(
             preferences.getLatitudeData(),
             preferences.getLongitudeData(),
@@ -90,7 +87,6 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             "no",
             "no"
         )
-
         selectCity()
         movedNext()
     }
@@ -281,7 +277,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
             startActivity(intent)
         } else {
-            cityDialog()
+            cityDialog(city[position].name)
         }
 
 
@@ -289,9 +285,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
 
 
     private fun retrieveData(output: SelectCityResponse.Output) {
-
         filterCityList = output.ot
-
         val gridLayout2 = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
         val otherCityAdapter = OtherCityAdapter(output.ot, output, this, this)
         binding?.recyclerViewOtherCity?.layoutManager = gridLayout2
@@ -325,7 +319,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
             startActivity(intent)
         } else {
-            cityDialog()
+            cityDialog(city[position].name)
         }
 
     }
@@ -346,7 +340,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
             startActivity(intent)
         } else {
-            cityDialog()
+            cityDialog(city[position].name)
         }
 
     }
@@ -385,7 +379,8 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         }
     }
 
-    private fun cityDialog() {
+    private fun cityDialog(name: String) {
+        cityNameMAin=name
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.city_select_dialog)
@@ -417,7 +412,11 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
     }
 
     override fun onItemClickCityDialog(city: String) {
-        preferences.saveCityName(city)
+        if (city=="All"){
+            preferences.saveCityName(cityNameMAin)
+        }else{
+            preferences.saveCityName(city)
+        }
         val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
         startActivity(intent)
     }

@@ -45,9 +45,8 @@ class SelectCityAdapter(
         val selectCityItemList = selectCityList[position]
         setWidth = width / 2 - 5
         setHeight = height / 2 - 60
-//        holder.constraintLayout.layoutParams =
-//            LinearLayout.LayoutParams(setWidth, setHeight)
         holder.cityName.text = selectCityItemList.name
+
         //Image
         Glide.with(context)
             .load(selectCityItemList.imageR)

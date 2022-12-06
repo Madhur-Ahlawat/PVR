@@ -43,5 +43,14 @@ class OtpVerifyViewModel @Inject constructor(private val userRepository: UserRep
             )
         }
     }
+//Resend Otp
+    val resendResponseLiveData: LiveData<NetworkResult<LoginResponse>>
+        get() = userRepository.userResponseLiveData
+
+    fun loginMobileUser(mobile: String, city: String, cName: String) {
+        viewModelScope.launch {
+            userRepository.loginMobile(mobile,city,cName)
+        }
+    }
 
 }

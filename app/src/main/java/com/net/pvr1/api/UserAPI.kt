@@ -32,6 +32,7 @@ import com.net.pvr1.ui.splash.response.SplashResponse
 import com.net.pvr1.ui.summery.response.AddFoodResponse
 import com.net.pvr1.ui.summery.response.SetDonationResponse
 import com.net.pvr1.ui.summery.response.SummeryResponse
+import com.net.pvr1.ui.ticketConfirmation.response.TicketBookedResponse
 import retrofit2.Response
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -371,7 +372,6 @@ interface UserAPI {
         @Query("screenid") screenid: String,
         @Query("adultSeats") adultSeats: String,
         @Query("childSeats") childSeats: String,
-        @Query("oldBookingId") oldBookingId: String,
         @Query("isMembersDay") isMembersDay: String,
         @Query("isSpi") isSpi: String,
         @Query("av") version: String,
@@ -407,7 +407,6 @@ interface UserAPI {
         @Query("infosys") infosys: String,
         @Query("isSpi") isSpi: String,
         @Query("doreq") doreq: Boolean,
-        @Query("oldBookingId") oldBookingId: String,
         @Query("change") change: String,
         @Query("av") version: String,
         @Query("pt") platform: String
@@ -423,11 +422,10 @@ interface UserAPI {
         @Query("srilanka") srilanka: String,
         @Query("infosys") infosys: String,
         @Query("isSpi") isSpi: String,
-        @Query("oldBookingId") oldBookingId: String,
         @Query("change") change: String,
         @Query("av") version: String,
         @Query("pt") platform: String
-    ): Response<SummeryResponse>
+    ): Response<TicketBookedResponse>
 
     @POST("content/specialcine")
     suspend fun formats(

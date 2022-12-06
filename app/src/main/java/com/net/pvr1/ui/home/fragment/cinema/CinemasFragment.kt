@@ -44,11 +44,9 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        authViewModel.cinema("Delhi-NCR", "0.0", "0.0", "", "")
+        authViewModel.cinema(preferences.getCityName(), preferences.getLatitudeData(), preferences.getLongitudeData(), "", "")
         cinemaApi()
         setPreference()
-
-
         movedNext()
     }
 
@@ -177,7 +175,7 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
         startActivity(intent)
     }
 
-    override fun onLocationClick(comingSoonItem: CinemaResponse.Output.C) {
+    override fun onCinemaClick(comingSoonItem: CinemaResponse.Output.C) {
         val intent = Intent(requireActivity(), CinemaSessionActivity::class.java)
         intent.putExtra("cid", comingSoonItem.cId.toString())
         intent.putExtra("lat", comingSoonItem.lat)

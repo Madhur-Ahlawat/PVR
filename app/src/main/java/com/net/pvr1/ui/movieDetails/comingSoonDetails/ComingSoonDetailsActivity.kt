@@ -271,7 +271,6 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
                 binding?.recyclerMusic?.adapter = trailerAdapter
             } else {
                 binding?.textView70?.hide()
-
             }
         }
 

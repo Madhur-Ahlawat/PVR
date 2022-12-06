@@ -5,9 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.net.pvr1.R
 import com.net.pvr1.databinding.ItemPaymentListBinding
-import com.net.pvr1.ui.food.CartModel
 import com.net.pvr1.ui.payment.response.PaymentResponse
 
 //category
@@ -37,6 +35,9 @@ class PaymentExclusiveAdapter(
 //                binding.imageView81.setImageResource(R.drawable.shows)
                 //title
                 binding.textView124.text = this.name
+                itemView.setOnClickListener{
+                    listener.paymentExclusiveClick(this)
+                }
 
             }
         }
@@ -49,7 +50,7 @@ class PaymentExclusiveAdapter(
 
 
     interface RecycleViewItemClickListenerCity {
-        fun paymentExclusiveClick(comingSoonItem: CartModel, position: Int)
+        fun paymentExclusiveClick(comingSoonItem: PaymentResponse.Output.Offer)
 
     }
 

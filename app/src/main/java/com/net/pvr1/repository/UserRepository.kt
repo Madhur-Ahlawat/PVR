@@ -35,6 +35,7 @@ import com.net.pvr1.ui.splash.response.SplashResponse
 import com.net.pvr1.ui.summery.response.AddFoodResponse
 import com.net.pvr1.ui.summery.response.SetDonationResponse
 import com.net.pvr1.ui.summery.response.SummeryResponse
+import com.net.pvr1.ui.ticketConfirmation.response.TicketBookedResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import org.json.JSONObject
@@ -910,7 +911,6 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             "",
             "",
             "",
-            "",
             "no",
             "no",
             Constant.version,
@@ -1046,7 +1046,6 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             "NO",
             false,
             "",
-            "",
             Constant.version,
             Constant.platform
         )
@@ -1067,9 +1066,9 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
 
     //Ticket Confirmation
 
-    private val ticketConfirmationLiveData = MutableLiveData<NetworkResult<SummeryResponse>>()
-    val ticketConfirmationResponseLiveData: LiveData<NetworkResult<SummeryResponse>>
-        get() = summerLiveData
+    private val ticketConfirmationLiveData = MutableLiveData<NetworkResult<TicketBookedResponse>>()
+    val ticketConfirmationResponseLiveData: LiveData<NetworkResult<TicketBookedResponse>>
+        get() = ticketConfirmationLiveData
 
     suspend fun ticketConfirmationLiveDataLayout(
         booktype: String,
@@ -1091,7 +1090,6 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             srilanka,
             infosys,
             isSpi,
-            oldBookingId,
             change,
             Constant.version,
             Constant.platform
@@ -1099,15 +1097,14 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         ticketConfirmationLiveDataLayoutResponse(response)
     }
 
-    private fun ticketConfirmationLiveDataLayoutResponse(response: Response<SummeryResponse>) {
-
+    private fun ticketConfirmationLiveDataLayoutResponse(response: Response<TicketBookedResponse>) {
         if (response.isSuccessful && response.body() != null) {
-            summerLiveData.postValue(NetworkResult.Success(response.body()!!))
+            ticketConfirmationLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
             val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
-            summerLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            ticketConfirmationLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
-            summerLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+            ticketConfirmationLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
 
     }

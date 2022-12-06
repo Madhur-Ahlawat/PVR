@@ -89,7 +89,7 @@
         android:textAllCaps="false"
         android:textColor="#2f2f2f"
         android:textSize="@dimen/dimen_14sp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:drawableEndCompat="@drawable/ic_yellow"
         app:layout_constraintEnd_toEndOf="@+id/otpEditText"
         app:layout_constraintTop_toBottomOf="@+id/otpEditText" />

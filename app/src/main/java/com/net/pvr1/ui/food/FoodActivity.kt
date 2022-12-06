@@ -68,25 +68,10 @@ class FoodActivity : AppCompatActivity(),
         binding = ActivityFoodBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-//        authViewModel.food(
-//            preferences.getUserId().toString(),
-//            CINEMA_ID,
-//            BOOKING_ID,
-//            "",
-//            "",
-//            "",
-//            "",
-//            "",
-//            "",
-//            "no",
-//            "no",
-//            "no"
-//        )
-
         authViewModel.food(
             preferences.getUserId().toString(),
-            "GURM",
-            "GURM220009921660",
+            CINEMA_ID,
+            BOOKING_ID,
             "",
             "",
             "",
@@ -97,6 +82,21 @@ class FoodActivity : AppCompatActivity(),
             "no",
             "no"
         )
+
+//        authViewModel.food(
+//            preferences.getUserId().toString(),
+//            "GURM",
+//            "GURM220009921660",
+//            "",
+//            "",
+//            "",
+//            "",
+//            "",
+//            "",
+//            "no",
+//            "no",
+//            "no"
+//        )
 
         movedNext()
         foodDetails()
@@ -146,6 +146,7 @@ class FoodActivity : AppCompatActivity(),
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
+                    printLog("Loading--->")
                     loader = LoaderDialog(R.string.pleasewait)
                     loader?.show(this.supportFragmentManager, null)
                 }

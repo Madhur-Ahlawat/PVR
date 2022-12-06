@@ -41,11 +41,16 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.Direction {
 
     //Item Action
     private fun movedNext() {
+        binding?.include2?.imageView58?.setOnClickListener {
+                onBackPressedDispatcher.onBackPressed()
+        }
+
+        binding?.include2?.textView108?.text=getString(R.string.booking_history)
 
 //GiftCard Action
         binding?.giftCard?.setOnClickListener {
             //GiftCard Api Call
-            authViewModel.giftCard("H5KQhI22Y8h4DtJYuU6ZAA==", "0cb41def6f59fb5f")
+            authViewModel.giftCard(preferences.getUserId().toString(), Constant().getDeviceId(this))
             binding?.view17?.backgroundTintList =
                 AppCompatResources.getColorStateList(this, R.color.yellow)
             binding?.view18?.backgroundTintList =
@@ -56,10 +61,10 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.Direction {
         binding?.ticketFood?.setOnClickListener {
             //Ticket & Food Api Call
             authViewModel.foodTicket(
-                "3myIKiEnYJgF3Jh8jqCATw==",
-                "1415BC19-37F5-4CAE-B968-497EDFCB4B71",
+                preferences.getUserId(),
+                Constant().getDeviceId(this),
                 "",
-                "Delhi-NCR",
+                preferences.getCityName(),
                 "",
                 "NO"
             )
@@ -72,10 +77,10 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.Direction {
         }
 //FoodCall
         authViewModel.foodTicket(
-            "3myIKiEnYJgF3Jh8jqCATw==",
-            "1415BC19-37F5-4CAE-B968-497EDFCB4B71",
+            preferences.getUserId(),
+            Constant().getDeviceId(this),
             "",
-            "Delhi-NCR",
+            preferences.getCityName(),
             "",
             "NO"
         )

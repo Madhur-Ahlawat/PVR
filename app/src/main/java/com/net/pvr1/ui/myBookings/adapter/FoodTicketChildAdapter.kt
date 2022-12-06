@@ -1,6 +1,7 @@
 package com.net.pvr1.ui.myBookings.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
+import com.net.pvr1.ui.ticketConfirmation.TicketConfirmationActivity
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
 
@@ -22,6 +24,7 @@ class FoodTicketChildAdapter(
 ) :
     RecyclerView.Adapter<FoodTicketChildAdapter.MyViewHolderNowShowing>() {
 
+    private var type=""
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderNowShowing {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.ticket_food_child_item, parent, false)
@@ -56,7 +59,6 @@ class FoodTicketChildAdapter(
         if (cinemaItem.is_only_fd) {
             holder.cinemaWithFood.hide()
             holder.onlyFood.show()
-
 //Food Item
             val gridLayout2 = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
             val foodTicketFoodAdapter = FoodTicketFoodAdapter(cinemaItem.f,"food")
@@ -66,11 +68,27 @@ class FoodTicketChildAdapter(
             holder.onlyFood.hide()
             holder.cinemaWithFood.show()
 
-//Food Item
-            val gridLayout2 = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
-            val foodTicketFoodAdapter = FoodTicketFoodAdapter(cinemaItem.f,"cinema")
-            holder.recyclerView.layoutManager = gridLayout2
-            holder.recyclerView.adapter = foodTicketFoodAdapter
+////Food Item
+//            val gridLayout2 = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
+//            val foodTicketFoodAdapter = FoodTicketFoodAdapter(cinemaItem.f,"cinema")
+//            holder.recyclerView.layoutManager = gridLayout2
+//            holder.recyclerView.adapter = foodTicketFoodAdapter
+
+        }
+
+
+        holder.itemView.setOnClickListener {
+            type = if (cinemaItem.is_only_fd){
+                "FOOD"
+            }else{
+                "BOOKING"
+
+            }
+            val intent = Intent( context,TicketConfirmationActivity::class.java)
+            intent.putExtra("bookingId",cinemaItem.bi)
+            intent.putExtra("type","myBooking")
+            intent.putExtra("bookType",type)
+            context.startActivity(intent)
 
         }
 

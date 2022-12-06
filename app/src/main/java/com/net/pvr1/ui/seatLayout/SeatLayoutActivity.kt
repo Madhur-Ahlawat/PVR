@@ -1857,7 +1857,9 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
     override fun showsClick(comingSoonItem: Int) {
         sessionId = comingSoonItem.toString()
+
         binding?.llRowName?.removeAllViews()
+
         authViewModel.seatLayout(
             CINEMA_ID,
             sessionId,
@@ -1867,6 +1869,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             false,
             ""
         )
+
     }
 
     override fun cinemaShowsClick(comingSoonItem: Int) {

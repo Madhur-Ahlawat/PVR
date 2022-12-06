@@ -25,7 +25,6 @@ import com.net.pvr1.databinding.ActivitySummeryBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.CartModel
-import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.ui.payment.PaymentActivity
 import com.net.pvr1.ui.seatLayout.adapter.AddFoodCartAdapter
 import com.net.pvr1.ui.summery.adapter.SeatListAdapter
@@ -48,12 +47,14 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     private var cartModel: ArrayList<CartModel> = arrayListOf()
     private var itemDescription: String = ""
     private var showTaxes = false
+    private var paidAmount = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySummeryBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
         try {
             cartModel = intent.getSerializableExtra("food") as ArrayList<CartModel>
             printLog("exception--->${cartModel}")
@@ -64,7 +65,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         authViewModel.summery(
             TRANSACTION_ID,
             CINEMA_ID,
-            preferences.getUserId().toString(),
+            preferences.getUserId(),
             BOOKING_ID
         )
         movedNext()
@@ -102,6 +103,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+
                         authViewModel.setDonation(
                             BOOKING_ID,
                             TRANSACTION_ID, true, false, "NO"
@@ -154,6 +156,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
 
                         val intent = Intent(this@SummeryActivity, PaymentActivity::class.java)
+                        intent.putExtra("paidAmount",paidAmount)
                         startActivity(intent)
 
                     } else {
@@ -275,6 +278,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         //2/ticket calling
 //        binding?.textView172?.text = ""
 //        grand total
+        paidAmount=output.a
         binding?.textView173?.text = getString(R.string.currency) + output.a
 //       pay
         binding?.textView174?.text =
@@ -283,6 +287,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         Glide.with(this)
             .load(output.imh)
             .into(binding?.imageView59!!)
+
         //title
         binding?.textView110?.text = output.m
         //shows
@@ -290,7 +295,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         //location
         binding?.textView113?.text = output.c
         binding?.imageView60?.setOnClickListener {
-            Constant().openMap(this, "28.5723921", "77.0449214")
+            Constant().openMap(this, preferences.getLatitudeData(), preferences.getLongitudeData())
         }
         //total seat
         val ticketCount = output.seat.size * 2
@@ -298,6 +303,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
         //audi
         binding?.textView115?.text = output.audi + "-" + output.st
+
         //seat
         val layoutManager = FlexboxLayoutManager(this)
         layoutManager.flexDirection = FlexDirection.ROW
@@ -320,14 +326,14 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
         //manage taxes Shows
         binding?.imageView77?.setOnClickListener {
-            if (!showTaxes) {
+            showTaxes = if (!showTaxes) {
                 binding?.imageView77?.setImageResource(R.drawable.arrow_down)
                 binding?.taxes?.hide()
-                showTaxes = true
+                true
             } else {
                 binding?.imageView77?.setImageResource(R.drawable.arrow_up)
                 binding?.taxes?.show()
-                showTaxes = false
+                false
             }
         }
 
@@ -350,21 +356,28 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 //            printLog("seat--->${itemDescription},${TRANSACTION_ID},${CINEMA_ID},${ preferences.getUserId().toString()},${output.seats},${output.audi}")
             printLog(
                 "seat--->${itemDescription},${TRANSACTION_ID},${CINEMA_ID},${
-                    preferences.getUserId().toString()
+                    preferences.getUserId()
                 },${output.seats},${output.audi}"
             )
 
-            authViewModel.seatWithFood(
-                itemDescription,
-                TRANSACTION_ID,
-                CINEMA_ID,
-                preferences.getUserId().toString(),
-                "",
-                "",
-                "no",
-                output.seats,
-                output.audi
-            )
+            if (cartModel.isNotEmpty()) {
+                authViewModel.seatWithFood(
+                    itemDescription,
+                    TRANSACTION_ID,
+                    CINEMA_ID,
+                    preferences.getUserId(),
+                    "",
+                    "",
+                    "no",
+                    output.seats,
+                    output.audi
+                )
+            } else {
+                val intent = Intent(this@SummeryActivity, PaymentActivity::class.java)
+                intent.putExtra("paidAmount",output.a)
+                startActivity(intent)
+            }
+
 
         }
     }
