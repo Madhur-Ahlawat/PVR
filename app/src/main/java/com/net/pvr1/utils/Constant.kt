@@ -25,6 +25,7 @@ import androidx.core.content.ContextCompat
 import com.net.pvr1.R
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
+import com.net.pvr1.ui.ticketConfirmation.TicketConfirmationActivity
 import java.net.MalformedURLException
 import java.net.URL
 import java.text.DecimalFormat
@@ -85,6 +86,14 @@ class Constant {
         var PrivilegeHomeResponseConst:PrivilegeHomeResponse.Output? =null
         var PlaceHolder:HomeResponse.Output? = null
         var DECIFORMAT = DecimalFormat("0.000")
+
+
+        // Payment Ids
+        var CREDIT_CARD = "116"
+        var DEBIT_CARD = "117"
+        var NET_BANKING = "118"
+        var UPI = "119"
+        var PHONE_PE = "113"
 
     }
 
@@ -307,5 +316,20 @@ class Constant {
         ) == PackageManager.PERMISSION_GRANTED
         return isAvailable && (coarsePermissionCheck || finePermissionCheck)
     }
+
+    fun printTicket(activity: Activity) {
+        val intent = Intent(
+            activity,
+            TicketConfirmationActivity::class.java
+        )
+        activity.startActivity(intent)
+        activity.finish()
+    }
+
+    fun paymentIds(){
+
+    }
+
+
 
 }

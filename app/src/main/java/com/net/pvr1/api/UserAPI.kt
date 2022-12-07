@@ -20,9 +20,7 @@ import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.offer.response.MOfferResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
-import com.net.pvr1.ui.payment.response.CouponResponse
-import com.net.pvr1.ui.payment.response.PaymentResponse
-import com.net.pvr1.ui.payment.response.PaytmHmacResponse
+import com.net.pvr1.ui.payment.response.*
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.seatLayout.response.InitResponse
 import com.net.pvr1.ui.seatLayout.response.ReserveSeatResponse
@@ -117,7 +115,7 @@ interface UserAPI {
         @Query("booktype") booktype: String,
         @Query("av") version: String,
         @Query("pt") platform: String
-    ): Response<PaymentResponse>
+    ): Response<UPIStatusResponse>
 
 
     @POST("v2/user/register")
@@ -517,5 +515,28 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<BookingRetrievalResponse>
+
+
+    //PhonpePe Api Call
+    @POST("payment/phonepe/signature")
+    suspend fun phonepeHmac(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PhonepeHmacResponse>
+
+    @POST("payment/phonepe/paydone")
+    suspend fun phonepeStatus(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<UPIStatusResponse>
+
 
 }

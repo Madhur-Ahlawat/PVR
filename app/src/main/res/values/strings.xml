@@ -429,4 +429,11 @@
     <string name="cardCvv">Enter Your CVV</string>
     <string name="cardMonth">Enter Your Card Moth/Year</string>
     <string name="cardName">Enter Your Card Name</string>
+
+
+<!--    // Phonepe Cred-->
+    <string name="phone_pe_app_id">9d40e79f1c154e4185f9155a527f4b67</string>
+    <string name="phone_pe_merchant_id">PVRCINEMAS</string>
+
+
 </resources>

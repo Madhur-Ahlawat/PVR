@@ -3,10 +3,14 @@ package com.net.pvr1.ui.payment.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.databinding.ItemPaymentListBinding
 import com.net.pvr1.ui.payment.response.PaymentResponse
+import com.net.pvr1.utils.Constant
+import com.phonepe.intent.sdk.api.PhonePe.isAppInstalled
+import com.phonepe.intent.sdk.api.PhonePeInitException
 
 //category
 
@@ -32,9 +36,25 @@ class PaymentAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
-                //title
-                binding.textView124.text = this.name
-                holder.itemView.setOnClickListener { listener.paymentClick(this)}
+                if (this.id==Constant.PHONE_PE){
+                    try {
+                        if (isAppInstalled()) {
+                            binding.textView124.text = this.name
+                            holder.itemView.setOnClickListener { listener.paymentClick(this) }
+                            holder.itemView.visibility = View.VISIBLE
+                        } else {
+                            holder.itemView.visibility = View.GONE
+                        }
+                    } catch (e: PhonePeInitException) {
+                        e.printStackTrace()
+                        holder.itemView.visibility = View.GONE
+                    }
+
+                }else {
+                    //title
+                    binding.textView124.text = this.name
+                    holder.itemView.setOnClickListener { listener.paymentClick(this) }
+                }
             }
         }
 

@@ -1,11 +1,10 @@
 package com.net.pvr1.ui.payment
 
 import android.annotation.SuppressLint
-import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,15 +22,22 @@ import com.net.pvr1.ui.payment.promoCode.PromoCodeActivity
 import com.net.pvr1.ui.payment.response.CouponResponse
 import com.net.pvr1.ui.payment.response.PaymentResponse
 import com.net.pvr1.ui.payment.response.PaytmHmacResponse
+import com.net.pvr1.ui.payment.response.UPIStatusResponse
 import com.net.pvr1.ui.payment.starPass.StarPassActivity
 import com.net.pvr1.ui.payment.viewModel.PaymentViewModel
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr1.utils.Constant.Companion.BOOK_TYPE
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
+import com.net.pvr1.utils.Constant.Companion.CREDIT_CARD
+import com.net.pvr1.utils.Constant.Companion.DEBIT_CARD
+import com.net.pvr1.utils.Constant.Companion.NET_BANKING
+import com.net.pvr1.utils.Constant.Companion.PHONE_PE
+import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
+import com.net.pvr1.utils.Constant.Companion.UPI
+import com.phonepe.intent.sdk.api.PhonePe
+import com.phonepe.intent.sdk.api.TransactionRequestBuilder
 import dagger.hilt.android.AndroidEntryPoint
-import org.json.JSONException
-import org.json.JSONObject
 import java.util.*
 import javax.inject.Inject
 
@@ -49,6 +55,8 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
     private var paidAmount = ""
 
     private val UPI_PAYMENT = 0
+    private var upi_count = 0
+    private var upi_loader = false
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +66,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         setContentView(view)
         binding?.include26?.textView108?.text = getString(R.string.payment)
 
-        paidAmount=intent.getStringExtra("paidAmount").toString()
+        paidAmount = intent.getStringExtra("paidAmount").toString()
         //paidAmount
         binding?.textView178?.text =
             getString(R.string.pay) + " " + getString(R.string.currency) + intent.getStringExtra("paidAmount")
@@ -110,7 +118,10 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         payModeDataLoad()
         paytmHMAC()
         upiStatus()
+        phonePeHmac()
+        phonePeStatus()
     }
+
 
 //    private fun voucherDataLoad() {
 //        authViewModel.userResponseLiveData.observe(this) {
@@ -261,8 +272,9 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         }
     }
 
-    override fun paymentClick(comingSoonItem: PaymentResponse.Output.Gateway) {
-        if (comingSoonItem.name=="UPI"){
+    //Payment Option Clicks
+    override fun paymentClick(paymentItem: PaymentResponse.Output.Gateway) {
+        if (paymentItem.id == UPI) {
             authViewModel.paytmHMAC(
                 preferences.getUserId(),
                 Constant.BOOKING_ID,
@@ -270,16 +282,27 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 false,
                 "",
                 Constant.BOOK_TYPE,
-                comingSoonItem.name,
+                paymentItem.name,
                 "no",
                 "NO"
             )
-//            payUsingUpi("","","","")
-        }else{
-        val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
-        intent.putExtra("pTypeId", comingSoonItem.id)
-        intent.putExtra("paidAmount", paidAmount)
-        startActivity(intent)
+        } else if (paymentItem.id == CREDIT_CARD) {
+            val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
+            intent.putExtra("pTypeId", paymentItem.id)
+            intent.putExtra("paidAmount", paidAmount)
+            startActivity(intent)
+        } else if (paymentItem.id == DEBIT_CARD) {
+            val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
+            intent.putExtra("pTypeId", paymentItem.id)
+            intent.putExtra("paidAmount", paidAmount)
+            startActivity(intent)
+        } else if (paymentItem.id == NET_BANKING) {
+            val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
+            intent.putExtra("pTypeId", paymentItem.id)
+            intent.putExtra("paidAmount", paidAmount)
+            startActivity(intent)
+        } else if (paymentItem.id == PHONE_PE) {
+            authViewModel.phonepeHMAC(preferences.getUserId(), BOOKING_ID, BOOK_TYPE,TRANSACTION_ID)
         }
     }
 
@@ -327,11 +350,10 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         authViewModel.upiStatusResponseLiveData.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
-                    loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-
-//                        retrieveDataUpi(it.data.output)
+                        retrieveStatusUpi(it.data.output)
                     } else {
+                        loader?.dismiss()
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
                             R.string.app_name,
@@ -344,7 +366,6 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                     }
                 }
                 is NetworkResult.Error -> {
-                    loader?.dismiss()
                     val dialog = OptionDialog(this,
                         R.mipmap.ic_launcher,
                         R.string.app_name,
@@ -356,12 +377,55 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
-                    loader?.show(this.supportFragmentManager, null)
+                    if (!upi_loader) {
+                        loader = LoaderDialog(R.string.pleasewait)
+                        loader?.show(this.supportFragmentManager, null)
+                    }
                 }
             }
         }
 
+    }
+
+    private fun retrieveStatusUpi(output: UPIStatusResponse.Output) {
+        upi_loader = true;
+        if (output.p.equals("PAID", ignoreCase = true)) {
+            loader?.dismiss()
+            Constant().printTicket(this@PaymentActivity)
+        } else if (output.p.equals("PENDING", ignoreCase = true)) {
+            if (upi_count <= 6) {
+                val handler = Handler()
+                upi_count += 1
+                handler.postDelayed({ // close your dialog
+                    authViewModel.upiStatus(
+                        BOOKING_ID,
+                        BOOK_TYPE
+                    )
+                }, 10000)
+            } else {
+                loader?.dismiss()
+                val dialog = OptionDialog(this,
+                    R.mipmap.ic_launcher,
+                    R.string.app_name,
+                    "If you want to try again then press retry otherwise press cancel.",
+                    positiveBtnText = R.string.ok,
+                    negativeBtnText = R.string.no,
+                    positiveClick = {},
+                    negativeClick = {})
+                dialog.show()
+            }
+        } else {
+            loader?.dismiss()
+            val dialog = OptionDialog(this,
+                R.mipmap.ic_launcher,
+                R.string.app_name,
+                "Transaction Failed!",
+                positiveBtnText = R.string.ok,
+                negativeBtnText = R.string.no,
+                positiveClick = {},
+                negativeClick = {})
+            dialog.show()
+        }
     }
 
 
@@ -369,40 +433,51 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(output.deepLink)
         startActivityForResult(intent, 120)
-        startActivity(intent)
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 120) {
             if (data != null && data.extras != null) {
+                if (BOOK_TYPE == "LOYALTYUNLIMITED") {
+                    toast("LOYALTYUNLIMITED")
+                } else {
+                    authViewModel.upiStatus(
+                        BOOKING_ID,
+                        BOOK_TYPE
+                    )
+                }
 
-//                getUPICustomCall(
-//                    context,
-//                    com.net.pvr.ui.otherpaymentoptions.PCOtherPaymentOptionsActivity.bookType,
-//                    com.net.pvr.ui.otherpaymentoptions.PCOtherPaymentOptionsActivity.paymentIntentData,
-//                    paymentType
-//                )
+            }else{
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
                     R.string.app_name,
-                    getString(R.string.pleasewait),
+                    "Transaction Failed!",
                     positiveBtnText = R.string.ok,
                     negativeBtnText = R.string.no,
                     positiveClick = {},
                     negativeClick = {})
                 dialog.show()
-                if (BOOK_TYPE=="LOYALTYUNLIMITED" ){
-                    toast("LOYALTYUNLIMITED")
-                }
-                else {
-                    authViewModel.upiStatus(
-                        BOOK_TYPE,
-                        BOOKING_ID
-                    )
-                }
+            }
+        }else if (resultCode == 300){
+            var bundle: Bundle
+            val txnResult: String? = null
+            if (data != null) {
+                if (resultCode == RESULT_OK) {
+                    authViewModel.phonepeStatus(preferences.getUserId(), BOOKING_ID, BOOK_TYPE,TRANSACTION_ID)
+                } else if (resultCode == RESULT_CANCELED) {
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        "Transaction Failed!",
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {
 
+                        },
+                        negativeClick = {})
+                    dialog.show()
+                }
             }
         }
     }
@@ -422,7 +497,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
             }
             "Promocode" -> {
                 val intent = Intent(this@PaymentActivity, PromoCodeActivity::class.java)
-                intent.putExtra("paidAmount",paidAmount)
+                intent.putExtra("paidAmount", paidAmount)
                 startActivity(intent)
             }
             "Hyatt Dining Club" -> {
@@ -464,6 +539,112 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         }
         return categoryPaymentNew
     }
+
+    private fun phonePeHmac() {
+        authViewModel.phonepeLiveDataScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        val transactionRequest2 = TransactionRequestBuilder()
+                            .setData(it.data.output.bs)
+                            .setChecksum(it.data.output.bs)
+                            .setUrl(it.data.output.bs)
+                            .build()
+
+                        startActivityForResult(
+                            PhonePe.getTransactionIntent(
+                                transactionRequest2
+                            ), 300
+                        )
+
+                    } else {
+                        loader?.dismiss()
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    if (!upi_loader) {
+                        loader = LoaderDialog(R.string.pleasewait)
+                        loader?.show(this.supportFragmentManager, null)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun phonePeStatus() {
+        authViewModel.phonepeStatusLiveDataScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+
+                        if (it.data.output.p != "false"){
+                            Constant().printTicket(this@PaymentActivity)
+                        }else{
+                            val dialog = OptionDialog(this,
+                                R.mipmap.ic_launcher,
+                                R.string.app_name,
+                                it.data?.msg.toString(),
+                                positiveBtnText = R.string.ok,
+                                negativeBtnText = R.string.no,
+                                positiveClick = {},
+                                negativeClick = {})
+                            dialog.show()
+                        }
+
+                    } else {
+                        loader?.dismiss()
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    if (!upi_loader) {
+                        loader = LoaderDialog(R.string.pleasewait)
+                        loader?.show(this.supportFragmentManager, null)
+                    }
+                }
+            }
+        }
+    }
+
 
 
 }

@@ -276,6 +276,18 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+<!--        // Phone Pe Cred-->
+        <meta-data
+            android:name="com.phonepe.android.sdk.MerchantId"
+            android:value="@string/phone_pe_merchant_id" />
+        <meta-data
+            android:name="com.phonepe.android.sdk.AppId"
+            android:value="@string/phone_pe_app_id" />
+        <meta-data
+            android:name="com.phonepe.android.sdk.Debuggable"
+            android:value="true" />
+
     </application>
 
 </manifest>

@@ -10,9 +10,11 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityOtpVerifyBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.enableLocation.EnableLocationActivity
 import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
 import com.net.pvr1.ui.login.otpVerify.viewModel.OtpVerifyViewModel
+import com.net.pvr1.ui.selectCity.SelectCityActivity
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.SmsBroadcastReceiver.SmsBroadcastReceiverListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -309,10 +311,20 @@ class OtpVerifyActivity : AppCompatActivity() {
         output?.token?.let { preferences.saveToken(it) }
         output?.dob?.let { preferences.saveDob(it) }
 
-        val intent = Intent(this@OtpVerifyActivity, HomeActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
-        finish()
+        if (!Constant().isLocationServicesAvailable(this@OtpVerifyActivity)){
+            val intent = Intent(this@OtpVerifyActivity, EnableLocationActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        else if (preferences.getCityName()==""){
+            val intent = Intent(this@OtpVerifyActivity, SelectCityActivity::class.java)
+            startActivity(intent)
+            finish()
+        }else{
+            val intent = Intent(this@OtpVerifyActivity, HomeActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     @Throws(Exception::class)
