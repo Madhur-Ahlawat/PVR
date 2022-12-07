@@ -5,8 +5,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
@@ -16,7 +14,6 @@ import android.provider.Settings.SettingNotFoundException
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ForegroundColorSpan
-import android.util.Base64
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.inputmethod.InputMethodManager
@@ -326,8 +323,12 @@ class Constant {
         activity.finish()
     }
 
-    fun paymentIds(){
-
+    fun shareData(activity: Activity,title:String,shareUrl:String){
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "text/plain"
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, title)
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareUrl)
+        activity.startActivity(Intent.createChooser(shareIntent, "Share via"))
     }
 
 

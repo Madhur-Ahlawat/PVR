@@ -122,18 +122,18 @@ class CinemaAdapter(
                 }
 
                 //Direction
-//                binding.llLocation.setOnClickListener {
-//                    listener.onDirectionClick(this)
-//                }
+                binding.imageView166.setOnClickListener {
+                    listener.onDirectionClick(this)
+                }
 
                 //Kilometer
                 binding.relativeLayout2.setOnClickListener {
                     location.onCinemaClick(this)
                 }
                 //Kilometer
-                binding.kiloMeter.setOnClickListener {
-                    location.onCinemaClick(this)
-                }
+//                binding.kiloMeter.setOnClickListener {
+//                    location.onCinemaClick(this)
+//                }
             }
         }
 

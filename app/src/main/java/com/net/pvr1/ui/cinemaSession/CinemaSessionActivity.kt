@@ -1,7 +1,6 @@
 package com.net.pvr1.ui.cinemaSession
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +9,6 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityCinemaSessionBinding
-import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.cinemaSession.adapter.CinemaSessionCinParentAdapter
 import com.net.pvr1.ui.cinemaSession.adapter.CinemaSessionDaysAdapter
 import com.net.pvr1.ui.cinemaSession.adapter.CinemaSessionLanguageAdapter
@@ -21,6 +19,7 @@ import com.net.pvr1.ui.cinemaSession.viewModel.CinemaSessionViewModel
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.home.adapter.PromotionAdapter
+import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import com.net.pvr1.utils.PreferenceManager
@@ -39,6 +38,7 @@ class CinemaSessionActivity : AppCompatActivity(),
     private var binding: ActivityCinemaSessionBinding? = null
     private val authViewModel: CinemaSessionViewModel by viewModels()
     private var loader: LoaderDialog? = null
+//    private var
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +46,7 @@ class CinemaSessionActivity : AppCompatActivity(),
         val view = binding?.root
         setContentView(view)
         authViewModel.cinemaSession(
-            "Delhi-NCR",
+            preferences.getCityName(),
             intent.getStringExtra("cid").toString(),
             intent.getStringExtra("lat").toString(),
             intent.getStringExtra("lang").toString(),
@@ -64,9 +64,22 @@ class CinemaSessionActivity : AppCompatActivity(),
             "ALL"
         )
         //Theater
-        authViewModel.cinemaNearTheater("Delhi-NCR", "0", "0", "192")
+        authViewModel.cinemaNearTheater(preferences.getCityName(), preferences.getLatitudeData(), preferences.getLongitudeData(), intent.getStringExtra("cid").toString())
         cinemaSessionDataLoad()
         cinemaNearTheaterLoad()
+        movedNext()
+    }
+
+    private fun movedNext() {
+        //onBack
+        binding?.imageView41?.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+        //share
+        binding?.imageView42?.setOnClickListener {
+            Constant().shareData(this@CinemaSessionActivity,"","")
+        }
+
     }
 
     private fun cinemaSessionDataLoad() {
@@ -168,6 +181,7 @@ class CinemaSessionActivity : AppCompatActivity(),
     }
 
     private fun retrieveData(output: CinemaSessionResponse.Output) {
+        binding?.textView99?.text = output.cn
         //title
         binding?.textView84?.text = output.cn
         //address
@@ -179,19 +193,12 @@ class CinemaSessionActivity : AppCompatActivity(),
             .into(binding?.imageView40!!)
         //Direction
         binding?.view64?.setOnClickListener {
-            val strUri =
-                "http://maps.google.com/maps?q=loc:" + output.lat + "," + output.lang + " (" + "Label which you want" + ")"
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(strUri))
-            intent.setClassName(
-                "com.google.android.apps.maps",
-                "com.google.android.maps.MapsActivity"
-            )
-            startActivity(intent)
+            Constant().openMap(this,output.lat , output.lang)
         }
         //Distance
         binding?.textView86?.text = output.d
         //Shows
-        binding?.textView85?.text = "40 Dummy"
+        binding?.textView85?.text = output.msc.toString()+getString(R.string.shows)
 
         //recycler Days
         val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
@@ -213,15 +220,68 @@ class CinemaSessionActivity : AppCompatActivity(),
         binding?.recyclerView15?.layoutManager = gridLayout3
         binding?.recyclerView15?.adapter = cinemaSessionCinParentAdapter
 
+        //action Like
+        var rowIndex:Boolean=output.like
+        toast("$rowIndex")
+        val isLogin=preferences.getIsLogin()
+        if (rowIndex){
+            binding?.imageView43?.setImageResource(R.drawable.ic_favourite_theatre)
+        }else {
+            binding?.imageView43?.setImageResource(R.drawable.ic_un_favourite_theatre)
+        }
+        binding?.imageView43?.setOnClickListener {
+            if (isLogin) {
+                if (rowIndex){
+                    rowIndex=false
+                    binding?.imageView43?.setImageResource(R.drawable.ic_un_favourite_theatre)
+                    authViewModel.cinemaPreference(preferences.getUserId(),intent.getStringExtra("cid").toString(),rowIndex,"t","")
 
-        binding?.textView99?.text = output.cn
+                }else {
+                    rowIndex= true
+                    binding?.imageView43?.setImageResource(R.drawable.ic_favourite_theatre)
+                    authViewModel.cinemaPreference(preferences.getUserId(),intent.getStringExtra("cid").toString(),rowIndex,"t","")
+                }
 
+            } else {
+                val dialog = OptionDialog(this,
+                    R.mipmap.ic_launcher_foreground,
+                    R.string.app_name,
+                    getString(R.string.loginCinema),
+                    positiveBtnText = R.string.yes,
+                    negativeBtnText = R.string.no,
+                    positiveClick = {
+                        val intent = Intent(this@CinemaSessionActivity, LoginActivity::class.java)
+                        startActivity(intent)
+                    },
+                    negativeClick = {
+                    })
+                dialog.show()
+            }
 
+        }
 
     }
 
     override fun dateClick(comingSoonItem: CinemaSessionResponse.Output.Bd) {
 
+        authViewModel.cinemaSession(
+            preferences.getCityName(),
+            intent.getStringExtra("cid").toString(),
+            intent.getStringExtra("lat").toString(),
+            intent.getStringExtra("lang").toString(),
+            preferences.getUserId(),
+            comingSoonItem.dt,
+            "ALL",
+            "ALL",
+            "ALL",
+            "ALL",
+            "ALL",
+            "ALL",
+            "ALL",
+            "no",
+            "ALL",
+            "ALL"
+        )
     }
 
     override fun languageClick(comingSoonItem: String) {
@@ -236,11 +296,7 @@ class CinemaSessionActivity : AppCompatActivity(),
     }
 
     override fun nearTheaterDirectionClick(comingSoonItem: CinemaNearTheaterResponse.Output.C) {
-        val strUri =
-            "http://maps.google.com/maps?q=loc:" + comingSoonItem.lat+ "," +  comingSoonItem.lang + " (" + "Label which you want" + ")"
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(strUri))
-        intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity")
-        startActivity(intent)
+        Constant().openMap(this, comingSoonItem.lat,  comingSoonItem.lang )
     }
 
 }

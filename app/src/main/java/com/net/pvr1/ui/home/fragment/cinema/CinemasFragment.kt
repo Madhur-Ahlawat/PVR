@@ -1,7 +1,6 @@
 package com.net.pvr1.ui.home.fragment.cinema
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,10 +18,7 @@ import com.net.pvr1.ui.home.fragment.cinema.adapter.CinemaAdapter
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.cinema.viewModel.CinemaViewModel
 import com.net.pvr1.ui.search.searchCinema.SearchCinemaActivity
-import com.net.pvr1.utils.Constant
-import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.PreferenceManager
-import com.net.pvr1.utils.printLog
+import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -46,18 +42,24 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        authViewModel.cinema(preferences.getCityName(), preferences.getLatitudeData(), preferences.getLongitudeData(), "", "")
+        authViewModel.cinema(preferences.getCityName(), preferences.getLatitudeData(), preferences.getLongitudeData(), preferences.getUserId(), "")
+        (requireActivity().findViewById(R.id.notify) as ImageView).hide()
+        (requireActivity().findViewById(R.id.locationBtn) as ImageView).hide()
+        (requireActivity().findViewById(R.id.scanQr) as ImageView).hide()
         cinemaApi()
         setPreference()
         movedNext()
     }
 
     private fun movedNext() {
-        val search = requireActivity().findViewById(R.id.searchBtn) as ImageView
-        search.setOnClickListener {
-            val intent = Intent(requireActivity(), SearchCinemaActivity::class.java)
-            startActivity(intent)
+        if (isAdded){
+            val search = requireActivity().findViewById(R.id.searchBtn) as ImageView
+            search.setOnClickListener {
+                val intent = Intent(requireActivity(), SearchCinemaActivity::class.java)
+                startActivity(intent)
+            }
         }
+
     }
 
     //CinemaData
@@ -115,29 +117,6 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         context.printLog(it.data.msg)
-//                        val dialog = OptionDialog(requireActivity(),
-//                            R.mipmap.ic_launcher,
-//                            R.string.app_name,
-//                            it.data.msg,
-//                            positiveBtnText = R.string.ok,
-//                            negativeBtnText = R.string.no,
-//                            positiveClick = {
-//                            },
-//                            negativeClick = {
-//                            })
-//                        dialog.show()
-//                    } else {
-//                        val dialog = OptionDialog(requireActivity(),
-//                            R.mipmap.ic_launcher,
-//                            R.string.app_name,
-//                            it.data?.msg.toString(),
-//                            positiveBtnText = R.string.ok,
-//                            negativeBtnText = R.string.no,
-//                            positiveClick = {
-//                            },
-//                            negativeClick = {
-//                            })
-//                        dialog.show()
                     }
                 }
                 is NetworkResult.Error -> {
@@ -172,11 +151,7 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
     }
 
     override fun onDirectionClick(comingSoonItem: CinemaResponse.Output.C) {
-        val strUri =
-            "http://maps.google.com/maps?q=loc:" + comingSoonItem.lat + "," + comingSoonItem.lang + " (" + "Label which you want" + ")"
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(strUri))
-        intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity")
-        startActivity(intent)
+        Constant().openMap(requireActivity(),comingSoonItem.lat,comingSoonItem.lang)
     }
 
     override fun onCinemaClick(comingSoonItem: CinemaResponse.Output.C) {
@@ -189,7 +164,6 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
 
     override fun onPreferenceClick(comingSoonItem: CinemaResponse.Output.C, rowIndex: Boolean) {
         authViewModel.cinemaPreference(preferences.getUserId().toString(),comingSoonItem.cId.toString(),rowIndex,"t","")
-
     }
 
 }

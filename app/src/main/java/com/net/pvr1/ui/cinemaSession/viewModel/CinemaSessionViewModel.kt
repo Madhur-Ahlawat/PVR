@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
 import com.net.pvr1.ui.cinemaSession.response.CinemaNearTheaterResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
+import com.net.pvr1.ui.home.fragment.cinema.response.PreferenceResponse
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -14,6 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CinemaSessionViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
 
+    // cinema
     val cinemaSessionLiveData: LiveData<NetworkResult<CinemaSessionResponse>>
         get() = userRepository.cinemaSessionResponseLiveData
 
@@ -57,7 +59,7 @@ class CinemaSessionViewModel @Inject constructor(private val userRepository: Use
         }
     }
 
-
+// near theater
 
     val cinemaSessionNearTheaterLiveData: LiveData<NetworkResult<CinemaNearTheaterResponse>>
         get() = userRepository.nearTheaterResponseLiveData
@@ -75,6 +77,17 @@ class CinemaSessionViewModel @Inject constructor(private val userRepository: Use
                 lng,
                 cid
             )
+        }
+    }
+
+
+    //preference
+    val cinemaPreferenceResponseLiveData: LiveData<NetworkResult<PreferenceResponse>>
+        get() = userRepository.cinemaPreferenceResponseLiveData
+
+    fun  cinemaPreference(userid: String, id: String, is_like: Boolean, type: String, did: String) {
+        viewModelScope.launch {
+            userRepository.cinemaPreference(userid,id,is_like,type,did)
         }
     }
 }

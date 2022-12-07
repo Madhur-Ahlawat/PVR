@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -26,6 +27,7 @@ import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.PlaceHolder
 import com.net.pvr1.utils.NetworkResult
 import com.net.pvr1.utils.PreferenceManager
+import com.net.pvr1.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -54,9 +56,11 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        authViewModel.home("Delhi-NCR", "", "0", "0", true, "no", "","ALL", "ALL", "ALL", "no")
         authViewModel.home(preferences.getCityName(), "", preferences.getUserId(), preferences.geMobileNumber(), true, "no", "", "ALL", "ALL", "ALL", "no")
 //        preferences.getCityName()
+        (requireActivity().findViewById(R.id.notify) as ImageView).show()
+        (requireActivity().findViewById(R.id.locationBtn) as ImageView).show()
+        (requireActivity().findViewById(R.id.scanQr) as ImageView).show()
 //        (requireActivity().findViewById(R.id.notify) as ImageView).show()
 //        (requireActivity().findViewById(R.id.locationBtn) as ImageView).show()
 //        (requireActivity().findViewById(R.id.textView2) as TextView).show()

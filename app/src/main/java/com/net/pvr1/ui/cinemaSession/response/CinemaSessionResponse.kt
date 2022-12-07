@@ -32,7 +32,7 @@ data class CinemaSessionResponse(
         val ina: String,
         val lang: String,
         val lat: String,
-        val like: Any,
+        val like: Boolean,
         val lngs: List<String>,
         val mc: Boolean,
         val me: Boolean,
