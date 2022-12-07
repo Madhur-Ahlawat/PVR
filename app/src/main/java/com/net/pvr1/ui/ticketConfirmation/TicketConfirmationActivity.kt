@@ -156,8 +156,12 @@ class TicketConfirmationActivity : AppCompatActivity() {
         //kiosk Id
         binding?.textView344?.text= output.mc
         //Qr Code
-        qrBitmap = Constant().createQrCode(output.qr)
-        binding?.imageView156?.setImageBitmap(qrBitmap)
+        Glide.with(this)
+            .load(output.qr)
+            .error(R.drawable.pvr_logo)
+            .into(binding?.imageView156!!)
+//        qrBitmap = Constant().createQrCode(output.qr)
+//        binding?.imageView156?.setImageBitmap(qrBitmap)
         //note
 //        binding?.textView365?.text=""
         //food
