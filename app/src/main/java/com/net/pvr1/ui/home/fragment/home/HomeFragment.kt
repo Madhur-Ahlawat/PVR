@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.net.pvr1.R
 import com.net.pvr1.databinding.FragmentHomeBinding
-import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.bookingSession.BookingActivity
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
@@ -135,12 +133,11 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     private fun homeApi() {
-        authViewModel.userResponseLiveData.observe(requireActivity()) {
+        authViewModel.userResponseLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkResult.Success -> {
-                    loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-
+                        loader?.dismiss()
                         retrieveData(it.data.output)
                     } else {
                         val dialog = OptionDialog(requireActivity(),
@@ -171,6 +168,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
+                    println("loadingHome--->")
                     loader = LoaderDialog(R.string.pleasewait)
                     loader?.show(requireActivity().supportFragmentManager, null)
                 }

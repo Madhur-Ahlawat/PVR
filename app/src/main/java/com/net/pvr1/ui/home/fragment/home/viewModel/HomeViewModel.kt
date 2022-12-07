@@ -19,24 +19,12 @@ class HomeViewModel @Inject constructor(private val userRepository: UserReposito
         get() = userRepository.homeResponseLiveData
 
     fun home(
-        city: String,
-        dtmsource: String,
-        userid: String,
-        mobile: String,
-        upbooking: Boolean,
-        srilanka: String,
-        type : String,
-        lng: String,
-        gener: String,
-        spShow: String,
-        isSpi: String
+        city: String, dtmsource: String, userid: String, mobile: String, upbooking: Boolean, srilanka: String, type : String, lng: String, gener: String, spShow: String, isSpi: String
     ) {
-        viewModelScope.launch {
-            userRepository.homeData(city,dtmsource,userid,mobile,upbooking,srilanka
+        viewModelScope.launch { userRepository.homeData(city,dtmsource,userid,mobile,upbooking,srilanka
             ,type,lng,gener,spShow,isSpi)
         }
     }
-
     val userResponseOfferLiveData: LiveData<NetworkResult<OfferResponse>>
         get() = userRepository.offerDetailsResponseLiveData
 

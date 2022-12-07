@@ -5,9 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.net.pvr1.R
 import com.net.pvr1.databinding.FragmentMoreBinding
@@ -25,6 +22,7 @@ import com.net.pvr1.ui.webView.WebViewActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.PreferenceManager
 import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -35,8 +33,7 @@ class MoreFragment : Fragment() {
     @Inject
     lateinit var preferences: PreferenceManager
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentMoreBinding.inflate(inflater, container, false)
@@ -46,13 +43,6 @@ class MoreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         preferences = PreferenceManager(requireActivity())
-//        (requireActivity().findViewById(R.id.notify) as ImageView).hide()
-//        (requireActivity().findViewById(R.id.locationBtn) as ImageView).hide()
-//        (requireActivity().findViewById(R.id.textView2) as TextView).hide()
-//        (requireActivity().findViewById(R.id.subTitle) as TextView).hide()
-//        (requireActivity().findViewById(R.id.txtCity) as TextView).hide()
-//        (requireActivity().findViewById(R.id.include) as ConstraintLayout).hide()
-//        (requireActivity().findViewById(R.id.constraintLayout55) as ConstraintLayout).hide()
         //SetName
         binding?.profileDetails?.textView205?.text = preferences.getUserName()
 
@@ -118,9 +108,29 @@ class MoreFragment : Fragment() {
             val intent = Intent(requireContext(), ContactUsActivity::class.java)
             startActivity(intent)
         }
+
+        //Manage ui
+        binding?.tvLoginButton?.textView5?.text= getString(R.string.login)
+
+        binding?.tvLoginButton?.textView5?.setOnClickListener {
+            val intent = Intent(requireActivity(), LoginActivity::class.java)
+            startActivity(intent)
+        }
+        if (preferences.getIsLogin()) {
+            binding?.llBookingSection?.show()
+            binding?.tvSignOut?.show()
+            binding?.profileLinear?.show()
+            binding?.loginBt?.show()
+        } else {
+            binding?.llBookingSection?.hide()
+            binding?.profileLinear?.hide()
+            binding?.tvSignOut?.hide()
+            binding?.loginBt?.hide()
+        }
     }
 
     private fun logOut() {
+        preferences.clearData()
         val dialog = OptionDialog(requireActivity(),
             R.mipmap.ic_launcher_foreground,
             R.string.app_name,
@@ -133,8 +143,7 @@ class MoreFragment : Fragment() {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
             },
-            negativeClick = {
-            })
+            negativeClick = {})
         dialog.show()
     }
 

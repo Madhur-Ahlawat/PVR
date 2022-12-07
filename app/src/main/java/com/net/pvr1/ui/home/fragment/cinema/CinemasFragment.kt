@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,7 +19,10 @@ import com.net.pvr1.ui.home.fragment.cinema.adapter.CinemaAdapter
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.cinema.viewModel.CinemaViewModel
 import com.net.pvr1.ui.search.searchCinema.SearchCinemaActivity
-import com.net.pvr1.utils.*
+import com.net.pvr1.utils.Constant
+import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.PreferenceManager
+import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -80,6 +82,7 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                         dialog.show()
                     }
                 }
+
                 is NetworkResult.Error -> {
                     loader?.dismiss()
                     val dialog = OptionDialog(requireActivity(),
@@ -95,6 +98,7 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
+                    println("loadingCinema--->")
                     loader = LoaderDialog(R.string.pleasewait)
                     loader?.show(requireActivity().supportFragmentManager, null)
                 }

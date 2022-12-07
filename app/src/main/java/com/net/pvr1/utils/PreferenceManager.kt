@@ -119,7 +119,6 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
         return prefs.getString(LONGITUDE, "").toString()
     }
 
-
     fun clearData() {
         if (editor != null) {
             editor?.clear()

@@ -265,6 +265,7 @@
     <string name="show_scanner_from_fragment">Show Scanner From Fragment</string>
     //Logout
     <string name="logout">Are you sure you want to logout?</string>
+    <string name="login">Log in</string>
     <string name="yes">Yes</string>
     //genre
     <string name="preferred_genres">Preferred Genres</string>

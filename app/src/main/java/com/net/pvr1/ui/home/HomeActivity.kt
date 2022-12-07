@@ -228,8 +228,8 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
-                    loader?.show(supportFragmentManager, null)
+//                    loader = LoaderDialog(R.string.pleasewait)
+//                    loader?.show(supportFragmentManager, null)
                 }
             }
         }
@@ -271,8 +271,8 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
-                    loader?.show(supportFragmentManager, null)
+//                    loader = LoaderDialog(R.string.pleasewait)
+//                    loader?.show(supportFragmentManager, null)
                 }
             }
         }
@@ -285,7 +285,6 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 
     private fun retrieveData(output: ArrayList<OfferResponse.Output>) {
         offerResponse = output
-        printLog("offer--->${output}")
         showOfferDialog()
     }
 

@@ -5,8 +5,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
@@ -16,7 +14,6 @@ import android.provider.Settings.SettingNotFoundException
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ForegroundColorSpan
-import android.util.Base64
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.inputmethod.InputMethodManager
@@ -38,12 +35,9 @@ class Constant {
         const val version = "11.3"
         const val status = "success"
         const val SUCCESS_CODE = 10001
-        const val pvrCare = "https://www.pvrcinemas.com/pvrstatic/pvr-care/"
         const val merchandise = "https://pvr.macmerise.com/?user_agent=pvr"
-
         const val IS_LOGIN = "is_login"
         var DISPLAY = 1
-
         const val SUCCESS_RESULT = 1
         const val RECEVIER = "$PACKAGE_NAME.RECEVIER"
         const val LOCATION_DATA_EXTRA = "$PACKAGE_NAME.LOCATION_DATA_EXTRA"
@@ -67,7 +61,6 @@ class Constant {
         var SESSION_ID = "0"
         var CINEMA_ID = "0"
         const val CITY = "Delhi-NCR"
-        const val CITY_CC = "City-Name"
         const val LATITUDE = "lat"
         const val LONGITUDE= "lang"
         const val BOOK_TYPE= "BOOKING"
@@ -85,6 +78,7 @@ class Constant {
         var PrivilegeHomeResponseConst:PrivilegeHomeResponse.Output? =null
         var PlaceHolder:HomeResponse.Output? = null
         var DECIFORMAT = DecimalFormat("0.000")
+
 
     }
 
@@ -117,11 +111,11 @@ class Constant {
 
     private fun addClickablePartTextViewResizable(
         strSpanned: Spanned, tv: TextView,
-        maxLine: Int, spanableText: String, viewMore: Boolean
+        maxLine: Int, spannableText: String, viewMore: Boolean
     ): SpannableStringBuilder{
         val str = strSpanned.toString()
         val ssb = SpannableStringBuilder(strSpanned)
-        if (str.contains(spanableText)) {
+        if (str.contains(spannableText)) {
             ssb.setSpan(object : MySpannable(false) {
                 override fun onClick(widget: View) {
                     if (viewMore) {
@@ -138,7 +132,7 @@ class Constant {
                         makeTextViewResizable(tv, 4, "..read more", true)
                     }
                 }
-            }, str.indexOf(spanableText), str.indexOf(spanableText) + spanableText.length, 0)
+            }, str.indexOf(spannableText), str.indexOf(spannableText) + spannableText.length, 0)
         }
         return ssb
     }
