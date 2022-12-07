@@ -22,9 +22,9 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/api/\""//Prod
+//            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/api/\""//Prod
 
-//            buildConfigField "String", "API_URL", "\"https://demoapi.pvrcinemas.com/PVRCinemasCMS/api/\""//stage
+            buildConfigField "String", "API_URL", "\"https://demoapi.pvrcinemas.com/PVRCinemasCMS/api/\""//stage
             minifyEnabled false
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -120,11 +120,11 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.14.2'
 
     // Sms Read
-    implementation 'com.google.android.gms:play-services-auth:20.3.0'
+    implementation 'com.google.android.gms:play-services-auth:20.4.0'
     implementation 'com.google.android.gms:play-services-auth-api-phone:18.0.1'
 
     // lib for SMS verification (Phone Auth)
-    implementation 'com.google.android.gms:play-services-auth:20.3.0'
+    implementation 'com.google.android.gms:play-services-auth:20.4.0'
     implementation 'com.google.android.gms:play-services-auth-api-phone:18.0.1'
     implementation 'com.google.android.gms:play-services-identity:18.0.1'
     implementation 'com.google.android.gms:play-services-base:18.1.0'
@@ -146,10 +146,8 @@ dependencies {
     implementation 'com.joooonho:selectableroundedimageview:1.0.1'
 
     // map
-
     implementation 'com.google.android.gms:play-services-maps:18.0.2'
     implementation 'com.google.android.libraries.places:places:2.6.0'
-
     implementation 'com.google.android.gms:play-services-location:20.0.0'
 
     implementation "com.karumi:dexter:5.0.0"

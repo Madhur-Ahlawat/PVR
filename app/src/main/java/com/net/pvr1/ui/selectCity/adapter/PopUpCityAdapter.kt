@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
-import com.net.pvr1.utils.printLog
 
 class PopUpCityAdapter(
     private var selectCityList: ArrayList<String>,
