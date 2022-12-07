@@ -23,8 +23,7 @@ class ComingSoonMovieAdapter(
     private var context: Context,
     private var listener: VideoPlay,
     private var checkLogin: Boolean
-) :
-    RecyclerView.Adapter<ComingSoonMovieAdapter.MyViewHolderNowShowing>() {
+) : RecyclerView.Adapter<ComingSoonMovieAdapter.MyViewHolderNowShowing>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderNowShowing {
         val view = LayoutInflater.from(parent.context)
@@ -38,10 +37,7 @@ class ComingSoonMovieAdapter(
         //title
         holder.title.text = comingSoonItem.name
         //Image
-        Glide.with(context)
-            .load(comingSoonItem.miv)
-            .error(R.drawable.app_icon)
-            .into(holder.image)
+        Glide.with(context).load(comingSoonItem.miv).error(R.drawable.app_icon).into(holder.image)
 
         //Manage Video Play
         if ((comingSoonItem.videoUrl.contains("v=") || comingSoonItem.videoUrl.contains("list=")) && !TextUtils.isEmpty(
@@ -157,9 +153,7 @@ class ComingSoonMovieAdapter(
             stringBuilder.append(lang)
         }
         if (!isChange) tvCensorLang.text = stringBuilder else Constant().spannableText(
-            activityContext as Activity,
-            stringBuilder,
-            tvCensorLang
+            activityContext as Activity, stringBuilder, tvCensorLang
         )
     }
 

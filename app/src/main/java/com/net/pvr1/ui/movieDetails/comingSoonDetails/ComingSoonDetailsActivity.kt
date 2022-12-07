@@ -41,8 +41,7 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityComingSoonDetailsBinding.inflate(layoutInflater, null, false)
-        val view = binding?.root
-        setContentView(view)
+        setContentView(binding?.root)
         movieDetails()
         movieAlert()
 
@@ -164,12 +163,77 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
             .load(output.wit)
             .error(R.drawable.app_icon)
             .into(binding?.imageView26!!)
+
+        if (output.mb != null && output.mb.name != null) {
+            //Cast
+            if (output.mb.cast != null) {
+                val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+                val castAdapter = CastAdapter(output.mb.cast, this, this)
+                binding?.recyclerView4?.layoutManager = layoutManager
+                binding?.recyclerView4?.adapter = castAdapter
+            }
+            //Crew
+            if (output.mb.crew.isNotEmpty()) {
+                val layoutManagerCrew =
+                    GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+                val crewAdapter = CrewAdapter(output.mb.crew, this, this)
+                binding?.recyclerCrew?.layoutManager = layoutManagerCrew
+                binding?.recyclerCrew?.adapter = crewAdapter
+            }
+            //trailer
+            if (output.trs.isNotEmpty()) {
+                binding?.textView69?.show()
+                val layoutManagerTrailer =
+                    GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+                val trailerAdapter = TrailerTrsAdapter(output.trs, this, this)
+                binding?.recyclerView5?.layoutManager = layoutManagerTrailer
+                binding?.recyclerView5?.adapter = trailerAdapter
+
+            } else {
+
+                if (output.mb.videos.isNotEmpty()) {
+                    binding?.textView69?.show()
+                    val layoutManagerTrailer =
+                        GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+                    val trailerAdapter = TrailerAdapter(output.mb.videos, this, this)
+                    binding?.recyclerView5?.layoutManager = layoutManagerTrailer
+                    binding?.recyclerView5?.adapter = trailerAdapter
+                } else {
+                    binding?.textView69?.hide()
+                }
+            }
+            //MusicVideo
+            if (output.trs.isNotEmpty()) {
+                toast("1")
+                binding?.textView70?.show()
+                val layoutManagerTrailer =
+                    GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+                val trailerAdapter = MusicVideoTrsAdapter(output.trs, this, this)
+                binding?.recyclerMusic?.layoutManager = layoutManagerTrailer
+                binding?.recyclerMusic?.adapter = trailerAdapter
+
+            } else {
+                if (output.mb.tracks.isNotEmpty()) {
+                    binding?.textView70?.show()
+                    val layoutManagerTrailer =
+                        GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+                    val trailerAdapter = MusicVideoAdapter(output.mb.tracks[0].roles, this, this)
+                    binding?.recyclerMusic?.layoutManager = layoutManagerTrailer
+                    binding?.recyclerMusic?.adapter = trailerAdapter
+                } else {
+                    binding?.textView70?.hide()
+
+                }
+            }
+        }
         //Trailer
         if (output.t.isNullOrEmpty()) {
             binding?.imageView29?.hide()
         } else {
             binding?.imageView29?.show()
         }
+        
+
         binding?.imageView29?.setOnClickListener {
             val intent = Intent(this@ComingSoonDetailsActivity, PlayerActivity::class.java)
             intent.putExtra("trailerUrl", output.t)
@@ -218,61 +282,7 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
             intent.putExtra("mid", output.id)
             startActivity(intent)
         }
-        //Cast
-        val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-        val castAdapter = CastAdapter(output.mb.cast, this, this)
-        binding?.recyclerView4?.layoutManager = layoutManager
-        binding?.recyclerView4?.adapter = castAdapter
 
-        //Crew
-        val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-        val crewAdapter = CrewAdapter(output.mb.crew, this, this)
-        binding?.recyclerCrew?.layoutManager = layoutManagerCrew
-        binding?.recyclerCrew?.adapter = crewAdapter
-
-        //trailer
-        if (output.trs.isNotEmpty()) {
-            binding?.textView69?.show()
-            val layoutManagerTrailer =
-                GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-            val trailerAdapter = TrailerTrsAdapter(output.trs, this, this)
-            binding?.recyclerView5?.layoutManager = layoutManagerTrailer
-            binding?.recyclerView5?.adapter = trailerAdapter
-
-        } else {
-            if (output.mb.videos.isNotEmpty()) {
-                binding?.textView69?.show()
-                val layoutManagerTrailer =
-                    GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-                val trailerAdapter = TrailerAdapter(output.mb.videos, this, this)
-                binding?.recyclerView5?.layoutManager = layoutManagerTrailer
-                binding?.recyclerView5?.adapter = trailerAdapter
-            } else {
-                binding?.textView69?.hide()
-            }
-        }
-        //MusicVideo
-        if (output.trs.isNotEmpty()) {
-            toast("1")
-            binding?.textView70?.show()
-            val layoutManagerTrailer =
-                GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-            val trailerAdapter = MusicVideoTrsAdapter(output.trs, this, this)
-            binding?.recyclerMusic?.layoutManager = layoutManagerTrailer
-            binding?.recyclerMusic?.adapter = trailerAdapter
-
-        } else {
-            if (output.mb.tracks.isNotEmpty()) {
-                binding?.textView70?.show()
-                val layoutManagerTrailer =
-                    GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-                val trailerAdapter = MusicVideoAdapter(output.mb.tracks[0].roles, this, this)
-                binding?.recyclerMusic?.layoutManager = layoutManagerTrailer
-                binding?.recyclerMusic?.adapter = trailerAdapter
-            } else {
-                binding?.textView70?.hide()
-            }
-        }
 
         //movie Alert
         binding?.constraintLayout89?.setOnClickListener {

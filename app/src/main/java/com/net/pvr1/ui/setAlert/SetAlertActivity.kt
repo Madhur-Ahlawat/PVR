@@ -1,13 +1,13 @@
 package com.net.pvr1.ui.setAlert
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.MutableLiveData
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySetAlertBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
@@ -23,28 +23,63 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SetAlertActivity : AppCompatActivity(), AlertTheaterAdapter.RecycleViewItemClickListener {
+class SetAlertActivity : AppCompatActivity() {
+
     @Inject
     lateinit var preferences: PreferenceManager
-    private var binding: ActivitySetAlertBinding? = null
+    private var _binding: ActivitySetAlertBinding? = null
+    val binding get() = _binding!!
+    lateinit var theaterAdapter: AlertTheaterAdapter
+    private val unableDisable = MutableLiveData<Boolean>(false)
+
     private var loader: LoaderDialog? = null
     private val authViewModel: SetAlertViewModel by viewModels()
+    private val selectedItemList: MutableList<BookingRetrievalResponse.Output.C> = mutableListOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySetAlertBinding.inflate(layoutInflater, null, false)
-        val view = binding?.root
-        setContentView(view)
+        _binding = ActivitySetAlertBinding.inflate(layoutInflater, null, false)
+        setContentView(binding.root)
         authViewModel.allTheater("Chennai", "", "", preferences.getUserId().toString(), "")
         allTheater()
         movedNext()
+        setUiValue()
 
 //        alert_dialog
     }
 
-    private fun movedNext() {
-        binding?.editText?.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable) {
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun setUiValue() {
 
+        binding.toggleButton.setOnCheckedChangeListener { buttonView, isChecked ->
+            unableDisable.value = isChecked
+        }
+
+        binding.apply {
+            include14.textView5.background = getDrawable(R.drawable.alert_curve_ui_unselect)
+            include14.textView5.isClickable = false
+        }
+
+        unableDisable.observe(this) {
+            if (it) {
+                binding.textView280.text = "You have selected all the theaters"
+                binding.include14.textView5.background = getDrawable(R.drawable.yellow_book_curve)
+            } else {
+                binding.textView280.text = "${selectedItemList.size}/5 Selected"
+                binding.include14.textView5.background =
+                    getDrawable(R.drawable.alert_curve_ui_unselect)
+                //binding.include14.textView5.setBackgroundColor(getColor(R.color.unSelectBg))
+            }
+        }
+        //set city name here
+        binding.textView36.text = preferences.getCityName()
+    }
+
+    private fun movedNext() {
+        //search
+        binding.searchAlert.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+                theaterAdapter.filter.filter(s.toString())
             }
 
             override fun beforeTextChanged(
@@ -54,13 +89,9 @@ class SetAlertActivity : AppCompatActivity(), AlertTheaterAdapter.RecycleViewIte
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                authViewModel.allTheater(
-                    "Chennai",
-                    "",
-                    "",
-                    preferences.getUserId().toString(),
-                    s.toString()
-                )
+                /*authViewModel.allTheater(
+                    "Chennai", "", "", preferences.getUserId(), s.toString()
+                )*/
             }
         })
 
@@ -108,16 +139,33 @@ class SetAlertActivity : AppCompatActivity(), AlertTheaterAdapter.RecycleViewIte
         }
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables", "SetTextI18n")
     private fun retrieveData(output: BookingRetrievalResponse.Output) {
-        val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        binding?.recyclerView32?.layoutManager = LinearLayoutManager(this)
-        val adapter = AlertTheaterAdapter(output.c, this)
-        binding?.recyclerView32?.layoutManager = gridLayout
-        binding?.recyclerView32?.adapter = adapter
+//        binding.theaterRv.layoutManager = LinearLayoutManager(this)
+        theaterAdapter = AlertTheaterAdapter(
+            context = this@SetAlertActivity,
+            nowShowingList = output.c,
+            unableDisable = unableDisable
+        ) { item, addToList ->
+            if (addToList) {
+                selectedItemList.add(item)
+            } else {
+                selectedItemList.remove(item)
+            }
+            binding.apply {
+                textView280.text = "${selectedItemList.size}/5 Selected"
+                if (selectedItemList.size == 0) {
+                    include14.textView5.text = "Proceed"
+                    include14.textView5.background = getDrawable(R.drawable.grey_curve)
+                    include14.textView5.isClickable = false
+                } else {
+                    include14.textView5.background = getDrawable(R.drawable.yellow_book_curve)
+                    include14.textView5.isClickable = true
+                }
+            }
+        }
+        binding.theaterRv.adapter = theaterAdapter
     }
 
-    override fun dateClick(comingSoonItem: BookingRetrievalResponse.Output.C) {
-
-    }
 
 }
