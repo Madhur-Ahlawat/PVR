@@ -23,9 +23,7 @@ import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.offer.response.MOfferResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
-import com.net.pvr1.ui.payment.response.CouponResponse
-import com.net.pvr1.ui.payment.response.PaymentResponse
-import com.net.pvr1.ui.payment.response.PaytmHmacResponse
+import com.net.pvr1.ui.payment.response.*
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.seatLayout.response.InitResponse
 import com.net.pvr1.ui.seatLayout.response.ReserveSeatResponse
@@ -229,8 +227,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
     //Upi Status
-    private val upiStatusLiveData = MutableLiveData<NetworkResult<PaymentResponse>>()
-    val upiStatusResponseLiveData: LiveData<NetworkResult<PaymentResponse>>
+    private val upiStatusLiveData = MutableLiveData<NetworkResult<UPIStatusResponse>>()
+    val upiStatusResponseLiveData: LiveData<NetworkResult<UPIStatusResponse>>
         get() = upiStatusLiveData
 
     suspend fun upiStatus(bookingid: String, booktype: String) {
@@ -245,7 +243,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         upiStatusResponse(response)
     }
 
-    private fun upiStatusResponse(response: Response<PaymentResponse>) {
+    private fun upiStatusResponse(response: Response<UPIStatusResponse>) {
         if (response.isSuccessful && response.body() != null) {
             upiStatusLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
@@ -1384,6 +1382,69 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             bookingRetrievalLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             bookingRetrievalLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    //Phone Pe Payment Section
+
+    //Phonepe Hmac
+    private val phonepeHmacLiveData = MutableLiveData<NetworkResult<PhonepeHmacResponse>>()
+    val phonepeHmacResponseLiveData: LiveData<NetworkResult<PhonepeHmacResponse>>
+        get() = phonepeHmacLiveData
+
+    suspend fun phonepeHmac(userid: String,bookingid: String, booktype: String,transid: String) {
+        phonepeHmacLiveData.postValue(NetworkResult.Loading())
+        val response =
+            userAPI.phonepeHmac(
+                userid,
+                bookingid,
+                booktype,
+                transid,
+                Constant.version,
+                Constant.platform
+            )
+        phonepeHmacResponse(response)
+    }
+
+    private fun phonepeHmacResponse(response: Response<PhonepeHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            phonepeHmacLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            phonepeHmacLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            phonepeHmacLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    private val phonepeStatusLiveData = MutableLiveData<NetworkResult<UPIStatusResponse>>()
+    val phonepeStatusResponseLiveData: LiveData<NetworkResult<UPIStatusResponse>>
+        get() = phonepeStatusLiveData
+
+    suspend fun phonepeStatus(userid: String,bookingid: String, booktype: String,transid: String) {
+        phonepeStatusLiveData.postValue(NetworkResult.Loading())
+        val response =
+            userAPI.phonepeStatus(
+                userid,
+                bookingid,
+                booktype,
+                transid,
+                Constant.version,
+                Constant.platform
+            )
+        phonepeStatusResponse(response)
+    }
+
+    private fun phonepeStatusResponse(response: Response<UPIStatusResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            phonepeStatusLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            phonepeStatusLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            phonepeStatusLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 

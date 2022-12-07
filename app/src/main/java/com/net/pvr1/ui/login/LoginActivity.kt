@@ -228,9 +228,19 @@ class LoginActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CREDENTIAL_PICKER_REQUEST && resultCode == RESULT_OK) {
             // Obtain the phone number from the result
-            val credentials: Credential = data?.getParcelableExtra(Credential.EXTRA_KEY)!!
-            binding?.mobileNumber?.setText(credentials.id.substring(5)) //get the selected phone number
-            //Do what ever you want to do with your selected phone number here
+            val cred: Credential = data?.getParcelableExtra(Credential.EXTRA_KEY)!!
+            try {
+                if (!TextUtils.isEmpty(cred.id) && cred.id.length > 4) {
+                    if (cred.id.startsWith("+91")) {
+                        binding?.mobileNumber?.setText(
+                            "" + cred.id.substring(3, cred.id.length)
+                        )
+                    } else {
+                        binding?.mobileNumber?.setText("" + cred.id)
+                    }
+                }
+            } catch (e: Exception) {
+            }
         } else if (requestCode == CREDENTIAL_PICKER_REQUEST && resultCode == CredentialsApi.ACTIVITY_RESULT_NO_HINTS_AVAILABLE) {
             // *** No phone numbers available ***
 //            val dialog = OptionDialog(this,

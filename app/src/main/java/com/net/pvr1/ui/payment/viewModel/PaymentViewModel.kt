@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
 import com.net.pvr1.ui.payment.response.PaymentResponse
 import com.net.pvr1.ui.payment.response.PaytmHmacResponse
+import com.net.pvr1.ui.payment.response.PhonepeHmacResponse
+import com.net.pvr1.ui.payment.response.UPIStatusResponse
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -53,7 +55,7 @@ class PaymentViewModel @Inject constructor(private val userRepository: UserRepos
     }
 
     //Upi Status
-    val upiStatusResponseLiveData: LiveData<NetworkResult<PaymentResponse>>
+    val upiStatusResponseLiveData: LiveData<NetworkResult<UPIStatusResponse>>
         get() = userRepository.upiStatusResponseLiveData
 
     fun upiStatus(
@@ -81,6 +83,35 @@ class PaymentViewModel @Inject constructor(private val userRepository: UserRepos
     ) {
         viewModelScope.launch {
             userRepository.paytmHMAC(userid, bookingid, transid, unpaid, cardNo,booktype,ptype,isSpi,binOffer)
+        }
+    }
+
+
+    //Phonepe Hmac
+    val phonepeLiveDataScope: LiveData<NetworkResult<PhonepeHmacResponse>> get() = userRepository.phonepeHmacResponseLiveData
+
+    fun phonepeHMAC(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String,
+    ) {
+        viewModelScope.launch {
+            userRepository.phonepeHmac(userid, bookingid,booktype,transid)
+        }
+    }
+
+    //Phonepe Status
+    val phonepeStatusLiveDataScope: LiveData<NetworkResult<UPIStatusResponse>> get() = userRepository.phonepeStatusResponseLiveData
+
+    fun phonepeStatus(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String,
+    ) {
+        viewModelScope.launch {
+            userRepository.phonepeStatus(userid, bookingid,booktype,transid)
         }
     }
 }

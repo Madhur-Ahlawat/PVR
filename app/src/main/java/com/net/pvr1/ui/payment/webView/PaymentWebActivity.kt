@@ -13,6 +13,7 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityPaymentWebBinding
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.ticketConfirmation.TicketConfirmationActivity
+import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr1.utils.Constant.Companion.BOOK_TYPE
 import com.net.pvr1.utils.printLog
@@ -284,11 +285,7 @@ class PaymentWebActivity : AppCompatActivity() {
                                     dialog.show()
                                 }
                             } else if (value.equals("success", ignoreCase = true)) {
-                                val intent = Intent(
-                                    this@PaymentWebActivity,
-                                    TicketConfirmationActivity::class.java
-                                )
-                                startActivity(intent)
+                               Constant().printTicket(this@PaymentWebActivity)
                             }
                         } else {
                             printLog("---->")
