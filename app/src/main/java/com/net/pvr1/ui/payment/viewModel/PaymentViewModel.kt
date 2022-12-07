@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
 import com.net.pvr1.ui.payment.response.PaymentResponse
+import com.net.pvr1.ui.payment.response.PaytmHmacResponse
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -48,6 +49,38 @@ class PaymentViewModel @Inject constructor(private val userRepository: UserRepos
     ) {
         viewModelScope.launch {
             userRepository.payMode(cinemacode, booktype, userid, mobile, type, isSpi, srilanka,unpaid)
+        }
+    }
+
+    //Upi Status
+    val upiStatusResponseLiveData: LiveData<NetworkResult<PaymentResponse>>
+        get() = userRepository.upiStatusResponseLiveData
+
+    fun upiStatus(
+        bookingid: String,
+        booktype: String
+    ) {
+        viewModelScope.launch {
+            userRepository.upiStatus(bookingid, booktype)
+        }
+    }
+
+    //paytm
+    val liveDataScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.paytmHmaResponseLiveData
+
+    fun paytmHMAC(
+        userid: String,
+        bookingid: String,
+        transid: String,
+        unpaid: Boolean,
+        cardNo: String,
+        booktype: String,
+        ptype: String,
+        isSpi: String,
+        binOffer: String
+    ) {
+        viewModelScope.launch {
+            userRepository.paytmHMAC(userid, bookingid, transid, unpaid, cardNo,booktype,ptype,isSpi,binOffer)
         }
     }
 }

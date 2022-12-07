@@ -20,7 +20,7 @@ data class PaytmHmacResponse(
         val hmackey: String,
         val mcc: String,
         val mid: String,
-        val nblist: Nblist,
+        val nblist: Map<String,String>,
         val subcriptionid: String,
         val timer: Int,
         val txndate: Any,
@@ -28,6 +28,42 @@ data class PaytmHmacResponse(
         val vpaname: String,
         val website: String
     ):java.io.Serializable{
-        class Nblist
+        data class Nblist(
+            val ANDB: String,
+            val AXIS: String,
+            val BHARAT: String,
+            val BOB: String,
+            val CANARA: String,
+            val CBI: String,
+            val CITIUB: String,
+            val CORP: String,
+            val COSMOS: String,
+            val CSB: String,
+            val DCB: String,
+            val DENA: String,
+            val GPPB: String,
+            val HDFC: String,
+            val ICICI: String,
+            val IDBI: String,
+            val IDFC: String,
+            val INDS: String,
+            val IOB: String,
+            val JKB: String,
+            val KTKB: String,
+            val LVB: String,
+            val NKMB: String,
+            val OBPRF: String,
+            val PNB: String,
+            val PSB: String,
+            val RATN: String,
+            val SBI: String,
+            val SIB: String,
+            val STB: String,
+            val UBI: String,
+            val UCO: String,
+            val UNI: String,
+            val VJYA: String,
+            val YES: String
+        )
     }
 }

@@ -44,6 +44,7 @@ class PaymentWebActivity : AppCompatActivity() {
     private var pType = ""
     private var payerAccount = ""
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPaymentWebBinding.inflate(layoutInflater, null, false)
@@ -113,14 +114,14 @@ class PaymentWebActivity : AppCompatActivity() {
 
     }
 
+    @SuppressLint("SetTextI18n")
     private fun getToken() {
         //CC ,DC,NB
         var urlParams = "&mid=$mid"
         urlParams = "$urlParams&amount=$amount"
         urlParams = "$urlParams&orderId=$BOOKING_ID"
         urlParams = "$urlParams&channelId=WAP"
-        urlParams = "$urlParams&channelCode=CREDIT_CARD"
-        println("pType---->$pType")
+
         if (pType.equals("NB", ignoreCase = true)) {
             pType = "NET_BANKING"
             urlParams = "$urlParams&channelCode=$bankname"
@@ -138,12 +139,13 @@ class PaymentWebActivity : AppCompatActivity() {
             urlParams = "$urlParams&payerAccount=$payerAccount&channelCode=$bankname"
         }
 
+        //title
+        binding?.include3?.textView108?.text= getString(R.string.payUsing)+" $pType"
+
         urlParams = "$urlParams&txnToken=$token"
-        urlParams = "$urlParams&paymentMode=CREDIT_CARD"
+        urlParams = "$urlParams&paymentMode=$pType"
         urlParams = "$urlParams&authMode=otp"
-        urlParams = if (pType.equals(
-                "UPI", ignoreCase = true
-            )
+        urlParams = if (pType.equals("UPI", ignoreCase = true)
         ) "$urlParams&storeInstrument=" else "$urlParams&storeInstrument=$saveCard"
 
         val url = checksum

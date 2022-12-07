@@ -228,6 +228,35 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
     }
 
+    //Upi Status
+    private val upiStatusLiveData = MutableLiveData<NetworkResult<PaymentResponse>>()
+    val upiStatusResponseLiveData: LiveData<NetworkResult<PaymentResponse>>
+        get() = upiStatusLiveData
+
+    suspend fun upiStatus(bookingid: String, booktype: String) {
+        payModeLiveData.postValue(NetworkResult.Loading())
+        val response =
+            userAPI.upiStatus(
+                bookingid,
+                booktype,
+                Constant.version,
+                Constant.platform
+            )
+        upiStatusResponse(response)
+    }
+
+    private fun upiStatusResponse(response: Response<PaymentResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            upiStatusLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            upiStatusLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            upiStatusLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
 
     //Resister
     private val resisterLiveData = MutableLiveData<NetworkResult<ResisterResponse>>()

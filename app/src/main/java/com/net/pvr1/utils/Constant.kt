@@ -40,7 +40,6 @@ class Constant {
         const val SUCCESS_CODE = 10001
         const val pvrCare = "https://www.pvrcinemas.com/pvrstatic/pvr-care/"
         const val merchandise = "https://pvr.macmerise.com/?user_agent=pvr"
-        var select_pos = 0
 
         const val IS_LOGIN = "is_login"
         var DISPLAY = 1
@@ -266,13 +265,6 @@ class Constant {
         context.startActivity(intent)
     }
 
-    fun getURLForResource(resourceId: Int): String? {
-        //use BuildConfig.APPLICATION_ID instead of R.class.getPackage().getName() if both are not same
-        return Uri.parse("android.resource://" + android.R::class.java.getPackage().name + "/" + resourceId)
-            .toString()
-    }
-
-
 
     fun hideKeyboard(activity: Activity) {
         val inputMethodManager = activity.getSystemService(
@@ -314,16 +306,6 @@ class Constant {
             Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
         return isAvailable && (coarsePermissionCheck || finePermissionCheck)
-    }
-
-
-    fun createQrCode(text: String): Bitmap {
-        val decodedString: ByteArray = Base64.decode(text, Base64.DEFAULT)
-        val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
-//        val bmp: Bitmap = Bitmap.createBitmap(150, 150, Bitmap.Config.ARGB_8888)
-//        val buffer: ByteBuffer = ByteBuffer.wrap(decodedString)
-//        bmp.copyPixelsFromBuffer(buffer)
-        return decodedByte
     }
 
 }

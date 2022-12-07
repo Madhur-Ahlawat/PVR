@@ -51,17 +51,18 @@ class BookingActivity : AppCompatActivity(),
         setContentView(view)
 
         authViewModel.bookingTicket(
-            "Delhi-NCR",
+            preferences.getCityName(),
             intent.getStringExtra("mid").toString(),
-            "0",
-            "0",
+            preferences.getLatitudeData(),
+            preferences.getLongitudeData(),
             "NA",
             "no",
             "no",
-            ""
+            preferences.getUserId()
         )
 
         movedNext()
+
         bookingTicketDataLoad()
         bookingTheatreDataLoad()
     }
@@ -89,10 +90,8 @@ class BookingActivity : AppCompatActivity(),
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -104,13 +103,12 @@ class BookingActivity : AppCompatActivity(),
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
+                    toast("loading")
                     loader = LoaderDialog(R.string.pleasewait)
                     loader?.show(supportFragmentManager, null)
                 }
@@ -122,7 +120,7 @@ class BookingActivity : AppCompatActivity(),
         authViewModel.userResponseTheatreLiveData.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
-                    loader?.dismiss()
+//                    loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         retrieveTheatreData(it.data.output)
                     } else {
@@ -132,10 +130,8 @@ class BookingActivity : AppCompatActivity(),
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -147,15 +143,13 @@ class BookingActivity : AppCompatActivity(),
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
-                    loader?.show(supportFragmentManager, null)
+//                    loader = LoaderDialog(R.string.pleasewait)
+//                    loader?.show(supportFragmentManager, null)
                 }
             }
         }
@@ -239,17 +233,16 @@ class BookingActivity : AppCompatActivity(),
     }
 
     override fun showsDaysClick(comingSoonItem: BookingResponse.Output.Dy) {
-        printLog("DaysClick--->${comingSoonItem}")
         daysClick = true
         authViewModel.bookingTicket(
-            "Delhi-NCR",
+            preferences.getCityName(),
             intent.getStringExtra("mid").toString(),
-            "0",
-            "0",
+            preferences.getLatitudeData(),
+            preferences.getLongitudeData(),
             comingSoonItem.dt,
             "no",
             "no",
-            ""
+            preferences.getUserId()
         )
     }
 
@@ -280,8 +273,7 @@ class BookingActivity : AppCompatActivity(),
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.booking_alert)
         dialog.window!!.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
@@ -296,9 +288,7 @@ class BookingActivity : AppCompatActivity(),
                 val uri = Uri.parse("market://details?id=com.olacabs.customer")
                 val goToMarket = Intent(Intent.ACTION_VIEW, uri)
                 goToMarket.addFlags(
-                    Intent.FLAG_ACTIVITY_NO_HISTORY or
-                            Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
-                            Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+                    Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_NEW_DOCUMENT or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
                 )
                 try {
                     startActivity(goToMarket)

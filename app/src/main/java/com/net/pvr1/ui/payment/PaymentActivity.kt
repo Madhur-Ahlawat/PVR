@@ -1,8 +1,11 @@
 package com.net.pvr1.ui.payment
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,13 +22,20 @@ import com.net.pvr1.ui.payment.mCoupon.MCouponActivity
 import com.net.pvr1.ui.payment.promoCode.PromoCodeActivity
 import com.net.pvr1.ui.payment.response.CouponResponse
 import com.net.pvr1.ui.payment.response.PaymentResponse
+import com.net.pvr1.ui.payment.response.PaytmHmacResponse
 import com.net.pvr1.ui.payment.starPass.StarPassActivity
 import com.net.pvr1.ui.payment.viewModel.PaymentViewModel
 import com.net.pvr1.utils.*
+import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
+import com.net.pvr1.utils.Constant.Companion.BOOK_TYPE
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import dagger.hilt.android.AndroidEntryPoint
+import org.json.JSONException
+import org.json.JSONObject
+import java.util.*
 import javax.inject.Inject
 
+@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClickListenerCity,
     PaymentExclusiveAdapter.RecycleViewItemClickListenerCity,
@@ -37,6 +47,8 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
     private var loader: LoaderDialog? = null
     private var catFilterPayment = ArrayList<PaymentResponse.Output.Gateway>()
     private var paidAmount = ""
+
+    private val UPI_PAYMENT = 0
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,6 +108,8 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
 
 //        voucherDataLoad()
         payModeDataLoad()
+        paytmHMAC()
+        upiStatus()
     }
 
 //    private fun voucherDataLoad() {
@@ -248,12 +262,151 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
     }
 
     override fun paymentClick(comingSoonItem: PaymentResponse.Output.Gateway) {
+        if (comingSoonItem.name=="UPI"){
+            authViewModel.paytmHMAC(
+                preferences.getUserId(),
+                Constant.BOOKING_ID,
+                Constant.TRANSACTION_ID,
+                false,
+                "",
+                Constant.BOOK_TYPE,
+                comingSoonItem.name,
+                "no",
+                "NO"
+            )
+//            payUsingUpi("","","","")
+        }else{
         val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
-        intent.putExtra("ptype", comingSoonItem.id)
+        intent.putExtra("pTypeId", comingSoonItem.id)
         intent.putExtra("paidAmount", paidAmount)
-
         startActivity(intent)
+        }
     }
+
+    private fun paytmHMAC() {
+        authViewModel.liveDataScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        retrieveDataUpi(it.data.output)
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleasewait)
+                    loader?.show(this.supportFragmentManager, null)
+                }
+            }
+        }
+
+    }
+
+    private fun upiStatus() {
+        authViewModel.upiStatusResponseLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+
+//                        retrieveDataUpi(it.data.output)
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleasewait)
+                    loader?.show(this.supportFragmentManager, null)
+                }
+            }
+        }
+
+    }
+
+
+    private fun retrieveDataUpi(output: PaytmHmacResponse.Output) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(output.deepLink)
+        startActivityForResult(intent, 120)
+        startActivity(intent)
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 120) {
+            if (data != null && data.extras != null) {
+
+//                getUPICustomCall(
+//                    context,
+//                    com.net.pvr.ui.otherpaymentoptions.PCOtherPaymentOptionsActivity.bookType,
+//                    com.net.pvr.ui.otherpaymentoptions.PCOtherPaymentOptionsActivity.paymentIntentData,
+//                    paymentType
+//                )
+                val dialog = OptionDialog(this,
+                    R.mipmap.ic_launcher,
+                    R.string.app_name,
+                    getString(R.string.pleasewait),
+                    positiveBtnText = R.string.ok,
+                    negativeBtnText = R.string.no,
+                    positiveClick = {},
+                    negativeClick = {})
+                dialog.show()
+                if (BOOK_TYPE=="LOYALTYUNLIMITED" ){
+                    toast("LOYALTYUNLIMITED")
+                }
+                else {
+                    authViewModel.upiStatus(
+                        BOOK_TYPE,
+                        BOOKING_ID
+                    )
+                }
+
+            }
+        }
+    }
+
 
     override fun paymentExclusiveClick(comingSoonItem: PaymentResponse.Output.Offer) {
         when (comingSoonItem.name) {
@@ -287,7 +440,6 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
 ////        intent.putExtra("ptype",comingSoonItem.id.toString())
 //        startActivity(intent)
     }
-
 
     private fun payMethodFilter(
         category: String

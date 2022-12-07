@@ -1,26 +1,25 @@
-package com.net.pvr1.ui.payment.adapter
+package com.net.pvr1.ui.payment.cardDetails.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.net.pvr1.R
-import com.net.pvr1.databinding.ItemPaymentPrivlegeBinding
-import com.net.pvr1.ui.food.CartModel
-import com.net.pvr1.ui.payment.response.CouponResponse
+import com.net.pvr1.databinding.ItemNetBankingBinding
 
-class CouponAdapter(
-    private var nowShowingList: ArrayList<CouponResponse.Output>,
+//category
+
+class NetBankingAdapter(
+    private var nowShowingList: ArrayList<Map.Entry<String, String>>,
     private var context: Context,
-    private var listener: RecycleViewItemClickListenerCity,
+    private var listener: RecycleViewItemClickListener,
 ) :
-    RecyclerView.Adapter<CouponAdapter.ViewHolder>() {
-    inner class ViewHolder(val binding: ItemPaymentPrivlegeBinding) :
+    RecyclerView.Adapter<NetBankingAdapter.ViewHolder>() {
+    inner class ViewHolder(val binding: ItemNetBankingBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemPaymentPrivlegeBinding.inflate(
+        val binding = ItemNetBankingBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -33,7 +32,10 @@ class CouponAdapter(
         with(holder) {
             with(nowShowingList[position]) {
                 //title
-                binding.radioButton.text = context.getString(R.string.redeem)
+                binding.textView375.text = this.key+ " "+this.value
+                holder.itemView.setOnClickListener {
+                    listener.netBankingClick(this)
+                }
             }
         }
     }
@@ -43,8 +45,8 @@ class CouponAdapter(
     }
 
 
-    interface RecycleViewItemClickListenerCity {
-        fun couponClick(comingSoonItem: CartModel, position: Int)
+    interface RecycleViewItemClickListener {
+        fun netBankingClick(comingSoonItem: Map.Entry<String, String>)
     }
 
 }

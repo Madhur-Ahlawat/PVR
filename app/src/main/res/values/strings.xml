@@ -423,4 +423,10 @@
     <string name="booking_history">Booking History</string>
     <string name="enjoy_your_show">Enjoy your show</string>
     <string name="seat_cushions_for_children_are_available_at_cinema">Seat cushions for children are available at cinema</string>
+    <string name="you_will_earn_190_00_privilege_points">You will earn 190.00 Privilege Points</string>
+    <string name="payUsing">Pay using </string>
+    <string name="cardNumber">Enter Your Card Number</string>
+    <string name="cardCvv">Enter Your CVV</string>
+    <string name="cardMonth">Enter Your Card Moth/Year</string>
+    <string name="cardName">Enter Your Card Name</string>
 </resources>

@@ -93,6 +93,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
 
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySeatLayoutBinding.inflate(layoutInflater, null, false)
@@ -242,7 +243,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
                             positiveClick = {
-                                finish()
                             },
                             negativeClick = {
                             })

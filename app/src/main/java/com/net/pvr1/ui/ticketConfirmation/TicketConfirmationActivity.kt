@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import com.bumptech.glide.Glide
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
@@ -16,6 +17,7 @@ import com.net.pvr1.databinding.ActivityTicketConfirmatonBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.ticketConfirmation.adapter.TicketFoodAdapter
+import com.net.pvr1.ui.ticketConfirmation.adapter.TicketPlaceHolderAdapter
 import com.net.pvr1.ui.ticketConfirmation.adapter.TicketSeatAdapter
 import com.net.pvr1.ui.ticketConfirmation.response.TicketBookedResponse
 import com.net.pvr1.ui.ticketConfirmation.viewModel.TicketConfirmationViewModel
@@ -160,17 +162,28 @@ class TicketConfirmationActivity : AppCompatActivity() {
             .load(output.qr)
             .error(R.drawable.pvr_logo)
             .into(binding?.imageView156!!)
-//        qrBitmap = Constant().createQrCode(output.qr)
-//        binding?.imageView156?.setImageBitmap(qrBitmap)
-        //note
-//        binding?.textView365?.text=""
+
         //food
         val layoutManagerFood = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         val ticketFoodAdapter = TicketFoodAdapter(output.food)
-        binding?.recyclerView47?.setHasFixedSize(true)
-        binding?.recyclerView47?.layoutManager = layoutManagerFood
-        binding?.recyclerView47?.adapter = ticketFoodAdapter
+        binding?.recyclerView48?.setHasFixedSize(true)
+        binding?.recyclerView48?.layoutManager = layoutManagerFood
+        binding?.recyclerView48?.adapter = ticketFoodAdapter
 
+        //placeholder
+        val snapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(binding?.recyclerView51)
+        val layoutManagerPlaceHolder = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        val ticketPlaceHolderAdapter = TicketPlaceHolderAdapter(this,output.ph)
+        binding?.recyclerView51?.setHasFixedSize(true)
+        binding?.recyclerView51?.layoutManager = layoutManagerPlaceHolder
+        binding?.recyclerView51?.adapter = ticketPlaceHolderAdapter
+
+
+        //Direction
+        binding?.constraintLayout129?.setOnClickListener {
+            Constant().openMap(this,output.ltd,output.lngt)
+        }
     }
 
 }

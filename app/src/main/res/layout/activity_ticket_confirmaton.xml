@@ -864,7 +864,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/imageView159"
-                        tools:text="You will earn 190.00 Privilege Points" />
+                        android:text="@string/you_will_earn_190_00_privilege_points" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -906,8 +906,9 @@
                             android:layout_marginTop="@dimen/dimen_10dp"
                             android:layout_marginEnd="@dimen/dimen_33dp"
                             android:layout_marginBottom="@dimen/dimen_10dp"
+                            android:maxLines="1"
                             android:fontFamily="@font/sf_pro_text_semi_bold"
-                            tools:text="TextView"
+                            android:text="@string/modify_booking"
                             android:textAlignment="center"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen_12sp" />
@@ -957,7 +958,7 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
                 android:background="@drawable/ticket_conf_curv"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout13">
@@ -992,11 +993,9 @@ ididunt ut labore et dolore magna aliqua." />
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout128"
                 android:layout_width="0dp"
-                android:visibility="gone"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
                 android:layout_marginTop="32dp"
-                android:layout_marginEnd="24dp"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout127">
@@ -1009,6 +1008,7 @@ ididunt ut labore et dolore magna aliqua." />
                     android:text="@string/official_merchandise"
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimen_14sp"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -1018,17 +1018,19 @@ ididunt ut labore et dolore magna aliqua." />
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:adjustViewBounds="true"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView366"
-                    tools:srcCompat="@tools:sample/backgrounds/scenic"
-                    tools:ignore="ContentDescription" />
+                    tools:ignore="ContentDescription"
+                    tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
                 <TextView
                     android:id="@+id/textView367"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="34dp"
                     android:fontFamily="@font/montserrat_bold"
                     android:text="@string/offers_for_you"
@@ -1038,6 +1040,7 @@ ididunt ut labore et dolore magna aliqua." />
                     app:layout_constraintTop_toBottomOf="@+id/recyclerView49" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView51"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"

@@ -28,6 +28,7 @@ import com.net.pvr1.ui.food.viewModel.FoodViewModel
 import com.net.pvr1.ui.summery.SummeryActivity
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
+import com.net.pvr1.utils.Constant.Companion.BOOK_TYPE
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -69,7 +70,7 @@ class FoodActivity : AppCompatActivity(),
         val view = binding?.root
         setContentView(view)
         authViewModel.food(
-            preferences.getUserId().toString(),
+            preferences.getUserId(),
             CINEMA_ID,
             BOOKING_ID,
             "",
@@ -183,15 +184,25 @@ class FoodActivity : AppCompatActivity(),
     }
 
     private fun movedNext() {
-        binding?.toolbar?.imageView58?.setOnClickListener {
+        //OnBack
+        binding?.imageView58?.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
+        //without food
+        binding?.textView374?.setOnClickListener {
+            val intent = Intent(this@FoodActivity, SummeryActivity::class.java)
+            intent.putExtra(BOOK_TYPE, "FOOD")
+            startActivity(intent)
 
-        binding?.toolbar?.textView108?.text = getString(R.string.order_snack)
+        }
+        binding?.textView108?.text = getString(R.string.order_snack)
         binding?.include24?.textView5?.text = getString(R.string.submit)
         binding?.include24?.textView5?.text = getString(R.string.proceed)
+
+        //with Food
         binding?.include24?.textView5?.setOnClickListener {
             val intent = Intent(this@FoodActivity, SummeryActivity::class.java)
+            intent.putExtra(BOOK_TYPE, "BOOKING")
             intent.putExtra("food", cartModel)
             startActivity(intent)
         }

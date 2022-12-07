@@ -111,6 +111,15 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<PaymentResponse>
 
+    @POST("payment/paytmex/upistatus")
+    suspend fun upiStatus(
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaymentResponse>
+
+
     @POST("v2/user/register")
     suspend fun resister(
         @Header("X-Token") hash: String,

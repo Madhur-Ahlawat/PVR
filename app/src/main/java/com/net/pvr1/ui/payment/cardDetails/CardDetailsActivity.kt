@@ -5,14 +5,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
 import android.view.View.OnFocusChangeListener
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityCardDetailsBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.payment.cardDetails.adapter.NetBankingAdapter
 import com.net.pvr1.ui.payment.cardDetails.viewModel.CardDetailsViewModel
 import com.net.pvr1.ui.payment.response.PaytmHmacResponse
 import com.net.pvr1.ui.payment.webView.PaymentWebActivity
@@ -25,7 +26,7 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CardDetailsActivity : AppCompatActivity() {
+class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewItemClickListener {
     private var isNetBaking: Boolean = false
 
     @Inject
@@ -44,6 +45,13 @@ class CardDetailsActivity : AppCompatActivity() {
     private var expiryMonth = ""
     private var expiryYear = ""
 
+    //netBanking Case
+    private var callingUrlNet = ""
+    private var currencyNet = ""
+    private var midNet = ""
+    private var amountNet = ""
+    private var hmackeyNet = ""
+
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,23 +59,39 @@ class CardDetailsActivity : AppCompatActivity() {
         binding = ActivityCardDetailsBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        paymentType = intent.getStringExtra("ptype").toString()
+        paymentType = intent.getStringExtra("pTypeId").toString()
         //PaidAmount
-        binding?.textView287?.text = getString(R.string.pay) + " " + getString(R.string.currency) + intent.getStringExtra("paidAmount")
+        binding?.textView287?.text =
+            getString(R.string.pay) + " " + getString(R.string.currency) + intent.getStringExtra("paidAmount")
         movedNext()
         paytmHMAC()
 
-        //        amountToAdd = Util.ceilAmount(Double.parseDouble(amountToAdd));
         if (paymentType.equals("116", ignoreCase = true)) {
             paymentType = getString(R.string.mobikwik_addmoney_payment_type_credit_card)
+            binding?.constraintLayout130?.show()
             isNetBaking = false
         } else if (paymentType.equals("117", ignoreCase = true)) {
             paymentType = getString(R.string.mobikwik_addmoney_payment_type_dedit_card)
+            binding?.constraintLayout130?.show()
             isNetBaking = false
         } else if (paymentType.equals("118", ignoreCase = true)) {
             paymentType = getString(R.string.mobikwik_addmoney_payment_type_net_banking)
+            binding?.constraintLayout130?.hide()
             isNetBaking = true
+            authViewModel.paytmHMAC(
+                preferences.getUserId(),
+                Constant.BOOKING_ID,
+                Constant.TRANSACTION_ID,
+                false,
+                "",
+                BOOK_TYPE,
+                paymentType,
+                "no",
+                "NO"
+            )
         }
+
+
     }
 
     private fun movedNext() {
@@ -81,17 +105,66 @@ class CardDetailsActivity : AppCompatActivity() {
 
         //Proceed Bt
         binding?.include28?.textView5?.setOnClickListener {
-            authViewModel.paytmHMAC(
-                preferences.getUserId(),
-                Constant.BOOKING_ID,
-                Constant.TRANSACTION_ID,
-                false,
-                binding?.cardNumber?.text.toString(),
-                "BOOKING",
-                paymentType,
-                "no",
-                "NO"
-            )
+
+            val cardNumber = binding?.cardNumber?.text.toString()
+            val monthYear = binding?.monthYear?.text.toString()
+            val cvv = binding?.cvv?.text.toString()
+            val nameOnCard = binding?.nameOnCard?.text.toString()
+
+            if (cardNumber == "") {
+                val dialog = OptionDialog(this,
+                    R.mipmap.ic_launcher,
+                    R.string.app_name,
+                    getString(R.string.cardNumber),
+                    positiveBtnText = R.string.ok,
+                    negativeBtnText = R.string.no,
+                    positiveClick = {},
+                    negativeClick = {})
+                dialog.show()
+            } else if (monthYear == "") {
+                val dialog = OptionDialog(this,
+                    R.mipmap.ic_launcher,
+                    R.string.app_name,
+                    getString(R.string.cardMonth),
+                    positiveBtnText = R.string.ok,
+                    negativeBtnText = R.string.no,
+                    positiveClick = {},
+                    negativeClick = {})
+                dialog.show()
+            } else if (cvv == "") {
+                val dialog = OptionDialog(this,
+                    R.mipmap.ic_launcher,
+                    R.string.app_name,
+                    getString(R.string.cardCvv),
+                    positiveBtnText = R.string.ok,
+                    negativeBtnText = R.string.no,
+                    positiveClick = {},
+                    negativeClick = {})
+                dialog.show()
+            } else if (nameOnCard == "") {
+                val dialog = OptionDialog(this,
+                    R.mipmap.ic_launcher,
+                    R.string.app_name,
+                    getString(R.string.cardNumber),
+                    positiveBtnText = R.string.ok,
+                    negativeBtnText = R.string.no,
+                    positiveClick = {},
+                    negativeClick = {})
+                dialog.show()
+            } else {
+                authViewModel.paytmHMAC(
+                    preferences.getUserId(),
+                    Constant.BOOKING_ID,
+                    Constant.TRANSACTION_ID,
+                    false,
+                    cardNumber,
+                    "BOOKING",
+                    paymentType,
+                    "no",
+                    "NO"
+                )
+            }
+
         }
 
         //mm//year
@@ -189,15 +262,71 @@ class CardDetailsActivity : AppCompatActivity() {
     }
 
     private fun retrieveData(output: PaytmHmacResponse.Output) {
-        expiryMonth = binding?.monthYear?.text.toString().split("/")[0]
-        expiryYear = binding?.monthYear?.text.toString().split("/")[1]
+        val bankList: ArrayList<Map.Entry<String, String>> = ArrayList()
+        if (output.nblist != null) {
+            output.nblist.forEach {
+                bankList.add(it)
+            }
+        }
 
+        printLog("nbList--->${bankList}")
+        if (bankList.isNotEmpty()) {
+            hmackeyNet = output.hmackey
+            amountNet = output.amount
+            midNet = output.mid
+            currencyNet = output.currency
+            callingUrlNet = output.callingurl
+
+            val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+            val foodBestSellerAdapter = NetBankingAdapter(bankList, this, this)
+            binding?.recyclerView52?.layoutManager = layoutManagerCrew
+            binding?.recyclerView52?.adapter = foodBestSellerAdapter
+            binding?.recyclerView52?.setHasFixedSize(true)
+        } else {
+            expiryMonth = binding?.monthYear?.text.toString().split("/")[0]
+            expiryYear = binding?.monthYear?.text.toString().split("/")[1]
+
+            val intent = Intent(this@CardDetailsActivity, PaymentWebActivity::class.java)
+            if (subscriptionId != "") intent.putExtra("subscriptionId", subscriptionId)
+            intent.putExtra("token", output.hmackey)
+            intent.putExtra("amount", output.amount)
+            intent.putExtra("mid", output.mid)
+            intent.putExtra("currency", output.currency)
+            intent.putExtra("saveCardId", saveCardId)
+            intent.putExtra("paymentType", paymentType)
+
+            if (!isFromNet) {
+                if (binding?.checkBox?.isChecked == true && !isKotak) {
+                    intent.putExtra("saveCard", "1")
+                } else {
+                    intent.putExtra("saveCard", "0")
+                }
+
+                intent.putExtra("cvv", binding?.cvv?.text.toString())
+                intent.putExtra("ccnumber", binding?.cardNumber?.text.toString())
+                intent.putExtra("expmonth", expiryMonth)
+                intent.putExtra("expyear", expiryYear)
+            }
+
+            intent.putExtra("channelCode", selectedBankCode)
+            intent.putExtra("paymenttype", paymentType)
+            intent.putExtra("checksum", output.callingurl)
+            intent.putExtra("BookType", BOOK_TYPE)
+            intent.putExtra("TICKET_BOOKING_DETAILS", "paymentIntentData")
+            startActivity(intent)
+
+        }
+
+    }
+
+
+    override fun netBankingClick(comingSoonItem: Map.Entry<String, String>) {
         val intent = Intent(this@CardDetailsActivity, PaymentWebActivity::class.java)
         if (subscriptionId != "") intent.putExtra("subscriptionId", subscriptionId)
-        intent.putExtra("token", output.hmackey)
-        intent.putExtra("amount", output.amount)
-        intent.putExtra("mid", output.mid)
-        intent.putExtra("currency", output.currency)
+        intent.putExtra("token", hmackeyNet)
+        intent.putExtra("amount", amountNet)
+        intent.putExtra("mid", midNet)
+        intent.putExtra("currency", currencyNet)
         intent.putExtra("saveCardId", saveCardId)
         intent.putExtra("paymentType", paymentType)
 
@@ -207,16 +336,15 @@ class CardDetailsActivity : AppCompatActivity() {
             } else {
                 intent.putExtra("saveCard", "0")
             }
-
             intent.putExtra("cvv", binding?.cvv?.text.toString())
             intent.putExtra("ccnumber", binding?.cardNumber?.text.toString())
             intent.putExtra("expmonth", expiryMonth)
             intent.putExtra("expyear", expiryYear)
         }
 
-        intent.putExtra("channelCode", selectedBankCode)
+        intent.putExtra("channelCode", comingSoonItem.key)
         intent.putExtra("paymenttype", paymentType)
-        intent.putExtra("checksum", output.callingurl)
+        intent.putExtra("checksum", callingUrlNet)
         intent.putExtra("BookType", BOOK_TYPE)
         intent.putExtra("TICKET_BOOKING_DETAILS", "paymentIntentData")
         startActivity(intent)
