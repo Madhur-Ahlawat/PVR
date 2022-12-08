@@ -536,10 +536,8 @@
                         android:layout_height="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="1.0" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/textView161"
@@ -595,7 +593,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         app:layout_constraintEnd_toEndOf="@+id/textView171"
                         app:layout_constraintStart_toStartOf="@+id/view110"
                         app:layout_constraintTop_toBottomOf="@+id/textView164">
@@ -755,6 +753,7 @@
                         app:layout_constraintBottom_toBottomOf="@+id/textView167"
                         app:layout_constraintEnd_toEndOf="@+id/textView172"
                         app:layout_constraintTop_toTopOf="@+id/textView167"
+                        app:layout_constraintVertical_bias="0.0"
                         tools:text="TextView" />
 
                     <View
@@ -847,7 +846,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/pvr_privilege_icon_copy"
+                            app:srcCompat="@drawable/privilege_icon"
                             tools:ignore="ContentDescription" />
 
                         <TextView
@@ -857,7 +856,7 @@
                             android:layout_marginTop="6dp"
                             android:layout_marginBottom="17dp"
                             android:fontFamily="@font/sf_pro_text_regular"
-                            tools:text="You will earn 190.00 Privilege Points."
+                            android:text="@string/privlege_point"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen_14sp"
                             app:layout_constraintBottom_toBottomOf="@+id/view215"

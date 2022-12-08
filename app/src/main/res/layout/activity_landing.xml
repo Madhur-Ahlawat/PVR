@@ -8,15 +8,27 @@
     android:background="@color/white"
     tools:context=".ui.splash.onBoarding.LandingActivity">
 
-    <View
-        android:id="@+id/view206"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/consViewPager"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/bottom_onboard_corner"
-        app:layout_constraintBottom_toBottomOf="@+id/viewPager"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout37"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/view2">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <View
         android:id="@+id/view2"
         android:layout_width="wrap_content"
@@ -34,22 +46,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:foregroundGravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout37"
-        app:layout_constraintEnd_toEndOf="@+id/view2"
-        app:layout_constraintStart_toStartOf="@+id/view2"
-        app:layout_constraintTop_toTopOf="@+id/view2"
-        tools:ignore="SpeakableTextPresentCheck" />
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout37"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:layout_marginTop="@dimen/dimen_2dp"
         android:paddingBottom="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/view2"
         app:layout_constraintEnd_toEndOf="parent"

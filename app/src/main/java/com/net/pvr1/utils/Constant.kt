@@ -166,7 +166,8 @@ class Constant {
                             viewMore
                         ), TextView.BufferType.SPANNABLE
                     )
-                    tv.setTextColor(Color.parseColor("#000000"));
+                    tv.setTextColor(Color.parseColor("#000000"))
+//                    tv.setTextColor(Color.parseColor(ContextCompat.getColor(R.color.black)))
 
                 } else if (maxLine > 0 && tv.lineCount >= maxLine) {
                     val lineEndIndex = tv.layout.getLineEnd(maxLine - 1)
@@ -181,6 +182,7 @@ class Constant {
                         ), TextView.BufferType.SPANNABLE
                     )
                     tv.setTextColor(Color.parseColor("#000000"));
+                    tv.typeface.isBold
 
                 } else {
                     val lineEndIndex = tv.layout.getLineEnd(tv.layout.lineCount - 1)
@@ -193,7 +195,8 @@ class Constant {
                             viewMore
                         ), TextView.BufferType.SPANNABLE
                     )
-                    tv.setTextColor(Color.parseColor("#000000"));
+                    tv.setTextColor(Color.parseColor("#000000"))
+                    tv.typeface.isBold
 
                 }
             }

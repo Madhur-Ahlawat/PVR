@@ -156,13 +156,12 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/txtSelectedLocation"
                         tools:text="Hyderabad" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/consSelectCity"
                     android:layout_width="0dp"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -252,12 +251,14 @@
                     android:id="@+id/textView124"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/dimen_16dp"
                     android:layout_margin="@dimen/dimen_20dp"
-                    android:textColor="@color/textColor"
-                    android:visibility="gone"
                     android:fontFamily="@font/helvetica_neu_medium"
                     android:text="Sorry! We could not find what you were \nlooking for"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/dimen_16sp"
+                    android:visibility="visible"
+                    android:layout_marginBottom="@dimen/dimen_20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/consSelectedLocation" />

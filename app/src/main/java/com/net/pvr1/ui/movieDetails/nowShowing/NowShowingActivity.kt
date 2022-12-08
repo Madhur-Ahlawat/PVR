@@ -36,6 +36,8 @@ class NowShowingActivity : AppCompatActivity(),
         val view = binding?.root
         setContentView(view)
         movieDetails()
+        binding?.include?.textView5?.text = resources.getString(R.string.book_now)
+
         authViewModel.movieDetails(
             "Delhi-NCR",
             intent.getStringExtra("mid").toString(),
@@ -173,16 +175,21 @@ class NowShowingActivity : AppCompatActivity(),
             binding?.constraintLayout11?.show()
         }
         //Cast
-        val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-        val castAdapter = CastAdapter(output.mb.cast, this, this)
-        binding?.recyclerView4?.layoutManager = layoutManager
-        binding?.recyclerView4?.adapter = castAdapter
+        if (output.mb != null && output.mb.name != null) {
 
-        //Crew
-        val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-        val crewAdapter = CrewAdapter(output.mb.crew, this, this)
-        binding?.recyclerCrew?.layoutManager = layoutManagerCrew
-        binding?.recyclerCrew?.adapter = crewAdapter
+            val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+            val castAdapter = CastAdapter(output.mb.cast, this, this)
+            binding?.recyclerView4?.layoutManager = layoutManager
+            binding?.recyclerView4?.adapter = castAdapter
+
+            //Crew
+            val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+            val crewAdapter = CrewAdapter(output.mb.crew, this, this)
+            binding?.recyclerCrew?.layoutManager = layoutManagerCrew
+            binding?.recyclerCrew?.adapter = crewAdapter
+        }
+
+
 
         //condition check for Trailer and Music video
         val trailerList:ArrayList<MovieDetailsResponse.Trs> = ArrayList()
@@ -214,19 +221,21 @@ class NowShowingActivity : AppCompatActivity(),
 
 //        //MusicVideo
         if (musicVideoList.size != 0) {
-            val layoutManagerTrailer =
-                GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+            val layoutManagerTrailer = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
             val trailerAdapter = MusicVideoTrsAdapter(musicVideoList, this, this)
             binding?.recyclerMusic?.layoutManager = layoutManagerTrailer
             binding?.recyclerMusic?.adapter = trailerAdapter
         } else {
-            if (output.mb.tracks.isNotEmpty()) {
-                val layoutManagerTrailer =
-                    GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-                val trailerAdapter = MusicVideoAdapter(output.mb.tracks[0].roles, this, this)
-                binding?.recyclerMusic?.layoutManager = layoutManagerTrailer
-                binding?.recyclerMusic?.adapter = trailerAdapter
+            if (output.mb != null && output.mb.name != null) {
+                if (output.mb.tracks.isNotEmpty()) {
+                    val layoutManagerTrailer =
+                        GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+                    val trailerAdapter = MusicVideoAdapter(output.mb.tracks[0].roles, this, this)
+                    binding?.recyclerMusic?.layoutManager = layoutManagerTrailer
+                    binding?.recyclerMusic?.adapter = trailerAdapter
+                }
             }
+
         }
     }
 

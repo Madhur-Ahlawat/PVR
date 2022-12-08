@@ -44,6 +44,7 @@ import com.net.pvr1.ui.selectCity.response.SelectCityResponse
 import com.net.pvr1.ui.selectCity.viewModel.SelectCityViewModel
 import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.internal.notify
 import java.io.IOException
 import java.util.*
 import javax.inject.Inject
@@ -347,27 +348,27 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
 
     private fun filter(text: String) {
         val filtered: ArrayList<SelectCityResponse.Output.Ot> = ArrayList()
+
         // creating a new array list to filter our data.
         // running a for loop to compare elements.
+
         for (item in filterCityList!!) {
 
             if (item.name.lowercase(Locale.getDefault())
                     .contains(text.lowercase(Locale.getDefault()))
             ) {
-                // if the item is matched we are
-                // adding it to our filtered list.
                 filtered.add(item)
             }
         }
 
         if (filtered.isEmpty()) {
-            binding?.consSelectedLocation?.show()
-
-            binding?.recyclerViewSearchCity?.hide()
-            binding?.consSelectedLocation?.show()
-            binding?.textView124?.show()
+            filtered.clear()
+//            binding?.consSelectedLocation?.show()
             binding?.consSelectCity?.hide()
-            Toast.makeText(this, "No Data Found..", Toast.LENGTH_SHORT).show()
+            binding?.recyclerViewSearchCity?.hide()
+
+            binding?.textView124?.show()
+//            Toast.makeText(this, "No Data Found..", Toast.LENGTH_SHORT).show()
 
         } else {
 

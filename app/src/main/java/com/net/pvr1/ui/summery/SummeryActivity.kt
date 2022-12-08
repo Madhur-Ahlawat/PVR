@@ -258,9 +258,33 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         binding?.textView168?.text = ""
         //coupon
         binding?.textView169?.text = ""
+
+        var itList : List<SummeryResponse.Output.F.It> = ArrayList()
         try {
+
+//           for (item in output.f){
+//
+//               if (item.n == "Taxes & Fees "){
+//
+//                   //taxes fee
+//                   binding?.textView170?.text =getString(R.string.currency) + item.v
+//                   itList = item.it
+//                   for (item in itList){
+//                       //Convenience fee
+//                       binding?.textView272?.text =getString(R.string.currency) + item.v
+//
+//                       //Convenience Heading
+//                       binding?.textView270?.text = item.n
+//                       //gst
+//                       binding?.textView273?.text = getString(R.string.currency) + item.v
+//                       //gst Heading
+//                       binding?.textView271?.text = item.n
+//                   }
+//               }
+//           }
+
             //taxes fee
-            binding?.textView170?.text = output.f[1].v
+            binding?.textView170?.text =getString(R.string.currency) + output.f[1].v
             //Convenience fee
             binding?.textView272?.text = output.f[1].it[0].v
             //Convenience Heading
@@ -291,7 +315,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         //title
         binding?.textView110?.text = output.m
         //shows
-        binding?.textView112?.text = output.md + "," + output.t
+        binding?.textView112?.text = output.md + ", " + output.t
         //location
         binding?.textView113?.text = output.c
         binding?.imageView60?.setOnClickListener {
