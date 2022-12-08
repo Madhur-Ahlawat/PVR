@@ -203,8 +203,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             snapHelper.attachToRecyclerView(binding?.recyclerViewSlider)
             val gridLayoutSlider =
                 GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
-
-
             binding?.recyclerViewSlider?.layoutManager = LinearLayoutManager(context)
             val adapterSlider = HomeSliderAdapter(requireActivity(), output.mv, this)
             binding?.recyclerViewSlider?.layoutManager = gridLayoutSlider

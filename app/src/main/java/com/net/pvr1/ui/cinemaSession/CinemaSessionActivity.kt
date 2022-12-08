@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.cinemaSession
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -23,7 +24,6 @@ import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import com.net.pvr1.utils.PreferenceManager
-import com.net.pvr1.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -38,7 +38,7 @@ class CinemaSessionActivity : AppCompatActivity(),
     private var binding: ActivityCinemaSessionBinding? = null
     private val authViewModel: CinemaSessionViewModel by viewModels()
     private var loader: LoaderDialog? = null
-//    private var
+    private var itemClick = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +50,7 @@ class CinemaSessionActivity : AppCompatActivity(),
             intent.getStringExtra("cid").toString(),
             intent.getStringExtra("lat").toString(),
             intent.getStringExtra("lang").toString(),
-            preferences.getUserId().toString(),
+            preferences.getUserId(),
             "NA",
             "ALL",
             "ALL",
@@ -64,7 +64,12 @@ class CinemaSessionActivity : AppCompatActivity(),
             "ALL"
         )
         //Theater
-        authViewModel.cinemaNearTheater(preferences.getCityName(), preferences.getLatitudeData(), preferences.getLongitudeData(), intent.getStringExtra("cid").toString())
+        authViewModel.cinemaNearTheater(
+            preferences.getCityName(),
+            preferences.getLatitudeData(),
+            preferences.getLongitudeData(),
+            intent.getStringExtra("cid").toString()
+        )
         cinemaSessionDataLoad()
         cinemaNearTheaterLoad()
         movedNext()
@@ -77,7 +82,7 @@ class CinemaSessionActivity : AppCompatActivity(),
         }
         //share
         binding?.imageView42?.setOnClickListener {
-            Constant().shareData(this@CinemaSessionActivity,"","")
+            Constant().shareData(this@CinemaSessionActivity, "", "")
         }
 
     }
@@ -96,10 +101,8 @@ class CinemaSessionActivity : AppCompatActivity(),
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -111,10 +114,8 @@ class CinemaSessionActivity : AppCompatActivity(),
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
@@ -139,10 +140,8 @@ class CinemaSessionActivity : AppCompatActivity(),
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -154,10 +153,8 @@ class CinemaSessionActivity : AppCompatActivity(),
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
@@ -174,96 +171,120 @@ class CinemaSessionActivity : AppCompatActivity(),
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(binding?.recyclerView18)
         val gridLayout4 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-        val cinemaSessionNearTheaterAdapter =
-            CinemaSessionNearTheaterAdapter(output.c, this, this)
+        val cinemaSessionNearTheaterAdapter = CinemaSessionNearTheaterAdapter(output.c, this, this)
         binding?.recyclerView18?.layoutManager = gridLayout4
         binding?.recyclerView18?.adapter = cinemaSessionNearTheaterAdapter
     }
 
+    @SuppressLint("SetTextI18n")
     private fun retrieveData(output: CinemaSessionResponse.Output) {
-        binding?.textView99?.text = output.cn
-        //title
-        binding?.textView84?.text = output.cn
-        //address
-        binding?.textView81?.text = output.addr
-        //Image
-        Glide.with(this@CinemaSessionActivity)
-            .load(output.imob)
-            .error(R.drawable.app_icon)
-            .into(binding?.imageView40!!)
-        //Direction
-        binding?.view64?.setOnClickListener {
-            Constant().openMap(this,output.lat , output.lang)
-        }
-        //Distance
-        binding?.textView86?.text = output.d
-        //Shows
-        binding?.textView85?.text = output.msc.toString()+getString(R.string.shows)
-
-        //recycler Days
-        val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-        val cinemaSessionDaysAdapter = CinemaSessionDaysAdapter(output.bd, this, this)
-        binding?.recyclerView13?.layoutManager = gridLayout2
-        binding?.recyclerView13?.adapter = cinemaSessionDaysAdapter
-
-        //Promotion
-        println("output.phd--->"+output.phd.size)
-        val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-        val cinemaSessionLanguageAdapter = PromotionAdapter(this, output.phd)
-        binding?.recyclerView14?.layoutManager = gridLayout
-        binding?.recyclerView14?.adapter = cinemaSessionLanguageAdapter
-
-        //recycler Cinemas
-        val gridLayout3 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-        val cinemaSessionCinParentAdapter =
-            CinemaSessionCinParentAdapter(output.childs, this, this)
-        binding?.recyclerView15?.layoutManager = gridLayout3
-        binding?.recyclerView15?.adapter = cinemaSessionCinParentAdapter
-
-        //action Like
-        var rowIndex:Boolean=output.like
-        toast("$rowIndex")
-        val isLogin=preferences.getIsLogin()
-        if (rowIndex){
-            binding?.imageView43?.setImageResource(R.drawable.ic_favourite_theatre)
-        }else {
-            binding?.imageView43?.setImageResource(R.drawable.ic_un_favourite_theatre)
-        }
-        binding?.imageView43?.setOnClickListener {
-            if (isLogin) {
-                if (rowIndex){
-                    rowIndex=false
-                    binding?.imageView43?.setImageResource(R.drawable.ic_un_favourite_theatre)
-                    authViewModel.cinemaPreference(preferences.getUserId(),intent.getStringExtra("cid").toString(),rowIndex,"t","")
-
-                }else {
-                    rowIndex= true
-                    binding?.imageView43?.setImageResource(R.drawable.ic_favourite_theatre)
-                    authViewModel.cinemaPreference(preferences.getUserId(),intent.getStringExtra("cid").toString(),rowIndex,"t","")
-                }
-
-            } else {
-                val dialog = OptionDialog(this,
-                    R.mipmap.ic_launcher_foreground,
-                    R.string.app_name,
-                    getString(R.string.loginCinema),
-                    positiveBtnText = R.string.yes,
-                    negativeBtnText = R.string.no,
-                    positiveClick = {
-                        val intent = Intent(this@CinemaSessionActivity, LoginActivity::class.java)
-                        startActivity(intent)
-                    },
-                    negativeClick = {
-                    })
-                dialog.show()
+        if (itemClick == 0) {
+            binding?.textView99?.text = output.cn
+            //title
+            binding?.textView84?.text = output.cn
+            //address
+            binding?.textView81?.text = output.addr
+            //Image
+            Glide.with(this@CinemaSessionActivity).load(output.imob).error(R.drawable.app_icon)
+                .into(binding?.imageView40!!)
+            //Direction
+            binding?.view64?.setOnClickListener {
+                Constant().openMap(this, output.lat, output.lang)
             }
 
+            //Distance
+            binding?.textView86?.text = output.d
+            //Shows
+            binding?.textView85?.text = output.msc.toString() + " " + getString(R.string.shows)
+
+            //recycler Days
+            binding?.recyclerView13?.onFlingListener = null
+            val snapHelper = PagerSnapHelper()
+            snapHelper.attachToRecyclerView(binding?.recyclerView13)
+            val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+            val cinemaSessionDaysAdapter = CinemaSessionDaysAdapter(output.bd, this, this)
+            binding?.recyclerView13?.layoutManager = gridLayout2
+            binding?.recyclerView13?.adapter = cinemaSessionDaysAdapter
+
+            //action Like
+            var rowIndex: Boolean = output.like
+            val isLogin = preferences.getIsLogin()
+            if (rowIndex) {
+                binding?.imageView43?.setImageResource(R.drawable.ic_favourite_theatre)
+            } else {
+                binding?.imageView43?.setImageResource(R.drawable.ic_un_favourite_theatre)
+            }
+
+            binding?.imageView43?.setOnClickListener {
+                if (isLogin) {
+                    if (rowIndex) {
+                        rowIndex = false
+                        binding?.imageView43?.setImageResource(R.drawable.ic_un_favourite_theatre)
+                        authViewModel.cinemaPreference(
+                            preferences.getUserId(),
+                            intent.getStringExtra("cid").toString(),
+                            rowIndex,
+                            "t",
+                            ""
+                        )
+
+                    } else {
+                        rowIndex = true
+                        binding?.imageView43?.setImageResource(R.drawable.ic_favourite_theatre)
+                        authViewModel.cinemaPreference(
+                            preferences.getUserId(),
+                            intent.getStringExtra("cid").toString(),
+                            rowIndex,
+                            "t",
+                            ""
+                        )
+                    }
+
+                } else {
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher_foreground,
+                        R.string.app_name,
+                        getString(R.string.loginCinema),
+                        positiveBtnText = R.string.yes,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {
+                            val intent =
+                                Intent(this@CinemaSessionActivity, LoginActivity::class.java)
+                            startActivity(intent)
+                        },
+                        negativeClick = {})
+                    dialog.show()
+                }
+
+            }
+
+            //Promotion
+            val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+            val cinemaSessionLanguageAdapter = PromotionAdapter(this, output.phd)
+            binding?.recyclerView14?.layoutManager = gridLayout
+            binding?.recyclerView14?.adapter = cinemaSessionLanguageAdapter
+
+
+            //recycler Cinemas
+            val gridLayout3 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+            val cinemaSessionCinParentAdapter =
+                CinemaSessionCinParentAdapter(output.childs, this, this)
+            binding?.recyclerView15?.layoutManager = gridLayout3
+            binding?.recyclerView15?.adapter = cinemaSessionCinParentAdapter
+            
+        } else {
+            //recycler Cinemas
+            val gridLayout3 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+            val cinemaSessionCinParentAdapter =
+                CinemaSessionCinParentAdapter(output.childs, this, this)
+            binding?.recyclerView15?.layoutManager = gridLayout3
+            binding?.recyclerView15?.adapter = cinemaSessionCinParentAdapter
         }
 
     }
 
     override fun dateClick(comingSoonItem: CinemaSessionResponse.Output.Bd) {
-
+        itemClick = 1
         authViewModel.cinemaSession(
             preferences.getCityName(),
             intent.getStringExtra("cid").toString(),
@@ -296,7 +317,7 @@ class CinemaSessionActivity : AppCompatActivity(),
     }
 
     override fun nearTheaterDirectionClick(comingSoonItem: CinemaNearTheaterResponse.Output.C) {
-        Constant().openMap(this, comingSoonItem.lat,  comingSoonItem.lang )
+        Constant().openMap(this, comingSoonItem.lat, comingSoonItem.lang)
     }
 
 }

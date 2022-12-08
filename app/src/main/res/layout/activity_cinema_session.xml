@@ -276,7 +276,7 @@
                             app:layout_constraintBottom_toBottomOf="@+id/view64"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/view64"
-                            android:text="Directions" />
+                            android:text="@string/directions" />
                     </LinearLayout>
 
 
