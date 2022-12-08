@@ -46,11 +46,11 @@ class CinemaSessionActivity : AppCompatActivity(),
         val view = binding?.root
         setContentView(view)
         authViewModel.cinemaSession(
-            "Delhi-NCR",
+            preferences.getCityName(),
             intent.getStringExtra("cid").toString(),
             intent.getStringExtra("lat").toString(),
             intent.getStringExtra("lang").toString(),
-            preferences.getUserId().toString(),
+            preferences.getUserId(),
             "NA",
             "ALL",
             "ALL",
@@ -64,7 +64,7 @@ class CinemaSessionActivity : AppCompatActivity(),
             "ALL"
         )
         //Theater
-        authViewModel.cinemaNearTheater("Delhi-NCR", "0", "0", "192")
+        authViewModel.cinemaNearTheater(preferences.getCityName(), preferences.getLatitudeData(), preferences.getLongitudeData(), intent.getStringExtra("cid").toString())
         cinemaSessionDataLoad()
         cinemaNearTheaterLoad()
     }
