@@ -28,6 +28,7 @@ import com.net.pvr1.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class CinemaSessionActivity : AppCompatActivity(),
     CinemaSessionDaysAdapter.RecycleViewItemClickListenerCity,
@@ -45,6 +46,11 @@ class CinemaSessionActivity : AppCompatActivity(),
         binding = ActivityCinemaSessionBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
+        binding?.imageView41?.setOnClickListener {
+            onBackPressed()
+        }
+
         authViewModel.cinemaSession(
             preferences.getCityName(),
             intent.getStringExtra("cid").toString(),
