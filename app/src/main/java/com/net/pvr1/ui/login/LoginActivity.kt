@@ -18,6 +18,7 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityLoginBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.enableLocation.EnableLocationActivity
 import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.login.otpVerify.OtpVerifyActivity
 import com.net.pvr1.ui.login.response.LoginResponse
@@ -140,12 +141,16 @@ class LoginActivity : AppCompatActivity() {
         }
         //Skip
         binding?.textView8?.setOnClickListener {
-            if (preferences.getCityName() == "") {
+            if (!Constant().isLocationServicesAvailable(this@LoginActivity)){
+                val intent = Intent(this@LoginActivity, EnableLocationActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else if (preferences.getCityName()==""){
                 val intent = Intent(this@LoginActivity, SelectCityActivity::class.java)
                 startActivity(intent)
                 finish()
             }else{
-//                val intent = Intent(this@SplashActivity, FoodActivity::class.java)
+//                    val intent = Intent(this@SplashActivity, StarPassActivity::class.java)
                 val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                 startActivity(intent)
                 finish()

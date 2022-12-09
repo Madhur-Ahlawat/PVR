@@ -3,6 +3,7 @@ package com.net.pvr1.utils
 import android.content.Context
 import android.content.SharedPreferences
 import com.net.pvr1.utils.Constant.Companion.CITY
+import com.net.pvr1.utils.Constant.Companion.CITY_CC
 import com.net.pvr1.utils.Constant.Companion.IS_LOGIN
 import com.net.pvr1.utils.Constant.Companion.LATITUDE
 import com.net.pvr1.utils.Constant.Companion.LONGITUDE
@@ -95,6 +96,17 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
 
     fun getCityName(): String {
         return prefs.getString(CITY, "").toString()
+    }
+
+    //City Name Coming Soon
+    fun cityNameCinema(cityCinema: String) {
+        editor = prefs.edit()
+        editor?.putString(CITY_CC, cityCinema)
+        editor?.apply()
+    }
+
+    fun getCityNameCinema(): String {
+        return prefs.getString(CITY_CC, "").toString()
     }
 
     //Lat

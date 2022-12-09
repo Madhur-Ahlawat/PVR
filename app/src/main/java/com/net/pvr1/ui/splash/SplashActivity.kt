@@ -82,8 +82,7 @@ class SplashActivity : AppCompatActivity() {
                     val intent = Intent(this@SplashActivity, EnableLocationActivity::class.java)
                     startActivity(intent)
                     finish()
-                }
-                else if (preferences.getCityName()==""){
+                } else if (preferences.getCityName()==""){
                     val intent = Intent(this@SplashActivity, SelectCityActivity::class.java)
                     startActivity(intent)
                     finish()

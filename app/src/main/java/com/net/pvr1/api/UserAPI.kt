@@ -139,8 +139,8 @@ interface UserAPI {
         @Query("city") city: String,
         @Query("lat") lat: String,
         @Query("lng") lng: String,
-        @Query("searchtxt") searchTxt: String,
         @Query("userid") userid: String,
+        @Query("searchtxt") searchTxt: String,
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<CinemaResponse>

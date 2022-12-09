@@ -51,24 +51,47 @@ class CinemaSessionActivity : AppCompatActivity(),
             onBackPressed()
         }
 
-        authViewModel.cinemaSession(
-            preferences.getCityName(),
-            intent.getStringExtra("cid").toString(),
-            intent.getStringExtra("lat").toString(),
-            intent.getStringExtra("lang").toString(),
-            preferences.getUserId(),
-            "NA",
-            "ALL",
-            "ALL",
-            "ALL",
-            "ALL",
-            "ALL",
-            "ALL",
-            "ALL",
-            "no",
-            "ALL",
-            "ALL"
-        )
+        if (intent.getStringExtra("addressCinema") == "yes"){
+            authViewModel.cinemaSession(
+                preferences.getCityNameCinema(),
+                intent.getStringExtra("cid").toString(),
+                intent.getStringExtra("lat").toString(),
+                intent.getStringExtra("lang").toString(),
+                preferences.getUserId(),
+                "NA",
+                "ALL",
+                "ALL",
+                "ALL",
+                "ALL",
+                "ALL",
+                "ALL",
+                "ALL",
+                "no",
+                "ALL",
+                "ALL"
+            )
+        }else{
+            authViewModel.cinemaSession(
+                preferences.getCityName(),
+                intent.getStringExtra("cid").toString(),
+                intent.getStringExtra("lat").toString(),
+                intent.getStringExtra("lang").toString(),
+                preferences.getUserId(),
+                "NA",
+                "ALL",
+                "ALL",
+                "ALL",
+                "ALL",
+                "ALL",
+                "ALL",
+                "ALL",
+                "no",
+                "ALL",
+                "ALL"
+            )
+        }
+
+
         //Theater
         authViewModel.cinemaNearTheater(preferences.getCityName(), preferences.getLatitudeData(), preferences.getLongitudeData(), intent.getStringExtra("cid").toString())
         cinemaSessionDataLoad()
@@ -194,6 +217,7 @@ class CinemaSessionActivity : AppCompatActivity(),
             )
             startActivity(intent)
         }
+
         //Distance
         binding?.textView86?.text = output.d
         //Shows
@@ -218,11 +242,7 @@ class CinemaSessionActivity : AppCompatActivity(),
             CinemaSessionCinParentAdapter(output.childs, this, this)
         binding?.recyclerView15?.layoutManager = gridLayout3
         binding?.recyclerView15?.adapter = cinemaSessionCinParentAdapter
-
-
         binding?.textView99?.text = output.cn
-
-
 
     }
 
