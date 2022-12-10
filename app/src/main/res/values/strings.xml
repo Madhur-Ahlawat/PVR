@@ -424,4 +424,15 @@
     <string name="enjoy_your_show">Enjoy your show</string>
     <string name="seat_cushions_for_children_are_available_at_cinema">Seat cushions for children are available at cinema</string>
     <string name="privlege_point">You will earn 190.00 Privilege Points.</string>
+
+    <!--    // Phonepe Cred-->
+    <string name="phone_pe_app_id">9d40e79f1c154e4185f9155a527f4b67</string>
+    <string name="phone_pe_merchant_id">PVRCINEMAS</string>
+
+    <string name="you_will_earn_190_00_privilege_points">You will earn 190.00 Privilege Points</string>
+    <string name="payUsing">Pay Using</string>
+    <string name="cardNumber">Enter Card Number</string>
+    <string name="cardMonth">Enter card Month</string>
+    <string name="cardCvv">Enter card Cvv</string>
+    <string name="login">Login</string>
 </resources>
