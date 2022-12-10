@@ -17,6 +17,7 @@ import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.inputmethod.EditorInfo
@@ -143,7 +144,8 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
                                 location.latitude.let { it1 ->
                                     geocoder.getFromLocation(
                                         it1,
-                                        it, 1)
+                                        it, 1
+                                    )
                                 }
                             }
                         if (addresses?.isNotEmpty()!!) {
@@ -200,7 +202,6 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
                 binding?.searchCity?.text?.chars()
                 filter(s.toString())
 
@@ -325,16 +326,15 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
     }
 
     override fun onItemClickCityImgCity(
-        city: ArrayList<SelectCityResponse.Output.Pc>, position: Int
+        city: ArrayList<SelectCityResponse.Output.Pc>,
+        position: Int
     ) {
-
         list = arrayListOf(*city[position].subcities.split(",").toTypedArray())
         list.add(0, "All")
         binding?.txtSelectedCity?.text = city[position].name
         preferences.saveCityName(city[position].name)
         preferences.saveLatitudeData(city[position].lat)
         preferences.saveLongitudeData(city[position].lng)
-
 
         if (city[position].subcities.isEmpty()) {
             val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
@@ -347,40 +347,41 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
 
     private fun filter(text: String) {
         val filtered: ArrayList<SelectCityResponse.Output.Ot> = ArrayList()
+        val filtered1: ArrayList<SelectCityResponse.Output.Ot> = ArrayList()
         // creating a new array list to filter our data.
         // running a for loop to compare elements.
+
         for (item in filterCityList!!) {
 
             if (item.name.lowercase(Locale.getDefault())
                     .contains(text.lowercase(Locale.getDefault()))
             ) {
-                // if the item is matched we are
-                // adding it to our filtered list.
                 filtered.add(item)
             }
         }
 
         if (filtered.isEmpty()) {
-            binding?.consSelectedLocation?.show()
 
-            binding?.recyclerViewSearchCity?.hide()
+            println("filterTextSearch ------->${filtered}")
             binding?.consSelectedLocation?.show()
-            binding?.textView124?.show()
             binding?.consSelectCity?.hide()
-            Toast.makeText(this, "No Data Found..", Toast.LENGTH_SHORT).show()
-
+            binding?.recyclerViewSearchCity?.hide()
+            binding?.textView124?.show()
+            searchCityAdapter?.filterList(filtered1)
+//          Toast.makeText(this, "No Data Found..", Toast.LENGTH_SHORT).show()
         } else {
-
-            binding?.recyclerViewSearchCity?.show()
+            println("filterTextSearch1 ------->${filtered}")
             binding?.consSelectedLocation?.show()
             binding?.textView124?.hide()
             binding?.consSelectCity?.hide()
             searchCityAdapter?.filterList(filtered)
+
         }
     }
 
+
     private fun cityDialog(name: String) {
-        cityNameMAin=name
+        cityNameMAin = name
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.city_select_dialog)
@@ -412,9 +413,9 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
     }
 
     override fun onItemClickCityDialog(city: String) {
-        if (city=="All"){
+        if (city == "All") {
             preferences.saveCityName(cityNameMAin)
-        }else{
+        } else {
             preferences.saveCityName(city)
         }
         val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)

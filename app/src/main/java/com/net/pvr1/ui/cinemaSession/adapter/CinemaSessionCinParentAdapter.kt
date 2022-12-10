@@ -15,21 +15,19 @@ import com.net.pvr1.utils.show
 class CinemaSessionCinParentAdapter(
     private var nowShowingList: List<CinemaSessionResponse.Child>,
     private var context: Context,
-    private var listener: RecycleViewItemClickListenerCity,
-) :
-    RecyclerView.Adapter<CinemaSessionCinParentAdapter.ViewHolder>() {
+    private var listener: RecycleViewItemClickListenerCity, ) : RecyclerView.Adapter<CinemaSessionCinParentAdapter.ViewHolder>() {
+
+    var check = 1
+
     inner class ViewHolder(val binding: ItemCinemaDetailsMoviesBinding) :
         RecyclerView.ViewHolder(binding.root)
     private var rowIndex = 0
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemCinemaDetailsMoviesBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
+        val binding = ItemCinemaDetailsMoviesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
@@ -40,20 +38,40 @@ class CinemaSessionCinParentAdapter(
                 val cinemaSessionCinemasChildAdapter = CinemaSessionChildAdapter(this.mvs, context)
                 binding.recyclerView16.layoutManager = gridLayout
                 binding.recyclerView16.adapter = cinemaSessionCinemasChildAdapter
-                if (rowIndex == position) {
-                    binding.imageView51.setImageResource(R.drawable.arrow_up)
-                    binding.constraintLayout26.show()
 
-                } else {
-                    binding.imageView51.setImageResource(R.drawable.arrow_down)
-                    binding.constraintLayout26.hide()
+
+//                if (rowIndex == position) {
+//                    binding.imageView51.setImageResource(R.drawable.arrow_up)
+//                    binding.constraintLayout26.show()
+//
+//                } else {
+//                    binding.imageView51.setImageResource(R.drawable.arrow_down)
+//                    binding.constraintLayout26.hide()
+//                }
+
+                binding.constraintLayout18.setOnClickListener {
+                    if (check == 1){
+                        binding.imageView51.setImageResource(R.drawable.arrow_up)
+                        binding.constraintLayout26.show()
+                        check = 2
+                        notifyDataSetChanged()
+                    }else{
+                        binding.imageView51.setImageResource(R.drawable.arrow_down)
+                        binding.constraintLayout26.hide()
+                        check = 1
+                        notifyDataSetChanged()
+                    }
                 }
-                binding.imageView51.setOnClickListener {
-                    rowIndex = position
-                    notifyDataSetChanged()
-                }
+
+//                binding.constraintLayout18.setOnClickListener {
+//                    rowIndex = position
+//                    notifyDataSetChanged()
+//                }
+
                 //click
-                holder.itemView.setOnClickListener { listener.cinemaClick(this) }
+                holder.itemView.setOnClickListener {
+                    listener.cinemaClick(this)
+                }
 
             }
         }

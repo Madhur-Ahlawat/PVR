@@ -173,6 +173,11 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             dialog.window!!.setGravity(Gravity.BOTTOM)
 
             btnName.text = getString(R.string.okay)
+
+            btnName.setOnClickListener {
+                dialog.dismiss()
+            }
+
             dialog.show()
         }
 

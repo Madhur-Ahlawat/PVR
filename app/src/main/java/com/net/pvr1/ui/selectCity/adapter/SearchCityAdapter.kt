@@ -32,21 +32,20 @@ class SearchCityAdapter(
         val selectCityItemList = selectCityList[position]
         holder.otherCityName.text = selectCityItemList.name
 
-        if (selectCityListCC.cc != null){
-            if (selectCityListCC.cc.name == selectCityItemList.name){
-                holder.otherCityName.paintFlags =
-                    holder.otherCityName.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-            }else{
-
-            }
-        }
-
+//        if (selectCityListCC.cc != null){
+//            if (selectCityListCC.cc.name == selectCityItemList.name){
+//                holder.otherCityName.paintFlags =
+//                    holder.otherCityName.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+//            }else{
+//                holder.otherCityName.paintFlags
+//            }
+//        }
 
         holder.otherCityName.setOnClickListener {
             listner.onItemClickCitySearch(selectCityList, position)
 
-            holder.otherCityName.paintFlags =
-                holder.otherCityName.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+//            holder.otherCityName.paintFlags =
+//                holder.otherCityName.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
         }
 

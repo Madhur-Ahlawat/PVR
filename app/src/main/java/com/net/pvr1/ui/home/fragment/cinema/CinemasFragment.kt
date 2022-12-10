@@ -1,14 +1,27 @@
 package com.net.pvr1.ui.home.fragment.cinema
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.LocationManager
+import android.location.Geocoder
+import android.location.Location
+import android.provider.Settings
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.net.pvr1.R
 import com.net.pvr1.databinding.FragmentCinemasBinding
 import com.net.pvr1.ui.cinemaSession.CinemaSessionActivity
@@ -20,6 +33,8 @@ import com.net.pvr1.ui.home.fragment.cinema.viewModel.CinemaViewModel
 import com.net.pvr1.ui.search.searchCinema.SearchCinemaActivity
 import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.IOException
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -31,6 +46,14 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
 
     @Inject
     lateinit var preferences: PreferenceManager
+
+    private lateinit var mFusedLocationClient: FusedLocationProviderClient
+    private val permissionId = 2
+
+    var currentAddress = ""
+    var lat = ""
+    var lng = ""
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,24 +65,114 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        authViewModel.cinema(preferences.getCityName(), preferences.getLatitudeData(), preferences.getLongitudeData(), preferences.getUserId(), "")
-        (requireActivity().findViewById(R.id.notify) as ImageView).hide()
-        (requireActivity().findViewById(R.id.locationBtn) as ImageView).hide()
-        (requireActivity().findViewById(R.id.scanQr) as ImageView).hide()
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        getLocation()
+
+        println("CurrentAddress12 -------->${currentAddress}-->${lat}---->${lng}")
         cinemaApi()
         setPreference()
         movedNext()
+
+
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        val locationManager: LocationManager =
+            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+    }
+
+    private fun checkPermissions(): Boolean {
+        if (ActivityCompat.checkSelfPermission(
+                requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            return true
+        }
+        return false
+    }
+
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            requireActivity(), arrayOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION
+            ), permissionId
+        )
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<String>, grantResults: IntArray
+    ) {
+        if (requestCode == permissionId) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                getLocation()
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission", "SetTextI18n")
+    private fun getLocation() {
+        if (checkPermissions()) {
+            if (isLocationEnabled()) {
+                mFusedLocationClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
+                    val location: Location? = task.result
+                    val geocoder = Geocoder(requireActivity(), Locale.getDefault())
+                    try {
+                        val addresses =
+                            location?.longitude?.let {
+                                location.latitude.let { it1 ->
+                                    geocoder.getFromLocation(
+                                        it1,
+                                        it, 1)
+                                }
+                            }
+                        if (addresses?.isNotEmpty()!!) {
+                            val currentAddress2 = addresses[0].getAddressLine(0)
+                            var currentAddress = addresses[0].locality
+                            currentAddress = addresses[0].locality
+
+                            preferences.cityNameCinema(currentAddress)
+
+                            lat = location.latitude.toString()
+                            lng = location.longitude.toString()
+                            println("CurrentAddress -------->${currentAddress}-->${lat}---->${lng}")
+                            authViewModel.cinema(currentAddress, lat, lng, preferences.getUserId(), "")
+
+//                            preferences.saveCityName(currentAddress)
+//                            preferences.saveLatitudeData(location.latitude.toString())
+//                            preferences.saveLongitudeData(location.latitude.toString())
+
+
+
+                        }
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+
+                }
+            } else {
+                Toast.makeText(requireActivity(), "Please turn on location", Toast.LENGTH_LONG).show()
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivity(intent)
+            }
+        } else {
+            requestPermissions()
+        }
     }
 
     private fun movedNext() {
-        if (isAdded){
-            val search = requireActivity().findViewById(R.id.searchBtn) as ImageView
-            search.setOnClickListener {
-                val intent = Intent(requireActivity(), SearchCinemaActivity::class.java)
-                startActivity(intent)
-            }
-        }
 
+
+        val search = requireActivity().findViewById(R.id.searchBtn) as ImageView
+        search.setOnClickListener {
+            val intent = Intent(requireActivity(), SearchCinemaActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     //CinemaData
@@ -84,7 +197,6 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                         dialog.show()
                     }
                 }
-
                 is NetworkResult.Error -> {
                     loader?.dismiss()
                     val dialog = OptionDialog(requireActivity(),
@@ -100,7 +212,6 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    println("loadingCinema--->")
                     loader = LoaderDialog(R.string.pleasewait)
                     loader?.show(requireActivity().supportFragmentManager, null)
                 }
@@ -117,6 +228,29 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         context.printLog(it.data.msg)
+//                        val dialog = OptionDialog(requireActivity(),
+//                            R.mipmap.ic_launcher,
+//                            R.string.app_name,
+//                            it.data.msg,
+//                            positiveBtnText = R.string.ok,
+//                            negativeBtnText = R.string.no,
+//                            positiveClick = {
+//                            },
+//                            negativeClick = {
+//                            })
+//                        dialog.show()
+//                    } else {
+//                        val dialog = OptionDialog(requireActivity(),
+//                            R.mipmap.ic_launcher,
+//                            R.string.app_name,
+//                            it.data?.msg.toString(),
+//                            positiveBtnText = R.string.ok,
+//                            negativeBtnText = R.string.no,
+//                            positiveClick = {
+//                            },
+//                            negativeClick = {
+//                            })
+//                        dialog.show()
                     }
                 }
                 is NetworkResult.Error -> {
@@ -151,7 +285,11 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
     }
 
     override fun onDirectionClick(comingSoonItem: CinemaResponse.Output.C) {
-        Constant().openMap(requireActivity(),comingSoonItem.lat,comingSoonItem.lang)
+        val strUri =
+            "http://maps.google.com/maps?q=loc:" + comingSoonItem.lat + "," + comingSoonItem.lang + " (" + "Label which you want" + ")"
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(strUri))
+        intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity")
+        startActivity(intent)
     }
 
     override fun onCinemaClick(comingSoonItem: CinemaResponse.Output.C) {
@@ -159,11 +297,14 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
         intent.putExtra("cid", comingSoonItem.cId.toString())
         intent.putExtra("lat", comingSoonItem.lat)
         intent.putExtra("lang", comingSoonItem.lang)
+        intent.putExtra("addressCinema", "yes")
+
         startActivity(intent)
     }
 
     override fun onPreferenceClick(comingSoonItem: CinemaResponse.Output.C, rowIndex: Boolean) {
         authViewModel.cinemaPreference(preferences.getUserId().toString(),comingSoonItem.cId.toString(),rowIndex,"t","")
+
     }
 
 }

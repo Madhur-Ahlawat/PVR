@@ -315,12 +315,12 @@ class OtpVerifyActivity : AppCompatActivity() {
             val intent = Intent(this@OtpVerifyActivity, EnableLocationActivity::class.java)
             startActivity(intent)
             finish()
-        }
-        else if (preferences.getCityName()==""){
+        } else if (preferences.getCityName()==""){
             val intent = Intent(this@OtpVerifyActivity, SelectCityActivity::class.java)
             startActivity(intent)
             finish()
         }else{
+//                    val intent = Intent(this@SplashActivity, StarPassActivity::class.java)
             val intent = Intent(this@OtpVerifyActivity, HomeActivity::class.java)
             startActivity(intent)
             finish()

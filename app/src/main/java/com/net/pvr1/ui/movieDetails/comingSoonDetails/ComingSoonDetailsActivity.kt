@@ -45,6 +45,8 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
         movieDetails()
         movieAlert()
 
+        binding?.include?.textView5?.text = resources.getString(R.string.book_now)
+
         authViewModel.movieDetails(
             "UP",
             preferences.getUserId().toString(),
