@@ -271,7 +271,7 @@ class CinemaSessionActivity : AppCompatActivity(),
                 CinemaSessionCinParentAdapter(output.childs, this, this)
             binding?.recyclerView15?.layoutManager = gridLayout3
             binding?.recyclerView15?.adapter = cinemaSessionCinParentAdapter
-            
+
         } else {
             //recycler Cinemas
             val gridLayout3 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)

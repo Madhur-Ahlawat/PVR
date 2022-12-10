@@ -8,9 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
-import androidx.recyclerview.widget.RecyclerView
+import com.net.pvr1.R
 import com.net.pvr1.databinding.FragmentPrivilegeBinding
 import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeTypeAdapter
+import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.PrivilegeHomeResponseConst
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,9 +38,9 @@ class PrivilegeFragment : Fragment(), PrivilegeTypeAdapter.RecycleViewItemClickL
         super.onViewCreated(view, savedInstanceState)
         requireActivity().printLog("response!Login--->${PrivilegeHomeResponseConst}")
         if (!preferences.getIsLogin()) {
-            requireActivity().toast("Logout")
+
         } else {
-            requireActivity().toast("Login")
+
         }
         notLoginCategoryDataLoad()
     }
@@ -57,37 +58,39 @@ class PrivilegeFragment : Fragment(), PrivilegeTypeAdapter.RecycleViewItemClickL
         binding?.recyclerView35?.adapter = adapter
     }
 
-    override fun privilegeHomeClick(comingSoonItem: RecyclerView.OnScrollListener) {
-//        Toast.makeText(requireActivity(), comingSoonItem.ptype, Toast.LENGTH_SHORT).show()
+    override fun privilegeTypeScroll(
+        nowShowingList: ArrayList<PrivilegeHomeResponse.Output.Pinfo>,
+        position: Int
+    ) {
 
-//        when (comingSoonItem.ptype) {
-//            "P" -> {
-//                Toast.makeText(requireActivity(), comingSoonItem.ptype, Toast.LENGTH_SHORT).show()
-//                binding?.include15?.show()
-//                binding?.include16?.hide()
-//                binding?.include15Logout?.salted?.text =
-//                    requireActivity().getString(R.string.p1TxtOne)
-//                //points
-//                binding?.include15Logout?.points?.text =
-//                    requireActivity().getString(R.string.p2TxtOne)
-//            }
-//            "PP" -> {
-//                Toast.makeText(requireActivity(), comingSoonItem.ptype, Toast.LENGTH_SHORT).show()
-//
-//                binding?.include15?.hide()
-//                binding?.include16?.show()
-//                binding?.include15Logout?.salted?.text = ""
-//                //points
-//                binding?.include15Logout?.points?.text = ""
-//            }
-//            "PPP" -> {
-//                Toast.makeText(requireActivity(), comingSoonItem.ptype, Toast.LENGTH_SHORT).show()
-//                binding?.include15Logout?.salted?.text =
-//                    requireActivity().getString(R.string.p3TxtOne)
-//                //points
-//                binding?.include15Logout?.points?.text =
-//                    requireActivity().getString(R.string.p3TxtOne)
-//            }
-//        }
+        context.toast("data--->-pos-->${position}")
+        when (nowShowingList[position].ptype) {
+            "P" -> {
+                binding?.include15?.show()
+                binding?.include16?.hide()
+                binding?.include15Logout?.salted?.text =
+                    requireActivity().getString(R.string.p1TxtOne)
+                //points
+                binding?.include15Logout?.points?.text =
+                    requireActivity().getString(R.string.p2TxtOne)
+            }
+            "PP" -> {
+
+                binding?.include15?.hide()
+                binding?.include16?.show()
+                binding?.include15Logout?.salted?.text = ""
+                //points
+                binding?.include15Logout?.points?.text = ""
+            }
+            "PPP" -> {
+                binding?.include15Logout?.salted?.text =
+                    requireActivity().getString(R.string.p3TxtOne)
+                //points
+                binding?.include15Logout?.points?.text =
+                    requireActivity().getString(R.string.p3TxtOne)
+            }
+        }
     }
+
+
 }

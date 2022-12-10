@@ -40,8 +40,6 @@ class CinemaSessionCinParentAdapter(
                 val cinemaSessionCinemasChildAdapter = CinemaSessionChildAdapter(this.mvs, context)
                 binding.recyclerView16.layoutManager = gridLayout
                 binding.recyclerView16.adapter = cinemaSessionCinemasChildAdapter
-
-
                 if (rowIndex == position) {
                     binding.imageView51.setImageResource(R.drawable.arrow_up)
                     binding.constraintLayout26.show()
