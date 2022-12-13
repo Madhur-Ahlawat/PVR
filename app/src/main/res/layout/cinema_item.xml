@@ -9,7 +9,6 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/dimen_15dp"
         android:orientation="vertical"
         app:cardBackgroundColor="#F9F9F9"
         app:cardCornerRadius="@dimen/padding_10"
@@ -70,17 +69,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-
                     <ImageView
                         android:id="@+id/cbFav"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:scaleType="fitXY"
                         android:checked="false"
                         android:layout_marginTop="@dimen/dimen_5dp"
                         android:layout_marginEnd="@dimen/dimen_5dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
 
 
                     <TextView

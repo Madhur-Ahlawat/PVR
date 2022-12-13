@@ -73,7 +73,7 @@ class CinemaAdapter(
                 }
 
                 //ShoW Hide
-                binding.imageView164.setOnClickListener {
+                binding.bottomView.setOnClickListener {
                     if (showList){
                         showList=false
                         binding.llMovieList.show()
@@ -84,10 +84,8 @@ class CinemaAdapter(
                         binding.llMovieList.hide()
                         binding.imageView164.setImageResource(R.drawable.arrow_down)
                         showList=true
-
                     }
                 }
-
 
                 binding.cbFav.setOnClickListener {
                     if (isLogin) {

@@ -27,7 +27,6 @@ import com.net.pvr1.ui.selectCity.SelectCityActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.FetchAddressIntentServices
 import com.net.pvr1.utils.PreferenceManager
-import com.net.pvr1.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -139,7 +138,6 @@ class EnableLocationActivity : AppCompatActivity() {
         intent.putExtra(Constant.RECEVIER, resultReceiver)
         intent.putExtra(Constant.LOCATION_DATA_EXTRA, location)
         startService(intent)
-
 
         val intent2 = Intent(this@EnableLocationActivity, SelectCityActivity::class.java)
         startActivity(intent2)

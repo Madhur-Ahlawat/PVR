@@ -47,17 +47,17 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout37"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:layout_marginTop="@dimen/dimen_2dp"
+        android:background="@color/white"
         android:paddingBottom="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/view2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/view2">
+        app:layout_constraintStart_toStartOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/consViewPager">
 
         <TextView
             android:id="@+id/change_text"

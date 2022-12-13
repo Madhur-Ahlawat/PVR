@@ -74,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="56dp"
+                    android:layout_marginTop="8dp"
                     android:padding="@dimen/dimen_8dp"
                     app:layout_constraintStart_toStartOf="@+id/imageView40"
                     app:layout_constraintTop_toTopOf="@+id/imageView40"
@@ -277,9 +277,9 @@
                             app:layout_constraintBottom_toBottomOf="@+id/view64"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/view64"
-                            android:text="Directions" />
-                    </LinearLayout>
+                            android:text="@string/directions" />
 
+                    </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -289,7 +289,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout15"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_50dp"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -311,27 +311,20 @@
                     android:orientation="horizontal"
                     android:layout_marginStart="@dimen/dimen_20dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toTopOf="@+id/view91"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view90"
                     tools:itemCount="10"
                     tools:listitem="@layout/item_cinema_details_shows" />
 
-                <View
-                    android:id="@+id/view91"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_1dp"
-                    android:background="@color/grayEd"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout16"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:background="@color/background_color"
                 android:paddingTop="@dimen/padding_10"
                 android:paddingBottom="@dimen/dimen_8dp"
@@ -353,15 +346,23 @@
                     tools:listitem="@layout/item_cinema_details_language" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:id="@+id/textView376"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_10dp"
+                android:background="@drawable/line_seprator"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout15"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout17"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_10dp"
                 android:background="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout16">
+                app:layout_constraintTop_toBottomOf="@+id/textView376">
 
                 <View
                     android:id="@+id/view59"
@@ -386,15 +387,24 @@
                     tools:listitem="@layout/item_cinema_details_movies" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:id="@+id/textView377"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout17"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_10dp"
+                android:background="@drawable/line_seprator"/>
+
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:background="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout17">
+                app:layout_constraintTop_toBottomOf="@+id/textView377">
 
                 <View
                     android:id="@+id/view60"

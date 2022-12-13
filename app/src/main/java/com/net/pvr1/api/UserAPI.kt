@@ -38,7 +38,6 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface UserAPI {
-
     @POST("v2/user/login")
     suspend fun loginMobile(
         @Query("mobile") mobile: String,

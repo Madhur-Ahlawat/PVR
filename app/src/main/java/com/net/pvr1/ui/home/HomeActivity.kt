@@ -32,7 +32,7 @@ import com.net.pvr1.ui.home.fragment.privilege.PrivilegeFragment
 import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeHomeDialogAdapter
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.offer.response.OfferResponse
-import com.net.pvr1.ui.search.searchHome.SearchHomeActivity
+import com.net.pvr1.ui.search.searchCinema.SearchCinemaActivity
 import com.net.pvr1.ui.selectCity.SelectCityActivity
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.PrivilegeHomeResponseConst
@@ -76,11 +76,6 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
             startActivity(intent)
         }
 
-        binding?.includeAppBar?.searchBtn?.setOnClickListener {
-            val intent = Intent(this@HomeActivity, SearchHomeActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
 
         //Coming Soon for Testing
 
