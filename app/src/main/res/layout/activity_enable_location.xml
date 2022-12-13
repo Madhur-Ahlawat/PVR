@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.enableLocation.EnableLocationActivity">
+    tools:context=".ui.location.enableLocation.EnableLocationActivity">
 
     <View
         android:id="@+id/view35"

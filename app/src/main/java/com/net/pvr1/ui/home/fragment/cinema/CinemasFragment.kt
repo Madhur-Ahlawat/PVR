@@ -5,17 +5,18 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.LocationManager
 import android.location.Geocoder
 import android.location.Location
-import android.provider.Settings
-import android.net.Uri
+import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -30,7 +31,7 @@ import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.cinema.adapter.CinemaAdapter
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.cinema.viewModel.CinemaViewModel
-import com.net.pvr1.ui.search.searchCinema.SearchCinemaActivity
+import com.net.pvr1.ui.search.searchHome.SearchHomeActivity
 import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
@@ -46,17 +47,14 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
 
     @Inject
     lateinit var preferences: PreferenceManager
-
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
     private val permissionId = 2
-
-    var currentAddress = ""
-    var lat = ""
-    var lng = ""
+    private var lat = ""
+    private var lng = ""
+    private var cityName = "Delhi-NCR"
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentCinemasBinding.inflate(inflater, container, false)
@@ -66,14 +64,22 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-        getLocation()
-
-        println("CurrentAddress12 -------->${currentAddress}-->${lat}---->${lng}")
+        (requireActivity().findViewById(R.id.include) as ConstraintLayout).show()
+        (requireActivity().findViewById(R.id.notify) as ImageView).hide()
+        (requireActivity().findViewById(R.id.locationBtn) as ImageView).hide()
+        (requireActivity().findViewById(R.id.scanQr) as ImageView).hide()
+        (requireActivity().findViewById(R.id.textView2) as TextView).show()
+        (requireActivity().findViewById(R.id.searchBtn) as ImageView).hide()
+        (requireActivity().findViewById(R.id.txtCity) as TextView).show()
+        (requireActivity().findViewById(R.id.searchCinema) as ImageView).show()
+        //Click Search
+        (requireActivity().findViewById(R.id.searchCinema) as ImageView).setOnClickListener {
+            val intent = Intent(requireActivity(), SearchHomeActivity::class.java)
+            startActivity(intent)
+        }
         cinemaApi()
         setPreference()
-        movedNext()
-
-
+        getLocation()
     }
 
     private fun isLocationEnabled(): Boolean {
@@ -104,10 +110,10 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
         )
     }
 
+    @Deprecated("Deprecated in Java")
     @SuppressLint("MissingSuperCall")
     override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String>, grantResults: IntArray
-    ) {
+        requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if (requestCode == permissionId) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 getLocation()
@@ -123,31 +129,19 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                     val location: Location? = task.result
                     val geocoder = Geocoder(requireActivity(), Locale.getDefault())
                     try {
-                        val addresses =
-                            location?.longitude?.let {
-                                location.latitude.let { it1 ->
-                                    geocoder.getFromLocation(
-                                        it1,
-                                        it, 1)
-                                }
+                        val addresses = location?.longitude?.let {
+                            location.latitude.let { it1 ->
+                                geocoder.getFromLocation(
+                                    it1, it, 1
+                                )
                             }
+                        }
                         if (addresses?.isNotEmpty()!!) {
-                            val currentAddress2 = addresses[0].getAddressLine(0)
-                            var currentAddress = addresses[0].locality
-                            currentAddress = addresses[0].locality
-
+                            val currentAddress: String = addresses[0].locality
                             preferences.cityNameCinema(currentAddress)
-
                             lat = location.latitude.toString()
                             lng = location.longitude.toString()
-                            println("CurrentAddress -------->${currentAddress}-->${lat}---->${lng}")
-                            authViewModel.cinema(currentAddress, lat, lng, preferences.getUserId(), "")
-
-//                            preferences.saveCityName(currentAddress)
-//                            preferences.saveLatitudeData(location.latitude.toString())
-//                            preferences.saveLongitudeData(location.latitude.toString())
-
-
+                            authViewModel.cinema(cityName, lat, lng, preferences.getUserId(), "")
 
                         }
                     } catch (e: IOException) {
@@ -156,22 +150,13 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
 
                 }
             } else {
-                Toast.makeText(requireActivity(), "Please turn on location", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireActivity(), "Please turn on location", Toast.LENGTH_LONG)
+                    .show()
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 startActivity(intent)
             }
         } else {
             requestPermissions()
-        }
-    }
-
-    private fun movedNext() {
-
-
-        val search = requireActivity().findViewById(R.id.searchBtn) as ImageView
-        search.setOnClickListener {
-            val intent = Intent(requireActivity(), SearchCinemaActivity::class.java)
-            startActivity(intent)
         }
     }
 
@@ -190,10 +175,8 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -205,10 +188,8 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
@@ -228,29 +209,7 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         context.printLog(it.data.msg)
-//                        val dialog = OptionDialog(requireActivity(),
-//                            R.mipmap.ic_launcher,
-//                            R.string.app_name,
-//                            it.data.msg,
-//                            positiveBtnText = R.string.ok,
-//                            negativeBtnText = R.string.no,
-//                            positiveClick = {
-//                            },
-//                            negativeClick = {
-//                            })
-//                        dialog.show()
-//                    } else {
-//                        val dialog = OptionDialog(requireActivity(),
-//                            R.mipmap.ic_launcher,
-//                            R.string.app_name,
-//                            it.data?.msg.toString(),
-//                            positiveBtnText = R.string.ok,
-//                            negativeBtnText = R.string.no,
-//                            positiveClick = {
-//                            },
-//                            negativeClick = {
-//                            })
-//                        dialog.show()
+
                     }
                 }
                 is NetworkResult.Error -> {
@@ -261,15 +220,11 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-//                    loader = LoaderDialog(R.string.pleasewait)
-//                    loader?.show(requireActivity().supportFragmentManager, null)
                 }
             }
         }
@@ -285,11 +240,7 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
     }
 
     override fun onDirectionClick(comingSoonItem: CinemaResponse.Output.C) {
-        val strUri =
-            "http://maps.google.com/maps?q=loc:" + comingSoonItem.lat + "," + comingSoonItem.lang + " (" + "Label which you want" + ")"
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(strUri))
-        intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity")
-        startActivity(intent)
+        Constant().openMap(requireActivity(), comingSoonItem.lat, comingSoonItem.lang)
     }
 
     override fun onCinemaClick(comingSoonItem: CinemaResponse.Output.C) {
@@ -297,14 +248,18 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
         intent.putExtra("cid", comingSoonItem.cId.toString())
         intent.putExtra("lat", comingSoonItem.lat)
         intent.putExtra("lang", comingSoonItem.lang)
+        intent.putExtra("cityName", cityName)
         intent.putExtra("addressCinema", "yes")
-
         startActivity(intent)
     }
 
     override fun onPreferenceClick(comingSoonItem: CinemaResponse.Output.C, rowIndex: Boolean) {
-        authViewModel.cinemaPreference(preferences.getUserId().toString(),comingSoonItem.cId.toString(),rowIndex,"t","")
-
+        authViewModel.cinemaPreference(
+            preferences.getUserId(),
+            comingSoonItem.cId.toString(),
+            rowIndex,
+            "t",
+            Constant().getDeviceId(requireActivity())
+        )
     }
-
 }

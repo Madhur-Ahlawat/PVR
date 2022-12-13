@@ -1,20 +1,18 @@
-package com.net.pvr1.ui.selectCity.adapter
+package com.net.pvr1.ui.location.selectCity.adapter
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.graphics.Paint
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
-import com.net.pvr1.ui.selectCity.response.SelectCityResponse
+import com.net.pvr1.ui.location.selectCity.response.SelectCityResponse
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
 
@@ -23,7 +21,8 @@ class SelectCityAdapter(
     private var selectCityList: ArrayList<SelectCityResponse.Output.Pc>,
     private var selectCityListCC: SelectCityResponse.Output,
     private var context: Activity,
-    var listner: RecycleViewItemClickListenerSelectCity ) :
+    var listner: RecycleViewItemClickListenerSelectCity
+) :
     RecyclerView.Adapter<SelectCityAdapter.MyViewHolderNowShowing>() {
     private var rowIndex = 0
     private var width = 0

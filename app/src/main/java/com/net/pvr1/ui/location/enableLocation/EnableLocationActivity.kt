@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.enableLocation
+package com.net.pvr1.ui.location.enableLocation
 
 import android.Manifest
 import android.content.Intent
@@ -22,12 +22,11 @@ import com.google.android.gms.location.LocationServices
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityEnableLocationBinding
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.enableLocation.viewModel.EnableLocationViewModel
-import com.net.pvr1.ui.selectCity.SelectCityActivity
+import com.net.pvr1.ui.location.enableLocation.viewModel.EnableLocationViewModel
+import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.FetchAddressIntentServices
 import com.net.pvr1.utils.PreferenceManager
-import com.net.pvr1.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -37,13 +36,10 @@ class EnableLocationActivity : AppCompatActivity() {
 
     @Inject
     lateinit var preferences: PreferenceManager
-
     private var binding: ActivityEnableLocationBinding? = null
     private val authViewModel: EnableLocationViewModel by viewModels()
-
     private val PERMISSION_REQUEST_CODE = 1
     private var resultReceiver: ResultReceiver? = null
-
     private var latitude: String = ""
     private var longitude: String = ""
 
@@ -156,8 +152,6 @@ class EnableLocationActivity : AppCompatActivity() {
                 val district = resultData.getString(Constant.DISTRICT)
                 val country = resultData.getString(Constant.COUNTRY)
                 val postcode = resultData.getString(Constant.POST_CODE)
-
-                println("location---->${state}")
             }
         }
     }

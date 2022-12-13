@@ -18,12 +18,12 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityLoginBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.enableLocation.EnableLocationActivity
+import com.net.pvr1.ui.location.enableLocation.EnableLocationActivity
 import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.login.otpVerify.OtpVerifyActivity
 import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.login.viewModel.LoginViewModel
-import com.net.pvr1.ui.selectCity.SelectCityActivity
+import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.SUCCESS_CODE
 import com.net.pvr1.utils.NetworkResult

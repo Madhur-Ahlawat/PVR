@@ -1,7 +1,6 @@
 package com.net.pvr1.ui.cinemaSession.adapter
 
 import android.app.Activity
-import android.content.Context
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -55,6 +54,11 @@ class CinemaSessionNearTheaterAdapter(
                 binding.view64.setOnClickListener {
                     holder.itemView.setOnClickListener {listener.nearTheaterDirectionClick(this)  }
                 }
+                //Shows
+                binding.view62.setOnClickListener {
+                    listener.showsClick(this)
+                }
+
                 //click
                 holder.itemView.setOnClickListener {listener.nearTheaterClick(this)  }
             }
@@ -69,6 +73,7 @@ class CinemaSessionNearTheaterAdapter(
 
     interface RecycleViewItemClickListenerCity {
         fun nearTheaterClick(comingSoonItem: CinemaNearTheaterResponse.Output.C)
+        fun showsClick(comingSoonItem: CinemaNearTheaterResponse.Output.C)
         fun nearTheaterDirectionClick(comingSoonItem: CinemaNearTheaterResponse.Output.C)
     }
 

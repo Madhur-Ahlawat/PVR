@@ -7,11 +7,10 @@
     android:background="@color/background_color">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout131"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:padding="@dimen/dimen_20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -20,6 +19,10 @@
             android:id="@+id/constraintLayout18"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="@dimen/dimen_20dp"
+            android:paddingEnd="@dimen/dimen_20dp"
+            android:paddingTop="@dimen/dimen_20dp"
+            android:paddingBottom="@dimen/dimen_20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -50,9 +53,9 @@
                 android:id="@+id/imageView51"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/textView102"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:visibility="visible"
                 app:layout_constraintTop_toTopOf="@+id/textView102"
                 app:srcCompat="@drawable/arrow_down"
                 tools:ignore="ContentDescription" />
@@ -62,8 +65,8 @@
             android:id="@+id/constraintLayout26"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_marginTop="@dimen/padding_10"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -83,4 +86,14 @@
                 tools:listitem="@layout/item_cinema_session_movie_details" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/textView377"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout131"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_10dp"
+        android:background="@drawable/line_seprator"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,8 +19,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout19"
         android:layout_width="0dp"
-        android:background="@color/white"
         android:layout_height="@dimen/dimen_60dp"
+        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/view68"
         app:layout_constraintStart_toStartOf="@+id/view68"
         app:layout_constraintTop_toTopOf="@+id/view68">
@@ -157,25 +157,33 @@
                     android:id="@+id/recyclerView9"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:background="@color/white"
-                    tools:itemCount="10"
-                    tools:listitem="@layout/seat_show_time_item"
+                    android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/view71"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:itemCount="10"
+                    tools:listitem="@layout/seat_show_time_item" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/View221"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_10dp"
+                android:background="@drawable/line_seprator"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout21" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout22"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/view69"
                 app:layout_constraintStart_toStartOf="@+id/view69"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout21">
+                app:layout_constraintTop_toBottomOf="@+id/View221">
 
                 <View
                     android:id="@+id/view72"
@@ -188,33 +196,71 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView10"
-                    android:visibility="gone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:visibility="visible"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:itemCount="10"
-                    tools:listitem="@layout/item_cinema_details_language"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/view72"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:itemCount="10"
+                    tools:listitem="@layout/item_cinema_details_language" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_10dp"
+                    android:background="@drawable/line_seprator"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerView10" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <!--placeHolder-->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout123"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout22"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView23"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/item_home_prmotion" />
+
+                <View
+                    android:background="@drawable/line_seprator"
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerView23"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView8"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:background="@color/white"
+                android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerView23"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout123"
                 tools:itemCount="3"
                 tools:listitem="@layout/item_booking_session_cinema_location" />
 
+            <!--Also Playing-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout83"
                 android:layout_width="match_parent"
@@ -263,18 +309,6 @@
                     tools:listitem="@layout/item_booking_session_cinema_movies" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView23"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:itemCount="2"
-                tools:listitem="@layout/item_home_prmotion"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout21" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
