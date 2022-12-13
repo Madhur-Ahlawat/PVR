@@ -48,6 +48,7 @@ import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
 import dagger.hilt.android.AndroidEntryPoint
 import java.math.BigDecimal
 
+
 @Suppress("DEPRECATION", "NAME_SHADOWING")
 @AndroidEntryPoint
 class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClickListenerCity,
@@ -83,10 +84,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     //Shows
     private var showsArray = ArrayList<Child.Sw.S>()
     private var selectSeatPriceCode = ArrayList<ReserveSeatRequest.Seat>()
-
     //Cinema Session
     private var cinemaSessionShows = ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>()
-
     private var textTermsAndCondition: TextView? = null
     private var tncValue = 1
     private var offerEnable = false
@@ -101,15 +100,14 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         setContentView(view)
         //from Movie
         if (intent.getStringExtra("from") == "cinema") {
-            cinemaSessionShows =
-                intent.getSerializableExtra("CinemaShows") as ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>
+            cinemaSessionShows =  intent.getSerializableExtra("CinemaShows") as ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>
             cinemaShows()
         } else {
             showsArray = intent.getSerializableExtra("shows") as ArrayList<Child.Sw.S>
             shows()
         }
 
-// manage offer
+        // manage offer
         if (intent.getStringExtra("skip").toString() == "false") {
             binding?.constraintLayout60?.show()
             binding?.textView202?.text="(You’ll save ${getString(R.string.currency)}  ${intent.getStringExtra("discountPrice").toString()})"
@@ -118,12 +116,10 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             binding?.constraintLayout60?.hide()
             offerEnable= false
         }
-
         //Remove Offer
         binding?.textView203?.setOnClickListener {
             binding?.llRowName?.removeAllViews()
             offerEnable= false
-            toast("$offerEnable")
             binding?.constraintLayout60?.hide()
             authViewModel.seatLayout(
                 CINEMA_ID,
@@ -140,14 +136,13 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
         authViewModel.seatLayout(
             CINEMA_ID,
-            SESSION_ID,
+            sessionId,
             "",
             "",
             "",
             offerEnable,
             ""
         )
-
         seatLayout()
         reserveSeat()
         initTrans()
@@ -164,7 +159,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
-
             val privacy = dialog.findViewById<TextView>(R.id.textView304)
             val btnName = dialog.findViewById<TextView>(R.id.textView5)
             privacy.paintFlags = privacy.paintFlags or Paint.UNDERLINE_TEXT_FLAG
@@ -402,6 +396,11 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     }
 
     private fun retrieveData(data: SeatResponse.Output) {
+        if (data.ca_a){
+            binding?.imageView97?.show()
+        }else{
+            binding?.imageView97?.hide()
+        }
         //title
         binding?.textView197?.text = data.mn
         //location

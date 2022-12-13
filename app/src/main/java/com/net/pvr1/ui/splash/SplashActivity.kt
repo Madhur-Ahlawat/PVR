@@ -22,13 +22,13 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySplashBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.enableLocation.EnableLocationActivity
+import com.net.pvr1.ui.location.enableLocation.EnableLocationActivity
 import com.net.pvr1.ui.food.FoodActivity
 import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.ui.payment.PaymentActivity
 import com.net.pvr1.ui.payment.starPass.StarPassActivity
-import com.net.pvr1.ui.selectCity.SelectCityActivity
+import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.ui.splash.onBoarding.LandingActivity
 import com.net.pvr1.ui.splash.response.SplashResponse
 import com.net.pvr1.ui.splash.viewModel.SplashViewModel

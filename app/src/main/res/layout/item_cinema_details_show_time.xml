@@ -42,25 +42,36 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="TextView" />
 
-            <ImageView
-                android:id="@+id/imageView48"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout133"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView49"
                 app:layout_constraintStart_toStartOf="@+id/textView96"
-                app:layout_constraintTop_toTopOf="@+id/imageView49"
-                app:srcCompat="@drawable/sit_user"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintTop_toTopOf="@+id/imageView49">
+
+                <ImageView
+                    android:id="@+id/imageView48"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/sit_user"
+                    tools:ignore="ContentDescription" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <ImageView
                 android:id="@+id/imageView49"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
                 android:layout_marginTop="@dimen/dimen_6dp"
                 android:layout_marginBottom="@dimen/dimen_13dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView48"
+                app:layout_constraintStart_toEndOf="@+id/constraintLayout133"
                 app:layout_constraintTop_toBottomOf="@+id/textView96"
                 app:srcCompat="@drawable/line_arrow"
                 tools:ignore="ContentDescription" />

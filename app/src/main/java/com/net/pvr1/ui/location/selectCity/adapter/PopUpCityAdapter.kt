@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.selectCity.adapter
+package com.net.pvr1.ui.location.selectCity.adapter
 
 import android.content.Context
 import android.graphics.Typeface

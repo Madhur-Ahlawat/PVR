@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.selectCity.response
+package com.net.pvr1.ui.location.selectCity.response
 
 import java.io.Serializable
 

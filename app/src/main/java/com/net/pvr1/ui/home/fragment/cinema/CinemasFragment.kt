@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -64,6 +65,10 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+<<<<<<< HEAD
+=======
+        (requireActivity().findViewById(R.id.include) as ConstraintLayout).show()
+>>>>>>> master
         (requireActivity().findViewById(R.id.notify) as ImageView).hide()
         (requireActivity().findViewById(R.id.locationBtn) as ImageView).hide()
         (requireActivity().findViewById(R.id.scanQr) as ImageView).hide()

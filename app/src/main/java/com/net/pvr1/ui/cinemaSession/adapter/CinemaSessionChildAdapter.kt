@@ -9,11 +9,13 @@ import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ItemCinemaSessionMovieDetailsBinding
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
+import com.net.pvr1.utils.hide
 
 
 class CinemaSessionChildAdapter(
     private var nowShowingList: ArrayList<CinemaSessionResponse.Child.Mv>,
-    private var context: Context
+    private var context: Context,
+    private var  cinemaId: String?
 ) :
     RecyclerView.Adapter<CinemaSessionChildAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemCinemaSessionMovieDetailsBinding) :
@@ -38,6 +40,7 @@ class CinemaSessionChildAdapter(
                 //genre
                 binding.textView93.text = this.genres.joinToString { it }
                 //Language
+                binding.textView94.hide()
                 binding.textView94.text = "Hindi Static"
                 //Image
                 Glide.with(context)
@@ -45,9 +48,10 @@ class CinemaSessionChildAdapter(
                     .error(R.drawable.app_icon)
                     .into(binding.imageView47)
 
+
                 //RecyclerView
                 val layoutManager = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
-                val cinemaSessionLanguageAdapter = CinemaSessionCinChildLanguageAdapter(this.ml, context, )
+                val cinemaSessionLanguageAdapter = CinemaSessionCinChildLanguageAdapter(this.ml, context, cinemaId)
                 binding.recyclerView17.layoutManager = layoutManager
                 binding.recyclerView17.adapter = cinemaSessionLanguageAdapter
 

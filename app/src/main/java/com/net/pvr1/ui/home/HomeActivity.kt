@@ -24,16 +24,21 @@ import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.adapter.HomeOfferAdapter
 import com.net.pvr1.ui.home.fragment.cinema.CinemasFragment
-import com.net.pvr1.ui.home.fragment.commingSoon.ComingSoonActivity
+import com.net.pvr1.ui.home.fragment.commingSoon.ComingSoonFragment
 import com.net.pvr1.ui.home.fragment.home.HomeFragment
 import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
 import com.net.pvr1.ui.home.fragment.more.MoreFragment
 import com.net.pvr1.ui.home.fragment.privilege.PrivilegeFragment
 import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeHomeDialogAdapter
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
+import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.ui.offer.response.OfferResponse
+<<<<<<< HEAD
 import com.net.pvr1.ui.search.searchCinema.SearchCinemaActivity
 import com.net.pvr1.ui.selectCity.SelectCityActivity
+=======
+import com.net.pvr1.ui.search.searchHome.SearchHomeActivity
+>>>>>>> master
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.PrivilegeHomeResponseConst
 import dagger.hilt.android.AndroidEntryPoint
@@ -61,9 +66,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         if (preferences.getIsLogin()){
             authViewModel.privilegeHome(preferences.geMobileNumber(), preferences.getCityName())
         }
-
         binding?.includeAppBar?.txtCity?.text = preferences.getCityName()
-
         privilegeDataLoad()
         movedNext()
     }
@@ -76,14 +79,6 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
             startActivity(intent)
         }
 
-
-        //Coming Soon for Testing
-
-        // Select City
-        binding?.includeAppBar?.notify?.setOnClickListener {
-            val intent = Intent(this, ComingSoonActivity::class.java)
-            startActivity(intent)
-        }
 
         //Close Offer Alert
         binding?.imageView78?.setOnClickListener {
@@ -99,6 +94,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         val firstFragment = HomeFragment()
         val secondFragment = CinemasFragment()
         val thirdFragment = PrivilegeFragment()
+        val fourthFragment = ComingSoonFragment()
         val fifthFragment = MoreFragment()
 
         setCurrentFragment(firstFragment)
@@ -110,6 +106,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                     binding?.includeAppBar?.textView2?.text = getString(R.string.all_theaters)
                 }
                 R.id.privilegeFragment -> setCurrentFragment(thirdFragment)
+                R.id.comingSoonFragment -> setCurrentFragment(fourthFragment)
                 R.id.moreFragment -> setCurrentFragment(fifthFragment)
             }
             true

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -54,6 +55,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+<<<<<<< HEAD
 
         authViewModel.home(
             preferences.getCityName(),
@@ -68,6 +70,9 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             "ALL",
             "no"
         )
+=======
+        (requireActivity().findViewById(R.id.include) as ConstraintLayout).show()
+>>>>>>> master
         (requireActivity().findViewById(R.id.notify) as ImageView).show()
         (requireActivity().findViewById(R.id.locationBtn) as ImageView).show()
         (requireActivity().findViewById(R.id.scanQr) as ImageView).show()
@@ -79,6 +84,22 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 startActivity(intent)
             }
         }
+<<<<<<< HEAD
+=======
+        authViewModel.home(
+            preferences.getCityName(),
+            "",
+            preferences.getUserId(),
+            preferences.geMobileNumber(),
+            true,
+            "no",
+            "",
+            "ALL",
+            "ALL",
+            "ALL",
+            "no"
+        )
+>>>>>>> master
         movedNext()
         homeApi()
     }
@@ -203,8 +224,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             binding?.recyclerViewSlider?.layoutManager = gridLayoutSlider
             binding?.recyclerViewSlider?.adapter = adapterSlider
 
-
         }
+
         //Promotion
         val gridLayoutSlider =
             GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
@@ -266,6 +287,5 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         intent.putExtra("trailerUrl", comingSoonItem.mtrailerurl)
         startActivity(intent)
     }
-
 
 }

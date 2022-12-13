@@ -28,9 +28,9 @@ class CinemaAdapter(
 ) :
     RecyclerView.Adapter<CinemaAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: CinemaItemBinding) : RecyclerView.ViewHolder(binding.root)
-
     private var rowIndex: Boolean = false
     private var showList: Boolean = false
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = CinemaItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
@@ -45,8 +45,6 @@ class CinemaAdapter(
                 binding.multipleCinema.text = this.mc
                 //address
                 binding.cinemaLocation.text = this.ad
-                //Shows
-//                binding.tvShows.text = this.sc.toString() + " " + context.getString(R.string.shows)
                 //Distance
                 binding.tvDistance.text = this.d
                 //Image

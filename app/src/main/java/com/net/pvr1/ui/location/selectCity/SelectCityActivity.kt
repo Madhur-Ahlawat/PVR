@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.selectCity
+package com.net.pvr1.ui.location.selectCity
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -17,7 +17,6 @@ import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Gravity
-import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.inputmethod.EditorInfo
@@ -37,12 +36,12 @@ import com.net.pvr1.databinding.ActivitySelectCityBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.HomeActivity
-import com.net.pvr1.ui.selectCity.adapter.OtherCityAdapter
-import com.net.pvr1.ui.selectCity.adapter.PopUpCityAdapter
-import com.net.pvr1.ui.selectCity.adapter.SearchCityAdapter
-import com.net.pvr1.ui.selectCity.adapter.SelectCityAdapter
-import com.net.pvr1.ui.selectCity.response.SelectCityResponse
-import com.net.pvr1.ui.selectCity.viewModel.SelectCityViewModel
+import com.net.pvr1.ui.location.selectCity.adapter.OtherCityAdapter
+import com.net.pvr1.ui.location.selectCity.adapter.PopUpCityAdapter
+import com.net.pvr1.ui.location.selectCity.adapter.SearchCityAdapter
+import com.net.pvr1.ui.location.selectCity.adapter.SelectCityAdapter
+import com.net.pvr1.ui.location.selectCity.response.SelectCityResponse
+import com.net.pvr1.ui.location.selectCity.viewModel.SelectCityViewModel
 import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException

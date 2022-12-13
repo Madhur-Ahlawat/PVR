@@ -10,11 +10,11 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityOtpVerifyBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.enableLocation.EnableLocationActivity
+import com.net.pvr1.ui.location.enableLocation.EnableLocationActivity
 import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
 import com.net.pvr1.ui.login.otpVerify.viewModel.OtpVerifyViewModel
-import com.net.pvr1.ui.selectCity.SelectCityActivity
+import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.SmsBroadcastReceiver.SmsBroadcastReceiverListener
 import dagger.hilt.android.AndroidEntryPoint

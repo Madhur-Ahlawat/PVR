@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.selectCity.adapter
+package com.net.pvr1.ui.location.selectCity.adapter
 
 import android.content.Context
 import android.graphics.Paint
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
-import com.net.pvr1.ui.selectCity.response.SelectCityResponse
+import com.net.pvr1.ui.location.selectCity.response.SelectCityResponse
 
 class OtherCityAdapter(
     private var selectCityList: ArrayList<SelectCityResponse.Output.Ot>,

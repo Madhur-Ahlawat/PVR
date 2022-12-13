@@ -11,17 +11,16 @@ import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 
 class CinemaSessionCinChildLanguageAdapter(
     private var nowShowingList: ArrayList<CinemaSessionResponse.Child.Mv.Ml>,
-    private var context: Context
-) :
-    RecyclerView.Adapter<CinemaSessionCinChildLanguageAdapter.ViewHolder>() {
+    private var context: Context,
+    private var cinemaId: String?
+) : RecyclerView.Adapter<CinemaSessionCinChildLanguageAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemCinemaSessionLangChildBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemCinemaSessionLangChildBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false)
+            LayoutInflater.from(parent.context), parent, false
+        )
         return ViewHolder(binding)
     }
 
@@ -30,14 +29,13 @@ class CinemaSessionCinChildLanguageAdapter(
             with(nowShowingList[position]) {
                 //title
                 binding.textView95.text = this.lng
-                println("session--------->${this.lng}")
                 //RecyclerView
                 val layoutManager = FlexboxLayoutManager(context)
                 layoutManager.flexWrap = FlexWrap.WRAP
                 layoutManager.flexDirection = FlexDirection.ROW
                 layoutManager.justifyContent = JustifyContent.FLEX_START
                 layoutManager.alignItems = AlignItems.FLEX_START
-                val cinemaSessionLanguageAdapter = CinemaSessionTimeAdapter(this.s, context)
+                val cinemaSessionLanguageAdapter = CinemaSessionTimeAdapter(this.s, context,cinemaId)
                 binding.recyclerView6.layoutManager = layoutManager
                 binding.recyclerView6.adapter = cinemaSessionLanguageAdapter
 

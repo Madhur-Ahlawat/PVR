@@ -12,12 +12,16 @@ import com.net.pvr1.databinding.ItemCinemaDetailsShowTimeBinding
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.seatLayout.SeatLayoutActivity
 import com.net.pvr1.utils.Constant
-import com.net.pvr1.utils.printLog
+import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.show
 
 
+@Suppress("DEPRECATION")
 class CinemaSessionTimeAdapter(
     private var nowShowingList: ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>,
-    private var context: Context) :
+    private var context: Context,
+    private  var cinemaId: String?
+) :
     RecyclerView.Adapter<CinemaSessionTimeAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemCinemaDetailsShowTimeBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -42,20 +46,25 @@ class CinemaSessionTimeAdapter(
                 binding.imageView48.setColorFilter(Color.parseColor(colorCode))
                 binding.imageView49.setColorFilter(Color.parseColor(colorCode))
 
-
-                val alpha = 10 //between 0-255
+                val alpha = 10
                 val alphaColor = ColorUtils.setAlphaComponent(Color.parseColor(colorCode), alpha)
                 val alphaNew2 = alphaColor.toString().substring(0, alphaColor.toString().length - 1)
                 val alphaNew3 = "#$alphaNew2"
-                context.printLog("colorCode--->${alphaNew2}")
                 val gd = GradientDrawable()
                 gd.setColor(Color.parseColor(alphaNew3))
                 gd.cornerRadius = 10f
                 gd.setStroke(2, Color.parseColor(colorCode))
                 binding.cardView10.setBackgroundDrawable(gd)
 
+                //handicap
+                if (this.hc){
+                    binding.constraintLayout133.show()
+                }else{
+                    binding.constraintLayout133.hide()
+                }
+
                 Constant.SESSION_ID = this.sid.toString()
-                Constant.CINEMA_ID = cc
+                Constant.CINEMA_ID = cinemaId.toString()
 
                 holder.itemView.setOnClickListener {
                     val intent = Intent(context, SeatLayoutActivity::class.java)
@@ -63,7 +72,6 @@ class CinemaSessionTimeAdapter(
                     intent.putExtra("skip", "true")
                     intent.putExtra("CinemaShows", nowShowingList)
                     context.startActivity(intent)
-
                 }
             }
         }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.net.pvr1.R
 import com.net.pvr1.databinding.FragmentMoreBinding
@@ -42,10 +43,10 @@ class MoreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireActivity().findViewById(R.id.include) as ConstraintLayout).hide()
         preferences = PreferenceManager(requireActivity())
         //SetName
         binding?.profileDetails?.textView205?.text = preferences.getUserName()
-
         movedNext()
     }
 

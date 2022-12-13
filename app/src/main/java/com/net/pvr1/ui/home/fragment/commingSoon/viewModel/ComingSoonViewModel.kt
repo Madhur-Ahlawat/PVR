@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
-import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -22,6 +21,4 @@ class ComingSoonViewModel @Inject constructor(private val userRepository: UserRe
             userRepository.comingSoon(city,genre,lang,userid)
         }
     }
-
-
 }

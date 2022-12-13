@@ -1,11 +1,13 @@
 package com.net.pvr1.ui.movieDetails.nowShowing
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
+import com.devs.readmoreoption.ReadMoreOption
 import com.net.pvr1.BuildConfig
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityNowShowingBinding
@@ -16,16 +18,17 @@ import com.net.pvr1.ui.movieDetails.nowShowing.adapter.*
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.ui.movieDetails.nowShowing.viewModel.MovieDetailsViewModel
 import com.net.pvr1.ui.player.PlayerActivity
-import com.net.pvr1.utils.*
+import com.net.pvr1.utils.Constant
+import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
-class NowShowingActivity : AppCompatActivity(),
-    CastAdapter.RecycleViewItemClickListener,
-    CrewAdapter.RecycleViewItemClickListener,
-    MusicVideoAdapter.RecycleViewItemClickListener,
-    TrailerAdapter.RecycleViewItemClickListener,
-    TrailerTrsAdapter.RecycleViewItemClickListener,
+class NowShowingActivity : AppCompatActivity(), CastAdapter.RecycleViewItemClickListener,
+    CrewAdapter.RecycleViewItemClickListener, MusicVideoAdapter.RecycleViewItemClickListener,
+    TrailerAdapter.RecycleViewItemClickListener, TrailerTrsAdapter.RecycleViewItemClickListener,
     MusicVideoTrsAdapter.RecycleViewItemClickListener {
     private var binding: ActivityNowShowingBinding? = null
     private var loader: LoaderDialog? = null
@@ -39,14 +42,7 @@ class NowShowingActivity : AppCompatActivity(),
         binding?.include?.textView5?.text = resources.getString(R.string.book_now)
 
         authViewModel.movieDetails(
-            "Delhi-NCR",
-            intent.getStringExtra("mid").toString(),
-            "",
-            "",
-            "",
-            "",
-            "no",
-            "no"
+            "Delhi-NCR", intent.getStringExtra("mid").toString(), "", "", "", "", "no", "no"
         )
     }
 
@@ -58,7 +54,7 @@ class NowShowingActivity : AppCompatActivity(),
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         retrieveData(it.data.output)
 //                        trailerlist = it.data.output.mb.trailers
-                        
+
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -66,10 +62,8 @@ class NowShowingActivity : AppCompatActivity(),
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -81,10 +75,8 @@ class NowShowingActivity : AppCompatActivity(),
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
@@ -100,10 +92,7 @@ class NowShowingActivity : AppCompatActivity(),
 
 
         //Image
-        Glide.with(this)
-            .load(output.wit)
-            .error(R.drawable.app_icon)
-            .into(binding?.imageView26!!)
+        Glide.with(this).load(output.wit).error(R.drawable.app_icon).into(binding?.imageView26!!)
         //Trailer
         if (output.t.isEmpty()) {
             binding?.imageView29?.hide()
@@ -151,8 +140,14 @@ class NowShowingActivity : AppCompatActivity(),
         val commaSeparatedString = output.lngs.joinToString { it }
 
         //Description
+        val readMoreOption = ReadMoreOption.Builder(this).textLength(4, ReadMoreOption.TYPE_LINE)
+            .moreLabel("read more").lessLabel("read less").moreLabelColor(Color.BLACK)
+            .lessLabelColor(Color.BLACK).labelUnderLine(false).expandAnimation(true).build()
+
         binding?.textView66?.text = output.p
-        binding?.textView66?.let { Constant().makeTextViewResizable(it, 4, "..read more", true) }
+//        binding?.textView66?.let { Constant().makeTextViewResizable(it, 4, "..read more", true,this) }
+        readMoreOption.addReadMoreTo(binding?.textView66, binding?.textView66?.text)
+
         //FilmType
         binding?.textView75?.text = output.tag
         //Language
@@ -174,31 +169,46 @@ class NowShowingActivity : AppCompatActivity(),
         } else {
             binding?.constraintLayout11?.show()
         }
-        //Cast
         if (output.mb != null && output.mb.name != null) {
 
-            val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-            val castAdapter = CastAdapter(output.mb.cast, this, this)
-            binding?.recyclerView4?.layoutManager = layoutManager
-            binding?.recyclerView4?.adapter = castAdapter
+            //Cast
+            if (output.mb.cast.isNotEmpty()) {
+                binding?.recyclerView4?.show()
+                binding?.textView67?.show()
+                val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+                val castAdapter = CastAdapter(output.mb.cast, this, this)
+                binding?.recyclerView4?.layoutManager = layoutManager
+                binding?.recyclerView4?.adapter = castAdapter
+
+            } else {
+                binding?.textView67?.hide()
+                binding?.recyclerView4?.hide()
+            }
 
             //Crew
-            val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-            val crewAdapter = CrewAdapter(output.mb.crew, this, this)
-            binding?.recyclerCrew?.layoutManager = layoutManagerCrew
-            binding?.recyclerCrew?.adapter = crewAdapter
+            if (output.mb.crew.isNotEmpty()) {
+                binding?.recyclerCrew?.show()
+                binding?.textView68?.show()
+                val layoutManagerCrew =
+                    GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+                val crewAdapter = CrewAdapter(output.mb.crew, this, this)
+                binding?.recyclerCrew?.layoutManager = layoutManagerCrew
+                binding?.recyclerCrew?.adapter = crewAdapter
+            } else {
+                binding?.recyclerCrew?.hide()
+                binding?.textView68?.hide()
+            }
         }
 
 
-
         //condition check for Trailer and Music video
-        val trailerList:ArrayList<MovieDetailsResponse.Trs> = ArrayList()
-        val musicVideoList:ArrayList<MovieDetailsResponse.Trs> = ArrayList()
+        val trailerList: ArrayList<MovieDetailsResponse.Trs> = ArrayList()
+        val musicVideoList: ArrayList<MovieDetailsResponse.Trs> = ArrayList()
 
-        for (item in output.trs){
-            if (item.ty == "MUSIC"){
+        for (item in output.trs) {
+            if (item.ty == "MUSIC") {
                 musicVideoList.addAll(output.trs)
-            }else{
+            } else {
                 trailerList.addAll(output.trs)
             }
         }
@@ -212,27 +222,41 @@ class NowShowingActivity : AppCompatActivity(),
             binding?.recyclerView5?.layoutManager = layoutManagerTrailer
             binding?.recyclerView5?.adapter = trailerAdapter
         } else {
-            val layoutManagerTrailer =
-                GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-            val trailerAdapter = TrailerAdapter(output.mb.videos, this, this)
-            binding?.recyclerView5?.layoutManager = layoutManagerTrailer
-            binding?.recyclerView5?.adapter = trailerAdapter
+            if (output.mb.videos.isNotEmpty()) {
+                binding?.recyclerView5?.show()
+                binding?.textView69?.show()
+                val layoutManagerTrailer =
+                    GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+                val trailerAdapter = TrailerAdapter(output.mb.videos, this, this)
+                binding?.recyclerView5?.layoutManager = layoutManagerTrailer
+                binding?.recyclerView5?.adapter = trailerAdapter
+            } else {
+                binding?.recyclerView5?.hide()
+                binding?.textView69?.hide()
+            }
         }
 
 //        //MusicVideo
         if (musicVideoList.size != 0) {
-            val layoutManagerTrailer = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+            binding?.textView70?.show()
+            val layoutManagerTrailer =
+                GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
             val trailerAdapter = MusicVideoTrsAdapter(musicVideoList, this, this)
             binding?.recyclerMusic?.layoutManager = layoutManagerTrailer
             binding?.recyclerMusic?.adapter = trailerAdapter
         } else {
             if (output.mb != null && output.mb.name != null) {
                 if (output.mb.tracks.isNotEmpty()) {
+                    binding?.textView70?.show()
+                    binding?.recyclerMusic?.show()
                     val layoutManagerTrailer =
                         GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
                     val trailerAdapter = MusicVideoAdapter(output.mb.tracks[0].roles, this, this)
                     binding?.recyclerMusic?.layoutManager = layoutManagerTrailer
                     binding?.recyclerMusic?.adapter = trailerAdapter
+                } else {
+                    binding?.textView70?.hide()
+                    binding?.recyclerMusic?.hide()
                 }
             }
 

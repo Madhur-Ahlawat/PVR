@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.enableLocation.viewModel
+package com.net.pvr1.ui.location.enableLocation.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

@@ -15,6 +15,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityBookingBinding
 import com.net.pvr1.ui.bookingSession.adapter.*
@@ -184,6 +185,8 @@ class BookingActivity : AppCompatActivity(),
                 daySessionResponse?.gnr + " " + getString(R.string.dots) + " " + language
 
             //recycler Days
+            val snapHelper = PagerSnapHelper()
+            snapHelper.attachToRecyclerView(binding?.recyclerView9)
             val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
             val bookingShowsDaysAdapter =
                 BookingShowsDaysAdapter(daySessionResponse?.dys!!, this, this)
@@ -208,13 +211,13 @@ class BookingActivity : AppCompatActivity(),
         //placeHolder
         printLog("placeHolder--->${output.ph}")
         if (output.ph.isNotEmpty()) {
-            binding?.recyclerView23?.show()
+            binding?.constraintLayout123?.show()
             val gridLayout4 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
             val bookingPlaceHolderAdapter = BookingPlaceHolderAdapter(output.ph, this, this)
             binding?.recyclerView23?.layoutManager = gridLayout4
             binding?.recyclerView23?.adapter = bookingPlaceHolderAdapter
         } else {
-            binding?.recyclerView23?.hide()
+            binding?.constraintLayout123?.hide()
         }
 
         for (data in output.cinemas) {
@@ -223,9 +226,9 @@ class BookingActivity : AppCompatActivity(),
         val string: String = java.lang.String.join(",", cinemaId)
 
         authViewModel.bookingTheatre(
-            "Delhi-NCR",
+            preferences.getCityName(),
             string,
-            preferences.getUserId().toString(),
+            preferences.getUserId(),
             intent.getStringExtra("mid").toString(),
             "HINDI",
             "no"

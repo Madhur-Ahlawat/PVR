@@ -9,10 +9,16 @@
         android:id="@+id/cinemaFragment"
         android:title="@string/cinema"
         android:icon="@drawable/cinema_grey"/>
+
     <item
         android:id="@+id/privilegeFragment"
         android:title="@string/privilege"
         android:icon="@drawable/privilege_grey"/>
+
+    <item
+        android:id="@+id/comingSoonFragment"
+        android:title="@string/coming_soon"
+        android:icon="@drawable/commingsoon_grey"/>
 
     <item
         android:id="@+id/moreFragment"

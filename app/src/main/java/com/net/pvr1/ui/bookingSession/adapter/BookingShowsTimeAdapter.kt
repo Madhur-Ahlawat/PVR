@@ -26,11 +26,8 @@ import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr1.utils.Constant.Companion.OfferDialogImage
 import com.net.pvr1.utils.Constant.Companion.SESSION_ID
 import com.net.pvr1.utils.hide
-import com.net.pvr1.utils.printLog
 import com.net.pvr1.utils.show
-import com.net.pvr1.utils.toast
 import kotlin.math.roundToInt
-
 
 @Suppress("DEPRECATION")
 class BookingShowsTimeAdapter(
@@ -45,6 +42,7 @@ class BookingShowsTimeAdapter(
     private  var rowIndex:Int=0
     private var sidText: String = ""
     private var ccText: String = ""
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemCinemaDetailsShowTimeBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -63,12 +61,11 @@ class BookingShowsTimeAdapter(
                 binding.imageView48.setColorFilter(Color.parseColor(colorCode))
                 binding.imageView49.setColorFilter(Color.parseColor(colorCode))
 
-                val alpha = 10 //between 0-255
+                //between 0-255
+                val alpha = 10
                 val alphaColor = ColorUtils.setAlphaComponent(Color.parseColor(colorCode), alpha)
                 val alphaNew2 = alphaColor.toString().substring(0, alphaColor.toString().length - 1)
                 val alphaNew3 = "#$alphaNew2"
-                context.printLog("colorCode--->${alphaNew2}")
-
                 val gd = GradientDrawable()
                 gd.setColor(Color.parseColor(alphaNew3))
                 gd.cornerRadius = 10f
@@ -82,14 +79,13 @@ class BookingShowsTimeAdapter(
 
                 //Handicap
                 if (this.hc){
-                    binding.imageView48.show()
+                    binding.constraintLayout133.show()
                 }else{
-                    binding.imageView48.hide()
+                    binding.constraintLayout133.hide()
                 }
 
                 holder.itemView.setOnClickListener {
                     rowIndex=position
-                    notifyDataSetChanged()
                     if (this.ss != 0 && this.ss != 3) {
                         if (this.ba) {
                             showOfferDialog()
@@ -123,6 +119,7 @@ class BookingShowsTimeAdapter(
 
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showOfferDialog() {
         val progressDialog = nowShowingList[0].prs
         val dialog = Dialog(context)
