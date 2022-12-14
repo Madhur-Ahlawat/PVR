@@ -31,7 +31,7 @@ import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.cinema.adapter.CinemaAdapter
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.cinema.viewModel.CinemaViewModel
-import com.net.pvr1.ui.search.searchHome.SearchHomeActivity
+import com.net.pvr1.ui.search.searchCinema.SearchCinemaActivity
 import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
@@ -72,11 +72,13 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
         (requireActivity().findViewById(R.id.searchBtn) as ImageView).hide()
         (requireActivity().findViewById(R.id.txtCity) as TextView).show()
         (requireActivity().findViewById(R.id.searchCinema) as ImageView).show()
+
         //Click Search
         (requireActivity().findViewById(R.id.searchCinema) as ImageView).setOnClickListener {
-            val intent = Intent(requireActivity(), SearchHomeActivity::class.java)
+            val intent = Intent(requireActivity(), SearchCinemaActivity::class.java)
             startActivity(intent)
         }
+
         cinemaApi()
         setPreference()
         getLocation()

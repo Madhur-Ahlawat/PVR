@@ -259,7 +259,6 @@ class NowShowingActivity : AppCompatActivity(), CastAdapter.RecycleViewItemClick
                     binding?.recyclerMusic?.hide()
                 }
             }
-
         }
     }
 
@@ -272,18 +271,28 @@ class NowShowingActivity : AppCompatActivity(), CastAdapter.RecycleViewItemClick
     }
 
     override fun musicVideo(comingSoonItem: MovieDetailsResponse.Mb.Crew.Role) {
+        val intent = Intent(this@NowShowingActivity, PlayerActivity::class.java)
+        intent.putExtra("trailerUrl", comingSoonItem.url)
+        startActivity(intent)
+
     }
 
     override fun trailerClick(comingSoonItem: MovieDetailsResponse.Mb.Video) {
-
+        val intent = Intent(this@NowShowingActivity, PlayerActivity::class.java)
+        intent.putExtra("trailerUrl", comingSoonItem.url)
+        startActivity(intent)
     }
 
     override fun trailerTrsClick(comingSoonItem: MovieDetailsResponse.Trs) {
-
+        val intent = Intent(this@NowShowingActivity, PlayerActivity::class.java)
+        intent.putExtra("trailerUrl", comingSoonItem.t)
+        startActivity(intent)
     }
 
     override fun musicVideoTrsClick(comingSoonItem: MovieDetailsResponse.Trs) {
-
+        val intent = Intent(this@NowShowingActivity, PlayerActivity::class.java)
+        intent.putExtra("trailerUrl", comingSoonItem.t)
+        startActivity(intent)
     }
 
 }

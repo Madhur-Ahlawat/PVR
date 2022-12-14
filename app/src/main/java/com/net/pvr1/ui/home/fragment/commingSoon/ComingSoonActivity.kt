@@ -2,7 +2,6 @@ package com.net.pvr1.ui.home.fragment.commingSoon
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +15,6 @@ import com.net.pvr1.ui.home.fragment.commingSoon.adapter.LanguageAdapter
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.commingSoon.viewModel.ComingSoonViewModel
 import com.net.pvr1.ui.movieDetails.comingSoonDetails.ComingSoonDetailsActivity
-import com.net.pvr1.ui.search.searchComingSoon.SearchComingSoonActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import com.net.pvr1.utils.PreferenceManager
@@ -117,5 +115,9 @@ class ComingSoonActivity : AppCompatActivity(), LanguageAdapter.RecycleViewItemC
         val intent = Intent(this, ComingSoonDetailsActivity::class.java)
         intent.putExtra("mid", comingSoonItem.masterMovieId)
         startActivity(intent)
+    }
+
+    override fun onTrailerClick(comingSoonItem: CommingSoonResponse.Output.Movy) {
+
     }
 }

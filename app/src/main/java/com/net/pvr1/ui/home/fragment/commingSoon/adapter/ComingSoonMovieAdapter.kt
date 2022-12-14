@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.home.fragment.commingSoon.adapter
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.text.TextUtils
@@ -31,9 +32,9 @@ class ComingSoonMovieAdapter(
         return MyViewHolderNowShowing(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolderNowShowing, position: Int) {
         val comingSoonItem = nowShowingList[position]
-
         //title
         holder.title.text = comingSoonItem.name
         //Image
@@ -48,15 +49,20 @@ class ComingSoonMovieAdapter(
         } else {
             holder.play.hide()
         }
+
 //        Video Play Click
+        holder.play.setOnClickListener {
+            listener.onTrailerClick(comingSoonItem)
+        }
+        //data click
         holder.itemView.setOnClickListener {
             listener.onDateClick(comingSoonItem)
         }
 
         //Manage Bookmark
+        println("checkLogin---->${checkLogin}")
         if (!checkLogin) {
             if (comingSoonItem.ul) {
-//                PCApplication.getPreference().putBoolean(comingSoonData.getMasterMovieId(), true)
                 holder.wishlist.show()
                 holder.wishlist.background =
                     ContextCompat.getDrawable(context, R.drawable.ic_wishlist_yellow)
@@ -119,8 +125,10 @@ class ComingSoonMovieAdapter(
 
     interface VideoPlay {
         fun onDateClick(comingSoonItem: CommingSoonResponse.Output.Movy)
+        fun onTrailerClick(comingSoonItem: CommingSoonResponse.Output.Movy)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun censorLanguage(
         otherLang: String?,
         lang: String?,

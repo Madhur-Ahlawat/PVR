@@ -18,6 +18,7 @@ import com.net.pvr1.ui.home.fragment.commingSoon.adapter.LanguageAdapter
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.commingSoon.viewModel.ComingSoonViewModel
 import com.net.pvr1.ui.movieDetails.comingSoonDetails.ComingSoonDetailsActivity
+import com.net.pvr1.ui.player.PlayerActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import com.net.pvr1.utils.PreferenceManager
@@ -125,6 +126,12 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
     override fun onDateClick(comingSoonItem: CommingSoonResponse.Output.Movy) {
         val intent = Intent(requireActivity(), ComingSoonDetailsActivity::class.java)
         intent.putExtra("mid", comingSoonItem.masterMovieId)
+        startActivity(intent)
+    }
+
+    override fun onTrailerClick(comingSoonItem: CommingSoonResponse.Output.Movy) {
+        val intent = Intent(requireActivity(), PlayerActivity::class.java)
+        intent.putExtra("trailerUrl", comingSoonItem.videoUrl)
         startActivity(intent)
     }
 }

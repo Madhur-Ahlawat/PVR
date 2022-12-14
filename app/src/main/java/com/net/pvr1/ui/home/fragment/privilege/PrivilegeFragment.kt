@@ -42,7 +42,7 @@ class PrivilegeFragment : Fragment(), PrivilegeTypeAdapter.RecycleViewItemClickL
         } else {
 
         }
-        notLoginCategoryDataLoad()
+//        notLoginCategoryDataLoad()
     }
 
     private fun notLoginCategoryDataLoad() {

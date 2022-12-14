@@ -117,16 +117,24 @@ class MoreFragment : Fragment() {
             val intent = Intent(requireActivity(), LoginActivity::class.java)
             startActivity(intent)
         }
+        println("loginStatus--->${preferences.getIsLogin()}")
         if (preferences.getIsLogin()) {
-            binding?.llBookingSection?.show()
             binding?.tvSignOut?.show()
             binding?.profileLinear?.show()
-            binding?.loginBt?.show()
-        } else {
-            binding?.llBookingSection?.hide()
-            binding?.profileLinear?.hide()
-            binding?.tvSignOut?.hide()
+            binding?.termsContainer?.show()
             binding?.loginBt?.hide()
+        } else {
+            binding?.profileLinear?.hide()
+            binding?.termsContainer?.hide()
+            binding?.loginUi?.hide()
+            binding?.tvSignOut?.hide()
+            binding?.loginBt?.show()
+            binding?.tvLoginButton?.textView5?.text= getString(R.string.login)
+            binding?.tvLoginButton?.textView5?.setOnClickListener {
+                val intent = Intent(requireActivity(), LoginActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+            }
         }
     }
 
