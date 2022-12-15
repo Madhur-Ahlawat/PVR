@@ -16,6 +16,7 @@ import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
+import com.net.pvr1.ui.location.selectCity.response.SelectCityResponse
 import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
 import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
@@ -28,12 +29,12 @@ import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.seatLayout.response.InitResponse
 import com.net.pvr1.ui.seatLayout.response.ReserveSeatResponse
 import com.net.pvr1.ui.seatLayout.response.SeatResponse
-import com.net.pvr1.ui.location.selectCity.response.SelectCityResponse
 import com.net.pvr1.ui.splash.response.SplashResponse
 import com.net.pvr1.ui.summery.response.AddFoodResponse
 import com.net.pvr1.ui.summery.response.SetDonationResponse
 import com.net.pvr1.ui.summery.response.SummeryResponse
 import com.net.pvr1.ui.ticketConfirmation.response.TicketBookedResponse
+import com.net.pvr1.ui.watchList.response.WatchListResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import org.json.JSONObject
@@ -70,23 +71,11 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         get() = contactUsLiveData
 
     suspend fun contactUsUser(
-        comment: String,
-        email: String,
-        mobile: String,
-        did: String,
-        isSpi: String,
-        ctype: String
+        comment: String, email: String, mobile: String, did: String, isSpi: String, ctype: String
     ) {
         contactUsLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.contactUs(
-            comment,
-            email,
-            mobile,
-            did,
-            isSpi,
-            ctype,
-            Constant.version,
-            Constant.platform
+            comment, email, mobile, did, isSpi, ctype, Constant.version, Constant.platform
         )
         contactUs(response)
     }
@@ -167,8 +156,19 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         binOffer: String
     ) {
         paytmHmacLiveData.postValue(NetworkResult.Loading())
-        val response =
-            userAPI.paytmHMAC(userid,bookingid,transid,unpaid,cardNo,booktype,ptype,isSpi,binOffer,Constant.version, Constant.platform)
+        val response = userAPI.paytmHMAC(
+            userid,
+            bookingid,
+            transid,
+            unpaid,
+            cardNo,
+            booktype,
+            ptype,
+            isSpi,
+            binOffer,
+            Constant.version,
+            Constant.platform
+        )
         paytmHmacResponse(response)
     }
 
@@ -199,19 +199,18 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         unpaid: Boolean
     ) {
         payModeLiveData.postValue(NetworkResult.Loading())
-        val response =
-            userAPI.payMode(
-                cinemacode,
-                booktype,
-                userid,
-                mobile,
-                type,
-                isSpi,
-                srilanka,
-                unpaid,
-                Constant.version,
-                Constant.platform
-            )
+        val response = userAPI.payMode(
+            cinemacode,
+            booktype,
+            userid,
+            mobile,
+            type,
+            isSpi,
+            srilanka,
+            unpaid,
+            Constant.version,
+            Constant.platform
+        )
         payModeResponse(response)
     }
 
@@ -233,13 +232,9 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
 
     suspend fun upiStatus(bookingid: String, booktype: String) {
         payModeLiveData.postValue(NetworkResult.Loading())
-        val response =
-            userAPI.upiStatus(
-                bookingid,
-                booktype,
-                Constant.version,
-                Constant.platform
-            )
+        val response = userAPI.upiStatus(
+            bookingid, booktype, Constant.version, Constant.platform
+        )
         upiStatusResponse(response)
     }
 
@@ -253,7 +248,6 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             upiStatusLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
-
 
 
     //Resister
@@ -272,15 +266,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     ) {
         otpVerifyLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.resister(
-            hash,
-            email,
-            name,
-            mobile,
-            otp,
-            city,
-            cname,
-            Constant.version,
-            Constant.platform
+            hash, email, name, mobile, otp, city, cname, Constant.version, Constant.platform
         )
         resisterResponse(response)
     }
@@ -304,8 +290,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     suspend fun comingSoon(city: String, genre: String, lang: String, userid: String) {
         comingSoonLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.comingSoon(
-            city, genre, lang, userid, Constant.version,
-            Constant.platform
+            city, genre, lang, userid, Constant.version, Constant.platform
         )
         comingSoonResponse(response)
     }
@@ -329,8 +314,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     suspend fun cinema(city: String, lat: String, lng: String, userid: String, searchTxt: String) {
         cinemaLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.cinema(
-            city, lat, lng, userid, searchTxt, Constant.version,
-            Constant.platform
+            city, lat, lng, userid, searchTxt, Constant.version, Constant.platform
         )
         cinemaResponse(response)
     }
@@ -352,11 +336,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         get() = cinemaPreferenceLiveData
 
     suspend fun cinemaPreference(
-        userid: String,
-        id: String,
-        is_like: Boolean,
-        type: String,
-        did: String
+        userid: String, id: String, is_like: Boolean, type: String, did: String
     ) {
         cinemaPreferenceLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.cinemaPreference(
@@ -384,8 +364,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     suspend fun giftCard(userId: String, did: String) {
         giftCardLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.giftCard(
-            userId, did, Constant.version,
-            Constant.platform
+            userId, did, Constant.version, Constant.platform
         )
         giftCardResponse(response)
     }
@@ -407,17 +386,11 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         get() = foodTicketLiveData
 
     suspend fun foodTicket(
-        userId: String,
-        did: String,
-        sriLanka: String,
-        city: String,
-        isSpi: String,
-        past: String
+        userId: String, did: String, sriLanka: String, city: String, isSpi: String, past: String
     ) {
         foodTicketLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.foodTicket(
-            userId, did, sriLanka, city, isSpi, past, Constant.version,
-            Constant.platform
+            userId, did, sriLanka, city, isSpi, past, Constant.version, Constant.platform
         )
         foodTicketResponse(response)
     }
@@ -506,21 +479,11 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         get() = selectCityLiveData
 
     suspend fun selectCity(
-        lat: String,
-        lng: String,
-        userid: String,
-        isSpi: String,
-        srilanka: String
+        lat: String, lng: String, userid: String, isSpi: String, srilanka: String
     ) {
         selectCityLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.selectCity(
-            lat,
-            lng,
-            Constant.version,
-            Constant.platform,
-            userid,
-            isSpi,
-            srilanka
+            lat, lng, Constant.version, Constant.platform, userid, isSpi, srilanka
         )
         selectCityResponse(response)
     }
@@ -556,8 +519,19 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     ) {
         selectCityLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.home(
-            city, Constant.version, Constant.platform, dtmsource, userid, mobile,
-            upbooking, srilanka, type, lng, gener, spShow, isSpi
+            city,
+            Constant.version,
+            Constant.platform,
+            dtmsource,
+            userid,
+            mobile,
+            upbooking,
+            srilanka,
+            type,
+            lng,
+            gener,
+            spShow,
+            isSpi
         )
         homeResponse(response)
     }
@@ -581,8 +555,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     suspend fun privilegeHomeData(mobile: String, city: String) {
         privilegeHomeLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.privilegeHome(
-            mobile,
-            city, Constant.version, Constant.platform
+            mobile, city, Constant.version, Constant.platform
         )
         privilegeHomeResponse(response)
     }
@@ -605,21 +578,11 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         get() = homeSearchLiveData
 
     suspend fun homeSearchData(
-        city: String,
-        text: String,
-        searchFilter: String,
-        lat: String,
-        lng: String
+        city: String, text: String, searchFilter: String, lat: String, lng: String
     ) {
         homeSearchLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.homeSearch(
-            city,
-            text,
-            searchFilter,
-            lat,
-            lng,
-            Constant.version,
-            Constant.platform
+            city, text, searchFilter, lat, lng, Constant.version, Constant.platform
         )
         homeSearchResponse(response)
     }
@@ -652,16 +615,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     ) {
         movieDetailsLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.movieDetails(
-            city,
-            mid,
-            Constant.version,
-            type,
-            Constant.platform,
-            userid,
-            lat,
-            lng,
-            isSpi,
-            srilanka
+            city, mid, Constant.version, type, Constant.platform, userid, lat, lng, isSpi, srilanka
         )
         movieDetailsResponse(response)
     }
@@ -683,19 +637,11 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         get() = commingSoonLiveData
 
     suspend fun commingSoonData(
-        type: String,
-        userid: String,
-        city: String,
-        mcode: String
+        type: String, userid: String, city: String, mcode: String
     ) {
         movieDetailsLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.commingSoon(
-            type,
-            userid,
-            city,
-            mcode,
-            Constant.version,
-            Constant.platform
+            type, userid, city, mcode, Constant.version, Constant.platform
         )
         commingSoonResponse(response)
     }
@@ -718,19 +664,11 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         get() = movieAlertLiveData
 
     suspend fun movieAlertData(
-        userid: String,
-        city: String,
-        mcode: String,
-        did: String
+        userid: String, city: String, mcode: String, did: String
     ) {
         movieAlertLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.movieAlert(
-            userid,
-            city,
-            mcode,
-            did,
-            Constant.version,
-            Constant.platform
+            userid, city, mcode, did, Constant.version, Constant.platform
         )
         movieAlertResponse(response)
     }
@@ -845,12 +783,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         get() = bookingTheatreLiveData
 
     suspend fun bookingTheatre(
-        city: String,
-        cid: String,
-        userid: String,
-        mid: String,
-        lng: String,
-        isSpi: String
+        city: String, cid: String, userid: String, mid: String, lng: String, isSpi: String
     ) {
         cinemaSessionLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.bookingTheatre(
@@ -926,8 +859,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         get() = initTransSeatLiveData
 
     suspend fun initTransSeatLayout(
-        cinemacode: String,
-        sessionid: String
+        cinemacode: String, sessionid: String
     ) {
         initTransSeatLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.initTransSeatLayout(
@@ -1056,10 +988,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         get() = summerLiveData
 
     suspend fun summerLayout(
-        transid: String,
-        cinemacode: String,
-        userid: String,
-        bookingid: String
+        transid: String, cinemacode: String, userid: String, bookingid: String
     ) {
         formatsLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.summery(
@@ -1145,11 +1074,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     suspend fun formatsLayout(type: String, city: String, isSpi: String) {
         formatsLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.formats(
-            type,
-            city,
-            isSpi,
-            Constant.version,
-            Constant.platform
+            type, city, isSpi, Constant.version, Constant.platform
         )
         formatsLayoutResponse(response)
     }
@@ -1216,21 +1141,11 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         get() = setDonationLiveData
 
     suspend fun setDonationLayout(
-        bookingid: String,
-        transid: String,
-        isDonate: Boolean,
-        istDonate: Boolean,
-        isSpi: String
+        bookingid: String, transid: String, isDonate: Boolean, istDonate: Boolean, isSpi: String
     ) {
         setDonationLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.setDonation(
-            bookingid,
-            transid,
-            isDonate,
-            istDonate,
-            isSpi,
-            Constant.version,
-            Constant.platform
+            bookingid, transid, isDonate, istDonate, isSpi, Constant.version, Constant.platform
         )
         setDonationLayoutResponse(response)
     }
@@ -1257,10 +1172,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     ) {
         splashLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.splash(
-            city,
-            "NO",
-            Constant.version,
-            Constant.platform
+            city, "NO", Constant.version, Constant.platform
         )
         splashLayoutResponse(response)
     }
@@ -1273,6 +1185,32 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             splashLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             splashLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    //watchList
+    private val watchListLiveData = MutableLiveData<NetworkResult<WatchListResponse>>()
+    val watchListResponseLiveData: LiveData<NetworkResult<WatchListResponse>>
+        get() = watchListLiveData
+
+    suspend fun watchListLayout(
+        userid: String, city: String, did: String
+    ) {
+        watchListLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.watchList(
+            userid, city, did, Constant.version, Constant.platform
+        )
+        watchListLayoutResponse(response)
+    }
+
+    private fun watchListLayoutResponse(response: Response<WatchListResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            watchListLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            watchListLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            watchListLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 
@@ -1329,8 +1267,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
 
 
     //GiftCardMain
-    private val giftCardMainLiveData =
-        MutableLiveData<NetworkResult<GiftCardResponse>>()
+    private val giftCardMainLiveData = MutableLiveData<NetworkResult<GiftCardResponse>>()
     val giftCardMainResponseLiveData: LiveData<NetworkResult<GiftCardResponse>>
         get() = giftCardMainLiveData
 
@@ -1361,11 +1298,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         get() = bookingRetrievalLiveData
 
     suspend fun bookingRetrievalLayout(
-        city: String,
-        lat: String,
-        lng: String,
-        userid: String,
-        searchtxt: String
+        city: String, lat: String, lng: String, userid: String, searchtxt: String
     ) {
         bookingRetrievalLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.bookingRetrieval(
@@ -1385,6 +1318,41 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
     }
 
+    //setAlert
+    private val setAlertLiveData =
+        MutableLiveData<NetworkResult<BookingRetrievalResponse>>()
+    val setAlertResponseLiveData: LiveData<NetworkResult<BookingRetrievalResponse>>
+        get() = setAlertLiveData
+
+    suspend fun setAlertLayout(
+        userid: String,
+        city: String,
+        mcode: String,
+        cinema: String,
+        whtsapp: String,
+        pushnotify: String,
+        sms: String,
+        email: String,
+        did: String
+    ) {
+        setAlertLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.setAlert(
+            userid,city,mcode,cinema,whtsapp,pushnotify,sms,email,did, Constant.version, Constant.platform
+        )
+        setAlertLayoutResponse(response)
+    }
+
+    private fun setAlertLayoutResponse(response: Response<BookingRetrievalResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            setAlertLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            setAlertLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            setAlertLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
 
     //Phone Pe Payment Section
 
@@ -1393,17 +1361,11 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     val phonepeHmacResponseLiveData: LiveData<NetworkResult<PhonepeHmacResponse>>
         get() = phonepeHmacLiveData
 
-    suspend fun phonepeHmac(userid: String,bookingid: String, booktype: String,transid: String) {
+    suspend fun phonepeHmac(userid: String, bookingid: String, booktype: String, transid: String) {
         phonepeHmacLiveData.postValue(NetworkResult.Loading())
-        val response =
-            userAPI.phonepeHmac(
-                userid,
-                bookingid,
-                booktype,
-                transid,
-                Constant.version,
-                Constant.platform
-            )
+        val response = userAPI.phonepeHmac(
+            userid, bookingid, booktype, transid, Constant.version, Constant.platform
+        )
         phonepeHmacResponse(response)
     }
 
@@ -1423,17 +1385,16 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     val phonepeStatusResponseLiveData: LiveData<NetworkResult<UPIStatusResponse>>
         get() = phonepeStatusLiveData
 
-    suspend fun phonepeStatus(userid: String,bookingid: String, booktype: String,transid: String) {
+    suspend fun phonepeStatus(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String
+    ) {
         phonepeStatusLiveData.postValue(NetworkResult.Loading())
-        val response =
-            userAPI.phonepeStatus(
-                userid,
-                bookingid,
-                booktype,
-                transid,
-                Constant.version,
-                Constant.platform
-            )
+        val response = userAPI.phonepeStatus(
+            userid, bookingid, booktype, transid, Constant.version, Constant.platform
+        )
         phonepeStatusResponse(response)
     }
 

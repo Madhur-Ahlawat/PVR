@@ -33,7 +33,6 @@ data class HomeSearchResponse(
             val n2: String,
             val t: String
         ) : Serializable
-
         data class M(
             val ad: String,
             val c: String,

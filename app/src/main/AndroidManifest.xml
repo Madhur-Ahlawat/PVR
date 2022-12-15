@@ -13,6 +13,12 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <queries>
+        <intent>
+            <action android:name="com.google.android.youtube.api.service.START" />
+        </intent>
+    </queries>
+
     <application
         android:name=".NoteApplication"
         android:allowBackup="true"
@@ -21,6 +27,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
+        <activity
+            android:name=".ui.home.fragment.commingSoon.search.CinemaSearchActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".ui.payment.mCoupon.MCouponActivity"
             android:exported="false">
@@ -267,30 +280,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.home.HomeActivity"
             android:exported="true"
-            android:screenOrientation="portrait" />
-
-
-
-
-<!--        <queries>-->
-<!--            <intent>-->
-<!--                <action android:name="com.google.android.youtube.api.service.START" />-->
-<!--            </intent>-->
-<!--        </queries>-->
-<!--        -->
-
-        <service
-            android:name=".utils.FetchAddressIntentServices" />
+            android:screenOrientation="portrait" /> <!-- <queries> -->
+        <!-- <intent> -->
+        <!-- <action android:name="com.google.android.youtube.api.service.START" /> -->
+        <!-- </intent> -->
+        <!-- </queries> -->
+        <!--  -->
+        <service android:name=".utils.FetchAddressIntentServices" />
 
         <meta-data
             android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
-
-<!--        // Phone Pe Cred-->
+            android:resource="@array/preloaded_fonts" /> <!-- // Phone Pe Cred -->
         <meta-data
             android:name="com.phonepe.android.sdk.MerchantId"
             android:value="@string/phone_pe_merchant_id" />
@@ -300,12 +303,6 @@
         <meta-data
             android:name="com.phonepe.android.sdk.Debuggable"
             android:value="true" />
-
-
     </application>
-    <queries>
-        <intent>
-            <action android:name="com.google.android.youtube.api.service.START" />
-        </intent>
-    </queries>
+
 </manifest>

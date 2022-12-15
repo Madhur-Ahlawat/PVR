@@ -40,7 +40,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/search" />
+            app:srcCompat="@drawable/search"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/textView378"
@@ -83,5 +84,19 @@
         app:layout_constraintEnd_toEndOf="@+id/view12"
         app:layout_constraintStart_toStartOf="@+id/view12"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout134" />
+
+    <com.net.pvr1.utils.MovableFloatingActionButton
+        android:id="@+id/filter_fab"
+        android:layout_width="@dimen/dimen_60dp"
+        android:layout_height="@dimen/dimen_60dp"
+        android:layout_marginBottom="@dimen/dimen_30dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:fabSize="normal"
+        app:layout_anchorGravity="bottom|right|end"
+        android:src="@drawable/filter_unselect"
+        tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck,ImageContrastCheck" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

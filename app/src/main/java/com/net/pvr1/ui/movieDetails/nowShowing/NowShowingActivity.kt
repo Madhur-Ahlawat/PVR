@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.devs.readmoreoption.ReadMoreOption
-import com.net.pvr1.BuildConfig
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityNowShowingBinding
 import com.net.pvr1.ui.bookingSession.BookingActivity
@@ -106,16 +105,7 @@ class NowShowingActivity : AppCompatActivity(), CastAdapter.RecycleViewItemClick
         }
         //Share
         binding?.imageView28?.setOnClickListener {
-            val appPackageName = BuildConfig.APPLICATION_ID
-            val appName = getString(R.string.app_name)
-            val shareBodyText = "https://play.google.com/store/apps/details?id=$appPackageName"
-
-            val sendIntent = Intent(Intent.ACTION_SEND).apply {
-                type = "text/plain"
-                putExtra(Intent.EXTRA_TITLE, appName)
-                putExtra(Intent.EXTRA_TEXT, shareBodyText)
-            }
-            startActivity(Intent.createChooser(sendIntent, null))
+            Constant().shareData(this,"","")
         }
         //Back
         binding?.imageView27?.setOnClickListener {
@@ -170,7 +160,6 @@ class NowShowingActivity : AppCompatActivity(), CastAdapter.RecycleViewItemClick
             binding?.constraintLayout11?.show()
         }
         if (output.mb != null && output.mb.name != null) {
-
             //Cast
             if (output.mb.cast.isNotEmpty()) {
                 binding?.recyclerView4?.show()

@@ -60,23 +60,20 @@ class ComingSoonMovieAdapter(
         }
 
         //Manage Bookmark
-        println("checkLogin---->${checkLogin}")
+        println("checkLogin---->${comingSoonItem.ul}")
         if (!checkLogin) {
             if (comingSoonItem.ul) {
                 holder.wishlist.show()
                 holder.wishlist.background =
                     ContextCompat.getDrawable(context, R.drawable.ic_wishlist_yellow)
             } else {
-//                PCApplication.getPreference().putBoolean(comingSoonData.getMasterMovieId(), false)
                 holder.wishlist.show()
                 holder.wishlist.background =
                     ContextCompat.getDrawable(context, R.drawable.ic_wishlist_white)
             }
         }
-
         //Release Manage
         holder.release.text = comingSoonItem.date_caption
-
         //Manage Language
         censorLanguage(
             comingSoonItem.otherlanguages,

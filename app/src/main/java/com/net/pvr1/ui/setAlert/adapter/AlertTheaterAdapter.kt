@@ -26,11 +26,11 @@ class AlertTheaterAdapter(
 
     lateinit var mContext: Context
     private var selectedItemCount = 0
-    var filteredData = ArrayList(nowShowingList)
+    private var filteredData = ArrayList(nowShowingList)
 
-    var theatreList: List<BookingRetrievalResponse.Output.C> = nowShowingList
+    private var theatreList: List<BookingRetrievalResponse.Output.C> = nowShowingList
 
-    inner class ViewHolder(val binding: SetAlertItemBinding) :
+     inner class ViewHolder(val binding: SetAlertItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

@@ -16,6 +16,7 @@ import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.commingSoon.adapter.ComingSoonMovieAdapter
 import com.net.pvr1.ui.home.fragment.commingSoon.adapter.LanguageAdapter
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
+import com.net.pvr1.ui.home.fragment.commingSoon.search.CinemaSearchActivity
 import com.net.pvr1.ui.home.fragment.commingSoon.viewModel.ComingSoonViewModel
 import com.net.pvr1.ui.movieDetails.comingSoonDetails.ComingSoonDetailsActivity
 import com.net.pvr1.ui.player.PlayerActivity
@@ -54,11 +55,12 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
     }
 
     private fun movedNext() {
-//        val search = this.findViewById(R.id.searchBtn) as ImageView
-//        search.setOnClickListener {
-//            val intent = Intent(this, SearchComingSoonActivity::class.java)
-//            startActivity(intent)
-//        }
+        binding?.imageView167?.setOnClickListener {
+            val intent = Intent(requireActivity(), CinemaSearchActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
     }
 
     private fun comingSoonApi() {

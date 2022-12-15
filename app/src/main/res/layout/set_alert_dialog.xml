@@ -35,6 +35,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.cardview.widget.CardView
+            android:visibility="gone"
             android:id="@+id/cardView12"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

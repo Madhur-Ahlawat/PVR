@@ -29,8 +29,9 @@ class SearchHomeMovieAdapter(
     override fun onBindViewHolder(holder: MyViewHolderNowShowing, position: Int) {
         val selectCityItemList = selectCityList[position]
         holder.title.text = selectCityItemList.n
-        holder.language.text = selectCityItemList.length + " | " + selectCityItemList.genre
-        holder.timeCategory.text = selectCityItemList.n
+        holder.timeCategory.text = selectCityItemList.length + " | " + selectCityItemList.genre
+        holder.language.text = selectCityItemList.lng
+
         //Image
         Glide.with(context)
             .load(selectCityItemList.im)
@@ -57,4 +58,5 @@ class SearchHomeMovieAdapter(
     interface RecycleViewItemClickListenerCity {
         fun onSearchMovie(selectCityList: HomeSearchResponse.Output.M)
     }
+
 }
