@@ -137,4 +137,5 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
             editor?.commit()
         }
     }
+
 }

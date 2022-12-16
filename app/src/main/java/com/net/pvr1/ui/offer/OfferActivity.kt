@@ -20,6 +20,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class OfferActivity : AppCompatActivity(){
+
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityOfferBinding? = null

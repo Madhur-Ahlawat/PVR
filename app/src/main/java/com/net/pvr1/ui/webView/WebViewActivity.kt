@@ -6,6 +6,7 @@ import android.net.http.SslError
 import android.os.Bundle
 import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
+import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityWebViewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,9 +26,19 @@ class WebViewActivity : AppCompatActivity() {
         title = intent.getStringExtra("title").toString()
         get = intent.getStringExtra("getUrl").toString()
         println("webUrl--->${get}")
-        binding?.include3?.textView108?.text= title
         movedNext()
-        loadWebData(get)
+
+        if (from == "merchandise"){
+            binding?.include3?.textView108?.text= title
+            loadWebData(get)
+        }else if (from == "PVRcare"){
+            binding?.include3?.textView108?.text= title
+            loadWebData(get)
+        }else{
+            binding?.include3?.textView108?.text= title
+            loadWebData(get)
+        }
+
     }
 
     private fun movedNext() {
@@ -44,11 +55,7 @@ class WebViewActivity : AppCompatActivity() {
             webSettings?.javaScriptEnabled = true
             webSettings?.domStorageEnabled = true
             binding?.webView?.clearFormData()
-            binding?.webView?.addJavascriptInterface(
-                JavaScriptInterface(
-                    this
-                ), "Android"
-            )
+            binding?.webView?.addJavascriptInterface(JavaScriptInterface(this), "Android")
         } catch (exception: Exception) {
             println("exception--->${exception.message}")
             exception.printStackTrace()

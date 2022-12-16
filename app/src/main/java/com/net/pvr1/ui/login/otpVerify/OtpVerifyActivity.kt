@@ -56,6 +56,7 @@ class OtpVerifyActivity : AppCompatActivity() {
         startSmsUserConsent()
         movedNext()
         resendOtp()
+
     }
 
     //For Auto Read otp

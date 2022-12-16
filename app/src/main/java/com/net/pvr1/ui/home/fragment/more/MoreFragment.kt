@@ -77,6 +77,25 @@ class MoreFragment : Fragment() {
         binding?.logout?.constraintLayout78?.setOnClickListener {
             val intent = Intent(requireContext(), OfferActivity::class.java)
             startActivity(intent)
+
+       // Merchandise
+            binding?.logout?.constraintLayout76?.setOnClickListener {
+                val intent1 = Intent(requireContext(), WebViewActivity::class.java)
+                intent1.putExtra("from", "merchandise")
+                intent1.putExtra("title", "Merchandise")
+                intent1.putExtra("getUrl", "https://pvr.macmerise.com/?user_agent=pvr")
+                startActivity(intent1)
+            }
+
+            // PVR care
+            binding?.logout?.constraintLayout75?.setOnClickListener {
+                val intent1 = Intent(requireContext(), WebViewActivity::class.java)
+                intent1.putExtra("from", "PVRcare")
+                intent1.putExtra("title", "PVR Care")
+                intent1.putExtra("getUrl", "https://www.pvrcinemas.com/pvrstatic/pvr-care/index.html")
+                startActivity(intent1)
+            }
+
         }
 
 //        //GiftCard
@@ -143,6 +162,7 @@ class MoreFragment : Fragment() {
                 val intent = Intent(requireActivity(), LoginActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
+                activity?.finish()
             },
             negativeClick = {})
         dialog.show()
