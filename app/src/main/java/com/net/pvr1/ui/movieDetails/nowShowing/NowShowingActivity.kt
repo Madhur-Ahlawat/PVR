@@ -135,8 +135,11 @@ class NowShowingActivity : AppCompatActivity(), CastAdapter.RecycleViewItemClick
             .lessLabelColor(Color.BLACK).labelUnderLine(false).expandAnimation(true).build()
 
         binding?.textView66?.text = output.p
+        if (binding?.textView66?.lineCount!! > 2) {
+            Constant().makeTextViewResizable(binding?.textView66!!, 4, "Read More", true)
+        }
 //        binding?.textView66?.let { Constant().makeTextViewResizable(it, 4, "..read more", true,this) }
-        readMoreOption.addReadMoreTo(binding?.textView66, binding?.textView66?.text)
+//        readMoreOption.addReadMoreTo(binding?.textView66, binding?.textView66?.text)
 
         //FilmType
         binding?.textView75?.text = output.tag

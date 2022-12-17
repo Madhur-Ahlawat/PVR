@@ -113,7 +113,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.setAlert.SetAlertActivity"
+            android:name=".ui.movieDetails.comingSoonDetails.setAlert.SetAlertActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

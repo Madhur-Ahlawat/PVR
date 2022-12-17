@@ -24,7 +24,6 @@ import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
 import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingActivity
 import com.net.pvr1.ui.player.PlayerActivity
-import com.net.pvr1.ui.search.searchCinema.SearchCinemaActivity
 import com.net.pvr1.ui.search.searchHome.SearchHomeActivity
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.PlaceHolder
@@ -64,7 +63,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         (requireActivity().findViewById(R.id.searchCinema) as ImageView).hide()
         (requireActivity().findViewById(R.id.searchBtn) as ImageView).setOnClickListener {
             if (isAdded) {
-
                 val intent = Intent(requireActivity(), SearchHomeActivity::class.java)
                 startActivity(intent)
             }
@@ -87,23 +85,25 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     private fun movedNext() {
-
         binding?.txtTrailers?.setOnClickListener {
             binding?.txtTrailers?.setTextColor(
                 ContextCompat.getColor(
                     requireActivity(), R.color.black
                 )
             )
+
             binding?.txtMusic?.setTextColor(
                 ContextCompat.getColor(
                     requireActivity(), R.color.textColorGray
                 )
             )
+
             binding?.view33?.setBackgroundColor(
                 ContextCompat.getColor(
                     requireContext(), R.color.yellow
                 )
             )
+
             binding?.view34?.setBackgroundColor(
                 ContextCompat.getColor(
                     requireContext(), R.color.gray
@@ -229,6 +229,31 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         val adapterTrailer = HomeTrailerAdapter(requireActivity(), output.mv, this)
         binding?.recyclerTrailer?.layoutManager = gridLayoutTrailer
         binding?.recyclerTrailer?.adapter = adapterTrailer
+
+//        binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
+//        filter_fab.setOnClickListener(View.OnClickListener {
+//            if (output != null) {
+//                val gFilter = GenericFilterHome()
+//                val filterPoints = HashMap<String, ArrayList<String>>()
+//                filterPoints[PCConstants.FilterType.LANG_FILTER] = output.getMlng()
+//                filterPoints[PCConstants.FilterType.GENERE_FILTER] = output.getMgener()
+//                filterPoints[PCConstants.FilterType.FORMAT_FILTER] = ArrayList()
+//                filterPoints[PCConstants.FilterType.ACCESSABILITY_FILTER] =
+//                    ArrayList(Arrays.asList(*arrayOf("Subtitle")))
+//                filterPoints[PCConstants.FilterType.PRICE_FILTER] = ArrayList()
+//                filterPoints[PCConstants.FilterType.SHOWTIME_FILTER] = ArrayList()
+//                filterPoints[PCConstants.FilterType.CINEMA_FORMAT] = ArrayList()
+//                filterPoints[PCConstants.FilterType.SPECIAL_SHOW] = ArrayList()
+//                gFilter.openFilters(
+//                    context,
+//                    "Home",
+//                    onButtonSelected,
+//                    appliedFilterType,
+//                    appliedFilterItem,
+//                    filterPoints
+//                )
+//            }
+//        })
 
     }
 

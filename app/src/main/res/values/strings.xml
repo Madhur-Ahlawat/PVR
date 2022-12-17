@@ -436,4 +436,7 @@
     <string name="cardCvv">Enter card Cvv</string>
     <string name="login">Login</string>
     <string name="already_subscribed">Already Subscribed</string>
+    <string name="apply_filter">Apply Filter</string>
+    <string name="reset">Reset</string>
+    <string name="accessibility">Accessibility</string>
 </resources>
