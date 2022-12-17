@@ -303,6 +303,16 @@
         <meta-data
             android:name="com.phonepe.android.sdk.Debuggable"
             android:value="true" />
+
+        <activity
+            android:name=".ui.payment.paytmpostpaid.PaytmPostPaidActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.payment.webView.PaytmWebActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

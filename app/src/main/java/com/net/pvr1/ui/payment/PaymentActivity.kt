@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.os.Parcelable
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,11 +14,13 @@ import com.net.pvr1.databinding.ActivityPaymentBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.CartModel
+import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.payment.adapter.CouponAdapter
 import com.net.pvr1.ui.payment.adapter.PaymentAdapter
 import com.net.pvr1.ui.payment.adapter.PaymentExclusiveAdapter
 import com.net.pvr1.ui.payment.cardDetails.CardDetailsActivity
 import com.net.pvr1.ui.payment.mCoupon.MCouponActivity
+import com.net.pvr1.ui.payment.paytmpostpaid.PaytmPostPaidActivity
 import com.net.pvr1.ui.payment.promoCode.PromoCodeActivity
 import com.net.pvr1.ui.payment.response.CouponResponse
 import com.net.pvr1.ui.payment.response.PaymentResponse
@@ -31,8 +34,12 @@ import com.net.pvr1.utils.Constant.Companion.BOOK_TYPE
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr1.utils.Constant.Companion.CREDIT_CARD
 import com.net.pvr1.utils.Constant.Companion.DEBIT_CARD
+import com.net.pvr1.utils.Constant.Companion.GYFTR
 import com.net.pvr1.utils.Constant.Companion.NET_BANKING
+import com.net.pvr1.utils.Constant.Companion.PAYTMPOSTPAID
+import com.net.pvr1.utils.Constant.Companion.PAYTM_WALLET
 import com.net.pvr1.utils.Constant.Companion.PHONE_PE
+import com.net.pvr1.utils.Constant.Companion.PROMOCODE
 import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
 import com.net.pvr1.utils.Constant.Companion.UPI
 import com.phonepe.intent.sdk.api.PhonePe
@@ -57,6 +64,10 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
     private val UPI_PAYMENT = 0
     private var upi_count = 0
     private var upi_loader = false
+
+    companion object{
+        var isPromocodeApplied = false
+    }
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -120,6 +131,9 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         upiStatus()
         phonePeHmac()
         phonePeStatus()
+        binding?.include26?.imageView58?.setOnClickListener {
+            onBackPressed()
+        }
     }
 
 
@@ -303,6 +317,53 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
             startActivity(intent)
         } else if (paymentItem.id == PHONE_PE) {
             authViewModel.phonepeHMAC(preferences.getUserId(), BOOKING_ID, BOOK_TYPE,TRANSACTION_ID)
+        }else if (paymentItem.id == PAYTMPOSTPAID) {
+            val intent = Intent(this, PaytmPostPaidActivity::class.java)
+            intent.putExtra("type", "PP")
+            intent.putExtra("ca_a", paymentItem.ca_a)
+            intent.putExtra("ca_t", paymentItem.ca_t)
+            intent.putExtra("title", paymentItem.name)
+            intent.putExtra("paidAmount", paidAmount)
+            startActivity(intent)
+        }else if (paymentItem.id == PAYTM_WALLET) {
+            val intent = Intent(this, PaytmPostPaidActivity::class.java)
+            intent.putExtra("type", "P")
+            intent.putExtra("ca_a", paymentItem.ca_a)
+            intent.putExtra("ca_t", paymentItem.ca_t)
+            intent.putExtra("title", paymentItem.name)
+            intent.putExtra("paidAmount", paidAmount)
+            startActivity(intent)
+        }else if (paymentItem.id == GYFTR) {
+            val intent = Intent(this, PromoCodeActivity::class.java)
+            intent.putExtra("type", "GYFTR")
+            intent.putExtra("pid", paymentItem.id)
+            intent.putExtra("ca_a", paymentItem.ca_a)
+            intent.putExtra("ca_t", paymentItem.ca_t)
+            intent.putExtra("title", paymentItem.name)
+            intent.putExtra("paidAmount", paidAmount)
+            startActivity(intent)
+        }else if (paymentItem.id == PROMOCODE) {
+            val intent = Intent(this, PromoCodeActivity::class.java)
+            intent.putExtra("type", "PROMO")
+            intent.putExtra("pid", paymentItem.id)
+            intent.putExtra("ca_a", paymentItem.ca_a)
+            intent.putExtra("ca_t", paymentItem.ca_t)
+            intent.putExtra("title", paymentItem.name)
+            intent.putExtra("paidAmount", paidAmount)
+
+            //intent.putExtra(PCConstants.BI_PT,bi_pt);
+            try {
+                if (paymentItem?.promomap != null) {
+                    val bundle = Bundle()
+                    bundle.putParcelableArrayList(
+                        "Promomaplist",
+                        paymentItem.promomap as ArrayList<out Parcelable?>
+                    )
+                    intent.putExtras(bundle)
+                }
+            } catch (e: Exception) {
+            }
+            startActivity(intent)
         }
     }
 
@@ -645,6 +706,23 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         }
     }
 
+    override fun onBackPressed() {
+        val dialog = OptionDialog(this,
+            R.mipmap.ic_launcher,
+            R.string.app_name,
+            "Do you want to end the session?",
+            positiveBtnText = R.string.ok,
+            negativeBtnText = R.string.no,
+            positiveClick = {
+                launchActivity(
+                    HomeActivity::class.java,
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                )
+            },
+            negativeClick = {
+            })
+        dialog.show()
+    }
 
 
 }

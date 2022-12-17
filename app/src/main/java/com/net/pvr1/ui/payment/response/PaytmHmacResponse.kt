@@ -10,6 +10,9 @@ data class PaytmHmacResponse(
 ):java.io.Serializable{
     data class Output(
         val amount: String,
+        val bal: String,
+        val industry_type: String,
+        val paytm_website: String,
         val bookid: String,
         val callingurl: String,
         val cardlist: List<Any>,
@@ -20,12 +23,19 @@ data class PaytmHmacResponse(
         val hmackey: String,
         val mcc: String,
         val mid: String,
+        val bookingid: String,
+        val cust_id: String,
         val nblist: Map<String,String>,
         val subcriptionid: String,
         val timer: Int,
         val txndate: Any,
         val vpa: String,
         val vpaname: String,
+        val p: Boolean,
+        val creditCardOnly: Boolean,
+        val di: String,
+        val txt: String,
+        val bin: String,
         val website: String
     ):java.io.Serializable{
         data class Nblist(

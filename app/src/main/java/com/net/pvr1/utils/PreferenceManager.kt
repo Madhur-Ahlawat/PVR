@@ -120,6 +120,20 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
         return prefs.getString(LATITUDE, "").toString()
     }
 
+    fun saveString(key:String,bal :String) {
+        editor = prefs.edit()
+        editor?.putString(key, bal).toString()
+        editor?.apply()
+
+    }
+
+    fun saveBoolean(key:String,bal :Boolean) {
+        editor = prefs.edit()
+        editor?.putBoolean(key, bal).toString()
+        editor?.apply()
+
+    }
+
     //Lang
     fun saveLongitudeData(lang: String) {
         editor = prefs.edit()

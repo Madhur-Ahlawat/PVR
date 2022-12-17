@@ -40,11 +40,6 @@
         android:id="@+id/recyclerCinema"
         android:layout_width="0dp"
         android:layout_height="0dp"
-<<<<<<< HEAD
-=======
-        tools:listitem="@layout/cinema_item"
-        tools:itemCount="3"
->>>>>>> master
         app:layout_constraintBottom_toBottomOf="@+id/view13"
         app:layout_constraintEnd_toEndOf="@+id/view13"
         app:layout_constraintStart_toStartOf="@+id/view13"

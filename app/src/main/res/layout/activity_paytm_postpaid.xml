@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+    <RelativeLayout
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="50dp"
+        android:id="@+id/erroLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height" />
+
+    <TextView
+        android:id="@+id/msg"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/dimen_15dp"
+        android:textSize="@dimen/dim_h19"
+        android:layout_below="@+id/header"
+        android:textColor="@color/text_color_default"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_25dp"
+        android:layout_marginBottom="@dimen/dimen_15dp"
+        android:textStyle="bold"/>
+
+    <RelativeLayout
+        android:id="@+id/otp_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/msg"
+        android:visibility="visible">
+
+
+        <LinearLayout
+            android:id="@+id/lin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="@dimen/dimen_5dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/gfgSampleField"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:background="@null"
+                android:text="a"
+                android:textColor="@color/white">
+                <requestFocus />
+            </EditText>
+
+            <EditText
+                android:id="@+id/et_otp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:layout_weight="2"
+                android:background="@drawable/edittext_postpaid_selector"
+                android:elevation="@dimen/dimen_2dp"
+                android:hint="OTP"
+                android:inputType="numberPassword"
+                android:maxLength="6"
+                android:padding="8dp"
+                android:textColorHint="@color/gray_1"
+                android:textSize="@dimen/dim_h3" />
+
+            <TextView
+                android:id="@+id/resendOTP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dim_h10"
+                android:background="@null"
+                android:text="@string/resend_otp_post_paid"
+                android:textColor="@color/text_color_default"
+                android:textSize="@dimen/dim_h7" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/otp_enter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lin"
+            android:layout_marginLeft="15dp"
+            android:text="@string/post_paid_otp_enter" />
+
+
+        <TextView
+            android:id="@+id/gateway_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/otp_enter"
+            android:layout_marginLeft="@dimen/dimen_24dp"
+            android:layout_marginTop="@dimen/dimen_55dp"
+            android:layout_marginRight="@dimen/dimen_24dp"
+            android:textColor="@color/text_color_default"
+            android:textSize="@dimen/dim_h8"
+            android:textStyle="bold" />
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/balanceView"
+        android:visibility="gone"
+        android:layout_below="@+id/msg"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+        <ImageView
+            android:layout_width="140dp"
+            android:padding="8dp"
+            android:id="@+id/title"
+            android:adjustViewBounds="true"
+            android:layout_gravity="center_vertical|left"
+            android:src="@drawable/paytm"
+            android:layout_height="80dp"
+            android:layout_alignParentLeft="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:padding="8dp"
+            android:id="@+id/balance"
+            android:layout_gravity="center_vertical|right"
+            android:drawableRight="@drawable/check"
+            android:textSize="@dimen/dim_h3"
+            android:gravity="center"
+            android:drawablePadding="5dp"
+            android:textColor="@color/text_color_default"
+            android:text="Rs. 200"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_25dp"/>
+        </RelativeLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/pvr_yellow"
+            android:text="ADD MONEY"
+            android:id="@+id/add_pay"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dim_h2"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/insuficient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/sub_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="30dp"
+        android:text="Insufficient Balance, Please add money. "
+        android:textColor="@color/text_color_default"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/sub_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/yellow_button_selector"
+        android:text="@string/submit"
+        android:textColor="@color/text_color_default"
+        android:textSize="@dimen/dim_h2" />
+
+</RelativeLayout>

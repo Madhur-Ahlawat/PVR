@@ -1409,5 +1409,252 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
     }
 
+    /**    Paytm PostPaid Api        **/
+
+// Paytm PostPaid Hmac
+    private val postpaidHmacLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val postpaidHmacResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = postpaidHmacLiveData
+
+    suspend fun postpaidHmac(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String
+    ) {
+        postpaidHmacLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.postPaidHmac(
+            userid, bookingid, booktype, transid, "false","false",Constant.version, Constant.platform
+        )
+        postpaidHmacResponse(response)
+    }
+
+    private fun postpaidHmacResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            postpaidHmacLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            postpaidHmacLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            postpaidHmacLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    // Paytm PostPaid PAY
+    private val postpaidPAYLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val postpaidPAYResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = postpaidPAYLiveData
+
+    suspend fun postpaidPay(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String
+    ) {
+        postpaidPAYLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.postPaidPay(
+            userid, bookingid, booktype, transid,"false","false", Constant.version, Constant.platform
+        )
+        postpaidPAYResponse(response)
+    }
+
+    private fun postpaidPAYResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            postpaidPAYLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            postpaidPAYLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            postpaidPAYLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    // Paytm PostPaid SEND OTP
+    private val postpaidSendOTPLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val postpaidSendOTPResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = postpaidSendOTPLiveData
+
+    suspend fun postPaidSendOTP(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String
+    ) {
+        postpaidSendOTPLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.postPaidSendOTP(
+            userid, bookingid, booktype, transid, "false",Constant.version, Constant.platform
+        )
+        postpaidSendOTPResponse(response)
+    }
+
+    private fun postpaidSendOTPResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            postpaidSendOTPLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            postpaidSendOTPLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            postpaidSendOTPLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    // Paytm PostPaid VERIFY OTP
+    private val postpaidVerifyOTPLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val postpaidVerifyOTPResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = postpaidVerifyOTPLiveData
+
+    suspend fun postPaidVerifYOTP(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String,
+        otp: String
+    ) {
+        postpaidVerifyOTPLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.postPaidVerifYOTP(
+            userid, bookingid, booktype, transid,otp,"false", Constant.version, Constant.platform
+        )
+        postpaidVerifyOTPResponse(response)
+    }
+
+    private fun postpaidVerifyOTPResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            postpaidVerifyOTPLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            postpaidVerifyOTPLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            postpaidVerifyOTPLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    // Paytm PostPaid MakePayment
+    private val postpaidMakePaymentLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val postpaidMakePaymentResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = postpaidMakePaymentLiveData
+
+    suspend fun postPaidMakePayment(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String
+    ) {
+        postpaidMakePaymentLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.postPaidMakePayment(
+            userid, bookingid, booktype, transid, Constant.version, Constant.platform
+        )
+        postpaidMakePaymentResponse(response)
+    }
+
+    private fun postpaidMakePaymentResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            postpaidMakePaymentLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            postpaidMakePaymentLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            postpaidMakePaymentLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    // Paytm paytmHmacOld
+    private val paytmHmacOldLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val paytmHmacOldResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = paytmHmacOldLiveData
+
+    suspend fun paytmHmacOld(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String
+    ) {
+        paytmHmacOldLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.paytmHmacOld(
+            userid, bookingid, booktype, transid, Constant.version, Constant.platform
+        )
+        paytmHmacOldResponse(response)
+    }
+
+    private fun paytmHmacOldResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            paytmHmacOldLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            paytmHmacOldLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            paytmHmacOldLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    /*******  promoCode      ****************/
+
+
+    private val promoCodeLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val promoCodeResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = promoCodeLiveData
+
+    suspend fun promoCode(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String,
+        promocode: String
+    ) {
+        promoCodeLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.promoCode(
+            userid, bookingid, booktype, transid,promocode, Constant.version, Constant.platform
+        )
+        promoCodeResponse(response)
+    }
+
+    private fun promoCodeResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            promoCodeLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            promoCodeLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            promoCodeLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+
+    /*******  promoGyft      ****************/
+
+
+    private val promoGyftLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val promoGyftResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = promoGyftLiveData
+
+    suspend fun promoGyft(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String,
+        promocode: String
+    ) {
+        promoGyftLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.promoGyft(
+            userid, bookingid, booktype, transid,promocode, Constant.version, Constant.platform
+        )
+        promoGyftResponse(response)
+    }
+
+    private fun promoGyftResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            promoGyftLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            promoGyftLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            promoGyftLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
 
 }

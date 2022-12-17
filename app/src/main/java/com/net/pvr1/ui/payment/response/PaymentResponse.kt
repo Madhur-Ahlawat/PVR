@@ -36,7 +36,7 @@ data class PaymentResponse(
             val id: String,
             val imageUrl: String,
             val name: String,
-            val promomap: Any,
+            val promomap: ArrayList<com.net.pvr1.ui.payment.response.Promomap>,
             val pty: String,
             val scheme: String,
             val tc: String

@@ -3,6 +3,7 @@ package com.net.pvr1.utils
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -28,5 +29,13 @@ fun View.hide() {
 
 fun View.invisible() {
     this.visibility = View.INVISIBLE
+}
+
+fun Context.launchActivity(cls: Class<*>, flags: Int) {
+    val intent = Intent(this, cls).apply {
+        addFlags(flags)
+    }
+    this.startActivity(intent)
+
 }
 

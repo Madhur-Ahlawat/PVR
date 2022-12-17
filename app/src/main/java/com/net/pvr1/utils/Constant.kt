@@ -83,13 +83,26 @@ class Constant {
         var PlaceHolder:HomeResponse.Output? = null
         var DECIFORMAT = DecimalFormat("0.000")
 
+        // DisCount for payment
+
+        var discount_val = "0.0"
+        var discount_txt = ""
+
 
         // Payment Ids
         var CREDIT_CARD = "116"
         var DEBIT_CARD = "117"
         var NET_BANKING = "118"
+        var PAYTMPOSTPAID = "124"
+        var PAYTM_WALLET = "102"
+        var ZAGGLE = "126"
         var UPI = "119"
         var PHONE_PE = "113"
+
+        // OFFERS
+
+        var PROMOCODE = "o104"
+        var GYFTR = "o108"
 
     }
 
@@ -339,6 +352,94 @@ class Constant {
             const val ACCESSABILITY_FILTER = "ACCESSABILITY_FILTER"
             const val CINEMA_FORMAT = "CINEMA_FORMAT"
             const val SPECIAL_SHOW = "SPECIAL_SHOW"
+        }
+    }
+
+    interface SharedPreference {
+        companion object {
+            const val WALK_THROUGH = "walk"
+            const val USER_NAME = "user_name"
+            const val USER_TOKEN = "user_token"
+            const val CHECK_BOX = "status"
+            const val FACEBOOK_USER_ID = "facebook_user_id"
+            const val USER_GENDER = "user_gender"
+            const val USER_AGE = "user_age"
+            const val AUTH_TOKEN = "auth_token"
+            const val EXPIRY_TIME = "expiry_time"
+            const val SESSION_ID = "session_id"
+            const val USER_ID = "user_id"
+            const val SHOW_PRESS = "press"
+            const val USER_IMAGE = "user_image"
+            const val USER_NUMBER = "user_number"
+            const val API_CALL = "api_call"
+            const val API_CALL2 = "api_call2"
+            const val BOOKING_FIRST_INDEX = "booking_first_index"
+            const val LOYALITY_POINT = "loyality_point"
+            const val pcities = "pcities"
+            const val SUBSCRIPTION_STATUS = "subscription_status"
+            const val NOT_SUBSCRIBED = "NOT SUBSCRIBED"
+            const val ACTIVE = "ACTIVE"
+            const val INACTIVE = "INACTIVE"
+            const val IS_LOGIN = "is_login"
+            const val IS_FOOD = "is_food"
+            const val IS_WHATSAPP = "is_whatsapp"
+            const val CORPORATE_USER = "corporate_user"
+            const val DOB = "dob"
+            const val GENDER = "gender"
+            const val LOYALITY_STATUS = "loyality_status"
+            const val LOYALITY_CARD = "loyality_card"
+            const val LOYALITY_CANCEL = "loyality_cancel"
+            const val USER_EMAIL = "user_email"
+            const val SAVED_ADDRESS = "saved_address"
+            const val SAVED_LATITUDE = "lat"
+            const val SAVED_LONGITUDE = "lng"
+            const val ADDRESS_STATUS = "address_status"
+            const val PREFLANG = "preflang"
+            const val USER_CARD = "user_card"
+            const val IS_REF = "is_ref"
+            const val IS_HM = "is_hm"
+            const val IS_HF = "is_hf"
+            const val IS_WF = "is_wf"
+            const val IS_HL = "is_HL"
+            const val IS_LY = "is_LY"
+            const val LSM = "lsm"
+            const val FEEDBACK = "feedback"
+            const val CINEMA_FEEDBACK = "cinema_feedback"
+            const val LS = "ls"
+            const val RM = "rm"
+            const val DONATION = "donation"
+            const val SVM = "svm"
+            const val Pvr_tc = "Pvr_tc"
+            const val Pvr_New_Tag = "Pvr_New_Tag"
+            const val PS = "ps"
+            const val MLIB = "mlib"
+            const val RB = "rb"
+            const val RBC = "rbc"
+            const val NT = "nt"
+            const val NTBT = "ntbt"
+            const val AR = "app_rate"
+            const val AU = "au"
+            const val SUBS_OPEN = "subs_open"
+            const val USEOFFER = "useroffer"
+            const val APPLYUSEOFFER = "applyuseroffer"
+            const val SELECTED_CITY_ID = "selectedCityId"
+            const val SELECTED_CITY_NAME = "selectedCityName"
+            const val TEMP_SELECTED_CITY_NAME = "tempSelectedCityName"
+            const val TEMP_SELECTED_CITY_ID = "tempSelectedCityId"
+            const val LOCATION_CHANGED = "locationChange"
+            const val IMAGE_COUNT = "count"
+            const val REDEEMED_COUNT = "redeemed_count"
+            const val REDEEMED_SET = "redeemed_set"
+            const val GCM_TOKEN = "gcm_token"
+            const val PAYMENT_OPTION = "payment"
+            const val LOGIN_TYPE = "loginType"
+            const val LAT = "lat"
+            const val LNG = "lng"
+            const val doClear = "doclear"
+            const val IS_ONBOARDING = "is_onboarding"
+            const val Promo_Bin_Series = "promoBinSeries"
+            const val Has_Bin_Series = "hasBinSeries"
+            const val PROMOCODE = "promocode"
         }
     }
 

@@ -72,11 +72,7 @@
                     android:id="@+id/imageView41"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-<<<<<<< HEAD
                     android:layout_marginStart="24dp"
-=======
-                    android:layout_marginStart="17dp"
->>>>>>> master
                     android:layout_marginTop="8dp"
                     android:padding="@dimen/dimen_8dp"
                     app:layout_constraintStart_toStartOf="@+id/imageView40"
@@ -279,12 +275,7 @@
                             android:textSize="@dimen/dimen_12sp"
                             app:layout_constraintBottom_toBottomOf="@+id/view64"
                             app:layout_constraintEnd_toEndOf="parent"
-<<<<<<< HEAD
-                            app:layout_constraintTop_toTopOf="@+id/view64"
-                            android:text="@string/directions" />
-=======
                             app:layout_constraintTop_toTopOf="@+id/view64" />
->>>>>>> master
 
                     </LinearLayout>
 
@@ -335,7 +326,6 @@
                 android:background="@color/background_color"
                 android:paddingTop="@dimen/padding_10"
                 android:paddingBottom="@dimen/dimen_8dp"
-                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/view57"
                 app:layout_constraintStart_toStartOf="@+id/constraintLayout15"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout15">
@@ -359,15 +349,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_10dp"
                 android:background="@drawable/line_seprator"
-<<<<<<< HEAD
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout15"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-=======
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout15" />
->>>>>>> master
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout17"

@@ -561,4 +561,106 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<UPIStatusResponse>
 
+
+/**    Paytm PostPaid Api        **/
+
+@POST("payment/paytmpp/hmac")
+suspend fun postPaidHmac(
+    @Query("userid") userid: String,
+    @Query("bookingid") bookingid: String,
+    @Query("booktype") booktype: String,
+    @Query("transid") transid: String,
+    @Query("unpaid") unpaid: String,
+    @Query("spi") spi: String,
+    @Query("av") version: String,
+    @Query("pt") platform: String
+): Response<PaytmHmacResponse>
+
+
+    @POST("payment/paytmpp/pay")
+    suspend fun postPaidPay(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("unpaid") unpaid: String,
+        @Query("isSpi") spi: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
+
+
+    @POST("payment/paytmpp/sendotp")
+    suspend fun postPaidSendOTP(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("spi") spi: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
+
+
+    @POST("payment/paytmpp/verifyotp")
+    suspend fun postPaidVerifYOTP(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("otp") otp: String,
+        @Query("spi") spi: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
+
+
+    @POST("payment/paytm/withdraw")
+    suspend fun postPaidMakePayment(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
+
+
+    @POST("payment/paytm/hmac")
+    suspend fun paytmHmacOld(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
+
+    /***   PROMO CODE       *****/
+
+    @POST("payment/promocode")
+    suspend fun promoCode(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("promocode") promocode: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
+
+
+    /***   GYFTER CODE       *****/
+
+    @POST("payment/gyft")
+    suspend fun promoGyft(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("promocode") promocode: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
+
 }

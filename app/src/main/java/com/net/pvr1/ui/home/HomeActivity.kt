@@ -33,12 +33,7 @@ import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeHomeDialogAdapte
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.ui.offer.response.OfferResponse
-<<<<<<< HEAD
 import com.net.pvr1.ui.search.searchCinema.SearchCinemaActivity
-import com.net.pvr1.ui.selectCity.SelectCityActivity
-=======
-import com.net.pvr1.ui.search.searchHome.SearchHomeActivity
->>>>>>> master
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.PrivilegeHomeResponseConst
 import dagger.hilt.android.AndroidEntryPoint

@@ -2,6 +2,7 @@ package com.net.pvr1.ui.cinemaSession
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -53,11 +54,8 @@ class CinemaSessionActivity : AppCompatActivity(),
             onBackPressed()
         }
 
-<<<<<<< HEAD
-=======
-        cinemaId=intent.getStringExtra("cid").toString()
+        cinemaId = intent.getStringExtra("cid").toString()
         println("cinemaId---->${cinemaId}")
->>>>>>> master
         if (intent.getStringExtra("addressCinema") == "yes") {
             authViewModel.cinemaSession(
                 intent.getStringExtra("cityName").toString(),
@@ -200,7 +198,6 @@ class CinemaSessionActivity : AppCompatActivity(),
 
     @SuppressLint("SetTextI18n")
     private fun retrieveData(output: CinemaSessionResponse.Output) {
-<<<<<<< HEAD
         //title
         binding?.textView84?.text = output.cn
         //address
@@ -236,12 +233,11 @@ class CinemaSessionActivity : AppCompatActivity(),
 
         //recycler Cinemas
         val gridLayout3 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-        val cinemaSessionCinParentAdapter = CinemaSessionCinParentAdapter(output.childs, this, this)
+        val cinemaSessionCinParentAdapter = CinemaSessionCinParentAdapter(output.childs, this, this,cinemaId)
         binding?.recyclerView15?.layoutManager = gridLayout3
         binding?.recyclerView15?.adapter = cinemaSessionCinParentAdapter
         binding?.textView99?.text = output.cn
 
-=======
         if (openTime == 0) {
             //title
             binding?.textView84?.text = output.cn
@@ -342,7 +338,6 @@ class CinemaSessionActivity : AppCompatActivity(),
             binding?.recyclerView15?.adapter = cinemaSessionCinParentAdapter
             binding?.textView99?.text = output.cn
         }
->>>>>>> master
     }
 
     override fun dateClick(comingSoonItem: CinemaSessionResponse.Output.Bd) {
@@ -423,15 +418,12 @@ class CinemaSessionActivity : AppCompatActivity(),
     }
 
     override fun nearTheaterDirectionClick(comingSoonItem: CinemaNearTheaterResponse.Output.C) {
-<<<<<<< HEAD
         val strUri =
             "http://maps.google.com/maps?q=loc:" + comingSoonItem.lat + "," + comingSoonItem.lang + " (" + "Label which you want" + ")"
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(strUri))
         intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity")
         startActivity(intent)
-=======
         Constant().openMap(this, comingSoonItem.lat, comingSoonItem.lang)
->>>>>>> master
     }
 
 }
