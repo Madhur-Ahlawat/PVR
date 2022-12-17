@@ -248,8 +248,8 @@
     <View
         android:id="@+id/view156"
         android:layout_width="wrap_content"
-        android:layout_height="4dp"
-        android:background="@color/background_color"
+        android:layout_height="@dimen/dimen_10dp"
+        android:background="@drawable/line_seprator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout74" />

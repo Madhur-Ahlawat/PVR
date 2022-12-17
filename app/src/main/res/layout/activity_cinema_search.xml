@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/padding_10"
-    tools:context=".ui.search.searchCinema.SearchCinemaActivity">
+    tools:context=".ui.home.fragment.commingSoon.search.CinemaSearchActivity">
 
     <View
         android:id="@+id/view38"

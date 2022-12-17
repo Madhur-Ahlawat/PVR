@@ -260,7 +260,6 @@ class Constant {
     }
 
     var youtubeVideoCode: String? = null
-
     fun getVideoCode(youtubeUrl: String) {
         val videoCode: Array<String>
         try {
@@ -269,9 +268,10 @@ class Constant {
             } else {
                 youtubeUrl.split("list=").toTypedArray()
             }
-            youtubeVideoCode = videoCode[1]
+         val youtubeVideoCode = videoCode[1]
+            println("videoCodeConstant--->${youtubeVideoCode}---->${videoCode[1]}")
         } catch (e: ArrayIndexOutOfBoundsException) {
-
+            e.printStackTrace()
         }
     }
 

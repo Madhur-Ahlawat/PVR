@@ -4,10 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.bumptech.glide.Glide
-import com.net.pvr1.BuildConfig
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityComingSoonDetailsBinding
 import com.net.pvr1.ui.bookingSession.BookingActivity
@@ -19,6 +19,7 @@ import com.net.pvr1.ui.movieDetails.nowShowing.adapter.*
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.ui.player.PlayerActivity
 import com.net.pvr1.ui.setAlert.SetAlertActivity
+import com.net.pvr1.ui.watchList.WatchListActivity
 import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -37,22 +38,24 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
     lateinit var preferences: PreferenceManager
     private var binding: ActivityComingSoonDetailsBinding? = null
     private var loader: LoaderDialog? = null
+    private  var cinemaId=""
     private val authViewModel: ComingSoonDetailsViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityComingSoonDetailsBinding.inflate(layoutInflater, null, false)
         setContentView(binding?.root)
-        movieDetails()
-        movieAlert()
 
         binding?.include?.textView5?.text = resources.getString(R.string.book_now)
 
         authViewModel.movieDetails(
             "UP",
-            preferences.getUserId().toString(),
-            "Delhi-NCR",
+            preferences.getUserId(),
+            preferences.getCityName(),
             intent.getStringExtra("mid").toString()
         )
+        cinemaId= intent.getStringExtra("mid").toString()
+        movieDetails()
+        movieAlert()
     }
 
 
@@ -112,7 +115,7 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-//                        retrieveData(it.data.output)
+                    retrieveAlertData(it.data.output)
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -150,6 +153,39 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
 
     }
 
+
+    private fun retrieveAlertData(output: MovieDetailsResponse.Output) {
+        binding?.subscribe?.setOnClickListener {
+            val intent = Intent(this@ComingSoonDetailsActivity, WatchListActivity::class.java)
+            startActivity(intent)
+        }
+
+        //movie Alert
+        binding?.constraintLayout89?.setOnClickListener {
+            val intent = Intent(this@ComingSoonDetailsActivity, SetAlertActivity::class.java)
+            intent.putExtra("cid",cinemaId)
+            startActivity(intent)
+        }
+
+        if (output!=null) {
+            binding?.wishlist?.show()
+            binding?.ivWishlist?.show()
+            binding?.ivWishlist?.show()
+            binding?.constraintLayout89?.hide()
+            binding?.subscribe?.show()
+            binding?.ivWishlist?.background =
+                ContextCompat.getDrawable(this, R.drawable.ic_wishlist_yellow)
+        } else {
+            binding?.wishlist?.show()
+            binding?.ivWishlist?.show()
+            binding?.constraintLayout89?.show()
+            binding?.subscribe?.hide()
+            binding?.ivWishlist?.background =
+                ContextCompat.getDrawable(this, R.drawable.ic_wishlist_white)
+        }
+
+    }
+
     private fun retrieveData(output: MovieDetailsResponse.Output) {
         //Promotion
         val snapHelper = PagerSnapHelper()
@@ -168,32 +204,55 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
 
         if (output.mb != null && output.mb.name != null) {
             //Cast
-            if (output.mb.cast != null) {
+            if (output.mb.cast.isNotEmpty()) {
+                binding?.recyclerView4?.show()
+                binding?.textView67?.show()
                 val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
                 val castAdapter = CastAdapter(output.mb.cast, this, this)
                 binding?.recyclerView4?.layoutManager = layoutManager
                 binding?.recyclerView4?.adapter = castAdapter
+
+            } else {
+                binding?.textView67?.hide()
+                binding?.recyclerView4?.hide()
             }
+
             //Crew
             if (output.mb.crew.isNotEmpty()) {
+                binding?.recyclerCrew?.show()
+                binding?.textView68?.show()
                 val layoutManagerCrew =
                     GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
                 val crewAdapter = CrewAdapter(output.mb.crew, this, this)
                 binding?.recyclerCrew?.layoutManager = layoutManagerCrew
                 binding?.recyclerCrew?.adapter = crewAdapter
+            } else {
+                binding?.recyclerCrew?.hide()
+                binding?.textView68?.hide()
             }
+
+            //condition check for Trailer and Music video
+            val trailerList: ArrayList<MovieDetailsResponse.Trs> = ArrayList()
+            val musicVideoList: ArrayList<MovieDetailsResponse.Trs> = ArrayList()
+
+            for (item in output.trs) {
+                if (item.ty == "MUSIC") {
+                    musicVideoList.addAll(output.trs)
+                } else {
+                    trailerList.addAll(output.trs)
+                }
+            }
+
             //trailer
-            if (output.trs.isNotEmpty()) {
-                binding?.textView69?.show()
+            if (trailerList.size != 0) {
                 val layoutManagerTrailer =
                     GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-                val trailerAdapter = TrailerTrsAdapter(output.trs, this, this)
+                val trailerAdapter = TrailerTrsAdapter(trailerList, this, this)
                 binding?.recyclerView5?.layoutManager = layoutManagerTrailer
                 binding?.recyclerView5?.adapter = trailerAdapter
-
             } else {
-
                 if (output.mb.videos.isNotEmpty()) {
+                    binding?.recyclerView5?.show()
                     binding?.textView69?.show()
                     val layoutManagerTrailer =
                         GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
@@ -201,35 +260,41 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
                     binding?.recyclerView5?.layoutManager = layoutManagerTrailer
                     binding?.recyclerView5?.adapter = trailerAdapter
                 } else {
+                    binding?.recyclerView5?.hide()
                     binding?.textView69?.hide()
                 }
             }
-            //MusicVideo
-            if (output.trs.isNotEmpty()) {
-                toast("1")
+
+//        //MusicVideo
+            if (musicVideoList.size != 0) {
                 binding?.textView70?.show()
                 val layoutManagerTrailer =
                     GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-                val trailerAdapter = MusicVideoTrsAdapter(output.trs, this, this)
+                val trailerAdapter = MusicVideoTrsAdapter(musicVideoList, this, this)
                 binding?.recyclerMusic?.layoutManager = layoutManagerTrailer
                 binding?.recyclerMusic?.adapter = trailerAdapter
-
             } else {
-                if (output.mb.tracks.isNotEmpty()) {
-                    binding?.textView70?.show()
-                    val layoutManagerTrailer =
-                        GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-                    val trailerAdapter = MusicVideoAdapter(output.mb.tracks[0].roles, this, this)
-                    binding?.recyclerMusic?.layoutManager = layoutManagerTrailer
-                    binding?.recyclerMusic?.adapter = trailerAdapter
-                } else {
-                    binding?.textView70?.hide()
-
+                if (output.mb != null && output.mb.name != null) {
+                    if (output.mb.tracks.isNotEmpty()) {
+                        binding?.textView70?.show()
+                        binding?.recyclerMusic?.show()
+                        val layoutManagerTrailer =
+                            GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+                        val trailerAdapter = MusicVideoAdapter(output.mb.tracks[0].roles, this, this)
+                        binding?.recyclerMusic?.layoutManager = layoutManagerTrailer
+                        binding?.recyclerMusic?.adapter = trailerAdapter
+                    } else {
+                        binding?.textView70?.hide()
+                        binding?.recyclerMusic?.hide()
+                    }
                 }
             }
+
         }
+
+
         //Trailer
-        if (output.t.isNullOrEmpty()) {
+        if (output.t.isNotEmpty()) {
             binding?.imageView29?.hide()
         } else {
             binding?.imageView29?.show()
@@ -243,16 +308,7 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
         }
         //Share
         binding?.imageView28?.setOnClickListener {
-            val appPackageName = BuildConfig.APPLICATION_ID
-            val appName = getString(R.string.app_name)
-            val shareBodyText = "https://play.google.com/store/apps/details?id=$appPackageName"
-
-            val sendIntent = Intent(Intent.ACTION_SEND).apply {
-                type = "text/plain"
-                putExtra(Intent.EXTRA_TITLE, appName)
-                putExtra(Intent.EXTRA_TEXT, shareBodyText)
-            }
-            startActivity(Intent.createChooser(sendIntent, null))
+            Constant().shareData(this,"","")
         }
         //Back
         binding?.imageView27?.setOnClickListener {
@@ -284,12 +340,6 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
             intent.putExtra("mid", output.id)
             startActivity(intent)
         }
-
-
-        //movie Alert
-        binding?.constraintLayout89?.setOnClickListener {
-            startActivity(Intent(this@ComingSoonDetailsActivity, SetAlertActivity::class.java))
-        }
     }
 
     override fun castClick(comingSoonItem: MovieDetailsResponse.Mb.Cast) {
@@ -301,18 +351,28 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
     }
 
     override fun musicVideo(comingSoonItem: MovieDetailsResponse.Mb.Crew.Role) {
+        val intent = Intent(this@ComingSoonDetailsActivity, PlayerActivity::class.java)
+        intent.putExtra("trailerUrl", comingSoonItem.url)
+        startActivity(intent)
+
     }
 
     override fun trailerClick(comingSoonItem: MovieDetailsResponse.Mb.Video) {
-
+        val intent = Intent(this@ComingSoonDetailsActivity, PlayerActivity::class.java)
+        intent.putExtra("trailerUrl", comingSoonItem.url)
+        startActivity(intent)
     }
 
     override fun trailerTrsClick(comingSoonItem: MovieDetailsResponse.Trs) {
-
+        val intent = Intent(this@ComingSoonDetailsActivity, PlayerActivity::class.java)
+        intent.putExtra("trailerUrl", comingSoonItem.t)
+        startActivity(intent)
     }
 
     override fun musicVideoTrsClick(comingSoonItem: MovieDetailsResponse.Trs) {
-
+        val intent = Intent(this@ComingSoonDetailsActivity, PlayerActivity::class.java)
+        intent.putExtra("trailerUrl", comingSoonItem.t)
+        startActivity(intent)
     }
 
 }

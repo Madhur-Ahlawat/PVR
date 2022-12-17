@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="14dp"
-                android:layout_marginTop="56dp"
+                android:layout_marginTop="8dp"
                 android:padding="@dimen/dimen_8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -117,14 +117,44 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
+                    android:layout_marginEnd="32dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:fontFamily="@font/montserrat_alternates_bold"
                     android:textColor="@color/black"
                     android:textSize="24sp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/wishlist"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/view42"
                     tools:text="The Batman" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/wishlist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:background="@drawable/wish_list_background"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="8dp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView55"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/ivWishlist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
                     android:id="@+id/textView56"
@@ -290,6 +320,7 @@
                         android:id="@+id/constraintLayout89"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:layout_marginTop="16dp"
                         android:background="@drawable/yellow_book_curve"
                         app:layout_constraintStart_toStartOf="@+id/textView63"
@@ -322,6 +353,52 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/subscribe"
+                        android:layout_marginTop="16dp"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="@dimen/dimen_6dp"
+                        android:background="@drawable/yellow_book_curve"
+                        app:layout_constraintStart_toStartOf="@+id/textView63"
+                        app:layout_constraintTop_toBottomOf="@+id/textView63"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_marginStart="@dimen/dimen_11dp"
+                            android:layout_marginEnd="@dimen/dimen_13dp"
+                            android:layout_marginBottom="@dimen/dimen_9dp"
+                            android:layout_marginTop="@dimen/dimen_9dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <ImageView
+                                android:layout_marginEnd="@dimen/dimen_8dp"
+                                android:src="@drawable/ohk_subscribe"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:ignore="ContentDescription" />
+
+                            <TextView
+                                android:layout_marginEnd="@dimen/dimen_9dp"
+                                android:fontFamily="@font/sf_pro_text_bold"
+                                android:textSize="@dimen/dimen_12sp"
+                                android:text="@string/already_subscribed"
+                                android:textColor="@color/black"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                            <ImageView
+                                android:layout_marginEnd="@dimen/dimen_8dp"
+                                android:src="@drawable/arrow_right_subscribe"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:ignore="ContentDescription" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View

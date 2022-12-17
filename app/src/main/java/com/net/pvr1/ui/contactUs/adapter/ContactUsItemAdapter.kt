@@ -16,7 +16,6 @@ class ContactUsItemAdapter(
 ) :
     RecyclerView.Adapter<ContactUsItemAdapter.ViewHolder>() {
     private var rowIndex = 0
-
     inner class ViewHolder(val binding: ContactUsItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 

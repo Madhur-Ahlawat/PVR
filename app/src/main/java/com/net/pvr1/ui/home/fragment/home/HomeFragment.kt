@@ -25,6 +25,7 @@ import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
 import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingActivity
 import com.net.pvr1.ui.player.PlayerActivity
 import com.net.pvr1.ui.search.searchCinema.SearchCinemaActivity
+import com.net.pvr1.ui.search.searchHome.SearchHomeActivity
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.PlaceHolder
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,24 +56,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-<<<<<<< HEAD
-
-        authViewModel.home(
-            preferences.getCityName(),
-            "",
-            preferences.getUserId(),
-            preferences.geMobileNumber(),
-            true,
-            "no",
-            "",
-            "ALL",
-            "ALL",
-            "ALL",
-            "no"
-        )
-=======
         (requireActivity().findViewById(R.id.include) as ConstraintLayout).show()
->>>>>>> master
         (requireActivity().findViewById(R.id.notify) as ImageView).show()
         (requireActivity().findViewById(R.id.locationBtn) as ImageView).show()
         (requireActivity().findViewById(R.id.scanQr) as ImageView).show()
@@ -80,12 +64,11 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         (requireActivity().findViewById(R.id.searchCinema) as ImageView).hide()
         (requireActivity().findViewById(R.id.searchBtn) as ImageView).setOnClickListener {
             if (isAdded) {
-                val intent = Intent(requireActivity(), SearchCinemaActivity::class.java)
+
+                val intent = Intent(requireActivity(), SearchHomeActivity::class.java)
                 startActivity(intent)
             }
         }
-<<<<<<< HEAD
-=======
         authViewModel.home(
             preferences.getCityName(),
             "",
@@ -99,7 +82,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             "ALL",
             "no"
         )
->>>>>>> master
         movedNext()
         homeApi()
     }

@@ -13,6 +13,7 @@ import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
+import com.net.pvr1.ui.location.selectCity.response.SelectCityResponse
 import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
 import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
@@ -25,12 +26,12 @@ import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.seatLayout.response.InitResponse
 import com.net.pvr1.ui.seatLayout.response.ReserveSeatResponse
 import com.net.pvr1.ui.seatLayout.response.SeatResponse
-import com.net.pvr1.ui.location.selectCity.response.SelectCityResponse
 import com.net.pvr1.ui.splash.response.SplashResponse
 import com.net.pvr1.ui.summery.response.AddFoodResponse
 import com.net.pvr1.ui.summery.response.SetDonationResponse
 import com.net.pvr1.ui.summery.response.SummeryResponse
 import com.net.pvr1.ui.ticketConfirmation.response.TicketBookedResponse
+import com.net.pvr1.ui.watchList.response.WatchListResponse
 import retrofit2.Response
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -468,6 +469,15 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<SplashResponse>
 
+    @POST("v1/movie-alert/get-all-alert")
+    suspend fun watchList(
+        @Query("userid") userid: String,
+        @Query("city") city: String,
+        @Query("did") did: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<WatchListResponse>
+
     @POST("food/savefoods")
     suspend fun addFood(
         @Query("cinemacode") cinemacode: String,
@@ -504,6 +514,21 @@ interface UserAPI {
         @Query("searchtxt") searchtxt: String,
         @Query("av") version: String,
         @Query("pt") platform: String
+    ): Response<BookingRetrievalResponse>
+
+    @POST("v1/movie-alert/set-alert")
+    suspend fun setAlert(
+        @Query("userid") userid: String,
+        @Query("city") city: String,
+        @Query("mcode")  mcode: String,
+        @Query("cinema")  cinema: String,
+        @Query("whtsapp") whtsapp: String,
+        @Query("pushnotify")  pushnotify: String,
+        @Query("sms")  sms: String,
+        @Query("email")  email: String,
+        @Query("did")  did: String,
+        @Query("av")  version: String,
+        @Query("pt")  platform: String
     ): Response<BookingRetrievalResponse>
 
     @POST("payment/paytmex/upistatus")
