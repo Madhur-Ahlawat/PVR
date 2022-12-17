@@ -33,7 +33,7 @@ data class MovieDetailsResponse(
         val othergenres: String,
         val otherlanguages: String,
         val p: String,
-        val ph: List<Any>,
+        val ph: List<Ph>,
         val pu: List<Any>,
         val rt: String,
         val rtt: String,
@@ -47,7 +47,20 @@ data class MovieDetailsResponse(
         val wib: String,
         val wit: String
     ) : Serializable
-
+    data class Ph(
+        val buttonText: String,
+        val cities: String,
+        val i: String,
+        val id: Int,
+        val location: String,
+        val name: String,
+        val platform: String,
+        val priority: Int,
+        val redirect_url: String,
+        val screen: String,
+        val trailerUrl: String,
+        val type: String
+    ):Serializable
     data class Offr(
         val cd: Any,
         val end: Any,

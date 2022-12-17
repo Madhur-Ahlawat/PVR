@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.setAlert
+package com.net.pvr1.ui.movieDetails.comingSoonDetails.setAlert
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -20,8 +20,8 @@ import com.net.pvr1.databinding.SetAlertDialogBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
-import com.net.pvr1.ui.setAlert.adapter.AlertTheaterAdapter
-import com.net.pvr1.ui.setAlert.viewModel.SetAlertViewModel
+import com.net.pvr1.ui.movieDetails.comingSoonDetails.setAlert.adapter.AlertTheaterAdapter
+import com.net.pvr1.ui.movieDetails.comingSoonDetails.setAlert.viewModel.SetAlertViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import com.net.pvr1.utils.PreferenceManager
@@ -174,7 +174,6 @@ class SetAlertActivity : AppCompatActivity() {
         bindingBottom.include21.textView5.setOnClickListener {
             finish()
         }
-
     }
 
     private fun allTheater() {

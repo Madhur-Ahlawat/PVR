@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.setAlert.adapter
+package com.net.pvr1.ui.movieDetails.comingSoonDetails.setAlert.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
 import com.net.pvr1.databinding.SetAlertItemBinding
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
-import com.net.pvr1.ui.setAlert.SetAlertActivity
+import com.net.pvr1.ui.movieDetails.comingSoonDetails.setAlert.SetAlertActivity
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
 import java.util.*

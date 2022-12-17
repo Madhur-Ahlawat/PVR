@@ -138,7 +138,7 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                                 )
                             }
                         }
-                        if (addresses?.isNotEmpty()!!) {
+                        if (addresses?.isNotEmpty() == true) {
                             val currentAddress: String = addresses[0].locality
                             preferences.cityNameCinema(currentAddress)
                             lat = location.latitude.toString()

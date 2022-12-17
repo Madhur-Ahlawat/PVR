@@ -18,7 +18,6 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import com.net.pvr1.R
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
@@ -121,101 +120,7 @@ class Constant {
         tvCensorLang.movementMethod = LinkMovementMethod.getInstance()
     }
 
-    private fun addClickablePartTextViewResizable(
-        strSpanned: Spanned, tv: TextView,
-        maxLine: Int, spanableText: String, viewMore: Boolean, context: Context
-    ): SpannableStringBuilder{
-        val str = strSpanned.toString()
-        val ssb = SpannableStringBuilder(strSpanned)
-        if (str.contains(spanableText)) {
-            ssb.setSpan(object : MySpannable(false) {
-                override fun onClick(widget: View) {
-                    if (viewMore) {
-                        val typeface = ResourcesCompat.getFont(context, R.font.sf_pro_text_regular)
-                        tv.layoutParams = tv.layoutParams
-                        tv.setText(tv.tag.toString(), TextView.BufferType.SPANNABLE)
-                        tv.invalidate()
-                        tv.typeface = typeface
-                        makeTextViewResizable(tv, -1, "..read less", false, context)
-                    } else {
-                        val typeface = ResourcesCompat.getFont(context, R.font.sf_pro_text_bold)
-                        tv.layoutParams = tv.layoutParams
-                        tv.setText(tv.tag.toString(), TextView.BufferType.SPANNABLE)
-                        tv.invalidate()
-                        tv.typeface = typeface
-                        makeTextViewResizable(tv, 4, "..read more", true, context)
-                    }
-                }
-            }, str.indexOf(spanableText), str.indexOf(spanableText) + spanableText.length, 0)
-        }
-        return ssb
-    }
 
-    fun makeTextViewResizable(
-        tv: TextView,
-        maxLine: Int,
-        expandText: String,
-        viewMore: Boolean,
-        context: Context
-    ) {
-        if (tv.tag == null) {
-            tv.tag = tv.text
-        }
-
-        val vto = tv.viewTreeObserver
-        vto.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                val obs = tv.viewTreeObserver
-                obs.removeGlobalOnLayoutListener(this)
-                if (maxLine == 0) {
-                    val lineEndIndex = tv.layout.getLineEnd(0)
-                    val typeface = ResourcesCompat.getFont(context, R.font.sf_pro_text_bold)
-                    val text = tv.text.subSequence(0, lineEndIndex - expandText.length + 1)
-                        .toString() + " " + expandText
-                    tv.text = text
-                    tv.typeface = typeface
-
-                    tv.movementMethod = LinkMovementMethod.getInstance()
-                    tv.setText(
-                        addClickablePartTextViewResizable(
-                            Html.fromHtml(tv.text.toString()), tv, maxLine, expandText,
-                            viewMore,context
-                        ), TextView.BufferType.SPANNABLE
-                    )
-
-                } else if (maxLine > 0 && tv.lineCount >= maxLine) {
-                    val lineEndIndex = tv.layout.getLineEnd(maxLine - 1)
-                    val text = tv.text.subSequence(0, lineEndIndex - expandText.length + 1)
-                        .toString() + " " + expandText
-                    tv.text = text
-                    tv.movementMethod = LinkMovementMethod.getInstance()
-                    tv.setText(
-                        addClickablePartTextViewResizable(
-                            Html.fromHtml(tv.text.toString()), tv, maxLine, expandText,
-                            viewMore,
-                            context
-                        ), TextView.BufferType.SPANNABLE
-                    )
-                    tv.typeface.isBold
-
-                } else {
-                    val lineEndIndex = tv.layout.getLineEnd(tv.layout.lineCount - 1)
-                    val text = tv.text.subSequence(0, lineEndIndex).toString() + " " + expandText
-                    tv.text = text
-                    tv.movementMethod = LinkMovementMethod.getInstance()
-                    tv.setText(
-                        addClickablePartTextViewResizable(
-                            Html.fromHtml(tv.text.toString()), tv, lineEndIndex, expandText,
-                            viewMore,
-                            context
-                        ), TextView.BufferType.SPANNABLE
-                    )
-                    tv.typeface.isBold
-
-                }
-            }
-        })
-    }
 
     fun extractYoutubeId(s: String): String? {
         return try {
@@ -343,6 +248,99 @@ class Constant {
         activity.startActivity(Intent.createChooser(shareIntent, "Share via"))
     }
 
+    fun makeTextViewResizable(tv: TextView, maxLine: Int, expandText: String, viewMore: Boolean) {
+        if (tv.tag == null) {
+            tv.tag = tv.text
+        }
+        val vto = tv.viewTreeObserver
+        vto.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                val obs = tv.viewTreeObserver
+                obs.removeGlobalOnLayoutListener(this)
+                if (maxLine == 0) {
+                    val lineEndIndex = tv.layout.getLineEnd(0)
+                    val text = tv.text.subSequence(0, lineEndIndex - expandText.length + 1)
+                        .toString() + "... " + expandText
+                    tv.text = text
+                    tv.movementMethod = LinkMovementMethod.getInstance()
+                    tv.setText(
+                       addClickablePartTextViewResizable(
+                            Html.fromHtml(tv.text.toString()), tv, maxLine, expandText,
+                            viewMore
+                        ), TextView.BufferType.SPANNABLE
+                    )
+                } else if (maxLine > 0 && tv.lineCount >= maxLine) {
+                    val lineEndIndex = tv.layout.getLineEnd(maxLine - 1)
+                    val text = tv.text.subSequence(0, lineEndIndex - expandText.length - 15)
+                        .toString() + "... " + expandText
+                    tv.text = text
+                    tv.movementMethod = LinkMovementMethod.getInstance()
+                    tv.setText(
+                       addClickablePartTextViewResizable(
+                            Html.fromHtml(tv.text.toString()), tv, maxLine, expandText,
+                            viewMore
+                        ), TextView.BufferType.SPANNABLE
+                    )
+                } else {
+                    val lineEndIndex = tv.layout.getLineEnd(tv.layout.lineCount - 1)
+                    val text = tv.text.subSequence(0, lineEndIndex).toString() + "" + expandText
+                    tv.text = text
+                    tv.movementMethod = LinkMovementMethod.getInstance()
+                    tv.setText(
+                        addClickablePartTextViewResizable(
+                            Html.fromHtml(tv.text.toString()), tv, lineEndIndex, expandText,
+                            viewMore
+                        ), TextView.BufferType.SPANNABLE
+                    )
+                }
+            }
+        })
+    }
+
+
+    //spannable textView
+
+    //spannable textView
+    private fun addClickablePartTextViewResizable(
+        strSpanned: Spanned, tv: TextView,
+        maxLine: Int, spanableText: String, viewMore: Boolean
+    ): SpannableStringBuilder? {
+        val str = strSpanned.toString()
+        val ssb = SpannableStringBuilder(strSpanned)
+        if (str.contains(spanableText)) {
+            ssb.setSpan(object : MySpannable(false) {
+                override fun onClick(widget: View) {
+                    super.onClick(widget)
+                    if (viewMore){
+                        tv.layoutParams = tv.layoutParams
+                        tv.setText(tv.tag.toString(), TextView.BufferType.SPANNABLE)
+                        tv.invalidate()
+                        makeTextViewResizable(tv, -1, "", false)
+                    }else{
+                        tv.layoutParams = tv.layoutParams
+                        tv.setText(tv.tag.toString(), TextView.BufferType.SPANNABLE)
+                        tv.invalidate()
+                        makeTextViewResizable(tv, 5, ".. Read More", true)
+                    }
+                }
+
+            }, str.indexOf(spanableText), str.indexOf(spanableText) + spanableText.length, 0)
+        }
+        return ssb
+    }
+
+    interface FilterType {
+        companion object {
+            const val LANG_FILTER = "LANG_FILTER"
+            const val GENERE_FILTER = "GENERE_FILTER"
+            const val FORMAT_FILTER = "FORMAT_FILTER"
+            const val PRICE_FILTER = "PRICE_FILTER"
+            const val SHOWTIME_FILTER = "SHOWTIME_FILTER"
+            const val ACCESSABILITY_FILTER = "ACCESSABILITY_FILTER"
+            const val CINEMA_FORMAT = "CINEMA_FORMAT"
+            const val SPECIAL_SHOW = "SPECIAL_SHOW"
+        }
+    }
 
 
 }

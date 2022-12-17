@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.setAlert.viewModel
+package com.net.pvr1.ui.movieDetails.comingSoonDetails.setAlert.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

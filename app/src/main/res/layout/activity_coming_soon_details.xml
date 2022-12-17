@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <View
         android:id="@+id/view39"
@@ -118,9 +119,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="32dp"
-                    android:maxLines="1"
                     android:ellipsize="end"
                     android:fontFamily="@font/montserrat_alternates_bold"
+                    android:maxLines="2"
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     app:layout_constraintEnd_toStartOf="@+id/wishlist"
@@ -139,7 +140,6 @@
                     android:paddingRight="5dp"
                     android:paddingBottom="8dp"
                     android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView55"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -151,8 +151,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="ContentDescription" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -173,9 +172,9 @@
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginEnd="32dp"
+                    android:layout_marginEnd="24dp"
                     android:background="@color/grayEd"
-                    app:layout_constraintEnd_toEndOf="@+id/textView55"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/textView55"
                     app:layout_constraintTop_toBottomOf="@+id/textView56" />
 
@@ -320,9 +319,9 @@
                         android:id="@+id/constraintLayout89"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
                         android:layout_marginTop="16dp"
                         android:background="@drawable/yellow_book_curve"
+                        android:visibility="gone"
                         app:layout_constraintStart_toStartOf="@+id/textView63"
                         app:layout_constraintTop_toBottomOf="@+id/textView63">
 
@@ -355,45 +354,46 @@
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/subscribe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:background="@drawable/yellow_book_curve"
                         app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="@dimen/dimen_6dp"
-                        android:background="@drawable/yellow_book_curve"
                         app:layout_constraintStart_toStartOf="@+id/textView63"
-                        app:layout_constraintTop_toBottomOf="@+id/textView63"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        app:layout_constraintTop_toBottomOf="@+id/textView63">
 
                         <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_marginStart="@dimen/dimen_11dp"
+                            android:layout_marginTop="@dimen/dimen_9dp"
                             android:layout_marginEnd="@dimen/dimen_13dp"
                             android:layout_marginBottom="@dimen/dimen_9dp"
-                            android:layout_marginTop="@dimen/dimen_9dp"
                             android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:orientation="horizontal">
+
                             <ImageView
-                                android:layout_marginEnd="@dimen/dimen_8dp"
-                                android:src="@drawable/ohk_subscribe"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/dimen_8dp"
+                                android:src="@drawable/ohk_subscribe"
                                 tools:ignore="ContentDescription" />
 
                             <TextView
-                                android:layout_marginEnd="@dimen/dimen_9dp"
-                                android:fontFamily="@font/sf_pro_text_bold"
-                                android:textSize="@dimen/dimen_12sp"
-                                android:text="@string/already_subscribed"
-                                android:textColor="@color/black"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-
-                            <ImageView
-                                android:layout_marginEnd="@dimen/dimen_8dp"
-                                android:src="@drawable/arrow_right_subscribe"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/dimen_9dp"
+                                android:fontFamily="@font/sf_pro_text_bold"
+                                android:text="@string/already_subscribed"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen_12sp" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/dimen_8dp"
+                                android:src="@drawable/arrow_right_subscribe"
                                 tools:ignore="ContentDescription" />
 
                         </LinearLayout>
@@ -442,16 +442,15 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/castCrew"
+                android:id="@+id/cast"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="40dp"
-                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout12">
-
 
                 <View
                     android:id="@+id/view50"
@@ -486,6 +485,19 @@
                     tools:itemCount="3"
                     tools:listitem="@layout/item_details_cast" />
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/crew"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cast">
+
+
                 <TextView
                     android:id="@+id/textView68"
                     android:layout_width="wrap_content"
@@ -496,7 +508,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimen_18sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/recyclerView4" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerCrew"
@@ -506,7 +518,7 @@
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/view50"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView68"
                     tools:itemCount="3"
                     tools:listitem="@layout/item_details_cast" />
@@ -520,15 +532,27 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/musicTrailer"
+                android:id="@+id/castCrew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout12">
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/trailer"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="40dp"
-                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/castCrew">
+                app:layout_constraintTop_toBottomOf="@+id/crew">
 
                 <View
                     android:id="@+id/view52"
@@ -563,6 +587,18 @@
                     tools:itemCount="3"
                     tools:listitem="@layout/item_details_music" />
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/musicVideo"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/trailer">
+
                 <TextView
                     android:id="@+id/textView70"
                     android:layout_width="wrap_content"
@@ -573,7 +609,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimen_18sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/recyclerView5" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerMusic"
@@ -583,7 +619,7 @@
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/view52"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView70"
                     tools:itemCount="3"
                     tools:listitem="@layout/item_details_music" />
@@ -594,7 +630,9 @@
                     android:layout_marginTop="@dimen/dimen_30dp"
                     android:background="#EDE8E9"
                     app:layout_constraintTop_toBottomOf="@+id/recyclerMusic" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
@@ -602,10 +640,10 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="@dimen/dimen_30dp"
                 android:layout_marginEnd="24dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/musicTrailer">
+                app:layout_constraintTop_toBottomOf="@+id/musicVideo">
 
                 <View
                     android:id="@+id/view53"
@@ -739,7 +777,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/view39"
         app:layout_constraintStart_toStartOf="@+id/view39">

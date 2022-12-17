@@ -11,11 +11,11 @@ data class CommingSoonResponse(
     val version: Any
 ):Serializable{
     data class Output(
-        val genre: List<String>,
+        val genre: ArrayList<String>,
         val language: ArrayList<String>,
         val movies: List<Movy>,
-        val ph: List<Ph>,
-        val pu: List<Pu>
+        val ph: ArrayList<Ph>,
+        val pu: ArrayList<Pu>
     ):Serializable{
         data class Movy(
             val caption: String,

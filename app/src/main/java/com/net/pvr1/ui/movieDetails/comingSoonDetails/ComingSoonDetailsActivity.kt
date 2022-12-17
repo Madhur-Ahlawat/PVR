@@ -13,12 +13,12 @@ import com.net.pvr1.databinding.ActivityComingSoonDetailsBinding
 import com.net.pvr1.ui.bookingSession.BookingActivity
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.home.fragment.home.adapter.PromotionAdapter
+import com.net.pvr1.ui.movieDetails.comingSoonDetails.adapter.ComDetailsPhAdapter
+import com.net.pvr1.ui.movieDetails.comingSoonDetails.setAlert.SetAlertActivity
 import com.net.pvr1.ui.movieDetails.comingSoonDetails.viewModels.ComingSoonDetailsViewModel
 import com.net.pvr1.ui.movieDetails.nowShowing.adapter.*
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.ui.player.PlayerActivity
-import com.net.pvr1.ui.setAlert.SetAlertActivity
 import com.net.pvr1.ui.watchList.WatchListActivity
 import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -193,8 +193,8 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
         val gridLayoutSlider =
             GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
         binding?.recyclerView37?.layoutManager = gridLayoutSlider
-        binding?.recyclerView37?.adapter =
-            Constant.PlaceHolder?.ph?.let { PromotionAdapter(this, it) }
+        val adapter = ComDetailsPhAdapter(this, output.ph)
+        binding?.recyclerView37?.adapter = adapter
 
         //Image
         Glide.with(this)
@@ -205,21 +205,21 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
         if (output.mb != null && output.mb.name != null) {
             //Cast
             if (output.mb.cast.isNotEmpty()) {
-                binding?.recyclerView4?.show()
+                binding?.cast?.show()
                 binding?.textView67?.show()
+                binding?.castCrew?.show()
                 val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
                 val castAdapter = CastAdapter(output.mb.cast, this, this)
                 binding?.recyclerView4?.layoutManager = layoutManager
                 binding?.recyclerView4?.adapter = castAdapter
 
             } else {
-                binding?.textView67?.hide()
-                binding?.recyclerView4?.hide()
+                binding?.cast?.hide()
             }
 
             //Crew
             if (output.mb.crew.isNotEmpty()) {
-                binding?.recyclerCrew?.show()
+                binding?.crew?.show()
                 binding?.textView68?.show()
                 val layoutManagerCrew =
                     GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
@@ -227,8 +227,7 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
                 binding?.recyclerCrew?.layoutManager = layoutManagerCrew
                 binding?.recyclerCrew?.adapter = crewAdapter
             } else {
-                binding?.recyclerCrew?.hide()
-                binding?.textView68?.hide()
+                binding?.crew?.hide()
             }
 
             //condition check for Trailer and Music video
@@ -252,7 +251,7 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
                 binding?.recyclerView5?.adapter = trailerAdapter
             } else {
                 if (output.mb.videos.isNotEmpty()) {
-                    binding?.recyclerView5?.show()
+                    binding?.trailer?.show()
                     binding?.textView69?.show()
                     val layoutManagerTrailer =
                         GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
@@ -260,13 +259,13 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
                     binding?.recyclerView5?.layoutManager = layoutManagerTrailer
                     binding?.recyclerView5?.adapter = trailerAdapter
                 } else {
-                    binding?.recyclerView5?.hide()
-                    binding?.textView69?.hide()
+                    binding?.trailer?.hide()
                 }
             }
 
 //        //MusicVideo
             if (musicVideoList.size != 0) {
+                binding?.musicVideo?.show()
                 binding?.textView70?.show()
                 val layoutManagerTrailer =
                     GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
@@ -277,24 +276,22 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
                 if (output.mb != null && output.mb.name != null) {
                     if (output.mb.tracks.isNotEmpty()) {
                         binding?.textView70?.show()
-                        binding?.recyclerMusic?.show()
+                        binding?.musicVideo?.show()
                         val layoutManagerTrailer =
                             GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
                         val trailerAdapter = MusicVideoAdapter(output.mb.tracks[0].roles, this, this)
                         binding?.recyclerMusic?.layoutManager = layoutManagerTrailer
                         binding?.recyclerMusic?.adapter = trailerAdapter
                     } else {
-                        binding?.textView70?.hide()
-                        binding?.recyclerMusic?.hide()
+                        binding?.musicVideo?.hide()
                     }
                 }
             }
 
         }
 
-
         //Trailer
-        if (output.t.isNotEmpty()) {
+        if (output.t.isEmpty()) {
             binding?.imageView29?.hide()
         } else {
             binding?.imageView29?.show()
@@ -317,7 +314,7 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
         //Title
         binding?.textView55?.text = output.n
         //Genre
-        binding?.textView56?.text = output.genre
+        binding?.textView56?.text = output.othergenres
         //Release Data
         binding?.textView58?.text = output.mopeningdate
         //Language
@@ -325,7 +322,10 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
         binding?.textView60?.text = commaSeparatedString
         //Description
         binding?.textView66?.text = output.p
-        binding?.textView66?.let { Constant().makeTextViewResizable(it, 4, "See More", true, this) }
+        if (binding?.textView66?.lineCount!! > 2) {
+            Constant().makeTextViewResizable(binding?.textView66!!, 4, "Read More", true)
+        }
+
         //FilmType
         binding?.textView75?.text = output.tag
         //Language
