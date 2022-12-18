@@ -98,11 +98,17 @@ class Constant {
         var ZAGGLE = "126"
         var UPI = "119"
         var PHONE_PE = "113"
+        var GEIFT_CARD = "105"
+        var AIRTEL = "110"
 
         // OFFERS
 
-        var PROMOCODE = "o104"
-        var GYFTR = "o108"
+        var PROMOCODE = "O104"
+        var ACCENTIVE = "o111"
+        var M_COUPON = "O102"
+        var STAR_PASS = "O105"
+        var HYATT = "O107"
+        var GYFTR = "O108"
 
     }
 

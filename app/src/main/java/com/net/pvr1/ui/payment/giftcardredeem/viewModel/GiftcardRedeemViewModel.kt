@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.payment.paytmpostpaid.viewModel
+package com.net.pvr1.ui.payment.giftcardredeem.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -14,34 +14,40 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PaytmPostPaidViewModel @Inject constructor(private val userRepository: UserRepository) :
+class GiftcardRedeemViewModel @Inject constructor(private val userRepository: UserRepository) :
     ViewModel() {
 
     //getBalance
-    val liveDataBalanceScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.postpaidHmacResponseLiveData
+    val livezagglePayScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.zaggalePayResponseLiveData
 
-    fun getBalance(
+    fun zagglePay(
         userid: String,
         bookingid: String,
         transid: String,
-        booktype: String
+        booktype: String,
+        cardNo: String,
+        pin:String,
+        type:String
     ) {
         viewModelScope.launch {
-            userRepository.postpaidHmac(userid, bookingid, booktype, transid)
+            userRepository.zaggalePay(userid, bookingid, booktype, transid,cardNo,pin,type)
         }
     }
 
     //POST PAID PAY
-    val liveDatapayScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.postpaidPAYResponseLiveData
+    val liveDataGiftCardRedeemScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.giftCardRedeemResponseLiveData
 
-    fun postPaidPay(
+    fun giftCardRedeem(
         userid: String,
         bookingid: String,
         transid: String,
-        booktype: String
+        booktype: String,
+        cardNo: String,
+        pin:String,
+        type:String
     ) {
         viewModelScope.launch {
-            userRepository.postpaidPay(userid, bookingid, booktype, transid)
+            userRepository.giftCardRedeem(userid, bookingid, booktype, transid,cardNo,pin,type)
         }
     }
 
@@ -100,20 +106,6 @@ class PaytmPostPaidViewModel @Inject constructor(private val userRepository: Use
     ) {
         viewModelScope.launch {
             userRepository.paytmHmacOld(userid, bookingid, booktype, transid)
-        }
-    }
-
-    //POST AIRTEL PAY
-    val airtelPayHmacOldScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.airtelPayResponseLiveData
-
-    fun airtelPay(
-        userid: String,
-        bookingid: String,
-        transid: String,
-        booktype: String
-    ) {
-        viewModelScope.launch {
-            userRepository.airtelPay(userid, bookingid, booktype, transid)
         }
     }
 

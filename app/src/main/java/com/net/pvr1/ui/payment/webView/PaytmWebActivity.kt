@@ -37,20 +37,73 @@ class PaytmWebActivity : AppCompatActivity() {
         binding = ActivityPaymentWebBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        authViewModel.postPaidMakePayment(
-            preferences.getUserId(),
-            Constant.BOOKING_ID,
-            Constant.TRANSACTION_ID,
-            Constant.BOOK_TYPE
-        )
+        binding?.include3?.imageView58?.setOnClickListener {
+            onBackPressed()
+        }
+        binding?.include3?.textView108?.text = intent.getStringExtra("title")
+        if (intent.getStringExtra("pTypeId") == "110") {
+            authViewModel.airtelPay(
+                preferences.getUserId(),
+                Constant.BOOKING_ID,
+                Constant.TRANSACTION_ID,
+                Constant.BOOK_TYPE
+            )
+        }else{
+            authViewModel.postPaidMakePayment(
+                preferences.getUserId(),
+                Constant.BOOKING_ID,
+                Constant.TRANSACTION_ID,
+                Constant.BOOK_TYPE
+            )
+        }
         getToken()
+        getAirtelToken()
 
     }
 
 
 
     private fun getToken() {
-        authViewModel.liveDataBalanceScope.observe(this) {
+        authViewModel.liveDatapaytmHmacOldScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        postRequestInWebView(it.data.output)
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleasewait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+
+    private fun getAirtelToken() {
+        authViewModel.airtelPayHmacOldScope.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
                     loader?.dismiss()

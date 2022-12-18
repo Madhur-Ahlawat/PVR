@@ -17,7 +17,7 @@ import javax.inject.Inject
 class PromoCodeViewModel @Inject constructor(private val userRepository: UserRepository) :
     ViewModel() {
 
-    //getBalance
+    //PROMOCODE
     val livePromoCodeScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.promoCodeResponseLiveData
 
     fun promoCode(
@@ -32,7 +32,7 @@ class PromoCodeViewModel @Inject constructor(private val userRepository: UserRep
         }
     }
 
-    //POST PAID PAY
+    //POST GYTER
     val liveDatapromoGyftScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.promoGyftResponseLiveData
 
     fun promoGyft(
@@ -47,47 +47,51 @@ class PromoCodeViewModel @Inject constructor(private val userRepository: UserRep
         }
     }
 
-    //POST PAID SEND OTP
-    val liveDatasendOTPScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.postpaidSendOTPResponseLiveData
+    //POST accentive
+    val accentivePromoOTPScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.accentivePromoResponseLiveData
 
-    fun postPaidSendOTP(
-        userid: String,
-        bookingid: String,
-        transid: String,
-        booktype: String
-    ) {
-        viewModelScope.launch {
-            userRepository.postPaidSendOTP(userid, bookingid, booktype, transid)
-        }
-    }
-
-
-    //POST PAID VERIFY OTP
-    val liveDataverifyOTPScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.postpaidVerifyOTPResponseLiveData
-
-    fun postPaidVerifYOTP(
+    fun accentivePromo(
         userid: String,
         bookingid: String,
         transid: String,
         booktype: String,
-        otp: String
+        promocode: String
+
     ) {
         viewModelScope.launch {
-            userRepository.postPaidVerifYOTP(userid, bookingid, booktype, transid,otp)
+            userRepository.accentivePromo(userid, bookingid, booktype, transid,promocode)
         }
     }
 
-    //POST PAID VERIFY OTP
-    val liveDataMakePaymentScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.postpaidMakePaymentResponseLiveData
 
-    fun postPaidMakePayment(
+    //POST HYATT SEND OTP
+    val hyattSendOTPScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.hyattSendOTPResponseLiveData
+
+    fun hyattSendOTP(
         userid: String,
         bookingid: String,
         transid: String,
-        booktype: String
+        booktype: String,
+        mobile: String
     ) {
         viewModelScope.launch {
-            userRepository.postPaidMakePayment(userid, bookingid, booktype, transid)
+            userRepository.hyattSendOTP(userid, bookingid, booktype, transid,mobile)
+        }
+    }
+
+    //POST HYATT VERIFY OTP
+    val hyattVerifyOTPScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.verfyOTPHYATTResponseLiveData
+
+    fun hyattVerifyOTP(
+        userid: String,
+        bookingid: String,
+        transid: String,
+        booktype: String,
+        mobile: String,
+        otp: String
+    ) {
+        viewModelScope.launch {
+            userRepository.verfyOTPHYATT(userid, bookingid, booktype, transid,mobile,otp)
         }
     }
 

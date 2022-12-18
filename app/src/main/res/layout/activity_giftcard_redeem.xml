@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.payment.promoCode.PromoCodeActivity">
+
+    <View
+        android:id="@+id/view227"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/include30"
+        layout="@layout/button_next"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <include
+        android:id="@+id/include29"
+        layout="@layout/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="58dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout46"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:background="#FFFDF5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include29">
+
+        <View
+            android:id="@+id/view114"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView177"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:fontFamily="@font/sf_pro_text_semi_bold"
+            android:text="@string/to_be_paid"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/view114"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView178"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="19dp"
+            android:fontFamily="@font/sf_pro_text_semi_bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/view114"
+            app:layout_constraintTop_toTopOf="@+id/view114"
+            tools:text="₹8888" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/include30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout46">
+
+        <View
+            android:id="@+id/view228"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView371"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf_pro_text_bold"
+            android:text="@string/promocode_wil_not_be_refunded_for_cancellation"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/view228" />
+
+        <RelativeLayout
+            android:id="@+id/ccLayout"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_60dp"
+            android:layout_marginTop="26dp"
+            android:layout_weight="1.2"
+            android:background="@drawable/text_curve"
+            android:gravity="center"
+            android:paddingTop="@dimen/dimen_8dp"
+            android:paddingEnd="@dimen/dimen_5dp"
+            android:paddingBottom="@dimen/dimen_5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView371">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ccInputLayout"
+                style="@style/styledBlackTilEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="-8dp"
+                android:hint="@string/card_number"
+                app:boxBackgroundColor="@color/transparent"
+                app:boxStrokeColor="@color/transparent"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:endIconMode="custom"
+                app:errorEnabled="false"
+                app:hintTextColor="@color/textColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <EditText
+                    android:id="@+id/ccEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:fontFamily="@font/sf_pro_text_bold"
+                    android:gravity="bottom"
+                    android:imeOptions="actionDone"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="16"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/textColor"
+                    android:textSize="16sp"
+                    tools:ignore="SpeakableTextPresentCheck"
+                    android:importantForAutofill="no" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/pinLayout"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_60dp"
+            android:layout_weight="1.2"
+            android:background="@drawable/text_curve"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:paddingTop="@dimen/dimen_8dp"
+            android:paddingEnd="@dimen/dimen_5dp"
+            android:paddingBottom="@dimen/dimen_5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ccLayout"
+          >
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/pinInputLayout"
+                style="@style/styledBlackTilEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="-8dp"
+                android:hint="Enter Pin"
+                app:boxBackgroundColor="@color/transparent"
+                app:boxStrokeColor="@color/transparent"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:endIconMode="custom"
+                app:errorEnabled="false"
+                app:hintTextColor="@color/textColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <EditText
+                    android:id="@+id/pinEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:fontFamily="@font/sf_pro_text_bold"
+                    android:gravity="bottom"
+                    android:imeOptions="actionDone"
+                    android:importantForAutofill="no"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="16"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/textColor"
+                    android:textSize="16sp"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/textView373"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="34dp"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:text="@string/couponText"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/dimen_16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pinLayout"
+            tools:ignore="TextContrastCheck" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

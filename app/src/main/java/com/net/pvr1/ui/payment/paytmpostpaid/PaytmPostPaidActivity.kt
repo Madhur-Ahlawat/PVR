@@ -1,6 +1,7 @@
 package com.net.pvr1.ui.payment.paytmpostpaid
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
@@ -103,7 +104,11 @@ class PaytmPostPaidActivity : AppCompatActivity() {
                         Constant.BOOK_TYPE
                     )
                 } else {
-                    launchActivity(PaytmWebActivity::class.java,FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
+                    val intent = Intent(this@PaytmPostPaidActivity, PaytmWebActivity::class.java)
+                    intent.putExtra("pTypeId", intent.getStringExtra("pid"))
+                    intent.putExtra("paidAmount", paidAmount)
+                    intent.putExtra("title", title)
+                    startActivity(intent)
                 }
             }
         })

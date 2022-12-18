@@ -1591,6 +1591,36 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
 
+    /*******  Airtel PAY      ****************/
+
+    private val airtelPayLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val airtelPayResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = airtelPayLiveData
+
+    suspend fun airtelPay(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String
+    ) {
+        airtelPayLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.airtelPay(
+            userid, bookingid, booktype, transid, Constant.version, Constant.platform
+        )
+        airtelPayResponse(response)
+    }
+
+    private fun airtelPayResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            airtelPayLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            airtelPayLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            airtelPayLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
     /*******  promoCode      ****************/
 
 
@@ -1654,6 +1684,166 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             promoGyftLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             promoGyftLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    /*******  Zaggle Pay      ****************/
+
+    private val zaggalePayLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val zaggalePayResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = zaggalePayLiveData
+
+    suspend fun zaggalePay(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String,
+        cardNo: String,
+        pin:String,
+        type: String
+    ) {
+        zaggalePayLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.zagglePay(
+            userid, bookingid, booktype, transid,cardNo,pin,type, Constant.version, Constant.platform
+        )
+        zaggalePayResponse(response)
+    }
+
+    private fun zaggalePayResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            zaggalePayLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            zaggalePayLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            zaggalePayLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    /*******  Gift Card      ****************/
+
+    private val giftCardRedeemLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val giftCardRedeemResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = giftCardRedeemLiveData
+
+    suspend fun giftCardRedeem(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String,
+        cardNo: String,
+        pin:String,
+        type: String
+    ) {
+        giftCardRedeemLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.giftCardRedeem(
+            userid, bookingid, booktype, transid,cardNo,pin,type, Constant.version, Constant.platform
+        )
+        giftCardRedeemResponse(response)
+    }
+
+    private fun giftCardRedeemResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            giftCardRedeemLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            giftCardRedeemLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            giftCardRedeemLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+  /*******  ACCENTIVE_PROMO     ****************/
+
+    private val accentivePromoLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val accentivePromoResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = accentivePromoLiveData
+
+    suspend fun accentivePromo(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String,
+        promocode: String,
+    ) {
+        accentivePromoLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.accentivePromo(
+            userid, bookingid, booktype, transid,promocode, Constant.version, Constant.platform
+        )
+        accentivePromoResponse(response)
+    }
+
+    private fun accentivePromoResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            accentivePromoLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            accentivePromoLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            accentivePromoLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+ /*******  HYATT     ****************/
+
+    private val hyattSendOTPLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val hyattSendOTPResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = hyattSendOTPLiveData
+
+    suspend fun hyattSendOTP(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String,
+        mobile: String,
+    ) {
+        hyattSendOTPLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.sendOTPHYATT(
+            userid, bookingid, booktype, transid,mobile, Constant.version, Constant.platform
+        )
+        hyattSendOTPResponse(response)
+    }
+
+    private fun hyattSendOTPResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            hyattSendOTPLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            hyattSendOTPLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            hyattSendOTPLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    private val verfyOTPHYATTLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val verfyOTPHYATTResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = verfyOTPHYATTLiveData
+
+    suspend fun verfyOTPHYATT(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String,
+        mobile: String,
+        otp: String
+    ) {
+        verfyOTPHYATTLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.verifyOTPHYATT(
+            userid, bookingid, booktype, transid,mobile,otp, Constant.version, Constant.platform
+        )
+        verfyOTPHYATTResponse(response)
+    }
+
+    private fun verfyOTPHYATTResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            verfyOTPHYATTLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            verfyOTPHYATTLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            verfyOTPHYATTLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 

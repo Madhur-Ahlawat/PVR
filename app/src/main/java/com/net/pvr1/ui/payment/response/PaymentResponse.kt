@@ -36,7 +36,7 @@ data class PaymentResponse(
             val id: String,
             val imageUrl: String,
             val name: String,
-            val promomap: ArrayList<com.net.pvr1.ui.payment.response.Promomap>,
+            val promomap: ArrayList<Promomap>,
             val pty: String,
             val scheme: String,
             val tc: String
@@ -49,15 +49,11 @@ data class PaymentResponse(
             val id: String,
             val imageUrl: String,
             val name: String,
-            val promomap: List<Promomap>,
+            val promomap: ArrayList<Promomap>,
             val pty: String,
             val scheme: String,
             val tc: String
         ) : java.io.Serializable
 
-        data class Promomap(
-            val key: String,
-            val value: String
-        ) : java.io.Serializable
     }
 }

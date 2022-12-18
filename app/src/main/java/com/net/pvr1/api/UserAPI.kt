@@ -636,6 +636,18 @@ suspend fun postPaidHmac(
         @Query("pt") platform: String
     ): Response<PaytmHmacResponse>
 
+    /***   AIRTEL PAY      *****/
+
+    @POST("payment/airtel/airtelhmac")
+    suspend fun airtelPay(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
+
     /***   PROMO CODE       *****/
 
     @POST("payment/promocode")
@@ -659,6 +671,77 @@ suspend fun postPaidHmac(
         @Query("booktype") booktype: String,
         @Query("transid") transid: String,
         @Query("promocode") promocode: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
+
+
+    /***   Zaggle CARD       *****/
+
+    @POST("payment/zaggle/pay")
+    suspend fun zagglePay(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("cardnumber") cardnumber: String,
+        @Query("otporpin") otporpin: String,
+        @Query("type") type: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
+
+
+    /***   GIFT CARD       *****/
+
+    @POST("payment/qccard")
+    suspend fun giftCardRedeem(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("gccardnum") gccardnum: String,
+        @Query("gcpinnum") gcpinnum: String,
+        @Query("type") type: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
+
+    /***   ACCENTIVE_PROMO       *****/
+
+    @POST("payment/accentive")
+    suspend fun accentivePromo(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("promocode") promocode: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
+
+
+    /***   HYATT       *****/
+
+    @POST("payment/hyatt/otp")
+    suspend fun sendOTPHYATT(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("mobile") mobile: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
+
+    @POST("payment/hyatt")
+    suspend fun verifyOTPHYATT(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("mobile") mobile: String,
+        @Query("otp") otp: String,
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<PaytmHmacResponse>

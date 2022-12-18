@@ -19,29 +19,36 @@ import com.net.pvr1.ui.payment.adapter.CouponAdapter
 import com.net.pvr1.ui.payment.adapter.PaymentAdapter
 import com.net.pvr1.ui.payment.adapter.PaymentExclusiveAdapter
 import com.net.pvr1.ui.payment.cardDetails.CardDetailsActivity
-import com.net.pvr1.ui.payment.mCoupon.MCouponActivity
+import com.net.pvr1.ui.payment.giftcardredeem.GiftCardRedeemActivity
 import com.net.pvr1.ui.payment.paytmpostpaid.PaytmPostPaidActivity
 import com.net.pvr1.ui.payment.promoCode.PromoCodeActivity
 import com.net.pvr1.ui.payment.response.CouponResponse
 import com.net.pvr1.ui.payment.response.PaymentResponse
 import com.net.pvr1.ui.payment.response.PaytmHmacResponse
 import com.net.pvr1.ui.payment.response.UPIStatusResponse
-import com.net.pvr1.ui.payment.starPass.StarPassActivity
 import com.net.pvr1.ui.payment.viewModel.PaymentViewModel
+import com.net.pvr1.ui.payment.webView.PaytmWebActivity
 import com.net.pvr1.utils.*
+import com.net.pvr1.utils.Constant.Companion.ACCENTIVE
+import com.net.pvr1.utils.Constant.Companion.AIRTEL
 import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr1.utils.Constant.Companion.BOOK_TYPE
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr1.utils.Constant.Companion.CREDIT_CARD
 import com.net.pvr1.utils.Constant.Companion.DEBIT_CARD
+import com.net.pvr1.utils.Constant.Companion.GEIFT_CARD
 import com.net.pvr1.utils.Constant.Companion.GYFTR
+import com.net.pvr1.utils.Constant.Companion.HYATT
+import com.net.pvr1.utils.Constant.Companion.M_COUPON
 import com.net.pvr1.utils.Constant.Companion.NET_BANKING
 import com.net.pvr1.utils.Constant.Companion.PAYTMPOSTPAID
 import com.net.pvr1.utils.Constant.Companion.PAYTM_WALLET
 import com.net.pvr1.utils.Constant.Companion.PHONE_PE
 import com.net.pvr1.utils.Constant.Companion.PROMOCODE
+import com.net.pvr1.utils.Constant.Companion.STAR_PASS
 import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
 import com.net.pvr1.utils.Constant.Companion.UPI
+import com.net.pvr1.utils.Constant.Companion.ZAGGLE
 import com.phonepe.intent.sdk.api.PhonePe
 import com.phonepe.intent.sdk.api.TransactionRequestBuilder
 import dagger.hilt.android.AndroidEntryPoint
@@ -65,7 +72,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
     private var upi_count = 0
     private var upi_loader = false
 
-    companion object{
+    companion object {
         var isPromocodeApplied = false
     }
 
@@ -288,82 +295,132 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
 
     //Payment Option Clicks
     override fun paymentClick(paymentItem: PaymentResponse.Output.Gateway) {
-        if (paymentItem.id == UPI) {
-            authViewModel.paytmHMAC(
-                preferences.getUserId(),
-                Constant.BOOKING_ID,
-                Constant.TRANSACTION_ID,
-                false,
-                "",
-                Constant.BOOK_TYPE,
-                paymentItem.name,
-                "no",
-                "NO"
-            )
-        } else if (paymentItem.id == CREDIT_CARD) {
-            val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
-            intent.putExtra("pTypeId", paymentItem.id)
-            intent.putExtra("paidAmount", paidAmount)
-            startActivity(intent)
-        } else if (paymentItem.id == DEBIT_CARD) {
-            val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
-            intent.putExtra("pTypeId", paymentItem.id)
-            intent.putExtra("paidAmount", paidAmount)
-            startActivity(intent)
-        } else if (paymentItem.id == NET_BANKING) {
-            val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
-            intent.putExtra("pTypeId", paymentItem.id)
-            intent.putExtra("paidAmount", paidAmount)
-            startActivity(intent)
-        } else if (paymentItem.id == PHONE_PE) {
-            authViewModel.phonepeHMAC(preferences.getUserId(), BOOKING_ID, BOOK_TYPE,TRANSACTION_ID)
-        }else if (paymentItem.id == PAYTMPOSTPAID) {
-            val intent = Intent(this, PaytmPostPaidActivity::class.java)
-            intent.putExtra("type", "PP")
-            intent.putExtra("ca_a", paymentItem.ca_a)
-            intent.putExtra("ca_t", paymentItem.ca_t)
-            intent.putExtra("title", paymentItem.name)
-            intent.putExtra("paidAmount", paidAmount)
-            startActivity(intent)
-        }else if (paymentItem.id == PAYTM_WALLET) {
-            val intent = Intent(this, PaytmPostPaidActivity::class.java)
-            intent.putExtra("type", "P")
-            intent.putExtra("ca_a", paymentItem.ca_a)
-            intent.putExtra("ca_t", paymentItem.ca_t)
-            intent.putExtra("title", paymentItem.name)
-            intent.putExtra("paidAmount", paidAmount)
-            startActivity(intent)
-        }else if (paymentItem.id == GYFTR) {
-            val intent = Intent(this, PromoCodeActivity::class.java)
-            intent.putExtra("type", "GYFTR")
-            intent.putExtra("pid", paymentItem.id)
-            intent.putExtra("ca_a", paymentItem.ca_a)
-            intent.putExtra("ca_t", paymentItem.ca_t)
-            intent.putExtra("title", paymentItem.name)
-            intent.putExtra("paidAmount", paidAmount)
-            startActivity(intent)
-        }else if (paymentItem.id == PROMOCODE) {
-            val intent = Intent(this, PromoCodeActivity::class.java)
-            intent.putExtra("type", "PROMO")
-            intent.putExtra("pid", paymentItem.id)
-            intent.putExtra("ca_a", paymentItem.ca_a)
-            intent.putExtra("ca_t", paymentItem.ca_t)
-            intent.putExtra("title", paymentItem.name)
-            intent.putExtra("paidAmount", paidAmount)
 
-            //intent.putExtra(PCConstants.BI_PT,bi_pt);
-            try {
-                if (paymentItem?.promomap != null) {
-                    val bundle = Bundle()
-                    bundle.putParcelableArrayList(
-                        "Promomaplist",
-                        paymentItem.promomap as ArrayList<out Parcelable?>
-                    )
-                    intent.putExtras(bundle)
-                }
-            } catch (e: Exception) {
+        when (paymentItem.id.toUpperCase()) {
+            UPI -> {
+                authViewModel.paytmHMAC(
+                    preferences.getUserId(),
+                    Constant.BOOKING_ID,
+                    Constant.TRANSACTION_ID,
+                    false,
+                    "",
+                    Constant.BOOK_TYPE,
+                    paymentItem.name,
+                    "no",
+                    "NO"
+                )
             }
-            startActivity(intent)
+            CREDIT_CARD -> {
+                val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
+                intent.putExtra("pTypeId", paymentItem.id)
+                intent.putExtra("paidAmount", paidAmount)
+                intent.putExtra("title", paymentItem.name)
+                startActivity(intent)
+            }
+            AIRTEL -> {
+                val intent = Intent(this@PaymentActivity, PaytmWebActivity::class.java)
+                intent.putExtra("pTypeId", paymentItem.id)
+                intent.putExtra("paidAmount", paidAmount)
+                intent.putExtra("title", paymentItem.name)
+                startActivity(intent)
+            }
+            DEBIT_CARD -> {
+                val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
+                intent.putExtra("pTypeId", paymentItem.id)
+                intent.putExtra("paidAmount", paidAmount)
+                intent.putExtra("title", paymentItem.name)
+                startActivity(intent)
+            }
+            NET_BANKING -> {
+                val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
+                intent.putExtra("pTypeId", paymentItem.id)
+                intent.putExtra("title", paymentItem.name)
+                intent.putExtra("paidAmount", paidAmount)
+                startActivity(intent)
+            }
+            PHONE_PE -> {
+                authViewModel.phonepeHMAC(
+                    preferences.getUserId(),
+                    BOOKING_ID,
+                    BOOK_TYPE,
+                    TRANSACTION_ID
+                )
+            }
+            PAYTMPOSTPAID -> {
+                val intent = Intent(this, PaytmPostPaidActivity::class.java)
+                intent.putExtra("type", "PP")
+                intent.putExtra("ca_a", paymentItem.ca_a)
+                intent.putExtra("ca_t", paymentItem.ca_t)
+                intent.putExtra("title", paymentItem.name)
+                intent.putExtra("paidAmount", paidAmount)
+                startActivity(intent)
+            }
+            PAYTM_WALLET -> {
+                val intent = Intent(this, PaytmPostPaidActivity::class.java)
+                intent.putExtra("type", "P")
+                intent.putExtra("ca_a", paymentItem.ca_a)
+                intent.putExtra("ca_t", paymentItem.ca_t)
+                intent.putExtra("title", paymentItem.name)
+                intent.putExtra("paidAmount", paidAmount)
+                startActivity(intent)
+            }
+            GYFTR -> {
+                val intent = Intent(this, PromoCodeActivity::class.java)
+                intent.putExtra("type", "GYFTR")
+                intent.putExtra("pid", paymentItem.id)
+                intent.putExtra("ca_a", paymentItem.ca_a)
+                intent.putExtra("ca_t", paymentItem.ca_t)
+                intent.putExtra("title", paymentItem.name)
+                intent.putExtra("paidAmount", paidAmount)
+                startActivity(intent)
+            }
+            GEIFT_CARD -> {
+                val intent = Intent(this, GiftCardRedeemActivity::class.java)
+                intent.putExtra("type", "GEIFT_CARD")
+                intent.putExtra("pid", paymentItem.id)
+                intent.putExtra("tc", paymentItem.tc)
+                intent.putExtra("c", paymentItem.c)
+                intent.putExtra("ca_a", paymentItem.ca_a)
+                intent.putExtra("ca_t", paymentItem.ca_t)
+                intent.putExtra("title", paymentItem.name)
+                intent.putExtra("paidAmount", paidAmount)
+                startActivity(intent)
+            }
+            ZAGGLE -> {
+                val intent = Intent(this, GiftCardRedeemActivity::class.java)
+                intent.putExtra("type", "ZAGGLE")
+                intent.putExtra("pid", paymentItem.id)
+                intent.putExtra("tc", paymentItem.tc)
+                intent.putExtra("c", paymentItem.c)
+                intent.putExtra("ca_a", paymentItem.ca_a)
+                intent.putExtra("ca_t", paymentItem.ca_t)
+                intent.putExtra("title", paymentItem.name)
+                intent.putExtra("paidAmount", paidAmount)
+                startActivity(intent)
+            }
+            PROMOCODE -> {
+                val intent = Intent(this, PromoCodeActivity::class.java)
+                intent.putExtra("type", "PROMO")
+                intent.putExtra("pid", paymentItem.id)
+                intent.putExtra("ca_a", paymentItem.ca_a)
+                intent.putExtra("ca_t", paymentItem.ca_t)
+                intent.putExtra("title", paymentItem.name)
+                intent.putExtra("paidAmount", paidAmount)
+
+                //intent.putExtra(PCConstants.BI_PT,bi_pt);
+                try {
+                    if (paymentItem?.promomap != null) {
+                        val bundle = Bundle()
+                        bundle.putParcelableArrayList(
+                            "Promomaplist",
+                            paymentItem.promomap as ArrayList<out Parcelable?>
+                        )
+                        intent.putExtras(bundle)
+                    }
+                } catch (e: Exception) {
+                }
+                startActivity(intent)
+            }
         }
     }
 
@@ -509,7 +566,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                     )
                 }
 
-            }else{
+            } else {
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
                     R.string.app_name,
@@ -520,12 +577,17 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                     negativeClick = {})
                 dialog.show()
             }
-        }else if (resultCode == 300){
+        } else if (resultCode == 300) {
             var bundle: Bundle
             val txnResult: String? = null
             if (data != null) {
                 if (resultCode == RESULT_OK) {
-                    authViewModel.phonepeStatus(preferences.getUserId(), BOOKING_ID, BOOK_TYPE,TRANSACTION_ID)
+                    authViewModel.phonepeStatus(
+                        preferences.getUserId(),
+                        BOOKING_ID,
+                        BOOK_TYPE,
+                        TRANSACTION_ID
+                    )
                 } else if (resultCode == RESULT_CANCELED) {
                     val dialog = OptionDialog(this,
                         R.mipmap.ic_launcher,
@@ -544,24 +606,67 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
     }
 
 
-    override fun paymentExclusiveClick(comingSoonItem: PaymentResponse.Output.Offer) {
-        when (comingSoonItem.name) {
-            "Star Pass" -> {
-                val intent = Intent(this@PaymentActivity, StarPassActivity::class.java)
+    override fun paymentExclusiveClick(paymentItem: PaymentResponse.Output.Offer) {
+        when (paymentItem.id) {
+            PROMOCODE -> {
+                val intent = Intent(this, PromoCodeActivity::class.java)
+                intent.putExtra("type", "PROMO")
+                intent.putExtra("pid", paymentItem.id)
+                intent.putExtra("ca_a", paymentItem.ca_a)
+                intent.putExtra("ca_t", paymentItem.ca_t)
+                intent.putExtra("title", paymentItem.name)
+                intent.putExtra("paidAmount", paidAmount)
+
+                //intent.putExtra(PCConstants.BI_PT,bi_pt);
+                try {
+                    if (paymentItem?.promomap != null) {
+                        val bundle = Bundle()
+                        bundle.putParcelableArrayList(
+                            "Promomaplist",
+                            paymentItem.promomap as ArrayList<out Parcelable?>
+                        )
+                        intent.putExtras(bundle)
+                    }
+                } catch (e: Exception) {
+                }
+                startActivity(intent)
+            }
+            GYFTR -> {
+                val intent = Intent(this, PromoCodeActivity::class.java)
+                intent.putExtra("type", "PROMO")
+                intent.putExtra("pid", paymentItem.id)
+                intent.putExtra("ca_a", paymentItem.ca_a)
+                intent.putExtra("ca_t", paymentItem.ca_t)
+                intent.putExtra("title", paymentItem.name)
                 intent.putExtra("paidAmount", paidAmount)
                 startActivity(intent)
             }
-            "M-Coupon" -> {
-                val intent = Intent(this@PaymentActivity, MCouponActivity::class.java)
+            HYATT -> {
+                val intent = Intent(this, PromoCodeActivity::class.java)
+                intent.putExtra("type", "HYATT")
+                intent.putExtra("pid", paymentItem.id)
+                intent.putExtra("ca_a", paymentItem.ca_a)
+                intent.putExtra("ca_t", paymentItem.ca_t)
+                intent.putExtra("title", paymentItem.name)
                 intent.putExtra("paidAmount", paidAmount)
                 startActivity(intent)
             }
-            "Promocode" -> {
-                val intent = Intent(this@PaymentActivity, PromoCodeActivity::class.java)
+            ACCENTIVE -> {
+                val intent = Intent(this, PromoCodeActivity::class.java)
+                intent.putExtra("type", "ACCENTIVE")
+                intent.putExtra("pid", paymentItem.id)
+                intent.putExtra("ca_a", paymentItem.ca_a)
+                intent.putExtra("ca_t", paymentItem.ca_t)
+                intent.putExtra("title", paymentItem.name)
                 intent.putExtra("paidAmount", paidAmount)
                 startActivity(intent)
             }
-            "Hyatt Dining Club" -> {
+            STAR_PASS -> {
+                val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
+                intent.putExtra("paidAmount", paidAmount)
+                startActivity(intent)
+            }
+            M_COUPON -> {
                 val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
                 intent.putExtra("paidAmount", paidAmount)
                 startActivity(intent)
@@ -658,9 +763,9 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 is NetworkResult.Success -> {
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
 
-                        if (it.data.output.p != "false"){
+                        if (it.data.output.p != "false") {
                             Constant().printTicket(this@PaymentActivity)
-                        }else{
+                        } else {
                             val dialog = OptionDialog(this,
                                 R.mipmap.ic_launcher,
                                 R.string.app_name,

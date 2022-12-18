@@ -110,61 +110,172 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view228" />
 
-        <RelativeLayout
-            android:id="@+id/ccLayout"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dimen_70dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mainView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="26dp"
-            android:layout_weight="1.2"
-            android:background="@drawable/text_curve"
-            android:gravity="center"
-            android:paddingStart="@dimen/dimen_10dp"
-            android:paddingTop="@dimen/dimen_8dp"
-            android:paddingEnd="@dimen/dimen_5dp"
-            android:paddingBottom="@dimen/dimen_5dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView371">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ccInputLayout"
-                style="@style/styledBlackTilEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="-8dp"
-                android:hint="@string/enter_promocode"
-                app:boxBackgroundColor="@color/transparent"
-                app:boxStrokeColor="@color/transparent"
-                app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp"
-                app:endIconMode="custom"
-                app:errorEnabled="false"
-                app:hintTextColor="@color/textColor"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <RelativeLayout
+                android:id="@+id/ccLayout"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dimen_70dp"
+                android:layout_weight="1.2"
+                android:background="@drawable/text_curve"
+                android:gravity="center"
+                android:paddingStart="@dimen/dimen_10dp"
+                android:paddingTop="@dimen/dimen_8dp"
+                android:paddingEnd="@dimen/dimen_5dp"
+                android:paddingBottom="@dimen/dimen_5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <EditText
-                    android:id="@+id/ccEditText"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ccInputLayout"
+                    style="@style/styledBlackTilEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:digits="1234567890"
-                    android:fontFamily="@font/sf_pro_text_bold"
-                    android:gravity="bottom"
-                    android:imeOptions="actionDone"
-                    android:inputType="textCapCharacters"
-                    android:maxLength="16"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/textColor"
-                    android:textSize="16sp"
-                    tools:ignore="SpeakableTextPresentCheck"
-                    android:importantForAutofill="no" />
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="-8dp"
+                    android:hint="@string/enter_promocode"
+                    app:boxBackgroundColor="@color/transparent"
+                    app:boxStrokeColor="@color/transparent"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:endIconMode="custom"
+                    app:errorEnabled="false"
+                    app:hintTextColor="@color/textColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            </com.google.android.material.textfield.TextInputLayout>
-        </RelativeLayout>
+                    <EditText
+                        android:id="@+id/ccEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:fontFamily="@font/sf_pro_text_bold"
+                        android:gravity="bottom"
+                        android:imeOptions="actionDone"
+                        android:importantForAutofill="no"
+                        android:inputType="textCapCharacters"
+                        android:maxLength="16"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/textColor"
+                        android:textSize="16sp"
+                        tools:ignore="SpeakableTextPresentCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/hayattView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_70dp"
+                android:background="@drawable/text_curve"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/dimen_10dp"
+                android:paddingTop="@dimen/dimen_8dp"
+                android:paddingEnd="@dimen/dimen_5dp"
+                android:paddingBottom="@dimen/dimen_5dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ccLayout">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/phoneLayout"
+                    style="@style/styledBlackTilEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="-8dp"
+                    android:hint="@string/enter_promocode"
+                    app:boxBackgroundColor="@color/transparent"
+                    app:boxStrokeColor="@color/transparent"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:endIconMode="custom"
+                    app:errorEnabled="false"
+                    app:hintTextColor="@color/textColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <EditText
+                        android:id="@+id/phonelIdEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:digits="0123456789"
+                        android:fontFamily="@font/sf_pro_text_bold"
+                        android:gravity="bottom"
+                        android:imeOptions="actionDone"
+                        android:importantForAutofill="no"
+                        android:inputType="phone"
+                        android:maxLength="10"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/textColor"
+                        android:textSize="16sp"
+                        tools:ignore="SpeakableTextPresentCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/otpLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="@dimen/spacing_between_msg_and_editext_bottom"
+                    android:visibility="visible">
+
+                    <com.kevinschildhorn.otpview.OTPView
+                        android:id="@+id/otpEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="true"
+                        android:inputType="number"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:otp_backgroundImage="@drawable/background"
+                        app:otp_filledBackgroundImage="@drawable/background"
+                        app:otp_highlightedBackgroundImage="@drawable/background_highlighted"
+                        app:otp_itemCount="6"
+                        app:otp_itemHeight="42dp"
+                        app:otp_itemWidth="42dp"
+                        app:otp_showCursor="false" />
+
+                    <TextView
+                        android:id="@+id/textView14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="30dp"
+                        android:drawablePadding="@dimen/dimen_5dp"
+                        android:fontFamily="@font/helvetica_neu_medium"
+                        android:gravity="center"
+                        android:text="@string/resend_otp"
+                        android:textAllCaps="false"
+                        android:textColor="#2f2f2f"
+                        android:textSize="@dimen/dimen_14sp"
+                        android:visibility="visible"
+                        app:drawableEndCompat="@drawable/ic_yellow"
+                        app:layout_constraintEnd_toEndOf="@+id/otpEditText"
+                        app:layout_constraintTop_toBottomOf="@+id/otpEditText" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <TextView
@@ -178,7 +289,7 @@
             android:textSize="@dimen/dimen_16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ccLayout"
+            app:layout_constraintTop_toBottomOf="@+id/mainView"
             tools:ignore="TextContrastCheck" />
 
 

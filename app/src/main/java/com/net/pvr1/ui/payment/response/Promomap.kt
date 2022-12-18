@@ -3,7 +3,7 @@ package com.net.pvr1.ui.payment.response
 import android.os.Parcel
 import android.os.Parcelable
 
-class Promomap protected constructor(`in`: Parcel) : Parcelable {
+class Promomap private constructor(`in`: Parcel) : Parcelable {
     var key: String?
     var value: String?
 
