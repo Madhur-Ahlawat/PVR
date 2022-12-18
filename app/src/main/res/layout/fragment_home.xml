@@ -42,17 +42,37 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0" />
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout135"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <include
+                        android:id="@+id/homeRecommend"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/home_recommended"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerCinemaCat"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_15dp"
+                    android:layout_marginTop="8dp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toTopOf="@+id/recyclerMovies"
                     app:layout_constraintEnd_toEndOf="@+id/vwMain1s"
                     app:layout_constraintHorizontal_bias="0.448"
                     app:layout_constraintStart_toStartOf="@+id/vwMain1s"
-                    app:layout_constraintTop_toTopOf="@+id/vwMain1s"
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerPromotion"
                     tools:ignore="SpeakableTextPresentCheck"
                     tools:itemCount="3"
                     tools:listitem="@layout/item_home_image" />
@@ -60,6 +80,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/quickBook"
                     android:layout_width="0dp"
+                    android:visibility="gone"
                     android:layout_height="@dimen/dimen_60dp"
                     android:layout_marginTop="@dimen/dimen_15dp"
                     android:background="@drawable/bg_quick_book"
@@ -101,6 +122,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_15dp"
                     tools:itemCount="3"
+                    android:visibility="gone"
                     tools:listitem="@layout/item_home_slider"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -108,21 +130,22 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/quickBook" />
 
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerPromotion"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_20dp"
+                    android:layout_marginTop="8dp"
                     android:background="@color/transparent"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/recyclerViewSlider"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout135"
                     tools:ignore="SpeakableTextPresentCheck"
                     tools:itemCount="2"
                     tools:listitem="@layout/item_home_prmotion" />
-
 
                 <com.google.android.material.tabs.TabLayout
                     android:visibility="gone"
@@ -146,7 +169,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/vwMain1s"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/vwMain1s"
-                    app:layout_constraintTop_toBottomOf="@+id/promotionPosition"
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerCinemaCat"
                     app:spanCount="2"
                     tools:itemCount="2"
                     tools:listitem="@layout/item_home_cinema_list" />

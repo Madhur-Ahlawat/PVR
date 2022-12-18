@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:id="@+id/rlRecomm"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/CLImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ivRecomm"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintDimensionRatio="H,1:0.4625"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                tool:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/playBtn"
+                android:layout_width="@dimen/dimen_35dp"
+                android:layout_height="@dimen/dimen_35dp"
+                android:layout_marginEnd="@dimen/dimen_16dp"
+                android:layout_marginBottom="@dimen/dimen_25dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/ic_group_play"
+                tool:ignore="ContentDescription" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <LinearLayout
+            android:id="@+id/llRecomm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/CLImage"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="-16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/rectangle_shape_gray"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/CLLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tvNewRe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#ffcb07"
+                    android:paddingStart="12dp"
+                    android:paddingTop="3dp"
+                    android:paddingEnd="6dp"
+                    android:paddingBottom="3dp"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="11sp"
+                    android:visibility="gone"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tool:text="New Release" />
+
+                <TextView
+                    android:id="@+id/tvRecomm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="6dp"
+                    android:textColor="@color/gray"
+                    android:textSize="11sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvNewRe"
+                    tool:text="Treanding" />
+
+
+                <TextView
+                    android:id="@+id/tvMovie"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="4dp"
+                    android:ellipsize="end"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxLines="1"
+                    android:scrollHorizontally="true"
+                    android:text=""
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/tvBook"
+                    app:layout_constraintTop_toBottomOf="@id/tvRecomm"
+                    tool:text="NAME" />
+
+
+                <TextView
+                    android:id="@+id/tvCensorLang"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text=""
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="@id/tvMovie"
+                    app:layout_constraintRight_toLeftOf="@+id/tvBook"
+                    app:layout_constraintTop_toBottomOf="@id/tvMovie"
+                    tool:text="A • English, Hindi" />
+
+
+                <TextView
+                    android:id="@+id/tvGenre"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="12dp"
+                    android:text=""
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="@id/tvCensorLang"
+                    app:layout_constraintTop_toBottomOf="@id/tvCensorLang"
+                    tool:text="Drama" />
+
+                <TextView
+                    android:id="@+id/genrePlus"
+                    style="@style/SearchText_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_6dp"
+                    android:layout_marginBottom="@dimen/dimen_5dp"
+                    android:background="@drawable/yellow_curve_four"
+                    android:backgroundTint="#B3828282"
+                    android:paddingStart="@dimen/dimen_5dp"
+                    android:paddingEnd="@dimen/dimen_5dp"
+                    android:text="+2"
+                    android:textColor="@color/black"
+                    android:textSize="11sp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tvGenre"
+                    app:layout_constraintTop_toBottomOf="@id/tvCensorLang" />
+
+
+                <TextView
+                    android:id="@+id/tvBook"
+                    android:layout_width="88dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/yellow_book_curve"
+                    android:gravity="center"
+                    android:text="@string/book"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/CLLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+
+                <TextView
+                    android:id="@+id/tvRecomm_new"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginRight="12dp"
+                    android:text="@string/trending"
+                    android:textAllCaps="true"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/tvMovie_new"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="12dp"
+                    android:ellipsize="end"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxLines="1"
+                    android:scrollHorizontally="true"
+                    android:text=""
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvRecomm_new"
+                    tool:text="NAME" />
+
+
+                <TextView
+                    android:id="@+id/tvTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginRight="12dp"
+                    android:text=""
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvMovie_new"
+                    tool:text="Tuesday, Sep 4 • 8:30 PM" />
+
+
+                <TextView
+                    android:id="@+id/tvPlace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginRight="12dp"
+                    android:text=""
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvTime"
+                    tool:text="PVR Rajnigandha Gold Select City" />
+
+
+                <TextView
+                    android:id="@+id/tvLeave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="12dp"
+                    android:text=""
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="11sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPlace"
+                    tool:text="PVR Rajnigandha Gold Select City" />
+
+
+                <LinearLayout
+                    android:id="@+id/llOlA"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:weightSum="2"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvLeave">
+
+                    <TextView
+                        android:id="@+id/tvOLA"
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rectangle_corner_white_border"
+                        android:elevation="3dp"
+                        android:gravity="center"
+                        android:letterSpacing="1.2"
+                        android:text="@string/book_ola"
+                        android:textColor="@color/pvr_dark_black"
+                        android:visibility="visible" />
+
+
+                    <TextView
+                        android:id="@+id/tvOpenM"
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/round_yellow_corners"
+                        android:elevation="3dp"
+                        android:gravity="center"
+                        android:letterSpacing="1.2"
+                        android:text="@string/open_m_ticket"
+                        android:textColor="@color/pvr_dark_black" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llRedeem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/llOlA">
+
+
+                    <ImageView
+                        android:id="@+id/ivDotted"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/doted_line"
+                        tool:ignore="ContentDescription" />
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp">
+
+
+                        <TextView
+                            android:id="@+id/tvVou"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/pvr_dark_black"
+                            android:textSize="16sp"
+                            tool:text="You have 5 food vouchers" />
+
+
+                        <TextView
+                            android:id="@+id/tvRedeem_Vou"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tvVou"
+                            android:layout_marginTop="8dp"
+                            android:textColor="#828282"
+                            android:textSize="12sp"
+                            tool:text="Redeem at the cinema food counter" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

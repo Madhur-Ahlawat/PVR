@@ -7,13 +7,14 @@
     <LinearLayout
         android:id="@+id/linearStoryLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <include
-            android:id="@+id/storyLayout"
+            android:id="@+id/includeStoryLayout"
             layout="@layout/story_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
 
     </LinearLayout>
     <LinearLayout

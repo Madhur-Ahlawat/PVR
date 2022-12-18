@@ -49,12 +49,9 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     HomePromotionAdapter.RecycleViewItemClickListener,
     HomeMoviesAdapter.RecycleViewItemClickListener, HomeTrailerAdapter.RecycleViewItemClickListener,
     GenericFilterHome.onButtonSelected, StoriesProgressView.StoriesListener {
-    private var appliedFilterType = ""
-    private var appliedFilterItem = HashMap<String, String>()
-
+    private var binding: FragmentHomeBinding? = null
     @Inject
     lateinit var preferences: PreferenceManager
-    private var binding: FragmentHomeBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel by activityViewModels<HomeViewModel>()
     private var onButtonSelected: GenericFilterHome.onButtonSelected = this
@@ -66,13 +63,14 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     private var buttonPressed = ArrayList<String>()
     private var generseleced: ArrayList<String?>? = ArrayList<String?>()
 
-
+// story board
     private var pressTime = 0L
     private var limit = 500L
     private var counterStory = 0
-    private var bannerModels: ArrayList<HomeResponse.Pu> = ArrayList<HomeResponse.Pu>()
     private var currentPage = 1
-
+    private var appliedFilterType = ""
+    private var appliedFilterItem = HashMap<String, String>()
+    private var bannerModels: ArrayList<HomeResponse.Pu> = ArrayList<HomeResponse.Pu>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,9 +84,9 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //        if (binding?.bannerLayout?.storyLayout?.stories != null) {
-//            binding?.bannerLayout?.storyLayout?.stories!!.destroy()
-//        }
+        if (binding?.bannerLayout?.includeStoryLayout?.stories== null) {
+            binding?.bannerLayout?.includeStoryLayout?.stories?.destroy()
+        }
 
         (requireActivity().findViewById(R.id.include) as ConstraintLayout).show()
         (requireActivity().findViewById(R.id.notify) as ImageView).show()
@@ -169,16 +167,16 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private val onTouchListener = OnTouchListener { v, event ->
+    private val onTouchListener = OnTouchListener { _, event ->
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 pressTime = System.currentTimeMillis()
-                binding?.bannerLayout?.storyLayout?.stories ?.pause()
+                binding?.bannerLayout?.includeStoryLayout?.stories?.pause()
                 return@OnTouchListener false
             }
             MotionEvent.ACTION_UP -> {
                 val now = System.currentTimeMillis()
-                binding?.bannerLayout?.storyLayout?.stories ?.resume()
+                binding?.bannerLayout?.includeStoryLayout?.stories?.resume()
                 return@OnTouchListener limit < now - pressTime
             }
         }
@@ -259,7 +257,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         binding?.recyclerPromotion?.layoutManager = gridLayoutSlider
         binding?.recyclerPromotion?.adapter = PromotionAdapter(requireActivity(), output.ph)
 
-
         //Movies
         val gridLayoutMovies = GridLayoutManager(context, 2)
         binding?.recyclerMovies?.layoutManager = LinearLayoutManager(context)
@@ -298,8 +295,10 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         }
 
 
-//        initBanner(output.pu)
+        if (output.rm!=null){
 
+        }
+        initBanner(output.pu)
     }
 
     override fun onCategoryClick(comingSoonItem: HomeResponse.Mfi) {
@@ -368,10 +367,10 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                     buttonPressed.clear()
                 }
             }
-            val containGeners = type.contains("geners")
-            if (containGeners) {
+            val containGenres = type.contains("geners")
+            if (containGenres) {
                 val index = type.indexOf("geners")
-                var value: String = filterItemSelected.get(type[index])!!
+                var value: String = filterItemSelected[type[index]]!!
                 if (value != null && !value.equals("", ignoreCase = true)) {
                     appliedFilterType = "geners"
                     generseleced?.clear()
@@ -389,7 +388,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             val containAccessability = type.contains("accessability")
             if (containAccessability) {
                 val index = type.indexOf("accessability")
-                val value: String = filterItemSelected.get(type[index])!!
+                val value: String = filterItemSelected[type[index]]!!
 //                if (value != null && !value.equals("", ignoreCase = true)) {
 //                    if (value.equals("Subtitle", ignoreCase = true)) special = output.getMspecial().get(0)
 //                } else {
@@ -477,13 +476,13 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
         if ((bannerModels != null) && bannerModels.isNotEmpty()) {
             (requireActivity().findViewById(R.id.RlBanner) as RelativeLayout).show()
-            binding?.bannerLayout?.storyLayout?.stories ?.setStoriesCount(bannerModels.size) // <- set stories
-            binding?.bannerLayout?.storyLayout?.stories ?.setStoryDuration(5000L) // <- set a story duration
-            binding?.bannerLayout?.storyLayout?.stories ?.setStoriesListener(this) // <- set listener
-            binding?.bannerLayout?.storyLayout?.stories ?.startStories() // <- start progress
+            binding?.bannerLayout?.includeStoryLayout?.stories?.setStoriesCount(bannerModels.size) // <- set stories
+            binding?.bannerLayout?.includeStoryLayout?.stories?.setStoryDuration(5000L) // <- set a story duration
+            binding?.bannerLayout?.includeStoryLayout?.stories?.setStoriesListener(this) // <- set listener
+            binding?.bannerLayout?.includeStoryLayout?.stories?.startStories() // <- start progress
             counterStory = 0
             if (!TextUtils.isEmpty(bannerModels[counterStory].i)) {
-                Picasso.get().load(bannerModels[counterStory].i).into(binding?.bannerLayout?.storyLayout?.ivBanner, object : Callback {
+                Picasso.get().load(bannerModels[counterStory].i).into(binding?.bannerLayout?.includeStoryLayout?.ivBanner, object : Callback {
                         override fun onSuccess() {
                             (requireActivity().findViewById(R.id.RlBanner) as RelativeLayout).show()
 
@@ -495,11 +494,11 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
 
 
-            binding?.bannerLayout?.storyLayout?.reverse?.setOnClickListener { binding?.bannerLayout?.storyLayout?.stories ?.reverse() }
-            binding?.bannerLayout?.storyLayout?.reverse?.setOnTouchListener(onTouchListener)
+            binding?.bannerLayout?.includeStoryLayout?.reverse?.setOnClickListener { binding?.bannerLayout?.includeStoryLayout?.stories ?.reverse() }
+            binding?.bannerLayout?.includeStoryLayout?.reverse?.setOnTouchListener(onTouchListener)
             showButton(bannerModels[0])
-            binding?.bannerLayout?.storyLayout?.skip?.setOnClickListener { binding?.bannerLayout?.storyLayout?.stories ?.skip() }
-            binding?.bannerLayout?.storyLayout?.skip?.setOnTouchListener(onTouchListener)
+            binding?.bannerLayout?.includeStoryLayout?.skip?.setOnClickListener { binding?.bannerLayout?.includeStoryLayout?.stories ?.skip() }
+            binding?.bannerLayout?.includeStoryLayout?.skip?.setOnTouchListener(onTouchListener)
             binding?.bannerLayout?.tvButton?.setOnClickListener {
                 (requireActivity().findViewById(R.id.RlBanner) as RelativeLayout).hide()
                 if (bannerModels != null && bannerModels.size > 0 && bannerModels[counterStory].type != "image"
@@ -592,15 +591,12 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         if (!TextUtils.isEmpty(bannerModels[counterStory].i)) {
             ++counterStory
             showButton(bannerModels[counterStory])
-            Glide.with(this)
-                .load(bannerModels[counterStory].i)
-                .into(binding?.bannerLayout?.storyLayout?.ivBanner!!)
+            binding?.bannerLayout?.includeStoryLayout?.ivBanner?.let {
+                Glide.with(this)
+                    .load(bannerModels[counterStory].i)
+                    .into(it)
+            }
 
-//            ImageLoader.getInstance().displayImage(
-//                bannerModels[counterStory].i,
-//                ivBanner,
-//                Constant.storiesImageOption
-//            )
         }
     }
 
@@ -609,20 +605,18 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         if (!TextUtils.isEmpty(bannerModels[counterStory].i)) {
             --counterStory
             showButton(bannerModels[counterStory])
-            Glide.with(this)
-                .load(bannerModels[counterStory].i)
-                .into(binding?.bannerLayout?.storyLayout?.ivBanner!!)
-//            ImageLoader.getInstance().displayImage(
-//                bannerModels[counterStory].i,
-//                ivBanner,
-//                PCApplication.storiesImageOption
-//            )
+            binding?.bannerLayout?.includeStoryLayout?.ivBanner?.let {
+                Glide.with(this)
+                    .load(bannerModels[counterStory].i)
+                    .into(it)
+            }
+
         }
     }
 
     override fun onComplete() {
-        binding?.bannerLayout?.storyLayout?.stories ?.destroy()
-        binding?.bannerLayout?.storyLayout?.stories ?.startStories()
+        binding?.bannerLayout?.includeStoryLayout?.stories ?.destroy()
+        binding?.bannerLayout?.includeStoryLayout?.stories ?.startStories()
         currentPage = 0
         (requireActivity().findViewById(R.id.RlBanner) as RelativeLayout).hide()
     }

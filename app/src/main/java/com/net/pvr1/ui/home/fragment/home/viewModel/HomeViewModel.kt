@@ -15,6 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
 
+
     val userResponseLiveData: LiveData<NetworkResult<HomeResponse>>
         get() = userRepository.homeResponseLiveData
 
@@ -25,6 +26,9 @@ class HomeViewModel @Inject constructor(private val userRepository: UserReposito
             ,type,lng,gener,spShow,isSpi)
         }
     }
+
+
+    //offer
     val userResponseOfferLiveData: LiveData<NetworkResult<OfferResponse>>
         get() = userRepository.offerDetailsResponseLiveData
 
