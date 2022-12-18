@@ -18,13 +18,13 @@ data class HomeResponse(
         val m: List<Any>,
         val mf: List<String>,
         val mfi: List<Mfi>,
-        val mgener: List<String>,
-        val mlng: List<String>,
+        val mgener: ArrayList<String>,
+        val mlng: ArrayList<String>,
         val mspecial: List<Any>,
         val msps: List<Any>,
         val mv: List<Mv>,
         val ph: ArrayList<Ph>,
-        val pu: List<Pu>,
+        val pu: ArrayList<Pu>,
         val rm: Rm,
         val vban: Any
     ):Serializable

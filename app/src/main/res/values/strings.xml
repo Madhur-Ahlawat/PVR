@@ -439,43 +439,13 @@
     <string name="apply_filter">Apply Filter</string>
     <string name="reset">Reset</string>
     <string name="accessibility">Accessibility</string>
-
-    <string name="resend_otp_post_paid">Resend OTP</string>
-    <string name="no_refund_post_paid">Paytm Postpaid will not be refuded for cancellation</string>
-    <string name="post_paid_otp_enter">You need to enter the OTP received</string>
-    <string name="confirm_msz">Do you want to end the session?</string>
-    <string name="payable_amnt_rs">"PAYABLE AMOUNT ₹ "</string>
-    <string name="promo_code_msg">We promise to keep your promocode safe</string>
-
-    <string name="card_number_msg_required">Card Number is required</string>
-    <string name="card_number_msg_invalid">Invalid Card Number</string>
-    <string name="card_pin_msg">We promise to keep your pin safe</string>
-    <string name="card_number_msg">We promise to keep your card number safe</string>
-    <string name="card_pin_msg_required">Pin is required</string>
-    <string name="card_pin_msg_invalid">Invalid Pin</string>
-    <string name="error_msg_mobile">enter mobile number separated by comma</string>
-    <string name="error_msg_email">enter email address separated by comma</string>
-    <string name="shared_successfully">Shared successfully</string>
-    <string name="apply_name">APPLY</string>
-
-    <string name="promo_code_msg_required">Promocode is required</string>
-    <string name="promo_code_msg_invalid">Invalid Promocode</string>
-
-    <string name="email_msg">We promise to keep the noise low</string>
-    <string name="mobile_msg">We will only use your number for transactional information</string>
-    <string name="password_msg">Your password should have at least 6 characters</string>
-    <string name="otp_msg">You need to enter the OTP received</string>
-    <string name="comment_msg">Your message should have at least 15 characters</string>
-    <string name="name_msg_required">Your name is required</string>
-
-    <string name="email_msg_required">Your email address is required</string>
-    <string name="mobile_msg_required">Your mobile number is required</string>
-    <string name="password_msg_required">Your password is required</string>
-    <string name="otp_msg_required">Your otp is required</string>
-    <string name="comment_msg_required">Your message should have at least 15 characters</string>
-    <string name="past_ticket_text">Previous Bookings</string>
-
-    <string name="mobile_msg_invalid">Invalid mobile number</string>
-    <string name="password_msg_invalid">You entered an invalid password</string>
-    <string name="otp_sent">OTP Sent</string>
+    <string name="languages">Languages</string>
+    <string name="filters">Filters</string>
+    <string name="genre">Genre</string>
+    <string name="format">Format</string>
+    <string name="show_time">Show Time</string>
+    <string name="price_range">Price Range</string>
+    <string name="cinema_format">Cinema Format</string>
+    <string name="_8_00">8:00</string>
+    <string name="_24_00">24:00</string>
 </resources>

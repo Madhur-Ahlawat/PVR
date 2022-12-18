@@ -16,7 +16,7 @@ import com.net.pvr1.utils.show
 
 class HomeTrailerAdapter(
     private var context: Context,
-    private var nowShowingList: List<HomeResponse.Mv>,
+    private var nowShowingList: List<HomeResponse.Cp>,
     private var listener: RecycleViewItemClickListener,
 
     ) :
@@ -33,7 +33,7 @@ class HomeTrailerAdapter(
 
         //Image
         Glide.with(context)
-            .load(comingSoonItem.wit)
+            .load(comingSoonItem.i)
             .error(R.drawable.app_icon)
             .into(holder.image)
 
@@ -62,7 +62,7 @@ class HomeTrailerAdapter(
     }
 
     interface RecycleViewItemClickListener {
-        fun onTrailerClick(comingSoonItem: HomeResponse.Mv)
+        fun onTrailerClick(comingSoonItem: HomeResponse.Cp)
     }
 
 }

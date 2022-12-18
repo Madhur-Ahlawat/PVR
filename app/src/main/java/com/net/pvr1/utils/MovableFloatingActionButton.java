@@ -42,12 +42,10 @@ public class MovableFloatingActionButton extends FloatingActionButton implements
 
         int action = motionEvent.getAction();
         if (action == MotionEvent.ACTION_DOWN) {
-
             downRawX = motionEvent.getRawX();
             downRawY = motionEvent.getRawY();
             dX = view.getX() - downRawX;
             dY = view.getY() - downRawY;
-
             return true; // Consumed
 
         }
@@ -91,7 +89,6 @@ public class MovableFloatingActionButton extends FloatingActionButton implements
             else { // A drag
                 return true; // Consumed
             }
-
         }
         else {
             return super.onTouchEvent(motionEvent);
