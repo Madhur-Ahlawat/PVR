@@ -294,6 +294,7 @@ class OtpVerifyActivity : AppCompatActivity() {
         output.id.let { preferences.saveUserId(it) }
         output.un.let { preferences.saveUserName(it) }
         output.ph.let { preferences.saveMobileNumber(it) }
+        output.em.let { preferences.saveEmail(it) }
         output.token.let { preferences.saveToken(it) }
         output.dob.let { preferences.saveDob(it) }
 

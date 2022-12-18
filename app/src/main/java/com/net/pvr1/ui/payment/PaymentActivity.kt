@@ -398,27 +398,14 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 intent.putExtra("paidAmount", paidAmount)
                 startActivity(intent)
             }
-            PROMOCODE -> {
+            ACCENTIVE -> {
                 val intent = Intent(this, PromoCodeActivity::class.java)
-                intent.putExtra("type", "PROMO")
+                intent.putExtra("type", "ACCENTIVE")
                 intent.putExtra("pid", paymentItem.id)
                 intent.putExtra("ca_a", paymentItem.ca_a)
                 intent.putExtra("ca_t", paymentItem.ca_t)
                 intent.putExtra("title", paymentItem.name)
                 intent.putExtra("paidAmount", paidAmount)
-
-                //intent.putExtra(PCConstants.BI_PT,bi_pt);
-                try {
-                    if (paymentItem?.promomap != null) {
-                        val bundle = Bundle()
-                        bundle.putParcelableArrayList(
-                            "Promomaplist",
-                            paymentItem.promomap as ArrayList<out Parcelable?>
-                        )
-                        intent.putExtras(bundle)
-                    }
-                } catch (e: Exception) {
-                }
                 startActivity(intent)
             }
         }

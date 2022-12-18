@@ -1605,7 +1605,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     ) {
         airtelPayLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.airtelPay(
-            userid, bookingid, booktype, transid, Constant.version, Constant.platform
+            userid, bookingid, booktype, transid,"WT", Constant.version, Constant.platform
         )
         airtelPayResponse(response)
     }
@@ -1784,6 +1784,68 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             accentivePromoLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             accentivePromoLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    } /*******  STARPASS     ****************/
+
+    private val starpassLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val starpassResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = starpassLiveData
+
+    suspend fun starpass(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String,
+        cinemacode: String,
+        starpasses: String,
+    ) {
+        starpassLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.starpass(
+            userid, bookingid, booktype, transid,cinemacode,starpasses, Constant.version, Constant.platform
+        )
+        starpassResponse(response)
+    }
+
+    private fun starpassResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            starpassLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            starpassLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            starpassLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    } /*******  MCOUPON     ****************/
+
+    private val mcouponLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val mcouponResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = mcouponLiveData
+
+    suspend fun mcoupon(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String,
+        cinemacode: String,
+        mccard: String,
+        mcmobile: String,
+        mCoupons: String,
+    ) {
+        mcouponLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.mcoupon(
+            userid, bookingid, booktype, transid,cinemacode,mccard,mcmobile,mCoupons,Constant.version, Constant.platform
+        )
+        mcouponResponse(response)
+    }
+
+    private fun mcouponResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            mcouponLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            mcouponLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            mcouponLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
  /*******  HYATT     ****************/

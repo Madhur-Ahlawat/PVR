@@ -9,6 +9,7 @@ import com.net.pvr1.utils.Constant.Companion.LATITUDE
 import com.net.pvr1.utils.Constant.Companion.LONGITUDE
 import com.net.pvr1.utils.Constant.Companion.PREFS_TOKEN_FILE
 import com.net.pvr1.utils.Constant.Companion.USER_DOB
+import com.net.pvr1.utils.Constant.Companion.USER_EMAIL
 import com.net.pvr1.utils.Constant.Companion.USER_ID
 import com.net.pvr1.utils.Constant.Companion.USER_MO_NUMBER
 import com.net.pvr1.utils.Constant.Companion.USER_NAME
@@ -63,6 +64,17 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
 
     fun geMobileNumber(): String {
         return prefs.getString(USER_MO_NUMBER, "0")!!
+    }
+
+    //UserId
+    fun saveEmail(mobileNum: String) {
+        val editor = prefs.edit()
+        editor.putString(USER_EMAIL, mobileNum)
+        editor.apply()
+    }
+
+    fun getEmail(): String {
+        return prefs.getString(USER_EMAIL, "0")!!
     }
 
     //Is Login

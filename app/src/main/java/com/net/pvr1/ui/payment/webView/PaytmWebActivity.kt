@@ -108,7 +108,7 @@ class PaytmWebActivity : AppCompatActivity() {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        postRequestInWebView(it.data.output)
+                        postFormOpenWebView(it.data.output)
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -140,6 +140,49 @@ class PaytmWebActivity : AppCompatActivity() {
             }
         }
     }
+
+    //    <div  style="display: none;">
+    // <form name="airtelform" id="airtelform" action="${AIRTEL_URL}" method="POST">
+    //  <input type="hidden" readonly="readonly" name="MID" value="" />
+    //  <input type="hidden" readonly="readonly" name="TXN_REF_NO" value="${BookingPaymentVO.payVO.bookingid}" />
+    //  <input type="hidden" readonly="readonly" name="SU" value="" />
+    //  <input type="hidden" readonly="readonly" name="FU" value="" />
+    //  <input type="hidden" readonly="readonly" name="AMT" value="" />
+    //  <input type="hidden" readonly="readonly" name="DATE" value="" />
+    //  <input type="hidden" readonly="readonly" name="CUR" value="INR" />
+    //  <input type="hidden" readonly="readonly" name="CUST_MOBILE" value="${loginVO.mobile}" />
+    //  <input type="hidden" readonly="readonly" name=CUST_EMAIL value="${loginVO.email}" />
+    // <!-- <input type="hidden" readonly="readonly" name="service" value="NB" />  -->
+    //  <input type="hidden" readonly="readonly" name="service" value="WT" />
+    //  <input type="hidden" readonly="readonly" name="HASH" value="" />
+    // </form>
+    //</div>
+    private fun postFormOpenWebView(data: PaytmHmacResponse.Output) {
+        if (null != data) {
+            var urlParams = "MID=" + nullCheck(data.mid)
+            urlParams = urlParams + "&TXN_REF_NO=" + nullCheck(data.bookid)
+            urlParams = urlParams + "&SU=" + nullCheck(data.forwardurl)
+            urlParams = urlParams + "&FU=" + nullCheck(data.forwardurl)
+            urlParams = urlParams + "&AMT=" + nullCheck(data.amount)
+            urlParams = urlParams + "&DATE=" + nullCheck(data.txndate.toString())
+            urlParams = urlParams + "&CUR=" + nullCheck(data.currency)
+            urlParams = "$urlParams&CUST_MOBILE=" + nullCheck(
+                preferences.geMobileNumber()
+            )
+            urlParams = "$urlParams&CUST_EMAIL=" + nullCheck(
+                preferences.getEmail()
+            )
+            urlParams = urlParams + "&service=" + nullCheck("WT")
+            urlParams = urlParams + "&HASH=" + nullCheck(data.hmackey)
+            val url: String = data.callingurl
+            postWebView(url, urlParams)
+        }
+    }
+
+    private fun nullCheck(`val`: String?): String? {
+        return `val` ?: ""
+    }
+
     @SuppressLint("SetJavaScriptEnabled", "ObsoleteSdkInt")
     private fun postRequestInWebView(data: PaytmHmacResponse.Output) {
         var urlParams = "REQUEST_TYPE=" + "DEFAULT"

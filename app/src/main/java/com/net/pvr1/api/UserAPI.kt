@@ -82,14 +82,14 @@ interface UserAPI {
 
     @POST("payment/paytmex/hmac")
     suspend fun paytmHMAC(
-        @Query("userid")  userid: String,
-        @Query("bookingid")   bookingid: String,
-        @Query("transid")  transid: String,
-        @Query("unpaid")  unpaid: Boolean,
-        @Query("cardNo")  cardNo: String,
-        @Query("booktype")  booktype: String,
-        @Query("ptype")  ptype: String,
-        @Query("isSpi")  isSpi: String,
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("transid") transid: String,
+        @Query("unpaid") unpaid: Boolean,
+        @Query("cardNo") cardNo: String,
+        @Query("booktype") booktype: String,
+        @Query("ptype") ptype: String,
+        @Query("isSpi") isSpi: String,
         @Query("binOffer") binOffer: String,
         @Query("av") version: String,
         @Query("pt") platform: String
@@ -450,16 +450,16 @@ interface UserAPI {
     ): Response<SummeryResponse>
 
 
-  @POST("trans/setdonation")
+    @POST("trans/setdonation")
     suspend fun setDonation(
-      @Query("bookingid")  bookingid: String,
-      @Query("transid") transid: String,
-      @Query("isDonate") isDonate: Boolean,
-      @Query("istDonate")  istDonate: Boolean,
-      @Query("isSpi")  isSpi: String,
-      @Query("av")    version: String,
-      @Query("pt")   platform: String
-  ): Response<SetDonationResponse>
+        @Query("bookingid") bookingid: String,
+        @Query("transid") transid: String,
+        @Query("isDonate") isDonate: Boolean,
+        @Query("istDonate") istDonate: Boolean,
+        @Query("isSpi") isSpi: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<SetDonationResponse>
 
     @POST("content/splashtxt")
     suspend fun splash(
@@ -520,15 +520,15 @@ interface UserAPI {
     suspend fun setAlert(
         @Query("userid") userid: String,
         @Query("city") city: String,
-        @Query("mcode")  mcode: String,
-        @Query("cinema")  cinema: String,
+        @Query("mcode") mcode: String,
+        @Query("cinema") cinema: String,
         @Query("whtsapp") whtsapp: String,
-        @Query("pushnotify")  pushnotify: String,
-        @Query("sms")  sms: String,
-        @Query("email")  email: String,
-        @Query("did")  did: String,
-        @Query("av")  version: String,
-        @Query("pt")  platform: String
+        @Query("pushnotify") pushnotify: String,
+        @Query("sms") sms: String,
+        @Query("email") email: String,
+        @Query("did") did: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
     ): Response<BookingRetrievalResponse>
 
     @POST("payment/paytmex/upistatus")
@@ -562,19 +562,19 @@ interface UserAPI {
     ): Response<UPIStatusResponse>
 
 
-/**    Paytm PostPaid Api        **/
+    /**    Paytm PostPaid Api        **/
 
-@POST("payment/paytmpp/hmac")
-suspend fun postPaidHmac(
-    @Query("userid") userid: String,
-    @Query("bookingid") bookingid: String,
-    @Query("booktype") booktype: String,
-    @Query("transid") transid: String,
-    @Query("unpaid") unpaid: String,
-    @Query("spi") spi: String,
-    @Query("av") version: String,
-    @Query("pt") platform: String
-): Response<PaytmHmacResponse>
+    @POST("payment/paytmpp/hmac")
+    suspend fun postPaidHmac(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("unpaid") unpaid: String,
+        @Query("spi") spi: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
 
 
     @POST("payment/paytmpp/pay")
@@ -644,6 +644,7 @@ suspend fun postPaidHmac(
         @Query("bookingid") bookingid: String,
         @Query("booktype") booktype: String,
         @Query("transid") transid: String,
+        @Query("servicetype") servicetype: String,
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<PaytmHmacResponse>
@@ -716,6 +717,36 @@ suspend fun postPaidHmac(
         @Query("booktype") booktype: String,
         @Query("transid") transid: String,
         @Query("promocode") promocode: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
+
+    /***   STARPASS       *****/
+
+    @POST("payment/starpass")
+    suspend fun starpass(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("cinemacode") cinemacode: String,
+        @Query("starpasses") starpasses: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
+
+    /***   MCOUPON       *****/
+
+    @POST("payment/mcoupon")
+    suspend fun mcoupon(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("cinemacode") cinemacode: String,
+        @Query("mccard") mccard: String,
+        @Query("mcmobile") mcmobile: String,
+        @Query("mCoupons") mCoupons: String,
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<PaytmHmacResponse>
