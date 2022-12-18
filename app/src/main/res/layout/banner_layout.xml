@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <include
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/story_layout"/>
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:id="@+id/iv_play"
+        android:visibility="gone"
+        android:layout_marginRight="@dimen/dimen_40dp"
+        android:layout_marginLeft="@dimen/dimen_40dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_100dp">
+        <ImageView
+             android:layout_width="@dimen/dimen_100dp"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/dimen_5dp"
+            android:src="@drawable/ic_play_icon"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+    <com.net.pvr.customeview.PCTextView
+        android:id="@+id/tv_button"
+        style="@style/next_button_style"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/dimen_50dp"
+        android:background="@drawable/gradient_yellow_button"
+        android:elevation="5dp"
+        android:gravity="center"
+
+        android:minWidth="90dp"
+        android:text="Book Now"
+        android:textSize="18sp"
+        android:visibility="gone" />
+    <androidx.viewpager.widget.ViewPager
+        android:visibility="gone"
+        android:id="@+id/view_offer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp" />
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dimen_60dp"
+        android:layout_marginStart="@dimen/dimen_15dp"
+        android:layout_marginEnd="@dimen/dimen_15dp"
+        android:layout_marginBottom="@dimen/dimen_5dp"
+        android:scaleType="fitXY"
+        android:visibility="invisible"
+        ></ImageView>
+
+
+    <ImageView
+        android:id="@+id/ivCross"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:layout_marginRight="@dimen/dimen_8dp"
+        android:src="@drawable/ic_close_banner"></ImageView>
+
+
+</RelativeLayout>
