@@ -61,17 +61,13 @@ class WebViewActivity : AppCompatActivity() {
             exception.printStackTrace()
         }
         binding?.webView?.webViewClient = object : WebViewClient() {
-
             @Deprecated("Deprecated in Java", ReplaceWith("false"))
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-
                 return false
             }
 
             override fun onPageFinished(view: WebView, url: String) {
                 super.onPageFinished(view, url)
-
-
             }
 
             override fun onReceivedError(

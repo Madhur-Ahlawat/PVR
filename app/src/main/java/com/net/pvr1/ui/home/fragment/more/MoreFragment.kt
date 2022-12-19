@@ -50,21 +50,21 @@ class MoreFragment : Fragment() {
         movedNext()
     }
 
-    //Ui ClickAction
+         //   Ui ClickAction
     private fun movedNext() {
-
         //Account
         binding?.profileDetails?.textView206?.setOnClickListener {
             val intent = Intent(requireContext(), ProfileActivity::class.java)
             startActivity(intent)
         }
 
-//        //MyBookings
+        //MyBookings
         binding?.login?.constraintLayout70?.setOnClickListener {
             val intent = Intent(requireContext(), MyBookingsActivity::class.java)
             startActivity(intent)
         }
-//        //Merchandise
+
+        //Merchandise
         binding?.logout?.constraintLayout79?.setOnClickListener {
             val intent = Intent(requireContext(), WebViewActivity::class.java)
             intent.putExtra("title", "Return to App")
@@ -73,7 +73,7 @@ class MoreFragment : Fragment() {
             startActivity(intent)
         }
 
-//        //Offers
+        //Offers
         binding?.logout?.constraintLayout78?.setOnClickListener {
             val intent = Intent(requireContext(), OfferActivity::class.java)
             startActivity(intent)
@@ -81,7 +81,7 @@ class MoreFragment : Fragment() {
        // Merchandise
             binding?.logout?.constraintLayout76?.setOnClickListener {
                 val intent1 = Intent(requireContext(), WebViewActivity::class.java)
-                intent1.putExtra("from", "merchandise")
+                intent1.putExtra("from", "more")
                 intent1.putExtra("title", "Merchandise")
                 intent1.putExtra("getUrl", "https://pvr.macmerise.com/?user_agent=pvr")
                 startActivity(intent1)
@@ -90,31 +90,39 @@ class MoreFragment : Fragment() {
             // PVR care
             binding?.logout?.constraintLayout75?.setOnClickListener {
                 val intent1 = Intent(requireContext(), WebViewActivity::class.java)
-                intent1.putExtra("from", "PVRcare")
+                intent1.putExtra("from", "more")
                 intent1.putExtra("title", "PVR Care")
+                intent1.putExtra("getUrl", "https://www.pvrcinemas.com/pvrstatic/pvr-care/index.html")
+                startActivity(intent1)
+            }
+
+            // PVR care
+            binding?.tvTerm?.setOnClickListener {
+                val intent1 = Intent(requireContext(), WebViewActivity::class.java)
+                intent1.putExtra("from", "more")
+                intent1.putExtra("title", "Terms Condition")
                 intent1.putExtra("getUrl", "https://www.pvrcinemas.com/pvrstatic/pvr-care/index.html")
                 startActivity(intent1)
             }
 
         }
 
-//        //GiftCard
+       //GiftCard
         binding?.logout?.constraintLayout77?.setOnClickListener {
             val intent = Intent(requireContext(), GiftCardActivity::class.java)
             startActivity(intent)
         }
-//
-//        //Private Screen
+        //Private Screen
         binding?.logout?.constraintLayout79?.setOnClickListener {
             val intent = Intent(requireContext(), PrivateScreeningsActivity::class.java)
             startActivity(intent)
         }
-//        //ScanQr
+        //ScanQr
         binding?.imageView101?.setOnClickListener {
             val intent = Intent(requireContext(), ScannerActivity::class.java)
             startActivity(intent)
         }
-//Booking Retrieval
+        //Booking Retrieval
         binding?.login?.constraintLayout71?.setOnClickListener {
             val intent = Intent(requireContext(), BookingRetrievalActivity::class.java)
             startActivity(intent)
@@ -136,6 +144,7 @@ class MoreFragment : Fragment() {
             val intent = Intent(requireActivity(), LoginActivity::class.java)
             startActivity(intent)
         }
+
         if (preferences.getIsLogin()) {
             binding?.llBookingSection?.show()
             binding?.tvSignOut?.show()
@@ -147,6 +156,7 @@ class MoreFragment : Fragment() {
             binding?.tvSignOut?.hide()
             binding?.loginBt?.hide()
         }
+
     }
 
     private fun logOut() {
