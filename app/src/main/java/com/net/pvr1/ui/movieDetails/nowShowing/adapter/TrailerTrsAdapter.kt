@@ -1,7 +1,6 @@
 package com.net.pvr1.ui.movieDetails.nowShowing.adapter
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
 import com.net.pvr1.R
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.utils.Constant
@@ -46,7 +43,7 @@ class TrailerTrsAdapter(
 
         val videoId = Constant().extractYoutubeId(cinemaItem.u)
         val imageUrl = "https://img.youtube.com/vi/" + videoId.toString() + "/mqdefault.jpg" //
-        context.printLog("ImageUrl--->${imageUrl}")
+        printLog("ImageUrl--->${imageUrl}")
         Glide.with(context)
             .load(imageUrl)
             .error(R.drawable.app_icon)

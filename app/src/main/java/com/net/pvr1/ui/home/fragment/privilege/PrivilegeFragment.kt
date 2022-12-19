@@ -36,7 +36,7 @@ class PrivilegeFragment : Fragment(), PrivilegeTypeAdapter.RecycleViewItemClickL
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().printLog("response!Login--->${PrivilegeHomeResponseConst}")
+        printLog("response!Login--->${PrivilegeHomeResponseConst}")
         if (!preferences.getIsLogin()) {
 
         } else {

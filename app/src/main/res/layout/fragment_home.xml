@@ -130,6 +130,40 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/quickBook" />
 
+                <LinearLayout
+                    android:id="@+id/privilege"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="@+id/recyclerCinemaCat"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/recyclerCinemaCat"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout135">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/privilegeLoginUi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <include
+                            android:id="@+id/privilegeLogin"
+                            layout="@layout/loyalty_paid_member"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/privilegeLogOutUi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <include
+                            android:id="@+id/privilegeLogOut"
+                            layout="@layout/ph_slider_item_new"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerPromotion"
@@ -142,7 +176,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout135"
+                    app:layout_constraintTop_toBottomOf="@+id/privilege"
                     tools:ignore="SpeakableTextPresentCheck"
                     tools:itemCount="2"
                     tools:listitem="@layout/item_home_prmotion" />

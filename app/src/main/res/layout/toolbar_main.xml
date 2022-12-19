@@ -102,7 +102,7 @@
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/common_header_padding"
                 android:paddingRight="@dimen/common_header_padding"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/scanQr"
                 app:layout_constraintTop_toTopOf="parent"
@@ -190,6 +190,6 @@
         android:src="@drawable/bottomshadow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription,ImageContrastCheck" />
     
 </androidx.constraintlayout.widget.ConstraintLayout>

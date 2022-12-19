@@ -33,8 +33,8 @@ import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeHomeDialogAdapte
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.ui.offer.response.OfferResponse
-import com.net.pvr1.ui.search.searchCinema.SearchCinemaActivity
 import com.net.pvr1.utils.*
+import com.net.pvr1.utils.Constant.Companion.PRIVILEGEVOUCHER
 import com.net.pvr1.utils.Constant.Companion.PrivilegeHomeResponseConst
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -47,7 +47,9 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     private var binding: ActivityHomeBinding? = null
     private val authViewModel: HomeViewModel by viewModels()
     private var loader: LoaderDialog? = null
+    private var offerShow: Boolean = false
     private var offerResponse: ArrayList<OfferResponse.Output>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater, null, false)
@@ -55,7 +57,6 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         setContentView(view)
         switchFragment()
         authViewModel.offer(Constant().getDeviceId(this))
-        offerDataLoad()
         //setUserName
         binding?.includeAppBar?.textView2?.text = preferences.getUserName()
         if (preferences.getIsLogin()){
@@ -64,6 +65,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         binding?.includeAppBar?.txtCity?.text = preferences.getCityName()
         privilegeDataLoad()
         movedNext()
+        offerDataLoad()
     }
 
     //ClickMovedNext
@@ -95,7 +97,14 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         setCurrentFragment(firstFragment)
         binding?.bottomNavigationView?.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.homeFragment -> setCurrentFragment(firstFragment)
+                R.id.homeFragment ->{
+                    setCurrentFragment(firstFragment)
+                    if (offerShow){
+                        binding?.constraintLayout55?.show()
+                    }else{
+                        binding?.constraintLayout55?.hide()
+                    }
+                }
                 R.id.cinemaFragment -> {
                     setCurrentFragment(secondFragment)
                     binding?.includeAppBar?.textView2?.text = getString(R.string.all_theaters)
@@ -266,11 +275,20 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     }
 
     private fun privilegeRetrieveData(output: PrivilegeHomeResponse.Output) {
+        Constant.PRIVILEGEPOINT= output.pt
+        PRIVILEGEVOUCHER= output.vou
         PrivilegeHomeResponseConst = output
-//        privilegeDialog()
+        privilegeDialog()
     }
 
     private fun retrieveData(output: ArrayList<OfferResponse.Output>) {
+        if (output.isNotEmpty()){
+            offerShow=true
+            binding?.constraintLayout55?.show()
+        }else{
+            offerShow= false
+            binding?.constraintLayout55?.hide()
+        }
         offerResponse = output
         showOfferDialog()
     }

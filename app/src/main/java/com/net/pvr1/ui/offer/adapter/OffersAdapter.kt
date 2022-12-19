@@ -119,7 +119,6 @@ class OffersAdapter(
             if (phList.size > 0) {
                 println("PCOffersActivity.phList----" + phList.size)
                 holder.upperView.visibility = View.VISIBLE
-//                phList = PCOffersActivity.phList
                 val layoutManager = LinearLayoutManager(
                     context,
                 LinearLayoutManager.HORIZONTAL,
@@ -137,6 +136,7 @@ class OffersAdapter(
             } else {
                 holder.upperView.visibility = View.GONE
             }
+
         } else {
             holder.upperView.visibility = View.GONE
             if (obj.list.size > 1) {

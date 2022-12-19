@@ -10,8 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.ui.formats.response.FormatResponse
-import com.net.pvr1.utils.hide
-import com.net.pvr1.utils.show
 
 
 class FormatMoviesAdapter(
@@ -39,12 +37,8 @@ class FormatMoviesAdapter(
 
         holder.title.text=comingSoonItem.n
         holder.rating.text=comingSoonItem.ce
-        holder.type.text=comingSoonItem.lng+","+comingSoonItem.tag
-        if (comingSoonItem.lng.isEmpty()){
-            holder.dots.hide()
-        }else{
-            holder.dots.show()
-        }
+//        holder.type.text=comingSoonItem.lng+","+comingSoonItem.tag
+
         holder.language.text=comingSoonItem.sh
         //Movie Click
         holder.image.setOnClickListener {
@@ -63,10 +57,10 @@ class FormatMoviesAdapter(
 
     class MyViewHolderNowShowing(view: View) : RecyclerView.ViewHolder(view) {
         var image: ImageView = view.findViewById(R.id.imageView16)
-        var dots: ImageView = view.findViewById(R.id.imageView17)
+//        var dots: ImageView = view.findViewById(R.id.imageView17)
         var title: TextView = view.findViewById(R.id.textView42)
         var rating: TextView = view.findViewById(R.id.textView43)
-        var type: TextView = view.findViewById(R.id.textView44)
+//        var type: TextView = view.findViewById(R.id.textView44)
         var language: TextView = view.findViewById(R.id.textView45)
         var book: TextView = view.findViewById(R.id.textView46)
 

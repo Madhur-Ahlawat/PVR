@@ -150,7 +150,7 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
             }
         }
         //ComingSoon}
-        requireActivity().printLog("movies--->${output.movies}")
+        printLog("movies--->${output.movies}")
         if (output.movies.isNotEmpty()){
             binding?.recComSoonMovie?.show()
             val gridLayout2 = GridLayoutManager(requireActivity(), 2, GridLayoutManager.VERTICAL, false)

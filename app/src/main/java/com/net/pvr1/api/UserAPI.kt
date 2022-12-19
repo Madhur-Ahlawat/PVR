@@ -234,6 +234,14 @@ interface UserAPI {
         @Query("pt") pt: String
     ): Response<PrivilegeHomeResponse>
 
+    @POST("history/nextbooking")
+    suspend fun nextBooking(
+        @Query("userid") userid: String,
+        @Query("did") did: String,
+        @Query("av") av: String,
+        @Query("pt") pt: String
+    ): Response<PrivilegeHomeResponse>
+
     @POST("content/search")
     suspend fun homeSearch(
         @Query("city") city: String,

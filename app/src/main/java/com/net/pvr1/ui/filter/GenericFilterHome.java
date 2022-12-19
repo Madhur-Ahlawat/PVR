@@ -55,7 +55,6 @@ public class GenericFilterHome implements GenericFilterAdapter.onFilterItemSelec
     boolean isSelected = false;
     String filterItemSelected = "";
     static ArrayList<String> type = new ArrayList<>();
-    ;
     static HashMap<String, String> selectedFilters = new HashMap<>();
     onButtonSelected onSelection;
 
@@ -90,64 +89,64 @@ public class GenericFilterHome implements GenericFilterAdapter.onFilterItemSelec
         Rect displayRectangle = new Rect();
         dialog.getWindow().getDecorView()
                 .getWindowVisibleDisplayFrame(displayRectangle);
-        LinearLayout mainView = (LinearLayout) dialog.findViewById(R.id.mainView);
+        LinearLayout mainView = dialog.findViewById(R.id.mainView);
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams((int) (displayRectangle.width() * 1f),(int) (displayRectangle.height() * 0.8f));
         mainView.setLayoutParams(params);
         GenericFilterAdapter adapterGeners, adapterLanguage, adapterFormat, adapterShowTime, adapterAccessability, adapterPriceRange;
         RecyclerView recyclerGeners, recyclerLanguage, recyclerFormat, recyclerShowTIme, recyclerAccessibility, recyclerPriceRange, cinemaRecyclerFormat, specialRecyclerFormat;
 
-        cinemaRecyclerFormat = (RecyclerView) dialog.findViewById(R.id.cinemaRecyclerFormat);
-        specialRecyclerFormat = (RecyclerView) dialog.findViewById(R.id.specialRecyclerFormat);
-        recyclerLanguage = (RecyclerView) dialog.findViewById(R.id.recyclerLanguage);
-        recyclerGeners = (RecyclerView) dialog.findViewById(R.id.recyclerGenere);
-        recyclerFormat = (RecyclerView) dialog.findViewById(R.id.recyclerFormat);
-        recyclerPriceRange = (RecyclerView) dialog.findViewById(R.id.recyclerPrice);
-        recyclerShowTIme = (RecyclerView) dialog.findViewById(R.id.recyclerTime);
-        recyclerAccessibility = (RecyclerView) dialog.findViewById(R.id.recyclerAccessibility);
+        cinemaRecyclerFormat = dialog.findViewById(R.id.cinemaRecyclerFormat);
+        specialRecyclerFormat = dialog.findViewById(R.id.specialRecyclerFormat);
+        recyclerLanguage = dialog.findViewById(R.id.recyclerLanguage);
+        recyclerGeners = dialog.findViewById(R.id.recyclerGenere);
+        recyclerFormat = dialog.findViewById(R.id.recyclerFormat);
+        recyclerPriceRange = dialog.findViewById(R.id.recyclerPrice);
+        recyclerShowTIme = dialog.findViewById(R.id.recyclerTime);
+        recyclerAccessibility = dialog.findViewById(R.id.recyclerAccessibility);
 
-        TextView formatT = (TextView) dialog.findViewById(R.id.formatT);
-        ImageView langDropImage = (ImageView) dialog.findViewById(R.id.langDropImage);
-        ImageView genereDropImage = (ImageView) dialog.findViewById(R.id.genereDropImage);
-        ImageView cinemaFormatDropImage = (ImageView) dialog.findViewById(R.id.cinemaFormatDropImage);
-        ImageView specialFormatDropImage = (ImageView) dialog.findViewById(R.id.specialFormatDropImage);
-        ImageView formatDropImage = (ImageView) dialog.findViewById(R.id.formatDropImage);
-        ImageView priceDropImage = (ImageView) dialog.findViewById(R.id.priceDropImage);
-        ImageView timeDropImage = (ImageView) dialog.findViewById(R.id.timeDropImage);
-        ImageView accessabilityDropImage = (ImageView) dialog.findViewById(R.id.accessabilityDropImage);
+        TextView formatT = dialog.findViewById(R.id.formatT);
+        ImageView langDropImage = dialog.findViewById(R.id.langDropImage);
+        ImageView genereDropImage = dialog.findViewById(R.id.genereDropImage);
+        ImageView cinemaFormatDropImage = dialog.findViewById(R.id.cinemaFormatDropImage);
+        ImageView specialFormatDropImage = dialog.findViewById(R.id.specialFormatDropImage);
+        ImageView formatDropImage = dialog.findViewById(R.id.formatDropImage);
+        ImageView priceDropImage = dialog.findViewById(R.id.priceDropImage);
+        ImageView timeDropImage = dialog.findViewById(R.id.timeDropImage);
+        ImageView accessabilityDropImage = dialog.findViewById(R.id.accessabilityDropImage);
 
-        LinearLayout language_filter_tabs = (LinearLayout) dialog.findViewById(R.id.language_filter_tabs);
-        LinearLayout cinemaFormat_filter_tabs = (LinearLayout) dialog.findViewById(R.id.cinemaFormat_filter_tabs);
-        LinearLayout specialFormat_filter_tabs = (LinearLayout) dialog.findViewById(R.id.specialFormat_filter_tabs);
-        LinearLayout genre_filter_tabs = (LinearLayout) dialog.findViewById(R.id.genere_filter_tabs);
-        LinearLayout format_filter_tabs = (LinearLayout) dialog.findViewById(R.id.format_filter_tabs);
-        LinearLayout price_filter_tabs = (LinearLayout) dialog.findViewById(R.id.price_filter_tabs);
-        LinearLayout time_filter_tabs = (LinearLayout) dialog.findViewById(R.id.time_filter_tabs);
-        LinearLayout accessability_filter_tabs = (LinearLayout) dialog.findViewById(R.id.accessibility_filter_tabs);
+        LinearLayout language_filter_tabs = dialog.findViewById(R.id.language_filter_tabs);
+        LinearLayout cinemaFormat_filter_tabs = dialog.findViewById(R.id.cinemaFormat_filter_tabs);
+        LinearLayout specialFormat_filter_tabs = dialog.findViewById(R.id.specialFormat_filter_tabs);
+        LinearLayout genre_filter_tabs = dialog.findViewById(R.id.genere_filter_tabs);
+        LinearLayout format_filter_tabs = dialog.findViewById(R.id.format_filter_tabs);
+        LinearLayout price_filter_tabs = dialog.findViewById(R.id.price_filter_tabs);
+        LinearLayout time_filter_tabs = dialog.findViewById(R.id.time_filter_tabs);
+        LinearLayout accessability_filter_tabs = dialog.findViewById(R.id.accessibility_filter_tabs);
 
-        LinearLayout languageFilterLay = (LinearLayout) dialog.findViewById(R.id.languageFilterLay);
-        LinearLayout genereFilterLay = (LinearLayout) dialog.findViewById(R.id.genereFilterLay);
-        LinearLayout cinemaFormatFilterLay = (LinearLayout) dialog.findViewById(R.id.cinemaFormatFilterLay);
-        LinearLayout specialFormatFilterLay = (LinearLayout) dialog.findViewById(R.id.specialFormatFilterLay);
-        LinearLayout formatFilterLay = (LinearLayout) dialog.findViewById(R.id.formatFilterLay);
-        LinearLayout priceFilterLay = (LinearLayout) dialog.findViewById(R.id.priceFilterLay);
-        LinearLayout timeFilterLay = (LinearLayout) dialog.findViewById(R.id.timeFilterLay);
-        LinearLayout accessibilityFilterLay = (LinearLayout) dialog.findViewById(R.id.accessibilityFilterLay);
+        LinearLayout languageFilterLay = dialog.findViewById(R.id.languageFilterLay);
+        LinearLayout genereFilterLay = dialog.findViewById(R.id.genereFilterLay);
+        LinearLayout cinemaFormatFilterLay = dialog.findViewById(R.id.cinemaFormatFilterLay);
+        LinearLayout specialFormatFilterLay = dialog.findViewById(R.id.specialFormatFilterLay);
+        LinearLayout formatFilterLay = dialog.findViewById(R.id.formatFilterLay);
+        LinearLayout priceFilterLay = dialog.findViewById(R.id.priceFilterLay);
+        LinearLayout timeFilterLay = dialog.findViewById(R.id.timeFilterLay);
+        LinearLayout accessibilityFilterLay = dialog.findViewById(R.id.accessibilityFilterLay);
 
-        seek_progress = (CrystalRangeSeekbar) dialog.findViewById(R.id.seek_progress1);
-        left_text = (TextView) dialog.findViewById(R.id.left_text);
-        right_text = (TextView) dialog.findViewById(R.id.right_text);
+        seek_progress = dialog.findViewById(R.id.seek_progress1);
+        left_text = dialog.findViewById(R.id.left_text);
+        right_text = dialog.findViewById(R.id.right_text);
         if (start_time < 10) {
-            left_text.setText("0" + String.valueOf(start_time) + ":00 hrs");
+            left_text.setText("0" + start_time + ":00 hrs");
         } else {
-            left_text.setText(String.valueOf(start_time) + ":00 hrs");
+            left_text.setText(start_time + ":00 hrs");
 
         }
 
         if (end_time < 10) {
-            right_text.setText("0" + String.valueOf(end_time) + ":00 hrs");
+            right_text.setText("0" + end_time + ":00 hrs");
         } else {
-            right_text.setText(String.valueOf(end_time) + ":00 hrs");
+            right_text.setText(end_time + ":00 hrs");
         }
 
         seek_progress.setGap(1);
@@ -161,18 +160,18 @@ public class GenericFilterHome implements GenericFilterAdapter.onFilterItemSelec
 
                 if (start_time > 8 || end_time < 24) {
                     if (Integer.parseInt(String.valueOf(minValue)) < 10) {
-                        left_text.setText("0" + String.valueOf(minValue) + ":00 hrs");
-                        show1 = String.valueOf(minValue) + ":00";
+                        left_text.setText("0" + minValue + ":00 hrs");
+                        show1 = minValue + ":00";
                     } else {
-                        left_text.setText(String.valueOf(minValue) + ":00 hrs");
-                        show1 = String.valueOf(minValue) + ":00";
+                        left_text.setText(minValue + ":00 hrs");
+                        show1 = minValue + ":00";
                     }
                     if (Integer.parseInt(String.valueOf(maxValue)) < 10) {
-                        right_text.setText("0" + String.valueOf(maxValue) + ":00 hrs");
-                        show2 = String.valueOf(maxValue) + ":00";
+                        right_text.setText("0" + maxValue + ":00 hrs");
+                        show2 = maxValue + ":00";
                     } else {
-                        right_text.setText(String.valueOf(maxValue) + ":00 hrs");
-                        show2 = String.valueOf(maxValue) + ":00";
+                        right_text.setText(maxValue + ":00 hrs");
+                        show2 = maxValue + ":00";
                     }
                 }
 
@@ -406,8 +405,8 @@ public class GenericFilterHome implements GenericFilterAdapter.onFilterItemSelec
         }
 
 
-        TextView btnApplyFilter = (TextView) dialog.findViewById(R.id.btnApplyFilter);
-        TextView btnReset = (TextView) dialog.findViewById(R.id.btnReset);
+        TextView btnApplyFilter = dialog.findViewById(R.id.btnApplyFilter);
+        TextView btnReset = dialog.findViewById(R.id.btnReset);
         onSelection = onClickListener;
 
         btnApplyFilter.setOnClickListener(v -> {
@@ -440,8 +439,6 @@ public class GenericFilterHome implements GenericFilterAdapter.onFilterItemSelec
 
     @Override
     public void onFilterItemClick(int position, String typeStr, String itemSelected, boolean selectedValue) {
-
-
         isSelected = selectedValue;
 
         switch (typeStr) {

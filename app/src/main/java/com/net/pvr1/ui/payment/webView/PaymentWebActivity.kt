@@ -1,7 +1,6 @@
 package com.net.pvr1.ui.payment.webView
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.graphics.Bitmap
 import android.net.UrlQuerySanitizer
 import android.os.Build
@@ -12,7 +11,6 @@ import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.util.Enc
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityPaymentWebBinding
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.ticketConfirmation.TicketConfirmationActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr1.utils.Constant.Companion.BOOK_TYPE

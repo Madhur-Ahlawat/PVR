@@ -8,14 +8,13 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.fragment.app.Fragment
 
 fun Context?.toast(@SuppressLint("SupportAnnotationUsage") @StringRes resId: String?) {
     resId ?: return
     this ?: return
     Toast.makeText(this, resId, Toast.LENGTH_SHORT).show()
 }
-fun Context?.printLog(@SuppressLint("SupportAnnotationUsage") @StringRes log: String?) {
+fun printLog(@SuppressLint("SupportAnnotationUsage") @StringRes log: String?) {
     Log.d(TAG, log.toString())
 }
 

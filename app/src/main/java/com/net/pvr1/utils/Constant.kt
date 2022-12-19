@@ -62,6 +62,8 @@ class Constant {
         var OfferDialogImage = "0"
         var BOOKING_ID = "0"
         var SESSION_ID = "0"
+        var PRIVILEGEPOINT = "0"
+        var PRIVILEGEVOUCHER = "0"
         var CINEMA_ID = "0"
         const val CITY = "Delhi-NCR"
         const val CITY_CC = "City-Name"
@@ -183,21 +185,7 @@ class Constant {
         }
     }
 
-    var youtubeVideoCode: String? = null
-    fun getVideoCode(youtubeUrl: String) {
-        val videoCode: Array<String>
-        try {
-            videoCode = if (youtubeUrl.contains("v=")) {
-                youtubeUrl.split("v=").toTypedArray()
-            } else {
-                youtubeUrl.split("list=").toTypedArray()
-            }
-         val youtubeVideoCode = videoCode[1]
-            println("videoCodeConstant--->${youtubeVideoCode}---->${videoCode[1]}")
-        } catch (e: ArrayIndexOutOfBoundsException) {
-            e.printStackTrace()
-        }
-    }
+
 
     fun openMap(context: Context,lat:String,lang:String){
         val strUri =
@@ -449,5 +437,8 @@ class Constant {
         }
     }
 
+    fun getLoyaltyQr(mobile_no: String, size: String): String {
+        return "https://chart.googleapis.com/chart?cht=qr&chl=$mobile_no&chld=H%7C1&chs=$size"
+    }
 
 }

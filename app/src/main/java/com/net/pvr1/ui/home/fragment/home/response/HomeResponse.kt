@@ -67,7 +67,8 @@ data class HomeResponse(
     ):Serializable
     data class Mfi(
         val name: String,
-        val url: String
+        val url: String,
+        val nurl: String
     ):Serializable
     data class Mv(
         val c: String,

@@ -51,49 +51,22 @@
         android:fontFamily="@font/sf_pro_text_regular"
         android:textColor="@color/textColorGray"
         android:textSize="@dimen/dimen_12sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/cardView3"
         app:layout_constraintTop_toBottomOf="@+id/textView42"
         tools:ignore="TextContrastCheck"
         tools:text="U/A" />
 
-    <ImageView
-        android:id="@+id/imageView17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView43"
-        app:layout_constraintStart_toEndOf="@+id/textView43"
-        app:layout_constraintTop_toTopOf="@+id/textView43"
-        app:srcCompat="@drawable/gray_circle"
-        tools:ignore="ContentDescription" />
-
-    <TextView
-        android:id="@+id/textView44"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:fontFamily="@font/sf_pro_text_regular"
-        android:textColor="@color/textColorGray"
-        android:textSize="@dimen/dimen_12sp"
-        android:maxLines="1"
-        android:ellipsize="end"
-        app:layout_constraintBottom_toBottomOf="@+id/textView43"
-        app:layout_constraintEnd_toEndOf="@+id/textView42"
-        app:layout_constraintStart_toEndOf="@+id/imageView17"
-        app:layout_constraintTop_toTopOf="@+id/textView43"
-        tools:ignore="TextContrastCheck"
-        tools:text="Action, Romantic" />
-
     <TextView
         android:id="@+id/textView45"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:maxLines="1"
+        android:layout_marginTop="5dp"
         android:ellipsize="end"
-        android:layout_marginTop="4dp"
-        app:layout_constraintEnd_toEndOf="@+id/textView44"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView43"
-        app:layout_constraintTop_toBottomOf="@+id/textView44"
+        app:layout_constraintTop_toBottomOf="@+id/textView43"
         tools:text="Hindi, English" />
 
     <TextView

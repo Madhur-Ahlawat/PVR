@@ -32,17 +32,16 @@ class HomeCinemaCategoryAdapter(
     override fun onBindViewHolder(holder: MyViewHolderNowShowing, position: Int) {
         val comingSoonItem = nowShowingList[position]
 
-        if (comingSoonItem.url.isEmpty()) {
-            holder.image.hide()
+        if (comingSoonItem.nurl.isEmpty()) {
+            holder.imageCat.hide()
             holder.btText.show()
             holder.textView.text = comingSoonItem.name
         } else {
-            holder.image.show()
+            holder.imageCat.show()
             holder.btText.hide()
             //Image
             Glide.with(context)
-                .load(comingSoonItem.url)
-                .error(R.drawable.app_icon)
+                .load(comingSoonItem.nurl)
                 .into(holder.image)
         }
 
@@ -58,6 +57,7 @@ class HomeCinemaCategoryAdapter(
     class MyViewHolderNowShowing(view: View) : RecyclerView.ViewHolder(view) {
         var image: ImageView = view.findViewById(R.id.imageView10)
         var btText: ConstraintLayout = view.findViewById(R.id.btText)
+        var imageCat: ConstraintLayout = view.findViewById(R.id.imageCat)
         var textView: TextView = view.findViewById(R.id.textView)
 
     }

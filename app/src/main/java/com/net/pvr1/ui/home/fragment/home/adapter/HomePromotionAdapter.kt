@@ -5,14 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
-import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.printLog
-import com.net.pvr1.utils.show
 
 
 class HomePromotionAdapter(
@@ -37,7 +34,7 @@ class HomePromotionAdapter(
             .error(R.drawable.app_icon)
             .into(holder.image)
 
-        context.printLog("ImageUrl--->${comingSoonItem.url}")
+        printLog("ImageUrl--->${comingSoonItem.url}")
 
         holder.image.setOnClickListener {
             listener.onPromotionClick(comingSoonItem)

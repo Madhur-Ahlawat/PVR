@@ -1,29 +1,21 @@
 package com.net.pvr1.ui.payment.giftcardredeem
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.Html
-import android.text.TextUtils
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.android.volley.VolleyError
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.safetynet.SafetyNet
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityGiftcardRedeemBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.payment.PaymentActivity
 import com.net.pvr1.ui.payment.giftcardredeem.viewModel.GiftcardRedeemViewModel
-import com.net.pvr1.ui.payment.response.Promomap
 import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import org.json.JSONObject
 import java.util.*
-import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -31,7 +23,7 @@ class GiftCardRedeemActivity : AppCompatActivity() {
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityGiftcardRedeemBinding? = null
-    private var title:String = ""
+    private var title: String = ""
     private var loader: LoaderDialog? = null
     private var stringtex = ""
     private var type = "GIFT_CARD"
@@ -39,6 +31,7 @@ class GiftCardRedeemActivity : AppCompatActivity() {
     var c = ""
     private val giftcardRedeemViewModel: GiftcardRedeemViewModel by viewModels()
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGiftcardRedeemBinding.inflate(layoutInflater, null, false)
@@ -48,18 +41,19 @@ class GiftCardRedeemActivity : AppCompatActivity() {
         title = intent.getStringExtra("title").toString()
         paymentOptionMode = intent.getStringExtra("pid").toString()
         //PaidAmount
-        binding?.textView178?.text = getString(R.string.pay) + " " + getString(R.string.currency) + intent.getStringExtra("paidAmount")
+        binding?.textView178?.text =
+            getString(R.string.pay) + " " + getString(R.string.currency) + intent.getStringExtra("paidAmount")
         binding?.include29?.imageView58?.setOnClickListener {
             onBackPressed()
         }
-        type = intent.extras?.getString("type").toString();
+        type = intent.extras?.getString("type").toString()
         if (intent.getStringExtra("c") != null) {
             c = intent.getStringExtra("c")?.split("-")?.get(0) ?: ""
         }
 
         if (intent.extras?.getBoolean("ca_a") === false)
             binding?.textView371?.text = intent.extras?.getString("ca_t")
-            binding?.textView373?.text = intent.extras?.getString("tc")
+          binding?.textView373?.text = intent.extras?.getString("tc")
 
 
         binding?.include30?.constraintLayout10?.setOnClickListener(View.OnClickListener {
@@ -90,7 +84,7 @@ class GiftCardRedeemActivity : AppCompatActivity() {
 
     }
 
-    private fun usePromoCode(){
+    private fun usePromoCode() {
         if (paymentOptionMode == "126") {
             giftcardRedeemViewModel.zagglePay(
                 preferences.getUserId(),
@@ -101,7 +95,7 @@ class GiftCardRedeemActivity : AppCompatActivity() {
                 binding?.pinEditText?.text.toString(),
                 paymentOptionMode
             )
-        }else{
+        } else {
             giftcardRedeemViewModel.giftCardRedeem(
                 preferences.getUserId(),
                 Constant.BOOKING_ID,
@@ -118,44 +112,45 @@ class GiftCardRedeemActivity : AppCompatActivity() {
     private fun setDataToApi() {
         usePromoCode()
     }
+
     private fun validateInputFields(): Boolean {
         if (!InputTextValidator.hasText(binding?.ccEditText!!)) {
-            binding?.ccInputLayout?.error==(getString(R.string.card_number_msg_required))
+            binding?.ccInputLayout?.error == (getString(R.string.card_number_msg_required))
         } else {
-            binding?.ccInputLayout?.error==(getString(R.string.card_number_msg))
+            binding?.ccInputLayout?.error == (getString(R.string.card_number_msg))
         }
         if (!InputTextValidator.hasText(binding?.pinEditText!!)) {
-            binding?.pinInputLayout?.error==(getString(R.string.card_pin_msg_required))
+            binding?.pinInputLayout?.error == (getString(R.string.card_pin_msg_required))
         } else {
-            binding?.pinInputLayout?.error==(getString(R.string.card_pin_msg))
+            binding?.pinInputLayout?.error == (getString(R.string.card_pin_msg))
         }
         if (!paymentOptionMode.equals("126", ignoreCase = true)) {
             if (!InputTextValidator.validatePin(binding?.pinEditText!!)) {
                 if (binding?.pinEditText?.text.toString().trim { it <= ' ' }.isEmpty()) {
-                    binding?.pinInputLayout?.error==(getString(R.string.card_pin_msg_required))
-                } else binding?.pinInputLayout?.error==(getString(R.string.card_pin_msg_invalid))
+                    binding?.pinInputLayout?.error == (getString(R.string.card_pin_msg_required))
+                } else binding?.pinInputLayout?.error == (getString(R.string.card_pin_msg_invalid))
             } else {
-                binding?.pinInputLayout?.error==(getString(R.string.card_pin_msg))
+                binding?.pinInputLayout?.error == (getString(R.string.card_pin_msg))
             }
         }
         if (!InputTextValidator.validateCard(binding?.ccEditText!!)) {
             if (binding?.ccEditText?.text.toString().trim { it <= ' ' }.isEmpty()) {
-                binding?.ccInputLayout?.error==(getString(R.string.card_number_msg_required))
-            } else binding?.ccInputLayout?.error==(getString(R.string.card_number_msg_invalid))
+                binding?.ccInputLayout?.error == (getString(R.string.card_number_msg_required))
+            } else binding?.ccInputLayout?.error == (getString(R.string.card_number_msg_invalid))
         } else {
-            binding?.ccInputLayout?.error==(getString(R.string.card_number_msg))
+            binding?.ccInputLayout?.error == (getString(R.string.card_number_msg))
         }
         return if (paymentOptionMode.equals("126", ignoreCase = true)) {
             (InputTextValidator.hasText(binding?.ccEditText!!) &&
-                InputTextValidator.hasText(binding?.pinEditText!!) &&
-                InputTextValidator.validateCard(binding?.ccEditText!!)
-            )
+                    InputTextValidator.hasText(binding?.pinEditText!!) &&
+                    InputTextValidator.validateCard(binding?.ccEditText!!)
+                    )
         } else {
             (InputTextValidator.hasText(binding?.ccEditText!!) &&
-                InputTextValidator.hasText(binding?.pinEditText!!) &&
-                InputTextValidator.validateCard(binding?.ccEditText!!) &&
-                InputTextValidator.validatePin(binding?.pinEditText!!)
-            )
+                    InputTextValidator.hasText(binding?.pinEditText!!) &&
+                    InputTextValidator.validateCard(binding?.ccEditText!!) &&
+                    InputTextValidator.validatePin(binding?.pinEditText!!)
+                    )
         }
     }
 
@@ -173,14 +168,24 @@ class GiftCardRedeemActivity : AppCompatActivity() {
                                     Constant.SharedPreference.Promo_Bin_Series,
                                     binSeries
                                 )
-                                preferences.saveBoolean(Constant.SharedPreference.Has_Bin_Series, true)
+                                preferences.saveBoolean(
+                                    Constant.SharedPreference.Has_Bin_Series,
+                                    true
+                                )
                             } else
-                                preferences.saveBoolean(Constant.SharedPreference.Has_Bin_Series, false)
+                                preferences.saveBoolean(
+                                    Constant.SharedPreference.Has_Bin_Series,
+                                    false
+                                )
                             PaymentActivity.isPromocodeApplied = it.data.output.creditCardOnly
                             if (it.data.output.p) {
                                 Constant().printTicket(this)
                             } else {
-                                if (Constant.BOOK_TYPE.equals("LOYALTYUNLIMITED", ignoreCase = true)) {
+                                if (Constant.BOOK_TYPE.equals(
+                                        "LOYALTYUNLIMITED",
+                                        ignoreCase = true
+                                    )
+                                ) {
 //                                    val intent =
 //                                        Intent(this, Subscription_Promo_Payment::class.java)
 //                                    intent.putExtra(
@@ -196,7 +201,8 @@ class GiftCardRedeemActivity : AppCompatActivity() {
                                 } else {
                                     Constant.discount_val = it.data.output.di
                                     Constant.discount_txt = it.data.output.txt
-                                    launchActivity(PaymentActivity::class.java,
+                                    launchActivity(
+                                        PaymentActivity::class.java,
                                         Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                                     )
 
@@ -235,6 +241,7 @@ class GiftCardRedeemActivity : AppCompatActivity() {
         }
 
     }
+
     private fun callGiftCardRedeem() {
         giftcardRedeemViewModel.liveDataGiftCardRedeemScope.observe(this) {
             when (it) {
@@ -248,14 +255,24 @@ class GiftCardRedeemActivity : AppCompatActivity() {
                                     Constant.SharedPreference.Promo_Bin_Series,
                                     binSeries
                                 )
-                                preferences.saveBoolean(Constant.SharedPreference.Has_Bin_Series, true)
+                                preferences.saveBoolean(
+                                    Constant.SharedPreference.Has_Bin_Series,
+                                    true
+                                )
                             } else
-                                preferences.saveBoolean(Constant.SharedPreference.Has_Bin_Series, false)
+                                preferences.saveBoolean(
+                                    Constant.SharedPreference.Has_Bin_Series,
+                                    false
+                                )
                             PaymentActivity.isPromocodeApplied = it.data.output.creditCardOnly
                             if (it.data.output.p) {
                                 Constant().printTicket(this)
                             } else {
-                                if (Constant.BOOK_TYPE.equals("LOYALTYUNLIMITED", ignoreCase = true)) {
+                                if (Constant.BOOK_TYPE.equals(
+                                        "LOYALTYUNLIMITED",
+                                        ignoreCase = true
+                                    )
+                                ) {
 //                                    val intent =
 //                                        Intent(this, Subscription_Promo_Payment::class.java)
 //                                    intent.putExtra(
@@ -271,7 +288,8 @@ class GiftCardRedeemActivity : AppCompatActivity() {
                                 } else {
                                     Constant.discount_val = it.data.output.di
                                     Constant.discount_txt = it.data.output.txt
-                                    launchActivity(PaymentActivity::class.java,
+                                    launchActivity(
+                                        PaymentActivity::class.java,
                                         Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                                     )
 

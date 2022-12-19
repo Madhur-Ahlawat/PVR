@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
@@ -27,7 +26,7 @@ class HomeOfferAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolderNowShowing, position: Int) {
         val cinemaItem = nowShowingList[position]
-        context.printLog("OfferSize--->${nowShowingList.size}")
+        printLog("OfferSize--->${nowShowingList.size}")
         //Image
             Glide.with(context)
             .load(cinemaItem.i)

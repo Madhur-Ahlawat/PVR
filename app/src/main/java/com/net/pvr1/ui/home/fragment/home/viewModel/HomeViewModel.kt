@@ -14,8 +14,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
-
-
     val userResponseLiveData: LiveData<NetworkResult<HomeResponse>>
         get() = userRepository.homeResponseLiveData
 
@@ -48,6 +46,19 @@ class HomeViewModel @Inject constructor(private val userRepository: UserReposito
     ) {
         viewModelScope.launch {
             userRepository.privilegeHomeData(mobile,city)
+        }
+    }
+
+    //nextBooking
+    val nextBookingResponseLiveData: LiveData<NetworkResult<PrivilegeHomeResponse>>
+        get() = userRepository.nextBookingResponseLiveData
+
+    fun nextBooking(
+        userid: String,
+        did: String
+    ) {
+        viewModelScope.launch {
+            userRepository.nextBookingData(userid,did)
         }
     }
 

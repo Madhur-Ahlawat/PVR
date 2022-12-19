@@ -571,6 +571,30 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
     }
 
+    // NextBooking
+    private val nextBookingLiveData = MutableLiveData<NetworkResult<PrivilegeHomeResponse>>()
+    val nextBookingResponseLiveData: LiveData<NetworkResult<PrivilegeHomeResponse>>
+        get() = nextBookingLiveData
+
+    suspend fun nextBookingData(userid: String, did: String) {
+        nextBookingLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.nextBooking(
+            userid, did, Constant.version, Constant.platform
+        )
+        nextBookingResponse(response)
+    }
+
+    private fun nextBookingResponse(response: Response<PrivilegeHomeResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            nextBookingLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            nextBookingLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            nextBookingLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
 
     //Search
     private val homeSearchLiveData = MutableLiveData<NetworkResult<HomeSearchResponse>>()

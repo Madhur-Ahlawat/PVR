@@ -38,7 +38,7 @@ class BookingShowsParentAdapter(
                 //Recycler
 
                 binding.constraintLayout121.setOnClickListener {
-                    context.printLog("size--->${this.childs[0].sws.size}")
+                    printLog("size--->${this.childs[0].sws.size}")
                     if (binding.recyclerView7.visibility == View.GONE) {
                         binding.recyclerView7.show()
                         binding.imageView56.setImageResource(R.drawable.arrow_up)

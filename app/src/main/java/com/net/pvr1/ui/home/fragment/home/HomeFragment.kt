@@ -1,18 +1,19 @@
 package com.net.pvr1.ui.home.fragment.home
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
+import android.view.*
 import android.view.View.OnTouchListener
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -35,6 +36,8 @@ import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingActivity
 import com.net.pvr1.ui.player.PlayerActivity
 import com.net.pvr1.ui.search.searchHome.SearchHomeActivity
 import com.net.pvr1.utils.*
+import com.net.pvr1.utils.Constant.Companion.PRIVILEGEPOINT
+import com.net.pvr1.utils.Constant.Companion.PRIVILEGEVOUCHER
 import com.net.pvr1.utils.Constant.Companion.PlaceHolder
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -50,6 +53,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     HomeMoviesAdapter.RecycleViewItemClickListener, HomeTrailerAdapter.RecycleViewItemClickListener,
     GenericFilterHome.onButtonSelected, StoriesProgressView.StoriesListener {
     private var binding: FragmentHomeBinding? = null
+
     @Inject
     lateinit var preferences: PreferenceManager
     private var loader: LoaderDialog? = null
@@ -59,18 +63,20 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     private var format = "ALL"
     private var special = "ALL"
     private var cinema_type = "ALL"
-    private var upcomingBooking = true
+    private var upcomingBooking = false
     private var buttonPressed = ArrayList<String>()
     private var generseleced: ArrayList<String?>? = ArrayList<String?>()
 
-// story board
+    // story board
+    private var bannerShow = 0
     private var pressTime = 0L
     private var limit = 500L
     private var counterStory = 0
     private var currentPage = 1
+    private var qrCode = ""
     private var appliedFilterType = ""
     private var appliedFilterItem = HashMap<String, String>()
-    private var bannerModels: ArrayList<HomeResponse.Pu> = ArrayList<HomeResponse.Pu>()
+    private var bannerModelsMain: ArrayList<HomeResponse.Pu> = ArrayList<HomeResponse.Pu>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -84,7 +90,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (binding?.bannerLayout?.includeStoryLayout?.stories== null) {
+        if (binding?.bannerLayout?.includeStoryLayout?.stories == null) {
             binding?.bannerLayout?.includeStoryLayout?.stories?.destroy()
         }
 
@@ -103,6 +109,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
         movedNext()
         homeApi()
+        createQr()
         getMovieFormatFromApi(true)
     }
 
@@ -164,6 +171,10 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         }
         binding?.RlBanner?.hide()
 
+    }
+
+    private fun createQr() {
+        qrCode = Constant().getLoyaltyQr(preferences.geMobileNumber(), "180x180")
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -248,7 +259,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             val adapterSlider = HomeSliderAdapter(requireActivity(), output.mv, this)
             binding?.recyclerViewSlider?.layoutManager = gridLayoutSlider
             binding?.recyclerViewSlider?.adapter = adapterSlider
-
         }
 
         //Promotion
@@ -265,7 +275,11 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         binding?.recyclerMovies?.adapter = adapterMovies
 
         //Trailer
-        val gridLayoutTrailer = GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+        binding?.recyclerTrailer?.onFlingListener = null
+        val snapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(binding?.recyclerTrailer)
+        val gridLayoutTrailer =
+            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
         binding?.recyclerTrailer?.layoutManager = LinearLayoutManager(context)
         val adapterTrailer = HomeTrailerAdapter(requireActivity(), output.cp, this)
         binding?.recyclerTrailer?.layoutManager = gridLayoutTrailer
@@ -278,8 +292,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             filterPoints[Constant.FilterType.LANG_FILTER] = output.mlng
             filterPoints[Constant.FilterType.GENERE_FILTER] = output.mgener
             filterPoints[Constant.FilterType.FORMAT_FILTER] = ArrayList()
-            filterPoints[Constant.FilterType.ACCESSABILITY_FILTER] =
-                ArrayList(listOf("Subtitle"))
+            filterPoints[Constant.FilterType.ACCESSABILITY_FILTER] = ArrayList(listOf("Subtitle"))
             filterPoints[Constant.FilterType.PRICE_FILTER] = ArrayList()
             filterPoints[Constant.FilterType.SHOWTIME_FILTER] = ArrayList()
             filterPoints[Constant.FilterType.CINEMA_FORMAT] = ArrayList()
@@ -295,10 +308,60 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         }
 
 
-        if (output.rm!=null){
-
+        if (output.rm != null) {
+            recommend(output.rm)
         }
-        initBanner(output.pu)
+
+        if (bannerShow == 0) {
+            initBanner(output.pu)
+        }
+
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun recommend(rm: HomeResponse.Rm) {
+        if (rm != null) {
+            //image
+            Glide.with(this).load(rm.i).into(binding?.homeRecommend?.ivRecomm!!)
+            //trailer
+            binding?.homeRecommend?.playBtn?.setOnClickListener {
+                val intent = Intent(requireActivity(), PlayerActivity::class.java)
+                intent.putExtra("trailerUrl", rm.mtrailerurl)
+                startActivity(intent)
+            }
+            //title
+            binding?.homeRecommend?.tvMovie?.text = rm.n
+
+            //trending
+            binding?.homeRecommend?.tvCensorLang?.text =
+                rm.ce + " • " + java.lang.String.join(",", rm.grs)
+
+            //    tvMovie.setSelected(true);
+            if (rm.othergenres != null && rm.otherlanguages != "") {
+                if (rm.otherlanguages.split(",").size > 2) {
+                    binding?.homeRecommend?.genrePlus?.visibility = View.VISIBLE
+                    binding?.homeRecommend?.genrePlus?.text =
+                        "+" + (rm.othergenres.split(",").size - 2)
+                    binding?.homeRecommend?.tvGenre?.text =
+                        rm.othergenres.split(",")[0] + " | " + rm.othergenres.split(",")[1]
+                } else {
+                    binding?.homeRecommend?.genrePlus?.visibility = View.GONE
+                    binding?.homeRecommend?.tvGenre?.text = rm.othergenres.replace(",", " | ")
+                }
+            } else {
+                var string = ""
+                for (i in 0 until rm.grs.size) {
+                    string =
+                        if (i == rm.grs.size - 1) string + rm.grs[i] else string + rm.grs[i] + " • "
+                }
+                binding?.homeRecommend?.tvGenre?.text = string
+            }
+
+
+            if (!TextUtils.isEmpty(rm.rtt)) binding?.homeRecommend?.tvRecomm?.text =
+                rm.rtt else binding?.homeRecommend?.tvRecomm?.text = "TRENDING"
+        }
+
     }
 
     override fun onCategoryClick(comingSoonItem: HomeResponse.Mfi) {
@@ -352,7 +415,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             val containLanguage = type.contains("language")
             if (containLanguage) {
                 val index = type.indexOf("language")
-                var value: String = filterItemSelected.get(type[index])!!
+                var value: String = filterItemSelected[type[index]]!!
                 if (value != null && !value.equals("", ignoreCase = true)) {
                     buttonPressed.clear()
                     appliedFilterType = "language"
@@ -409,19 +472,28 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         generseleced = ArrayList()
         appliedFilterItem = HashMap()
         binding?.appliedFilter?.visibility = View.GONE
-        getMovieFormatFromApi(true)
+        authViewModel.home(
+            preferences.getCityName(),
+            "",
+            preferences.getUserId(),
+            preferences.geMobileNumber(),
+            upcomingBooking,
+            "no",
+            "",
+            "ALL",
+            "ALL",
+            "ALL",
+            "no"
+        )
     }
 
     private fun getMovieFormatFromApi(isFirstTime: Boolean) {
-        getMoviesForUNowShowingHit(isFirstTime)
+        getMoviesForUNowShowingHit()
     }
 
     @SuppressLint("SuspiciousIndentation")
-    private fun getMoviesForUNowShowingHit(firstTime: Boolean) {
-//        if (!TextUtils.isEmpty( PCApplication.getPreference() .getString(PCConstants.SharedPreference.BOOKING_FIRST_INDEX)) && preferences.getIsLogin()==true
-//        )
-        upcomingBooking = preferences.getIsLogin() == true
-
+    private fun getMoviesForUNowShowingHit() {
+        upcomingBooking = preferences.getIsLogin() == false
         if (!special.equals("All", ignoreCase = true))
 
             if (buttonPressed.isNotEmpty()) {
@@ -435,8 +507,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 format + "," + generseleced!![i]!!.split("-").toTypedArray()[0].trim { it <= ' ' }
         }
 
-        if (!cinema_type.equals("All", ignoreCase = true)){
-
+        if (!cinema_type.equals("All", ignoreCase = true)) {
             authViewModel.home(
                 preferences.getCityName(),
                 "",
@@ -450,8 +521,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 special,
                 "no"
             )
-        }else{
-
+        } else {
             authViewModel.home(
                 preferences.getCityName(),
                 "",
@@ -467,13 +537,33 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             )
         }
 
-    }
+        if (preferences.getIsLogin()) {
+            binding?.privilegeLoginUi?.show()
+            binding?.privilegeLogOutUi?.hide()
+            printLog("pt---->${PRIVILEGEPOINT}")
+            binding?.privilegeLogin?.pt?.text = PRIVILEGEPOINT
+            binding?.privilegeLogin?.numVou?.text = PRIVILEGEVOUCHER
+            binding?.privilegeLogin?.qrImgMainPage?.setOnClickListener {
+//                val intent = Intent(requireActivity(), PrivilegeDetailsActivity::class.java)
+//                startActivity(intent)
+                oPenDialogQR()
+            }
 
+            authViewModel.nextBooking(
+                preferences.getUserId(),
+                Constant().getDeviceId(requireActivity())
+            )
+        } else {
+            binding?.privilegeLoginUi?.hide()
+            binding?.privilegeLogOutUi?.show()
+        }
+
+    }
 
     @SuppressLint("CutPasteId")
     private fun initBanner(bannerModels: ArrayList<HomeResponse.Pu>) {
-        println("InitBannerResponse--->" + bannerModels.size)
-
+        bannerShow += 1
+        bannerModelsMain = bannerModels
         if ((bannerModels != null) && bannerModels.isNotEmpty()) {
             (requireActivity().findViewById(R.id.RlBanner) as RelativeLayout).show()
             binding?.bannerLayout?.includeStoryLayout?.stories?.setStoriesCount(bannerModels.size) // <- set stories
@@ -482,22 +572,22 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             binding?.bannerLayout?.includeStoryLayout?.stories?.startStories() // <- start progress
             counterStory = 0
             if (!TextUtils.isEmpty(bannerModels[counterStory].i)) {
-                Picasso.get().load(bannerModels[counterStory].i).into(binding?.bannerLayout?.includeStoryLayout?.ivBanner, object : Callback {
+                Picasso.get().load(bannerModels[counterStory].i)
+                    .into(binding?.bannerLayout?.includeStoryLayout?.ivBanner, object : Callback {
                         override fun onSuccess() {
                             (requireActivity().findViewById(R.id.RlBanner) as RelativeLayout).show()
 
                             //  storiesProgressView.startStories(); // <- start progress
                         }
+
                         override fun onError(e: Exception?) {}
                     })
             }
 
-
-
-            binding?.bannerLayout?.includeStoryLayout?.reverse?.setOnClickListener { binding?.bannerLayout?.includeStoryLayout?.stories ?.reverse() }
+            binding?.bannerLayout?.includeStoryLayout?.reverse?.setOnClickListener { binding?.bannerLayout?.includeStoryLayout?.stories?.reverse() }
             binding?.bannerLayout?.includeStoryLayout?.reverse?.setOnTouchListener(onTouchListener)
             showButton(bannerModels[0])
-            binding?.bannerLayout?.includeStoryLayout?.skip?.setOnClickListener { binding?.bannerLayout?.includeStoryLayout?.stories ?.skip() }
+            binding?.bannerLayout?.includeStoryLayout?.skip?.setOnClickListener { binding?.bannerLayout?.includeStoryLayout?.stories?.skip() }
             binding?.bannerLayout?.includeStoryLayout?.skip?.setOnTouchListener(onTouchListener)
             binding?.bannerLayout?.tvButton?.setOnClickListener {
                 (requireActivity().findViewById(R.id.RlBanner) as RelativeLayout).hide()
@@ -519,9 +609,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                                 val intent = Intent(
                                     Intent.ACTION_VIEW, Uri.parse(
                                         bannerModels[counterStory].redirect_url.replace(
-                                                "https",
-                                                "app"
-                                            )
+                                            "https", "app"
+                                        )
                                     )
                                 )
                                 startActivity(intent)
@@ -570,7 +659,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     private fun showButton(bannerModel: HomeResponse.Pu) {
-//        equalsIgnoreCase("video")
         if (bannerModel.type != "video") {
             binding?.bannerLayout?.ivPlay?.visibility = View.VISIBLE
             binding?.bannerLayout?.tvButton?.visibility = View.GONE
@@ -588,36 +676,67 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     override fun onNext() {
-        if (!TextUtils.isEmpty(bannerModels[counterStory].i)) {
-            ++counterStory
-            showButton(bannerModels[counterStory])
-            binding?.bannerLayout?.includeStoryLayout?.ivBanner?.let {
-                Glide.with(this)
-                    .load(bannerModels[counterStory].i)
-                    .into(it)
+        try {
+            if (!TextUtils.isEmpty(bannerModelsMain[counterStory].i)) {
+                ++counterStory
+                showButton(bannerModelsMain[counterStory])
+                binding?.bannerLayout?.includeStoryLayout?.ivBanner?.let {
+                    Glide.with(this).load(bannerModelsMain[counterStory].i).into(it)
+                }
             }
-
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+
     }
 
     override fun onPrev() {
         if (counterStory - 1 < 0) return
-        if (!TextUtils.isEmpty(bannerModels[counterStory].i)) {
+        if (!TextUtils.isEmpty(bannerModelsMain[counterStory].i)) {
             --counterStory
-            showButton(bannerModels[counterStory])
+            showButton(bannerModelsMain[counterStory])
             binding?.bannerLayout?.includeStoryLayout?.ivBanner?.let {
-                Glide.with(this)
-                    .load(bannerModels[counterStory].i)
-                    .into(it)
+                Glide.with(this).load(bannerModelsMain[counterStory].i).into(it)
             }
-
         }
     }
 
     override fun onComplete() {
-        binding?.bannerLayout?.includeStoryLayout?.stories ?.destroy()
-        binding?.bannerLayout?.includeStoryLayout?.stories ?.startStories()
+        binding?.bannerLayout?.includeStoryLayout?.stories?.destroy()
+        binding?.bannerLayout?.includeStoryLayout?.stories?.startStories()
         currentPage = 0
         (requireActivity().findViewById(R.id.RlBanner) as RelativeLayout).hide()
     }
+
+    private fun oPenDialogQR() {
+        val dialogQR = Dialog(requireActivity())
+        dialogQR.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogQR.setCancelable(false)
+        dialogQR.setContentView(R.layout.activity_privilege_details)
+        dialogQR.window?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+        dialogQR.window?.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+        dialogQR.window?.setGravity(Gravity.CENTER)
+        dialogQR.setTitle("")
+        val pointsPcTextView = dialogQR.findViewById<TextView>(R.id.points_txt)
+        val vochersPcTextView = dialogQR.findViewById<TextView>(R.id.vouchers_txt_)
+        val TVusername: TextView = dialogQR.findViewById<View>(R.id.TVusername) as TextView
+        val ivImage = dialogQR.findViewById<View>(R.id.ivImage) as ImageView
+        val tvCross = dialogQR.findViewById<View>(R.id.tvCross) as ImageView
+        Glide.with(requireActivity()).load(qrCode).into(ivImage)
+        TVusername.text = preferences.getUserName()
+        pointsPcTextView.text = PRIVILEGEPOINT
+        vochersPcTextView.text = PRIVILEGEVOUCHER
+        tvCross.setOnClickListener { dialogQR.dismiss() }
+        dialogQR.setOnKeyListener { _, keyCode, _ ->
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                dialogQR.dismiss()
+            }
+            true
+        }
+        dialogQR.show()
+    }
+
 }

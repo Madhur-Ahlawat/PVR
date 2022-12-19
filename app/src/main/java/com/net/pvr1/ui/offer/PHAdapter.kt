@@ -39,7 +39,7 @@ class PHAdapter(
         var itemLayoutView: View? = null
         itemLayoutView = if (type == 1) {
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.ph_slider_item, null)
+                .inflate(R.layout.ph_slider_item_new, null)
         } else {
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.ph_slider_item_new, null)

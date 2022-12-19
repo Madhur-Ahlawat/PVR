@@ -87,8 +87,7 @@
                     android:textSize="11sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvNewRe"
-                    tool:text="Treanding" />
-
+                    android:text="@string/trending" />
 
                 <TextView
                     android:id="@+id/tvMovie"

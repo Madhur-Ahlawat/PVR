@@ -28,6 +28,13 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
         <activity
+            android:name=".ui.home.fragment.privilege.PrivilegeDetailsActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.home.fragment.commingSoon.search.CinemaSearchActivity"
             android:exported="false">
             <meta-data
@@ -308,7 +315,6 @@
             android:name=".ui.payment.paytmpostpaid.PaytmPostPaidActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.payment.webView.PaytmWebActivity"
             android:exported="false"
