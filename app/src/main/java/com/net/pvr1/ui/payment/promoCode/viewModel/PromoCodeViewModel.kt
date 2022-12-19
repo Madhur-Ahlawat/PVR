@@ -96,35 +96,36 @@ class PromoCodeViewModel @Inject constructor(private val userRepository: UserRep
     }
 
     //POST PAID VERIFY OTP
-    val liveDatapaytmHmacOldScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.paytmHmacOldResponseLiveData
+    val starpassOldScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.starpassResponseLiveData
 
-    fun postPaidpaytmHmacOld(
+    fun starpass(
         userid: String,
         bookingid: String,
         transid: String,
-        booktype: String
+        booktype: String,
+        cinemacode: String,
+        starpasses: String,
     ) {
         viewModelScope.launch {
-            userRepository.paytmHmacOld(userid, bookingid, booktype, transid)
+            userRepository.starpass(userid, bookingid, booktype, transid,cinemacode,starpasses)
         }
     }
 
     //E_pay_Latter
-    val liveDataEPAYScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.paytmHmaResponseLiveData
+    val mcouponScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.mcouponResponseLiveData
 
-    fun ePayLatter(
+    fun mcoupon(
         userid: String,
         bookingid: String,
         transid: String,
-        unpaid: Boolean,
-        cardNo: String,
         booktype: String,
-        ptype: String,
-        isSpi: String,
-        binOffer: String
+        cinemacode: String,
+        mccard: String,
+        mcmobile: String,
+        mCoupons: String,
     ) {
         viewModelScope.launch {
-            userRepository.paytmHMAC(userid, bookingid, transid, unpaid, cardNo,booktype,ptype,isSpi,binOffer)
+            userRepository.mcoupon(userid, bookingid, transid, booktype,cinemacode,mccard,mcmobile,mCoupons)
         }
     }
 

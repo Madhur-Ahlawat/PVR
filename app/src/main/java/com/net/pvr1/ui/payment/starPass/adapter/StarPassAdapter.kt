@@ -28,26 +28,26 @@ class StarPassAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        with(holder) {
-            with(nowShowingList[position]) {
-                binding.textInputLayout.hint = this.name
-                binding.Count.text = nowShowingList.size.toString()
-
-                if (position == nowShowingList.size - 1) {
-                    binding.count.show()
-                } else {
-                    binding.count.hide()
-                }
-
-                binding.minus.setOnClickListener {
-                    listener.starPassMinusClick(this)
-                }
-                binding.plus.setOnClickListener {
-                    listener.starPassAddClick(this)
-
-                }
-            }
-        }
+//        with(holder) {
+//            with(nowShowingList[position]) {
+//                binding.textInputLayout.hint = this.name
+//                binding.Count.text = nowShowingList.size.toString()
+//
+//                if (position == nowShowingList.size - 1) {
+//                    binding.count.show()
+//                } else {
+//                    binding.count.hide()
+//                }
+//
+//                binding.minus.setOnClickListener {
+//                    listener.starPassMinusClick(this)
+//                }
+//                binding.plus.setOnClickListener {
+//                    listener.starPassAddClick(this)
+//
+//                }
+//            }
+//        }
     }
 
     override fun getItemCount(): Int {
