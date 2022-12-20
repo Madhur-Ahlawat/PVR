@@ -20,12 +20,14 @@ import com.net.pvr1.ui.payment.adapter.PaymentAdapter
 import com.net.pvr1.ui.payment.adapter.PaymentExclusiveAdapter
 import com.net.pvr1.ui.payment.cardDetails.CardDetailsActivity
 import com.net.pvr1.ui.payment.giftcardredeem.GiftCardRedeemActivity
+import com.net.pvr1.ui.payment.mCoupon.MCouponActivity
 import com.net.pvr1.ui.payment.paytmpostpaid.PaytmPostPaidActivity
 import com.net.pvr1.ui.payment.promoCode.PromoCodeActivity
 import com.net.pvr1.ui.payment.response.CouponResponse
 import com.net.pvr1.ui.payment.response.PaymentResponse
 import com.net.pvr1.ui.payment.response.PaytmHmacResponse
 import com.net.pvr1.ui.payment.response.UPIStatusResponse
+import com.net.pvr1.ui.payment.starPass.StarPassActivity
 import com.net.pvr1.ui.payment.viewModel.PaymentViewModel
 import com.net.pvr1.ui.payment.webView.PaytmWebActivity
 import com.net.pvr1.utils.*
@@ -315,6 +317,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 intent.putExtra("pTypeId", paymentItem.id)
                 intent.putExtra("paidAmount", paidAmount)
                 intent.putExtra("title", paymentItem.name)
+                intent.putExtra("tc", paymentItem.tc)
                 startActivity(intent)
             }
             AIRTEL -> {
@@ -322,6 +325,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 intent.putExtra("pTypeId", paymentItem.id)
                 intent.putExtra("paidAmount", paidAmount)
                 intent.putExtra("title", paymentItem.name)
+                intent.putExtra("tc", paymentItem.tc)
                 startActivity(intent)
             }
             DEBIT_CARD -> {
@@ -329,11 +333,13 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 intent.putExtra("pTypeId", paymentItem.id)
                 intent.putExtra("paidAmount", paidAmount)
                 intent.putExtra("title", paymentItem.name)
+                intent.putExtra("tc", paymentItem.tc)
                 startActivity(intent)
             }
             NET_BANKING -> {
                 val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
                 intent.putExtra("pTypeId", paymentItem.id)
+                intent.putExtra("tc", paymentItem.tc)
                 intent.putExtra("title", paymentItem.name)
                 intent.putExtra("paidAmount", paidAmount)
                 startActivity(intent)
@@ -350,6 +356,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 val intent = Intent(this, PaytmPostPaidActivity::class.java)
                 intent.putExtra("type", "PP")
                 intent.putExtra("ca_a", paymentItem.ca_a)
+                intent.putExtra("tc", paymentItem.tc)
                 intent.putExtra("ca_t", paymentItem.ca_t)
                 intent.putExtra("title", paymentItem.name)
                 intent.putExtra("paidAmount", paidAmount)
@@ -359,6 +366,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 val intent = Intent(this, PaytmPostPaidActivity::class.java)
                 intent.putExtra("type", "P")
                 intent.putExtra("ca_a", paymentItem.ca_a)
+                intent.putExtra("tc", paymentItem.tc)
                 intent.putExtra("ca_t", paymentItem.ca_t)
                 intent.putExtra("title", paymentItem.name)
                 intent.putExtra("paidAmount", paidAmount)
@@ -368,6 +376,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 val intent = Intent(this, PromoCodeActivity::class.java)
                 intent.putExtra("type", "GYFTR")
                 intent.putExtra("pid", paymentItem.id)
+                intent.putExtra("tc", paymentItem.tc)
                 intent.putExtra("ca_a", paymentItem.ca_a)
                 intent.putExtra("ca_t", paymentItem.ca_t)
                 intent.putExtra("title", paymentItem.name)
@@ -402,6 +411,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 val intent = Intent(this, PromoCodeActivity::class.java)
                 intent.putExtra("type", "ACCENTIVE")
                 intent.putExtra("pid", paymentItem.id)
+                intent.putExtra("tc", paymentItem.tc)
                 intent.putExtra("ca_a", paymentItem.ca_a)
                 intent.putExtra("ca_t", paymentItem.ca_t)
                 intent.putExtra("title", paymentItem.name)
@@ -599,6 +609,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 val intent = Intent(this, PromoCodeActivity::class.java)
                 intent.putExtra("type", "PROMO")
                 intent.putExtra("pid", paymentItem.id)
+                intent.putExtra("tc", paymentItem.tc)
                 intent.putExtra("ca_a", paymentItem.ca_a)
                 intent.putExtra("ca_t", paymentItem.ca_t)
                 intent.putExtra("title", paymentItem.name)
@@ -622,6 +633,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 val intent = Intent(this, PromoCodeActivity::class.java)
                 intent.putExtra("type", "PROMO")
                 intent.putExtra("pid", paymentItem.id)
+                intent.putExtra("tc", paymentItem.tc)
                 intent.putExtra("ca_a", paymentItem.ca_a)
                 intent.putExtra("ca_t", paymentItem.ca_t)
                 intent.putExtra("title", paymentItem.name)
@@ -632,6 +644,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 val intent = Intent(this, PromoCodeActivity::class.java)
                 intent.putExtra("type", "HYATT")
                 intent.putExtra("pid", paymentItem.id)
+                intent.putExtra("tc", paymentItem.tc)
                 intent.putExtra("ca_a", paymentItem.ca_a)
                 intent.putExtra("ca_t", paymentItem.ca_t)
                 intent.putExtra("title", paymentItem.name)
@@ -642,6 +655,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 val intent = Intent(this, PromoCodeActivity::class.java)
                 intent.putExtra("type", "ACCENTIVE")
                 intent.putExtra("pid", paymentItem.id)
+                intent.putExtra("tc", paymentItem.tc)
                 intent.putExtra("ca_a", paymentItem.ca_a)
                 intent.putExtra("ca_t", paymentItem.ca_t)
                 intent.putExtra("title", paymentItem.name)
@@ -649,12 +663,22 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 startActivity(intent)
             }
             STAR_PASS -> {
-                val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
+                val intent = Intent(this@PaymentActivity, MCouponActivity::class.java)
+                intent.putExtra("pid", paymentItem.id)
+                intent.putExtra("ca_a", paymentItem.ca_a)
+                intent.putExtra("tc", paymentItem.tc)
+                intent.putExtra("ca_t", paymentItem.ca_t)
+                intent.putExtra("title", paymentItem.name)
                 intent.putExtra("paidAmount", paidAmount)
                 startActivity(intent)
             }
             M_COUPON -> {
-                val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
+                val intent = Intent(this@PaymentActivity, MCouponActivity::class.java)
+                intent.putExtra("pid", paymentItem.id)
+                intent.putExtra("tc", paymentItem.tc)
+                intent.putExtra("ca_a", paymentItem.ca_a)
+                intent.putExtra("ca_t", paymentItem.ca_t)
+                intent.putExtra("title", paymentItem.name)
                 intent.putExtra("paidAmount", paidAmount)
                 startActivity(intent)
             }

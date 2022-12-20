@@ -61,6 +61,7 @@ class Constant {
         var TRANSACTION_ID = "0"
         var OfferDialogImage = "0"
         var BOOKING_ID = "0"
+        var SELECTED_SEAT = 0
         var SESSION_ID = "0"
         var PRIVILEGEPOINT = "0"
         var PRIVILEGEVOUCHER = "0"

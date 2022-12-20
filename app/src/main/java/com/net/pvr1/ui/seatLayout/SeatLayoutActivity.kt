@@ -43,6 +43,7 @@ import com.net.pvr1.ui.summery.SummeryActivity
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
+import com.net.pvr1.utils.Constant.Companion.SELECTED_SEAT
 import com.net.pvr1.utils.Constant.Companion.SESSION_ID
 import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
 import dagger.hilt.android.AndroidEntryPoint
@@ -319,6 +320,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
     private fun retrieverReserveSeatData(output: ReserveSeatResponse.Output) {
         BOOKING_ID = output.bookingid
+        SELECTED_SEAT = selectedSeats.size
         if (output.nf == "true") {
             startActivity(Intent(this, FoodActivity::class.java))
         } else {
