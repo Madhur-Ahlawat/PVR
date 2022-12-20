@@ -13,7 +13,7 @@ data class CinemaResponse(
     data class Output(
         val c: List<C>,
         val ph: List<Ph>,
-        val pu: List<Pu>
+        val pu: ArrayList<Pu>
     ) : Serializable {
         data class C(
             val ad: String,
@@ -75,6 +75,7 @@ data class CinemaResponse(
             val platform: String,
             val priority: Int,
             val redirect_url: String,
+            val redirectView: String,
             val screen: String,
             val trailerUrl: String,
             val type: String

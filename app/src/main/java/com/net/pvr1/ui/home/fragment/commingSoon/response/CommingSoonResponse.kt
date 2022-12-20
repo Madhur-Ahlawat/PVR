@@ -69,6 +69,7 @@ data class CommingSoonResponse(
             val platform: String,
             val priority: Int,
             val redirect_url: String,
+            val redirectView: String,
             val screen: String,
             val trailerUrl: String,
             val type: String

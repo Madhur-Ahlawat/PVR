@@ -1,15 +1,24 @@
 package com.net.pvr1.ui.home.fragment.commingSoon
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
+import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityComingSoonBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
@@ -24,13 +33,16 @@ import com.net.pvr1.ui.movieDetails.comingSoonDetails.ComingSoonDetailsActivity
 import com.net.pvr1.ui.movieDetails.comingSoonDetails.adapter.ComDetailsHomePhAdapter
 import com.net.pvr1.ui.player.PlayerActivity
 import com.net.pvr1.utils.*
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import jp.shts.android.storiesprogressview.StoriesProgressView
 import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListener,
-    ComingSoonMovieAdapter.VideoPlay, GenericFilterComing.onButtonSelected {
+    ComingSoonMovieAdapter.VideoPlay, GenericFilterComing.onButtonSelected  , StoriesProgressView.StoriesListener{
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityComingSoonBinding? = null
@@ -45,6 +57,24 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
     private var language="ALL"
     private var genre="ALL"
 
+
+    // story board
+    private var bannerShow = 0
+    private var pressTime = 0L
+    private var limit = 500L
+    private var counterStory = 0
+    private var currentPage = 1
+    private var qrCode = ""
+    private var bannerModelsMain: ArrayList<CommingSoonResponse.Output.Pu> = ArrayList()
+    private var ivBanner: ImageView? = null
+    private var ivCross: ImageView? = null
+    private var skip: View? = null
+    private var reverse: View? = null
+    private var tvButton: TextView? = null
+    private var ivPlay: LinearLayout? = null
+    private var RlBanner: RelativeLayout? = null
+    private var stories: StoriesProgressView? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -56,6 +86,23 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (requireActivity().findViewById(R.id.include) as ConstraintLayout).hide()
+
+        tvButton = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
+            .findViewById(R.id.tv_button))
+        ivBanner = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
+            .findViewById(R.id.ivBanner))
+        ivPlay = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
+            .findViewById(R.id.ivPlay))
+        skip = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout).findViewById(R.id.skip))
+        reverse =
+            (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout).findViewById(R.id.reverse))
+        ivCross = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout).findViewById(R.id.ivCross))
+        RlBanner = (requireActivity().findViewById(R.id.RlBanner))
+        stories = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout).findViewById(R.id.stories))
+
+        if (stories == null) {
+            stories?.destroy()
+        }
         comingSoonApi()
         movedNext()
         comingSoonAPICall()
@@ -191,7 +238,11 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
         }
         if (appliedFilterItem.size > 0) binding?.appliedFilter?.visibility = View.VISIBLE
 
+        if (output.pu.isNotEmpty()){
+            initBanner(output.pu)
+        }
     }
+
 
     override fun onDateClick(comingSoonItem: Any) {
 
@@ -263,7 +314,186 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
         binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
         buttonPressed = ArrayList<String>()
         generseleced = ArrayList<String>()
-        binding?.appliedFilter?.setVisibility(View.GONE)
+        binding?.appliedFilter?.visibility = View.GONE
         appliedFilterItem = HashMap()
+        authViewModel.comingSoon(preferences.getCityName(), "ALL", "ALL", preferences.getUserId())
+
     }
+
+    private fun initBanner(bannerModels: ArrayList<CommingSoonResponse.Output.Pu>) {
+        bannerShow += 1
+        bannerModelsMain = bannerModels
+        if ((bannerModels != null) && bannerModels.isNotEmpty()) {
+            RlBanner?.show()
+            stories?.setStoriesCount(bannerModels.size) // <- set stories
+            stories?.setStoryDuration(5000L) // <- set a story duration
+            stories?.setStoriesListener(this) // <- set listener
+            stories?.startStories() // <- start progress
+            counterStory = 0
+            if (!TextUtils.isEmpty(bannerModels[counterStory].i)) {
+                Picasso.get().load(bannerModels[counterStory].i).into(ivBanner!!, object :
+                    Callback {
+                    override fun onSuccess() {
+                        RlBanner?.show()
+                        //  storiesProgressView.startStories(); // <- start progress
+                    }
+
+                    override fun onError(e: Exception?) {}
+                })
+            }
+
+            reverse?.setOnClickListener { stories?.reverse() }
+            reverse?.setOnTouchListener(onTouchListener)
+            showButton(bannerModels[0])
+            skip?.setOnClickListener { stories?.skip() }
+            skip?.setOnTouchListener(onTouchListener)
+            tvButton?.setOnClickListener {
+                RlBanner?.hide()
+                if (bannerModels != null && bannerModels.size > 0 && bannerModels[counterStory].type
+                        .equals("image",ignoreCase = true)
+                ) {
+                    if (bannerModels[counterStory].redirectView.equals("DEEPLINK",ignoreCase = true)) {
+                        if (bannerModels[counterStory].redirect_url != null && !bannerModels[counterStory].redirect_url
+                                .equals("",ignoreCase = true)
+                        ) {
+                            if (bannerModels[counterStory].redirect_url
+                                    .toLowerCase(Locale.ROOT).contains("/loyalty/home")
+                            ) {
+//                                if (context is PCLandingActivity) (context as PCLandingActivity).PriviegeFragment(
+//                                    "C"
+//                                )
+                            } else {
+                                val intent = Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse(
+                                        bannerModels[counterStory].redirect_url
+                                            .replace("https", "app").replace("http", "app")
+                                    )
+                                )
+                                startActivity(intent)
+                            }
+                        }
+                    } else if (bannerModels[counterStory].redirectView
+                            .equals("INAPP",ignoreCase = true)
+                    ) {
+                        if (bannerModels[counterStory].redirectView != null && !bannerModels[counterStory].redirect_url
+                                .equals("",ignoreCase = true)
+                        ) {
+//                            val intent = Intent(context, PrivacyActivity::class.java)
+//                            intent.putExtra("url", bannerModels[counterStory].getRedirect_url())
+//                            intent.putExtra(PCConstants.IS_FROM, 2000)
+//                            intent.putExtra("title", bannerModels[counterStory].getName())
+//                            startActivity(intent)
+                        }
+                    } else if (bannerModels[counterStory].redirectView
+                            .equals("WEB",ignoreCase = true)
+                    ) {
+                        if (bannerModels[counterStory].redirect_url != null && !bannerModels[counterStory].redirect_url
+                                .equals("",ignoreCase = true)
+                        ) {
+                            val intent = Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(bannerModels[counterStory].redirect_url)
+                            )
+                            startActivity(intent)
+                        }
+                    }
+                }
+
+
+            }
+            (requireActivity().findViewById(R.id.bannerLayout) as RelativeLayout).show()
+
+            ivPlay?.setOnClickListener {
+                RlBanner?.hide()
+                if (bannerModels != null && bannerModels.size > 0 && bannerModels[counterStory].type
+                        .equals("video",ignoreCase = true)
+                ) {
+                    if (bannerModels[counterStory].trailerUrl != null) {
+//                        val intent = Intent(context, MovieTrailerActivity::class.java)
+//                        intent.putExtra("id", "")
+//                        intent.putExtra("name", "")
+//                        intent.putExtra("language", "")
+//                        intent.putExtra(
+//                            PCConstants.IntentKey.YOUTUBE_URL,
+//                            bannerModels[counterStory].trailerUrl
+//                        )
+//                        startActivity(intent)
+                    }
+                }
+
+            }
+
+        } else {
+            RlBanner?.hide()
+        }
+    }
+
+
+    override fun onNext() {
+        try {
+            if (!TextUtils.isEmpty(bannerModelsMain[counterStory].i)) {
+                ++counterStory
+                showButton(bannerModelsMain[counterStory])
+                ivBanner?.let {
+                    Glide.with(this).load(bannerModelsMain[counterStory].i).into(it)
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    override fun onPrev() {
+        if (counterStory - 1 < 0) return
+        if (!TextUtils.isEmpty(bannerModelsMain[counterStory].i)) {
+            --counterStory
+            showButton(bannerModelsMain[counterStory])
+            ivBanner?.let {
+                Glide.with(this).load(bannerModelsMain[counterStory].i).into(it)
+            }
+        }
+    }
+
+    override fun onComplete() {
+        stories?.destroy()
+        stories?.startStories()
+        currentPage = 0
+        RlBanner?.hide()
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private val onTouchListener = View.OnTouchListener { _, event ->
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                pressTime = System.currentTimeMillis()
+                stories?.pause()
+                return@OnTouchListener false
+            }
+            MotionEvent.ACTION_UP -> {
+                val now = System.currentTimeMillis()
+                stories?.resume()
+                return@OnTouchListener limit < now - pressTime
+            }
+        }
+        false
+    }
+
+    private fun showButton(bannerModel: CommingSoonResponse.Output.Pu) {
+        if (bannerModel.type.equals("video",ignoreCase = true)) {
+            ivPlay?.show()
+            tvButton?.hide()
+        } else if (bannerModel.type.equals("image",ignoreCase = true) && bannerModel.redirect_url.equals("",ignoreCase = true)
+        ) {
+            ivPlay?.hide()
+            tvButton?.text = bannerModel.buttonText
+            tvButton?.show()
+        } else {
+            ivPlay?.hide()
+            tvButton?.hide()
+        }
+
+    }
+
 }

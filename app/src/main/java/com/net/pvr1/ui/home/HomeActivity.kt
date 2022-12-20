@@ -137,7 +137,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
             val gridLayout =
                 GridLayoutManager(this@HomeActivity, 1, GridLayoutManager.HORIZONTAL, false)
             recyclerView.layoutManager = LinearLayoutManager(this@HomeActivity)
-            val adapter = HomeOfferAdapter(offerResponse!!, this, this)
+            val adapter = offerResponse?.let { HomeOfferAdapter(it, this, this) }
             recyclerView.layoutManager = gridLayout
             recyclerView.adapter = adapter
         } catch (e: Exception) {
@@ -153,13 +153,13 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.privilege_dialog)
-        dialog.window!!.setLayout(
+        dialog.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
-        dialog.window!!.setGravity(Gravity.BOTTOM)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+        dialog.window?.setGravity(Gravity.BOTTOM)
         dialog.show()
 
         val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerView34)
@@ -175,7 +175,8 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         val gridLayout =
             GridLayoutManager(this@HomeActivity, 1, GridLayoutManager.HORIZONTAL, false)
         recyclerView.layoutManager = LinearLayoutManager(this@HomeActivity)
-        val adapter = PrivilegeHomeDialogAdapter(PrivilegeHomeResponseConst?.pinfo!!, this,0, this)
+        val adapter =
+            PrivilegeHomeResponseConst?.pinfo?.let { PrivilegeHomeDialogAdapter(it, this,0, this) }
         recyclerView.layoutManager = gridLayout
         recyclerView.adapter = adapter
         recyclerView.addItemDecoration(LinePagerIndicatorDecoration())
@@ -185,7 +186,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.fragment, fragment)
             commit()
-        }
+    }
 
     private fun offerDataLoad() {
         authViewModel.userResponseOfferLiveData.observe(this) {

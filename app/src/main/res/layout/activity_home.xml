@@ -6,6 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <View
         android:id="@+id/view7"
@@ -15,6 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -49,7 +53,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout55"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_width="0dp"
         android:layout_height="@dimen/dimen_50dp"
         android:layout_marginStart="8dp"
@@ -122,6 +126,7 @@
             app:layout_constraintEnd_toStartOf="@+id/imageView78"
             app:layout_constraintTop_toTopOf="@+id/view103" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--    Story Board-->
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
@@ -142,5 +147,21 @@
         app:layout_constraintStart_toStartOf="@+id/view7" />
 
 
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E8000000"
+        android:id="@+id/RlBanner"
+        android:visibility="gone">
+        <include
+            android:id="@+id/bannerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/banner_layout"/>
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

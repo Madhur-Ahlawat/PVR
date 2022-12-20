@@ -8,19 +8,21 @@ import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.text.TextUtils
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.net.pvr1.R
@@ -33,7 +35,10 @@ import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.cinema.viewModel.CinemaViewModel
 import com.net.pvr1.ui.search.searchCinema.SearchCinemaActivity
 import com.net.pvr1.utils.*
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import jp.shts.android.storiesprogressview.StoriesProgressView
 import java.io.IOException
 import java.util.*
 import javax.inject.Inject
@@ -41,7 +46,7 @@ import javax.inject.Inject
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
 class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Location,
-    CinemaAdapter.SetPreference {
+    CinemaAdapter.SetPreference , StoriesProgressView.StoriesListener {
     private var binding: FragmentCinemasBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel by activityViewModels<CinemaViewModel>()
@@ -53,6 +58,27 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
     private var lat = ""
     private var lng = ""
     private var cityName = "Delhi-NCR"
+
+
+
+    // story board
+    private var bannerShow = 0
+    private var pressTime = 0L
+    private var limit = 500L
+    private var counterStory = 0
+    private var currentPage = 1
+    private var qrCode = ""
+    private var appliedFilterType = ""
+    private var appliedFilterItem = HashMap<String, String>()
+    private var bannerModelsMain: ArrayList<CinemaResponse.Output.Pu> = ArrayList()
+    private var ivBanner: ImageView? = null
+    private var ivCross: ImageView? = null
+    private var skip: View? = null
+    private var reverse: View? = null
+    private var tvButton: TextView? = null
+    private var ivPlay: LinearLayout? = null
+    private var RlBanner: RelativeLayout? = null
+    private var stories: StoriesProgressView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -73,6 +99,25 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
         (requireActivity().findViewById(R.id.searchBtn) as ImageView).hide()
         (requireActivity().findViewById(R.id.txtCity) as TextView).show()
         (requireActivity().findViewById(R.id.searchCinema) as ImageView).show()
+
+
+        tvButton = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
+            .findViewById(R.id.tv_button))
+        ivBanner = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
+            .findViewById(R.id.ivBanner))
+        ivPlay = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
+            .findViewById(R.id.ivPlay))
+        skip = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout).findViewById(R.id.skip))
+        reverse =
+            (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout).findViewById(R.id.reverse))
+        ivCross = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout).findViewById(R.id.ivCross))
+        RlBanner = (requireActivity().findViewById(R.id.RlBanner))
+        stories = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout).findViewById(R.id.stories))
+
+        if (stories == null) {
+            stories?.destroy()
+        }
+
 
         //Click Search
         (requireActivity().findViewById(R.id.searchCinema) as ImageView).setOnClickListener {
@@ -240,7 +285,177 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
             CinemaAdapter(output.c, requireActivity(), this, this, this, preferences.getIsLogin())
         binding?.recyclerCinema?.layoutManager = gridLayout2
         binding?.recyclerCinema?.adapter = comingSoonMovieAdapter
+
+        if (output.pu.isNotEmpty()){
+            initBanner(output.pu)
+
+        }
     }
+
+    private fun initBanner(bannerModels: ArrayList<CinemaResponse.Output.Pu>) {
+        bannerShow += 1
+        bannerModelsMain = bannerModels
+        if ((bannerModels != null) && bannerModels.isNotEmpty()) {
+            RlBanner?.show()
+            stories?.setStoriesCount(bannerModels.size) // <- set stories
+            stories?.setStoryDuration(5000L) // <- set a story duration
+            stories?.setStoriesListener(this) // <- set listener
+            stories?.startStories() // <- start progress
+            counterStory = 0
+            if (!TextUtils.isEmpty(bannerModels[counterStory].i)) {
+                Picasso.get().load(bannerModels[counterStory].i).into(ivBanner!!, object :
+                    Callback {
+                    override fun onSuccess() {
+                        RlBanner?.show()
+                        //  storiesProgressView.startStories(); // <- start progress
+                    }
+
+                    override fun onError(e: Exception?) {}
+                })
+            }
+
+            reverse?.setOnClickListener { stories?.reverse() }
+            reverse?.setOnTouchListener(onTouchListener)
+            showButton(bannerModels[0])
+            skip?.setOnClickListener { stories?.skip() }
+            skip?.setOnTouchListener(onTouchListener)
+            tvButton?.setOnClickListener {
+                RlBanner?.hide()
+
+                if (bannerModels != null && bannerModels.size > 0 && bannerModels[counterStory].type
+                        .equals("image", ignoreCase = true)
+                ) {
+                    if (bannerModels[counterStory].redirectView.equals("DEEPLINK",ignoreCase = true)) {
+                        if (bannerModels[counterStory].redirect_url!= null && !bannerModels[counterStory].redirect_url
+                                .equals("",ignoreCase = true)
+                        ) {
+                            if (bannerModels[counterStory].redirect_url
+                                    .toLowerCase(Locale.ROOT).contains("/loyalty/home")
+                            ) {
+//                                if (context is PCLandingActivity) (context as PCLandingActivity).PriviegeFragment(
+//                                    "C"
+//                                )
+                            } else {
+                                val intent = Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse(
+                                        bannerModels[counterStory].redirect_url
+                                            .replace("https", "app").replace("http", "app")
+                                    )
+                                )
+                                startActivity(intent)
+                            }
+                        }
+                    } else if (bannerModels[counterStory].redirectView
+                            .equals("INAPP",ignoreCase = true)
+                    ) {
+                        if (bannerModels[counterStory].redirect_url != null && !bannerModels[counterStory].redirect_url
+                                .equals("",ignoreCase = true)
+                        )
+                      {
+//                            val intent = Intent(context, PrivacyActivity::class.java)
+//                            intent.putExtra("url", bannerModels[counterStory].redirect_url)
+//                            intent.putExtra(PCConstants.IS_FROM, 2000)
+//                            intent.putExtra("title", bannerModels[counterStory].name)
+//                            startActivity(intent)
+                        }
+                    } else if (bannerModels[counterStory].redirectView
+                            .equals("WEB",ignoreCase = true)
+                    ) {
+                        if (bannerModels[counterStory].redirect_url != null && !bannerModels[counterStory].redirect_url
+                                .equals("",ignoreCase = true)
+                        ) {
+                            val intent = Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(bannerModels[counterStory].redirect_url)
+                            )
+                            startActivity(intent)
+                        }
+                    }
+                }
+
+            }
+            (requireActivity().findViewById(R.id.bannerLayout) as RelativeLayout).show()
+
+            ivPlay?.setOnClickListener {
+                RlBanner?.hide()
+                if (bannerModels != null && bannerModels.size > 0 && bannerModels[counterStory].type.equals("video",ignoreCase = true)
+
+                ) {
+                }
+            }
+
+        } else {
+            RlBanner?.hide()
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private val onTouchListener = View.OnTouchListener { _, event ->
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                pressTime = System.currentTimeMillis()
+                stories?.pause()
+                return@OnTouchListener false
+            }
+            MotionEvent.ACTION_UP -> {
+                val now = System.currentTimeMillis()
+                stories?.resume()
+                return@OnTouchListener limit < now - pressTime
+            }
+        }
+        false
+    }
+
+    private fun showButton(bannerModel: CinemaResponse.Output.Pu) {
+        if (bannerModel.type.equals("video",ignoreCase = true)) {
+            ivPlay?.show()
+            tvButton?.hide()
+        } else if (bannerModel.type.equals("image",ignoreCase = true) && bannerModel.redirect_url.equals("",ignoreCase = true)
+        ) {
+            ivPlay?.hide()
+            tvButton?.text = bannerModel.buttonText
+            tvButton?.show()
+        } else {
+            ivPlay?.hide()
+            tvButton?.hide()
+        }
+
+    }
+
+    override fun onNext() {
+        try {
+            if (!TextUtils.isEmpty(bannerModelsMain[counterStory].i)) {
+                ++counterStory
+                showButton(bannerModelsMain[counterStory])
+                ivBanner?.let {
+                    Glide.with(this).load(bannerModelsMain[counterStory].i).into(it)
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    override fun onPrev() {
+        if (counterStory - 1 < 0) return
+        if (!TextUtils.isEmpty(bannerModelsMain[counterStory].i)) {
+            --counterStory
+            showButton(bannerModelsMain[counterStory])
+            ivBanner?.let {
+                Glide.with(this).load(bannerModelsMain[counterStory].i).into(it)
+            }
+        }
+    }
+
+    override fun onComplete() {
+        stories?.destroy()
+        stories?.startStories()
+        currentPage = 0
+        RlBanner?.hide()
+    }
+
 
     override fun onDirectionClick(comingSoonItem: CinemaResponse.Output.C) {
         Constant().openMap(requireActivity(), comingSoonItem.lat, comingSoonItem.lang)

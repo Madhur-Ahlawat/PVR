@@ -364,20 +364,5 @@
 
     </RelativeLayout>
 
-<!--    Story Board-->
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#E8000000"
-        android:id="@+id/RlBanner"
-        android:visibility="gone">
-        <include
-            android:id="@+id/bannerLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            layout="@layout/banner_layout"/>
-
-    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
