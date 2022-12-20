@@ -50,21 +50,21 @@ class MoreFragment : Fragment() {
         movedNext()
     }
 
-    //Ui ClickAction
+         //   Ui ClickAction
     private fun movedNext() {
-
         //Account
         binding?.profileDetails?.textView206?.setOnClickListener {
             val intent = Intent(requireContext(), ProfileActivity::class.java)
             startActivity(intent)
         }
 
-//        //MyBookings
+        //MyBookings
         binding?.login?.constraintLayout70?.setOnClickListener {
             val intent = Intent(requireContext(), MyBookingsActivity::class.java)
             startActivity(intent)
         }
-//        //Merchandise
+
+        //Merchandise
         binding?.logout?.constraintLayout79?.setOnClickListener {
             val intent = Intent(requireContext(), WebViewActivity::class.java)
             intent.putExtra("title", "Return to App")
@@ -73,29 +73,56 @@ class MoreFragment : Fragment() {
             startActivity(intent)
         }
 
-//        //Offers
+        //Offers
         binding?.logout?.constraintLayout78?.setOnClickListener {
             val intent = Intent(requireContext(), OfferActivity::class.java)
             startActivity(intent)
+
+       // Merchandise
+            binding?.logout?.constraintLayout76?.setOnClickListener {
+                val intent1 = Intent(requireContext(), WebViewActivity::class.java)
+                intent1.putExtra("from", "more")
+                intent1.putExtra("title", "Merchandise")
+                intent1.putExtra("getUrl", "https://pvr.macmerise.com/?user_agent=pvr")
+                startActivity(intent1)
+            }
+
+            // PVR care
+            binding?.logout?.constraintLayout75?.setOnClickListener {
+                val intent1 = Intent(requireContext(), WebViewActivity::class.java)
+                intent1.putExtra("from", "more")
+                intent1.putExtra("title", "PVR Care")
+                intent1.putExtra("getUrl", "https://www.pvrcinemas.com/pvrstatic/pvr-care/index.html")
+                startActivity(intent1)
+            }
+
+            // PVR care
+            binding?.tvTerm?.setOnClickListener {
+                val intent1 = Intent(requireContext(), WebViewActivity::class.java)
+                intent1.putExtra("from", "more")
+                intent1.putExtra("title", "Terms Condition")
+                intent1.putExtra("getUrl", "https://www.pvrcinemas.com/pvrstatic/pvr-care/index.html")
+                startActivity(intent1)
+            }
+
         }
 
-//        //GiftCard
+       //GiftCard
         binding?.logout?.constraintLayout77?.setOnClickListener {
             val intent = Intent(requireContext(), GiftCardActivity::class.java)
             startActivity(intent)
         }
-//
-//        //Private Screen
+        //Private Screen
         binding?.logout?.constraintLayout79?.setOnClickListener {
             val intent = Intent(requireContext(), PrivateScreeningsActivity::class.java)
             startActivity(intent)
         }
-//        //ScanQr
+        //ScanQr
         binding?.imageView101?.setOnClickListener {
             val intent = Intent(requireContext(), ScannerActivity::class.java)
             startActivity(intent)
         }
-//Booking Retrieval
+        //Booking Retrieval
         binding?.login?.constraintLayout71?.setOnClickListener {
             val intent = Intent(requireContext(), BookingRetrievalActivity::class.java)
             startActivity(intent)
@@ -117,25 +144,19 @@ class MoreFragment : Fragment() {
             val intent = Intent(requireActivity(), LoginActivity::class.java)
             startActivity(intent)
         }
-        println("loginStatus--->${preferences.getIsLogin()}")
+
         if (preferences.getIsLogin()) {
+            binding?.llBookingSection?.show()
             binding?.tvSignOut?.show()
             binding?.profileLinear?.show()
-            binding?.termsContainer?.show()
-            binding?.loginBt?.hide()
-        } else {
-            binding?.profileLinear?.hide()
-            binding?.termsContainer?.hide()
-            binding?.loginUi?.hide()
-            binding?.tvSignOut?.hide()
             binding?.loginBt?.show()
-            binding?.tvLoginButton?.textView5?.text= getString(R.string.login)
-            binding?.tvLoginButton?.textView5?.setOnClickListener {
-                val intent = Intent(requireActivity(), LoginActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-            }
+        } else {
+            binding?.llBookingSection?.hide()
+            binding?.profileLinear?.hide()
+            binding?.tvSignOut?.hide()
+            binding?.loginBt?.hide()
         }
+
     }
 
     private fun logOut() {
@@ -151,6 +172,7 @@ class MoreFragment : Fragment() {
                 val intent = Intent(requireActivity(), LoginActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
+                activity?.finish()
             },
             negativeClick = {})
         dialog.show()

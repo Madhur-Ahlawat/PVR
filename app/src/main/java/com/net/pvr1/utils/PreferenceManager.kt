@@ -158,9 +158,10 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
     }
 
     fun clearData() {
-        if (editor != null) {
+//        if (editor != null) {
             editor?.clear()
             editor?.commit()
-        }
+//        }
     }
+
 }
