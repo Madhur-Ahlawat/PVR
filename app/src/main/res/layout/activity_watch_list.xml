@@ -16,14 +16,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <include
-        android:id="@+id/include17"
-        layout="@layout/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        app:layout_constraintEnd_toEndOf="parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout136"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include
+            android:id="@+id/include17"
+            layout="@layout/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/textView281"
@@ -38,7 +47,7 @@
         android:text="@string/we_ll_notify"
         app:layout_constraintEnd_toEndOf="@+id/view175"
         app:layout_constraintStart_toStartOf="@+id/view175"
-        app:layout_constraintTop_toBottomOf="@+id/include17" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout136" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView53"

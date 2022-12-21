@@ -57,7 +57,7 @@
                     android:layout_marginStart="@dimen/dimen_8dp"
                     android:layout_marginTop="@dimen/dimen_8dp"
                     android:layout_marginBottom="@dimen/dimen_5dp"
-                    android:text="Featured Offers"
+                    android:text="@string/featured_offers"
                     android:textColor="#2f2f2f"
                     android:textSize="18sp" />
 
@@ -69,14 +69,14 @@
                     android:layout_marginTop="@dimen/dimen_15dp"
                     android:layout_marginEnd="@dimen/dimen_15dp"
                     android:layout_marginBottom="@dimen/dimen_15dp"
-                    android:drawableEnd="@drawable/ic_right"
                     android:drawablePadding="@dimen/dimen_8dp"
-                    android:drawableTint="@color/black"
                     android:gravity="center_vertical"
-                    android:text="See All"
+                    android:text="@string/see_all"
                     android:textColor="#2f2f2f"
                     android:textSize="14sp"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    app:drawableEndCompat="@drawable/ic_right"
+                    app:drawableTint="@color/black" />
 
             </RelativeLayout>
 
@@ -91,7 +91,6 @@
                 tools:itemCount="5"
                 tools:listitem="@layout/item_filter_list" />
 
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -101,8 +100,6 @@
         android:layout_height="@dimen/padding_10"
         android:layout_marginBottom="@dimen/dimen_5dp"
         android:background="#F9F9F9"
-        android:orientation="vertical">
-
-    </LinearLayout>
+        android:orientation="vertical"/>
 
 </LinearLayout>

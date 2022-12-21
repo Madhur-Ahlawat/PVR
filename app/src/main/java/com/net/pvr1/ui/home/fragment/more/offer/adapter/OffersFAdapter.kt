@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.offer.adapter
+package com.net.pvr1.ui.home.fragment.more.offer.adapter
 
 import android.app.Activity
 import android.util.DisplayMetrics
@@ -11,8 +11,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
-import com.net.pvr1.ui.offer.response.MOfferResponse
-import com.net.pvr1.ui.offer.response.OfferResponse
+import com.net.pvr1.ui.home.fragment.more.offer.response.MOfferResponse
+import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr1.utils.Util
 
 //context: Activity, offerList: List<Datum>?, type: String
@@ -45,7 +45,7 @@ class OffersFAdapter(
         return ViewHolder(itemLayoutView)
     }
 
-    override fun onBindViewHolder(holder: OffersFAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         screenWidth = context.resources.displayMetrics.widthPixels
         val obj: MOfferResponse.Output.Offer = offerList[position]
         holder.name.text = obj.c

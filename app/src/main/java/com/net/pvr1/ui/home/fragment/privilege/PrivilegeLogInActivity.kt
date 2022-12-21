@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.net.pvr1.databinding.ActivityPrivilegeLogInBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.home.fragment.privilege.viewModel.PrivilegeLoginViewModel
-import com.net.pvr1.ui.offer.response.OfferResponse
+import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr1.utils.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

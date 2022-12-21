@@ -79,22 +79,39 @@
                     app:layout_constraintStart_toStartOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
             <!--Privilege-->
-            <include
-                layout="@layout/loyalty_paid_member"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
 
-            <ImageView
-                android:id="@+id/NonPvrKnowMore"
+            <LinearLayout
+                android:layout_marginStart="@dimen/dimen_24dp"
+                android:layout_marginEnd="@dimen/dimen_24dp"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/non_loyalty_member_home"
-                android:scaleType="fitXY"
-                android:visibility="gone"
-                tools:ignore="ContentDescription" />
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/privilegeLoginUi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <include
+                        android:id="@+id/privilegeLogin"
+                        layout="@layout/loyalty_paid_member"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/privilegeLogOutUi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <include
+                        android:id="@+id/privilegeLogOut"
+                        layout="@layout/ph_slider_item_new"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
 
             <LinearLayout
                 android:id="@+id/llBookingSection"
@@ -154,14 +171,13 @@
                 android:id="@+id/termsContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:orientation="vertical"
                 android:paddingBottom="10dp">
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_10dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/dimen_5dp"
                     android:background="@drawable/line_seprator" />
 
                 <RelativeLayout

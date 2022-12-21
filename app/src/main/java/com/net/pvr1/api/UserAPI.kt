@@ -12,6 +12,8 @@ import com.net.pvr1.ui.home.fragment.cinema.response.PreferenceResponse
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
+import com.net.pvr1.ui.home.fragment.more.response.DeleteAlertResponse
+import com.net.pvr1.ui.home.fragment.more.response.WhatsAppOptStatus
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.location.selectCity.response.SelectCityResponse
 import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
@@ -19,8 +21,8 @@ import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
-import com.net.pvr1.ui.offer.response.MOfferResponse
-import com.net.pvr1.ui.offer.response.OfferResponse
+import com.net.pvr1.ui.home.fragment.more.offer.response.MOfferResponse
+import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr1.ui.payment.response.*
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.seatLayout.response.InitResponse
@@ -225,6 +227,39 @@ interface UserAPI {
         @Query("spShow") spShow: String,
         @Query("isSpi") isSpi: String,
     ): Response<HomeResponse>
+
+    @POST("v2/user/optin/check")
+    suspend fun whatsappOpt(
+        @Query("userid") userid: String,
+        @Query("mobile")  mobile: String,
+        @Query("timestamp") timestamp: String,
+        @Header("X-Token")  token: String,
+        @Query("av")  version: String,
+        @Query("pt")  platform: String,
+        @Query("did")  did: String
+    ): Response<WhatsAppOptStatus>
+
+ @POST("v2/user/optin")
+    suspend fun whatsappOptIn(
+        @Query("userid") userid: String,
+        @Query("mobile")  mobile: String,
+        @Query("timestamp") timestamp: String,
+        @Header("X-Token")  token: String,
+        @Query("av")  version: String,
+        @Query("pt")  platform: String,
+        @Query("did")  did: String
+    ): Response<WhatsAppOptStatus>
+
+ @POST("v2/user/optout")
+    suspend fun whatsappOptOut(
+        @Query("userid") userid: String,
+        @Query("mobile")  mobile: String,
+        @Query("timestamp") timestamp: String,
+        @Header("X-Token")  token: String,
+        @Query("av")  version: String,
+        @Query("pt")  platform: String,
+        @Query("did")  did: String
+    ): Response<WhatsAppOptStatus>
 
     @POST("loyalty/home")
     suspend fun privilegeHome(
@@ -485,6 +520,15 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<WatchListResponse>
+
+    @POST("v1/movie-alert/delete-alert")
+    suspend fun deleteAlert(
+        @Query("userid") userid: String,
+        @Query("mcode") mcode: String,
+        @Query("city") city: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<DeleteAlertResponse>
 
     @POST("food/savefoods")
     suspend fun addFood(

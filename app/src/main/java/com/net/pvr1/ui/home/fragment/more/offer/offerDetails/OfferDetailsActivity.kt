@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.offer.offerDetails
+package com.net.pvr1.ui.home.fragment.more.offer.offerDetails
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,7 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityOfferDetialsBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.offer.offerDetails.viewModel.OfferDetailsViewModel
+import com.net.pvr1.ui.home.fragment.more.offer.offerDetails.viewModel.OfferDetailsViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint

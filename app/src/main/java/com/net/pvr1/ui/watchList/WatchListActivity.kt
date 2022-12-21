@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.watchList
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityWatchListBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.movieDetails.comingSoonDetails.ComingSoonDetailsActivity
 import com.net.pvr1.ui.watchList.adapter.WatchListAdapter
 import com.net.pvr1.ui.watchList.response.WatchListResponse
 import com.net.pvr1.ui.watchList.viewModel.WatchListViewModel
@@ -33,7 +35,19 @@ class WatchListActivity : AppCompatActivity(),WatchListAdapter.RecycleViewItemCl
         setContentView(view)
         authViewModel.watchlist(preferences.getUserId(),preferences.getCityName(),Constant().getDeviceId(this))
         watchListData()
+        deleteAlert()
+        movedNext()
     }
+
+    private fun movedNext() {
+        //back
+        binding?.include17?.imageView58?.setOnClickListener {
+            finish()
+        }
+        //title
+        binding?.include17?.textView108?.text=getString(R.string.watchlist)
+    }
+
     private fun watchListData() {
         authViewModel.liveDataScope.observe(this) {
             when (it) {
@@ -86,9 +100,60 @@ class WatchListActivity : AppCompatActivity(),WatchListAdapter.RecycleViewItemCl
         binding?.recyclerView53?.layoutManager = gridLayout
         binding?.recyclerView53?.adapter = adapter
     }
+    override fun itemClick(comingSoonItem: WatchListResponse.Output) {
+        val intent = Intent(this, ComingSoonDetailsActivity::class.java)
+        intent.putExtra("mid", comingSoonItem.moviecode)
+        startActivity(intent)
+    }
 
-    override fun watchListClick(comingSoonItem: String) {
 
+    override fun deleteAlertClick(comingSoonItem: WatchListResponse.Output) {
+        authViewModel.deleteAlert(preferences.getUserId(),comingSoonItem.moviecode,comingSoonItem.city)
+    }
+
+
+    private fun deleteAlert() {
+        authViewModel.deleteAlertLiveDataScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        authViewModel.watchlist(preferences.getUserId(),preferences.getCityName(),Constant().getDeviceId(this))
+
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {
+                            },
+                            negativeClick = {
+                            })
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {
+                        },
+                        negativeClick = {
+                        })
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleasewait)
+                    loader?.show(this.supportFragmentManager, null)
+                }
+            }
+        }
 
     }
 

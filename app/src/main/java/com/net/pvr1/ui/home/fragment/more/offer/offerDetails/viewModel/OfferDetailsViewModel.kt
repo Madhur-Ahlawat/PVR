@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.offer.offerDetails.viewModel
+package com.net.pvr1.ui.home.fragment.more.offer.offerDetails.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -7,7 +7,7 @@ import com.net.pvr1.models.request.UserRequest
 import com.net.pvr1.models.response.UserResponse
 import com.net.pvr1.repository.UserRepository
 import com.net.pvr1.ui.login.response.LoginResponse
-import com.net.pvr1.ui.offer.response.OfferResponse
+import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

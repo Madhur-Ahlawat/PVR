@@ -5,7 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.net.pvr1.R
+import com.bumptech.glide.Glide
 import com.net.pvr1.databinding.WatchlistItemBinding
 import com.net.pvr1.ui.watchList.response.WatchListResponse
 
@@ -15,18 +15,14 @@ class WatchListAdapter(
     private var nowShowingList: ArrayList<WatchListResponse.Output>,
     private var context: Context,
     private var listener: RecycleViewItemClickListener,
-) :
-    RecyclerView.Adapter<WatchListAdapter.ViewHolder>() {
-    private var rowIndex = 0
+) : RecyclerView.Adapter<WatchListAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: WatchlistItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = WatchlistItemBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
+            LayoutInflater.from(parent.context), parent, false
         )
         return ViewHolder(binding)
     }
@@ -35,17 +31,36 @@ class WatchListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
-//                Glide.with(context)
-//                    .load(this.movieData.image)
-//                    .into(binding.imageView114)
-
-                //title
-                binding.textView282.text=this.movieData.genre
+                if (this.movieData!=null){
+                 Glide.with(context).load(this.movieData.miv).into(binding.imageView114)
                 //date
-                binding.textView283.text=this.movieData.date_caption
-                //rating
-                binding.textView284.text=this.movieData.genre+context.getString(R.string.dots)+this.movieData.censor
+                val date: String = this.movieData.date_caption
+                val separated: Array<String> = date.split("on").toTypedArray()
+                binding.textView283.text = separated[1]
+                //genre
+                var genre: String = this.movieData.genre
+                genre = genre.replace(",", " \u2022 ")
+                binding.textView284.text = genre
+                }
+                //title
+                binding.textView282.text = this.movieName
+                val str = this.cinemaCodes
+                if (str == "") {
+                    binding.textView285.text = "Alert set for all theaters in " + this.city
+                } else {
+                    val num: Int = str.replace("[^,]".toRegex(), "").length + 1
+                    if (num == 1) binding.textView285.text =
+                        "Alert set for " + num + " theater in " + this.city
+                    else binding.textView285.text =
+                        "Alert set for " + num + " theaters in " + this.city
+                }
 
+                binding.imageView115.setOnClickListener {
+                    listener.deleteAlertClick(this)
+                }
+                binding.imageView136.setOnClickListener {
+                    listener.itemClick(this)
+                }
             }
         }
 
@@ -57,7 +72,8 @@ class WatchListAdapter(
 
 
     interface RecycleViewItemClickListener {
-        fun watchListClick(comingSoonItem: String)
+        fun deleteAlertClick(comingSoonItem: WatchListResponse.Output)
+        fun itemClick(comingSoonItem: WatchListResponse.Output)
     }
 
 }

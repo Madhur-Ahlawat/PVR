@@ -4,7 +4,9 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.content.pm.PackageManager.NameNotFoundException
 import android.net.Uri
 import android.os.Build
 import android.provider.ContactsContract.Directory.PACKAGE_NAME
@@ -13,6 +15,7 @@ import android.provider.Settings.SettingNotFoundException
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ForegroundColorSpan
+import android.text.style.ScaleXSpan
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.inputmethod.InputMethodManager
@@ -35,8 +38,12 @@ class Constant {
         const val version = "11.3"
         const val status = "success"
         const val SUCCESS_CODE = 10001
-        const val pvrCare = "https://www.pvrcinemas.com/pvrstatic/pvr-care/"
+
+        const val pvrCare = " https://www.pvrcinemas.com/pvrstatic/pvr-care/index.html"
         const val merchandise = "https://pvr.macmerise.com/?user_agent=pvr"
+        const val termsCondition = "https://www.pvrcinemas.com/pvrstatic/tnc.html"
+        const val termsUse = "https://www.pvrcinemas.com/pvrstatic/pvr-terms.html"
+        const val privacy = "https://www.pvrcinemas.com/pvrstatic/pvr-privacy.html"
 
         const val IS_LOGIN = "is_login"
         var DISPLAY = 1
@@ -69,8 +76,8 @@ class Constant {
         const val CITY = "Delhi-NCR"
         const val CITY_CC = "City-Name"
         const val LATITUDE = "lat"
-        const val LONGITUDE= "lang"
-        const val BOOK_TYPE= "BOOKING"
+        const val LONGITUDE = "lang"
+        const val BOOK_TYPE = "BOOKING"
         const val ON_BOARDING_CLICK = false
         const val SEAT_BOOKED = 2
         const val SEAT_SELECTED = 3
@@ -82,8 +89,9 @@ class Constant {
         const val SUV = 6
         const val BIKE = 7
         const val BIKE_SEAT_BOOKED = 8
-        var PrivilegeHomeResponseConst:PrivilegeHomeResponse.Output? =null
-        var PlaceHolder:HomeResponse.Output? = null
+        const val LETTER_SPACING = 1
+        var PrivilegeHomeResponseConst: PrivilegeHomeResponse.Output? = null
+        var PlaceHolder: HomeResponse.Output? = null
         var DECIFORMAT = DecimalFormat("0.000")
 
         // DisCount for payment
@@ -143,7 +151,6 @@ class Constant {
     }
 
 
-
     fun extractYoutubeId(s: String): String? {
         return try {
             var query: String? = null
@@ -187,8 +194,7 @@ class Constant {
     }
 
 
-
-    fun openMap(context: Context,lat:String,lang:String){
+    fun openMap(context: Context, lat: String, lang: String) {
         val strUri =
             "http://maps.google.com/maps?q=loc:$lat,$lang (Label which you want)"
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(strUri))
@@ -248,7 +254,7 @@ class Constant {
         activity.finish()
     }
 
-    fun shareData(activity: Activity,title:String,shareUrl:String){
+    fun shareData(activity: Activity, title: String, shareUrl: String) {
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "text/plain"
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, title)
@@ -272,7 +278,7 @@ class Constant {
                     tv.text = text
                     tv.movementMethod = LinkMovementMethod.getInstance()
                     tv.setText(
-                       addClickablePartTextViewResizable(
+                        addClickablePartTextViewResizable(
                             Html.fromHtml(tv.text.toString()), tv, maxLine, expandText,
                             viewMore
                         ), TextView.BufferType.SPANNABLE
@@ -284,7 +290,7 @@ class Constant {
                     tv.text = text
                     tv.movementMethod = LinkMovementMethod.getInstance()
                     tv.setText(
-                       addClickablePartTextViewResizable(
+                        addClickablePartTextViewResizable(
                             Html.fromHtml(tv.text.toString()), tv, maxLine, expandText,
                             viewMore
                         ), TextView.BufferType.SPANNABLE
@@ -319,12 +325,12 @@ class Constant {
             ssb.setSpan(object : MySpannable(false) {
                 override fun onClick(widget: View) {
                     super.onClick(widget)
-                    if (viewMore){
+                    if (viewMore) {
                         tv.layoutParams = tv.layoutParams
                         tv.setText(tv.tag.toString(), TextView.BufferType.SPANNABLE)
                         tv.invalidate()
                         makeTextViewResizable(tv, -1, "", false)
-                    }else{
+                    } else {
                         tv.layoutParams = tv.layoutParams
                         tv.setText(tv.tag.toString(), TextView.BufferType.SPANNABLE)
                         tv.invalidate()
@@ -442,4 +448,40 @@ class Constant {
         return "https://chart.googleapis.com/chart?cht=qr&chl=$mobile_no&chld=H%7C1&chs=$size"
     }
 
+
+    fun getAppVersion(activity: Activity): String? {
+        val packageInfo: PackageInfo
+        try {
+            packageInfo = activity.packageManager.getPackageInfo(activity.packageName, 0)
+            if (packageInfo != null) return packageInfo.versionName
+        } catch (e: NameNotFoundException) {
+            e.printStackTrace()
+        }
+        return ""
+    }
+
+    fun applyLetterSpacing(pcTextView: TextView, text: String, letterspacing: Int) {
+        val builder = StringBuilder()
+        for (i in 0 until text.length) {
+            builder.append(text[i])
+            if (i + 1 < text.length) {
+                builder.append("\u00A0")
+            }
+        }
+        val finalText = SpannableString(builder.toString())
+        val letterSpacingBuf = if (letterspacing == -1) 0.1f else (letterspacing + 1).toFloat()
+        if (builder.toString().length > 1) {
+            var i = 1
+            while (i < builder.toString().length) {
+                finalText.setSpan(
+                    ScaleXSpan(letterSpacingBuf / 10),
+                    i,
+                    i + 1,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                i += 2
+            }
+        }
+        pcTextView.setText(finalText)
+    }
 }

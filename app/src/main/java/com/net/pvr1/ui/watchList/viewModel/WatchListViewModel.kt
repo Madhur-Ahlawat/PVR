@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
+import com.net.pvr1.ui.home.fragment.more.response.DeleteAlertResponse
 import com.net.pvr1.ui.watchList.response.WatchListResponse
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,4 +22,15 @@ class WatchListViewModel @Inject constructor(private val userRepository: UserRep
             userRepository.watchListLayout(userid,city,did)
         }
     }
+
+    val deleteAlertLiveDataScope: LiveData<NetworkResult<DeleteAlertResponse>>
+    get() = userRepository.deleteAlertResponseLiveData
+
+    fun deleteAlert(userid:String,mcode: String,city: String) {
+        viewModelScope.launch {
+            userRepository.deleteAlertLayout(userid,mcode,city)
+        }
+    }
+
+
 }

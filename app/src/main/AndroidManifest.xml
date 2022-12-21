@@ -28,6 +28,20 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
         <activity
+            android:name=".ui.home.fragment.more.offer.OfferActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.home.fragment.more.privacy.TermsPrivacyActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.home.fragment.privilege.PrivilegeDetailsActivity"
             android:exported="false">
             <meta-data
@@ -189,7 +203,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.offer.offerDetails.OfferDetailsActivity"
+            android:name=".ui.home.fragment.more.offer.offerDetails.OfferDetailsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -253,10 +267,7 @@
             android:name=".ui.giftCard.GiftCardActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.offer.OfferActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.webView.WebViewActivity"
             android:exported="false"
@@ -290,7 +301,9 @@
         <activity
             android:name=".ui.home.HomeActivity"
             android:exported="true"
-            android:screenOrientation="portrait" /> <!-- <queries> -->
+            android:screenOrientation="portrait" />
+
+        <!-- <queries> -->
         <!-- <intent> -->
         <!-- <action android:name="com.google.android.youtube.api.service.START" /> -->
         <!-- </intent> -->

@@ -466,6 +466,17 @@
     <string name="mobile_msg_invalid">Invalid mobile number</string>
     <string name="mobile_msg">We will only use your number for transactional information</string>
     <string name="otp_msg_required">Your otp is required</string>
+    <string name="terms_condition_text"><![CDATA[T&C | PRIVACY]]></string>
 
+    //terms
+    <string-array name="terms_condition_items">
+        <item>Privacy</item>
+        <item>Terms of Use</item>
+        <item>Terms and Conditions</item>
+    </string-array>
+    <string name="version">"Version "</string>
+    <string name="privacy">Privacy</string>
+    <string name="watchlist">WATCHLIAST</string>
+    <string name="see_all">See All</string>
 
 </resources>

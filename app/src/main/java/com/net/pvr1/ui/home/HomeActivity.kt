@@ -28,11 +28,11 @@ import com.net.pvr1.ui.home.fragment.commingSoon.ComingSoonFragment
 import com.net.pvr1.ui.home.fragment.home.HomeFragment
 import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
 import com.net.pvr1.ui.home.fragment.more.MoreFragment
+import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr1.ui.home.fragment.privilege.PrivilegeFragment
 import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeHomeDialogAdapter
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.location.selectCity.SelectCityActivity
-import com.net.pvr1.ui.offer.response.OfferResponse
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.PRIVILEGEVOUCHER
 import com.net.pvr1.utils.Constant.Companion.PrivilegeHomeResponseConst

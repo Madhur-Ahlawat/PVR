@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.offer.OfferActivity">
+    tools:context=".ui.home.fragment.more.offer.OfferActivity">
 
     <View
         android:id="@+id/view22"
@@ -34,17 +34,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/textView24"
-        style="@style/H3SizeBold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/featured_offers"
-        app:layout_constraintStart_toStartOf="@+id/view22"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout89" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
@@ -55,7 +44,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/view22"
         app:layout_constraintEnd_toEndOf="@+id/view22"
         app:layout_constraintStart_toStartOf="@+id/view22"
-        app:layout_constraintTop_toBottomOf="@+id/textView24"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout89"
         tools:itemCount="3"
         tools:listitem="@layout/offer_item" />
 

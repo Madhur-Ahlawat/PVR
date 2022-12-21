@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.offer.adapter
+package com.net.pvr1.ui.home.fragment.more.offer.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
-import com.net.pvr1.ui.offer.adapter.OfferFilterAdapter.FilterViewHolder
+
 
 class OfferFilterAdapter(
     private var data: List<String>,
@@ -18,7 +18,7 @@ class OfferFilterAdapter(
 
     rowIndex: Int,
     private var offerRecList: RecyclerView
-) : RecyclerView.Adapter<FilterViewHolder>() {
+) : RecyclerView.Adapter<OfferFilterAdapter.FilterViewHolder>() {
     var rowIndex = -1
 
     init {
@@ -33,8 +33,8 @@ class OfferFilterAdapter(
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: FilterViewHolder, position: Int) {
-        val dataitem = data[position]
-        holder.name.text = dataitem
+        val dataItem = data[position]
+        holder.name.text = dataItem
         holder.name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
         holder.name.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
         if (rowIndex == position) {
@@ -47,10 +47,10 @@ class OfferFilterAdapter(
         holder.itemView.setOnClickListener {
             if (rowIndex == position) {
                 rowIndex = -1
-                listener.onFilterClick(dataitem, 0, rowIndex, offerRecList)
+                listener.onFilterClick(dataItem, 0, rowIndex,offerRecList)
             } else {
                 rowIndex = position
-                listener.onFilterClick(dataitem, 1, rowIndex, offerRecList)
+                listener.onFilterClick(dataItem, 1, rowIndex,offerRecList)
             }
             notifyDataSetChanged()
         }

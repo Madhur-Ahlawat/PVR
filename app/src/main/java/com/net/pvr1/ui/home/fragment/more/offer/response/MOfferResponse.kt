@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.offer.response
+package com.net.pvr1.ui.home.fragment.more.offer.response
 
 data class MOfferResponse(
     val code: Int,

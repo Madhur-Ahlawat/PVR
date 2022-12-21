@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.offer
+package com.net.pvr1.ui.home.fragment.more.offer
 
 import android.app.Activity
 import android.util.DisplayMetrics
@@ -10,7 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
-import com.net.pvr1.ui.offer.response.MOfferResponse
+import com.net.pvr1.ui.home.fragment.more.offer.response.MOfferResponse
 import com.net.pvr1.utils.Util.convertDpToPixel
 
 @Suppress("DEPRECATION")
