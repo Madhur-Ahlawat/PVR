@@ -9,7 +9,7 @@ data class PaymentResponse(
     val version: Any
 ) : java.io.Serializable {
     data class Output(
-        val binoffers: List<Binoffer>,
+        val binoffers: ArrayList<Binoffer>,
         val ca_a: Boolean,
         val dc: Boolean,
         val dcinfo: String,

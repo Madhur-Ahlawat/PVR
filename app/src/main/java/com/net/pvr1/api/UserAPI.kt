@@ -785,4 +785,49 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<PaytmHmacResponse>
 
+
+    /********      CRED           ****************/
+
+
+    @POST("payment/cred/check")
+    suspend fun credCheck(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("unpaid") unpaid: String,
+        @Query("cred_present") cred_present: String,
+        @Query("spi") spi: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<UPIStatusResponse>
+
+
+    @POST("payment/cred/hmac")
+    suspend fun credHmac(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("unpaid") unpaid: String,
+        @Query("cred_present") cred_present: String,
+        @Query("spi") spi: String,
+        @Query("spi") spi: String,
+        @Query("ptype") ptype: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
+
+
+
+    @POST("payment/cred/status")
+    suspend fun credStatus(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<UPIStatusResponse>
+
 }

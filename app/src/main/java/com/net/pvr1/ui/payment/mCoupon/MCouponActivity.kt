@@ -20,7 +20,7 @@ import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.payment.PaymentActivity
 import com.net.pvr1.ui.payment.promoCode.viewModel.PromoCodeViewModel
-import com.net.pvr1.ui.payment.starPass.StarPasModel
+import com.net.pvr1.ui.payment.bankoffers.StarPasModel
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.M_COUPON
 import com.net.pvr1.utils.Constant.Companion.SELECTED_SEAT

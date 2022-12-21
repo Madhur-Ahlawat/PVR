@@ -162,6 +162,27 @@
                     android:background="@drawable/line_seprator" />
 
                 <TextView
+                    android:id="@+id/bankOffers"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_45dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/sf_pro_text_regular"
+                    android:drawableEnd="@drawable/ic_skip_arrow"
+                    android:drawablePadding="@dimen/dimen_5dp"
+                    android:paddingEnd="@dimen/dimen_25dp"
+                    android:text="@string/bank_offer"
+                    android:textSize="@dimen/dimen_12sp"
+                    app:layout_constraintStart_toStartOf="@+id/view115"
+                    app:layout_constraintTop_toTopOf="@+id/view115" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim_h10"
+                    android:background="@drawable/line_seprator" />
+
+                <TextView
                     android:id="@+id/textView325"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

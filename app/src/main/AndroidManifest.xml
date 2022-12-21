@@ -56,7 +56,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.payment.starPass.StarPassActivity"
+            android:name=".ui.payment.bankoffers.BankOffersActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

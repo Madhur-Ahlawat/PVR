@@ -15,6 +15,7 @@ data class PaytmHmacResponse(
         val paytm_website: String,
         val bookid: String,
         val callingurl: String,
+        val intent: String,
         val cardlist: List<Any>,
         val channelId: String,
         val currency: String,
