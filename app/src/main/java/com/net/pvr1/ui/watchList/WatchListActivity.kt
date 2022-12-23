@@ -119,7 +119,6 @@ class WatchListActivity : AppCompatActivity(),WatchListAdapter.RecycleViewItemCl
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         authViewModel.watchlist(preferences.getUserId(),preferences.getCityName(),Constant().getDeviceId(this))
-
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,

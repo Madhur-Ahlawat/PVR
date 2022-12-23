@@ -4,27 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".ui.home.fragment.more.bookingRetrieval.BookingRetrievalActivity">
-
-    <View
-        android:id="@+id/view5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <include
         android:id="@+id/include13"
         layout="@layout/toolbar"
         android:layout_width="0dp"
         android:layout_height="@dimen/dimen_60dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/view5"
-        app:layout_constraintTop_toTopOf="@+id/view5" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout137"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/yellow_circle"
@@ -47,186 +41,210 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:fontFamily="@font/montserrat_alternates_semi_bold"
-        android:text="@string/booking_retrival"
-        android:textColor="@color/black"
-        android:textSize="@dimen/dimen_16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include13" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="9dp"
-        android:fontFamily="@font/montserrat_regular"
-        android:text="@string/booking_txt"
-        android:textColor="@color/h8Point1Color"
-        android:textSize="@dimen/dimen_14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-    <TextView
-        android:id="@+id/textView36"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:drawablePadding="@dimen/dimen_8dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="@dimen/dimen_12sp"
-        app:drawableEndCompat="@drawable/arrow_down"
-        app:drawableStartCompat="@drawable/location_down"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7"
-        tools:text="Delhi" />
-
-    <View
-        android:id="@+id/view162"
-        android:layout_width="0dp"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="21dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/include14"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView36" />
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout137"
+        app:layout_constraintBottom_toTopOf="@+id/include14">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout3"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/enter_Booking_ID"
-        android:textColorHint="@color/black"
-        app:boxBackgroundColor="@color/white"
-        app:boxStrokeColor="#EDE8E9"
-        app:boxStrokeWidth="1dp"
-        app:endIconMode="custom"
-        app:errorEnabled="false"
-        app:hintTextColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/view162"
-        app:layout_constraintStart_toStartOf="@+id/view162"
-        app:layout_constraintTop_toTopOf="@+id/view162">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:digits="1234567890"
-            android:imeOptions="actionNext"
-            android:inputType="phone"
-            android:maxLength="10"
-            android:textColor="@color/pvr_dark_black"
-            android:textSize="16sp"
-            tools:ignore="TextContrastCheck" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="match_parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout4"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="@string/mobile_number"
-        android:textColorHint="@color/black"
-        app:boxBackgroundColor="@color/white"
-        app:boxStrokeColor="#EDE8E9"
-        app:boxStrokeWidth="1dp"
-        app:endIconMode="custom"
-        app:errorEnabled="false"
-        app:hintTextColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/view162"
-        app:layout_constraintStart_toStartOf="@+id/view162"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:digits="1234567890"
-            android:imeOptions="actionDone"
-            android:inputType="phone"
-            android:maxLength="10"
-            android:textColor="@color/pvr_dark_black"
-            android:textSize="16sp"
-            tools:ignore="TextContrastCheck" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <View
-        android:id="@+id/view163"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="21dp"
-        android:background="@color/grayEd"
-        app:layout_constraintEnd_toEndOf="@+id/view162"
-        app:layout_constraintStart_toStartOf="@+id/view162"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout4" />
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout81"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="21dp"
-        android:background="@drawable/curve_search_reatrival"
-        app:layout_constraintEnd_toEndOf="@+id/view162"
-        app:layout_constraintStart_toStartOf="@+id/view162"
-        app:layout_constraintTop_toBottomOf="@+id/view163">
-
-        <EditText
-            android:id="@+id/editTextTextPersonName2"
+        <View
+            android:id="@+id/view5"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/dimen_15dp"
-            android:layout_marginEnd="@dimen/dimen_15dp"
-            android:autofillHints="name"
-            android:background="@null"
-            android:drawableStart="@drawable/search"
-            android:drawablePadding="@dimen/dimen_12dp"
-            android:drawableTint="@color/textColorGray"
-            android:importantForAutofill="no"
-            android:inputType="textPersonName"
-            android:text="@string/search_theater"
-            android:textColor="@color/textColorGray"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="LabelFor" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/montserrat_alternates_semi_bold"
+            android:text="@string/booking_retrival"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="@string/booking_txt"
+            android:textColor="@color/h8Point1Color"
+            android:textSize="@dimen/dimen_14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        <TextView
+            android:id="@+id/textView36"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:drawablePadding="@dimen/dimen_8dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_12sp"
+            app:drawableEndCompat="@drawable/arrow_down"
+            app:drawableStartCompat="@drawable/location_down"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView7"
+            tools:text="Delhi" />
+
+        <View
+            android:id="@+id/view162"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView36" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout3"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_Booking_ID"
+            android:textColorHint="@color/black"
+            app:boxBackgroundColor="@color/white"
+            app:boxStrokeColor="#EDE8E9"
+            app:boxStrokeWidth="1dp"
+            app:endIconMode="custom"
+            app:errorEnabled="false"
+            app:hintTextColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/view162"
+            app:layout_constraintStart_toStartOf="@+id/view162"
+            app:layout_constraintTop_toTopOf="@+id/view162">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:digits="1234567890"
+                android:imeOptions="actionNext"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:textColor="@color/pvr_dark_black"
+                android:textSize="16sp"
+                tools:ignore="TextContrastCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout4"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/mobile_number"
+            android:textColorHint="@color/black"
+            app:boxBackgroundColor="@color/white"
+            app:boxStrokeColor="#EDE8E9"
+            app:boxStrokeWidth="1dp"
+            app:endIconMode="custom"
+            app:errorEnabled="false"
+            app:hintTextColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/view162"
+            app:layout_constraintStart_toStartOf="@+id/view162"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:digits="1234567890"
+                android:imeOptions="actionDone"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:textColor="@color/pvr_dark_black"
+                android:textSize="16sp"
+                tools:ignore="TextContrastCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View
+            android:id="@+id/view163"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="21dp"
+            android:background="@color/grayEd"
+            app:layout_constraintEnd_toEndOf="@+id/view162"
+            app:layout_constraintStart_toStartOf="@+id/view162"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout4" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout81"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="21dp"
+            android:background="@drawable/curve_search_reatrival"
+            app:layout_constraintEnd_toEndOf="@+id/view162"
+            app:layout_constraintStart_toStartOf="@+id/view162"
+            app:layout_constraintTop_toBottomOf="@+id/view163">
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dimen_15dp"
+                android:layout_marginEnd="@dimen/dimen_15dp"
+                android:autofillHints="name"
+                android:background="@null"
+                android:imeOptions="actionDone"
+                android:drawableStart="@drawable/search"
+                android:drawablePadding="@dimen/dimen_12dp"
+                android:drawableTint="@color/textColorGray"
+                android:hint="@string/search_theater"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:textColor="@color/textColorGray"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="LabelFor" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView32"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="21dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintEnd_toEndOf="@+id/view162"
+            app:layout_constraintStart_toStartOf="@+id/view163"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout81"
+            app:spanCount="1"
+            tools:itemCount="2"
+            tools:listitem="@layout/retrieval_item" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
 
     <include
         android:id="@+id/include14"
         layout="@layout/button_next"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/view5"
-        app:layout_constraintEnd_toEndOf="@+id/view5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView32"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="21dp"
-        tools:itemCount="2"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="1"
-        tools:listitem="@layout/retrieval_item"
-        app:layout_constraintBottom_toBottomOf="@+id/view162"
-        app:layout_constraintEnd_toEndOf="@+id/view162"
-        app:layout_constraintStart_toStartOf="@+id/view163"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout81" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

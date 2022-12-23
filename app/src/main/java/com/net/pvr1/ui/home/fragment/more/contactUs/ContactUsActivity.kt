@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.contactUs
+package com.net.pvr1.ui.home.fragment.more.contactUs
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityContactUsBinding
-import com.net.pvr1.ui.contactUs.adapter.ContactUsItemAdapter
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.contactUs.viewModel.ContactUsViewModel
+import com.net.pvr1.ui.home.fragment.more.contactUs.adapter.ContactUsItemAdapter
+import com.net.pvr1.ui.home.fragment.more.contactUs.viewModel.ContactUsViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,7 +55,7 @@ class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewI
 
         //Click Submit
         binding?.include22?.textView5?.setOnClickListener {
-            val mobile = binding?.mobile?.text.toString()
+            val mobile = binding?.mobileNumber?.text.toString()
             val email = binding?.email?.text.toString()
             val notes = binding?.notes?.text.toString()
             if (mobile == "") {
@@ -126,6 +126,7 @@ class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewI
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
                             positiveClick = {
+                               retrieveData()
                             },
                             negativeClick = {
                             })
@@ -164,6 +165,12 @@ class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewI
                 }
             }
         }
+    }
+
+    private fun retrieveData() {
+       binding?.mobileNumber?.text?.clear()
+       binding?.email?.text?.clear()
+       binding?.notes?.text?.clear()
     }
 
 }

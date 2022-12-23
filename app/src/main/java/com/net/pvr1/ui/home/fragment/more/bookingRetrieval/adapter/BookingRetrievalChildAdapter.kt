@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.net.pvr1.R
 import com.net.pvr1.databinding.RetrivalItemChildBinding
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
@@ -14,6 +15,8 @@ class BookingRetrievalChildAdapter(
     private var nowShowingList: List<BookingRetrievalResponse.Output.Child>,
 ) :
     RecyclerView.Adapter<BookingRetrievalChildAdapter.ViewHolder>() {
+
+    private  var rowIndex=0
     inner class ViewHolder(val binding: RetrivalItemChildBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -25,7 +28,19 @@ class BookingRetrievalChildAdapter(
         with(holder){
             with(nowShowingList[position]){
                 //name
-                binding.radioButton3.text="  "+this.ccn
+                binding.textView379.text="  "+this.ccn
+                if (rowIndex==position){
+                    binding.constraintLayout82.setBackgroundResource(R.drawable.ui_item_select)
+                    binding.radioButton3.setImageResource(R.drawable.curve_select)
+                }else{
+                    binding.constraintLayout82.setBackgroundResource(R.drawable.ui_item_unselect)
+                    binding.radioButton3.setImageResource(R.drawable.curve_unselect)
+
+                }
+                itemView.setOnClickListener {
+                    rowIndex=position
+                    notifyDataSetChanged()
+                }
                }
         }
 

@@ -18,8 +18,6 @@ import com.net.pvr1.utils.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
-
 @AndroidEntryPoint
 class OfferActivity : AppCompatActivity() {
     @Inject

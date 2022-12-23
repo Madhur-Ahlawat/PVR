@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.contactUs.ContactUsActivity">
+    tools:context=".ui.home.fragment.more.contactUs.ContactUsActivity">
 
     <View
         android:id="@+id/view196"
@@ -55,34 +55,65 @@
                 android:id="@+id/recyclerView40"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8dp"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:itemCount="4"
+                tools:itemCount="3"
                 tools:listitem="@layout/contact_us_item" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <RelativeLayout
+                android:id="@+id/mobileLayout"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingEnd="@dimen/dimen_5dp"
+                android:paddingBottom="@dimen/dimen_5dp"
+                android:paddingTop="@dimen/dimen_8dp"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView10"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:hint="@string/mobile_number"
-                android:textColorHint="@color/textColor"
-                app:boxBackgroundColor="@color/white"
-                app:boxStrokeColor="@color/textColor"
-                app:boxStrokeWidth="1dp"
-                app:hintTextColor="@color/black">
+                android:layout_height="@dimen/dimen_70dp"
+                android:paddingStart="@dimen/dimen_10dp"
+                android:background="@drawable/text_curve">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/mobile"
+                <com.google.android.material.textfield.TextInputLayout
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:boxStrokeColor="@color/transparent"
+                    app:boxBackgroundColor="@color/transparent"
+                    android:layout_marginTop="-8dp"
+                    style="@style/styledBlackTilEditText"
+                    android:layout_centerVertical="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="10"
-                    android:inputType="phone"
-                    android:imeOptions="actionNext"
-                    tools:ignore="TextContrastCheck,TextContrastCheck" />
+                    app:hintTextColor="@color/textColor"
+                    android:hint="@string/mobile_number"
+                    app:endIconMode="custom"
+                    app:errorEnabled="false"
+                    android:id="@+id/textInputLayout"
+                    >
 
+                    <EditText
+                        android:id="@+id/mobileNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/sf_pro_text_bold"
+                        android:digits="1234567890"
+                        android:imeOptions="actionDone"
+                        android:inputType="phone"
+                        android:maxLength="10"
+                        android:gravity="bottom"
+                        android:textColorHint="@color/textColor"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:background="@null" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/textView298"
@@ -95,28 +126,59 @@
                 android:textSize="@dimen/dimen_12sp"
                 tools:ignore="TextContrastCheck" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:hint="@string/email_id"
-                android:textColorHint="@color/textColor"
-                app:boxBackgroundColor="@color/white"
-                app:boxStrokeColor="@color/textColor"
-                app:boxStrokeWidth="1dp"
-                app:hintTextColor="@color/black">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/email"
+            <RelativeLayout
+                android:id="@+id/emailLayout"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingEnd="@dimen/dimen_5dp"
+                android:paddingBottom="@dimen/dimen_5dp"
+                android:paddingTop="@dimen/dimen_8dp"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_70dp"
+                android:paddingStart="@dimen/dimen_10dp"
+                android:background="@drawable/text_curve">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:boxStrokeColor="@color/transparent"
+                    app:boxBackgroundColor="@color/transparent"
+                    android:layout_marginTop="-8dp"
+                    style="@style/styledBlackTilEditText"
+                    android:layout_centerVertical="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
-                    tools:ignore="TextContrastCheck" />
+                    app:hintTextColor="@color/textColor"
+                    android:hint="@string/email_id"
+                    app:endIconMode="custom"
+                    app:errorEnabled="false"
+                    android:id="@+id/emailInputLayout"
+                    >
 
+                    <EditText
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/sf_pro_text_bold"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress"
+                        android:gravity="bottom"
+                        android:textColorHint="@color/textColor"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:background="@null" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
+            </RelativeLayout>
+
 
             <TextView
                 android:id="@+id/textView299"
@@ -129,30 +191,61 @@
                 android:textSize="@dimen/dimen_12sp"
                 tools:ignore="TextContrastCheck" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <RelativeLayout
+                android:id="@+id/perosnalNotesLayout"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingEnd="@dimen/dimen_5dp"
+                android:paddingBottom="@dimen/dimen_5dp"
+                android:paddingTop="@dimen/dimen_8dp"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:hint="@string/personal_note"
-                android:textColorHint="@color/textColor"
-                app:boxBackgroundColor="@color/white"
-                app:boxStrokeColor="@color/textColor"
-                app:boxStrokeWidth="1dp"
-                app:counterEnabled="true"
-                app:counterMaxLength="100"
-                app:hintTextColor="@color/black">
+                android:paddingStart="@dimen/dimen_10dp"
+                android:background="@drawable/text_curve">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/notes"
+                <com.google.android.material.textfield.TextInputLayout
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:boxStrokeColor="@color/transparent"
+                    app:boxBackgroundColor="@color/transparent"
+                    android:layout_marginTop="-8dp"
+                    style="@style/styledBlackTilEditText"
+                    android:layout_centerVertical="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textAutoCorrect"
-                    android:imeOptions="actionDone"
-                    tools:ignore="TextContrastCheck,TextContrastCheck" />
+                    app:hintTextColor="@color/textColor"
+                    android:hint="@string/personal_note"
+                    app:endIconMode="custom"
+                    app:errorEnabled="false"
+                    app:counterMaxLength="100"
+                    app:counterEnabled="true"
+                    android:id="@+id/notesInputLayout"
+                    >
 
+                    <EditText
+                        android:id="@+id/notes"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/sf_pro_text_bold"
+                        android:imeOptions="actionDone"
+                        android:inputType="textEmailAddress"
+                        android:maxLength="100"
+                        android:gravity="bottom"
+                        android:textColorHint="@color/textColor"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:background="@null" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
+            </RelativeLayout>
+
 
             <TextView
                 android:id="@+id/textView300"

@@ -1,10 +1,10 @@
-package com.net.pvr1.ui.contactUs.viewModel
+package com.net.pvr1.ui.home.fragment.more.contactUs.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
-import com.net.pvr1.ui.contactUs.response.ContactUsResponse
+import com.net.pvr1.ui.home.fragment.more.contactUs.response.ContactUsResponse
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

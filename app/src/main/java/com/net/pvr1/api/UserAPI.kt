@@ -4,14 +4,17 @@ import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.ui.bookingSession.response.BookingTheatreResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaNearTheaterResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
-import com.net.pvr1.ui.contactUs.response.ContactUsResponse
 import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.ui.formats.response.FormatResponse
+import com.net.pvr1.ui.home.fragment.cinema.response.CinemaPreferenceResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
-import com.net.pvr1.ui.home.fragment.cinema.response.PreferenceResponse
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
+import com.net.pvr1.ui.home.fragment.more.contactUs.response.ContactUsResponse
+import com.net.pvr1.ui.home.fragment.more.offer.response.MOfferResponse
+import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
+import com.net.pvr1.ui.home.fragment.more.prefrence.response.PreferenceResponse
 import com.net.pvr1.ui.home.fragment.more.response.DeleteAlertResponse
 import com.net.pvr1.ui.home.fragment.more.response.WhatsAppOptStatus
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
@@ -21,8 +24,6 @@ import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
-import com.net.pvr1.ui.home.fragment.more.offer.response.MOfferResponse
-import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr1.ui.payment.response.*
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.seatLayout.response.InitResponse
@@ -154,7 +155,7 @@ interface UserAPI {
         @Query("did") did: String,
         @Query("av") version: String,
         @Query("pt") platform: String
-    ): Response<PreferenceResponse>
+    ): Response<CinemaPreferenceResponse>
 
     @POST("history/giftcard")
     suspend fun giftCard(
@@ -260,6 +261,14 @@ interface UserAPI {
         @Query("pt")  platform: String,
         @Query("did")  did: String
     ): Response<WhatsAppOptStatus>
+
+ @POST("user/getprefrenences")
+    suspend fun preference(
+        @Query("city") city: String,
+        @Query("userid") userid: String,
+        @Query("av")  version: String,
+        @Query("pt")  platform: String
+    ): Response<PreferenceResponse>
 
     @POST("loyalty/home")
     suspend fun privilegeHome(

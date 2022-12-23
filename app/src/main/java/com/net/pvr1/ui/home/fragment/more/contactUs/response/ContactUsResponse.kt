@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.contactUs.response
+package com.net.pvr1.ui.home.fragment.more.contactUs.response
 
 data class ContactUsResponse(
     val code: Int,

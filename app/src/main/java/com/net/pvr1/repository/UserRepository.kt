@@ -7,14 +7,17 @@ import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.ui.bookingSession.response.BookingTheatreResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaNearTheaterResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
-import com.net.pvr1.ui.contactUs.response.ContactUsResponse
 import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.ui.formats.response.FormatResponse
+import com.net.pvr1.ui.home.fragment.cinema.response.CinemaPreferenceResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
-import com.net.pvr1.ui.home.fragment.cinema.response.PreferenceResponse
 import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
+import com.net.pvr1.ui.home.fragment.more.contactUs.response.ContactUsResponse
+import com.net.pvr1.ui.home.fragment.more.offer.response.MOfferResponse
+import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
+import com.net.pvr1.ui.home.fragment.more.prefrence.response.PreferenceResponse
 import com.net.pvr1.ui.home.fragment.more.response.DeleteAlertResponse
 import com.net.pvr1.ui.home.fragment.more.response.WhatsAppOptStatus
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
@@ -24,8 +27,6 @@ import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
-import com.net.pvr1.ui.home.fragment.more.offer.response.MOfferResponse
-import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr1.ui.payment.response.*
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.seatLayout.response.InitResponse
@@ -333,8 +334,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
     //cinemaPreference
-    private val cinemaPreferenceLiveData = MutableLiveData<NetworkResult<PreferenceResponse>>()
-    val cinemaPreferenceResponseLiveData: LiveData<NetworkResult<PreferenceResponse>>
+    private val cinemaPreferenceLiveData = MutableLiveData<NetworkResult<CinemaPreferenceResponse>>()
+    val cinemaPreferenceResponseLiveData: LiveData<NetworkResult<CinemaPreferenceResponse>>
         get() = cinemaPreferenceLiveData
 
     suspend fun cinemaPreference(
@@ -347,7 +348,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         cinemaPreferenceResponse(response)
     }
 
-    private fun cinemaPreferenceResponse(response: Response<PreferenceResponse>) {
+    private fun cinemaPreferenceResponse(response: Response<CinemaPreferenceResponse>) {
         if (response.isSuccessful && response.body() != null) {
             cinemaPreferenceLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
@@ -2049,6 +2050,30 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             whatsappOptOutLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             whatsappOptOutLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+//    whatsapp Opt CheckOut
+
+    private val preferenceLiveData = MutableLiveData<NetworkResult<PreferenceResponse>>()
+    val preferenceResponseLiveData: LiveData<NetworkResult<PreferenceResponse>>
+        get() = preferenceLiveData
+
+    suspend fun preference(city: String, userid: String) {
+        preferenceLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.preference(city,userid,Constant.version, Constant.platform)
+        preferenceData(response)
+    }
+
+    private fun preferenceData(response: Response<PreferenceResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            preferenceLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            preferenceLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            preferenceLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 

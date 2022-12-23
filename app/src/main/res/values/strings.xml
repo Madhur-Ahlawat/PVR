@@ -474,9 +474,17 @@
         <item>Terms of Use</item>
         <item>Terms and Conditions</item>
     </string-array>
+
+    <string-array name="genres">
+        <item>Genre</item>
+        <item>Theaters</item>
+        <item>Payments</item>
+        <item>Languages</item>
+    </string-array>
     <string name="version">"Version "</string>
     <string name="privacy">Privacy</string>
     <string name="watchlist">WATCHLIAST</string>
     <string name="see_all">See All</string>
+    <string name="clear_all">Clear All</string>
 
 </resources>

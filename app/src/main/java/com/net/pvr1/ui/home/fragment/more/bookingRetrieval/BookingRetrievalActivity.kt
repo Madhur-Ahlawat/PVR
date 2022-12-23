@@ -1,6 +1,7 @@
 package com.net.pvr1.ui.home.fragment.more.bookingRetrieval
 
 import android.os.Bundle
+import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,6 +20,7 @@ import com.net.pvr1.utils.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
 class BookingRetrievalActivity : AppCompatActivity(),BookingRetrievalAdapter.RecycleViewItemClickListener {
     @Inject
@@ -31,8 +33,26 @@ class BookingRetrievalActivity : AppCompatActivity(),BookingRetrievalAdapter.Rec
         binding = ActivityBookingRetrievalBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        authViewModel.bookingRetrieval("Chennai", "", "", preferences.getUserId().toString(), "")
+        authViewModel.bookingRetrieval("Chennai", preferences.getLongitudeData(), preferences.getLongitudeData(), preferences.getUserId().toString(), "")
+        binding?.textView36?.text=preferences.getCityName()
         bookingRetrievalApi()
+        movedNext()
+    }
+
+    private fun movedNext() {
+        //back click
+        binding?.include13?.imageView58?.setOnClickListener {
+            finish()
+        }
+
+        binding?.editText?.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                //do here your stuff f
+                authViewModel.bookingRetrieval("Chennai", preferences.getLongitudeData(), preferences.getLongitudeData(), preferences.getUserId().toString(), binding?.editText?.text.toString())
+
+                true
+            } else false
+        }
     }
 
     private fun bookingRetrievalApi() {
@@ -78,7 +98,7 @@ class BookingRetrievalActivity : AppCompatActivity(),BookingRetrievalAdapter.Rec
         val gridLayout =
             GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
         binding?.recyclerView32?.layoutManager = LinearLayoutManager(this)
-        val adapter = BookingRetrievalAdapter(this, output.c, this)
+        val adapter = BookingRetrievalAdapter(this, output.c, this,binding?.include14?.textView5)
         binding?.recyclerView32?.layoutManager = gridLayout
         binding?.recyclerView32?.adapter = adapter
     }

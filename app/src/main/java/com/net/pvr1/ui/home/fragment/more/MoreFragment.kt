@@ -14,12 +14,13 @@ import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.FragmentMoreBinding
-import com.net.pvr1.ui.contactUs.ContactUsActivity
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.giftCard.GiftCardActivity
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.BookingRetrievalActivity
+import com.net.pvr1.ui.home.fragment.more.contactUs.ContactUsActivity
 import com.net.pvr1.ui.home.fragment.more.offer.OfferActivity
+import com.net.pvr1.ui.home.fragment.more.prefrence.PreferenceActivity
 import com.net.pvr1.ui.home.fragment.more.privacy.TermsPrivacyActivity
 import com.net.pvr1.ui.home.fragment.more.viewModel.MoreViewModel
 import com.net.pvr1.ui.login.LoginActivity
@@ -199,6 +200,11 @@ class MoreFragment : Fragment() {
             startActivity(intent)
         }
 
+        //Prefrence
+        binding?.login?.constraintLayout73?.setOnClickListener {
+            val intent = Intent(requireContext(), PreferenceActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun createQr() {

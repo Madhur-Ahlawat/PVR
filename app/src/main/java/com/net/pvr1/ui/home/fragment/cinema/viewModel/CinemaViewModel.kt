@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
-import com.net.pvr1.ui.home.fragment.cinema.response.PreferenceResponse
+import com.net.pvr1.ui.home.fragment.cinema.response.CinemaPreferenceResponse
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -23,7 +23,7 @@ class CinemaViewModel @Inject constructor(private val userRepository: UserReposi
         }
     }
 
-    val cinemaPreferenceResponseLiveData: LiveData<NetworkResult<PreferenceResponse>>
+    val cinemaPreferenceResponseLiveData: LiveData<NetworkResult<CinemaPreferenceResponse>>
         get() = userRepository.cinemaPreferenceResponseLiveData
 
    fun  cinemaPreference(userid: String, id: String, is_like: Boolean, type: String, did: String) {

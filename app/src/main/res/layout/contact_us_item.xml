@@ -9,8 +9,8 @@
         android:id="@+id/constraintLayout102"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/alert_curve_ui"
-        android:layout_marginBottom="@dimen/dimen_5dp"
+        android:background="@drawable/ui_item_unselect"
+        android:layout_marginBottom="@dimen/dimen_8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,13 +20,13 @@
             android:id="@+id/textView301"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dimen_14sp"
             android:fontFamily="@font/sf_pro_text_medium"
             android:textColor="@color/black"
-            tools:text="Advertising/Corporate"
+            android:textSize="@dimen/dimen_14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Advertising/Corporate" />
 
         <ImageView
             android:id="@+id/imageView143"

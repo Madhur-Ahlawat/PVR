@@ -1,6 +1,6 @@
 package com.net.pvr1.ui.home.fragment.cinema.response
 
-data class PreferenceResponse(
+data class CinemaPreferenceResponse(
     val code: Int,
     val minversion: Any,
     val msg: String,

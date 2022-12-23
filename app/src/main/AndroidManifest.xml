@@ -106,7 +106,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.contactUs.ContactUsActivity"
+            android:name=".ui.home.fragment.more.contactUs.ContactUsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
