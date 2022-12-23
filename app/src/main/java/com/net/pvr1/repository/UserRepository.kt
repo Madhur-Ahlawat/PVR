@@ -2078,4 +2078,98 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
 
+    /*****************       CRED       **************/
+
+    private val credCheckLiveData = MutableLiveData<NetworkResult<UPIStatusResponse>>()
+    val credCheckResponseLiveData: LiveData<NetworkResult<UPIStatusResponse>>
+        get() = credCheckLiveData
+
+    suspend fun credCheck(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String,
+        unpaid: String,
+        cred_present: String,
+        spi: String
+    ) {
+        credCheckLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.credCheck(
+            userid, bookingid, booktype, transid,unpaid,cred_present,spi, Constant.version, Constant.platform
+        )
+        credCheckResponse(response)
+    }
+
+    private fun credCheckResponse(response: Response<UPIStatusResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            credCheckLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            credCheckLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            credCheckLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    private val credHmacLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val credHmacResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = credHmacLiveData
+
+    suspend fun credHmac(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String,
+        unpaid: String,
+        cred_present: String,
+        spi: String,
+        ptype: String
+    ) {
+        credHmacLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.credHmac(
+            userid, bookingid, booktype, transid,unpaid,cred_present,spi,ptype, Constant.version, Constant.platform
+        )
+        credHmacResponse(response)
+    }
+
+    private fun credHmacResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            credHmacLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            credHmacLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            credHmacLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    private val credStatusLiveData = MutableLiveData<NetworkResult<UPIStatusResponse>>()
+    val credStatusResponseLiveData: LiveData<NetworkResult<UPIStatusResponse>>
+        get() = credStatusLiveData
+
+    suspend fun credStatus(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String
+    ) {
+        credStatusLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.credStatus(
+            userid, bookingid, booktype, transid, Constant.version, Constant.platform
+        )
+        credStatusResponse(response)
+    }
+
+    private fun credStatusResponse(response: Response<UPIStatusResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            credStatusLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            credStatusLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            credStatusLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+>>>>>>> anoop_dev
 }

@@ -114,4 +114,49 @@ class PaymentViewModel @Inject constructor(private val userRepository: UserRepos
             userRepository.phonepeStatus(userid, bookingid,booktype,transid)
         }
     }
+
+    //CRED Check
+    val credCheckLiveDataScope: LiveData<NetworkResult<UPIStatusResponse>> get() = userRepository.credCheckResponseLiveData
+
+    fun credCheck(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String,
+        unpaid: String,
+        cred_present: String,
+        spi: String,
+    ) {
+        viewModelScope.launch {
+            userRepository.credCheck(userid, bookingid,booktype,transid,unpaid,cred_present,spi)
+        }
+    }//CRED Hmac
+    val credHmacLiveDataScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.credHmacResponseLiveData
+
+    fun credHmac(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String,
+        unpaid: String,
+        cred_present: String,
+        spi: String,
+        ptype: String
+    ) {
+        viewModelScope.launch {
+            userRepository.credHmac(userid, bookingid,booktype,transid,unpaid,cred_present,spi,ptype)
+        }
+    }//CRED Status
+    val credStatusLiveDataScope: LiveData<NetworkResult<UPIStatusResponse>> get() = userRepository.credStatusResponseLiveData
+
+    fun credStatus(
+        userid: String,
+        bookingid: String,
+        booktype: String,
+        transid: String,
+    ) {
+        viewModelScope.launch {
+            userRepository.credStatus(userid, bookingid,booktype,transid)
+        }
+    }
 }

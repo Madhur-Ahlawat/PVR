@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/top_curve_bottomsheet">
+
+    <TextView
+        android:id="@+id/cross"
+        android:fontFamily="@font/sf_pro_text_medium"
+        android:textColor="@color/pvr_dark_black"
+        android:textSize="@dimen/dimen_16sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:drawableEnd="@drawable/ic_food_cross"
+        android:text="Terms &amp; Condition"
+        android:layout_marginBottom="20dp"/>
+
+    <include layout="@layout/horizontal_line"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tncText"
+        android:fontFamily="@font/sf_pro_text_regular"
+        android:lineSpacingExtra="@dimen/dimen_4dp"
+        android:padding="@dimen/dimen_15dp"
+        android:textSize="@dimen/dimen_12sp"
+        android:textColor="@color/black"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl metus, ornare vitae leo vitae, cursus sollicitudin justo. Vivamus erat justo, tempus.
+Phasellus vehicula magna nec pretium venenatis. Aliquam vulputate ante ipsum, id sagittis enim tempor ut. Sed eu pellentesque enim.
+Curabitur pellentesque nec orci fringilla pellentesque. Nunc et sagittis nulla.
+Maecenas condimentum in magna non interdum. Praesent vitae eleifend purus. Quisque libero tellus, maximus non augue eu, ultricies rhoncus ipsum.
+Nulla id ultrices risus. Duis ornare neque eu sagittis euismod. Cras dapibus fringilla metus, id tincidunt nisi. Fusce tempus elit eget accumsan sollicitudin.
+Donec finibus velit viverra, vestibulum orci eget, efficitur ante. Vivamus elementum diam at massa bibendum cursus.
+In facilisis, ipsum id imperdiet aliquam, sem nunc condimentum urna, non rhoncus lectus sapien ut ligula. Sed quis congue arcu, id ultrices mauris."
+        android:layout_marginTop="@dimen/dimen_15dp"
+        android:layout_marginBottom="@dimen/dimen_15dp"/>
+
+
+
+</LinearLayout>

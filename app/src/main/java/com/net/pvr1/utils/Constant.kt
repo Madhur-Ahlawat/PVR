@@ -106,6 +106,7 @@ class Constant {
         var NET_BANKING = "118"
         var PAYTMPOSTPAID = "124"
         var PAYTM_WALLET = "102"
+        var CRED = "125"
         var ZAGGLE = "126"
         var UPI = "119"
         var PHONE_PE = "113"
@@ -120,6 +121,19 @@ class Constant {
         var STAR_PASS = "O105"
         var HYATT = "O107"
         var GYFTR = "O108"
+
+        fun isPackageInstalled(packageManager: PackageManager): Boolean {
+            return try {
+                //            "com.dreamplug.androidapp.dev"
+                //           "com.dreamplug.androidapp"
+                packageManager.getPackageInfo("com.dreamplug.androidapp.dev", 0)
+                true
+            } catch (e: PackageManager.NameNotFoundException) {
+                e.printStackTrace()
+                println("NameNotFoundException---" + e.message)
+                false
+            }
+        }
 
     }
 

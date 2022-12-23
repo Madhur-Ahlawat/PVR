@@ -18,7 +18,9 @@ import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.payment.adapter.CouponAdapter
 import com.net.pvr1.ui.payment.adapter.PaymentAdapter
 import com.net.pvr1.ui.payment.adapter.PaymentExclusiveAdapter
+import com.net.pvr1.ui.payment.bankoffers.BankOffersActivity
 import com.net.pvr1.ui.payment.cardDetails.CardDetailsActivity
+import com.net.pvr1.ui.payment.cred.CredActivity
 import com.net.pvr1.ui.payment.giftcardredeem.GiftCardRedeemActivity
 import com.net.pvr1.ui.payment.mCoupon.MCouponActivity
 import com.net.pvr1.ui.payment.paytmpostpaid.PaytmPostPaidActivity
@@ -27,7 +29,6 @@ import com.net.pvr1.ui.payment.response.CouponResponse
 import com.net.pvr1.ui.payment.response.PaymentResponse
 import com.net.pvr1.ui.payment.response.PaytmHmacResponse
 import com.net.pvr1.ui.payment.response.UPIStatusResponse
-import com.net.pvr1.ui.payment.starPass.StarPassActivity
 import com.net.pvr1.ui.payment.viewModel.PaymentViewModel
 import com.net.pvr1.ui.payment.webView.PaytmWebActivity
 import com.net.pvr1.utils.*
@@ -36,6 +37,7 @@ import com.net.pvr1.utils.Constant.Companion.AIRTEL
 import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr1.utils.Constant.Companion.BOOK_TYPE
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
+import com.net.pvr1.utils.Constant.Companion.CRED
 import com.net.pvr1.utils.Constant.Companion.CREDIT_CARD
 import com.net.pvr1.utils.Constant.Companion.DEBIT_CARD
 import com.net.pvr1.utils.Constant.Companion.GEIFT_CARD
@@ -56,6 +58,7 @@ import com.phonepe.intent.sdk.api.TransactionRequestBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
@@ -67,6 +70,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
     private var binding: ActivityPaymentBinding? = null
     private val authViewModel: PaymentViewModel by viewModels()
     private var loader: LoaderDialog? = null
+    private var paymentItemHold: PaymentResponse.Output.Gateway? = null
     private var catFilterPayment = ArrayList<PaymentResponse.Output.Gateway>()
     private var paidAmount = ""
 
@@ -76,6 +80,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
 
     companion object {
         var isPromocodeApplied = false
+        var offerList:ArrayList<PaymentResponse.Output.Binoffer> = ArrayList()
     }
 
     @SuppressLint("SetTextI18n")
@@ -137,6 +142,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
 //        voucherDataLoad()
         payModeDataLoad()
         paytmHMAC()
+        credCheck()
         upiStatus()
         phonePeHmac()
         phonePeStatus()
@@ -245,6 +251,14 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
     }
 
     private fun retrieveData(output: PaymentResponse.Output) {
+        //Bank Offer
+        if (output.binoffers.isNotEmpty()) {
+            binding?.bankOffers?.show()
+            offerList = output.binoffers
+        } else {
+            binding?.bankOffers?.hide()
+        }
+
         //Pay Mode
         if (output.gateway.isNotEmpty()) {
             binding?.recyclerView42?.show()
@@ -293,6 +307,12 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         } else {
             binding?.recyclerView45?.hide()
         }
+
+        binding?.bankOffers?.setOnClickListener {
+            val intent = Intent(this@PaymentActivity, BankOffersActivity::class.java)
+            intent.putExtra("paidAmount", paidAmount)
+            startActivity(intent)
+        }
     }
 
     //Payment Option Clicks
@@ -319,6 +339,19 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 intent.putExtra("title", paymentItem.name)
                 intent.putExtra("tc", paymentItem.tc)
                 startActivity(intent)
+            }
+            CRED -> {
+                paymentItemHold = paymentItem
+                authViewModel.credCheck(
+                    preferences.getUserId(),
+                    Constant.BOOKING_ID,
+                    Constant.BOOK_TYPE,
+                    Constant.TRANSACTION_ID,
+                    "false",
+                    Constant.isPackageInstalled(packageManager).toString(),
+                    "false"
+                )
+
             }
             AIRTEL -> {
                 val intent = Intent(this@PaymentActivity, PaytmWebActivity::class.java)
@@ -420,6 +453,62 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
             }
         }
     }
+
+    private fun credCheck() {
+        authViewModel.credCheckLiveDataScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        if (it.data.output.state == "true"){
+                            val intent = Intent(this@PaymentActivity, CredActivity::class.java)
+                            intent.putExtra("bannertext",it.data.output.banner_txt)
+                            intent.putExtra("icon", it.data.output.icon)
+                            intent.putExtra("paidAmount", paidAmount)
+                            intent.putExtra("msg", it.data.output.msg)
+                            intent.putExtra("mode",it.data.output.mode)
+                            intent.putExtra("pid", paymentItemHold?.id)
+                            intent.putExtra("tc", paymentItemHold?.tc)
+                            intent.putExtra("ca_a", paymentItemHold?.ca_a)
+                            intent.putExtra("ca_t", paymentItemHold?.ca_t)
+                            intent.putExtra("title", paymentItemHold?.name)
+                            startActivity(intent)
+                        }else{
+                            toast(it.data.msg)
+                        }
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleasewait)
+                    loader?.show(this.supportFragmentManager, null)
+                }
+            }
+        }
+
+    }
+
 
     private fun paytmHMAC() {
         authViewModel.liveDataScope.observe(this) {

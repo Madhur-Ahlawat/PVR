@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.payment.starPass
+package com.net.pvr1.ui.payment.bankoffers
 
 import java.util.ArrayList
 
