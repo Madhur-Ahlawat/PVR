@@ -52,7 +52,7 @@ data class PreferenceResponse(
         data class Pon(
             val Other: List<Genre.Other>,
             val SavedCards: List<Any>,
-            val Wallets: List<Wallet>
+            val Wallets: ArrayList<Wallet>
         ):java.io.Serializable
 
         data class Schedule(

@@ -112,6 +112,30 @@ class Constant {
         var PHONE_PE = "113"
         var GEIFT_CARD = "105"
         var AIRTEL = "110"
+        var PRICE_DESK = "101"
+        var PAYTM = "102"
+        var MOBIKWIK = "103"
+        var OXYGEN = "104"
+        var DC_CARD = "106"
+        var OFFER_OPTION = "00000"
+        var BIN_OPTION = "000000"
+        var PAYTM_DEBIT_CARD = "117"
+        var PAYTM_CREDIT_CARD = "116"
+        var PAYTM_NETBANKING = "118"
+
+        var NETBANKING = "109"
+        var TEJ = "109"
+        var TEZUPI = "111"
+        var PAYTMUPI = "119"
+        var EPAY_LATTER = "115"
+        var PAYPAL = "114"
+
+
+        var KOTAK_SATURDAY = "o101"
+        var KOTAK_WEEKEND = "130"
+        var KOTAK_CREDIT_CARD = "125"
+
+
 
         // OFFERS
 
@@ -143,9 +167,7 @@ class Constant {
 
 
     fun spannableText(
-        activityContext: Activity,
-        stringBuilder: StringBuilder?,
-        tvCensorLang: TextView
+        activityContext: Activity, stringBuilder: StringBuilder?, tvCensorLang: TextView
     ) {
         val ss = SpannableString(stringBuilder)
         ss.setSpan(
@@ -209,8 +231,7 @@ class Constant {
 
 
     fun openMap(context: Context, lat: String, lang: String) {
-        val strUri =
-            "http://maps.google.com/maps?q=loc:$lat,$lang (Label which you want)"
+        val strUri = "http://maps.google.com/maps?q=loc:$lat,$lang (Label which you want)"
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(strUri))
         intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity")
         context.startActivity(intent)
@@ -223,8 +244,7 @@ class Constant {
         ) as InputMethodManager
         if (inputMethodManager.isAcceptingText) {
             inputMethodManager.hideSoftInputFromWindow(
-                activity.currentFocus!!.windowToken,
-                0
+                activity.currentFocus!!.windowToken, 0
             )
         }
     }
@@ -243,26 +263,22 @@ class Constant {
             isAvailable = locationMode != Settings.Secure.LOCATION_MODE_OFF
         } else {
             locationProviders = Settings.Secure.getString(
-                context.contentResolver,
-                Settings.Secure.LOCATION_PROVIDERS_ALLOWED
+                context.contentResolver, Settings.Secure.LOCATION_PROVIDERS_ALLOWED
             )
             isAvailable = !TextUtils.isEmpty(locationProviders)
         }
         val coarsePermissionCheck = ContextCompat.checkSelfPermission(
-            context,
-            Manifest.permission.ACCESS_COARSE_LOCATION
+            context, Manifest.permission.ACCESS_COARSE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
         val finePermissionCheck = ContextCompat.checkSelfPermission(
-            context,
-            Manifest.permission.ACCESS_FINE_LOCATION
+            context, Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
         return isAvailable && (coarsePermissionCheck || finePermissionCheck)
     }
 
     fun printTicket(activity: Activity) {
         val intent = Intent(
-            activity,
-            TicketConfirmationActivity::class.java
+            activity, TicketConfirmationActivity::class.java
         )
         activity.startActivity(intent)
         activity.finish()
@@ -293,8 +309,7 @@ class Constant {
                     tv.movementMethod = LinkMovementMethod.getInstance()
                     tv.setText(
                         addClickablePartTextViewResizable(
-                            Html.fromHtml(tv.text.toString()), tv, maxLine, expandText,
-                            viewMore
+                            Html.fromHtml(tv.text.toString()), tv, maxLine, expandText, viewMore
                         ), TextView.BufferType.SPANNABLE
                     )
                 } else if (maxLine > 0 && tv.lineCount >= maxLine) {
@@ -305,8 +320,7 @@ class Constant {
                     tv.movementMethod = LinkMovementMethod.getInstance()
                     tv.setText(
                         addClickablePartTextViewResizable(
-                            Html.fromHtml(tv.text.toString()), tv, maxLine, expandText,
-                            viewMore
+                            Html.fromHtml(tv.text.toString()), tv, maxLine, expandText, viewMore
                         ), TextView.BufferType.SPANNABLE
                     )
                 } else {
@@ -316,7 +330,10 @@ class Constant {
                     tv.movementMethod = LinkMovementMethod.getInstance()
                     tv.setText(
                         addClickablePartTextViewResizable(
-                            Html.fromHtml(tv.text.toString()), tv, lineEndIndex, expandText,
+                            Html.fromHtml(tv.text.toString()),
+                            tv,
+                            lineEndIndex,
+                            expandText,
                             viewMore
                         ), TextView.BufferType.SPANNABLE
                     )
@@ -330,8 +347,7 @@ class Constant {
 
     //spannable textView
     private fun addClickablePartTextViewResizable(
-        strSpanned: Spanned, tv: TextView,
-        maxLine: Int, spanableText: String, viewMore: Boolean
+        strSpanned: Spanned, tv: TextView, maxLine: Int, spanableText: String, viewMore: Boolean
     ): SpannableStringBuilder? {
         val str = strSpanned.toString()
         val ssb = SpannableStringBuilder(strSpanned)
@@ -488,14 +504,11 @@ class Constant {
             var i = 1
             while (i < builder.toString().length) {
                 finalText.setSpan(
-                    ScaleXSpan(letterSpacingBuf / 10),
-                    i,
-                    i + 1,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    ScaleXSpan(letterSpacingBuf / 10), i, i + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
                 i += 2
             }
         }
-        pcTextView.setText(finalText)
+        pcTextView.text = finalText
     }
 }

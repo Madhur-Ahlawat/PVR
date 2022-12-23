@@ -198,6 +198,8 @@
                     android:id="@+id/recyclerView42"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_24dp"
+                    android:layout_marginStart="@dimen/dimen_24dp"
                     android:orientation="vertical"
                     tools:itemCount="2"
                     tools:listitem="@layout/item_payment_list" />
@@ -224,6 +226,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:layout_marginEnd="@dimen/dimen_24dp"
+                    android:layout_marginStart="@dimen/dimen_24dp"
                     tools:itemCount="2"
                     tools:listitem="@layout/item_payment_list" />
 
@@ -250,6 +254,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:layout_marginEnd="@dimen/dimen_24dp"
+                    android:layout_marginStart="@dimen/dimen_24dp"
                     tools:itemCount="2"
                     tools:listitem="@layout/item_payment_list" />
 
@@ -277,6 +283,8 @@
                     android:id="@+id/recyclerView45"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_24dp"
+                    android:layout_marginStart="@dimen/dimen_24dp"
                     android:orientation="vertical"
                     tools:itemCount="2"
                     tools:listitem="@layout/item_payment_list" />

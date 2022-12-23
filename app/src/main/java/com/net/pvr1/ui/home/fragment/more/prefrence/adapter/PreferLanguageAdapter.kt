@@ -10,12 +10,12 @@ import com.net.pvr1.databinding.GenreChildItemBinding
 import com.net.pvr1.ui.home.fragment.more.prefrence.response.PreferenceResponse
 
 
-class PreferdLanguageAdapter(
+class PreferLanguageAdapter(
     private var context: Context,
     private var nowShowingList: List<PreferenceResponse.Output.Genre.Liked>,
     private var listener: RecycleViewItemClickListener
 ) :
-    RecyclerView.Adapter<PreferdLanguageAdapter.ViewHolder>() {
+    RecyclerView.Adapter<PreferLanguageAdapter.ViewHolder>() {
     private var rowIndex=0
 
     inner class ViewHolder(val binding: GenreChildItemBinding) : RecyclerView.ViewHolder(binding.root)

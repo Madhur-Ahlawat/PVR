@@ -513,4 +513,11 @@
     </string-array>
     <string name="version">"Version"</string>
     <string name="terms_condition_text"><![CDATA[T&C | PRIVACY]]></string>
+    <string name="favouriteTheaters">Favourite Theaters</string>
+    <string name="noTheatersSelected">No theaters selected</string>
+    <string name="preferredPaymentMethod">Preferred Payment Method</string>
+    <string name="noPaymentMethodSelected">No payment method selected</string>
+    <string name="preferredLanguages">Preferred Languages</string>
+    <string name="noLangaugesSelected">No langauges selected</string>
+    <string name="noGenresSelected">No genres selected</string>
 </resources>

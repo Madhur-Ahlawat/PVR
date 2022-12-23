@@ -16,13 +16,11 @@
 
     <ImageView
         android:id="@+id/imageView81"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView124"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView124"
-        app:srcCompat="@drawable/car"
         tools:ignore="ContentDescription" />
 
     <TextView
@@ -55,7 +53,6 @@
         android:id="@+id/imageView82"
         android:layout_width="8dp"
         android:layout_height="@dimen/dimen_12dp"
-        android:layout_marginEnd="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView124"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView124"

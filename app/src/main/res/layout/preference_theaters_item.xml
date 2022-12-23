@@ -8,6 +8,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout142"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_100dp"
         android:layout_marginStart="@dimen/padding_10"
@@ -109,9 +110,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_un_favourite_theatre"
-            app:tint="#908E8E"
             tools:ignore="ContentDescription" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
