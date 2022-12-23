@@ -2171,5 +2171,4 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
     }
 
->>>>>>> anoop_dev
 }

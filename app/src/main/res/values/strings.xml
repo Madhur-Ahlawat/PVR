@@ -493,4 +493,24 @@
     <string name="_24_00">24:00</string>
     <string name="trending">Trending</string>
     <string name="open_m_ticket">OPEN M-TICKET</string>
+    <string name="clear_all">Clear All</string>
+    <string name="privacy">Privacy</string>
+    <string name="see_all">See All</string>
+    <string name="watchlist">WATCHLIST</string>
+
+<!--    terms-->
+    <string-array name="terms_condition_items">
+        <item>Privacy</item>
+        <item>Terms of Use</item>
+        <item>Terms and Conditions</item>
+    </string-array>
+
+    <string-array name="genres">
+        <item>Genre</item>
+        <item>Theaters</item>
+        <item>Payments</item>
+        <item>Languages</item>
+    </string-array>
+    <string name="version">"Version"</string>
+    <string name="terms_condition_text"><![CDATA[T&C | PRIVACY]]></string>
 </resources>
