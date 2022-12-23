@@ -481,4 +481,16 @@
     <string name="otp_sent">OTP Sent</string>
     <string name="terms_amp_condition"><![CDATA[Terms & Condition]]></string>
     <string name="avail_offers">AVAIL OFFERS</string>
+
+    <string name="languages">Languages</string>
+    <string name="filters">Filters</string>
+    <string name="genre">Genre</string>
+    <string name="format">Format</string>
+    <string name="show_time">Show Time</string>
+    <string name="price_range">Price Range</string>
+    <string name="cinema_format">Cinema Format</string>
+    <string name="_8_00">8:00</string>
+    <string name="_24_00">24:00</string>
+    <string name="trending">Trending</string>
+    <string name="open_m_ticket">OPEN M-TICKET</string>
 </resources>

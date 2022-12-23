@@ -812,7 +812,6 @@ interface UserAPI {
         @Query("unpaid") unpaid: String,
         @Query("cred_present") cred_present: String,
         @Query("spi") spi: String,
-        @Query("spi") spi: String,
         @Query("ptype") ptype: String,
         @Query("av") version: String,
         @Query("pt") platform: String
