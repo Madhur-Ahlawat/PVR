@@ -20,6 +20,8 @@ import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr1.ui.home.fragment.more.prefrence.response.PreferenceResponse
 import com.net.pvr1.ui.home.fragment.more.response.DeleteAlertResponse
 import com.net.pvr1.ui.home.fragment.more.response.WhatsAppOptStatus
+import com.net.pvr1.ui.home.fragment.privilege.response.LoyaltyDataResponse
+import com.net.pvr1.ui.home.fragment.privilege.response.PassportPlanResponse
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.location.selectCity.response.SelectCityResponse
 import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
@@ -550,6 +552,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
     }
 
+    /************   Privilege USER REPO        *******************/
+
     // Privilege Home
     private val privilegeHomeLiveData = MutableLiveData<NetworkResult<PrivilegeHomeResponse>>()
     val privilegeHomeResponseLiveData: LiveData<NetworkResult<PrivilegeHomeResponse>>
@@ -576,6 +580,66 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             }
         } else {
             privilegeHomeLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+
+    // Privilege Home
+    private val loyaltyDataLiveData = MutableLiveData<NetworkResult<LoyaltyDataResponse>>()
+    val loyaltyDataResponseLiveData: LiveData<NetworkResult<LoyaltyDataResponse>>
+        get() = loyaltyDataLiveData
+
+    suspend fun loyaltyData(userId: String, city: String,mobile: String, timestamp: String,token: String) {
+        loyaltyDataLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.loyaltyData(
+            userId, city, mobile,timestamp,token,Constant.version, Constant.platform,Constant.getDid()
+        )
+        loyaltyDataResponse(response)
+    }
+
+    private fun loyaltyDataResponse(response: Response<LoyaltyDataResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            loyaltyDataLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = ""
+            try {
+                val errorObj = JSONObject(response.errorBody()?.charStream()?.readText())
+                loyaltyDataLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            }catch (e:Exception){
+                loyaltyDataLiveData.postValue(NetworkResult.Error(response.errorBody()?.charStream()?.readText().toString()))
+            }
+        } else {
+            loyaltyDataLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    // Passport Plan
+    private val passportPlanLiveData = MutableLiveData<NetworkResult<PassportPlanResponse>>()
+    val passportPlanResponseLiveData: LiveData<NetworkResult<PassportPlanResponse>>
+        get() = passportPlanLiveData
+
+    suspend fun passportPlans(userId: String, city: String) {
+        passportPlanLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.passportPlans(
+            userId, city, Constant.version, Constant.platform, Constant.getDid()
+        )
+        passportPlanResponse(response)
+    }
+
+    private fun passportPlanResponse(response: Response<PassportPlanResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            passportPlanLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            try {
+                val errorObj = JSONObject(response.errorBody()?.charStream()?.readText())
+                passportPlanLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            }catch (e:Exception){
+                passportPlanLiveData.postValue(NetworkResult.Error(response.errorBody()?.charStream()?.readText().toString()))
+            }
+        } else {
+            passportPlanLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 
@@ -1213,8 +1277,12 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         if (response.isSuccessful && response.body() != null) {
             splashLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
-            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
-            splashLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            try {
+                val errorObj = JSONObject(response.errorBody()?.charStream()?.readText())
+                splashLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            }catch (e:Exception){
+                splashLiveData.postValue(NetworkResult.Error(response.errorBody()?.charStream()?.readText().toString()))
+            }
         } else {
             splashLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }

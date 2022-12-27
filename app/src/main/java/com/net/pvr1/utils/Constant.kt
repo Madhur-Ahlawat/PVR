@@ -135,6 +135,19 @@ class Constant {
             }
         }
 
+        fun onShareClick(context: Context,shareUrl: String,shareMessage:String){
+            /*System.out.println("ShareUrl"+shareURL+"fkfg"+shareMessage);*/
+            val sendIntent = Intent()
+            sendIntent.action = Intent.ACTION_SEND
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "$shareMessage $shareUrl")
+            sendIntent.type = "text/plain"
+            context.startActivity(sendIntent)
+        }
+
+        fun getDid():String{
+            return ""
+        }
+
     }
 
     fun getDeviceId(context: Activity): String {

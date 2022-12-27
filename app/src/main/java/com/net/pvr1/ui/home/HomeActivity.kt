@@ -37,7 +37,8 @@ import com.net.pvr1.ui.home.fragment.home.HomeFragment
 import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
 import com.net.pvr1.ui.home.fragment.more.MoreFragment
 import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
-import com.net.pvr1.ui.home.fragment.privilege.PrivilegeFragment
+import com.net.pvr1.ui.home.fragment.privilege.MemberFragment
+import com.net.pvr1.ui.home.fragment.privilege.NonMemberFragment
 import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeHomeDialogAdapter
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.home.interfaces.PlayPopup
@@ -46,6 +47,8 @@ import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.PRIVILEGEVOUCHER
 import com.net.pvr1.utils.Constant.Companion.PrivilegeHomeResponseConst
 import dagger.hilt.android.AndroidEntryPoint
+import org.json.JSONObject
+import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -59,6 +62,22 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     private var loader: LoaderDialog? = null
     private var offerShow: Boolean = false
     private var offerResponse: ArrayList<OfferResponse.Output>? = null
+
+    private val firstFragment = HomeFragment()
+    private val secondFragment = CinemasFragment()
+    private val thirdFragment = NonMemberFragment()
+    private val memberFragment = MemberFragment()
+    private val fourthFragment = ComingSoonFragment()
+    private val fifthFragment = MoreFragment()
+
+    companion object{
+        var review_position = 0
+        var pcheck = "0"
+        var pdays = "0"
+        fun getCurrentItem(recyclerView: RecyclerView): Int {
+            return (Objects.requireNonNull(recyclerView.layoutManager) as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,12 +121,6 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     }
 
     private fun switchFragment() {
-        val firstFragment = HomeFragment()
-        val secondFragment = CinemasFragment()
-        val thirdFragment = PrivilegeFragment()
-        val fourthFragment = ComingSoonFragment()
-        val fifthFragment = MoreFragment()
-
         setCurrentFragment(firstFragment)
         binding?.bottomNavigationView?.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -123,7 +136,25 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                     setCurrentFragment(secondFragment)
                     binding?.includeAppBar?.textView2?.text = getString(R.string.all_theaters)
                 }
-                R.id.privilegeFragment -> setCurrentFragment(thirdFragment)
+                R.id.privilegeFragment ->{
+                    if (preferences.getIsLogin()){
+                        val ls = preferences
+                            .getString(Constant.SharedPreference.LOYALITY_STATUS)
+                        val isHl: String = preferences
+                            .getString(Constant.SharedPreference.IS_HL)
+                        val isLy: String = preferences
+                            .getString(Constant.SharedPreference.IS_LY)
+                        if (isLy.equals("true", ignoreCase = true)) {
+                            if (ls != null && !ls.equals("", ignoreCase = true)) {
+                                if (isHl.equals("true", ignoreCase = true)) {
+                                    setCurrentFragment(memberFragment)
+                                }
+                            }
+                        }
+                    }else{
+                        setCurrentFragment(thirdFragment)
+                    }
+                }
                 R.id.comingSoonFragment -> setCurrentFragment(fourthFragment)
                 R.id.moreFragment -> setCurrentFragment(fifthFragment)
             }
@@ -176,8 +207,9 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         dialog.window?.setGravity(Gravity.BOTTOM)
         dialog.show()
 
-        val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerView34)
-        val icon = dialog.findViewById<ImageView>(R.id.imageView109)
+        val recyclerView = dialog.findViewById<RecyclerView>(R.id.loyaltyList)
+        val icon = dialog.findViewById<ImageView>(R.id.logo)
+        val turnOn = dialog.findViewById<TextView>(R.id.turnOn)
         //icon
         Glide.with(this)
             .load(PrivilegeHomeResponseConst?.pinfo?.get(0)?.plogo)
@@ -193,7 +225,40 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
             PrivilegeHomeResponseConst?.pinfo?.let { PrivilegeHomeDialogAdapter(it, this,0, this) }
         recyclerView.layoutManager = gridLayout
         recyclerView.adapter = adapter
-        recyclerView.addItemDecoration(LinePagerIndicatorDecoration())
+        val mSnapHelper = PagerSnapHelper()
+        if ( PrivilegeHomeResponseConst?.pinfo?.size!! > 1) {
+            review_position = 0
+            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    println("review_positionnewState--->$newState")
+                    if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                        //Dragging
+                    } else if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        review_position = getCurrentItem(recyclerView)
+
+
+                        /*
+                    Here load the Image to image view with picaso
+                 */
+                    }
+                }
+
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val firstVisibleItem: Int = getCurrentItem(recyclerView)
+                    println("review_position123--->$firstVisibleItem")
+                    /* Log.e ("VisibleItem", String.valueOf(firstVisibleItem));*/
+                }
+            })
+            recyclerView.onFlingListener = null
+            mSnapHelper.attachToRecyclerView(recyclerView)
+            recyclerView.addItemDecoration(LinePagerIndicatorDecoration())
+        }
+
+        turnOn.setOnClickListener {
+            managePrivilege()
+        }
     }
 
     private fun setCurrentFragment(fragment: Fragment) =
@@ -294,7 +359,29 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     }
 
     private fun privilegeRetrieveData(output: PrivilegeHomeResponse.Output) {
-        PrivilegeHomeResponseConst = output
+        try {
+            PrivilegeHomeResponseConst = output
+            pcheck = output.pcheck
+            preferences.saveString("FAQ", output.faq)
+            pdays = output.pdays
+            preferences.saveString(Constant.SharedPreference.pcities, output.pcities)
+            preferences.saveString("KOTAK_URL", output.pkotakurl)
+            val jsonObject1 = JSONObject()
+            jsonObject1.put("points", output.pt)
+            jsonObject1.put("voucher", output.vou)
+            preferences
+                .saveString(Constant.SharedPreference.LOYALITY_POINT, jsonObject1.toString())
+            preferences
+                .saveString(Constant.SharedPreference.LOYALITY_CARD, output.passportbuy.toString())
+            preferences
+                .saveString(Constant.SharedPreference.SUBS_OPEN, output.passport.toString())
+            preferences
+                .saveString(Constant.SharedPreference.LOYALITY_STATUS, output.ls)
+            preferences
+                .saveString(Constant.SharedPreference.SUBSCRIPTION_STATUS,output.ulm)
+        }catch (e:Exception){
+
+        }
     }
 
     private fun retrieveData(output: ArrayList<OfferResponse.Output>) {
@@ -422,6 +509,32 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
             result
         } else {
             true
+        }
+    }
+
+    private fun managePrivilege(){
+        if (preferences.getIsLogin()){
+            val ls = preferences
+                .getString(Constant.SharedPreference.LOYALITY_STATUS)
+            val isHl: String = preferences
+                .getString(Constant.SharedPreference.IS_HL)
+            val isLy: String = preferences
+                .getString(Constant.SharedPreference.IS_LY)
+            if (isLy.equals("true", ignoreCase = true)) {
+                if (ls != null && !ls.equals("", ignoreCase = true)) {
+                    if (isHl.equals("true", ignoreCase = true)) {
+                        setCurrentFragment(memberFragment)
+                    }else{
+                        setCurrentFragment(thirdFragment)
+                    }
+                }else{
+                    setCurrentFragment(thirdFragment)
+                }
+            }else{
+                setCurrentFragment(thirdFragment)
+            }
+        }else{
+            setCurrentFragment(thirdFragment)
         }
     }
 

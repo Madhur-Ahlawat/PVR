@@ -20,10 +20,10 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySplashBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.location.enableLocation.EnableLocationActivity
 import com.net.pvr1.ui.home.HomeActivity
-import com.net.pvr1.ui.login.LoginActivity
+import com.net.pvr1.ui.location.enableLocation.EnableLocationActivity
 import com.net.pvr1.ui.location.selectCity.SelectCityActivity
+import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.ui.splash.onBoarding.LandingActivity
 import com.net.pvr1.ui.splash.response.SplashResponse
 import com.net.pvr1.ui.splash.viewModel.SplashViewModel
@@ -191,6 +191,8 @@ class SplashActivity : AppCompatActivity() {
     private fun retrieveData(output: SplashResponse.Output) {
         preferences.saveString(Constant.SharedPreference.NT,output.nt)
         preferences.saveString(Constant.SharedPreference.NTBT,output.ntbn)
+        preferences.saveString(Constant.SharedPreference.IS_HL, output.hl)
+        preferences.saveString(Constant.SharedPreference.IS_LY, output.ly)
         movedNext()
     }
 

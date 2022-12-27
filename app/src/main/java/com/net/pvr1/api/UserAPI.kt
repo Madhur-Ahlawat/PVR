@@ -17,6 +17,8 @@ import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr1.ui.home.fragment.more.prefrence.response.PreferenceResponse
 import com.net.pvr1.ui.home.fragment.more.response.DeleteAlertResponse
 import com.net.pvr1.ui.home.fragment.more.response.WhatsAppOptStatus
+import com.net.pvr1.ui.home.fragment.privilege.response.LoyaltyDataResponse
+import com.net.pvr1.ui.home.fragment.privilege.response.PassportPlanResponse
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.location.selectCity.response.SelectCityResponse
 import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
@@ -232,43 +234,45 @@ interface UserAPI {
     @POST("v2/user/optin/check")
     suspend fun whatsappOpt(
         @Query("userid") userid: String,
-        @Query("mobile")  mobile: String,
+        @Query("mobile") mobile: String,
         @Query("timestamp") timestamp: String,
-        @Header("X-Token")  token: String,
-        @Query("av")  version: String,
-        @Query("pt")  platform: String,
-        @Query("did")  did: String
+        @Header("X-Token") token: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
     ): Response<WhatsAppOptStatus>
 
- @POST("v2/user/optin")
+    @POST("v2/user/optin")
     suspend fun whatsappOptIn(
         @Query("userid") userid: String,
-        @Query("mobile")  mobile: String,
+        @Query("mobile") mobile: String,
         @Query("timestamp") timestamp: String,
-        @Header("X-Token")  token: String,
-        @Query("av")  version: String,
-        @Query("pt")  platform: String,
-        @Query("did")  did: String
+        @Header("X-Token") token: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
     ): Response<WhatsAppOptStatus>
 
- @POST("v2/user/optout")
+    @POST("v2/user/optout")
     suspend fun whatsappOptOut(
         @Query("userid") userid: String,
-        @Query("mobile")  mobile: String,
+        @Query("mobile") mobile: String,
         @Query("timestamp") timestamp: String,
-        @Header("X-Token")  token: String,
-        @Query("av")  version: String,
-        @Query("pt")  platform: String,
-        @Query("did")  did: String
+        @Header("X-Token") token: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
     ): Response<WhatsAppOptStatus>
 
- @POST("user/getprefrenences")
+    @POST("user/getprefrenences")
     suspend fun preference(
         @Query("city") city: String,
         @Query("userid") userid: String,
-        @Query("av")  version: String,
-        @Query("pt")  platform: String
+        @Query("av") version: String,
+        @Query("pt") platform: String
     ): Response<PreferenceResponse>
+
+    /***********************   Privilege  API'S     ******************/
 
     @POST("loyalty/home")
     suspend fun privilegeHome(
@@ -277,6 +281,28 @@ interface UserAPI {
         @Query("av") av: String,
         @Query("pt") pt: String
     ): Response<PrivilegeHomeResponse>
+
+    @POST("loyalty/data")
+    suspend fun loyaltyData(
+        @Query("userid") userid: String,
+        @Query("city") city: String,
+        @Query("mobile") mobile: String,
+        @Query("timestamp") timestamp: String,
+        @Header("X-Token") token: String,
+        @Query("av") av: String,
+        @Query("pt") pt: String,
+        @Query("did") did: String
+    ): Response<LoyaltyDataResponse>
+
+
+    @POST("offervoucher/loyalty-subscription/v2/plans")
+    suspend fun passportPlans(
+        @Query("userid") userid: String,
+        @Query("city") city: String,
+        @Query("av") av: String,
+        @Query("pt") pt: String,
+        @Query("did") did: String
+    ): Response<PassportPlanResponse>
 
     @POST("history/nextbooking")
     suspend fun nextBooking(
@@ -869,7 +895,6 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<PaytmHmacResponse>
-
 
 
     @POST("payment/cred/status")
