@@ -3,7 +3,6 @@ package com.net.pvr1.ui.scanner
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.NameValuePair
@@ -11,7 +10,6 @@ import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.u
 import com.google.zxing.integration.android.IntentIntegrator
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityScannerBinding
-import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.scanner.bookings.SelectBookingsActivity
 import com.net.pvr1.utils.PreferenceManager
 import com.net.pvr1.utils.printLog
@@ -26,7 +24,6 @@ class ScannerActivity : AppCompatActivity() {
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityScannerBinding? = null
-    private var loader: LoaderDialog? = null
     private var fromScan: String? = ""
     private var qrScanIntegrator: IntentIntegrator? = null
 
@@ -44,7 +41,8 @@ class ScannerActivity : AppCompatActivity() {
     private fun movedNext() {
     //title
         binding?.includeHeader?.textView108?.text= getString(R.string.scan_qr_code)
-    //Back
+
+    //back
         binding?.includeHeader?.imageView58?.setOnClickListener {
             finish()
         }
@@ -78,12 +76,11 @@ class ScannerActivity : AppCompatActivity() {
             val server = uri.authority
             val path = uri.path
             val parts = path!!.split("/").toTypedArray()
-            val handler = Handler()
             println("Result-->" + path + "=====" + parts.size)
             if (path.contains("newpromo")) {
                 getOfferCode()
             } else if (path.contains("food") || path.contains("booking")) {
-                handler.postDelayed({
+//                handler.postDelayed({
                     // close your dialog
                     if (parts.size == 5) {
 //                            successIMG.setVisibility(View.VISIBLE)
@@ -120,8 +117,7 @@ class ScannerActivity : AppCompatActivity() {
                             }
                         }
 //                            successIMG.setVisibility(View.VISIBLE)
-                            val intent =
-                                Intent(this, SelectBookingsActivity::class.java)
+                            val intent =Intent(this, SelectBookingsActivity::class.java)
                               intent.putExtra("from", "pscan")
 //                            val paymentIntentData = PaymentIntentData()
 //                            paymentIntentData.setCinemaID(parts[2])
@@ -144,9 +140,9 @@ class ScannerActivity : AppCompatActivity() {
                         finish()
 
                     }
-                }, 300)
+//                }, 300)
             } else if (path.contains("getqrcode")) {
-                handler.postDelayed({ // close your dialog
+//                handler.postDelayed({ // close your dialog
                     if (parts.size == 5) {
 //                            successIMG.setVisibility(View.VISIBLE)
 //                            fromScan = "scan"
@@ -250,7 +246,7 @@ class ScannerActivity : AppCompatActivity() {
                         }
 
                     }
-                }, 300)
+//                }, 300)
 //                } else {
 //                    println("successIMG============else")
 //                    successIMG.setVisibility(View.GONE)

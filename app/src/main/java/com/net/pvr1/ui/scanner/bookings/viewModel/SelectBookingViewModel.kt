@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.home.fragment.more.prefrence.response.PreferenceResponse
+import com.net.pvr1.ui.scanner.response.GetFoodResponse
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -27,7 +28,7 @@ class SelectBookingViewModel @Inject constructor(private val userRepository: Use
     }
 
     //food Outlet
-    val foodOutletResponseLiveData: LiveData<NetworkResult<PreferenceResponse>>
+    val foodOutletResponseLiveData: LiveData<NetworkResult<GetFoodResponse>>
         get() = userRepository.foodOutletResponseLiveData
 
     fun foodOutlet(

@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.NameNotFoundException
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import android.provider.ContactsContract.Directory.PACKAGE_NAME
@@ -20,8 +21,12 @@ import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.location.LocationManagerCompat
 import com.net.pvr1.R
+import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.ticketConfirmation.TicketConfirmationActivity
@@ -38,6 +43,8 @@ class Constant {
         const val version = "11.3"
         const val status = "success"
         const val SUCCESS_CODE = 10001
+        var latitude: Double? = 0.0
+        var longitude: Double? = 0.0
 
         const val pvrCare = " https://www.pvrcinemas.com/pvrstatic/pvr-care/index.html"
         const val merchandise = "https://pvr.macmerise.com/?user_agent=pvr"
@@ -134,7 +141,6 @@ class Constant {
         var KOTAK_SATURDAY = "o101"
         var KOTAK_WEEKEND = "130"
         var KOTAK_CREDIT_CARD = "125"
-
 
 
         // OFFERS
@@ -512,8 +518,68 @@ class Constant {
         pcTextView.text = finalText
     }
 
+    //location Mange
+    private val REQUEST_LOCATION = 1
+    private var locationManager: LocationManager? = null
 
-   private fun getLatLang(activity:Activity){
 
-   }
+    fun enableLocation(activity: Activity) {
+        //Manage Location
+        ActivityCompat.requestPermissions(
+            activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION
+        )
+        locationManager = activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (locationManager?.isProviderEnabled(LocationManager.GPS_PROVIDER) != true) {
+            onGPS(activity)
+        } else {
+            getLocation(activity)
+        }
+    }
+
+    //location
+    private fun onGPS(activity: Activity) {
+        val dialog = OptionDialog(activity,
+            R.mipmap.ic_launcher,
+            R.string.app_name,
+            "Enable GPS",
+            positiveBtnText = R.string.ok,
+            negativeBtnText = R.string.no,
+            positiveClick = {
+                activity.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+            },
+            negativeClick = {})
+        dialog.show()
+    }
+
+    private fun getLocation(activity: Activity) {
+        if (ActivityCompat.checkSelfPermission(
+                activity, Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                activity, Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            ActivityCompat.requestPermissions(
+                activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION
+            )
+        } else {
+            val locationGPS = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            printLog("location---->$locationGPS")
+            if (locationGPS != null) {
+                val lat = locationGPS.latitude
+                val long = locationGPS.longitude
+                longitude = long
+                latitude = lat
+
+            } else {
+                Toast.makeText(activity, "Unable to find location.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
+     fun isLocationEnabled(context: Context): Boolean {
+        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return LocationManagerCompat.isLocationEnabled(locationManager)
+    }
 }

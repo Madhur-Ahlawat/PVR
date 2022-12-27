@@ -59,7 +59,7 @@ class CinemaSessionActivity : AppCompatActivity(),
         if (intent.getStringExtra("addressCinema") == "yes") {
             authViewModel.cinemaSession(
                 intent.getStringExtra("cityName").toString(),
-                intent.getStringExtra("cid").toString(),
+                cinemaId,
                 intent.getStringExtra("lat").toString(),
                 intent.getStringExtra("lang").toString(),
                 preferences.getUserId(),

@@ -25,6 +25,7 @@ import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.payment.response.*
+import com.net.pvr1.ui.scanner.response.GetFoodResponse
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.seatLayout.response.InitResponse
 import com.net.pvr1.ui.seatLayout.response.ReserveSeatResponse
@@ -304,7 +305,7 @@ interface UserAPI {
         @Query("isSpi") isSpi: String,
         @Query("av") version: String,
         @Query("pt") platform: String
-    ): Response<PreferenceResponse>
+    ): Response<GetFoodResponse>
 
     @POST("loyalty/home")
     suspend fun privilegeHome(

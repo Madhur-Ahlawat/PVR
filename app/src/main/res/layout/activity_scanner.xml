@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         layout="@layout/toolbar" />
     <TextView
+        android:visibility="gone"
         android:id="@+id/nameKey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,6 +23,7 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,6 +35,7 @@
         app:layout_constraintTop_toBottomOf="@+id/nameKey" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/site_name_key"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,6 +46,7 @@
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/site_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

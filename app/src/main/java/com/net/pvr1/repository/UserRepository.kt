@@ -28,6 +28,7 @@ import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.payment.response.*
+import com.net.pvr1.ui.scanner.response.GetFoodResponse
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.seatLayout.response.InitResponse
 import com.net.pvr1.ui.seatLayout.response.ReserveSeatResponse
@@ -2255,8 +2256,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
     //foodOutlet
-    private val foodOutletLiveData = MutableLiveData<NetworkResult<PreferenceResponse>>()
-    val foodOutletResponseLiveData: LiveData<NetworkResult<PreferenceResponse>>
+    private val foodOutletLiveData = MutableLiveData<NetworkResult<GetFoodResponse>>()
+    val foodOutletResponseLiveData: LiveData<NetworkResult<GetFoodResponse>>
         get() = foodOutletLiveData
 
     suspend fun foodOutlet(
@@ -2273,19 +2274,19 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         iserv: String,
         isSpi: String
     ) {
-        preferenceLiveData.postValue(NetworkResult.Loading())
+        foodOutletLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.foodOutlet(userid, ccode,bookingid,booking_id,cbookid,type,transid,audi,seat,qr,iserv,isSpi, Constant.version, Constant.platform)
         foodOutletData(response)
     }
 
-    private fun foodOutletData(response: Response<PreferenceResponse>) {
+    private fun foodOutletData(response: Response<GetFoodResponse>) {
         if (response.isSuccessful && response.body() != null) {
-            getCodeLiveData.postValue(NetworkResult.Success(response.body()!!))
+            foodOutletLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
             val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
-            getCodeLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            foodOutletLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
-            getCodeLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+            foodOutletLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 }

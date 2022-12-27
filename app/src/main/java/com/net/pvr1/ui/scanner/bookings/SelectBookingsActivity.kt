@@ -17,11 +17,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySelectBookingsBinding
+import com.net.pvr1.ui.cinemaSession.CinemaSessionActivity
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.food.FoodActivity
 import com.net.pvr1.ui.home.fragment.more.prefrence.response.PreferenceResponse
+import com.net.pvr1.ui.location.enableLocation.EnableLocationActivity
+import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.ui.scanner.bookings.viewModel.SelectBookingViewModel
+import com.net.pvr1.ui.scanner.response.GetFoodResponse
 import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -46,8 +51,6 @@ class SelectBookingsActivity : AppCompatActivity() {
 
     private var click = false
     private var clickF = false
-    private val call = 0
-
 
     private var format = "ALL"
     private var price1 = "ALL"
@@ -57,26 +60,18 @@ class SelectBookingsActivity : AppCompatActivity() {
     private var show = ""
     private var hc = "ALL"
     private var show2 = "ALL"
-    private var special = "ALL"
     private var cinema_type = "ALL"
     private var lang = "ALL"
     private var childcinemaId = ""
     private var shows = ""
     private var childCinemaname = ""
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySelectBookingsBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-
-        printLog(
-            "------>type${intent.getStringExtra("type")}------>${intent.getStringExtra("promo")}------>${
-                intent.getStringExtra(
-                    "cid"
-                )
-            }"
-        )
         cinemaId = intent.getStringExtra("cid").toString()
 
 //Manage Location
@@ -91,6 +86,11 @@ class SelectBookingsActivity : AppCompatActivity() {
         }
 
         movedNext()
+        //Api Response
+        getTheaterDetailResponse()
+        getCodeResponse()
+        getOutletsResponse()
+        checkUserLocationData()
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -104,7 +104,6 @@ class SelectBookingsActivity : AppCompatActivity() {
         binding?.onlyFood?.background = getDrawable(R.drawable.food_select)
     }
 
-
     private fun enableFood() {
         clickF = true
         binding?.tvCinemaName?.setTextColor(getColor(R.color.pvr_dark_black))
@@ -116,26 +115,37 @@ class SelectBookingsActivity : AppCompatActivity() {
         binding?.onlyFood?.background = getDrawable(R.drawable.food_select)
     }
 
-
     private fun disable() {
         click = false
         clickF = false
         // tvCinemaName.setText("Please select the correct location!");
-        binding?.tvCinemaName?.setTextColor(resources.getColor(R.color.red_color_loc))
-        binding?.tvSelectBookDummy?.setTextColor(resources.getColor(R.color.gray))
-        binding?.tvTicket?.setTextColor(resources.getColor(R.color.gray))
-        binding?.tvFood?.setTextColor(resources.getColor(R.color.gray))
-        binding?.llTicketFood?.background = resources.getDrawable(R.drawable.threater_select_gray)
-        binding?.onlyFood?.background = resources.getDrawable(R.drawable.food_select_gray)
+        binding?.tvCinemaName?.setTextColor(getColor(R.color.red_color_loc))
+        binding?.tvSelectBookDummy?.setTextColor(getColor(R.color.gray))
+        binding?.tvTicket?.setTextColor(getColor(R.color.gray))
+        binding?.tvFood?.setTextColor(getColor(R.color.gray))
+        binding?.llTicketFood?.background = getDrawable(R.drawable.threater_select_gray)
+        binding?.onlyFood?.background = getDrawable(R.drawable.food_select_gray)
     }
 
     private fun movedNext() {
+        binding?.textView24?.text = preferences.getCityName()
+        binding?.textView24?.setOnClickListener {
+            if (!Constant().isLocationEnabled(this)){
+                val intent = Intent(this, EnableLocationActivity::class.java)
+                intent.putExtra("from","qr")
+                intent.putExtra("cid",cinemaId)
+                startActivity(intent)
+            }else{
+                val intent = Intent(this, SelectCityActivity::class.java)
+                intent.putExtra("from","qr")
+                intent.putExtra("cid",cinemaId)
+                startActivity(intent)
+            }
+
+        }
         if (preferences.getCityName().isNotEmpty()) {
             binding?.tvCinemaName?.hide()
-        } else {
-            binding?.textView24?.text = preferences.getCityName()
         }
-
         //title
         binding?.include33?.textView108?.text = getString(R.string.scan_qr_code)
         //Back
@@ -147,39 +157,29 @@ class SelectBookingsActivity : AppCompatActivity() {
             getOutlets()
         }
 
-        binding?.llTicketFood?.setOnClickListener {
-            if (TextUtils.isEmpty(cinemaId)) {
-//                FromScan = "scan"
-//                val intent = Intent(this@SelectBookingActivity, PCTheatreDetailActivity::class.java)
-//                intent.putExtra("CinemaId" cinemaId)
-//                intent.putExtra(PCConstants.IntentKey.CINEMA_NAME, childCinemaname)
-//                intent.putExtra("SHOWS", shows)
-//                intent.putExtra("lat", latitude.toString())
-//                intent.putExtra("lng", longitude.toString())
-//                intent.putExtra("fromselect", "select")
-//                if (getIntent().hasExtra("type") && !TextUtils.isEmpty(getIntent().getStringExtra("type"))) intent.putExtra(
-//                    "type",
-//                    getIntent().getStringExtra("type")
-//                )
-//                startActivity(intent)
-            }
-        }
         cinetypeQR = "NORMAL"
-
         if (intent.hasExtra("type") && !TextUtils.isEmpty(intent.getStringExtra("type"))) cinetypeQR =
             intent.getStringExtra("type").toString()
 
-        printLog("format---->$cinetypeQR")
-        if (intent.hasExtra("promo") && intent.getStringExtra("promo") != null) {
-//            newPromoValue = "NEWPROMO";
-//            getOfferCode();
+        binding?.llTicketFood?.setOnClickListener {
+            if (cinemaId.isNotEmpty()){
+                val intent = Intent(this, CinemaSessionActivity::class.java)
+                intent.putExtra("cid", cinemaId)
+                intent.putExtra("lat", latitude.toString())
+                intent.putExtra("lang", longitude.toString())
+                intent.putExtra("cityName", getCityName())
+                intent.putExtra("addressCinema", "yes")
+                startActivity(intent)
+            }
         }
-        //Api Response
-        getTheaterDetailResponse()
-        getCodeResponse()
-        getOutletsResponse()
-        checkUserLocationData()
     }
+
+    private fun getCityName(): String {
+        var cityName = ""
+        cityName = preferences.getCityName()
+        return cityName
+    }
+
 
     //Cinema Details
     private fun getTheaterDetail() {
@@ -235,7 +235,6 @@ class SelectBookingsActivity : AppCompatActivity() {
                             checkUserLocation()
                             binding?.tvCinemaName?.text = it.data.msg
                         } else {
-                            //      PCApiErrorHandler.handleErrorMessage(data.getCode(), data.getMessage(), (Activity) context, dialog, errorLayout, SelectBookingActivity.this, PCConstants.PaymentType.THEATER);
                             getCode()
                         }
 
@@ -281,7 +280,7 @@ class SelectBookingsActivity : AppCompatActivity() {
 
 
     private fun checkUserLocationData(){
-        authViewModel.cinemaSessionLiveData.observe(this) {
+        authViewModel.userLocationLiveData.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
@@ -302,34 +301,33 @@ class SelectBookingsActivity : AppCompatActivity() {
                             getTheaterDetail()
 //                        }
 
-
                     } else {
-                        val dialog = OptionDialog(this,
-                            R.mipmap.ic_launcher,
-                            R.string.app_name,
-                            it.data?.msg.toString(),
-                            positiveBtnText = R.string.ok,
-                            negativeBtnText = R.string.no,
-                            positiveClick = {},
-                            negativeClick = {})
-                        dialog.show()
+//                        val dialog = OptionDialog(this,
+//                            R.mipmap.ic_launcher,
+//                            R.string.app_name,
+//                            it.data?.msg.toString(),
+//                            positiveBtnText = R.string.ok,
+//                            negativeBtnText = R.string.no,
+//                            positiveClick = {},
+//                            negativeClick = {})
+//                        dialog.show()
                     }
                 }
                 is NetworkResult.Error -> {
-                    loader?.dismiss()
-                    val dialog = OptionDialog(this,
-                        R.mipmap.ic_launcher,
-                        R.string.app_name,
-                        it.message.toString(),
-                        positiveBtnText = R.string.ok,
-                        negativeBtnText = R.string.no,
-                        positiveClick = {},
-                        negativeClick = {})
-                    dialog.show()
+//                    loader?.dismiss()
+//                    val dialog = OptionDialog(this,
+//                        R.mipmap.ic_launcher,
+//                        R.string.app_name,
+//                        it.message.toString(),
+//                        positiveBtnText = R.string.ok,
+//                        negativeBtnText = R.string.no,
+//                        positiveClick = {},
+//                        negativeClick = {})
+//                    dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
-                    loader?.show(this.supportFragmentManager, null)
+//                    loader = LoaderDialog(R.string.pleasewait)
+//                    loader?.show(this.supportFragmentManager, null)
                 }
             }
         }
@@ -481,8 +479,67 @@ class SelectBookingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun retrieveOutlet(output: PreferenceResponse.Output) {
+    private fun retrieveOutlet(output: List<GetFoodResponse.Output>) {
+        //comment for only show food----------------------------------
+        if (output!= null &&output.size > 1) {
+//        if (output!= null ) {
+            dataToOutletsFood(output)
+        } else {
+            dataToFood(output)
+        }
+    }
 
+    private fun dataToOutletsFood(output: List<GetFoodResponse.Output>) {
+        toast("1")
+//        if ((click || clickF) && !TextUtils.isEmpty(childcinemaId)) {
+//            EventBus.getDefault().postSticky(output)
+//            fromScan = "scan"
+//            val intent = Intent(this, Outlets_Activity::class.java)
+//            val paymentIntentData = PaymentIntentData()
+//            intent.putExtra("from", "pscan")
+//            paymentIntentData.setCinemaID(childcinemaId)
+//            paymentIntentData.setPaymentType(PCConstants.PaymentType.INTHEATRE)
+//            paymentIntentData.setName("")
+//            paymentIntentData.setFnb(PCConstants.FNB)
+//            paymentIntentData.setSessionActive(true)
+//            intent.putExtra(PCConstants.IntentKey.TICKET_BOOKING_DETAILS, paymentIntentData)
+//            intent.putExtra("SEAT", "")
+//            intent.putExtra("AUDI", "")
+//            startActivity(intent)
+//        }
+    }
+
+    private fun dataToFood(output: List<GetFoodResponse.Output>) {
+        toast("2")
+        if ((click || clickF) && !TextUtils.isEmpty(childcinemaId)) {
+            Constant.CINEMA_ID=childcinemaId
+            val intent = Intent(this, FoodActivity::class.java)
+            startActivity(intent)
+//            fromScan = "scan"
+//            val intent = Intent(this@SelectBookingActivity, GrabABiteActivity::class.java)
+//            val paymentIntentData = PaymentIntentData()
+//            intent.putExtra("from", "pscan")
+//            if (msg.equals("true", ignoreCase = true)) {
+//                intent.putExtra("NF", true)
+//            } else {
+//                intent.putExtra("NF", false)
+//            }
+//            paymentIntentData.setCinemaID(childcinemaId)
+//            paymentIntentData.setPaymentType(PCConstants.PaymentType.INTHEATRE)
+//            paymentIntentData.setName("")
+//            paymentIntentData.setFnb(PCConstants.FNB)
+//            paymentIntentData.setSessionActive(true)
+//            intent.putExtra(PCConstants.IntentKey.TICKET_BOOKING_DETAILS, paymentIntentData)
+//            intent.putExtra("SEAT", "")
+//            intent.putExtra("AUDI", "")
+//            if (getIntent().hasExtra("iserv") && !TextUtils.isEmpty(getIntent().getStringExtra("iserv"))) intent.putExtra(
+//                "iserv",
+//                getIntent().getStringExtra("iserv")
+//            )
+//            startActivity(intent)
+//            //new added
+//            finish()
+        }
     }
 
     //location

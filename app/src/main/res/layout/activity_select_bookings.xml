@@ -99,9 +99,14 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         tools:text="TextView"
+        android:textColor="@color/gray"
+        android:fontFamily="@font/sf_pro_text_regular"
+        android:textSize="@dimen/dim_h4"
+        android:drawablePadding="@dimen/padding_10"
         app:layout_constraintBottom_toBottomOf="@+id/include33"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/include33" />
+        app:layout_constraintTop_toTopOf="@+id/include33"
+        app:drawableStartCompat="@drawable/location_down" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
