@@ -567,8 +567,13 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         if (response.isSuccessful && response.body() != null) {
             privilegeHomeLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
-            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
-            privilegeHomeLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            val errorObj = ""
+            try {
+                val errorObj = JSONObject(response.errorBody()?.charStream()?.readText())
+                privilegeHomeLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            }catch (e:Exception){
+                privilegeHomeLiveData.postValue(NetworkResult.Error(response.errorBody()?.charStream()?.readText().toString()))
+            }
         } else {
             privilegeHomeLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }

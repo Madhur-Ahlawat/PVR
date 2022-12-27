@@ -32,7 +32,7 @@ class HomeCinemaCategoryAdapter(
     override fun onBindViewHolder(holder: MyViewHolderNowShowing, position: Int) {
         val comingSoonItem = nowShowingList[position]
 
-        if (comingSoonItem.nurl.isEmpty()) {
+        if (comingSoonItem.url.isEmpty()) {
             holder.imageCat.hide()
             holder.btText.show()
             holder.textView.text = comingSoonItem.name
@@ -41,7 +41,7 @@ class HomeCinemaCategoryAdapter(
             holder.btText.hide()
             //Image
             Glide.with(context)
-                .load(comingSoonItem.nurl)
+                .load(comingSoonItem.url)
                 .into(holder.image)
         }
 

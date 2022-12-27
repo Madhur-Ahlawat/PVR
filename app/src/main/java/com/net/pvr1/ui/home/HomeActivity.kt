@@ -1,23 +1,31 @@
 package com.net.pvr1.ui.home
 
 import android.app.Dialog
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityHomeBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
@@ -32,16 +40,18 @@ import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr1.ui.home.fragment.privilege.PrivilegeFragment
 import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeHomeDialogAdapter
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
+import com.net.pvr1.ui.home.interfaces.PlayPopup
 import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.PRIVILEGEVOUCHER
 import com.net.pvr1.utils.Constant.Companion.PrivilegeHomeResponseConst
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickListenerCity,
-    PrivilegeHomeDialogAdapter.RecycleViewItemClickListener {
+    PrivilegeHomeDialogAdapter.RecycleViewItemClickListener,PlayPopup {
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityHomeBinding? = null
@@ -56,16 +66,20 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         val view = binding?.root
         setContentView(view)
         switchFragment()
-        authViewModel.offer(Constant().getDeviceId(this))
+//        authViewModel.offer(Constant().getDeviceId(this))
         //setUserName
-        binding?.includeAppBar?.textView2?.text = preferences.getUserName()
-        if (preferences.getIsLogin()){
-            authViewModel.privilegeHome(preferences.geMobileNumber(), preferences.getCityName())
+        if (preferences.getIsLogin()) {
+            binding?.includeAppBar?.textView2?.text = "Hello, "+preferences.getUserName()
+        } else {
+            binding?.includeAppBar?.textView2?.text = "Hello!"
         }
+        //if (preferences.getIsLogin()){
+            authViewModel.privilegeHome(preferences.geMobileNumber(), preferences.getCityName())
+       // }
         binding?.includeAppBar?.txtCity?.text = preferences.getCityName()
         privilegeDataLoad()
         movedNext()
-        offerDataLoad()
+        //offerDataLoad()
     }
 
     //ClickMovedNext
@@ -188,49 +202,49 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
             commit()
     }
 
-    private fun offerDataLoad() {
-        authViewModel.userResponseOfferLiveData.observe(this) {
-            when (it) {
-                is NetworkResult.Success -> {
-                    loader?.dismiss()
-                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        printLog("output--->${it.data.output}")
-                        retrieveData(it.data.output)
-                    } else {
-                        val dialog = OptionDialog(this,
-                            R.mipmap.ic_launcher,
-                            R.string.app_name,
-                            it.data?.msg.toString(),
-                            positiveBtnText = R.string.ok,
-                            negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
-                        dialog.show()
-                    }
-                }
-                is NetworkResult.Error -> {
-                    loader?.dismiss()
-                    val dialog = OptionDialog(this,
-                        R.mipmap.ic_launcher,
-                        R.string.app_name,
-                        it.message.toString(),
-                        positiveBtnText = R.string.ok,
-                        negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
-                    dialog.show()
-                }
-                is NetworkResult.Loading -> {
-//                    loader = LoaderDialog(R.string.pleasewait)
-//                    loader?.show(supportFragmentManager, null)
-                }
-            }
-        }
-    }
+//    private fun offerDataLoad() {
+//        authViewModel.userResponseOfferLiveData.observe(this) {
+//            when (it) {
+//                is NetworkResult.Success -> {
+//                    loader?.dismiss()
+//                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+//                        printLog("output--->${it.data.output}")
+//                        retrieveData(it.data.output)
+//                    } else {
+//                        val dialog = OptionDialog(this,
+//                            R.mipmap.ic_launcher,
+//                            R.string.app_name,
+//                            it.data?.msg.toString(),
+//                            positiveBtnText = R.string.ok,
+//                            negativeBtnText = R.string.no,
+//                            positiveClick = {
+//                            },
+//                            negativeClick = {
+//                            })
+//                        dialog.show()
+//                    }
+//                }
+//                is NetworkResult.Error -> {
+//                    loader?.dismiss()
+//                    val dialog = OptionDialog(this,
+//                        R.mipmap.ic_launcher,
+//                        R.string.app_name,
+//                        it.message.toString(),
+//                        positiveBtnText = R.string.ok,
+//                        negativeBtnText = R.string.no,
+//                        positiveClick = {
+//                        },
+//                        negativeClick = {
+//                        })
+//                    dialog.show()
+//                }
+//                is NetworkResult.Loading -> {
+////                    loader = LoaderDialog(R.string.pleasewait)
+////                    loader?.show(supportFragmentManager, null)
+//                }
+//            }
+//        }
+//    }
 
     private fun privilegeDataLoad() {
         authViewModel.privilegeHomeResponseLiveData.observe(this) {
@@ -238,8 +252,12 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        Constant.PRIVILEGEPOINT= it.data.output.pt
+                        PRIVILEGEVOUCHER= it.data.output.vou
                         privilegeRetrieveData(it.data.output)
                     } else {
+                        if (it?.data?.output!=null)
+                        privilegeRetrieveData(it.data.output)
 //                        val dialog = OptionDialog(this,
 //                            R.mipmap.ic_launcher,
 //                            R.string.app_name,
@@ -276,10 +294,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     }
 
     private fun privilegeRetrieveData(output: PrivilegeHomeResponse.Output) {
-        Constant.PRIVILEGEPOINT= output.pt
-        PRIVILEGEVOUCHER= output.vou
         PrivilegeHomeResponseConst = output
-        privilegeDialog()
     }
 
     private fun retrieveData(output: ArrayList<OfferResponse.Output>) {
@@ -322,5 +337,93 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     override fun privilegeHomeClick(comingSoonItem: PrivilegeHomeResponse.Output.Pinfo) {
 
     }
+
+    override fun onShowNotification() {
+        if (!areNotificationsEnabled()) {
+            if (preferences.getString(Constant.SharedPreference.NT) == "true") {
+                showDialog(
+                    this@HomeActivity,
+                    preferences.getString(Constant.SharedPreference.NTBT)
+                )
+            }
+        }
+    }
+
+    override fun onShowPrivilege() {
+        privilegeDialog()
+    }
+
+    override fun onViewOffers() {
+
+    }
+
+    override fun onFeedbackOffers() {
+    }
+
+    private fun areNotificationsEnabled(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            if (!manager.areNotificationsEnabled()) {
+                return false
+            }
+            val channels = manager.notificationChannels
+            for (channel in channels) {
+                if (channel.importance == NotificationManager.IMPORTANCE_NONE) {
+                    return false
+                }
+            }
+            true
+        } else {
+            NotificationManagerCompat.from(this).areNotificationsEnabled()
+        }
+    }
+
+    private fun showDialog(mContext: Context?, banner: String?) {
+        if (hasMonthPassed()) {
+            preferences.saveLong("SHOW_POP", System.currentTimeMillis())
+            val dialog = BottomSheetDialog(mContext!!, R.style.NoBackgroundDialogTheme)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setContentView(R.layout.notification_dialoge)
+            dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.window!!.setLayout(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            dialog.window!!.setGravity(Gravity.CENTER)
+            val latter = dialog.findViewById<View>(R.id.latter) as TextView?
+            val turnOn = dialog.findViewById<View>(R.id.turnOn) as TextView?
+            val bannerImg = dialog.findViewById<View>(R.id.bannerImg) as ImageView?
+                          Glide.with(mContext)
+                    .load(banner)
+                              .error(R.drawable.placeholder_horizontal_movie)
+                   .into(bannerImg!!)
+
+
+            turnOn!!.setOnClickListener {
+                val settingsIntent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+                    .putExtra(Settings.EXTRA_CHANNEL_ID, "WAP")
+                startActivity(settingsIntent)
+                dialog.dismiss()
+            }
+            latter!!.setOnClickListener { dialog.dismiss() }
+            dialog.show()
+        }
+    }
+
+    private fun hasMonthPassed(): Boolean {
+        return if (preferences.getLong("SHOW_POP") > 0) {
+            val lastTimestamp: Long = preferences.getLong("SHOW_POP")
+            val currentTimestamp = System.currentTimeMillis()
+            val result = currentTimestamp - lastTimestamp >= TimeUnit.DAYS.toMillis(15)
+            println(result)
+            result
+        } else {
+            true
+        }
+    }
+
 
 }

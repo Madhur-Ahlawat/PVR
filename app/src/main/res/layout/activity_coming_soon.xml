@@ -96,13 +96,12 @@
         app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
 
-    <com.net.pvr1.utils.MovableFloatingActionButton
+    <com.net.pvr1.utils.view.MovableFloatingActionButton
         android:id="@+id/filter_fab"
         android:layout_width="@dimen/dimen_60dp"
         android:layout_height="@dimen/dimen_60dp"
         android:layout_marginBottom="@dimen/dimen_30dp"
         android:visibility="visible"
-        android:backgroundTint="@color/yellow"
         android:src="@drawable/filter_unselect"
         app:layout_anchorGravity="bottom|right|end"
         app:layout_constraintBottom_toBottomOf="parent"
