@@ -9,10 +9,8 @@ import android.content.pm.PackageManager
 import android.content.pm.PackageManager.NameNotFoundException
 import android.location.LocationManager
 import android.net.Uri
-import android.os.Build
 import android.provider.ContactsContract.Directory.PACKAGE_NAME
 import android.provider.Settings
-import android.provider.Settings.SettingNotFoundException
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ForegroundColorSpan
@@ -23,11 +21,11 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.location.LocationManagerCompat
 import com.net.pvr1.R
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
+import com.net.pvr1.ui.home.fragment.more.response.ProfileResponse
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.ticketConfirmation.TicketConfirmationActivity
 import java.net.MalformedURLException
@@ -98,6 +96,7 @@ class Constant {
         const val BIKE_SEAT_BOOKED = 8
         const val LETTER_SPACING = 1
         var PrivilegeHomeResponseConst: PrivilegeHomeResponse.Output? = null
+        var ProfileResponseConst: ProfileResponse.Output? = null
         var PlaceHolder: HomeResponse.Output? = null
         var DECIFORMAT = DecimalFormat("0.000")
 
@@ -255,32 +254,32 @@ class Constant {
         }
     }
 
-    fun isLocationServicesAvailable(context: Context): Boolean {
-        var locationMode = 0
-        val locationProviders: String
-        var isAvailable = false
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            try {
-                locationMode =
-                    Settings.Secure.getInt(context.contentResolver, Settings.Secure.LOCATION_MODE)
-            } catch (e: SettingNotFoundException) {
-                e.printStackTrace()
-            }
-            isAvailable = locationMode != Settings.Secure.LOCATION_MODE_OFF
-        } else {
-            locationProviders = Settings.Secure.getString(
-                context.contentResolver, Settings.Secure.LOCATION_PROVIDERS_ALLOWED
-            )
-            isAvailable = !TextUtils.isEmpty(locationProviders)
-        }
-        val coarsePermissionCheck = ContextCompat.checkSelfPermission(
-            context, Manifest.permission.ACCESS_COARSE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
-        val finePermissionCheck = ContextCompat.checkSelfPermission(
-            context, Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
-        return isAvailable && (coarsePermissionCheck || finePermissionCheck)
-    }
+//    fun isLocationServicesAvailable(context: Context): Boolean {
+//        var locationMode = 0
+//        val locationProviders: String
+//        var isAvailable = false
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            try {
+//                locationMode =
+//                    Settings.Secure.getInt(context.contentResolver, Settings.Secure.LOCATION_MODE)
+//            } catch (e: SettingNotFoundException) {
+//                e.printStackTrace()
+//            }
+//            isAvailable = locationMode != Settings.Secure.LOCATION_MODE_OFF
+//        } else {
+//            locationProviders = Settings.Secure.getString(
+//                context.contentResolver, Settings.Secure.LOCATION_PROVIDERS_ALLOWED
+//            )
+//            isAvailable = !TextUtils.isEmpty(locationProviders)
+//        }
+//        val coarsePermissionCheck = ContextCompat.checkSelfPermission(
+//            context, Manifest.permission.ACCESS_COARSE_LOCATION
+//        ) == PackageManager.PERMISSION_GRANTED
+//        val finePermissionCheck = ContextCompat.checkSelfPermission(
+//            context, Manifest.permission.ACCESS_FINE_LOCATION
+//        ) == PackageManager.PERMISSION_GRANTED
+//        return isAvailable && (coarsePermissionCheck || finePermissionCheck)
+//    }
 
     fun printTicket(activity: Activity) {
         val intent = Intent(

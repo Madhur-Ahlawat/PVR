@@ -20,10 +20,10 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySplashBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.location.enableLocation.EnableLocationActivity
 import com.net.pvr1.ui.home.HomeActivity
-import com.net.pvr1.ui.login.LoginActivity
+import com.net.pvr1.ui.location.enableLocation.EnableLocationActivity
 import com.net.pvr1.ui.location.selectCity.SelectCityActivity
+import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.ui.splash.onBoarding.LandingActivity
 import com.net.pvr1.ui.splash.response.SplashResponse
 import com.net.pvr1.ui.splash.viewModel.SplashViewModel
@@ -73,7 +73,7 @@ class SplashActivity : AppCompatActivity() {
     private fun movedNext() {
         val runnable = Runnable {
             if (preferences.getIsLogin()) {
-                if (!Constant().isLocationServicesAvailable(this@SplashActivity)){
+                if (!Constant().isLocationEnabled(this@SplashActivity)){
                     val intent = Intent(this@SplashActivity, EnableLocationActivity::class.java)
                     startActivity(intent)
                     finish()

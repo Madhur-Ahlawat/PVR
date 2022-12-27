@@ -22,6 +22,7 @@ import com.net.pvr1.ui.home.fragment.more.contactUs.ContactUsActivity
 import com.net.pvr1.ui.home.fragment.more.offer.OfferActivity
 import com.net.pvr1.ui.home.fragment.more.prefrence.PreferenceActivity
 import com.net.pvr1.ui.home.fragment.more.privacy.TermsPrivacyActivity
+import com.net.pvr1.ui.home.fragment.more.response.ProfileResponse
 import com.net.pvr1.ui.home.fragment.more.viewModel.MoreViewModel
 import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.ui.myBookings.MyBookingsActivity
@@ -31,6 +32,7 @@ import com.net.pvr1.ui.scanner.ScannerActivity
 import com.net.pvr1.ui.watchList.WatchListActivity
 import com.net.pvr1.ui.webView.WebViewActivity
 import com.net.pvr1.utils.*
+import com.net.pvr1.utils.Constant.Companion.ProfileResponseConst
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.internal.and
 import java.security.MessageDigest
@@ -64,13 +66,20 @@ class MoreFragment : Fragment() {
         manageFunctions()
         createQr()
         timeStamp = (System.currentTimeMillis() / 1000).toString()
+        //profile
+        authViewModel.userProfile(preferences.getCityName(),preferences.getUserId(),timeStamp,getHashProfile("${preferences.getUserId()+"|"+timeStamp}"))
+
+        //whatsapp status
         authViewModel.whatsappOpt(
             preferences.getUserId(),
             preferences.getToken().toString(),
             timeStamp,
             getHash("${preferences.getUserId() + "|" + preferences.getToken() + "|" + "optin-info" + "|" + timeStamp}")
         )
+        //whatsapp Status
         whatsappOptStatus()
+        //profileResponse
+        profileResponse()
     }
 
     private fun manageFunctions() {
@@ -272,6 +281,16 @@ class MoreFragment : Fragment() {
         }
         return sb.toString()
     }
+    @Throws(Exception::class)
+    fun getHashProfile(text: String): String {
+        val mdText = MessageDigest.getInstance("SHA-512")
+        val byteData = mdText.digest(text.toByteArray())
+        val sb = StringBuffer()
+        for (i in byteData.indices) {
+            sb.append(((byteData[i] and 0xff) + 0x100).toString(16).substring(1))
+        }
+        return sb.toString()
+    }
 
     private fun whatsappOptStatus() {
         authViewModel.userResponseLiveData.observe(viewLifecycleOwner) {
@@ -334,6 +353,55 @@ class MoreFragment : Fragment() {
                 )
             }
         }
+    }
+
+
+    //Profile Response
+    private fun profileResponse() {
+        authViewModel.userProfileLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        loader?.dismiss()
+                        retrieveProfileData(it.data.output)
+                    } else {
+                        val dialog = OptionDialog(requireActivity(),
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(requireContext(),
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    println("loadingHome--->")
+                    loader = LoaderDialog(R.string.pleasewait)
+                    loader?.show(requireActivity().supportFragmentManager, null)
+                }
+            }
+        }
+
+    }
+
+    private fun retrieveProfileData(output: ProfileResponse.Output) {
+        ProfileResponseConst=output
+        binding?.profileDetails?.textView206?.text=output.cd
+
     }
 
 

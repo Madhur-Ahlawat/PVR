@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
-import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,34 +13,12 @@ import javax.inject.Inject
 @HiltViewModel
 class UserProfileViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
 
-    val userResponseLiveData: LiveData<NetworkResult<HomeResponse>>
-        get() = userRepository.homeResponseLiveData
+    val userResponseLiveData: LiveData<NetworkResult<OfferResponse>>
+        get() = userRepository.editProfileResponseLiveData
 
-    fun home(
-        city: String,
-        dtmsource: String,
-        userid: String,
-        mobile: String,
-        upbooking: Boolean,
-        srilanka: String,
-        type : String,
-        lng: String,
-        gener: String,
-        spShow: String,
-        isSpi: String
-    ) {
+    fun editProfile(userid:String,email:String,mobile:String,name:String,dob:String,gender:String,mstatus:String,doa:String) {
         viewModelScope.launch {
-            userRepository.homeData(city,dtmsource,userid,mobile,upbooking,srilanka
-            ,type,lng,gener,spShow,isSpi)
-        }
-    }
-
-    val userResponseOfferLiveData: LiveData<NetworkResult<OfferResponse>>
-        get() = userRepository.offerDetailsResponseLiveData
-
-    fun offer(id:String) {
-        viewModelScope.launch {
-            userRepository.offer(id)
+            userRepository.editProfile(userid,email,mobile,name,dob,gender,mstatus,doa)
         }
     }
 

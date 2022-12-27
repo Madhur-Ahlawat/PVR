@@ -16,6 +16,7 @@ import com.net.pvr1.ui.home.fragment.more.offer.response.MOfferResponse
 import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr1.ui.home.fragment.more.prefrence.response.PreferenceResponse
 import com.net.pvr1.ui.home.fragment.more.response.DeleteAlertResponse
+import com.net.pvr1.ui.home.fragment.more.response.ProfileResponse
 import com.net.pvr1.ui.home.fragment.more.response.WhatsAppOptStatus
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.location.selectCity.response.SelectCityResponse
@@ -186,6 +187,21 @@ interface UserAPI {
     ): Response<OfferResponse>
 
 
+    @POST("user/editprofile")
+    suspend fun editProfile(
+        @Query("userid") userid: String,
+        @Query("email") email: String,
+        @Query("mobile") mobile: String,
+        @Query("name") name: String,
+        @Query("dob") dob: String,
+        @Query("gender") gender: String,
+        @Query("mstatus") mstatus: String,
+        @Query("doa") doa: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+    ): Response<OfferResponse>
+
+
     @POST("deals/moffers")
     suspend fun mOfferList(
         @Query("did") did: String,
@@ -263,6 +279,16 @@ interface UserAPI {
         @Query("did") did: String
     ): Response<WhatsAppOptStatus>
 
+    @POST("user/profile")
+    suspend fun userProfile(
+        @Query("city") city: String,
+        @Query("userid") userid: String,
+        @Query("timestamp") timestamp: String,
+        @Header("X-Token") token: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+    ): Response<ProfileResponse>
+
     @POST("user/getprefrenences")
     suspend fun preference(
         @Query("city") city: String,
@@ -285,7 +311,7 @@ interface UserAPI {
         @Query("lat") lat: String,
         @Query("lng") lng: String,
         @Query("city") city: String,
-        @Query("av")  version: String,
+        @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<PreferenceResponse>
 

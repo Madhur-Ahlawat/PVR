@@ -18,12 +18,12 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityLoginBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.location.enableLocation.EnableLocationActivity
 import com.net.pvr1.ui.home.HomeActivity
+import com.net.pvr1.ui.location.enableLocation.EnableLocationActivity
+import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.ui.login.otpVerify.OtpVerifyActivity
 import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.login.viewModel.LoginViewModel
-import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.SUCCESS_CODE
 import com.net.pvr1.utils.NetworkResult
@@ -141,7 +141,7 @@ class LoginActivity : AppCompatActivity() {
         }
         //Skip
         binding?.textView8?.setOnClickListener {
-            if (!Constant().isLocationServicesAvailable(this@LoginActivity)){
+            if (!Constant().isLocationEnabled(this@LoginActivity)){
                 val intent = Intent(this@LoginActivity, EnableLocationActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -231,6 +231,7 @@ class LoginActivity : AppCompatActivity() {
     @Deprecated("Deprecated in Java")
     @Override
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == CREDENTIAL_PICKER_REQUEST && resultCode == RESULT_OK) {
             // Obtain the phone number from the result
             val cred: Credential = data?.getParcelableExtra(Credential.EXTRA_KEY)!!

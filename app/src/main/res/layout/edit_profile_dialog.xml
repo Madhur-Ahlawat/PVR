@@ -87,6 +87,7 @@
             android:layout_height="@dimen/dimen_0dp" />
 
         <TextView
+            android:id="@+id/save"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -150,6 +151,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/circularImageView">
 
                 <ImageView
+                    android:visibility="gone"
                     android:id="@+id/imageView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -197,13 +199,14 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
                         android:imeOptions="actionNext"
                         android:inputType="textEmailAddress"
                         android:textAlignment="textStart"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textColorHint="@color/textColor"
                         android:textCursorDrawable="@null"
                         android:textSize="@dimen/dimen_14sp"
@@ -247,13 +250,14 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
                         android:imeOptions="actionNext"
                         android:inputType="textEmailAddress"
                         android:textAlignment="textStart"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textColorHint="@color/textColor"
                         android:textCursorDrawable="@null"
                         android:textSize="@dimen/dimen_14sp"
@@ -296,13 +300,14 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
                         android:imeOptions="actionNext"
                         android:inputType="textEmailAddress"
                         android:textAlignment="textStart"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textColorHint="@color/textColor"
                         android:textCursorDrawable="@null"
                         android:textSize="@dimen/dimen_14sp"
@@ -314,7 +319,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout67"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dimen_70dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/curve_field"
                 android:paddingStart="@dimen/dimen_20dp"
@@ -345,13 +350,14 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/gender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
                         android:imeOptions="actionNext"
                         android:inputType="textEmailAddress"
                         android:textAlignment="textStart"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textColorHint="@color/textColor"
                         android:textCursorDrawable="@null"
                         android:textSize="@dimen/dimen_14sp"
@@ -363,7 +369,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout68"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/curve_field"
                 android:paddingStart="@dimen/dimen_20dp"
@@ -394,11 +400,12 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
+                        android:id="@+id/dob"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
                         android:textAlignment="textStart"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textColorHint="@color/textColor"
                         android:textCursorDrawable="@null"
                         android:textSize="@dimen/dimen_14sp"
@@ -412,7 +419,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout69"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/curve_field"
                 android:paddingStart="@dimen/dimen_20dp"
@@ -443,13 +450,14 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
+                       android:id="@+id/martialStatus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
                         android:imeOptions="actionNext"
                         android:inputType="textEmailAddress"
                         android:textAlignment="textStart"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textColorHint="@color/textColor"
                         android:textCursorDrawable="@null"
                         android:textSize="@dimen/dimen_14sp"
@@ -460,8 +468,9 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/anniversaryClick"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="40dp"
                 android:background="@drawable/curve_field"
@@ -494,19 +503,18 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/enterUsername"
+                    <TextView
+                        android:id="@+id/anniversary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
-                        android:imeOptions="actionNext"
-                        android:inputType="textEmailAddress"
                         android:textAlignment="textStart"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textColorHint="@color/textColor"
                         android:textCursorDrawable="@null"
                         android:textSize="@dimen/dimen_14sp"
-                        tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
+                        tools:ignore="TextContrastCheck,TouchTargetSizeCheck"
+                        app:drawableEndCompat="@drawable/calender"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

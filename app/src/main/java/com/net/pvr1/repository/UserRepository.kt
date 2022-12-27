@@ -19,6 +19,7 @@ import com.net.pvr1.ui.home.fragment.more.offer.response.MOfferResponse
 import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr1.ui.home.fragment.more.prefrence.response.PreferenceResponse
 import com.net.pvr1.ui.home.fragment.more.response.DeleteAlertResponse
+import com.net.pvr1.ui.home.fragment.more.response.ProfileResponse
 import com.net.pvr1.ui.home.fragment.more.response.WhatsAppOptStatus
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.location.selectCity.response.SelectCityResponse
@@ -430,6 +431,38 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             offerLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             offerLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    //EditProfile
+
+    private val editProfileLiveData = MutableLiveData<NetworkResult<OfferResponse>>()
+    val editProfileResponseLiveData: LiveData<NetworkResult<OfferResponse>>
+        get() = editProfileLiveData
+
+    suspend fun editProfile(
+        userid: String,
+        email: String,
+        mobile: String,
+        name: String,
+        dob: String,
+        gender: String,
+        mstatus: String,
+        doa: String
+    ) {
+        editProfileLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.editProfile(userid,email,mobile,name,dob,gender,mstatus,doa, Constant.version, Constant.platform)
+        editProfileResponse(response)
+    }
+
+    private fun editProfileResponse(response: Response<OfferResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            editProfileLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            editProfileLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            editProfileLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 
@@ -2078,7 +2111,35 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             whatsappOptOutLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
+//User Profile
 
+    private val userProfileLiveData = MutableLiveData<NetworkResult<ProfileResponse>>()
+    val userProfileResponseOutLiveData: LiveData<NetworkResult<ProfileResponse>>
+        get() = userProfileLiveData
+
+    suspend fun userProfile(city: String, userid: String, timestamp: String, token: String) {
+        whatsappOptOutLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.userProfile(
+            city,
+            userid,
+            timestamp,
+            token,
+            Constant.version,
+            Constant.platform,
+        )
+        userProfileData(response)
+    }
+
+    private fun userProfileData(response: Response<ProfileResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            userProfileLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            userProfileLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            userProfileLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
 
     private val preferenceLiveData = MutableLiveData<NetworkResult<PreferenceResponse>>()
     val preferenceResponseLiveData: LiveData<NetworkResult<PreferenceResponse>>

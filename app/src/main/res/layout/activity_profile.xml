@@ -124,6 +124,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/circularImageView">
 
                 <ImageView
+                    android:visibility="gone"
                     android:id="@+id/imageView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -196,14 +197,15 @@
                         android:textColor="@color/textColorGray"
                         android:textSize="@dimen/dimen_14sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view147" />
+                        app:layout_constraintTop_toBottomOf="@+id/view147"
+                        tools:ignore="TextContrastCheck" />
 
                     <TextView
                         android:id="@+id/textView215"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sf_pro_text_medium"
-                        android:text="@string/phone"
+                        tools:text="@string/phone"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimen_14sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -236,14 +238,15 @@
                         android:textColor="@color/textColorGray"
                         android:textSize="@dimen/dimen_14sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="TextContrastCheck" />
 
                     <TextView
                         android:id="@+id/textView217"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sf_pro_text_medium"
-                        android:text="@string/phone"
+                        tools:text="@string/phone"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimen_14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/textView216"
@@ -278,14 +281,15 @@
                         android:textColor="@color/textColorGray"
                         android:textSize="@dimen/dimen_14sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="TextContrastCheck" />
 
                     <TextView
                         android:id="@+id/textView219"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sf_pro_text_medium"
-                        android:text="@string/phone"
+                        tools:text="@string/phone"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimen_14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/textView218"
@@ -320,14 +324,15 @@
                         android:textColor="@color/textColorGray"
                         android:textSize="@dimen/dimen_14sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="TextContrastCheck" />
 
                     <TextView
                         android:id="@+id/textView221"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sf_pro_text_medium"
-                        android:text="@string/phone"
+                        tools:text="@string/phone"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimen_14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/textView220"
@@ -362,14 +367,15 @@
                         android:textColor="@color/textColorGray"
                         android:textSize="@dimen/dimen_14sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="TextContrastCheck" />
 
                     <TextView
                         android:id="@+id/textView223"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sf_pro_text_medium"
-                        android:text="@string/phone"
+                        tools:text="@string/phone"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimen_14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/textView222"
@@ -404,14 +410,15 @@
                         android:textColor="@color/textColorGray"
                         android:textSize="@dimen/dimen_14sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="TextContrastCheck" />
 
                     <TextView
                         android:id="@+id/textView225"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/sf_pro_text_medium"
-                        android:text="@string/phone"
+                        tools:text="@string/phone"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimen_14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/textView224"

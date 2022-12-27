@@ -10,11 +10,11 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityOtpVerifyBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.location.enableLocation.EnableLocationActivity
 import com.net.pvr1.ui.home.HomeActivity
+import com.net.pvr1.ui.location.enableLocation.EnableLocationActivity
+import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
 import com.net.pvr1.ui.login.otpVerify.viewModel.OtpVerifyViewModel
-import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.SmsBroadcastReceiver.SmsBroadcastReceiverListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -313,7 +313,7 @@ class OtpVerifyActivity : AppCompatActivity() {
         output?.token?.let { preferences.saveToken(it) }
         output?.dob?.let { preferences.saveDob(it) }
 
-        if (!Constant().isLocationServicesAvailable(this@OtpVerifyActivity)){
+        if (!Constant().isLocationEnabled(this@OtpVerifyActivity)){
             val intent = Intent(this@OtpVerifyActivity, EnableLocationActivity::class.java)
             startActivity(intent)
             finish()
