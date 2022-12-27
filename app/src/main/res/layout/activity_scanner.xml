@@ -6,11 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.scanner.ScannerActivity">
 
+    <include
+        android:id="@+id/includeHeader"
+        android:layout_height="@dimen/toolbar_height"
+        android:layout_width="match_parent"
+        layout="@layout/toolbar" />
     <TextView
         android:id="@+id/nameKey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/includeHeader"
         android:paddingBottom="@dimen/padding_default"
         android:text="@string/name"
         app:layout_constraintEnd_toEndOf="parent"

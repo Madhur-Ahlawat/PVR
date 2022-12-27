@@ -511,4 +511,9 @@ class Constant {
         }
         pcTextView.text = finalText
     }
+
+
+   private fun getLatLang(activity:Activity){
+
+   }
 }

@@ -334,7 +334,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
     //cinemaPreference
-    private val cinemaPreferenceLiveData = MutableLiveData<NetworkResult<CinemaPreferenceResponse>>()
+    private val cinemaPreferenceLiveData =
+        MutableLiveData<NetworkResult<CinemaPreferenceResponse>>()
     val cinemaPreferenceResponseLiveData: LiveData<NetworkResult<CinemaPreferenceResponse>>
         get() = cinemaPreferenceLiveData
 
@@ -1994,7 +1995,15 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
 
     suspend fun whatsappOpt(userid: String, mobile: String, timestamp: String, token: String) {
         whatsappOptLiveData.postValue(NetworkResult.Loading())
-        val response = userAPI.whatsappOpt(userid, mobile, timestamp, token, Constant.version, Constant.platform,"123")
+        val response = userAPI.whatsappOpt(
+            userid,
+            mobile,
+            timestamp,
+            token,
+            Constant.version,
+            Constant.platform,
+            "123"
+        )
         whatsappOptData(response)
     }
 
@@ -2009,14 +2018,22 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
     }
 
-//    whatsapp Opt CheckIn
+    //    whatsapp Opt CheckIn
     private val whatsappOptInLiveData = MutableLiveData<NetworkResult<WhatsAppOptStatus>>()
     val whatsappOptResponseInLiveData: LiveData<NetworkResult<WhatsAppOptStatus>>
         get() = whatsappOptInLiveData
 
     suspend fun whatsappOptIn(userid: String, mobile: String, timestamp: String, token: String) {
         whatsappOptInLiveData.postValue(NetworkResult.Loading())
-        val response = userAPI.whatsappOptIn(userid, mobile, timestamp, token, Constant.version, Constant.platform,"123")
+        val response = userAPI.whatsappOptIn(
+            userid,
+            mobile,
+            timestamp,
+            token,
+            Constant.version,
+            Constant.platform,
+            "123"
+        )
         whatsappOptInData(response)
     }
 
@@ -2031,14 +2048,22 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
     }
 
-//    whatsapp Opt CheckOut
+    //    whatsapp Opt CheckOut
     private val whatsappOptOutLiveData = MutableLiveData<NetworkResult<WhatsAppOptStatus>>()
     val whatsappOptResponseOutLiveData: LiveData<NetworkResult<WhatsAppOptStatus>>
         get() = whatsappOptOutLiveData
 
     suspend fun whatsappOptOut(userid: String, mobile: String, timestamp: String, token: String) {
         whatsappOptOutLiveData.postValue(NetworkResult.Loading())
-        val response = userAPI.whatsappOptOut(userid, mobile, timestamp, token, Constant.version, Constant.platform,"123")
+        val response = userAPI.whatsappOptOut(
+            userid,
+            mobile,
+            timestamp,
+            token,
+            Constant.version,
+            Constant.platform,
+            "123"
+        )
         whatsappOptOutData(response)
     }
 
@@ -2054,15 +2079,13 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
 
-//    whatsapp Opt CheckOut
-
     private val preferenceLiveData = MutableLiveData<NetworkResult<PreferenceResponse>>()
     val preferenceResponseLiveData: LiveData<NetworkResult<PreferenceResponse>>
         get() = preferenceLiveData
 
     suspend fun preference(city: String, userid: String) {
         preferenceLiveData.postValue(NetworkResult.Loading())
-        val response = userAPI.preference(city,userid,Constant.version, Constant.platform)
+        val response = userAPI.preference(city, userid, Constant.version, Constant.platform)
         preferenceData(response)
     }
 
@@ -2079,7 +2102,6 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
 
 
     /*****************       CRED       **************/
-
     private val credCheckLiveData = MutableLiveData<NetworkResult<UPIStatusResponse>>()
     val credCheckResponseLiveData: LiveData<NetworkResult<UPIStatusResponse>>
         get() = credCheckLiveData
@@ -2095,7 +2117,15 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     ) {
         credCheckLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.credCheck(
-            userid, bookingid, booktype, transid,unpaid,cred_present,spi, Constant.version, Constant.platform
+            userid,
+            bookingid,
+            booktype,
+            transid,
+            unpaid,
+            cred_present,
+            spi,
+            Constant.version,
+            Constant.platform
         )
         credCheckResponse(response)
     }
@@ -2127,7 +2157,16 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     ) {
         credHmacLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.credHmac(
-            userid, bookingid, booktype, transid,unpaid,cred_present,spi,ptype, Constant.version, Constant.platform
+            userid,
+            bookingid,
+            booktype,
+            transid,
+            unpaid,
+            cred_present,
+            spi,
+            ptype,
+            Constant.version,
+            Constant.platform
         )
         credHmacResponse(response)
     }
@@ -2148,10 +2187,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         get() = credStatusLiveData
 
     suspend fun credStatus(
-        userid: String,
-        bookingid: String,
-        booktype: String,
-        transid: String
+        userid: String, bookingid: String, booktype: String, transid: String
     ) {
         credStatusLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.credStatus(
@@ -2171,4 +2207,85 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
     }
 
+
+    ///////////////Booking ////////////////////
+
+    //getCode
+    private val getCodeLiveData = MutableLiveData<NetworkResult<PreferenceResponse>>()
+    val getCodeResponseLiveData: LiveData<NetworkResult<PreferenceResponse>>
+        get() = getCodeLiveData
+
+    suspend fun getCode(cid: String, cineTypeQR: String) {
+        preferenceLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.getCode(cid, cineTypeQR, Constant.version, Constant.platform)
+        getCodeData(response)
+    }
+
+    private fun getCodeData(response: Response<PreferenceResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            getCodeLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            getCodeLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            getCodeLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    //UserLocation
+    private val userLocationLiveData = MutableLiveData<NetworkResult<PreferenceResponse>>()
+    val userLocationResponseLiveData: LiveData<NetworkResult<PreferenceResponse>>
+        get() = userLocationLiveData
+
+    suspend fun userLocation(userid: String, lat: String, lng: String, city: String) {
+        userLocationLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.userLocation(userid, lat,lng,city, Constant.version, Constant.platform)
+        userLocationData(response)
+    }
+
+    private fun userLocationData(response: Response<PreferenceResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            userLocationLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            userLocationLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            userLocationLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    //foodOutlet
+    private val foodOutletLiveData = MutableLiveData<NetworkResult<PreferenceResponse>>()
+    val foodOutletResponseLiveData: LiveData<NetworkResult<PreferenceResponse>>
+        get() = foodOutletLiveData
+
+    suspend fun foodOutlet(
+        userid: String,
+        ccode: String,
+        bookingid: String,
+        booking_id: String,
+        cbookid: String,
+        type: String,
+        transid: String,
+        audi: String,
+        seat: String,
+        qr: String,
+        iserv: String,
+        isSpi: String
+    ) {
+        preferenceLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.foodOutlet(userid, ccode,bookingid,booking_id,cbookid,type,transid,audi,seat,qr,iserv,isSpi, Constant.version, Constant.platform)
+        foodOutletData(response)
+    }
+
+    private fun foodOutletData(response: Response<PreferenceResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            getCodeLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            getCodeLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            getCodeLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
 }

@@ -232,42 +232,78 @@ interface UserAPI {
     @POST("v2/user/optin/check")
     suspend fun whatsappOpt(
         @Query("userid") userid: String,
-        @Query("mobile")  mobile: String,
+        @Query("mobile") mobile: String,
         @Query("timestamp") timestamp: String,
-        @Header("X-Token")  token: String,
-        @Query("av")  version: String,
-        @Query("pt")  platform: String,
-        @Query("did")  did: String
+        @Header("X-Token") token: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
     ): Response<WhatsAppOptStatus>
 
- @POST("v2/user/optin")
+    @POST("v2/user/optin")
     suspend fun whatsappOptIn(
         @Query("userid") userid: String,
-        @Query("mobile")  mobile: String,
+        @Query("mobile") mobile: String,
         @Query("timestamp") timestamp: String,
-        @Header("X-Token")  token: String,
-        @Query("av")  version: String,
-        @Query("pt")  platform: String,
-        @Query("did")  did: String
+        @Header("X-Token") token: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
     ): Response<WhatsAppOptStatus>
 
- @POST("v2/user/optout")
+    @POST("v2/user/optout")
     suspend fun whatsappOptOut(
         @Query("userid") userid: String,
-        @Query("mobile")  mobile: String,
+        @Query("mobile") mobile: String,
         @Query("timestamp") timestamp: String,
-        @Header("X-Token")  token: String,
-        @Query("av")  version: String,
-        @Query("pt")  platform: String,
-        @Query("did")  did: String
+        @Header("X-Token") token: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
     ): Response<WhatsAppOptStatus>
 
- @POST("user/getprefrenences")
+    @POST("user/getprefrenences")
     suspend fun preference(
         @Query("city") city: String,
         @Query("userid") userid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PreferenceResponse>
+
+    @POST("content/getccode")
+    suspend fun getCode(
+        @Query("cid") cid: String,
+        @Query("cinetypeQR") cinetypeQR: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PreferenceResponse>
+
+    @POST("content/checkuserlocation")
+    suspend fun userLocation(
+        @Query("userid") userid: String,
+        @Query("lat") lat: String,
+        @Query("lng") lng: String,
+        @Query("city") city: String,
         @Query("av")  version: String,
-        @Query("pt")  platform: String
+        @Query("pt") platform: String
+    ): Response<PreferenceResponse>
+
+    @POST("food/getfoods-outlet")
+    suspend fun foodOutlet(
+        @Query("userid") userid: String,
+        @Query("ccode") ccode: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booking_id") booking_id: String,
+        @Query("cbookid") cbookid: String,
+        @Query("type") type: String,
+        @Query("transid") transid: String,
+        @Query("audi") audi: String,
+        @Query("seat") seat: String,
+        @Query("qr") qr: String,
+        @Query("iserv") iserv: String,
+        @Query("isSpi") isSpi: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
     ): Response<PreferenceResponse>
 
     @POST("loyalty/home")
@@ -869,7 +905,6 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<PaytmHmacResponse>
-
 
 
     @POST("payment/cred/status")

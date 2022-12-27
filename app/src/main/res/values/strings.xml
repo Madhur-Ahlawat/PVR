@@ -498,7 +498,7 @@
     <string name="see_all">See All</string>
     <string name="watchlist">WATCHLIST</string>
 
-<!--    terms-->
+    <!--    terms-->
     <string-array name="terms_condition_items">
         <item>Privacy</item>
         <item>Terms of Use</item>
@@ -520,4 +520,6 @@
     <string name="preferredLanguages">Preferred Languages</string>
     <string name="noLangaugesSelected">No langauges selected</string>
     <string name="noGenresSelected">No genres selected</string>
+    <string name="please_enable_location_sharing_to_use_this_feature">Please enable location sharing to use this feature</string>
+    <string name="please_select_your_booking">Please select your booking</string>
 </resources>
