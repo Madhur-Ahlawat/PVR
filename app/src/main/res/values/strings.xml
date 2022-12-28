@@ -522,4 +522,6 @@
     <string name="noGenresSelected">No genres selected</string>
     <string name="please_enable_location_sharing_to_use_this_feature">Please enable location sharing to use this feature</string>
     <string name="please_select_your_booking">Please select your booking</string>
+    <string name="complete_your_profile">Complete Your Profile</string>
+    <string name="get_500_voucher_on_100_profile_completion">Get ₹500 voucher on 100% profile completion</string>
 </resources>

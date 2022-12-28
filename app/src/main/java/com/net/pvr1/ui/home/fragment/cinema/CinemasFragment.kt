@@ -59,8 +59,6 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
     private var lng = ""
     private var cityName = "Delhi-NCR"
 
-
-
     // story board
     private var bannerShow = 0
     private var pressTime = 0L
@@ -124,7 +122,6 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
             val intent = Intent(requireActivity(), SearchCinemaActivity::class.java)
             startActivity(intent)
         }
-
         cinemaApi()
         setPreference()
         getLocation()

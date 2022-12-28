@@ -11,7 +11,7 @@ data class MOfferResponse(
     data class Output(
         val offers: ArrayList<Offer>,
         val ph: ArrayList<Ph>,
-        val pu: List<Pu>
+        val pu: ArrayList<Pu>
     ):java.io.Serializable{
         data class Ph(
             val buttonText: String,

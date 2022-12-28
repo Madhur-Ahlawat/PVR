@@ -312,5 +312,24 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+
     </androidx.core.widget.NestedScrollView>
+
+    <com.net.pvr1.utils.MovableFloatingActionButton
+        android:id="@+id/filter_fab"
+        android:layout_width="@dimen/dimen_60dp"
+        android:layout_height="@dimen/dimen_60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:visibility="visible"
+        android:layout_marginStart="@dimen/dimen_15dp"
+        android:layout_marginTop="@dimen/dimen_15dp"
+        android:layout_marginEnd="@dimen/dimen_15dp"
+        android:layout_marginBottom="@dimen/dimen_30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/filter_unselect"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

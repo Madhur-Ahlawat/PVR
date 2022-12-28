@@ -199,7 +199,7 @@ interface UserAPI {
         @Query("doa") doa: String,
         @Query("av") version: String,
         @Query("pt") platform: String,
-    ): Response<OfferResponse>
+    ): Response<ProfileResponse>
 
 
     @POST("deals/moffers")
@@ -417,7 +417,7 @@ interface UserAPI {
         @Query("cinetypeQR") cinetypeQR: String
     ): Response<CinemaSessionResponse>
 
-    @POST("content/msessionsnew")
+    @POST("content/msessionsnewfilters")
     suspend fun bookingSession(
         @Query("city") city: String,
         @Query("mid") mid: String,

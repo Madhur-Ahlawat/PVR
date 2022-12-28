@@ -18,16 +18,16 @@ data class BookingResponse(
         val cd: String,
         val cert: String,
         val cinemas: ArrayList<Cinema>,
-        val ct: List<String>,
+        val ct: ArrayList<String>,
         val d: String,
         val dys: ArrayList<Dy>,
         val gnr: String,
-        val icn: List<String>,
+        val icn: ArrayList<String>,
         val img: List<String>,
         val lc: String,
         val len: String,
         val lng: String,
-        val lngs: List<String>,
+        val lngs: ArrayList<String>,
         val mb: Mb,
         val mid: String,
         val mih: String,
@@ -40,13 +40,18 @@ data class BookingResponse(
         val pu: List<Any>,
         val rt: String,
         val sm: String,
-        val sps: List<Any>,
+        val sps: ArrayList<SPS>,
         val su: String,
         val tag: String,
         val ul: Boolean,
         val vdo: String,
         val wib: String
     ) : Serializable {
+        data class SPS(
+            val id: String,
+            val na: String,
+            val txt: String
+        ):Serializable
         data class Ph(
             val buttonText: String,
             val cities: String,

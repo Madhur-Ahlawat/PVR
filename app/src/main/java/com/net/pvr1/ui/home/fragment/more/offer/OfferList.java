@@ -3,13 +3,14 @@ package com.net.pvr1.ui.home.fragment.more.offer;
 import com.net.pvr1.ui.home.fragment.more.offer.response.MOfferResponse;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OfferList implements Serializable {
     String cat;
-    List<MOfferResponse.Output.Offer> list;
+    ArrayList<MOfferResponse.Output.Offer> list;
 
-    public List<MOfferResponse.Output.Offer> getList() {
+    public ArrayList<MOfferResponse.Output.Offer> getList() {
         return list;
     }
 
@@ -21,7 +22,7 @@ public class OfferList implements Serializable {
         return cat;
     }
 
-    public void setList(List<MOfferResponse.Output.Offer> list) {
+    public void setList(ArrayList<MOfferResponse.Output.Offer> list) {
         this.list = list;
     }
 }

@@ -7,12 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.ui.home.fragment.more.offer.response.MOfferResponse
-import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr1.utils.Util
 
 //context: Activity, offerList: List<Datum>?, type: String
@@ -22,23 +22,11 @@ class OffersFAdapter(
     private var type: String
 ) :
     RecyclerView.Adapter<OffersFAdapter.ViewHolder>() {
-    //    private val offerList: List<Datum>?
-//    private val context: Context
-//    private val type: String
     private var screenWidth = 0
     var displayMetrics = DisplayMetrics()
 
-    init {
-//        this.offerList = offerList
-//        this.context = context
-//        this.type = type
-//        notifyDataSetChanged()
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         screenWidth = context.resources.displayMetrics.widthPixels
-//        return LayoutInflater.from(parent.context)
-//            .inflate(R.layout.offer_item, null)
 
         val itemLayoutView: View = LayoutInflater.from(parent.context)
             .inflate(R.layout.offer_item, null)
@@ -48,6 +36,7 @@ class OffersFAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         screenWidth = context.resources.displayMetrics.widthPixels
         val obj: MOfferResponse.Output.Offer = offerList[position]
+        Toast.makeText(context, "Valid till ", Toast.LENGTH_SHORT).show()
         holder.name.text = obj.c
         holder.name.isSelected = true
         holder.expiry.text = "Valid till " + obj.vt

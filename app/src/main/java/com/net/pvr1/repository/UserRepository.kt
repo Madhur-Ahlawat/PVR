@@ -436,8 +436,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
 
     //EditProfile
 
-    private val editProfileLiveData = MutableLiveData<NetworkResult<OfferResponse>>()
-    val editProfileResponseLiveData: LiveData<NetworkResult<OfferResponse>>
+    private val editProfileLiveData = MutableLiveData<NetworkResult<ProfileResponse>>()
+    val editProfileResponseLiveData: LiveData<NetworkResult<ProfileResponse>>
         get() = editProfileLiveData
 
     suspend fun editProfile(
@@ -455,7 +455,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         editProfileResponse(response)
     }
 
-    private fun editProfileResponse(response: Response<OfferResponse>) {
+    private fun editProfileResponse(response: Response<ProfileResponse>) {
         if (response.isSuccessful && response.body() != null) {
             editProfileLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {

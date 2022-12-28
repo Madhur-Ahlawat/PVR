@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.*
 import android.view.View.OnTouchListener
 import android.widget.ImageView
@@ -481,7 +480,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 //                } else {
 //                    special = "ALL"
 //                }
-                Log.d("ShowSelection", "onAply filter accessability: $special")
             }
             getMovieFormatFromApi(true)
         } else {
@@ -733,20 +731,18 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         dialogQR.setCancelable(false)
         dialogQR.setContentView(R.layout.activity_privilege_details)
         dialogQR.window?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
-        dialogQR.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
-        )
+        dialogQR.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         dialogQR.window?.setGravity(Gravity.CENTER)
         dialogQR.setTitle("")
         val pointsPcTextView = dialogQR.findViewById<TextView>(R.id.points_txt)
-        val vochersPcTextView = dialogQR.findViewById<TextView>(R.id.vouchers_txt_)
-        val TVusername: TextView = dialogQR.findViewById<View>(R.id.TVusername) as TextView
+        val vouchersPcTextView = dialogQR.findViewById<TextView>(R.id.vouchers_txt_)
+        val tvUserName: TextView = dialogQR.findViewById<View>(R.id.TVusername) as TextView
         val ivImage = dialogQR.findViewById<View>(R.id.ivImage) as ImageView
         val tvCross = dialogQR.findViewById<View>(R.id.tvCross) as ImageView
         Glide.with(requireActivity()).load(qrCode).into(ivImage)
-        TVusername.text = preferences.getUserName()
+        tvUserName.text = preferences.getUserName()
         pointsPcTextView.text = PRIVILEGEPOINT
-        vochersPcTextView.text = PRIVILEGEVOUCHER
+        vouchersPcTextView.text = PRIVILEGEVOUCHER
         tvCross.setOnClickListener { dialogQR.dismiss() }
         dialogQR.setOnKeyListener { _, keyCode, _ ->
             if (keyCode == KeyEvent.KEYCODE_BACK) {

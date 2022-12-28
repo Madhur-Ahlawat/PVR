@@ -31,6 +31,7 @@ import com.net.pvr1.ui.ticketConfirmation.TicketConfirmationActivity
 import java.net.MalformedURLException
 import java.net.URL
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
 
 
 @Suppress("DEPRECATION")
@@ -44,6 +45,7 @@ class Constant {
         var latitude: Double? = 0.0
         var longitude: Double? = 0.0
 
+        const val donation = "https://www.pvrcinemas.com/pvrstatic/donation/tnc.html"
         const val pvrCare = " https://www.pvrcinemas.com/pvrstatic/pvr-care/index.html"
         const val merchandise = "https://pvr.macmerise.com/?user_agent=pvr"
         const val termsCondition = "https://www.pvrcinemas.com/pvrstatic/tnc.html"
@@ -345,6 +347,10 @@ class Constant {
                 }
             }
         })
+
+
+
+
     }
 
 
@@ -580,5 +586,24 @@ class Constant {
      fun isLocationEnabled(context: Context): Boolean {
         val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return LocationManagerCompat.isLocationEnabled(locationManager)
+    }
+
+
+    fun changeDateFormat(date: String?): String? {
+        return if (date != null && date != "") {
+            try {
+                val sdf = SimpleDateFormat("dd-MM-yyyy")
+                val d = sdf.parse(date)
+                val displayFormat = SimpleDateFormat("dd MMM, yyyy")
+                displayFormat.format(d)
+
+                // all done
+            } catch (e: Exception) {
+                e.printStackTrace()
+                ""
+            }
+        } else {
+            ""
+        }
     }
 }

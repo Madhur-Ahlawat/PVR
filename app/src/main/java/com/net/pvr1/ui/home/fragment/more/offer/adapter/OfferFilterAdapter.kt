@@ -14,13 +14,11 @@ import com.net.pvr1.R
 class OfferFilterAdapter(
     private var data: List<String>,
     private var context: Context,
-    var listener: OffersAdapter,
-
+    private var listener: OffersAdapter,
     rowIndex: Int,
     private var offerRecList: RecyclerView
 ) : RecyclerView.Adapter<OfferFilterAdapter.FilterViewHolder>() {
     var rowIndex = -1
-
     init {
         this.rowIndex = rowIndex
     }

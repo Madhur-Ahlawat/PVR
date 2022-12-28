@@ -1,7 +1,6 @@
 package com.net.pvr1.utils
 
 import android.content.Context
-import android.util.DisplayMetrics
 
 object Util {
     fun convertPixelsToDp(px: Float, context: Context): Float {

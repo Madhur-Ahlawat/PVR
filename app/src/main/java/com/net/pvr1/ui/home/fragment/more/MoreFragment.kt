@@ -3,22 +3,30 @@ package com.net.pvr1.ui.home.fragment.more
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.net.pvr1.R
 import com.net.pvr1.databinding.FragmentMoreBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.giftCard.GiftCardActivity
+import com.net.pvr1.ui.home.fragment.more.adapter.ProfileCompleteAdapter
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.BookingRetrievalActivity
 import com.net.pvr1.ui.home.fragment.more.contactUs.ContactUsActivity
+import com.net.pvr1.ui.home.fragment.more.model.ProfileModel
 import com.net.pvr1.ui.home.fragment.more.offer.OfferActivity
 import com.net.pvr1.ui.home.fragment.more.prefrence.PreferenceActivity
 import com.net.pvr1.ui.home.fragment.more.privacy.TermsPrivacyActivity
@@ -45,6 +53,7 @@ class MoreFragment : Fragment() {
     private var binding: FragmentMoreBinding? = null
     private val authViewModel by activityViewModels<MoreViewModel>()
     private var loader: LoaderDialog? = null
+    private val profileList: ArrayList<ProfileModel> = ArrayList<ProfileModel>()
 
     @Inject
     lateinit var preferences: PreferenceManager
@@ -60,22 +69,35 @@ class MoreFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (requireActivity().findViewById(R.id.include) as ConstraintLayout).hide()
         preferences = PreferenceManager(requireActivity())
+        timeStamp = (System.currentTimeMillis() / 1000).toString()
+
+        //add List
+        profileList.add(ProfileModel("Provide your contact number", "MOBILE"))
+        profileList.add(ProfileModel("Your email", "EMAIL"))
+        profileList.add(ProfileModel("Gender information", "GENDER"))
+        profileList.add(ProfileModel("Date of birth", "DOB"))
+        profileList.add(ProfileModel("Anniversary", "DOA"))
+        profileList.add(ProfileModel("Save movie preferences", "MOVIE"))
+
         //SetName
         binding?.profileDetails?.textView205?.text = preferences.getUserName()
-        movedNext()
-        manageFunctions()
-        createQr()
-        timeStamp = (System.currentTimeMillis() / 1000).toString()
+
         //profile
-        authViewModel.userProfile(preferences.getCityName(),preferences.getUserId(),timeStamp,getHashProfile("${preferences.getUserId()+"|"+timeStamp}"))
+        authViewModel.userProfile(preferences.getCityName(),preferences.getUserId(),timeStamp,getHashProfile(
+            preferences.getUserId()+"|"+timeStamp
+        ))
 
         //whatsapp status
         authViewModel.whatsappOpt(
             preferences.getUserId(),
             preferences.getToken().toString(),
             timeStamp,
-            getHash("${preferences.getUserId() + "|" + preferences.getToken() + "|" + "optin-info" + "|" + timeStamp}")
+            getHash(preferences.getUserId() + "|" + preferences.getToken() + "|" + "optin-info" + "|" + timeStamp)
         )
+
+        movedNext()
+        manageFunctions()
+        createQr()
         //whatsapp Status
         whatsappOptStatus()
         //profileResponse
@@ -214,6 +236,7 @@ class MoreFragment : Fragment() {
             val intent = Intent(requireContext(), PreferenceActivity::class.java)
             startActivity(intent)
         }
+
     }
 
     private fun createQr() {
@@ -401,7 +424,39 @@ class MoreFragment : Fragment() {
     private fun retrieveProfileData(output: ProfileResponse.Output) {
         ProfileResponseConst=output
         binding?.profileDetails?.textView206?.text=output.cd
+        binding?.profileDetails?.textView208?.text= output.percentage.toString() + "%"
+        binding?.profileDetails?.progressBar?.progress = output.percentage
 
+        //profile Complete
+        binding?.profileDetails?.completeProfile?.setOnClickListener {
+            openProfilePopup(output)
+        }
+    }
+
+
+
+    private fun openProfilePopup(output: ProfileResponse.Output) {
+        val dialog = BottomSheetDialog(requireActivity(), R.style.NoBackgroundDialogTheme)
+        val behavior: BottomSheetBehavior<*> = dialog.behavior
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.profile_popup)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val displayRectangle = Rect()
+        dialog.window!!.decorView
+            .getWindowVisibleDisplayFrame(displayRectangle)
+        behavior.peekHeight = (displayRectangle.height() * 0.9f).toInt()
+        behavior.maxHeight = (displayRectangle.height() * 0.9f).toInt()
+        val mainView = dialog.findViewById<View>(R.id.mainView) as ConstraintLayout?
+        mainView!!.maxHeight = (displayRectangle.height() * 0.6f).toInt()
+        val progressBar2 = dialog.findViewById<ProgressBar>(R.id.progressBar2)
+        val profileRecycler = dialog.findViewById<RecyclerView>(R.id.profileList)
+        progressBar2?.progress =output.percentage
+        val layoutManager = LinearLayoutManager(context)
+        profileRecycler?.layoutManager = layoutManager
+        val recyclerAdapter = ProfileCompleteAdapter(requireActivity(), profileList, output.params)
+        profileRecycler?.adapter = recyclerAdapter
+        dialog.show()
     }
 
 

@@ -165,16 +165,17 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <RelativeLayout
                 android:id="@+id/constraintLayout64"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/curve_field"
                 android:paddingStart="@dimen/dimen_20dp"
+                android:layout_marginTop="30dp"
+                android:layout_width="0dp"
+                android:paddingEnd="@dimen/dimen_5dp"
+                android:paddingBottom="@dimen/dimen_5dp"
                 android:paddingTop="@dimen/dimen_15dp"
-                android:paddingEnd="@dimen/dimen_20dp"
-                android:paddingBottom="@dimen/dimen_15dp"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:background="@drawable/curve_field"
                 app:layout_constraintEnd_toEndOf="@+id/view148"
                 app:layout_constraintStart_toStartOf="@+id/view148"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout62">
@@ -184,13 +185,17 @@
                     android:layout_height="wrap_content"
                     android:autofillHints=""
                     android:background="@null"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:boxStrokeColor="@color/transparent"
+                    app:boxBackgroundColor="@color/transparent"
+                    android:layout_marginTop="-8dp"
+                    style="@style/styledBlackTilEditText"
+                    android:layout_centerVertical="true"
                     android:hint="@string/name"
                     android:importantForAutofill="no"
                     android:longClickable="false"
                     android:textColorHint="@color/textColor"
-                    app:boxStrokeColor="@color/edittext_selector"
-                    app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp"
                     app:hintTextColor="@color/textColor"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -198,34 +203,34 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <EditText
                         android:id="@+id/name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/transparent"
                         android:imeOptions="actionNext"
                         android:inputType="textEmailAddress"
                         android:textAlignment="textStart"
                         android:textColor="@color/black"
                         android:textColorHint="@color/textColor"
                         android:textCursorDrawable="@null"
-                        android:textSize="@dimen/dimen_14sp"
-                        tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
+                        android:background="@null"
+                        android:textSize="@dimen/dimen_14sp"/>
+
                 </com.google.android.material.textfield.TextInputLayout>
 
+            </RelativeLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <RelativeLayout
                 android:id="@+id/constraintLayout65"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/curve_field"
+                android:layout_width="0dp"
                 android:paddingStart="@dimen/dimen_20dp"
+                android:paddingEnd="@dimen/dimen_5dp"
+                android:paddingBottom="@dimen/dimen_5dp"
                 android:paddingTop="@dimen/dimen_15dp"
-                android:paddingEnd="@dimen/dimen_20dp"
-                android:paddingBottom="@dimen/dimen_15dp"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:background="@drawable/curve_field"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/view148"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout64">
@@ -233,15 +238,19 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autofillHints=""
+                    android:autofillHints="phone"
                     android:background="@null"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:boxStrokeColor="@color/transparent"
+                    app:boxBackgroundColor="@color/transparent"
+                    android:layout_marginTop="-8dp"
+                    style="@style/styledBlackTilEditText"
+                    android:layout_centerVertical="true"
                     android:hint="@string/phone"
                     android:importantForAutofill="no"
                     android:longClickable="false"
                     android:textColorHint="@color/textColor"
-                    app:boxStrokeColor="@color/edittext_selector"
-                    app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp"
                     app:hintTextColor="@color/textColor"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -264,18 +273,19 @@
                         tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <RelativeLayout
                 android:id="@+id/constraintLayout66"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/curve_field"
                 android:paddingStart="@dimen/dimen_20dp"
+                android:paddingEnd="@dimen/dimen_5dp"
+                android:paddingBottom="@dimen/dimen_5dp"
                 android:paddingTop="@dimen/dimen_15dp"
-                android:paddingEnd="@dimen/dimen_20dp"
-                android:paddingBottom="@dimen/dimen_15dp"
+                android:gravity="center"
+                android:background="@drawable/curve_field"
                 app:layout_constraintEnd_toEndOf="@+id/view148"
                 app:layout_constraintStart_toStartOf="@+id/view148"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout65">
@@ -283,16 +293,20 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autofillHints=""
+                    android:autofillHints="emailAddress"
                     android:background="@null"
-                    android:hint="@string/email"
-                    android:importantForAutofill="no"
-                    android:longClickable="false"
-                    android:textColorHint="@color/textColor"
-                    app:boxStrokeColor="@color/edittext_selector"
                     app:boxStrokeWidth="0dp"
                     app:boxStrokeWidthFocused="0dp"
+                    app:boxStrokeColor="@color/transparent"
+                    app:boxBackgroundColor="@color/transparent"
+                    android:layout_marginTop="-8dp"
+                    style="@style/styledBlackTilEditText"
+                    android:layout_centerVertical="true"
+                    android:hint="@string/email"
+                    android:longClickable="false"
+                    android:textColorHint="@color/textColor"
                     app:hintTextColor="@color/textColor"
+                    android:importantForAutofill="no"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -314,18 +328,19 @@
                         tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <RelativeLayout
                 android:id="@+id/constraintLayout67"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/dimen_70dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/curve_field"
                 android:paddingStart="@dimen/dimen_20dp"
+                android:paddingEnd="@dimen/dimen_5dp"
+                android:paddingBottom="@dimen/dimen_5dp"
                 android:paddingTop="@dimen/dimen_15dp"
-                android:paddingEnd="@dimen/dimen_20dp"
-                android:paddingBottom="@dimen/dimen_15dp"
+                android:gravity="center"
+                android:background="@drawable/curve_field"
                 app:layout_constraintEnd_toEndOf="@+id/view148"
                 app:layout_constraintStart_toStartOf="@+id/view148"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout66">
@@ -335,13 +350,17 @@
                     android:layout_height="wrap_content"
                     android:autofillHints=""
                     android:background="@null"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:boxStrokeColor="@color/transparent"
+                    app:boxBackgroundColor="@color/transparent"
+                    android:layout_marginTop="-8dp"
+                    style="@style/styledBlackTilEditText"
+                    android:layout_centerVertical="true"
                     android:hint="@string/gender"
                     android:importantForAutofill="no"
                     android:longClickable="false"
                     android:textColorHint="@color/textColor"
-                    app:boxStrokeColor="@color/edittext_selector"
-                    app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp"
                     app:hintTextColor="@color/textColor"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -364,18 +383,19 @@
                         tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout68"
                 android:layout_width="0dp"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/curve_field"
                 android:paddingStart="@dimen/dimen_20dp"
-                android:paddingTop="@dimen/dimen_15dp"
                 android:paddingEnd="@dimen/dimen_20dp"
-                android:paddingBottom="@dimen/dimen_15dp"
+                android:paddingBottom="@dimen/dimen_12dp"
+                android:paddingTop="@dimen/dimen_12dp"
+                android:gravity="center"
+                android:background="@drawable/curve_field"
                 app:layout_constraintEnd_toEndOf="@+id/view148"
                 app:layout_constraintStart_toStartOf="@+id/view148"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout67">
@@ -406,6 +426,9 @@
                         android:background="@color/transparent"
                         android:textAlignment="textStart"
                         android:textColor="@color/black"
+                        android:layout_marginStart="15dp"
+                        android:paddingTop="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_10"
                         android:textColorHint="@color/textColor"
                         android:textCursorDrawable="@null"
                         android:textSize="@dimen/dimen_14sp"
@@ -416,16 +439,17 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <RelativeLayout
                 android:id="@+id/constraintLayout69"
                 android:layout_width="0dp"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/curve_field"
                 android:paddingStart="@dimen/dimen_20dp"
+                android:paddingEnd="@dimen/dimen_5dp"
+                android:paddingBottom="@dimen/dimen_5dp"
                 android:paddingTop="@dimen/dimen_15dp"
-                android:paddingEnd="@dimen/dimen_20dp"
-                android:paddingBottom="@dimen/dimen_15dp"
+                android:gravity="center"
+                android:background="@drawable/curve_field"
                 app:layout_constraintEnd_toEndOf="@+id/view148"
                 app:layout_constraintStart_toStartOf="@+id/view148"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout68">
@@ -433,15 +457,20 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autofillHints=""
+
                     android:background="@null"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:boxStrokeColor="@color/transparent"
+                    app:boxBackgroundColor="@color/transparent"
+                    android:layout_marginTop="-8dp"
+                    style="@style/styledBlackTilEditText"
+                    android:layout_centerVertical="true"
+                    android:autofillHints=""
                     android:hint="@string/marital_status"
                     android:importantForAutofill="no"
                     android:longClickable="false"
                     android:textColorHint="@color/textColor"
-                    app:boxStrokeColor="@color/edittext_selector"
-                    app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp"
                     app:hintTextColor="@color/textColor"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -465,19 +494,20 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/anniversaryClick"
                 android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
                 android:background="@drawable/curve_field"
+                android:layout_marginTop="20dp"
                 android:paddingStart="@dimen/dimen_20dp"
-                android:paddingTop="@dimen/dimen_15dp"
                 android:paddingEnd="@dimen/dimen_20dp"
-                android:paddingBottom="@dimen/dimen_15dp"
+                android:paddingBottom="@dimen/dimen_12dp"
+                android:paddingTop="@dimen/dimen_12dp"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/view148"
                 app:layout_constraintStart_toStartOf="@+id/view148"
@@ -510,6 +540,9 @@
                         android:background="@color/transparent"
                         android:textAlignment="textStart"
                         android:textColor="@color/black"
+                        android:layout_marginStart="15dp"
+                        android:paddingTop="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_10"
                         android:textColorHint="@color/textColor"
                         android:textCursorDrawable="@null"
                         android:textSize="@dimen/dimen_14sp"
@@ -519,8 +552,8 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.core.widget.NestedScrollView>
 
     <TextView
