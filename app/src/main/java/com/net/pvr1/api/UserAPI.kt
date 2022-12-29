@@ -4,6 +4,7 @@ import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.ui.bookingSession.response.BookingTheatreResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaNearTheaterResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
+import com.net.pvr1.ui.food.old.reponse.OldFoodResponse
 import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.ui.formats.response.FormatResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaPreferenceResponse
@@ -536,6 +537,24 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<FoodResponse>
+
+    @POST("food/getfoods")
+    suspend fun oldFood(
+        @Query("userid") userid: String,
+        @Query("ccode") ccode: String,
+        @Query("bookingid") bookingid: String,
+        @Query("cbookid") cbookid: String,
+        @Query("transid") transid: String,
+        @Query("type") type: String,
+        @Query("audi") audi: String,
+        @Query("seat") seat: String,
+        @Query("city") city: String,
+        @Query("qr") qr: String,
+        @Query("iserv") iserv: String,
+        @Query("isSpi") isSpi: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<OldFoodResponse>
 
     @POST("trans/tckdetails")
     suspend fun summery(

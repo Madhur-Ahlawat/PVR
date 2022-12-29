@@ -82,6 +82,7 @@ class SplashActivity : AppCompatActivity() {
                     finish()
                 }else{
 //                    val intent = Intent(this@SplashActivity, StarPassActivity::class.java)
+//                    val intent = Intent(this@SplashActivity, OldFoodActivity::class.java)
                     val intent = Intent(this@SplashActivity, HomeActivity::class.java)
                     startActivity(intent)
                     finish()

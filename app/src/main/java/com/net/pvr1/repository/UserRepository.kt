@@ -7,6 +7,7 @@ import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.ui.bookingSession.response.BookingTheatreResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaNearTheaterResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
+import com.net.pvr1.ui.food.old.reponse.OldFoodResponse
 import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.ui.formats.response.FormatResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaPreferenceResponse
@@ -1109,6 +1110,56 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             foodLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             foodLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    //Old Food
+    private val oldfoodLiveData = MutableLiveData<NetworkResult<OldFoodResponse>>()
+    val oldFoodResponseLiveData: LiveData<NetworkResult<OldFoodResponse>>
+        get() = oldfoodLiveData
+
+    suspend fun oldFoodLayout(
+        userid: String,
+        ccode: String,
+        bookingid: String,
+        cbookid: String,
+        transid: String,
+        type: String,
+        audi: String,
+        seat: String,
+        city: String,
+        qr: String,
+        iserv: String,
+        isSpi: String
+    ) {
+        oldfoodLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.oldFood(
+            userid,
+            ccode,
+            bookingid,
+            cbookid,
+            transid,
+            type,
+            audi,
+            seat,
+            city,
+            qr,
+            iserv,
+            isSpi,
+            Constant.version,
+            Constant.platform
+        )
+        oldFoodLayoutResponse(response)
+    }
+
+    private fun oldFoodLayoutResponse(response: Response<OldFoodResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            oldfoodLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            oldfoodLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            oldfoodLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 

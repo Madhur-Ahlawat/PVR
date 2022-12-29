@@ -150,8 +150,6 @@ class FoodActivity : AppCompatActivity(),
         binding?.recyclerView19?.adapter = bestSellerFoodAdapter
         binding?.recyclerView19?.setHasFixedSize(true)
 
-        printLog("bestSeller--->${output.bestsellers}")
-
         //Category
         val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
         val categoryAdapter = CategoryAdapter(foodResponseCategory, this, this)
@@ -251,7 +249,7 @@ class FoodActivity : AppCompatActivity(),
             }
         }
         //Non veg
-        binding?.switch3?.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding?.switch3?.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 menuType = 2
                 binding?.switch2?.isChecked = false
