@@ -18,6 +18,8 @@ import com.net.pvr1.ui.home.fragment.more.prefrence.response.PreferenceResponse
 import com.net.pvr1.ui.home.fragment.more.response.DeleteAlertResponse
 import com.net.pvr1.ui.home.fragment.more.response.ProfileResponse
 import com.net.pvr1.ui.home.fragment.more.response.WhatsAppOptStatus
+import com.net.pvr1.ui.home.fragment.privilege.response.LoyaltyDataResponse
+import com.net.pvr1.ui.home.fragment.privilege.response.PassportPlanResponse
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.location.selectCity.response.SelectCityResponse
 import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
@@ -333,6 +335,8 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<GetFoodResponse>
 
+/************************ Privilege ************************/
+
     @POST("loyalty/home")
     suspend fun privilegeHome(
         @Query("mobile") mobile: String,
@@ -340,6 +344,30 @@ interface UserAPI {
         @Query("av") av: String,
         @Query("pt") pt: String
     ): Response<PrivilegeHomeResponse>
+
+
+    @POST("loyalty/data")
+    suspend fun loyaltyData(
+        @Query("userid") userid: String,
+        @Query("city") city: String,
+        @Query("mobile") mobile: String,
+        @Query("timestamp") timestamp: String,
+        @Header("X-Token") token: String,
+        @Query("av") av: String,
+        @Query("pt") pt: String,
+        @Query("did") did: String
+    ): Response<LoyaltyDataResponse>
+
+
+    @POST("offervoucher/loyalty-subscription/v2/plans")
+    suspend fun passportPlans(
+        @Query("userid") userid: String,
+        @Query("city") city: String,
+        @Query("av") av: String,
+        @Query("pt") pt: String,
+        @Query("did") did: String
+    ): Response<PassportPlanResponse>
+
 
     @POST("history/nextbooking")
     suspend fun nextBooking(
