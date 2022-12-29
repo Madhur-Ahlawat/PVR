@@ -85,20 +85,18 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         val view = binding?.root
         setContentView(view)
         switchFragment()
-//        authViewModel.offer(Constant().getDeviceId(this))
         //setUserName
         if (preferences.getIsLogin()) {
             binding?.includeAppBar?.textView2?.text = "Hello, "+preferences.getUserName()
         } else {
             binding?.includeAppBar?.textView2?.text = "Hello!"
         }
-        //if (preferences.getIsLogin()){
-            authViewModel.privilegeHome(preferences.geMobileNumber(), preferences.getCityName())
-       // }
         binding?.includeAppBar?.txtCity?.text = preferences.getCityName()
+
+        // Call Loyalty Home Api
+        authViewModel.privilegeHome(preferences.geMobileNumber(), preferences.getCityName())
         privilegeDataLoad()
         movedNext()
-        //offerDataLoad()
     }
 
     //ClickMovedNext
@@ -136,25 +134,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                     setCurrentFragment(secondFragment)
                     binding?.includeAppBar?.textView2?.text = getString(R.string.all_theaters)
                 }
-                R.id.privilegeFragment ->{
-                    if (preferences.getIsLogin()){
-                        val ls = preferences
-                            .getString(Constant.SharedPreference.LOYALITY_STATUS)
-                        val isHl: String = preferences
-                            .getString(Constant.SharedPreference.IS_HL)
-                        val isLy: String = preferences
-                            .getString(Constant.SharedPreference.IS_LY)
-                        if (isLy.equals("true", ignoreCase = true)) {
-                            if (ls != null && !ls.equals("", ignoreCase = true)) {
-                                if (isHl.equals("true", ignoreCase = true)) {
-                                    setCurrentFragment(memberFragment)
-                                }
-                            }
-                        }
-                    }else{
-                        setCurrentFragment(thirdFragment)
-                    }
-                }
+                R.id.privilegeFragment ->managePrivilege()
                 R.id.comingSoonFragment -> setCurrentFragment(fourthFragment)
                 R.id.moreFragment -> setCurrentFragment(fifthFragment)
             }
@@ -195,16 +175,15 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     }
 
     private fun privilegeDialog() {
-        val dialog = Dialog(this)
+        val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.privilege_dialog)
-        dialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
+        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window!!.setLayout(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
-        dialog.window?.setGravity(Gravity.BOTTOM)
         dialog.show()
 
         val recyclerView = dialog.findViewById<RecyclerView>(R.id.loyaltyList)
@@ -213,22 +192,22 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         //icon
         Glide.with(this)
             .load(PrivilegeHomeResponseConst?.pinfo?.get(0)?.plogo)
-            .into(icon)
+            .into(icon!!)
 
         // add pager behavior
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(recyclerView)
         val gridLayout =
             GridLayoutManager(this@HomeActivity, 1, GridLayoutManager.HORIZONTAL, false)
-        recyclerView.layoutManager = LinearLayoutManager(this@HomeActivity)
+        recyclerView?.layoutManager = LinearLayoutManager(this@HomeActivity)
         val adapter =
             PrivilegeHomeResponseConst?.pinfo?.let { PrivilegeHomeDialogAdapter(it, this,0, this) }
-        recyclerView.layoutManager = gridLayout
-        recyclerView.adapter = adapter
+        recyclerView?.layoutManager = gridLayout
+        recyclerView?.adapter = adapter
         val mSnapHelper = PagerSnapHelper()
         if ( PrivilegeHomeResponseConst?.pinfo?.size!! > 1) {
             review_position = 0
-            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
                     println("review_positionnewState--->$newState")
@@ -251,12 +230,13 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                     /* Log.e ("VisibleItem", String.valueOf(firstVisibleItem));*/
                 }
             })
-            recyclerView.onFlingListener = null
+            recyclerView?.onFlingListener = null
             mSnapHelper.attachToRecyclerView(recyclerView)
-            recyclerView.addItemDecoration(LinePagerIndicatorDecoration())
+            recyclerView?.addItemDecoration(LinePagerIndicatorDecoration())
         }
 
-        turnOn.setOnClickListener {
+        turnOn?.setOnClickListener {
+            dialog.dismiss()
             managePrivilege()
         }
     }
@@ -520,6 +500,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                 .getString(Constant.SharedPreference.IS_HL)
             val isLy: String = preferences
                 .getString(Constant.SharedPreference.IS_LY)
+            println("ls--$ls---$isHl---$isLy")
             if (isLy.equals("true", ignoreCase = true)) {
                 if (ls != null && !ls.equals("", ignoreCase = true)) {
                     if (isHl.equals("true", ignoreCase = true)) {

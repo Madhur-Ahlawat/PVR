@@ -1,7 +1,6 @@
 package com.net.pvr1.ui.home.fragment.home.adapter
 
 import android.app.Activity
-import android.content.Context
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View

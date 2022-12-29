@@ -24,8 +24,8 @@ class NetworkModule {
     @Provides
     fun providesRetrofit(): Retrofit.Builder {
         return Retrofit.Builder()
-//            .baseUrl("https://api1.pvrcinemas.com/PVRCinemasCMS/api/")
-            .baseUrl(BuildConfig.API_URL)
+            .baseUrl("https://beta.pvrcinemas.com/PVRCinemasCMS/api/")
+//            .baseUrl(BuildConfig.API_URL)
             .addConverterFactory(GsonConverterFactory.create())
     }
 
@@ -43,7 +43,7 @@ class NetworkModule {
         client.connectTimeout(600, TimeUnit.SECONDS)
         client.addInterceptor(Interceptor { chain ->
             val newRequest: Request = chain.request().newBuilder()
-                .addHeader("Content-Type", "application/json")
+//                .addHeader("Content-Type", "application/json")
                 .build()
             chain.proceed(newRequest)
         })

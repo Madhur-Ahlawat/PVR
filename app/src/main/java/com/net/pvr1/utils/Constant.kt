@@ -25,8 +25,10 @@ import com.net.pvr1.R
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.ticketConfirmation.TicketConfirmationActivity
+import okhttp3.internal.and
 import java.net.MalformedURLException
 import java.net.URL
+import java.security.MessageDigest
 import java.text.DecimalFormat
 
 
@@ -146,6 +148,17 @@ class Constant {
 
         fun getDid():String{
             return ""
+        }
+
+        @Throws(Exception::class)
+        fun getHash(text: String): String {
+            val mdText = MessageDigest.getInstance("SHA-512")
+            val byteData = mdText.digest(text.toByteArray())
+            val sb = StringBuffer()
+            for (i in byteData.indices) {
+                sb.append(((byteData[i] and 0xff) + 0x100).toString(16).substring(1))
+            }
+            return sb.toString()
         }
 
     }

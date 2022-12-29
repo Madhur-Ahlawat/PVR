@@ -145,7 +145,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -309,6 +309,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_10"
+                        android:layout_marginBottom="@dimen/dimen_12dp"
                         android:orientation="vertical"
                         android:visibility="gone">
 
@@ -321,11 +322,10 @@
                             android:focusable="false"
                             android:fontFamily="@font/sf_pro_text_regular"
                             android:gravity="center"
-                            android:letterSpacing="0.1"
                             android:text="PVR Passport"
                             android:textColor="@color/white"
                             android:textSize="18sp"
-                            app:letterspacing="@integer/tracking" />
+                             />
 
                         <TextView
                             android:id="@+id/signInBtn"
@@ -338,12 +338,11 @@
                             android:focusable="false"
                             android:fontFamily="@font/sfprodisplay_bold"
                             android:gravity="center"
-                            android:letterSpacing="0.1"
                             android:text="Unlock Card"
                             android:textAllCaps="true"
                             android:textColor="@color/pvr_dark_black"
                             android:textSize="20sp"
-                            app:letterspacing="@integer/tracking" />
+                            />
 
 
                     </LinearLayout>
@@ -368,12 +367,11 @@
                             android:focusable="false"
                             android:fontFamily="@font/sfprodisplay_bold"
                             android:gravity="center"
-                            android:letterSpacing="0.1"
                             android:text="Book Movie"
                             android:textAllCaps="true"
                             android:textColor="@color/pvr_dark_black"
                             android:textSize="20sp"
-                            app:letterspacing="@integer/tracking" />
+                           />
 
                         <LinearLayout
                             android:layout_width="match_parent"
