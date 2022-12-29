@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -17,6 +19,67 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="25dp"
+                android:padding="@dimen/dimen_12dp"
+                android:background="@drawable/passport_corner_new"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true">
+                        <TextView
+                            android:id="@+id/priceNewText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/padding_10"
+                            android:text="₹500.00 / Month"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            app:layout_constraintTop_toBottomOf="@id/ivEarnPoint"
+                            />
+
+                        <TextView
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:id="@+id/textBelow"
+                            android:layout_marginStart="@dimen/padding_10"
+                            android:text="Automatic renewal every month."
+                            android:textColor="@color/pvr_yellow"
+                            android:textSize="12sp"
+                            app:layout_constraintTop_toBottomOf="@id/ivEarnPoint"
+                            />
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
 
             <LinearLayout
                 android:id="@+id/llFirstCard"
@@ -28,6 +91,8 @@
                 android:orientation="vertical"
                 android:visibility="visible"
                 android:weightSum="2">
+
+
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -53,8 +118,7 @@
                             app:contentPadding="@dimen/dimen_12dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            tools:ignore="UnusedAttribute">
+                            app:layout_constraintStart_toStartOf="parent">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -66,14 +130,14 @@
                                     android:layout_height="45dp"
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerVertical="true"
-                                    android:layout_marginEnd="26dp"
+                                    android:layout_marginRight="26dp"
                                     android:src="@drawable/earn_privilege"
                                     android:visibility="gone"
                                     app:layout_constraintLeft_toLeftOf="parent"
                                     app:layout_constraintLeft_toRightOf="@+id/ivEarnPoint"
                                     app:layout_constraintRight_toRightOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    tools:ignore="ContentDescription" />
+                                    app:layout_constraintTop_toTopOf="parent" />
+
 
                                 <ImageView
                                     android:id="@+id/ivEarnPoint"
@@ -84,36 +148,40 @@
                                     android:visibility="gone"
                                     app:layout_constraintLeft_toLeftOf="parent"
                                     app:layout_constraintRight_toRightOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    tools:ignore="ContentDescription" />
+                                    app:layout_constraintTop_toTopOf="parent" />
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_centerVertical="true"
                                     android:orientation="vertical"
-                                    tools:ignore="RelativeOverlap">
-
+                                    android:layout_alignParentStart="true"
+                                    android:layout_centerVertical="true">
                                     <TextView
                                         android:id="@+id/visitText"
+                                        android:fontFamily="@font/sfprodisplay_bold"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_centerVertical="true"
                                         android:layout_marginStart="@dimen/padding_10"
+                                        android:text="1x Visit a Day"
                                         android:textColor="@color/white"
                                         android:textSize="14sp"
                                         app:layout_constraintTop_toBottomOf="@id/ivEarnPoint"
-                                        tools:ignore="TooDeepLayout"
-                                        tools:text="1x Visit a Day" />
+                                        />
 
                                     <TextView
+                                        android:fontFamily="@font/sf_pro_text_regular"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_centerVertical="true"
                                         android:layout_marginStart="@dimen/padding_10"
+                                        android:text="Monday to Friday"
                                         android:textColor="@color/white"
                                         android:textSize="12sp"
                                         app:layout_constraintTop_toBottomOf="@id/ivEarnPoint"
-                                        tools:text="Monday to Thursday" />
+                                        />
 
                                 </LinearLayout>
 
@@ -125,8 +193,7 @@
                                     android:layout_centerVertical="true"
                                     android:padding="@dimen/dimen_2dp"
                                     android:src="@drawable/privilege_date"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    tools:ignore="ContentDescription" />
+                                    app:layout_constraintTop_toTopOf="parent" />
 
                             </RelativeLayout>
 
@@ -149,7 +216,6 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent">
-
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="105dp"
@@ -162,8 +228,7 @@
                             app:contentPadding="@dimen/dimen_12dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            tools:ignore="UnusedAttribute">
+                            app:layout_constraintStart_toStartOf="parent">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -174,13 +239,12 @@
                                     android:layout_width="45dp"
                                     android:layout_height="45dp"
                                     android:layout_marginTop="8dp"
-                                    android:layout_marginEnd="26dp"
+                                    android:layout_marginRight="26dp"
                                     android:background="@drawable/oval"
                                     android:visibility="gone"
                                     app:layout_constraintLeft_toLeftOf="parent"
                                     app:layout_constraintRight_toRightOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    tools:ignore="ContentDescription" />
+                                    app:layout_constraintTop_toTopOf="parent" />
 
                                 <ImageView
                                     android:layout_width="51dp"
@@ -191,33 +255,35 @@
                                     android:visibility="gone"
                                     app:layout_constraintLeft_toLeftOf="parent"
                                     app:layout_constraintRight_toRightOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    tools:ignore="ContentDescription" />
+                                    app:layout_constraintTop_toTopOf="parent" />
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_centerVertical="true"
                                     android:orientation="vertical"
-                                    tools:ignore="RelativeOverlap">
-
+                                    android:layout_alignParentStart="true"
+                                    android:layout_centerVertical="true">
                                     <TextView
+                                        android:fontFamily="@font/sfprodisplay_bold"
                                         android:id="@+id/top_text"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginStart="@dimen/padding_10"
+                                        android:text="Total 30 visits allowed"
                                         android:textColor="@color/white"
-                                        android:textSize="14sp"
-                                        tools:text="Total 30 visits allowed" />
+                                        android:textSize="14sp" />
 
                                     <TextView
+                                        android:fontFamily="@font/sf_pro_text_regular"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_centerVertical="true"
+                                        android:layout_below="@+id/top_text"
                                         android:layout_marginStart="@dimen/padding_10"
+                                        android:text="90 days validity"
                                         android:textColor="@color/white"
-                                        android:textSize="12sp"
-                                        tools:text="90 days validity" />
+                                        android:textSize="12sp" />
                                 </LinearLayout>
 
                                 <RelativeLayout
@@ -226,43 +292,44 @@
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerVertical="true"
                                     app:layout_constraintTop_toTopOf="parent">
-
                                     <LinearLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_centerInParent="true"
+                                        android:orientation="vertical"
                                         android:gravity="center"
-                                        android:orientation="vertical">
+                                        android:layout_centerInParent="true">
 
                                         <TextView
                                             android:id="@+id/visitCount"
+                                            android:fontFamily="@font/sfprodisplay_bold"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginBottom="-5dp"
                                             android:gravity="center"
+                                            android:text="30"
                                             android:textAllCaps="true"
+                                            android:layout_marginBottom="-5dp"
                                             android:textColor="@color/white"
-                                            android:textSize="20sp"
-                                            tools:text="30" />
+                                            android:textSize="20sp" />
 
                                         <TextView
+                                            android:fontFamily="@font/sfprodisplay_bold"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_marginTop="-5dp"
                                             android:gravity="center"
+                                            android:text="Visits"
+                                            android:layout_marginTop="-5dp"
                                             android:textAllCaps="true"
                                             android:textColor="@color/white"
-                                            android:textSize="@dimen/dimen_13sp"
-                                            tools:text="Visits" />
+                                            android:textSize="@dimen/dimen_12sp" />
                                     </LinearLayout>
 
                                     <ImageView
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:src="@drawable/privilege_visit"
-                                        tools:ignore="ContentDescription" />
+                                        android:src="@drawable/privilege_visit"/>
 
                                 </RelativeLayout>
+
 
 
                             </RelativeLayout>
@@ -272,8 +339,8 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -309,8 +376,7 @@
                             app:contentPadding="@dimen/padding_10"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            tools:ignore="UnusedAttribute">
+                            app:layout_constraintStart_toStartOf="parent">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -322,13 +388,12 @@
                                     android:layout_height="45dp"
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerVertical="true"
-                                    android:layout_marginEnd="26dp"
+                                    android:layout_marginRight="26dp"
                                     android:src="@drawable/earn_privilege"
                                     android:visibility="gone"
                                     app:layout_constraintLeft_toLeftOf="parent"
                                     app:layout_constraintRight_toRightOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    tools:ignore="ContentDescription" />
+                                    app:layout_constraintTop_toTopOf="parent" />
 
 
                                 <ImageView
@@ -339,34 +404,38 @@
                                     android:visibility="gone"
                                     app:layout_constraintLeft_toLeftOf="parent"
                                     app:layout_constraintRight_toRightOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    tools:ignore="ContentDescription" />
+                                    app:layout_constraintTop_toTopOf="parent" />
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_centerVertical="true"
                                     android:orientation="vertical"
-                                    tools:ignore="RelativeOverlap">
-
+                                    android:layout_alignParentStart="true"
+                                    android:layout_centerVertical="true">
                                     <TextView
+                                        android:fontFamily="@font/sfprodisplay_bold"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginStart="@dimen/padding_10"
+                                        android:text="Online only Movie pass"
                                         android:textColor="@color/white"
                                         android:textSize="14sp"
-                                        tools:text="Online only Movie pass" />
 
+                                        />
                                     <TextView
+                                        android:fontFamily="@font/sf_pro_text_regular"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginStart="@dimen/padding_10"
-                                        android:text="@string/book_using_pvr_mobile_app_or_website"
+                                        android:text="Book using PVR mobile\napp or website"
                                         android:textColor="@color/white"
-                                        android:textSize="12sp" />
+                                        android:textSize="12sp"
+
+                                        />
+
 
                                 </LinearLayout>
+
 
                                 <ImageView
                                     android:layout_width="@dimen/dimen_60dp"
@@ -376,8 +445,7 @@
                                     android:layout_marginStart="@dimen/dimen_30dp"
                                     android:layout_marginTop="@dimen/dimen_8dp"
                                     android:src="@drawable/privilege_book"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    tools:ignore="ContentDescription" />
+                                    app:layout_constraintTop_toTopOf="parent" />
 
                             </RelativeLayout>
 
@@ -392,8 +460,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="105dp"
-                    android:layout_weight="1"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    android:layout_weight="1">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/constraintLayout7"
@@ -401,7 +469,6 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent">
-
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="105dp"
@@ -414,8 +481,7 @@
                             app:contentPadding="@dimen/dimen_12dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            tools:ignore="UnusedAttribute">
+                            app:layout_constraintStart_toStartOf="parent">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -426,14 +492,13 @@
                                     android:layout_width="45dp"
                                     android:layout_height="45dp"
                                     android:layout_marginTop="8dp"
-                                    android:layout_marginEnd="26dp"
+                                    android:layout_marginRight="26dp"
                                     android:background="@drawable/oval"
                                     android:visibility="gone"
                                     app:layout_constraintLeft_toLeftOf="parent"
                                     app:layout_constraintLeft_toRightOf="@+id/ivRedeem"
                                     app:layout_constraintRight_toRightOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    tools:ignore="ContentDescription" />
+                                    app:layout_constraintTop_toTopOf="parent" />
 
                                 <ImageView
                                     android:id="@+id/ivRedeem"
@@ -445,29 +510,29 @@
                                     android:visibility="gone"
                                     app:layout_constraintLeft_toLeftOf="parent"
                                     app:layout_constraintRight_toRightOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    tools:ignore="ContentDescription" />
+                                    app:layout_constraintTop_toTopOf="parent" />
 
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:orientation="vertical"
-                                    tools:ignore="RelativeOverlap">
-
+                                    android:orientation="vertical">
                                     <TextView
+                                        android:fontFamily="@font/sfprodisplay_bold"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:layout_alignParentBottom="true"
                                         android:layout_marginStart="@dimen/padding_10"
+                                        android:text="Online Only Movie Pass"
                                         android:textColor="@color/white"
-                                        android:textSize="14sp"
-                                        tools:text="Online Only Movie Pass" />
-
+                                        android:textSize="14sp" />
                                     <TextView
+                                        android:fontFamily="@font/sf_pro_text_regular"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:layout_alignParentBottom="true"
                                         android:layout_marginStart="@dimen/padding_10"
-                                        android:text="@string/book_using_pvr_mobile_app_or_website"
+                                        android:text="Book using PVR mobile\napp or website"
                                         android:textColor="@color/white"
                                         android:textSize="12sp" />
 
@@ -480,8 +545,7 @@
                                     android:layout_centerVertical="true"
                                     android:layout_marginStart="@dimen/dimen_30dp"
                                     android:src="@drawable/privilege_subs"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    tools:ignore="ContentDescription" />
+                                    app:layout_constraintTop_toTopOf="parent" />
 
                             </RelativeLayout>
 
@@ -492,119 +556,202 @@
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
             </LinearLayout>
+
 
         </LinearLayout>
 
+
+
+
         <TextView
             android:id="@+id/tvWithPvr"
+            android:fontFamily="@font/sfprodisplay_bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/llFirstCard"
             android:layout_marginTop="20dp"
             android:gravity="center"
+            android:text="Joining Benefits"
             android:textColor="@color/white"
-            android:textSize="14sp"
-            tools:text="Joining Benefits" />
+            android:textSize="14sp" />
+
 
         <View
             android:layout_width="60dp"
             android:layout_height="1dp"
-            android:layout_gravity="center_horizontal"
+            android:background="@color/pvr_yellow"
             android:layout_marginTop="@dimen/padding_10"
             android:layout_marginBottom="@dimen/padding_10"
-            android:background="@color/pvr_yellow" />
+            android:layout_gravity="center_horizontal"/>
 
         <ImageView
             android:layout_width="@dimen/dimen_30dp"
             android:layout_height="@dimen/dimen_30dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/dimen_20dp"
-            android:src="@drawable/privilege_star"
             android:visibility="gone"
-            tools:ignore="ContentDescription" />
+            android:src="@drawable/privilege_star"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="@dimen/dimen_40dp"
-            android:layout_marginTop="@dimen/dimen_8dp"
-            android:layout_marginEnd="@dimen/dimen_40dp"
-            android:gravity="center"
-            android:textColor="@color/white"
             android:textSize="15sp"
-            tools:text="Food &amp; Beverages Voucher Worth INR 200" />
-
+            android:gravity="center"
+            android:fontFamily="@font/sf_pro_text_medium"
+            android:layout_marginStart="@dimen/dimen_40dp"
+            android:layout_marginEnd="@dimen/dimen_40dp"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:text="Food &amp; Beverages Voucher Worth INR 200"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="@dimen/dimen_40dp"
-            android:layout_marginTop="@dimen/dimen_8dp"
-            android:layout_marginEnd="@dimen/dimen_40dp"
-            android:gravity="center"
-            android:textColor="@color/white"
             android:textSize="12sp"
-            tools:text="(On spend of INR 800 get a discount of INR 200)" />
+            android:gravity="center"
+            android:layout_marginStart="@dimen/dimen_40dp"
+            android:layout_marginEnd="@dimen/dimen_40dp"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:text="(On spend of INR 800 get a discount of INR 200)"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dimen_30dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/dimen_20dp"
-            android:src="@drawable/privilege_logo"
-            tools:ignore="ContentDescription" />
+            android:src="@drawable/privilege_logo"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="@dimen/dimen_40dp"
-            android:layout_marginTop="@dimen/dimen_8dp"
-            android:layout_marginEnd="@dimen/dimen_40dp"
-            android:gravity="center"
-            android:textColor="@color/white"
             android:textSize="14sp"
-            tools:text="You will be auto-enrolled into PVR Privilege Program. In case already a member, you shall continue to avail all the benefits of the Privilege Program" />
+            android:gravity="center"
+            android:layout_marginStart="@dimen/dimen_40dp"
+            android:layout_marginEnd="@dimen/dimen_40dp"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:text="You will be auto-enrolled into PVR Privilege Program. In case already a member, you shall continue to avail all the benefits of the Privilege Program"/>
 
         <ImageView
             android:layout_width="@dimen/dimen_30dp"
             android:layout_height="@dimen/dimen_30dp"
+            android:visibility="gone"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/dimen_20dp"
-            android:src="@drawable/privilege_star"
-            android:visibility="gone"
-            tools:ignore="ContentDescription" />
+            android:src="@drawable/privilege_star"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="@dimen/dimen_40dp"
-            android:layout_marginTop="@dimen/dimen_8dp"
-            android:layout_marginEnd="@dimen/dimen_40dp"
-            android:gravity="center"
-            android:textColor="@color/white"
             android:textSize="14sp"
+            android:gravity="center"
             android:visibility="gone"
-            tools:text="Earn Privilege points @ 5% on spending for the purchase of additional tickets* (points not issued for Tickets purchased using the Passport voucher)" />
+            android:layout_marginStart="@dimen/dimen_40dp"
+            android:layout_marginEnd="@dimen/dimen_40dp"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:text="Earn Privilege points @ 5% on spending for the purchase of additional tickets* (points not issued for Tickets purchased using the Passport voucher)"/>
+
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/tvTerms2"
+            android:fontFamily="@font/sf_pro_text_regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/relative_layout"
+            android:paddingTop="8dp"
+            android:visibility="gone"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/dimen_20dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="12dp"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:visibility="gone"
             app:buttonTint="@color/pvr_yellow"
-            tools:text="I agree to the terms &amp; conditions" />
+            android:paddingBottom="12dp"
+            android:text="I agree to the terms &amp; conditions"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
 
-        <include layout="@layout/privilege_text_dialog" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/dimen_30dp"
+            android:background="@drawable/border_gray"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_30dp"
+                android:layout_marginTop="@dimen/dimen_30dp"
+                android:layout_marginEnd="@dimen/dimen_30dp"
+                android:gravity="center"
+                android:lineSpacingExtra="@dimen/dimen_5dp"
+                tools:text="Applicable currently for bookings made in Pune, Lucknow &amp; City"
+                android:textColor="#B3FFFFFF"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="@dimen/dimen_20dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="#4DFFFFFF" />
+
+            <TextView
+                android:id="@id/text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_30dp"
+                android:layout_marginEnd="@dimen/dimen_30dp"
+                android:gravity="center"
+                android:lineSpacingExtra="@dimen/dimen_5dp"
+                tools:text="Only one booking is covered by Passport under a booking session"
+                android:textColor="#B3FFFFFF"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="@dimen/dimen_20dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="#4DFFFFFF" />
+
+            <TextView
+                android:id="@+id/text4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_30dp"
+                android:layout_marginEnd="@dimen/dimen_30dp"
+                android:gravity="center"
+                android:lineSpacingExtra="@dimen/dimen_5dp"
+                tools:text="Ticket price limit is INR 400. If ticket price is more than INR 400, the difference shall be payable by patron"
+                android:textColor="#B3FFFFFF"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="#4DFFFFFF" />
+
+            <TextView
+                android:id="@+id/faqBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_30dp"
+                android:drawablePadding="@dimen/dimen_5dp"
+                android:gravity="center"
+                tools:text="FAQs"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                app:drawableEndCompat="@drawable/ic_arrow_right_white" />
+        </LinearLayout>
+
 
     </LinearLayout>
 

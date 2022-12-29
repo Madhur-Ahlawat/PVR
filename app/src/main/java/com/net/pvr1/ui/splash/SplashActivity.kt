@@ -57,17 +57,16 @@ class SplashActivity : AppCompatActivity() {
 
         //Check interNet Connection
         if (isConnected()) {
-            movedNext()
+            if (preferences.getCityName() == "") {
+                authViewModel.splash("")
+            } else {
+                authViewModel.splash(preferences.getCityName())
+            }
         } else {
             networkDialog()
         }
         summeryDetails()
-        if (preferences.getCityName() == "") {
 
-            authViewModel.splash("")
-        } else {
-            authViewModel.splash(preferences.getCityName())
-        }
     }
 
     private fun movedNext() {
@@ -190,7 +189,11 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun retrieveData(output: SplashResponse.Output) {
-
+        preferences.saveString(Constant.SharedPreference.NT,output.nt)
+        preferences.saveString(Constant.SharedPreference.NTBT,output.ntbn)
+        preferences.saveString(Constant.SharedPreference.IS_HL, output.hl)
+        preferences.saveString(Constant.SharedPreference.IS_LY, output.ly)
+        movedNext()
     }
 
 }

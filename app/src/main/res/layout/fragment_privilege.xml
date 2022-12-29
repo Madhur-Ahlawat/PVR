@@ -6,128 +6,122 @@
     android:layout_height="match_parent"
     android:background="@color/black">
 
-    <View
-        android:id="@+id/view172"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:id="@+id/parrentView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_loyalty"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@+id/tvTerms1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tvTerms1"
+            android:layout_alignParentTop="true"
+            android:fillViewport="true"
+            android:fitsSystemWindows="true"
+            android:scrollbars="none">
 
-            <View
-                android:id="@+id/view173"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView35"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent1"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="@+id/view173"
-                app:layout_constraintStart_toStartOf="@+id/view173"
-                app:layout_constraintTop_toTopOf="@+id/view173"
-                tools:itemCount="3"
-                tools:listitem="@layout/privilege_cards" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/include15"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerView35">
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/dimen_15dp"
+                android:orientation="vertical">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/privilegeCardList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent1"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/privilege_cards" />
+
+
                 <include
-                    android:id="@+id/include15Logout"
+                    android:id="@+id/privilegeView"
                     layout="@layout/loyalty"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/include16"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/include15" >
+                    android:visibility="visible" />
 
                 <include
+                    android:id="@+id/passportView"
                     layout="@layout/privilege_passport_know_more"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:visibility="gone" />
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/tvTerms1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tvEnroll"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
+            android:button="@drawable/checked_filter_selector"
+            android:fontFamily="@font/sf_pro_text_medium"
+            android:gravity="center_vertical"
+            android:text="I agree to the terms &amp; conditions"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:buttonTint="@color/yellow" />
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.core.widget.NestedScrollView>
-
-    <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/tvTerms1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/tvEnroll"
-        android:layout_centerInParent="true"
-        android:button="@drawable/checked_filter_selector"
-        android:gravity="center_vertical"
-        android:text="@string/i_agree_to_the_terms_amp_conditions"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        app:buttonTint="@color/yellow"
-        app:layout_constraintBottom_toTopOf="@+id/tvEnroll"
-        app:layout_constraintEnd_toEndOf="@+id/view172"
-        app:layout_constraintStart_toStartOf="@+id/view172" />
+        <TextView
+            android:id="@+id/tvEnroll"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/dimen_32dp"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:layout_marginEnd="@dimen/dimen_30dp"
+            android:layout_marginBottom="@dimen/dimen_20dp"
+            android:background="@drawable/round_corner_radius_rect"
+            android:backgroundTint="@color/pvr_yellow"
+            android:fontFamily="@font/sfprodisplay_bold"
+            android:gravity="center"
+            android:text="@string/pvr_privilege_join"
+            android:textColor="@color/pvr_dark_black"
+            android:textSize="22sp"
+            android:visibility="visible" />
 
 
-    <TextView
-        android:id="@+id/tvEnroll"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/round_corner_radius_rect"
-        android:backgroundTint="@color/pvr_yellow"
-        android:gravity="center"
-        android:text="@string/pvr_privilege_join"
-        android:textAllCaps="true"
-        android:textColor="@color/pvr_dark_black"
-        android:textSize="22sp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="32dp" />
+        <RelativeLayout
+            android:id="@+id/ivBack"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/back" />
+
+            <ImageView
+                android:id="@+id/shareBtn"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="end"
+                android:layout_marginLeft="30dp"
+                android:layout_marginEnd="@dimen/dimen_20dp"
+                android:src="@drawable/share" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

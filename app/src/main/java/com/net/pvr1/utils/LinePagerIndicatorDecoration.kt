@@ -2,24 +2,24 @@ package com.net.pvr1.utils
 
 import android.content.res.Resources
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.view.View
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
-import com.net.pvr1.utils.LinePagerIndicatorDecoration
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.Interpolator
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 
 class LinePagerIndicatorDecoration : ItemDecoration() {
-    private val colorActive = -0x00D9D9D9
-    private val colorInactive = 0x00000000
+    private val colorActive = -0x1
+    private val colorInactive = 0x66FFFFFF
 
     /**
      * Height of the space the indicator takes up at the bottom of the view.
      */
-    private val mIndicatorHeight = (DP * 20).toInt()
+    private val mIndicatorHeight = (DP * 16).toInt()
 
     /**
      * Indicator stroke width.
@@ -29,7 +29,7 @@ class LinePagerIndicatorDecoration : ItemDecoration() {
     /**
      * Indicator width.
      */
-    private val mIndicatorItemLength = DP * 30
+    private val mIndicatorItemLength = DP * 16
 
     /**
      * Padding between indicators.
@@ -88,7 +88,7 @@ class LinePagerIndicatorDecoration : ItemDecoration() {
         indicatorPosY: Float,
         itemCount: Int
     ) {
-        mPaint.color = colorInactive
+        mPaint.color = Color.parseColor("#DEDEDE")
 
         // width of item indicator including padding
         val itemWidth = mIndicatorItemLength + mIndicatorItemPadding
@@ -104,7 +104,8 @@ class LinePagerIndicatorDecoration : ItemDecoration() {
         c: Canvas, indicatorStartX: Float, indicatorPosY: Float,
         highlightPosition: Int, progress: Float, itemCount: Int
     ) {
-        mPaint.color = colorActive
+        mPaint.color = Color.parseColor("#000000")
+
 
         // width of item indicator including padding
         val itemWidth = mIndicatorItemLength + mIndicatorItemPadding
@@ -151,3 +152,4 @@ class LinePagerIndicatorDecoration : ItemDecoration() {
         private val DP = Resources.getSystem().displayMetrics.density
     }
 }
+

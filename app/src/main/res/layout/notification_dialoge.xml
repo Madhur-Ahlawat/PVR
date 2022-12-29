@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_gravity="bottom"
+    android:background="@drawable/top_curve_bottomsheet">
+
+    <ImageView
+        android:layout_width="@dimen/dimen_60dp"
+        android:layout_height="@dimen/dimen_60dp"
+        android:src="@drawable/noti_fi_icon"
+        android:layout_marginTop="@dimen/dimen_30dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:fontFamily="@font/helvetica_neu_bold"
+        android:textColor="@color/pvr_dark_black"
+        android:textSize="@dimen/dimen_18sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="You’re missing some\namazing offers"
+        />
+
+    <TextView
+        android:fontFamily="@font/sf_pro_text_light"
+        android:textColor="@color/pvr_dark_black"
+        android:textSize="@dimen/dimen_13sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="We’ll notify you as soon as the new\noffers are live in nearby theaters"
+        android:layout_marginBottom="20dp"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.joooonho.SelectableRoundedImageView
+            android:id="@+id/bannerImg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_30dp"
+            android:layout_marginEnd="@dimen/dimen_30dp"
+            android:layout_gravity="center_horizontal"
+            android:adjustViewBounds="true"
+            app:layout_constraintDimensionRatio="1:2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:sriv_left_bottom_corner_radius="6dp"
+            app:sriv_left_top_corner_radius="6dp"
+            app:sriv_right_bottom_corner_radius="6dp"
+            app:sriv_right_top_corner_radius="6dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include layout="@layout/horizontal_line"
+        android:layout_marginStart="@dimen/dimen_70dp"
+        android:layout_marginEnd="@dimen/dimen_70dp"
+        android:layout_marginTop="@dimen/dimen_30dp"
+        android:layout_height="1dp"
+        android:layout_width="match_parent" />
+
+    <TextView
+        android:fontFamily="@font/sf_pro_text_medium"
+        android:textColor="@color/pvr_dark_black"
+        android:textSize="@dimen/dimen_16sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:text="Enable notification to get notified on\nyour PVR app"
+        android:layout_marginBottom="20dp"/>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="@dimen/dimen_40dp"
+        android:layout_marginStart="@dimen/dimen_50dp"
+        android:layout_marginEnd="@dimen/dimen_50dp"
+        android:visibility="visible"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/turnOn"
+            android:fontFamily="@font/sfprodisplay_bold"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/pvr_yellow"
+            android:background="@drawable/yellow_book_curve"
+            android:gravity="center"
+            app:textAllCaps="true"
+            android:textSize="18sp"
+            android:text="Turn On"
+            />
+
+        <TextView
+            android:id="@+id/latter"
+            android:fontFamily="@font/sf_pro_text_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/yellow"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            app:textAllCaps="true"
+            android:textSize="@dimen/dimen_16sp"
+            android:text="@string/try_latter"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

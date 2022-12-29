@@ -13,6 +13,8 @@ data class PrivilegeHomeResponse(
         val ls: String,
         val passcancel: Boolean,
         val passport: Boolean,
+        var passportbuy: Boolean = false,
+
         val pcheck: String,
         val pcities: String,
         val pdays: String,

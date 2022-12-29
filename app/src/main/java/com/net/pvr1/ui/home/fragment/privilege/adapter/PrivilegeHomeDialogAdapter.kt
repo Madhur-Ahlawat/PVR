@@ -2,8 +2,10 @@ package com.net.pvr1.ui.home.fragment.privilege.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
@@ -47,9 +49,9 @@ class PrivilegeHomeDialogAdapter(
                     binding.textView275.show()
                 }
                 //title
-                binding.textView274.text=this.ph
+                binding.textView274.text=Html.fromHtml(this.ph)
                 //desc
-                binding.textView275.text=this.psh
+                binding.textView275.text=Html.fromHtml(this.psh.replace("Rs.".toRegex(),"₹"))
                 //click
                 holder.itemView.setOnClickListener {listener.privilegeHomeClick(this)  }
             }
@@ -62,6 +64,29 @@ class PrivilegeHomeDialogAdapter(
 
     interface RecycleViewItemClickListener {
         fun privilegeHomeClick(comingSoonItem: PrivilegeHomeResponse.Output.Pinfo)
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        val manager = recyclerView.layoutManager
+        if (manager is LinearLayoutManager && itemCount > 0) {
+            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                }
+
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val visiblePosition = manager.findFirstCompletelyVisibleItemPosition()
+                    println("review_position1234--->$visiblePosition")
+                    if (visiblePosition > -1) {
+//                        View v = llm.findViewByPosition(visiblePosition);
+//                        //do something
+//                        v.setBackgroundColor(Color.parseColor("#777777"));
+                    }
+                }
+            })
+        }
     }
 
 }

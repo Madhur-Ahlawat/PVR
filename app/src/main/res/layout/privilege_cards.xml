@@ -1,75 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:layout_gravity="center_horizontal"
-    android:background="@color/transparent1">
+    android:gravity="center"
+    android:background="@color/transparent1"
+    >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/loyalty_card"
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/transparent1"
+        android:layout_marginBottom="@dimen/dimen_8dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dimen_8dp"
-        android:layout_marginBottom="@dimen/dimen_8dp"
-        android:background="@color/transparent1"
+        android:id="@+id/loyalty_card"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
             android:id="@+id/rlMid"
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:background="@drawable/gradient_loyalty_corner"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/tc_bg"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone">
+                android:visibility="gone"
+                android:id="@+id/tc_bg">
+
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:scaleType="fitXY"
                     android:padding="@dimen/dimen_1dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/privilege_plus"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="ContentDescription" />
+                    android:src="@drawable/privilege_plus"/>
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/kotak_transparent_bg"
-                    android:scaleType="fitXY"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="ContentDescription" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:background="@drawable/kotak_tranceparrent_bg"
+                    android:scaleType="fitXY" />
+
+            </RelativeLayout>
 
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout86"
+            <RelativeLayout
+                android:id="@+id/rlmain_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                >
 
                 <ImageView
                     android:id="@+id/logoImg"
@@ -78,37 +69,31 @@
                     android:layout_centerVertical="true"
                     android:adjustViewBounds="true"
                     android:scaleType="fitStart"
-                    android:src="@drawable/kotak_logo"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="ContentDescription" />
+                    android:src="@drawable/kotak_logo" />
 
-
-                <ImageView
+                <com.joooonho.SelectableRoundedImageView
                     android:id="@+id/imgUserImage"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_alignParentTop="true"
+                    android:adjustViewBounds="true"
                     android:background="@drawable/user_png_img"
                     android:scaleType="centerCrop"
                     android:src="@drawable/user_png_img"
                     android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="ContentDescription" />
+                    app:sriv_left_bottom_corner_radius="0dp"
+                    app:sriv_oval="true"
+                    app:sriv_right_bottom_corner_radius="0dp" />
+
 
                 <LinearLayout
                     android:id="@+id/llImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="UseCompoundDrawables">
+                    android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/qr_code_img"
@@ -116,70 +101,69 @@
                         android:layout_height="24dp"
                         android:background="@color/black_75"
                         android:src="@drawable/ic_barcode_qr"
-                        android:visibility="visible"
-                        tools:ignore="ContentDescription" />
+                        android:visibility="visible" />
 
                     <TextView
+                        android:fontFamily="@font/sf_pro_text_regular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="@string/tap_to_expand"
+                        android:text="Tap to\nExpand"
                         android:textColor="@color/white"
-                        android:textSize="11sp"
+                        android:textSize="10sp"
                         android:visibility="gone" />
 
                 </LinearLayout>
+            </RelativeLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_below="@+id/constraintLayout86"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/rlmain_view"
                 android:layout_alignParentBottom="true"
                 android:gravity="bottom"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout86">
+                android:orientation="vertical">
 
 
                 <LinearLayout
-                    android:id="@+id/linearLayout6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_20dp"
+                    android:layout_above="@+id/passportView"
+                    android:layout_marginLeft="@dimen/dimen_20dp"
+                    android:layout_marginBottom="@dimen/padding_10"
                     android:gravity="bottom"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toTopOf="@+id/passportViewB"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tvName"
+                        android:fontFamily="@font/sf_pro_text_regular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLength="25"
                         android:maxLines="2"
                         android:textColor="@color/white"
                         android:textSize="16sp"
-                        tools:text="Akash Mishra" />
+                        tools:text="Shwet Mishra"
+
+                        />
 
                     <TextView
                         android:id="@+id/tvPoints_data"
+                        android:fontFamily="@font/sf_pro_text_regular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_star_points"
                         android:drawablePadding="@dimen/dimen_3dp"
                         android:textColor="#B3FFFFFF"
                         android:textSize="12sp"
-                        app:drawableStartCompat="@drawable/ic_star_points"
                         tools:text="36.85 Points" />
+
 
                 </LinearLayout>
 
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <RelativeLayout
                     android:id="@+id/passportViewB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -189,26 +173,24 @@
                     android:orientation="horizontal"
                     android:paddingTop="@dimen/dimen_8dp"
                     android:paddingBottom="@dimen/dimen_8dp"
-                    android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    android:visibility="visible">
 
                     <TextView
+                        android:fontFamily="@font/sfprodisplay_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/dimen_32dp"
-                        android:text="@string/available_visits"
+                        android:text="Available Visits:"
                         android:textColor="#B3000000"
                         android:textSize="15sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+
+                        />
 
                     <TextView
                         android:id="@+id/totalVisits"
+                        android:fontFamily="@font/sfprodisplay_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -216,19 +198,68 @@
                         android:layout_gravity="center_vertical|end"
                         android:layout_marginStart="@dimen/dimen_15dp"
                         android:layout_marginEnd="@dimen/dimen_20dp"
+                        android:text="8 Visits"
                         android:textColor="#B3000000"
                         android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="8 Visits" />
+
+                        />
 
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                </RelativeLayout>
+            </RelativeLayout>
 
 
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_8dp"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:id="@+id/otherCardView"
+        android:layout_gravity="center_horizontal"
+        android:visibility="visible"
+        android:background="@color/transparent1"
+        app:cardBackgroundColor="@color/transparent1">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="@color/transparent1">
+
+            <com.joooonho.SelectableRoundedImageView
+                android:id="@+id/otherCardBg"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                app:sriv_left_bottom_corner_radius="@dimen/dimen_14dp"
+                app:sriv_left_top_corner_radius="@dimen/dimen_14dp"
+                app:sriv_right_bottom_corner_radius="@dimen/dimen_14dp"
+                app:sriv_right_top_corner_radius="@dimen/dimen_14dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/ic_privilege_unlock" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

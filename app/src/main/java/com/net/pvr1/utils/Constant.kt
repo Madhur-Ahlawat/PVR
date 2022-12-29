@@ -28,8 +28,10 @@ import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.more.response.ProfileResponse
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.ticketConfirmation.TicketConfirmationActivity
+import okhttp3.internal.and
 import java.net.MalformedURLException
 import java.net.URL
+import java.security.MessageDigest
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 
@@ -164,6 +166,30 @@ class Constant {
                 println("NameNotFoundException---" + e.message)
                 false
             }
+        }
+
+        fun onShareClick(context: Context,shareUrl: String,shareMessage:String){
+            /*System.out.println("ShareUrl"+shareURL+"fkfg"+shareMessage);*/
+            val sendIntent = Intent()
+            sendIntent.action = Intent.ACTION_SEND
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "$shareMessage $shareUrl")
+            sendIntent.type = "text/plain"
+            context.startActivity(sendIntent)
+        }
+
+        fun getDid():String{
+            return ""
+        }
+
+        @Throws(Exception::class)
+        fun getHash(text: String): String {
+            val mdText = MessageDigest.getInstance("SHA-512")
+            val byteData = mdText.digest(text.toByteArray())
+            val sb = StringBuffer()
+            for (i in byteData.indices) {
+                sb.append(((byteData[i] and 0xff) + 0x100).toString(16).substring(1))
+            }
+            return sb.toString()
         }
 
     }

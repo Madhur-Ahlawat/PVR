@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.text.TextUtils
 import android.view.*
 import android.view.View.OnTouchListener
@@ -16,11 +17,13 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.SnapHelper
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.FragmentHomeBinding
@@ -32,6 +35,7 @@ import com.net.pvr1.ui.formats.FormatsActivity
 import com.net.pvr1.ui.home.fragment.home.adapter.*
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
+import com.net.pvr1.ui.home.interfaces.PlayPopup
 import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingActivity
 import com.net.pvr1.ui.player.PlayerActivity
 import com.net.pvr1.ui.search.searchHome.SearchHomeActivity
@@ -85,6 +89,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     private var ivPlay: LinearLayout? = null
     private var RlBanner: RelativeLayout? = null
     private var stories: StoriesProgressView? = null
+    private var listener: PlayPopup? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -98,6 +103,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     @SuppressLint("CutPasteId")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        listener = activity as PlayPopup?
 
         tvButton = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
             .findViewById(R.id.tv_button))
@@ -189,9 +195,10 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         //banner
         ivCross?.setOnClickListener {
             RlBanner?.hide()
+            listener?.onShowNotification()
+            listener?.onShowPrivilege()
 //                Constant.PvrHB = ""
         }
-        RlBanner?.hide()
 
     }
 
@@ -284,27 +291,25 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         }
 
         //Promotion
-        val gridLayoutSlider =
-            GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
-        binding?.recyclerPromotion?.layoutManager = gridLayoutSlider
-        binding?.recyclerPromotion?.adapter = PromotionAdapter(requireActivity(), output.ph)
-
+        if (output.ph.isNotEmpty())
+        updatePH(output.ph)
         //Movies
         val gridLayoutMovies = GridLayoutManager(context, 2)
         binding?.recyclerMovies?.layoutManager = LinearLayoutManager(context)
         val adapterMovies = HomeMoviesAdapter(requireActivity(), output.mv, this)
         binding?.recyclerMovies?.layoutManager = gridLayoutMovies
         binding?.recyclerMovies?.adapter = adapterMovies
+        ViewCompat.setNestedScrollingEnabled(binding?.recyclerMovies!!, false);
 
         //Trailer
+        val layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        val snapHelper: SnapHelper = PagerSnapHelper()
+        binding?.recyclerTrailer?.layoutManager = layoutManager
         binding?.recyclerTrailer?.onFlingListener = null
-        val snapHelper = PagerSnapHelper()
-        snapHelper.attachToRecyclerView(binding?.recyclerTrailer)
-        val gridLayoutTrailer =
-            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
-        binding?.recyclerTrailer?.layoutManager = LinearLayoutManager(context)
+        snapHelper.attachToRecyclerView(binding?.recyclerTrailer!!)
         val adapterTrailer = HomeTrailerAdapter(requireActivity(), output.cp, this)
-        binding?.recyclerTrailer?.layoutManager = gridLayoutTrailer
+        binding?.recyclerTrailer?.layoutManager = layoutManager
         binding?.recyclerTrailer?.adapter = adapterTrailer
 
         binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
@@ -331,10 +336,13 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
 
         if (output.rm != null) {
+            binding?.constraintLayout135?.show()
             recommend(output.rm)
+        }else{
+            binding?.constraintLayout135?.hide()
         }
 
-        if (bannerShow == 0) {
+        if (bannerShow == 0 && output.pu.isNotEmpty()) {
             initBanner(output.pu)
         }
 
@@ -342,7 +350,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     @SuppressLint("SetTextI18n")
     private fun recommend(rm: HomeResponse.Rm) {
-        if (rm != null) {
             //image
             Glide.with(this).load(rm.i).into(binding?.homeRecommend?.ivRecomm!!)
             //trailer
@@ -382,7 +389,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
             if (!TextUtils.isEmpty(rm.rtt)) binding?.homeRecommend?.tvRecomm?.text =
                 rm.rtt else binding?.homeRecommend?.tvRecomm?.text = "TRENDING"
-        }
 
     }
 
@@ -433,7 +439,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         if (type!!.size > 1) {
             binding?.filterFab?.setImageResource(R.drawable.filter_selected)
             appliedFilterItem = filterItemSelected!!
-            binding?.appliedFilter?.visibility = View.VISIBLE
             val containLanguage = type.contains("language")
             if (containLanguage) {
                 val index = type.indexOf("language")
@@ -483,7 +488,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             }
             getMovieFormatFromApi(true)
         } else {
-            binding?.appliedFilter?.visibility = View.GONE
             binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
         }
     }
@@ -493,7 +497,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         buttonPressed = ArrayList()
         generseleced = ArrayList()
         appliedFilterItem = HashMap()
-        binding?.appliedFilter?.visibility = View.GONE
         authViewModel.home(
             preferences.getCityName(),
             "",
@@ -571,9 +574,9 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 oPenDialogQR()
             }
 
-            authViewModel.nextBooking(
-                preferences.getUserId(), Constant().getDeviceId(requireActivity())
-            )
+//            authViewModel.nextBooking(
+//                preferences.getUserId(), Constant().getDeviceId(requireActivity())
+//            )
         } else {
             binding?.privilegeLoginUi?.hide()
             binding?.privilegeLogOutUi?.show()
@@ -610,6 +613,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             skip?.setOnTouchListener(onTouchListener)
             tvButton?.setOnClickListener {
                 RlBanner?.hide()
+                listener?.onShowNotification()
+                listener?.onShowPrivilege()
                 if (bannerModels != null && bannerModels.size > 0 && bannerModels[counterStory].type.equals("image",ignoreCase = true)
 //                        .equalsIgnoreCase("image")
                 ) {
@@ -663,6 +668,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
             ivPlay?.setOnClickListener {
                 RlBanner?.hide()
+                listener?.onShowNotification()
+                listener?.onShowPrivilege()
                 if (bannerModels != null && bannerModels.size > 0 && bannerModels[counterStory].type.equals("video",ignoreCase = true)
 //                        .equalsIgnoreCase("video")
 
@@ -672,6 +679,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
         } else {
             RlBanner?.hide()
+            listener?.onShowNotification()
+            listener?.onShowPrivilege()
         }
     }
 
@@ -723,6 +732,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         stories?.startStories()
         currentPage = 0
         RlBanner?.hide()
+        listener?.onShowNotification()
+        listener?.onShowPrivilege()
     }
 
     private fun oPenDialogQR() {
@@ -752,5 +763,44 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         }
         dialogQR.show()
     }
+
+    private fun updatePH(phd: ArrayList<HomeResponse.Ph>?) {
+        if (phd != null && phd.size > 0) {
+            binding?.includePlaceHolder?.placeHolderView?.show()
+            val layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            val snapHelper: SnapHelper = PagerSnapHelper()
+            binding?.includePlaceHolder?.recyclerPromotion?.layoutManager = layoutManager
+            binding?.includePlaceHolder?.recyclerPromotion?.onFlingListener = null
+            snapHelper.attachToRecyclerView(binding?.includePlaceHolder?.recyclerPromotion!!)
+            binding?.includePlaceHolder?.recyclerPromotion?.layoutManager = layoutManager
+            val adapter = PromotionAdapter(requireActivity(), phd)
+            binding?.includePlaceHolder?.recyclerPromotion?.adapter = adapter
+            if (phd.size > 1) {
+                val speedScroll = 5000
+                val handler = Handler()
+                val runnable: Runnable = object : Runnable {
+                    var count = 0
+                    var flag = true
+                    override fun run() {
+                        if (count < adapter.itemCount) {
+                            if (count == adapter.itemCount - 1) {
+                                flag = false
+                            } else if (count == 0) {
+                                flag = true
+                            }
+                            if (flag) count++ else count--
+                            binding?.includePlaceHolder?.recyclerPromotion?.smoothScrollToPosition(count)
+                            handler.postDelayed(this, speedScroll.toLong())
+                        }
+                    }
+                }
+                handler.postDelayed(runnable, speedScroll.toLong())
+            }
+        } else {
+            binding?.includePlaceHolder?.placeHolderView?.hide()
+        }
+    }
+
 
 }

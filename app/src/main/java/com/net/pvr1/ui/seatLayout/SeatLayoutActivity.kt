@@ -28,7 +28,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySeatLayoutBinding
-import com.net.pvr1.ui.bookingSession.response.BookingResponse.Output.*
 import com.net.pvr1.ui.bookingSession.response.BookingResponse.Output.Cinema.*
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.dailogs.LoaderDialog

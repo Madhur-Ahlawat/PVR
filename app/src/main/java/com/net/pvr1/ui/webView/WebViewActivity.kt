@@ -28,15 +28,22 @@ class WebViewActivity : AppCompatActivity() {
         println("webUrl--->${get}")
         movedNext()
 
-        if (from == "merchandise"){
-            binding?.include3?.textView108?.text= title
-            loadWebData(get)
-        }else if (from == "PVRcare"){
-            binding?.include3?.textView108?.text= title
-            loadWebData(get)
-        }else{
-            binding?.include3?.textView108?.text= title
-            loadWebData(get)
+        when (from) {
+            "merchandise" -> {
+                binding?.include3?.textView108?.text= title
+                loadWebData(get)
+            }
+            "PVRcare" -> {
+                binding?.include3?.textView108?.text= title
+                loadWebData(get)
+            }"passFaq" -> {
+                binding?.include3?.textView108?.text= title
+                loadWebData(get)
+            }
+            else -> {
+                binding?.include3?.textView108?.text= title
+                loadWebData(get)
+            }
         }
 
     }

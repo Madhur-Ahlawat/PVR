@@ -6,21 +6,19 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.PrivilegeImageItemBinding
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.utils.Constant
-import org.json.JSONException
 
 
 @Suppress("DEPRECATION")
 class PrivilegeTypeAdapter(
     private var nowShowingList: ArrayList<PrivilegeHomeResponse.Output.Pinfo>,
-    private var context: Activity,
-    private var listener: RecycleViewItemClickListener,
-    private var recyclerView: RecyclerView?
+    private var context: Activity
 ) : RecyclerView.Adapter<PrivilegeTypeAdapter.ViewHolder>() {
     private val displayMetrics = DisplayMetrics()
     private var screenWidth = 0
@@ -50,19 +48,6 @@ class PrivilegeTypeAdapter(
                     .into(binding.imageView15)
 
                 //click
-                recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                        super.onScrollStateChanged(recyclerView, newState)
-                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                            rowIndex= position
-                            try {
-                                listener.privilegeTypeScroll(nowShowingList,position)
-                            } catch (e: JSONException) {
-                                e.printStackTrace()
-                            }
-                        }
-                    }
-                })
 
                 if (nowShowingList.size > 1) {
                     if (nowShowingList.size == 2) {
@@ -121,11 +106,34 @@ class PrivilegeTypeAdapter(
         return if (nowShowingList.isNotEmpty()) nowShowingList.size else 0
     }
 
-    interface RecycleViewItemClickListener {
-        fun privilegeTypeScroll(
-            nowShowingList: ArrayList<PrivilegeHomeResponse.Output.Pinfo>,
-            position: Int
-        )
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        val manager = recyclerView.layoutManager
+        if (manager is LinearLayoutManager && itemCount > 0) {
+            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                }
+
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val visiblePosition = manager.findFirstCompletelyVisibleItemPosition()
+                    //                    System.out.println("review_position1234--->"+visiblePosition);
+                    if (visiblePosition > -1) {
+//                        View v = llm.findViewByPosition(visiblePosition);
+//                        //do something
+//                        v.setBackgroundColor(Color.parseColor("#777777"));
+                    }
+                }
+            })
+        }
     }
+
+//    interface RecycleViewItemClickListener {
+//        fun privilegeTypeScroll(
+//            nowShowingList: ArrayList<PrivilegeHomeResponse.Output.Pinfo>,
+//            position: Int
+//        )
+//    }
 
 }

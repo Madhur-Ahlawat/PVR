@@ -79,11 +79,11 @@
 
     <ImageView
         android:id="@+id/ivCross"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="20dp"
+        android:layout_height="@dimen/dimen_20dp"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/dimen_8dp"
-        android:layout_marginEnd="@dimen/dimen_8dp"
+        android:layout_marginEnd="@dimen/dimen_12dp"
         android:src="@drawable/close"
         tools:ignore="ContentDescription"
         app:tint="@color/white" />

@@ -168,7 +168,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.home.fragment.privilege.PrivilegeLogInActivity"
+            android:name=".ui.home.fragment.privilege.NonMemberActivity"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data

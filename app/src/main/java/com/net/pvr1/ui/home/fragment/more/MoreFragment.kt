@@ -275,7 +275,6 @@ class MoreFragment : Fragment() {
     }
 
     private fun logOut() {
-        preferences.clearData()
         val dialog = OptionDialog(requireActivity(),
             R.mipmap.ic_launcher_foreground,
             R.string.app_name,
@@ -283,7 +282,7 @@ class MoreFragment : Fragment() {
             positiveBtnText = R.string.yes,
             negativeBtnText = R.string.no,
             positiveClick = {
-                preferences.clearData()
+                preferences.clearData(requireActivity())
                 val intent = Intent(requireActivity(), LoginActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
