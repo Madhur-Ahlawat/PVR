@@ -20,7 +20,7 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySplashBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.home.HomeActivity
+import com.net.pvr1.ui.food.old.OldFoodActivity
 import com.net.pvr1.ui.location.enableLocation.EnableLocationActivity
 import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.ui.login.LoginActivity
@@ -41,9 +41,9 @@ class SplashActivity : AppCompatActivity() {
     private var networkDialog: Dialog? = null
     private val authViewModel: SplashViewModel by viewModels()
     private var loader: LoaderDialog? = null
-    val MyPREFERENCES = "MyPrefs"
-    var sharedpreferences: SharedPreferences? = null
-    val OnBoardingClick = "Name"
+    private val MyPREFERENCES = "MyPrefs"
+    private var sharedpreferences: SharedPreferences? = null
+    private val OnBoardingClick = "Name"
     private var clickOnBoarding: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,18 +72,17 @@ class SplashActivity : AppCompatActivity() {
     private fun movedNext() {
         val runnable = Runnable {
             if (preferences.getIsLogin()) {
-                if (!Constant().isLocationEnabled(this@SplashActivity)){
+                if (!Constant().isLocationEnabled(this@SplashActivity)) {
                     val intent = Intent(this@SplashActivity, EnableLocationActivity::class.java)
                     startActivity(intent)
                     finish()
-                } else if (preferences.getCityName()==""){
+                } else if (preferences.getCityName() == "") {
                     val intent = Intent(this@SplashActivity, SelectCityActivity::class.java)
                     startActivity(intent)
                     finish()
-                }else{
-//                    val intent = Intent(this@SplashActivity, StarPassActivity::class.java)
-//                    val intent = Intent(this@SplashActivity, OldFoodActivity::class.java)
-                    val intent = Intent(this@SplashActivity, HomeActivity::class.java)
+                } else {
+//                    val intent = Intent(this@SplashActivity, HomeActivity::class.java)
+                    val intent = Intent(this@SplashActivity, OldFoodActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
@@ -99,6 +98,7 @@ class SplashActivity : AppCompatActivity() {
                 }
             }
         }
+
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed(runnable, 3000)
     }
@@ -128,8 +128,7 @@ class SplashActivity : AppCompatActivity() {
         wlp?.flags = wlp?.flags?.and(WindowManager.LayoutParams.FLAG_BLUR_BEHIND.inv())
         window?.attributes = wlp
         networkDialog?.window?.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.MATCH_PARENT
+            WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT
         )
 
         val restart = networkDialog?.findViewById<View>(R.id.view49)
@@ -159,10 +158,8 @@ class SplashActivity : AppCompatActivity() {
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -174,10 +171,8 @@ class SplashActivity : AppCompatActivity() {
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
@@ -190,8 +185,8 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun retrieveData(output: SplashResponse.Output) {
-        preferences.saveString(Constant.SharedPreference.NT,output.nt)
-        preferences.saveString(Constant.SharedPreference.NTBT,output.ntbn)
+        preferences.saveString(Constant.SharedPreference.NT, output.nt)
+        preferences.saveString(Constant.SharedPreference.NTBT, output.ntbn)
         preferences.saveString(Constant.SharedPreference.IS_HL, output.hl)
         preferences.saveString(Constant.SharedPreference.IS_LY, output.ly)
         movedNext()

@@ -18,7 +18,6 @@ import com.net.pvr1.databinding.OldFoodItemsBinding
 import com.net.pvr1.ui.food.old.reponse.OldFoodResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.hide
-import com.net.pvr1.utils.printLog
 import com.net.pvr1.utils.show
 
 class OldAllFoodAdapter(
@@ -68,7 +67,6 @@ class OldAllFoodAdapter(
 
                 //price
                 binding.tvPrice.text = context.getString(R.string.currency) + Constant.DECIFORMAT.format(this.dp / 100.0)
-                printLog("------------>${this.qt}")
                 //UiShowHide
                 if (this.qt > 0) {
                     binding.beforeAdd.hide()

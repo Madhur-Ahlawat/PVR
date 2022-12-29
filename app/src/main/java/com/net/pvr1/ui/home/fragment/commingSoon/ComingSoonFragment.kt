@@ -42,7 +42,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListener,
-    ComingSoonMovieAdapter.VideoPlay, GenericFilterComing.onButtonSelected  , StoriesProgressView.StoriesListener{
+    ComingSoonMovieAdapter.VideoPlay, GenericFilterComing.onButtonSelected ,
+    StoriesProgressView.StoriesListener{
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityComingSoonBinding? = null
