@@ -8,15 +8,16 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-feature android:name="android.hardware.camera.any" />
-    <uses-permission android:name="android.permission.CAMERA" />
 
+    <uses-feature android:name="android.hardware.camera.any" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+<!--    Youtube Api initialization-->
     <queries>
         <intent>
             <action android:name="com.google.android.youtube.api.service.START" />
         </intent>
     </queries>
-
     <application
         android:name=".NoteApplication"
         android:allowBackup="true"
@@ -25,6 +26,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
+        <activity
+            android:name=".ui.food.old.OldFoodActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".ui.scanner.bookings.SelectBookingsActivity"
             android:exported="false">

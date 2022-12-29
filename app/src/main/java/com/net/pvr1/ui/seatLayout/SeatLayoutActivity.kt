@@ -34,6 +34,7 @@ import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.FoodActivity
+import com.net.pvr1.ui.food.old.OldFoodActivity
 import com.net.pvr1.ui.seatLayout.adapter.CinemaShowsAdapter
 import com.net.pvr1.ui.seatLayout.adapter.ShowsAdapter
 import com.net.pvr1.ui.seatLayout.request.ReserveSeatRequest
@@ -85,12 +86,12 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     //Shows
     private var showsArray = ArrayList<Child.Sw.S>()
     private var selectSeatPriceCode = ArrayList<ReserveSeatRequest.Seat>()
+
     //Cinema Session
     private var cinemaSessionShows = ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>()
     private var textTermsAndCondition: TextView? = null
     private var tncValue = 1
     private var offerEnable = false
-
 
 
     @SuppressLint("SetTextI18n")
@@ -101,7 +102,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         setContentView(view)
         //from Movie
         if (intent.getStringExtra("from") == "cinema") {
-            cinemaSessionShows =  intent.getSerializableExtra("CinemaShows") as ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>
+            cinemaSessionShows =
+                intent.getSerializableExtra("CinemaShows") as ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>
             cinemaShows()
         } else {
             showsArray = intent.getSerializableExtra("shows") as ArrayList<Child.Sw.S>
@@ -111,38 +113,28 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         // manage offer
         if (intent.getStringExtra("skip").toString() == "false") {
             binding?.constraintLayout60?.show()
-            binding?.textView202?.text="(You’ll save ${getString(R.string.currency)}  ${intent.getStringExtra("discountPrice").toString()})"
-            offerEnable=true
+            binding?.textView202?.text = "(You’ll save ${getString(R.string.currency)}  ${
+                intent.getStringExtra("discountPrice").toString()
+            })"
+            offerEnable = true
         } else {
             binding?.constraintLayout60?.hide()
-            offerEnable= false
+            offerEnable = false
         }
         //Remove Offer
         binding?.textView203?.setOnClickListener {
             binding?.llRowName?.removeAllViews()
-            offerEnable= false
+            offerEnable = false
             binding?.constraintLayout60?.hide()
             authViewModel.seatLayout(
-                CINEMA_ID,
-                SESSION_ID,
-                "",
-                "",
-                "",
-                offerEnable,
-                ""
+                CINEMA_ID, SESSION_ID, "", "", "", offerEnable, ""
             )
         }
         //from Shows
         sessionId = SESSION_ID
 
         authViewModel.seatLayout(
-            CINEMA_ID,
-            sessionId,
-            "",
-            "",
-            "",
-            offerEnable,
-            ""
+            CINEMA_ID, sessionId, "", "", "", offerEnable, ""
         )
         seatLayout()
         reserveSeat()
@@ -157,8 +149,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog.setContentView(R.layout.seat_layout_dilog)
             dialog.window!!.setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
             )
             val privacy = dialog.findViewById<TextView>(R.id.textView304)
             val btnName = dialog.findViewById<TextView>(R.id.textView5)
@@ -242,10 +233,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -257,10 +246,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
@@ -291,8 +278,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                             positiveClick = {
                                 finish()
                             },
-                            negativeClick = {
-                            })
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -304,10 +290,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
@@ -323,8 +307,11 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         SELECTED_SEAT = selectedSeats.size
         if (output.nf == "true") {
             startActivity(Intent(this, FoodActivity::class.java))
+        } else if (output.nf == "false") {
+            startActivity(Intent(this, OldFoodActivity::class.java))
         } else {
             startActivity(Intent(this, SummeryActivity::class.java))
+
         }
 
     }
@@ -347,8 +334,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                             positiveClick = {
                                 finish()
                             },
-                            negativeClick = {
-                            })
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -360,10 +346,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
@@ -383,8 +367,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             println("price--->${price}--->${seatId}")
             selectSeatPriceCode.add(
                 ReserveSeatRequest.Seat(
-                    price.toString(),
-                    seatId.toString()
+                    price.toString(), seatId.toString()
                 )
             )
         }
@@ -398,9 +381,9 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     }
 
     private fun retrieveData(data: SeatResponse.Output) {
-        if (data.ca_a){
+        if (data.ca_a) {
             binding?.imageView97?.show()
-        }else{
+        } else {
             binding?.imageView97?.hide()
         }
         //title
@@ -422,8 +405,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 val linearLayout = LinearLayout(this)
                 linearLayout.orientation = LinearLayout.HORIZONTAL
                 val layoutParams = LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
                 )
                 linearLayout.layoutParams = layoutParams
                 binding?.llSeatLayout?.addView(linearLayout)
@@ -438,8 +420,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 //Draw Area============
                 val rlLayout = RelativeLayout(this)
                 val layoutParams = LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    Constant().convertDpToPixel(50F, this)
+                    ViewGroup.LayoutParams.MATCH_PARENT, Constant().convertDpToPixel(50F, this)
                 )
                 rlLayout.layoutParams = layoutParams
                 try {
@@ -451,8 +432,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 }
                 val centerLayout = LinearLayout(this)
                 val centerLayoutParameter = RelativeLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
+                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
                 )
                 centerLayoutParameter.addRule(RelativeLayout.CENTER_IN_PARENT)
                 centerLayout.gravity = Gravity.CENTER_VERTICAL
@@ -460,8 +440,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 centerLayout.layoutParams = centerLayoutParameter
                 val padding: Int = Constant().convertDpToPixel(2F, this)
                 val layoutParameter1 = LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
+                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
                 )
                 val textView = TextView(this)
                 textView.layoutParams = layoutParameter1
@@ -480,7 +459,10 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.seat_t_c_dialog_layout)
-        dialog.window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.window!!.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
         dialog.window!!.setGravity(Gravity.BOTTOM)
@@ -513,8 +495,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 seatView.id = i
                 var layoutParams: LinearLayout.LayoutParams
                 if (!isDit) layoutParams = LinearLayout.LayoutParams(
-                    Constant().convertDpToPixel(20F, this),
-                    Constant().convertDpToPixel(20F, this)
+                    Constant().convertDpToPixel(20F, this), Constant().convertDpToPixel(20F, this)
                 ) else {
                     layoutParams =
                         if (seat.s == Constant.BIKE || seat.s == Constant.BIKE_SEAT_BOOKED || seat.s == Constant.SEAT_SELECTED_BIKE) {
@@ -560,8 +541,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                     }
                     seatView.setTextColor(
                         ContextCompat.getColor(
-                            this,
-                            R.color.black_with_fifteen_opacity
+                            this, R.color.black_with_fifteen_opacity
                         )
                     )
                 } else if (seat.s == Constant.SEAT_SELECTED) {
@@ -684,8 +664,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             } else {
                 val seatView = TextView(this)
                 val layoutParams: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
-                    Constant().convertDpToPixel(20F, this),
-                    Constant().convertDpToPixel(20F, this)
+                    Constant().convertDpToPixel(20F, this), Constant().convertDpToPixel(20F, this)
                 )
                 seatView.layoutParams = layoutParams
                 val margin: Int = Constant().convertDpToPixel(2F, this)
@@ -702,11 +681,9 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             val txtRowName = TextView(this)
             txtRowName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
             val layoutParams: LinearLayout.LayoutParams = if (isDit) LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                Constant().convertDpToPixel(40F, this)
+                ViewGroup.LayoutParams.MATCH_PARENT, Constant().convertDpToPixel(40F, this)
             ) else LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                Constant().convertDpToPixel(45F, this)
+                ViewGroup.LayoutParams.MATCH_PARENT, Constant().convertDpToPixel(45F, this)
             )
             txtRowName.gravity = Gravity.CENTER
             val margin: Int = Constant().convertDpToPixel(2F, this)
@@ -720,11 +697,9 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             txtRowName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
             txtRowName.textSize = Color.parseColor("#767373").toFloat()
             val layoutParams: LinearLayout.LayoutParams = if (isDit) LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                Constant().convertDpToPixel(40F, this)
+                ViewGroup.LayoutParams.MATCH_PARENT, Constant().convertDpToPixel(40F, this)
             ) else LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                Constant().convertDpToPixel(20F, this)
+                ViewGroup.LayoutParams.MATCH_PARENT, Constant().convertDpToPixel(20F, this)
             )
             val margin: Int = Constant().convertDpToPixel(4F, this)
             txtRowName.gravity = Gravity.CENTER
@@ -756,10 +731,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                 "Companion seat is only available with a wheelchair seat.",
                                 positiveBtnText = R.string.ok,
                                 negativeBtnText = R.string.no,
-                                positiveClick = {
-                                },
-                                negativeClick = {
-                                })
+                                positiveClick = {},
+                                negativeClick = {})
                             dialog.show()
 
                         } else {
@@ -772,10 +745,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                     "These are couple recliners.",
                                     positiveBtnText = R.string.ok,
                                     negativeBtnText = R.string.no,
-                                    positiveClick = {
-                                    },
-                                    negativeClick = {
-                                    })
+                                    positiveClick = {},
+                                    negativeClick = {})
                                 dialog.show()
 
                             }
@@ -787,10 +758,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                     messageText,
                                     positiveBtnText = R.string.ok,
                                     negativeBtnText = R.string.no,
-                                    positiveClick = {
-                                    },
-                                    negativeClick = {
-                                    })
+                                    positiveClick = {},
+                                    negativeClick = {})
                                 dialog.show()
                             } else {
                                 if (selectedSeats.size < 10) {
@@ -802,10 +771,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                             messageText,
                                             positiveBtnText = R.string.ok,
                                             negativeBtnText = R.string.no,
-                                            positiveClick = {
-                                            },
-                                            negativeClick = {
-                                            })
+                                            positiveClick = {},
+                                            negativeClick = {})
                                         dialog.show()
                                     } else {
                                         if (selectedSeats.size > 0 && seat.bu) {
@@ -815,18 +782,15 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                                 messageText,
                                                 positiveBtnText = R.string.ok,
                                                 negativeBtnText = R.string.no,
-                                                positiveClick = {
-                                                },
-                                                negativeClick = {
-                                                })
+                                                positiveClick = {},
+                                                negativeClick = {})
                                             dialog.show()
                                         } else {
                                             seat.s = Constant.SEAT_SELECTED
                                             printLog("EnterInSeat-- seat.s->${seat.st}size--->${noOfRowsSmall?.size}")
 
-                                            if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1]
-                                                .s[num2]
-                                                .s = Constant.SEAT_SELECTED
+                                            if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1].s[num2].s =
+                                                Constant.SEAT_SELECTED
                                             when (seat.st) {
                                                 1 -> {
                                                     seatView.text = ""
@@ -844,8 +808,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                                     seatView.setBackgroundResource(R.drawable.ic_selected)
                                                     seatView.setTextColor(
                                                         ContextCompat.getColor(
-                                                            this,
-                                                            R.color.black
+                                                            this, R.color.black
                                                         )
                                                     )
                                                 }
@@ -860,10 +823,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                         getString(R.string.max_seat_msz1),
                                         positiveBtnText = R.string.ok,
                                         negativeBtnText = R.string.no,
-                                        positiveClick = {
-                                        },
-                                        negativeClick = {
-                                        })
+                                        positiveClick = {},
+                                        negativeClick = {})
                                     dialog.show()
 
                                 }
@@ -904,14 +865,13 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                 seatView.setBackgroundResource(R.drawable.ic_vacant)
                                 seatView.setTextColor(
                                     ContextCompat.getColor(
-                                        this,
-                                        R.color.black_with_fifteen_opacity
+                                        this, R.color.black_with_fifteen_opacity
                                     )
                                 )
                             }
                         }
-                        if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1].s[num2]
-                            .s = Constant.SEAT_AVAILABEL
+                        if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1].s[num2].s =
+                            Constant.SEAT_AVAILABEL
                         removeSelectedSeats(seat)
                     }
                 } else if (seat.s == Constant.HATCHBACK) {
@@ -928,10 +888,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                 "Companion seat is only available with a wheelchair seat.",
                                 positiveBtnText = R.string.ok,
                                 negativeBtnText = R.string.no,
-                                positiveClick = {
-                                },
-                                negativeClick = {
-                                })
+                                positiveClick = {},
+                                negativeClick = {})
                             dialog.show()
 
                             if (flagHc1) hcSeat = false
@@ -943,10 +901,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                     "These are couple recliners.",
                                     positiveBtnText = R.string.ok,
                                     negativeBtnText = R.string.no,
-                                    positiveClick = {
-                                    },
-                                    negativeClick = {
-                                    })
+                                    positiveClick = {},
+                                    negativeClick = {})
                                 dialog.show()
 
                             }
@@ -957,10 +913,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                     messageText,
                                     positiveBtnText = R.string.ok,
                                     negativeBtnText = R.string.no,
-                                    positiveClick = {
-                                    },
-                                    negativeClick = {
-                                    })
+                                    positiveClick = {},
+                                    negativeClick = {})
                                 dialog.show()
 
                             } else {
@@ -972,10 +926,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                             messageText,
                                             positiveBtnText = R.string.ok,
                                             negativeBtnText = R.string.no,
-                                            positiveClick = {
-                                            },
-                                            negativeClick = {
-                                            })
+                                            positiveClick = {},
+                                            negativeClick = {})
                                         dialog.show()
 
                                     } else {
@@ -987,16 +939,13 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                                 messageText,
                                                 positiveBtnText = R.string.ok,
                                                 negativeBtnText = R.string.no,
-                                                positiveClick = {
-                                                },
-                                                negativeClick = {
-                                                })
+                                                positiveClick = {},
+                                                negativeClick = {})
                                             dialog.show()
                                         } else {
                                             seat.s = Constant.SEAT_SELECTED_HATCHBACK
-                                            if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1]
-                                                .s[num2]
-                                                .s = Constant.SEAT_SELECTED
+                                            if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1].s[num2].s =
+                                                Constant.SEAT_SELECTED
                                             when (seat.st) {
                                                 1 -> {
                                                     seatView.text = ""
@@ -1014,8 +963,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                                     seatView.setBackgroundResource(R.drawable.ic_selected)
                                                     seatView.setTextColor(
                                                         ContextCompat.getColor(
-                                                            this,
-                                                            R.color.black
+                                                            this, R.color.black
                                                         )
                                                     )
                                                 }
@@ -1031,10 +979,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                         getString(R.string.max_seat_msz),
                                         positiveBtnText = R.string.ok,
                                         negativeBtnText = R.string.no,
-                                        positiveClick = {
-                                        },
-                                        negativeClick = {
-                                        })
+                                        positiveClick = {},
+                                        negativeClick = {})
                                     dialog.show()
                                 }
                             }
@@ -1055,10 +1001,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                 "Companion seat is only available with a wheelchair seat.",
                                 positiveBtnText = R.string.ok,
                                 negativeBtnText = R.string.no,
-                                positiveClick = {
-                                },
-                                negativeClick = {
-                                })
+                                positiveClick = {},
+                                negativeClick = {})
                             dialog.show()
                         } else {
                             if (flagHc1) hcSeat = false
@@ -1070,10 +1014,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                     "These are couple recliners.",
                                     positiveBtnText = R.string.ok,
                                     negativeBtnText = R.string.no,
-                                    positiveClick = {
-                                    },
-                                    negativeClick = {
-                                    })
+                                    positiveClick = {},
+                                    negativeClick = {})
                                 dialog.show()
 
                             }
@@ -1084,10 +1026,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                     messageText,
                                     positiveBtnText = R.string.ok,
                                     negativeBtnText = R.string.no,
-                                    positiveClick = {
-                                    },
-                                    negativeClick = {
-                                    })
+                                    positiveClick = {},
+                                    negativeClick = {})
                                 dialog.show()
                             } else {
                                 if (selectedSeats.size < 10) {
@@ -1098,10 +1038,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                             messageText,
                                             positiveBtnText = R.string.ok,
                                             negativeBtnText = R.string.no,
-                                            positiveClick = {
-                                            },
-                                            negativeClick = {
-                                            })
+                                            positiveClick = {},
+                                            negativeClick = {})
                                         dialog.show()
                                     } else {
                                         if (selectedSeats.size > 0 && seat.bu) {
@@ -1111,16 +1049,13 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                                 messageText,
                                                 positiveBtnText = R.string.ok,
                                                 negativeBtnText = R.string.no,
-                                                positiveClick = {
-                                                },
-                                                negativeClick = {
-                                                })
+                                                positiveClick = {},
+                                                negativeClick = {})
                                             dialog.show()
                                         } else {
                                             seat.s = Constant.SEAT_SELECTED_BIKE
-                                            if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1]
-                                                .s[num2]
-                                                .s = Constant.SEAT_SELECTED
+                                            if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1].s[num2].s =
+                                                Constant.SEAT_SELECTED
                                             when (seat.st) {
                                                 1 -> {
                                                     seatView.text = ""
@@ -1138,8 +1073,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                                     seatView.setBackgroundResource(R.drawable.ic_selected)
                                                     seatView.setTextColor(
                                                         ContextCompat.getColor(
-                                                            this,
-                                                            R.color.black
+                                                            this, R.color.black
                                                         )
                                                     )
                                                 }
@@ -1156,10 +1090,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                         getString(R.string.max_seat_msz),
                                         positiveBtnText = R.string.ok,
                                         negativeBtnText = R.string.no,
-                                        positiveClick = {
-                                        },
-                                        negativeClick = {
-                                        })
+                                        positiveClick = {},
+                                        negativeClick = {})
                                     dialog.show()
                                 }
                             }
@@ -1179,10 +1111,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                 "Companion seat is only available with a wheelchair seat.",
                                 positiveBtnText = R.string.ok,
                                 negativeBtnText = R.string.no,
-                                positiveClick = {
-                                },
-                                negativeClick = {
-                                })
+                                positiveClick = {},
+                                negativeClick = {})
                             dialog.show()
 
                         } else {
@@ -1195,10 +1125,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                     "These are couple recliners.",
                                     positiveBtnText = R.string.ok,
                                     negativeBtnText = R.string.no,
-                                    positiveClick = {
-                                    },
-                                    negativeClick = {
-                                    })
+                                    positiveClick = {},
+                                    negativeClick = {})
                                 dialog.show()
 
                             }
@@ -1209,10 +1137,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                     messageText,
                                     positiveBtnText = R.string.ok,
                                     negativeBtnText = R.string.no,
-                                    positiveClick = {
-                                    },
-                                    negativeClick = {
-                                    })
+                                    positiveClick = {},
+                                    negativeClick = {})
                                 dialog.show()
                             } else {
                                 if (selectedSeats.size < 10) {
@@ -1223,10 +1149,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                             messageText,
                                             positiveBtnText = R.string.ok,
                                             negativeBtnText = R.string.no,
-                                            positiveClick = {
-                                            },
-                                            negativeClick = {
-                                            })
+                                            positiveClick = {},
+                                            negativeClick = {})
                                         dialog.show()
                                     } else {
                                         if (selectedSeats.size > 0 && seat.bu) {
@@ -1236,17 +1160,14 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                                 messageText,
                                                 positiveBtnText = R.string.ok,
                                                 negativeBtnText = R.string.no,
-                                                positiveClick = {
-                                                },
-                                                negativeClick = {
-                                                })
+                                                positiveClick = {},
+                                                negativeClick = {})
                                             dialog.show()
 
                                         } else {
                                             seat.s = Constant.SEAT_SELECTED_SUV
-                                            if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1]
-                                                .s[num2]
-                                                .s = Constant.SEAT_SELECTED
+                                            if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1].s[num2].s =
+                                                Constant.SEAT_SELECTED
                                             when (seat.st) {
                                                 1 -> {
                                                     seatView.text = ""
@@ -1264,8 +1185,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                                     seatView.setBackgroundResource(R.drawable.ic_selected)
                                                     seatView.setTextColor(
                                                         ContextCompat.getColor(
-                                                            this,
-                                                            R.color.black
+                                                            this, R.color.black
                                                         )
                                                     )
                                                 }
@@ -1282,10 +1202,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                         getString(R.string.max_seat_msz),
                                         positiveBtnText = R.string.ok,
                                         negativeBtnText = R.string.no,
-                                        positiveClick = {
-                                        },
-                                        negativeClick = {
-                                        })
+                                        positiveClick = {},
+                                        negativeClick = {})
                                     dialog.show()
 
                                 }
@@ -1325,14 +1243,13 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                 seatView.setBackgroundResource(R.drawable.ic_vacant)
                                 seatView.setTextColor(
                                     ContextCompat.getColor(
-                                        this,
-                                        R.color.black_with_fifteen_opacity
+                                        this, R.color.black_with_fifteen_opacity
                                     )
                                 )
                             }
                         }
-                        if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1].s[num2]
-                            .s = Constant.SEAT_AVAILABEL
+                        if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1].s[num2].s =
+                            Constant.SEAT_AVAILABEL
                         removeSelectedSeats(seat)
                         seatView.setBackgroundResource(R.drawable.ic_red_sedan)
                         seatView.setTextColor(ContextCompat.getColor(this, R.color.red_data))
@@ -1370,14 +1287,13 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                 seatView.setBackgroundResource(R.drawable.ic_vacant)
                                 seatView.setTextColor(
                                     ContextCompat.getColor(
-                                        this,
-                                        R.color.black_with_fifteen_opacity
+                                        this, R.color.black_with_fifteen_opacity
                                     )
                                 )
                             }
                         }
-                        if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1].s[num2]
-                            .s = Constant.SEAT_AVAILABEL
+                        if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1].s[num2].s =
+                            Constant.SEAT_AVAILABEL
                         removeSelectedSeats(seat)
                         seatView.text = ""
                         seatView.setBackgroundResource(R.drawable.ic_bike_normal)
@@ -1415,14 +1331,13 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                 seatView.setBackgroundResource(R.drawable.ic_vacant)
                                 seatView.setTextColor(
                                     ContextCompat.getColor(
-                                        this,
-                                        R.color.black_with_fifteen_opacity
+                                        this, R.color.black_with_fifteen_opacity
                                     )
                                 )
                             }
                         }
-                        if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1].s[num2]
-                            .s = Constant.SEAT_AVAILABEL
+                        if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1].s[num2].s =
+                            Constant.SEAT_AVAILABEL
                         removeSelectedSeats(seat)
                         seatView.setBackgroundResource(R.drawable.ic_blue_suv)
                         seatView.setTextColor(ContextCompat.getColor(this, R.color.blue_data))
@@ -1468,10 +1383,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 //                )
 //            )
 
-            if (!isDit) binding?.textView195?.text =
-                "No Seats Selected"
-            else binding?.textView195?.text =
-                "No Vehicle Slots Selected"
+            if (!isDit) binding?.textView195?.text = "No Seats Selected"
+            else binding?.textView195?.text = "No Vehicle Slots Selected"
         } else {
             binding?.textView195?.show()
             binding?.textView196?.show()
@@ -1548,8 +1461,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 //                )
 //            )
             if (!isDit) binding?.textView195?.text =
-                "No Seats Selected" else binding?.textView196?.text =
-                "No Vehicle Slots Selected"
+                "No Seats Selected" else binding?.textView196?.text = "No Vehicle Slots Selected"
         }
         var totalPrice = 0f
         val selectSeat = ArrayList<Spannable>()
@@ -1562,14 +1474,13 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 var seatNo: String
                 when (seatTagData.st) {
                     1 -> {
-                        seatNo =
-                            if (binding?.textView195?.text.toString()
-                                    .equals("", ignoreCase = true)
-                            ) {
-                                "\uF101 " + seatTagData.sn
-                            } else {
-                                "," + "\uF101 " + seatTagData.sn
-                            }
+                        seatNo = if (binding?.textView195?.text.toString()
+                                .equals("", ignoreCase = true)
+                        ) {
+                            "\uF101 " + seatTagData.sn
+                        } else {
+                            "," + "\uF101 " + seatTagData.sn
+                        }
                         wordToSpan = SpannableString(seatNo)
                         wordToSpan.setSpan(
                             ForegroundColorSpan(Color.parseColor("#800080")),
@@ -1581,14 +1492,13 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 //                        binding?.textView195?.append(wordToSpan)
                     }
                     2 -> {
-                        seatNo =
-                            if (binding?.textView195?.text.toString()
-                                    .equals("", ignoreCase = true)
-                            ) {
-                                "\uF102 " + seatTagData.sn
-                            } else {
-                                "," + "\uF102 " + seatTagData.sn
-                            }
+                        seatNo = if (binding?.textView195?.text.toString()
+                                .equals("", ignoreCase = true)
+                        ) {
+                            "\uF102 " + seatTagData.sn
+                        } else {
+                            "," + "\uF102 " + seatTagData.sn
+                        }
                         wordToSpan = SpannableString(seatNo)
                         wordToSpan.setSpan(
                             ForegroundColorSpan(Color.parseColor("#800080")),
@@ -1688,8 +1598,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         dialog.setContentView(R.layout.ticket_cancel)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window!!.setLayout(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         dialog.window!!.setGravity(Gravity.CENTER)
         dialog.setTitle("")
@@ -1726,10 +1635,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                     "These are couple recliners.",
                     positiveBtnText = R.string.ok,
                     negativeBtnText = R.string.no,
-                    positiveClick = {
-                    },
-                    negativeClick = {
-                    })
+                    positiveClick = {},
+                    negativeClick = {})
                 dialog.show()
             }
             printLog("select_buddy=1==$selectBuddy")
@@ -1740,10 +1647,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                     messageText,
                     positiveBtnText = R.string.ok,
                     negativeBtnText = R.string.no,
-                    positiveClick = {
-                    },
-                    negativeClick = {
-                    })
+                    positiveClick = {},
+                    negativeClick = {})
                 dialog.show()
             } else {
                 if (selectedSeats.size < 10) {
@@ -1754,10 +1659,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                             messageText,
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     } else {
                         if (selectedSeats.size > 0 && seat.bu) {
@@ -1767,15 +1670,13 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                 messageText,
                                 positiveBtnText = R.string.ok,
                                 negativeBtnText = R.string.no,
-                                positiveClick = {
-                                },
-                                negativeClick = {
-                                })
+                                positiveClick = {},
+                                negativeClick = {})
                             dialog.show()
                         } else {
                             seat.s = Constant.SEAT_SELECTED
-                            if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1].s[num2]
-                                .s = Constant.SEAT_SELECTED
+                            if (noOfRowsSmall?.size!! > 0) noOfRowsSmall!![num1].s[num2].s =
+                                Constant.SEAT_SELECTED
                             when (seat.st) {
                                 1 -> {
                                     seatView.text = ""
@@ -1793,8 +1694,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                     seatView.setBackgroundResource(R.drawable.ic_selected)
                                     seatView.setTextColor(
                                         ContextCompat.getColor(
-                                            this,
-                                            R.color.black
+                                            this, R.color.black
                                         )
                                     )
                                 }
@@ -1810,10 +1710,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                         getString(R.string.max_seat_msz),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
             }
@@ -1835,8 +1733,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         dialog.setContentView(R.layout.ticket_cancel)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window!!.setLayout(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         dialog.window!!.setGravity(Gravity.CENTER)
         dialog.setTitle("")
@@ -1863,13 +1760,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         binding?.llRowName?.removeAllViews()
 
         authViewModel.seatLayout(
-            CINEMA_ID,
-            sessionId,
-            "",
-            "",
-            "",
-            false,
-            ""
+            CINEMA_ID, sessionId, "", "", "", false, ""
         )
 
     }
@@ -1878,13 +1769,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         sessionId = comingSoonItem.toString()
         binding?.llRowName?.removeAllViews()
         authViewModel.seatLayout(
-            CINEMA_ID,
-            sessionId,
-            "",
-            "",
-            "",
-            false,
-            ""
+            CINEMA_ID, sessionId, "", "", "", false, ""
         )
     }
 }

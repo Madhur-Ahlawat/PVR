@@ -513,6 +513,7 @@ class SelectBookingsActivity : AppCompatActivity() {
         toast("2")
         if ((click || clickF) && !TextUtils.isEmpty(childcinemaId)) {
             Constant.CINEMA_ID=childcinemaId
+
             val intent = Intent(this, FoodActivity::class.java)
             startActivity(intent)
 //            fromScan = "scan"
