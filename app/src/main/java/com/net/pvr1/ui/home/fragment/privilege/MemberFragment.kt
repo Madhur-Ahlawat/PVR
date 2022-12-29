@@ -1,22 +1,25 @@
 package com.net.pvr1.ui.home.fragment.privilege
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.SystemClock
 import android.text.Html
 import android.text.TextUtils
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityPrivilegeLogInBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.home.HomeActivity.Companion.getCurrentItem
 import com.net.pvr1.ui.home.HomeActivity.Companion.review_position
 import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeCardAdapter
@@ -40,7 +43,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
     @Inject
     lateinit var preferences: PreferenceManager
     private val authViewModel by activityViewModels<PrivilegeLoginViewModel>()
-
+    private var qrCode:String=""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,6 +66,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
             Constant.getHash(preferences.getUserId() + "|" + preferences.getToken().toString() + "|" + time.toString())
 
         )
+        createQr()
         getProfileData()
     }
 
@@ -422,8 +426,41 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
         }
 
     override fun onQrClick() {
-
+        oPenDialogQR()
     }
 
+    private fun createQr() {
+        qrCode = Constant().getLoyaltyQr(preferences.geMobileNumber(), "180x180")
+    }
 
+    //Privilege Details
+    private fun oPenDialogQR() {
+        val dialogQR = Dialog(requireActivity())
+        dialogQR.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogQR.setCancelable(false)
+        dialogQR.setContentView(R.layout.activity_privilege_details)
+        dialogQR.window?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+        dialogQR.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+        )
+        dialogQR.window?.setGravity(Gravity.CENTER)
+        dialogQR.setTitle("")
+        val pointsPcTextView = dialogQR.findViewById<TextView>(R.id.points_txt)
+        val vochersPcTextView = dialogQR.findViewById<TextView>(R.id.vouchers_txt_)
+        val TVusername: TextView = dialogQR.findViewById<View>(R.id.TVusername) as TextView
+        val ivImage = dialogQR.findViewById<View>(R.id.ivImage) as ImageView
+        val tvCross = dialogQR.findViewById<View>(R.id.tvCross) as ImageView
+        Glide.with(requireActivity()).load(qrCode).into(ivImage)
+        TVusername.text = preferences.getUserName()
+        pointsPcTextView.text = Constant.PRIVILEGEPOINT
+        vochersPcTextView.text = Constant.PRIVILEGEVOUCHER
+        tvCross.setOnClickListener { dialogQR.dismiss() }
+        dialogQR.setOnKeyListener { _, keyCode, _ ->
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                dialogQR.dismiss()
+            }
+            true
+        }
+        dialogQR.show()
+    }
 }

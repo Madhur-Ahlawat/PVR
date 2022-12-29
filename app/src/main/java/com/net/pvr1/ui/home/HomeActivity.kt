@@ -414,8 +414,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     override fun onShowNotification() {
         if (!areNotificationsEnabled()) {
             if (preferences.getString(Constant.SharedPreference.NT) == "true") {
-                showDialog(
-                    this@HomeActivity,
+                showDialog( this@HomeActivity,
                     preferences.getString(Constant.SharedPreference.NTBT)
                 )
             }
@@ -453,7 +452,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 
     private fun showDialog(mContext: Context?, banner: String?) {
         if (hasMonthPassed()) {
-            preferences.saveLong("SHOW_POP", System.currentTimeMillis())
+            preferences.saveLong("SHOW_POP", System.currentTimeMillis().toLong())
             val dialog = BottomSheetDialog(mContext!!, R.style.NoBackgroundDialogTheme)
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog.setContentView(R.layout.notification_dialoge)

@@ -3,7 +3,6 @@ package com.net.pvr1.utils
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.fragment.app.FragmentActivity
 import com.net.pvr1.utils.Constant.Companion.CITY
 import com.net.pvr1.utils.Constant.Companion.CITY_CC
 import com.net.pvr1.utils.Constant.Companion.IS_LOGIN
@@ -171,16 +170,14 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
     }
 
     fun clearData(requireActivity: Activity) {
-//        if (editor != null) {
         editor = prefs.edit()
-//        requireActivity.deleteSharedPreferences(PREFS_TOKEN_FILE);
         editor?.clear()
         editor?.commit()
-//        }
+
     }
 
     fun getLong(s: String): Long {
-        return prefs.getLong(LONGITUDE, 0).toLong()
+        return prefs.getLong(s, 0)
     }
 
 }

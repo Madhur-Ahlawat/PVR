@@ -64,6 +64,7 @@ class FoodActivity : AppCompatActivity(),
 
     //foodLimit
     private var foodLimit: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFoodBinding.inflate(layoutInflater, null, false)
@@ -83,21 +84,6 @@ class FoodActivity : AppCompatActivity(),
             "no",
             "no"
         )
-
-//        authViewModel.food(
-//            preferences.getUserId().toString(),
-//            "GURM",
-//            "GURM220009921660",
-//            "",
-//            "",
-//            "",
-//            "",
-//            "",
-//            "",
-//            "no",
-//            "no",
-//            "no"
-//        )
 
         movedNext()
         foodDetails()

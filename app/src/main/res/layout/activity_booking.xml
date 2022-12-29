@@ -316,7 +316,7 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <com.net.pvr1.utils.MovableFloatingActionButton
+    <com.net.pvr1.utils.view.MovableFloatingActionButton
         android:id="@+id/filter_fab"
         android:layout_width="@dimen/dimen_60dp"
         android:layout_height="@dimen/dimen_60dp"
