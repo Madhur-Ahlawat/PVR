@@ -98,10 +98,12 @@
 
     <com.net.pvr1.utils.view.MovableFloatingActionButton
         android:id="@+id/filter_fab"
-        android:layout_width="@dimen/dimen_60dp"
-        android:layout_height="@dimen/dimen_60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dimen_30dp"
+        android:layout_marginEnd="@dimen/dimen_15sp"
         android:visibility="visible"
+        app:tint="@null"
         android:src="@drawable/filter_unselect"
         app:layout_anchorGravity="bottom|right|end"
         app:layout_constraintBottom_toBottomOf="parent"

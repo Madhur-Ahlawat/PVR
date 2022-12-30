@@ -1,10 +1,10 @@
-package com.net.pvr1.ui.profile
+package com.net.pvr1.ui.home.fragment.more.profile
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.net.pvr1.R
 
 class ProfileFragment : Fragment() {

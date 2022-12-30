@@ -223,10 +223,12 @@
                         android:paddingStart="24dp"
                         android:paddingEnd="@dimen/dimen_1dp">
 
-                        <Switch
+                        <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/checkState"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="@dimen/dimen_30dp"
+                            app:track="@drawable/custom_track"
+                            android:thumb="@drawable/custom_thumb"
                             tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
                     </LinearLayout>
 

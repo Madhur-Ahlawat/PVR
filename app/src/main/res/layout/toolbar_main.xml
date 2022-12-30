@@ -144,13 +144,13 @@
                 android:paddingRight="@dimen/common_header_padding"
                 android:src="@drawable/qr_code_scan"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/locationBtn"
+                app:layout_constraintEnd_toStartOf="@+id/profileBtn"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription" />
 
             <ImageButton
                 android:visibility="visible"
-                android:id="@+id/locationBtn"
+                android:id="@+id/profileBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"

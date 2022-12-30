@@ -124,7 +124,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
         (requireActivity().findViewById(R.id.include) as ConstraintLayout).show()
         (requireActivity().findViewById(R.id.notify) as ImageView).show()
-        (requireActivity().findViewById(R.id.locationBtn) as ImageView).show()
         (requireActivity().findViewById(R.id.scanQr) as ImageView).show()
         (requireActivity().findViewById(R.id.searchBtn) as ImageView).show()
         (requireActivity().findViewById(R.id.searchCinema) as ImageView).hide()
@@ -133,6 +132,13 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 val intent = Intent(requireActivity(), SearchHomeActivity::class.java)
                 startActivity(intent)
             }
+        }
+        if (preferences.getIsLogin()){
+            (requireActivity().findViewById(R.id.profileBtn) as ImageView).show()
+
+        }else{
+            (requireActivity().findViewById(R.id.profileBtn) as ImageView).hide()
+
         }
 
         movedNext()
@@ -264,6 +270,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun retrieveData(output: HomeResponse.Output) {
         PlaceHolder = output
         if (isAdded) {
@@ -479,12 +486,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             if (containAccessibility) {
                 val index = type.indexOf("accessability")
                 val value: String = filterItemSelected[type[index]]!!
-//
-//                if (value != null && !value.equals("", ignoreCase = true)) {
-//                    if (value.equals("Subtitle", ignoreCase = true)) special = output.getMspecial().get(0)
-//                } else {
-//                    special = "ALL"
-//                }
             }
             getMovieFormatFromApi(true)
         } else {
@@ -569,14 +570,9 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             binding?.privilegeLogin?.pt?.text = PRIVILEGEPOINT
             binding?.privilegeLogin?.numVou?.text = PRIVILEGEVOUCHER
             binding?.privilegeLogin?.qrImgMainPage?.setOnClickListener {
-//                val intent = Intent(requireActivity(), PrivilegeDetailsActivity::class.java)
-//                startActivity(intent)
                 oPenDialogQR()
             }
 
-//            authViewModel.nextBooking(
-//                preferences.getUserId(), Constant().getDeviceId(requireActivity())
-//            )
         } else {
             binding?.privilegeLoginUi?.hide()
             binding?.privilegeLogOutUi?.show()

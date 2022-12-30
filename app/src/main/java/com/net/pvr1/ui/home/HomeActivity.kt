@@ -37,6 +37,7 @@ import com.net.pvr1.ui.home.fragment.home.HomeFragment
 import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
 import com.net.pvr1.ui.home.fragment.more.MoreFragment
 import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
+import com.net.pvr1.ui.home.fragment.more.profile.userDetails.ProfileActivity
 import com.net.pvr1.ui.home.fragment.privilege.MemberFragment
 import com.net.pvr1.ui.home.fragment.privilege.NonMemberFragment
 import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeHomeDialogAdapter
@@ -88,8 +89,10 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         switchFragment()
         //setUserName
         if (preferences.getIsLogin()) {
+            binding?.includeAppBar?.profileBtn?.show()
             binding?.includeAppBar?.textView2?.text = "Hello, "+preferences.getUserName()
         } else {
+            binding?.includeAppBar?.profileBtn?.hide()
             binding?.includeAppBar?.textView2?.text = "Hello!"
         }
         binding?.includeAppBar?.txtCity?.text = preferences.getCityName()
@@ -110,6 +113,12 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         // Qr COde
         binding?.includeAppBar?.scanQr?.setOnClickListener {
             val intent = Intent(this, ScannerActivity::class.java)
+            startActivity(intent)
+        }
+        // Profile
+        binding?.includeAppBar?.profileBtn?.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            intent.putExtra("from","home")
             startActivity(intent)
         }
 

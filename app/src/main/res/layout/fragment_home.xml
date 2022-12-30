@@ -165,7 +165,8 @@
 
                 </LinearLayout>
 
-                <include layout="@layout/placeholder_layout"
+                <include
+                    layout="@layout/placeholder_layout"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"

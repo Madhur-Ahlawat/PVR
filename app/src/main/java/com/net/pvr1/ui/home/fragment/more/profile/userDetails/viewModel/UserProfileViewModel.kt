@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.profile.userDetails.viewModel
+package com.net.pvr1.ui.home.fragment.more.profile.userDetails.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -19,6 +19,19 @@ class UserProfileViewModel @Inject constructor(private val userRepository: UserR
     fun editProfile(userid:String,email:String,mobile:String,name:String,dob:String,gender:String,mstatus:String,doa:String) {
         viewModelScope.launch {
             userRepository.editProfile(userid,email,mobile,name,dob,gender,mstatus,doa)
+        }
+    }
+
+
+    //UserProfile
+    val userProfileLiveData: LiveData<NetworkResult<ProfileResponse>>
+        get() = userRepository.userProfileResponseOutLiveData
+
+    fun userProfile(
+        city: String, userid: String, timestamp: String, token: String
+    ) {
+        viewModelScope.launch {
+            userRepository.userProfile(city, userid, timestamp,token)
         }
     }
 

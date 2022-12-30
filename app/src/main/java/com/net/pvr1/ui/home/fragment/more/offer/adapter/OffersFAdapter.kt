@@ -1,6 +1,7 @@
 package com.net.pvr1.ui.home.fragment.more.offer.adapter
 
 import android.app.Activity
+import android.content.Intent
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
+import com.net.pvr1.ui.home.fragment.more.offer.offerDetails.OfferDetailsActivity
 import com.net.pvr1.ui.home.fragment.more.offer.response.MOfferResponse
 import com.net.pvr1.utils.Util
 
@@ -68,72 +70,15 @@ class OffersFAdapter(
             holder.itemView.layoutParams = layoutParams
         }
 
-//        if (!type.equalsIgnoreCase("N")){
-//            if (offerList.size() > 1) {
-//                if (offerList.size() == 2) {
-//                    int itemWidth = (int) ((screenWidth - 0) / (1.33f));
-//                    ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(itemWidth, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-//                    if (position == 0) {
-//                        layoutParams.leftMargin = (int) Util.convertDpToPixel(14, context);
-//                        layoutParams.rightMargin = (int) Util.convertDpToPixel(7, context);
-//                    } else {
-//                        layoutParams.leftMargin = (int) Util.convertDpToPixel(7, context);
-//                        layoutParams.rightMargin = (int) Util.convertDpToPixel(14, context);
-//                    }
-//                    holder.itemView.setLayoutParams(layoutParams);
-//                } else if (position == 0) {
-//                    int itemWidth = (int) ((screenWidth - 8) * (0.8f));
-//                    ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(itemWidth, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-//                    layoutParams.leftMargin = (int) Util.convertDpToPixel(0, context);
-////                    layoutParams.rightMargin = (int) Util.convertDpToPixel(7, context);
-//                    holder.itemView.setLayoutParams(layoutParams);
-//                } else if (position == offerList.size() - 1) {
-//                    int itemWidth = (int) ((screenWidth - 8) * (0.95f));
-//                    ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(itemWidth, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-//                    layoutParams.rightMargin = (int) Util.convertDpToPixel(7, context);
-//                    layoutParams.leftMargin = (int) Util.convertDpToPixel(7, context);
-//                    holder.itemView.setLayoutParams(layoutParams);
-//                } else {
-//                    int itemWidth = (int) ((screenWidth - 8) * (0.85f));
-//                    ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(itemWidth, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-////                    layoutParams.rightMargin = (int) Util.convertDpToPixel(7, context);
-//                    layoutParams.leftMargin = (int) Util.convertDpToPixel(7, context);
-//                    holder.itemView.setLayoutParams(layoutParams);
-//                }
-//
-//            } else {
-//                int itemWidth = (int) ((screenWidth - 0) / (1.15f));
-//                ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(itemWidth, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-//                layoutParams.leftMargin = (int) Util.convertDpToPixel(7, context);
-//                holder.itemView.setLayoutParams(layoutParams);
-//            }
-//    }else {
-//            ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-//            layoutParams.leftMargin = (int) Util.convertDpToPixel(25, context);
-//            layoutParams.rightMargin = (int) Util.convertDpToPixel(25, context);
-//            layoutParams.bottomMargin = (int) Util.convertDpToPixel(1, context);
-//            layoutParams.topMargin = (int) Util.convertDpToPixel(6, context);
-//            holder.itemView.setLayoutParams(layoutParams);
-//        }
-
         Glide.with(context)
             .load(obj.i)
             .into(holder.offerImg)
 
-//        ImageLoader.getInstance()
-//            .displayImage(obj.getI1(), holder.offerImg, PCApplication.landingRectangleImageOption)
         holder.itemView.setOnClickListener(View.OnClickListener {
-//            GoogleAnalyitics.setGAEventName(context as Activity, "Offers", "Offers", obj.getT())
-//            val bundle = Bundle()
-//            FirebaseEvent.hitEvent(
-//                context,
-//                FirebaseEvent.OFFER_EVENT + "_" + obj.getT().replaceAll(" ", "_"),
-//                bundle
-//            )
-//            val intent = Intent(context, PcOfferDetailActivity::class.java)
-//            intent.putExtra(PCConstants.IntentKey.OFFER_ID, Integer.toString(obj.getId()))
-//            intent.putExtra(PCConstants.IntentKey.TITLE_HEADER, obj.getT())
-//            context.startActivity(intent)
+            val intent = Intent(context, OfferDetailsActivity::class.java)
+            intent.putExtra("title",obj.c)
+            intent.putExtra("description",obj.description)
+            context.startActivity(intent)
         })
     }
 

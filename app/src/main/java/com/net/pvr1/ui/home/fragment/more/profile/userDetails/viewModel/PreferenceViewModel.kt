@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.profile.userDetails.viewModel
+package com.net.pvr1.ui.home.fragment.more.profile.userDetails.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
