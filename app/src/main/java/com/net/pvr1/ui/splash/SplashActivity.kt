@@ -20,7 +20,7 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySplashBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.food.old.OldFoodActivity
+import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.location.enableLocation.EnableLocationActivity
 import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.ui.login.LoginActivity
@@ -81,8 +81,8 @@ class SplashActivity : AppCompatActivity() {
                     startActivity(intent)
                     finish()
                 } else {
-//                    val intent = Intent(this@SplashActivity, HomeActivity::class.java)
-                    val intent = Intent(this@SplashActivity, OldFoodActivity::class.java)
+                    val intent = Intent(this@SplashActivity, HomeActivity::class.java)
+//                    val intent = Intent(this@SplashActivity, OldFoodActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
