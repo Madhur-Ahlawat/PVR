@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityGiftCardBinding
-import com.net.pvr1.databinding.GiftCardMainBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.giftCard.activateGiftCard.ActivateGiftCardActivity
@@ -17,7 +16,6 @@ import com.net.pvr1.ui.giftCard.response.GiftCardResponse
 import com.net.pvr1.ui.giftCard.viewModel.GiftCardViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -88,7 +86,7 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
+                    loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(supportFragmentManager, null)
                 }
             }

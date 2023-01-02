@@ -81,16 +81,17 @@
             <!--Privilege-->
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_24dp"
                 android:layout_marginEnd="@dimen/dimen_24dp"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/privilegeLoginUi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <include
                         android:id="@+id/privilegeLogin"
                         layout="@layout/loyalty_paid_member"
@@ -103,6 +104,7 @@
                     android:id="@+id/privilegeLogOutUi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <include
                         android:id="@+id/privilegeLogOut"
                         layout="@layout/ph_slider_item_new"
@@ -174,72 +176,85 @@
                 android:orientation="vertical"
                 android:paddingBottom="10dp">
 
-                <View
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/whatsappUi"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_10dp"
-                    android:layout_marginTop="@dimen/dimen_5dp"
-                    android:background="@drawable/line_seprator" />
+                    android:layout_height="wrap_content">
 
-                <RelativeLayout
-                    android:id="@+id/rlWhatsapp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="@dimen/dimen_20dp"
-                    android:orientation="horizontal"
-                    android:visibility="visible">
+                    <View
+                        android:id="@+id/view233"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_10dp"
+                        android:layout_marginTop="@dimen/dimen_5dp"
+                        android:background="@drawable/line_seprator"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-
-                    <ImageView
-                        android:id="@+id/ic_whatsapp"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerInParent="true"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="16dp"
-                        android:src="@drawable/whatsapp"
-                        tools:ignore="ContentDescription" />
-
-                    <TextView
-                        android:id="@+id/tvEventName"
-                        style="@style/H2SizeDark"
-                        android:layout_width="wrap_content"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/rlWhatsapp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_marginStart="12dp"
-                        android:layout_toEndOf="@+id/ic_whatsapp"
-                        android:text="@string/whatsapp_notifications"
-                        tools:ignore="RelativeOverlap" />
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view233">
 
-                    <LinearLayout
-                        android:id="@+id/checkStateLinear"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentEnd="true"
-                        android:layout_gravity="center"
-                        android:layout_marginEnd="20dp"
-                        android:gravity="center"
-                        android:paddingStart="24dp"
-                        android:paddingEnd="@dimen/dimen_1dp">
+                        <ImageView
+                            android:id="@+id/ic_whatsapp"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="16dp"
+                            android:src="@drawable/whatsapp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:id="@+id/tvEventName"
+                            style="@style/H2SizeDark"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_toEndOf="@+id/ic_whatsapp"
+                            android:text="@string/whatsapp_notifications"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/checkState"
+                            app:layout_constraintStart_toEndOf="@+id/ic_whatsapp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="RelativeOverlap" />
 
                         <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/checkState"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/dimen_30dp"
-                            app:track="@drawable/custom_track"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="20dp"
                             android:thumb="@drawable/custom_thumb"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:track="@drawable/custom_track"
                             tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
-                    </LinearLayout>
 
-                </RelativeLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
+                    android:id="@+id/view234"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_10dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/line_seprator" />
-
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/line_seprator"
+                    app:layout_constraintTop_toBottomOf="@+id/rlWhatsapp" />
 
                 <TextView
                     android:id="@+id/tvTerm"

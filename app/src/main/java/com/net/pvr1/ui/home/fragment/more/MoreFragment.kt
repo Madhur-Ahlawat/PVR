@@ -88,6 +88,7 @@ class MoreFragment : Fragment() {
     private fun manageFunctions() {
         //mange privilege show hide
         if (preferences.getIsLogin()) {
+            binding?.whatsappUi?.show()
             authViewModel.whatsappOpt(
                 preferences.getUserId(),
                 preferences.getToken().toString(),
@@ -115,6 +116,7 @@ class MoreFragment : Fragment() {
             createQr()
 
         } else {
+            binding?.whatsappUi?.hide()
             binding?.llBookingSection?.show()
             binding?.tvSignOut?.hide()
             binding?.profileLinear?.hide()
@@ -220,7 +222,9 @@ class MoreFragment : Fragment() {
         //Login
         binding?.tvLoginButton?.textView5?.setOnClickListener {
             val intent = Intent(requireActivity(), LoginActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
+            activity?.finish()
         }
 
         //MovieAlert
@@ -385,7 +389,7 @@ class MoreFragment : Fragment() {
                 }
                 is NetworkResult.Loading -> {
                     println("loadingHome--->")
-                    loader = LoaderDialog(R.string.pleasewait)
+                    loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(requireActivity().supportFragmentManager, null)
                 }
             }

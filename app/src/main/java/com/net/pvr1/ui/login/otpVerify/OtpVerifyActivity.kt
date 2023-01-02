@@ -37,14 +37,17 @@ class OtpVerifyActivity : AppCompatActivity() {
     private var newUser: String = ""
 
     //Otp Read
-    private val User_Content = 200
+    private val otpRead = 200
     private var smsBroadcastReceiver: SmsBroadcastReceiver? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOtpVerifyBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+        manageFunction()
+    }
+
+    private fun manageFunction() {
         mobile = intent.getStringExtra("mobile").toString()
         newUser = intent.getStringExtra("newUser").toString()
 
@@ -53,10 +56,17 @@ class OtpVerifyActivity : AppCompatActivity() {
         } else {
             binding?.textView15?.text = getString(R.string.submit)
         }
-        startSmsUserConsent()
-        movedNext()
-        resendOtp()
 
+//        Read otp
+        startSmsUserConsent()
+        //moved another Page
+        movedNext()
+        //resend Otp
+        resendOtp()
+        //verify Otp
+        otpVerify()
+        //newUser
+        registerUser()
     }
 
     //For Auto Read otp
@@ -77,8 +87,8 @@ class OtpVerifyActivity : AppCompatActivity() {
         //Resend Otp
         binding?.textView14?.setOnClickListener {
             authViewModel.loginMobileUser(mobile, preferences.getCityName(), "INDIA")
-
         }
+
         //Submit
         binding?.textView15?.setOnClickListener {
             val otp = binding?.otpEditText?.getStringFromFields()
@@ -89,16 +99,13 @@ class OtpVerifyActivity : AppCompatActivity() {
                     getString(R.string.enterOtp),
                     positiveBtnText = R.string.ok,
                     negativeBtnText = R.string.no,
-                    positiveClick = {
-                    },
-                    negativeClick = {
-                    })
+                    positiveClick = {},
+                    negativeClick = {})
                 dialog.show()
             } else {
                 if (newUser == "false") {
                     authViewModel.otpVerify(
-                        mobile,
-                        getHash(
+                        mobile, getHash(
                             "$mobile|$otp"
                         )
                     )
@@ -115,10 +122,8 @@ class OtpVerifyActivity : AppCompatActivity() {
                                 getString(R.string.enterName),
                                 positiveBtnText = R.string.ok,
                                 negativeBtnText = R.string.no,
-                                positiveClick = {
-                                },
-                                negativeClick = {
-                                })
+                                positiveClick = {},
+                                negativeClick = {})
                             dialog.show()
                         } else if (email == "") {
                             val dialog = OptionDialog(this,
@@ -127,18 +132,14 @@ class OtpVerifyActivity : AppCompatActivity() {
                                 getString(R.string.enterEmail),
                                 positiveBtnText = R.string.ok,
                                 negativeBtnText = R.string.no,
-                                positiveClick = {
-                                },
-                                negativeClick = {
-                                })
+                                positiveClick = {},
+                                negativeClick = {})
                             dialog.show()
                         } else {
                             authViewModel.resister(
                                 getHash(
                                     "$mobile|$otp|$email"
-                                ),
-                                name,
-                                email, mobile, otp.toString(), "INDIA", false
+                                ), name, email, mobile, otp.toString(), "INDIA", false
                             )
                         }
                     }
@@ -147,11 +148,7 @@ class OtpVerifyActivity : AppCompatActivity() {
 
             }
         }
-        otpVerify()
-        registerUser()
-
     }
-
 
     private fun resendOtp() {
         authViewModel.resendResponseLiveData.observe(this) {
@@ -165,10 +162,8 @@ class OtpVerifyActivity : AppCompatActivity() {
                             it.data.msg,
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     } else {
                         val dialog = OptionDialog(this,
@@ -177,10 +172,8 @@ class OtpVerifyActivity : AppCompatActivity() {
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -192,14 +185,12 @@ class OtpVerifyActivity : AppCompatActivity() {
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
+                    loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(supportFragmentManager, null)
                 }
             }
@@ -220,10 +211,8 @@ class OtpVerifyActivity : AppCompatActivity() {
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -234,14 +223,12 @@ class OtpVerifyActivity : AppCompatActivity() {
                         it.data?.msg.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
+                    loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(supportFragmentManager, null)
                 }
             }
@@ -262,10 +249,8 @@ class OtpVerifyActivity : AppCompatActivity() {
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -276,14 +261,12 @@ class OtpVerifyActivity : AppCompatActivity() {
                         it.data?.msg.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
+                    loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(supportFragmentManager, null)
                 }
             }
@@ -298,12 +281,9 @@ class OtpVerifyActivity : AppCompatActivity() {
         output.em.let { preferences.saveEmail(it) }
         output.token.let { preferences.saveToken(it) }
         output.dob.let { preferences.saveDob(it) }
-
-
-        val intent = Intent(this@OtpVerifyActivity, HomeActivity::class.java)
-        startActivity(intent)
-        finish()
+        checkMoved()
     }
+
 
     private fun retrieveData(output: ResisterResponse.Output?) {
         preferences.saveIsLogin(true)
@@ -312,18 +292,23 @@ class OtpVerifyActivity : AppCompatActivity() {
         output?.ph?.let { preferences.saveMobileNumber(it) }
         output?.token?.let { preferences.saveToken(it) }
         output?.dob?.let { preferences.saveDob(it) }
+        checkMoved()
+    }
 
-        if (!Constant().isLocationEnabled(this@OtpVerifyActivity)){
+    private fun checkMoved() {
+        if (!Constant().locationServicesEnabled(this@OtpVerifyActivity)) {
             val intent = Intent(this@OtpVerifyActivity, EnableLocationActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             finish()
-        } else if (preferences.getCityName()==""){
+        } else if (preferences.getCityName() == "") {
             val intent = Intent(this@OtpVerifyActivity, SelectCityActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             finish()
-        }else{
-//                    val intent = Intent(this@SplashActivity, StarPassActivity::class.java)
+        } else {
             val intent = Intent(this@OtpVerifyActivity, HomeActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             finish()
         }
@@ -331,7 +316,6 @@ class OtpVerifyActivity : AppCompatActivity() {
 
     @Throws(Exception::class)
     fun getHash(text: String): String {
-
         val md = MessageDigest.getInstance("SHA-512")
         val digest = md.digest(text.toByteArray())
         val sb = StringBuilder()
@@ -339,14 +323,13 @@ class OtpVerifyActivity : AppCompatActivity() {
             sb.append(((digest[i] and 0xff) + 0x100).toString(16).substring(1))
         }
         return sb.toString()
-
     }
 
     @Deprecated("Deprecated in Java")
     @Override
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == User_Content) {
+        if (requestCode == otpRead) {
             if (resultCode == RESULT_OK && data != null) {
                 //That gives all message to us.
                 val message: String = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE)!!
@@ -363,8 +346,7 @@ class OtpVerifyActivity : AppCompatActivity() {
             binding?.otpEditText?.setText(matcher.group(0)!!)
             val otp = binding?.otpEditText?.getStringFromFields()
             authViewModel.otpVerify(
-                mobile,
-                getHash(
+                mobile, getHash(
                     "$mobile|$otp"
                 )
             )
@@ -373,15 +355,13 @@ class OtpVerifyActivity : AppCompatActivity() {
 
     private fun registerBroadcastReceiver() {
         smsBroadcastReceiver = SmsBroadcastReceiver()
-        smsBroadcastReceiver?.smsBroadcastReceiverListener =
-            object : SmsBroadcastReceiverListener {
-                override fun onSuccess(intent: Intent?) {
-
-                    startActivityForResult(intent, User_Content)
-                }
-
-                override fun onFailure() {}
+        smsBroadcastReceiver?.smsBroadcastReceiverListener = object : SmsBroadcastReceiverListener {
+            override fun onSuccess(intent: Intent?) {
+                startActivityForResult(intent, otpRead)
             }
+
+            override fun onFailure() {}
+        }
         val intentFilter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
         registerReceiver(smsBroadcastReceiver, intentFilter)
     }

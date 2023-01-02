@@ -27,15 +27,19 @@ class LandingActivity : AppCompatActivity() {
     lateinit var preferences: PreferenceManager
     private var binding: ActivityLandingBinding? = null
     private var layouts: IntArray? = null
-    private   val MyPREFERENCES = "MyPrefs"
-    private var sharedpreferences: SharedPreferences? = null
-    private val OnBoardingClick = "Name"
+    private val myPreference = "MyPrefs"
+    private var sharedPreferences: SharedPreferences? = null
+    private val onBoardingClick = "Name"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLandingBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE)
+        mangeFunction()
+    }
+
+    private fun mangeFunction() {
+        sharedPreferences = getSharedPreferences(myPreference, Context.MODE_PRIVATE)
         slider()
         movedNext()
     }
@@ -51,8 +55,8 @@ class LandingActivity : AppCompatActivity() {
         }
 
         binding?.movedToNext?.setOnClickListener {
-            val editor = sharedpreferences?.edit()
-            editor?.putBoolean(OnBoardingClick, true)
+            val editor = sharedPreferences?.edit()
+            editor?.putBoolean(onBoardingClick, true)
             editor?.commit()
             val intent = Intent(this@LandingActivity, LoginActivity::class.java)
             ON_BOARDING_CLICK
@@ -125,8 +129,7 @@ class LandingActivity : AppCompatActivity() {
 
     //Slider Adapter
     class MyViewPagerAdapter(
-        private val layouts: IntArray,
-        private val landingActivity: LandingActivity
+        private val layouts: IntArray, private val landingActivity: LandingActivity
     ) : PagerAdapter() {
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val layoutInflater =

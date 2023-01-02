@@ -72,7 +72,8 @@ class SplashActivity : AppCompatActivity() {
     private fun movedNext() {
         val runnable = Runnable {
             if (preferences.getIsLogin()) {
-                if (!Constant().isLocationEnabled(this@SplashActivity)) {
+                printLog("location--->${Constant().locationServicesEnabled(this@SplashActivity)}---->${preferences.getCityName()}")
+                if (!Constant().locationServicesEnabled(this@SplashActivity) ) {
                     val intent = Intent(this@SplashActivity, EnableLocationActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -82,7 +83,6 @@ class SplashActivity : AppCompatActivity() {
                     finish()
                 } else {
                     val intent = Intent(this@SplashActivity, HomeActivity::class.java)
-//                    val intent = Intent(this@SplashActivity, OldFoodActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
@@ -176,7 +176,7 @@ class SplashActivity : AppCompatActivity() {
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
+                    loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(this.supportFragmentManager, null)
                 }
             }

@@ -134,7 +134,7 @@ class FoodActivity : AppCompatActivity(),
                 }
                 is NetworkResult.Loading -> {
                     printLog("Loading--->")
-                    loader = LoaderDialog(R.string.pleasewait)
+                    loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(this.supportFragmentManager, null)
                 }
             }

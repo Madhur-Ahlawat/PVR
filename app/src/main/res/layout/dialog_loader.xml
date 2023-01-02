@@ -44,7 +44,7 @@
                 android:fontFamily="@font/helvetica_neu_medium"
                 android:gravity="center"
                 android:lineSpacingExtra="1dp"
-                android:text="@string/pleasewait"
+                android:text="@string/pleaseWait"
                 android:textColor="@color/black"
                 android:textSize="@dimen/dimen_16sp"
                 android:visibility="visible"

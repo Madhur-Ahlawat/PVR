@@ -129,7 +129,7 @@ class BookingActivity : AppCompatActivity(),
                 }
                 is NetworkResult.Loading -> {
                     toast("loading")
-                    loader = LoaderDialog(R.string.pleasewait)
+                    loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(supportFragmentManager, null)
                 }
             }

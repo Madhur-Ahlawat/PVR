@@ -88,7 +88,7 @@ class PreferenceActivity : AppCompatActivity(), PreferenceListAdapter.RecycleVie
                 }
                 is NetworkResult.Loading -> {
                     if(itemClick==0) {
-                        loader = LoaderDialog(R.string.pleasewait)
+                        loader = LoaderDialog(R.string.pleaseWait)
                         loader?.show(supportFragmentManager, null)
                     }
                 }

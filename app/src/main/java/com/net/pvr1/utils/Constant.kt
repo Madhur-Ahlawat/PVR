@@ -1,13 +1,14 @@
 package com.net.pvr1.utils
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.NameNotFoundException
-import android.location.LocationManager
+import android.location.*
 import android.net.Uri
 import android.provider.ContactsContract.Directory.PACKAGE_NAME
 import android.provider.Settings
@@ -21,7 +22,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.location.LocationManagerCompat
+import androidx.core.content.ContextCompat
 import com.net.pvr1.R
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
@@ -34,6 +35,7 @@ import java.net.URL
 import java.security.MessageDigest
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
+import java.util.*
 
 
 @Suppress("DEPRECATION")
@@ -168,7 +170,7 @@ class Constant {
             }
         }
 
-        fun onShareClick(context: Context,shareUrl: String,shareMessage:String){
+        fun onShareClick(context: Context, shareUrl: String, shareMessage: String) {
             /*System.out.println("ShareUrl"+shareURL+"fkfg"+shareMessage);*/
             val sendIntent = Intent()
             sendIntent.action = Intent.ACTION_SEND
@@ -177,7 +179,7 @@ class Constant {
             context.startActivity(sendIntent)
         }
 
-        fun getDid():String{
+        fun getDid(): String {
             return ""
         }
 
@@ -282,32 +284,6 @@ class Constant {
         }
     }
 
-//    fun isLocationServicesAvailable(context: Context): Boolean {
-//        var locationMode = 0
-//        val locationProviders: String
-//        var isAvailable = false
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            try {
-//                locationMode =
-//                    Settings.Secure.getInt(context.contentResolver, Settings.Secure.LOCATION_MODE)
-//            } catch (e: SettingNotFoundException) {
-//                e.printStackTrace()
-//            }
-//            isAvailable = locationMode != Settings.Secure.LOCATION_MODE_OFF
-//        } else {
-//            locationProviders = Settings.Secure.getString(
-//                context.contentResolver, Settings.Secure.LOCATION_PROVIDERS_ALLOWED
-//            )
-//            isAvailable = !TextUtils.isEmpty(locationProviders)
-//        }
-//        val coarsePermissionCheck = ContextCompat.checkSelfPermission(
-//            context, Manifest.permission.ACCESS_COARSE_LOCATION
-//        ) == PackageManager.PERMISSION_GRANTED
-//        val finePermissionCheck = ContextCompat.checkSelfPermission(
-//            context, Manifest.permission.ACCESS_FINE_LOCATION
-//        ) == PackageManager.PERMISSION_GRANTED
-//        return isAvailable && (coarsePermissionCheck || finePermissionCheck)
-//    }
 
     fun printTicket(activity: Activity) {
         val intent = Intent(
@@ -373,8 +349,6 @@ class Constant {
                 }
             }
         })
-
-
 
 
     }
@@ -550,15 +524,14 @@ class Constant {
     }
 
     //location Mange
-    private val REQUEST_LOCATION = 1
+    private val requestLocation = 1
     private var locationManager: LocationManager? = null
 
 
+    //Manage Location
     fun enableLocation(activity: Activity) {
-        //Manage Location
         ActivityCompat.requestPermissions(
-            activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION
-        )
+            activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), requestLocation)
         locationManager = activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         if (locationManager?.isProviderEnabled(LocationManager.GPS_PROVIDER) != true) {
             onGPS(activity)
@@ -591,39 +564,64 @@ class Constant {
         ) {
 
             ActivityCompat.requestPermissions(
-                activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION
+                activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), requestLocation
             )
         } else {
-            val locationGPS = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-            printLog("location---->$locationGPS")
-            if (locationGPS != null) {
-                val lat = locationGPS.latitude
-                val long = locationGPS.longitude
-                longitude = long
-                latitude = lat
+            locationManager = activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
+            val criteria = Criteria()
+            val bestProvider = locationManager?.getBestProvider(criteria, false)
+            val location: Location =
+                locationManager?.getLastKnownLocation(bestProvider.toString())!!
+
+            if (location == null) {
+                Toast.makeText(activity, "Location Not found", Toast.LENGTH_LONG).show()
             } else {
-                Toast.makeText(activity, "Unable to find location.", Toast.LENGTH_SHORT).show()
+                val geocoder = Geocoder(activity)
+                try {
+                    val user = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                    latitude = user?.get(0)?.latitude as Double
+                    longitude = user[0]?.longitude as Double
+                    val geocoder = Geocoder(activity, Locale.getDefault())
+                    val addresses: List<Address>? = geocoder.getFromLocation(latitude!!, longitude!!, 1)
+                    val cityName: String? = addresses?.get(0)?.getAddressLine(0)
+                    val stateName: String? = addresses?.get(0)?.getAddressLine(1)
+                    val countryName: String? = addresses?.get(0)?.getAddressLine(2)
+                    printLog("latLang---->${latitude}--->${longitude}--st->${stateName}--ct-->${cityName}-->cot--${countryName}")
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
         }
     }
 
-
-     fun isLocationEnabled(context: Context): Boolean {
-        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        return LocationManagerCompat.isLocationEnabled(locationManager)
+    fun locationServicesEnabled(context: Context): Boolean {
+        var locationMode = 0
+        var isAvailable = false
+        try {
+            locationMode =
+                Settings.Secure.getInt(context.contentResolver, Settings.Secure.LOCATION_MODE)
+        } catch (e: Settings.SettingNotFoundException) {
+            e.printStackTrace()
+        }
+        isAvailable = locationMode != Settings.Secure.LOCATION_MODE_OFF
+        val coarsePermissionCheck = ContextCompat.checkSelfPermission(
+            context, Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+        val finePermissionCheck = ContextCompat.checkSelfPermission(
+            context, Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+        return isAvailable && (coarsePermissionCheck || finePermissionCheck)
     }
 
-
+    @SuppressLint("SimpleDateFormat")
     fun changeDateFormat(date: String?): String? {
         return if (date != null && date != "") {
             try {
                 val sdf = SimpleDateFormat("dd-MM-yyyy")
                 val d = sdf.parse(date)
                 val displayFormat = SimpleDateFormat("dd MMM, yyyy")
-                displayFormat.format(d)
-
-                // all done
+                d?.let { displayFormat.format(it) }
             } catch (e: Exception) {
                 e.printStackTrace()
                 ""

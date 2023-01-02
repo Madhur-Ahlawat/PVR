@@ -74,12 +74,12 @@ class OffersFAdapter(
             .load(obj.i)
             .into(holder.offerImg)
 
-        holder.itemView.setOnClickListener(View.OnClickListener {
+        holder.itemView.setOnClickListener {
             val intent = Intent(context, OfferDetailsActivity::class.java)
-            intent.putExtra("title",obj.c)
-            intent.putExtra("description",obj.description)
+            intent.putExtra("title", obj.c)
+            intent.putExtra("description", obj.description)
             context.startActivity(intent)
-        })
+        }
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -97,6 +97,4 @@ class OffersFAdapter(
     override fun getItemCount(): Int {
         return offerList.size
     }
-
-    companion object
-}
+    }
