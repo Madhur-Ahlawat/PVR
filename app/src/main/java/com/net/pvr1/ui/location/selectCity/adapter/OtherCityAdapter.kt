@@ -38,7 +38,6 @@ class OtherCityAdapter(
             }
         }
 
-
         holder.itemView.setOnClickListener {
             listner.onItemClickCityOtherCity(selectCityList, position)
             holder.otherCityName.paintFlags =

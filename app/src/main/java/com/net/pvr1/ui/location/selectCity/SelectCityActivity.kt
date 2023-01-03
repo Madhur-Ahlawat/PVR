@@ -1,6 +1,6 @@
 package com.net.pvr1.ui.location.selectCity
 
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -11,9 +11,6 @@ import android.text.TextWatcher
 import android.view.Gravity
 import android.view.ViewGroup
 import android.view.Window
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -67,10 +64,10 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         binding = ActivitySelectCityBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        cityName = preferences.getCityName()
-        // Location City Name
-        binding?.txtSelectedCity?.text = preferences.getCityName()
+        manageFunction()
+    }
+
+    private fun manageFunction() {
         selectCityViewModel.selectCity(
             preferences.getLatitudeData(),
             preferences.getLongitudeData(),
@@ -78,25 +75,24 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             "no",
             "no"
         )
-        selectCity()
-        movedNext()
-
+//Location
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        cityName = preferences.getCityName()
+        // Location City Name
+        binding?.txtSelectedCity?.text = preferences.getCityName()
         //Get Intent  Qr Case
         cid = intent.getStringExtra("cid").toString()
         from = intent.getStringExtra("from").toString()
+        selectCity()
+        movedNext()
     }
 
-
-
-    fun EditText.hideKeyboard() {
-        val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(this.windowToken, 0)
-    }
-
-
+    @SuppressLint("SuspiciousIndentation")
     private fun movedNext() {
+
+        // get Location
         binding?.imageView39?.setOnClickListener {
-            if (Constant().locationServicesEnabled(this) && Constant.latitude!=0.0 && Constant.longitude!= 0.0) {
+            if (Constant().locationServicesEnabled(this) && Constant.latitude != 0.0 && Constant.longitude != 0.0) {
                 preferences.saveLatitudeData(Constant.latitude.toString())
                 preferences.saveLatitudeData(Constant.longitude.toString())
 
@@ -106,57 +102,63 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
                     intent.putExtra("cid", cid)
                     startActivity(intent)
                 } else {
-                    enableLocation=1
-                        selectCityViewModel.selectCity(
-                            Constant.latitude.toString(),
-                            Constant.longitude.toString(),
-                            preferences.getUserId(),
-                            "no",
-                            "no"
-                        )
+                    enableLocation = 1
+                    selectCityViewModel.selectCity(
+                        Constant.latitude.toString(),
+                        Constant.longitude.toString(),
+                        preferences.getUserId(),
+                        "no",
+                        "no"
+                    )
 
                 }
-            }else {
+            } else {
                 Constant().enableLocation(this)
             }
         }
-
-        binding?.searchCity?.setOnClickListener {
-            binding?.recyclerViewSearchCity?.show()
-            binding?.consSelectedLocation?.show()
-            binding?.consSelectCity?.hide()
-        }
-
-        binding?.imageView35?.setOnClickListener {
+        //On Back Press
+        binding?.include37?.imageView58?.setOnClickListener {
             finish()
         }
 
-        binding?.searchCity?.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        //title
+        binding?.include37?.textView108?.gravity = Gravity.CENTER
+        binding?.include37?.textView108?.text = getString(R.string.search_city)
 
+        //Search city
+        binding?.searchCity?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 binding?.searchCity?.text?.chars()
                 filter(s.toString())
-
-                binding?.searchCity?.setOnEditorActionListener { _, action, _ ->
-                    if (action == EditorInfo.IME_ACTION_SEARCH) {
-                        binding?.searchCity?.text?.chars()
-                        filter(s.toString())
-                        binding?.searchCity?.hideKeyboard()
-                        return@setOnEditorActionListener true
-                    }
-                    return@setOnEditorActionListener true
-                }
-
             }
 
-            override fun afterTextChanged(s: Editable?) {
-                binding?.recyclerViewSearchCity?.show()
-                binding?.consSelectCity?.hide()
+            override fun afterTextChanged(s: Editable) {
+                if (s.isNotEmpty()) {
+                    binding?.imageView109?.show()
+                    binding?.nestedScrollView3?.hide()
+                    binding?.consSelectedLocation?.hide()
+                    binding?.recyclerViewSearchCity?.show()
+                } else {
+                    binding?.recyclerViewSearchCity?.hide()
+                    binding?.consSelectedLocation?.show()
+                    binding?.nestedScrollView3?.show()
+                    binding?.consSelectCity?.show()
+                    binding?.imageView109?.hide()
+                }
             }
         })
+
+        //clear button
+        binding?.imageView109?.setOnClickListener {
+            binding?.recyclerViewSearchCity?.hide()
+            binding?.nestedScrollView3?.show()
+            binding?.consSelectCity?.show()
+            binding?.searchCity?.text?.clear()
+            Constant().hideKeyboard(this)
+        }
     }
 
     private fun selectCity() {
@@ -227,12 +229,12 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
 
     private fun retrieveData(output: SelectCityResponse.Output) {
         preferences.saveCityName(output.cc.name)
-        if (enableLocation==1){
+        if (enableLocation == 1) {
             toast(output.cc.name)
             val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
             startActivity(intent)
             finish()
-        }else{
+        } else {
             filterCityList = output.ot
             val gridLayout2 = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
             val otherCityAdapter = OtherCityAdapter(output.ot, output, this, this)
@@ -245,7 +247,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             binding?.recyclerCity?.adapter = selectCityAdapter
 
             val gridLayout3 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-            searchCityAdapter = SearchCityAdapter(filterCityList!!, output, this, this)
+            searchCityAdapter = SearchCityAdapter(filterCityList!!, this, this)
             binding?.recyclerViewSearchCity?.layoutManager = gridLayout3
             binding?.recyclerViewSearchCity?.adapter = searchCityAdapter
 
@@ -253,11 +255,9 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
 
     }
 
-
     override fun onItemClickCityOtherCity(
         city: ArrayList<SelectCityResponse.Output.Ot>, position: Int
     ) {
-
         list = arrayListOf(*city[position].subcities.split(",").toTypedArray())
         list.add(0, "All")
         binding?.txtSelectedCity?.text = city[position].name
@@ -305,17 +305,12 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         } else {
             cityDialog(city[position].name)
         }
-
     }
 
     private fun filter(text: String) {
         val filtered: ArrayList<SelectCityResponse.Output.Ot> = ArrayList()
         val filtered1: ArrayList<SelectCityResponse.Output.Ot> = ArrayList()
-        // creating a new array list to filter our data.
-        // running a for loop to compare elements.
-
         for (item in filterCityList!!) {
-
             if (item.name.lowercase(Locale.getDefault())
                     .contains(text.lowercase(Locale.getDefault()))
             ) {
@@ -324,23 +319,21 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         }
 
         if (filtered.isEmpty()) {
-
-            println("filterTextSearch ------->${filtered}")
-            binding?.consSelectedLocation?.show()
+            binding?.consSelectedLocation?.hide()
+            binding?.nestedScrollView3?.hide()
             binding?.consSelectCity?.hide()
             binding?.recyclerViewSearchCity?.hide()
             binding?.textView124?.show()
             searchCityAdapter?.filterList(filtered1)
         } else {
-            println("filterTextSearch1 ------->${filtered}")
             binding?.consSelectedLocation?.show()
+            binding?.nestedScrollView3?.show()
+            binding?.consSelectCity?.show()
             binding?.textView124?.hide()
-            binding?.consSelectCity?.hide()
+            binding?.nestedScrollView3?.show()
             searchCityAdapter?.filterList(filtered)
-
         }
     }
-
 
     private fun cityDialog(name: String) {
         cityNameMAin = name
@@ -390,4 +383,5 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             startActivity(intent)
         }
     }
+
 }
