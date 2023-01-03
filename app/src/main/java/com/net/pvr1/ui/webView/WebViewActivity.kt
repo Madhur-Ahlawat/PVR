@@ -6,7 +6,6 @@ import android.net.http.SslError
 import android.os.Bundle
 import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
-import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityWebViewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,7 +24,6 @@ class WebViewActivity : AppCompatActivity() {
         from = intent.getStringExtra("from").toString()
         title = intent.getStringExtra("title").toString()
         get = intent.getStringExtra("getUrl").toString()
-        println("webUrl--->${get}")
         movedNext()
 
         when (from) {

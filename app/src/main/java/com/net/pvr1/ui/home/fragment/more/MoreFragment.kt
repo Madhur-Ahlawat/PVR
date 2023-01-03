@@ -30,12 +30,12 @@ import com.net.pvr1.ui.home.fragment.more.model.ProfileModel
 import com.net.pvr1.ui.home.fragment.more.offer.OfferActivity
 import com.net.pvr1.ui.home.fragment.more.prefrence.PreferenceActivity
 import com.net.pvr1.ui.home.fragment.more.privacy.TermsPrivacyActivity
+import com.net.pvr1.ui.home.fragment.more.profile.userDetails.ProfileActivity
 import com.net.pvr1.ui.home.fragment.more.response.ProfileResponse
 import com.net.pvr1.ui.home.fragment.more.viewModel.MoreViewModel
 import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.ui.myBookings.MyBookingsActivity
 import com.net.pvr1.ui.privateScreenings.PrivateScreeningsActivity
-import com.net.pvr1.ui.profile.userDetails.ProfileActivity
 import com.net.pvr1.ui.scanner.ScannerActivity
 import com.net.pvr1.ui.watchList.WatchListActivity
 import com.net.pvr1.ui.webView.WebViewActivity
@@ -82,31 +82,25 @@ class MoreFragment : Fragment() {
         //SetName
         binding?.profileDetails?.textView205?.text = preferences.getUserName()
 
-        //profile
-        authViewModel.userProfile(preferences.getCityName(),preferences.getUserId(),timeStamp,getHashProfile(
-            preferences.getUserId()+"|"+timeStamp
-        ))
-
-        //whatsapp status
-        authViewModel.whatsappOpt(
-            preferences.getUserId(),
-            preferences.getToken().toString(),
-            timeStamp,
-            getHash(preferences.getUserId() + "|" + preferences.getToken() + "|" + "optin-info" + "|" + timeStamp)
-        )
-
-        movedNext()
         manageFunctions()
-        createQr()
-        //whatsapp Status
-        whatsappOptStatus()
-        //profileResponse
-        profileResponse()
     }
 
     private fun manageFunctions() {
         //mange privilege show hide
         if (preferences.getIsLogin()) {
+            binding?.whatsappUi?.show()
+            authViewModel.whatsappOpt(
+                preferences.getUserId(),
+                preferences.getToken().toString(),
+                timeStamp,
+                getHash(preferences.getUserId() + "|" + preferences.getToken() + "|" + "optin-info" + "|" + timeStamp)
+            )
+//profile
+            authViewModel.userProfile(
+                preferences.getCityName(), preferences.getUserId(), timeStamp, getHashProfile(
+                    preferences.getUserId() + "|" + timeStamp
+                )
+            )
             binding?.privilegeLoginUi?.show()
             binding?.privilegeLogOutUi?.hide()
             binding?.llBookingSection?.show()
@@ -119,8 +113,10 @@ class MoreFragment : Fragment() {
             binding?.privilegeLogin?.qrImgMainPage?.setOnClickListener {
                 oPenDialogQR()
             }
+            createQr()
 
         } else {
+            binding?.whatsappUi?.hide()
             binding?.llBookingSection?.show()
             binding?.tvSignOut?.hide()
             binding?.profileLinear?.hide()
@@ -129,6 +125,11 @@ class MoreFragment : Fragment() {
             binding?.privilegeLoginUi?.hide()
             binding?.privilegeLogOutUi?.show()
         }
+        movedNext()
+        //whatsapp Status
+        whatsappOptStatus()
+        //profileResponse
+        profileResponse()
     }
 
     //   Ui ClickAction
@@ -221,7 +222,9 @@ class MoreFragment : Fragment() {
         //Login
         binding?.tvLoginButton?.textView5?.setOnClickListener {
             val intent = Intent(requireActivity(), LoginActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
+            activity?.finish()
         }
 
         //MovieAlert
@@ -319,37 +322,11 @@ class MoreFragment : Fragment() {
             when (it) {
                 is NetworkResult.Success -> {
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        loader?.dismiss()
                         retrieveData(it.data.output)
-                    } else {
-                        val dialog = OptionDialog(requireActivity(),
-                            R.mipmap.ic_launcher,
-                            R.string.app_name,
-                            it.data?.msg.toString(),
-                            positiveBtnText = R.string.ok,
-                            negativeBtnText = R.string.no,
-                            positiveClick = {},
-                            negativeClick = {})
-                        dialog.show()
                     }
                 }
-                is NetworkResult.Error -> {
-                    loader?.dismiss()
-                    val dialog = OptionDialog(requireContext(),
-                        R.mipmap.ic_launcher,
-                        R.string.app_name,
-                        it.message.toString(),
-                        positiveBtnText = R.string.ok,
-                        negativeBtnText = R.string.no,
-                        positiveClick = {},
-                        negativeClick = {})
-                    dialog.show()
-                }
-                is NetworkResult.Loading -> {
-                    println("loadingHome--->")
-                    loader = LoaderDialog(R.string.pleasewait)
-                    loader?.show(requireActivity().supportFragmentManager, null)
-                }
+                is NetworkResult.Error -> {}
+                is NetworkResult.Loading -> {}
             }
         }
 
@@ -412,7 +389,7 @@ class MoreFragment : Fragment() {
                 }
                 is NetworkResult.Loading -> {
                     println("loadingHome--->")
-                    loader = LoaderDialog(R.string.pleasewait)
+                    loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(requireActivity().supportFragmentManager, null)
                 }
             }

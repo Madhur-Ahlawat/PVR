@@ -2,9 +2,10 @@
 
 package com.net.pvr1.ui.login
 
+import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Intent
-import android.content.IntentSender.SendIntentException
+import android.content.IntentSender
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.inputmethod.EditorInfo
@@ -28,11 +29,10 @@ import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.SUCCESS_CODE
 import com.net.pvr1.utils.NetworkResult
 import com.net.pvr1.utils.PreferenceManager
+import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
-@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     @Inject
@@ -40,42 +40,35 @@ class LoginActivity : AppCompatActivity() {
     private var binding: ActivityLoginBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: LoginViewModel by viewModels()
-    private val CREDENTIAL_PICKER_REQUEST = 1
+    private val mobileRequest = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        movedNext()
+        manageFunction()
+    }
 
+    private fun manageFunction() {
         //Auto Show Mobile Number
-        val hintRequest = HintRequest.Builder()
-            .setPhoneNumberIdentifierSupported(true)
-            .build()
-
-
+        val hintRequest = HintRequest.Builder().setPhoneNumberIdentifierSupported(true).build()
         val intent: PendingIntent = Credentials.getClient(this).getHintPickerIntent(hintRequest)
         try {
             startIntentSenderForResult(
-                intent.intentSender,
-                CREDENTIAL_PICKER_REQUEST,
-                null,
-                0,
-                0,
-                0,
-                Bundle()
+                intent.intentSender, mobileRequest, null, 0, 0, 0, Bundle()
             )
-        } catch (e: SendIntentException) {
+        } catch (e: IntentSender.SendIntentException) {
             e.printStackTrace()
         }
+
+        //moved Another Pages
+        movedNext()
     }
 
     private fun movedNext() {
-
         binding?.mobileNumber?.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                //do here your stuff f
                 val mobile = binding?.mobileNumber?.text.toString()
                 if (mobile == "") {
                     val dialog = OptionDialog(this,
@@ -84,10 +77,8 @@ class LoginActivity : AppCompatActivity() {
                         getString(R.string.enterMobileNo),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 } else if (!TextUtils.isEmpty(mobile) && mobile.length != 10) {
                     val dialog = OptionDialog(this,
@@ -96,10 +87,8 @@ class LoginActivity : AppCompatActivity() {
                         getString(R.string.checkNumber),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 } else {
                     authViewModel.loginMobileUser(mobile, preferences.getCityName(), "INDIA")
@@ -109,7 +98,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding?.textView11?.setOnClickListener {
-            //do here your stuff f
             val mobile = binding?.mobileNumber?.text.toString()
             if (mobile == "") {
                 val dialog = OptionDialog(this,
@@ -118,10 +106,8 @@ class LoginActivity : AppCompatActivity() {
                     getString(R.string.enterMobileNo),
                     positiveBtnText = R.string.ok,
                     negativeBtnText = R.string.no,
-                    positiveClick = {
-                    },
-                    negativeClick = {
-                    })
+                    positiveClick = {},
+                    negativeClick = {})
                 dialog.show()
             } else if (!TextUtils.isEmpty(mobile) && mobile.length != 10) {
                 val dialog = OptionDialog(this,
@@ -130,40 +116,40 @@ class LoginActivity : AppCompatActivity() {
                     getString(R.string.checkNumber),
                     positiveBtnText = R.string.ok,
                     negativeBtnText = R.string.no,
-                    positiveClick = {
-                    },
-                    negativeClick = {
-                    })
+                    positiveClick = {},
+                    negativeClick = {})
                 dialog.show()
             } else {
                 authViewModel.loginMobileUser(mobile, "", "INDIA")
             }
         }
+
         //Skip
         binding?.textView8?.setOnClickListener {
-            if (!Constant().isLocationEnabled(this@LoginActivity)){
+            if (!Constant().locationServicesEnabled(this@LoginActivity)) {
                 val intent = Intent(this@LoginActivity, EnableLocationActivity::class.java)
                 startActivity(intent)
                 finish()
-            } else if (preferences.getCityName()==""){
+            } else if (preferences.getCityName() == "") {
                 val intent = Intent(this@LoginActivity, SelectCityActivity::class.java)
                 startActivity(intent)
                 finish()
-            }else{
-//                    val intent = Intent(this@SplashActivity, StarPassActivity::class.java)
+            } else {
                 val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
             }
         }
 
-    // OutSide Click
+        // OutSide Click
         binding?.loginClick?.setOnClickListener {
             binding?.textInputLayout?.isSelected = false
             binding?.mobileNumber?.isFocusableInTouchMode = false
             binding?.textInputLayout?.isFocusableInTouchMode = false
             Constant().hideKeyboard(this)
         }
+
+        //Login
         loginApi()
     }
 
@@ -182,8 +168,7 @@ class LoginActivity : AppCompatActivity() {
                             positiveClick = {
                                 retrieveData(it.data.output)
                             },
-                            negativeClick = {
-                            })
+                            negativeClick = {})
                         dialog.show()
                     } else {
                         val dialog = OptionDialog(this,
@@ -192,10 +177,8 @@ class LoginActivity : AppCompatActivity() {
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -207,14 +190,12 @@ class LoginActivity : AppCompatActivity() {
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
+                    loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(supportFragmentManager, null)
                 }
             }
@@ -229,10 +210,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     @Deprecated("Deprecated in Java")
+    @SuppressLint("SetTextI18n")
     @Override
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == CREDENTIAL_PICKER_REQUEST && resultCode == RESULT_OK) {
+        if (requestCode == mobileRequest && resultCode == RESULT_OK) {
             // Obtain the phone number from the result
             val cred: Credential = data?.getParcelableExtra(Credential.EXTRA_KEY)!!
             try {
@@ -246,20 +228,11 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
             } catch (e: Exception) {
+                e.printStackTrace()
             }
-        } else if (requestCode == CREDENTIAL_PICKER_REQUEST && resultCode == CredentialsApi.ACTIVITY_RESULT_NO_HINTS_AVAILABLE) {
+        } else if (requestCode == mobileRequest && resultCode == CredentialsApi.ACTIVITY_RESULT_NO_HINTS_AVAILABLE) {
             // *** No phone numbers available ***
-//            val dialog = OptionDialog(this,
-//                R.mipmap.ic_launcher,
-//                R.string.app_name,
-//                getString(R.string.mobileNotAvailable),
-//                positiveBtnText = R.string.ok,
-//                negativeBtnText = R.string.no,
-//                positiveClick = {
-//                },
-//                negativeClick = {
-//                })
-//            dialog.show()
+            printLog("numberNotFound---->")
         }
     }
 }

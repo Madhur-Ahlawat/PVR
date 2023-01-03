@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.profile.userDetails
+package com.net.pvr1.ui.home.fragment.more.profile.userDetails
 
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
@@ -20,13 +20,15 @@ import com.net.pvr1.databinding.ActivityProfileBinding
 import com.net.pvr1.databinding.EditProfileDialogBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.home.fragment.more.profile.userDetails.viewModel.UserProfileViewModel
 import com.net.pvr1.ui.home.fragment.more.response.ProfileResponse
-import com.net.pvr1.ui.profile.userDetails.viewModel.UserProfileViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.ProfileResponseConst
 import com.net.pvr1.utils.NetworkResult
 import com.net.pvr1.utils.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.internal.and
+import java.security.MessageDigest
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -54,8 +56,22 @@ class ProfileActivity : AppCompatActivity() {
         binding?.textView212?.text = preferences.getUserName()
         profileResponse = ProfileResponseConst
         movedNext()
-        detailsDataSet()
+
+        //profile
+        if (intent.getStringExtra("from") == "home") {
+            val timeStamp = (System.currentTimeMillis() / 1000).toString()
+            authViewModel.userProfile(
+                preferences.getCityName(), preferences.getUserId(), timeStamp, getHashProfile(
+                    preferences.getUserId() + "|" + timeStamp
+                )
+            )
+
+        } else {
+            detailsDataSet()
+        }
+
         profileUpdate()
+        profileLoad()
     }
 
     private fun detailsDataSet() {
@@ -89,6 +105,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun editProfileDialog() {
         dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
         //profileDialog
         val inflater = LayoutInflater.from(this)
         val bindingProfile = EditProfileDialogBinding.inflate(inflater)
@@ -96,13 +113,13 @@ class ProfileActivity : AppCompatActivity() {
         behavior?.state = BottomSheetBehavior.STATE_EXPANDED
         dialog?.setContentView(bindingProfile.root)
         dialog?.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.attributes?.windowAnimations = R.style.DialogAnimation
         dialog?.window?.setGravity(Gravity.BOTTOM)
         dialog?.show()
+
         //name
         bindingProfile.name.setText(preferences.getUserName())
         //phone
@@ -119,12 +136,15 @@ class ProfileActivity : AppCompatActivity() {
         //anniversary
         anniversary = bindingProfile.anniversary
         anniversary?.text = profileResponse?.doa.toString()
+
         //Dob DatePicker
         bindingProfile.constraintLayout68.setOnClickListener {
             dobClick = true
             DatePickerDialog(
-                this, dateD, myCalendar
-                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                this,
+                dateD,
+                myCalendar.get(Calendar.YEAR),
+                myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH)
             ).show()
         }
@@ -132,12 +152,12 @@ class ProfileActivity : AppCompatActivity() {
         bindingProfile.anniversaryClick.setOnClickListener {
             dobClick = false
             DatePickerDialog(
-                this, dateD, myCalendar
-                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                this,
+                dateD,
+                myCalendar.get(Calendar.YEAR),
+                myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH)
             ).show()
-//            myCalendar.getDatePicker().setMaxDate(System.currentTimeMillis());
-
         }
         //dismiss Dialog
         bindingProfile.textView247.setOnClickListener {
@@ -164,13 +184,13 @@ class ProfileActivity : AppCompatActivity() {
 
     //calender
     private var myCalendar = Calendar.getInstance()
-    private var dateD =
-        OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-            myCalendar[Calendar.YEAR] = year
-            myCalendar[Calendar.MONTH] = monthOfYear
-            myCalendar[Calendar.DAY_OF_MONTH] = dayOfMonth
-            updateLabel()
-        }
+
+    private var dateD = OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+        myCalendar[Calendar.YEAR] = year
+        myCalendar[Calendar.MONTH] = monthOfYear
+        myCalendar[Calendar.DAY_OF_MONTH] = dayOfMonth
+        updateLabel()
+    }
 
     private fun updateLabel() {
         val myFormat = "dd MMM, yyyy " //In which you need put here
@@ -182,6 +202,83 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    private fun profileLoad() {
+        authViewModel.userProfileLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        retrieveDataProfile(it.data.output)
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+
+    private fun retrieveDataProfile(output: ProfileResponse.Output) {
+        profileResponse = output
+        ProfileResponseConst = output
+        binding?.textView212?.text = preferences.getUserName()
+
+        //member
+        binding?.textView213?.text = output.cd
+        //phone
+        binding?.textView215?.text = output.ph
+        //email
+        binding?.textView217?.text = output.em
+        //gender
+        binding?.textView219?.text = output.g
+        //dob
+        binding?.textView221?.text = output.dob
+        //martial status
+        binding?.textView223?.text = output.ms
+        //anniversary
+        binding?.textView225?.text = output.doa.toString()
+
+//        //Update
+//        //name
+//        bindingProfile.name.setText(preferences.getUserName())
+//        //phone
+//        bindingProfile.phone.setText(profileResponse?.ph)
+//        //email
+//        bindingProfile.email.setText(profileResponse?.em)
+//        //gender
+//        bindingProfile.gender.setText(profileResponse?.g)
+//        //dob
+//        dob = bindingProfile.dob
+//        dob?.text = profileResponse?.dob
+//        //martial status
+//        bindingProfile.martialStatus.setText(profileResponse?.ms)
+//        //anniversary
+//        anniversary = bindingProfile.anniversary
+//        anniversary?.text = profileResponse?.doa.toString()
+    }
 
     private fun profileUpdate() {
         authViewModel.userResponseLiveData.observe(this) {
@@ -195,10 +292,8 @@ class ProfileActivity : AppCompatActivity() {
                             it.data.msg,
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                         retrieveData(it.data.output)
                     } else {
@@ -208,10 +303,8 @@ class ProfileActivity : AppCompatActivity() {
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -223,14 +316,12 @@ class ProfileActivity : AppCompatActivity() {
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
+                    loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(supportFragmentManager, null)
                 }
             }
@@ -243,4 +334,14 @@ class ProfileActivity : AppCompatActivity() {
 
     }
 
+    @Throws(Exception::class)
+    fun getHashProfile(text: String): String {
+        val mdText = MessageDigest.getInstance("SHA-512")
+        val byteData = mdText.digest(text.toByteArray())
+        val sb = StringBuffer()
+        for (i in byteData.indices) {
+            sb.append(((byteData[i] and 0xff) + 0x100).toString(16).substring(1))
+        }
+        return sb.toString()
+    }
 }

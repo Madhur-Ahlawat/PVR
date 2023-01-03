@@ -130,7 +130,7 @@ class SelectBookingsActivity : AppCompatActivity() {
     private fun movedNext() {
         binding?.textView24?.text = preferences.getCityName()
         binding?.textView24?.setOnClickListener {
-            if (!Constant().isLocationEnabled(this)){
+            if (!Constant().locationServicesEnabled(this)){
                 val intent = Intent(this, EnableLocationActivity::class.java)
                 intent.putExtra("from","qr")
                 intent.putExtra("cid",cinemaId)
@@ -262,7 +262,7 @@ class SelectBookingsActivity : AppCompatActivity() {
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
+                    loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(this.supportFragmentManager, null)
                 }
             }
@@ -413,7 +413,7 @@ class SelectBookingsActivity : AppCompatActivity() {
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
+                    loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(this.supportFragmentManager, null)
                 }
             }
@@ -472,7 +472,7 @@ class SelectBookingsActivity : AppCompatActivity() {
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
+                    loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(this.supportFragmentManager, null)
                 }
             }

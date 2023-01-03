@@ -253,7 +253,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
+                    loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(this.supportFragmentManager, null)
                 }
             }

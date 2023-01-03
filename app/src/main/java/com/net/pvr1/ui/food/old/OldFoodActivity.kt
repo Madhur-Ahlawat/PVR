@@ -1,9 +1,11 @@
 package com.net.pvr1.ui.food.old
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
@@ -18,15 +20,15 @@ import com.net.pvr1.ui.food.old.adapter.OldAllFoodAdapter
 import com.net.pvr1.ui.food.old.adapter.OldCategoryAdapter
 import com.net.pvr1.ui.food.old.reponse.OldFoodResponse
 import com.net.pvr1.ui.food.old.viewModel.OldFoodViewModel
+import com.net.pvr1.ui.summery.SummeryActivity
 import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class OldFoodActivity : AppCompatActivity(),
-    OldCategoryAdapter.RecycleViewItemClickListener ,
-    OldAllFoodAdapter.RecycleViewItemClickListener,CartAdapter.RecycleViewItemClickListenerCity{
+class OldFoodActivity : AppCompatActivity(), OldCategoryAdapter.RecycleViewItemClickListener,
+    OldAllFoodAdapter.RecycleViewItemClickListener, CartAdapter.RecycleViewItemClickListenerCity {
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityOldFoodBinding? = null
@@ -38,15 +40,43 @@ class OldFoodActivity : AppCompatActivity(),
     private var cartShow = false
 
     //foodLimit
-    private var foodLimit : Int = 10
-    private var itemCheckPriceCart : Int = 0
+    private var foodLimit: Int = 10
+    private var itemCheckPriceCart: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOldFoodBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        authViewModel.food(preferences.getUserId(),"LOGG","LOGG220007711942","","","","","","","","","no")
+//        authViewModel.food(
+//            preferences.getUserId(),
+//            "LOGG",
+//            "LOGG220007711942",
+//            "",
+//            "",
+//            "",
+//            "",
+//            "",
+//            "",
+//            "",
+//            "",
+//            "no"
+//        )
+
+        authViewModel.food(
+            preferences.getUserId(),
+            Constant.CINEMA_ID,
+            Constant.BOOKING_ID,
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "no",
+            "no",
+            "no"
+        )
         foodDataApi()
         movedNext()
     }
@@ -54,8 +84,8 @@ class OldFoodActivity : AppCompatActivity(),
     private fun movedNext() {
         //search
         binding?.searchView?.setOnClickListener {
-           binding?.searchUi?.show()
-           binding?.toolbarUi?.hide()
+            binding?.searchUi?.show()
+            binding?.toolbarUi?.hide()
         }
         //cancel Search
         binding?.include35?.cancelBtn?.setOnClickListener {
@@ -66,15 +96,13 @@ class OldFoodActivity : AppCompatActivity(),
         binding?.include35?.editTextTextPersonName?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {}
             override fun beforeTextChanged(
-                s: CharSequence, start: Int,
-                count: Int, after: Int
+                s: CharSequence, start: Int, count: Int, after: Int
             ) {
 
             }
 
             override fun onTextChanged(
-                s: CharSequence, start: Int,
-                before: Int, count: Int
+                s: CharSequence, start: Int, before: Int, count: Int
             ) {
 
 //                field1.setText("")
@@ -82,7 +110,7 @@ class OldFoodActivity : AppCompatActivity(),
         })
         //filter
         binding?.imageView17?.setOnClickListener {
-            val popupMenu = PopupMenu(this,  binding?.imageView17!!)
+            val popupMenu = PopupMenu(this, binding?.imageView17!!)
             // Inflating popup menu from popup_menu.xml file
             popupMenu.menuInflater.inflate(R.menu.old_food_menu, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener { menuItem ->
@@ -90,16 +118,31 @@ class OldFoodActivity : AppCompatActivity(),
                 val layoutManagerCrew2 =
                     GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
                 oldAllFoodAdapter =
-                    OldAllFoodAdapter(getFilterAllMfl( menuItem.title.toString()), this, this)
+                    OldAllFoodAdapter(getFilterAllMfl(menuItem.title.toString()), this, this)
                 binding?.recyclerView58?.adapter = oldAllFoodAdapter
                 binding?.recyclerView58?.setHasFixedSize(true)
                 binding?.recyclerView58?.layoutManager = layoutManagerCrew2
-                OldAllFoodAdapter(getFilterAllMfl( menuItem.title.toString()), this, this)
+                OldAllFoodAdapter(getFilterAllMfl(menuItem.title.toString()), this, this)
 
                 true
             }
             // Showing the popup menu
             popupMenu.show()
+        }
+
+        //without Food
+        binding?.textView381?.setOnClickListener {
+            val intent = Intent(this, SummeryActivity::class.java)
+            intent.putExtra(Constant.BOOK_TYPE, "BOOKING")
+            intent.putExtra("food", cartModel)
+            startActivity(intent)
+        }
+        //with Food
+        binding?.include24?.textView5?.setOnClickListener {
+            val intent = Intent(this, SummeryActivity::class.java)
+            intent.putExtra(Constant.BOOK_TYPE, "BOOKING")
+            intent.putExtra("food", cartModel)
+            startActivity(intent)
         }
     }
 
@@ -109,7 +152,7 @@ class OldFoodActivity : AppCompatActivity(),
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        catFilter =it.data.output.r
+                        catFilter = it.data.output.r
                         retrieveData(it.data.output)
                     } else {
                         val dialog = OptionDialog(this,
@@ -121,8 +164,7 @@ class OldFoodActivity : AppCompatActivity(),
                             positiveClick = {
                                 finish()
                             },
-                            negativeClick = {
-                            })
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -134,14 +176,12 @@ class OldFoodActivity : AppCompatActivity(),
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
+                    loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(this.supportFragmentManager, null)
                 }
             }
@@ -158,20 +198,16 @@ class OldFoodActivity : AppCompatActivity(),
         binding?.recyclerView57?.setHasFixedSize(true)
 
 
-        val layoutManagerCrew2 =
-            GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        oldAllFoodAdapter =
-            OldAllFoodAdapter(getFilterAllMfl( "ALL"), this, this)
+        val layoutManagerCrew2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+        oldAllFoodAdapter = OldAllFoodAdapter(getFilterAllMfl("ALL"), this, this)
         binding?.recyclerView58?.adapter = oldAllFoodAdapter
         binding?.recyclerView58?.setHasFixedSize(true)
         binding?.recyclerView58?.layoutManager = layoutManagerCrew2
     }
 
     override fun categoryClick(string: String) {
-        val layoutManagerCrew2 =
-            GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        oldAllFoodAdapter=
-            OldAllFoodAdapter(getFilterAllMfl( string), this, this)
+        val layoutManagerCrew2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+        oldAllFoodAdapter = OldAllFoodAdapter(getFilterAllMfl(string), this, this)
         binding?.recyclerView58?.adapter = oldAllFoodAdapter
         binding?.recyclerView58?.setHasFixedSize(true)
         binding?.recyclerView58?.layoutManager = layoutManagerCrew2
@@ -187,15 +223,13 @@ class OldFoodActivity : AppCompatActivity(),
             }
             "Non Veg" -> {
                 for (data in catFilter) {
-                    if (!data.veg)
-                        categoryFilterNew.add(data)
+                    if (!data.veg) categoryFilterNew.add(data)
 
                 }
             }
             "Veg" -> {
                 for (data in catFilter) {
-                    if (data.veg)
-                        categoryFilterNew.add(data)
+                    if (data.veg) categoryFilterNew.add(data)
                 }
             }
             else -> {
@@ -228,10 +262,8 @@ class OldFoodActivity : AppCompatActivity(),
                 getString(R.string.max_item_msz) + " " + foodLimit + " " + getString(R.string.items_a_time),
                 positiveBtnText = R.string.ok,
                 negativeBtnText = R.string.no,
-                positiveClick = {
-                },
-                negativeClick = {
-                })
+                positiveClick = {},
+                negativeClick = {})
             dialog.show()
         } else {
             num += 1
@@ -251,10 +283,8 @@ class OldFoodActivity : AppCompatActivity(),
                 getString(R.string.min_item_msz),
                 positiveBtnText = R.string.ok,
                 negativeBtnText = R.string.no,
-                positiveClick = {
-                },
-                negativeClick = {
-                })
+                positiveClick = {},
+                negativeClick = {})
             dialog.show()
         } else {
             num -= 1
@@ -319,21 +349,22 @@ class OldFoodActivity : AppCompatActivity(),
 
     @SuppressLint("SetTextI18n", "UseCompatLoadingForDrawables", "NotifyDataSetChanged")
     private fun cartData() {
+
         oldAllFoodAdapter?.notifyDataSetChanged()
         if (cartModel.isEmpty()) {
             binding?.constraintLayout30?.hide()
+            binding?.constraintLayout35?.hide()
         } else {
-            binding?.constraintLayout30?.show()
+            binding?.constraintLayout35?.show()
             binding?.imageView74?.setOnClickListener {
-                cartShow = if (cartShow){
-                    binding?.imageView74?.setImageDrawable(this.getDrawable(R.drawable.arrow_up))
-                    binding?.constraintLayout112?.show()
-                    false
-                }else{
+                if (binding?.constraintLayout30?.visibility == View.VISIBLE) {
                     binding?.imageView74?.setImageDrawable(this.getDrawable(R.drawable.arrow_down))
-                    binding?.constraintLayout112?.hide()
-                    true
+                    binding?.constraintLayout30?.hide()
+                } else {
+                    binding?.imageView74?.setImageDrawable(this.getDrawable(R.drawable.arrow_up))
+                    binding?.constraintLayout30?.show()
                 }
+
             }
 
             //total Price
@@ -341,7 +372,6 @@ class OldFoodActivity : AppCompatActivity(),
             binding?.textView148?.text =
                 getString(R.string.currency) + Constant.DECIFORMAT.format(itemCheckPriceCart / 100.0)
             binding?.textView149?.text = cartModel.size.toString() + " " + getString(R.string.items)
-            binding?.constraintLayout30?.show()
             val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
             val cartAdapter = CartAdapter(cartModel, this, this)
             binding?.recyclerView41?.layoutManager = layoutManager
@@ -359,27 +389,25 @@ class OldFoodActivity : AppCompatActivity(),
         return totalPrice
     }
 
-//    Cart
+    //    Cart
     override fun cartFoodPlus(comingSoonItem: CartModel, position: Int) {
-    var num = comingSoonItem.quantity
-    if (num > foodLimit || num == foodLimit) {
-        val dialog = OptionDialog(this,
-            R.mipmap.ic_launcher,
-            R.string.app_name,
-            getString(R.string.max_item_msz) + " " + foodLimit + " " + getString(R.string.items_a_time),
-            positiveBtnText = R.string.ok,
-            negativeBtnText = R.string.no,
-            positiveClick = {
-            },
-            negativeClick = {
-            })
-        dialog.show()
-    } else {
-        num += 1
-        comingSoonItem.quantity = num
-        updateCartFoodCartList(comingSoonItem)
-        cartData()
-    }
+        var num = comingSoonItem.quantity
+        if (num > foodLimit || num == foodLimit) {
+            val dialog = OptionDialog(this,
+                R.mipmap.ic_launcher,
+                R.string.app_name,
+                getString(R.string.max_item_msz) + " " + foodLimit + " " + getString(R.string.items_a_time),
+                positiveBtnText = R.string.ok,
+                negativeBtnText = R.string.no,
+                positiveClick = {},
+                negativeClick = {})
+            dialog.show()
+        } else {
+            num += 1
+            comingSoonItem.quantity = num
+            updateCartFoodCartList(comingSoonItem)
+            cartData()
+        }
     }
 
     override fun cartFoodMinus(comingSoonItem: CartModel, position: Int) {
@@ -391,10 +419,8 @@ class OldFoodActivity : AppCompatActivity(),
                 getString(R.string.min_item_msz),
                 positiveBtnText = R.string.ok,
                 negativeBtnText = R.string.no,
-                positiveClick = {
-                },
-                negativeClick = {
-                })
+                positiveClick = {},
+                negativeClick = {})
             dialog.show()
         } else {
             num -= 1

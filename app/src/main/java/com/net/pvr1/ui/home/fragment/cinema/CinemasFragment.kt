@@ -91,7 +91,7 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         (requireActivity().findViewById(R.id.include) as ConstraintLayout).show()
         (requireActivity().findViewById(R.id.notify) as ImageView).hide()
-        (requireActivity().findViewById(R.id.locationBtn) as ImageView).hide()
+        (requireActivity().findViewById(R.id.profileBtn) as ImageView).hide()
         (requireActivity().findViewById(R.id.scanQr) as ImageView).hide()
         (requireActivity().findViewById(R.id.textView2) as TextView).show()
         (requireActivity().findViewById(R.id.searchBtn) as ImageView).hide()
@@ -238,7 +238,7 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
+                    loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(requireActivity().supportFragmentManager, null)
                 }
             }

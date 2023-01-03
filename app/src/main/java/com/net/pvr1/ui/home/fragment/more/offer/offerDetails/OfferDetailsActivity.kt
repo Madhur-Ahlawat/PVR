@@ -11,11 +11,14 @@ import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.more.offer.offerDetails.viewModel.OfferDetailsViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class OfferDetailsActivity : AppCompatActivity() {
-    //    private lateinit var preferences: AppPreferences
+    @Inject
+    lateinit var preferences: PreferenceManager
     private var binding: ActivityOfferDetialsBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: OfferDetailsViewModel by viewModels()
@@ -85,7 +88,7 @@ class OfferDetailsActivity : AppCompatActivity() {
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
+                    loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(supportFragmentManager, null)
                 }
             }

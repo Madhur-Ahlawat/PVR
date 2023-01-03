@@ -243,7 +243,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
+                    loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(supportFragmentManager, null)
                 }
             }
@@ -501,7 +501,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
+                    loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(this.supportFragmentManager, null)
                 }
             }
@@ -542,7 +542,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleasewait)
+                    loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(this.supportFragmentManager, null)
                 }
             }
@@ -582,7 +582,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 }
                 is NetworkResult.Loading -> {
                     if (!upi_loader) {
-                        loader = LoaderDialog(R.string.pleasewait)
+                        loader = LoaderDialog(R.string.pleaseWait)
                         loader?.show(this.supportFragmentManager, null)
                     }
                 }
@@ -849,7 +849,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 }
                 is NetworkResult.Loading -> {
                     if (!upi_loader) {
-                        loader = LoaderDialog(R.string.pleasewait)
+                        loader = LoaderDialog(R.string.pleaseWait)
                         loader?.show(this.supportFragmentManager, null)
                     }
                 }
@@ -903,7 +903,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 }
                 is NetworkResult.Loading -> {
                     if (!upi_loader) {
-                        loader = LoaderDialog(R.string.pleasewait)
+                        loader = LoaderDialog(R.string.pleaseWait)
                         loader?.show(this.supportFragmentManager, null)
                     }
                 }

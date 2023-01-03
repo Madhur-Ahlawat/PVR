@@ -10,7 +10,7 @@ import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.more.prefrence.adapter.*
 import com.net.pvr1.ui.home.fragment.more.prefrence.response.PreferenceResponse
-import com.net.pvr1.ui.profile.userDetails.viewModel.PreferenceViewModel
+import com.net.pvr1.ui.home.fragment.more.profile.userDetails.viewModel.PreferenceViewModel
 import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -88,7 +88,7 @@ class PreferenceActivity : AppCompatActivity(), PreferenceListAdapter.RecycleVie
                 }
                 is NetworkResult.Loading -> {
                     if(itemClick==0) {
-                        loader = LoaderDialog(R.string.pleasewait)
+                        loader = LoaderDialog(R.string.pleaseWait)
                         loader?.show(supportFragmentManager, null)
                     }
                 }

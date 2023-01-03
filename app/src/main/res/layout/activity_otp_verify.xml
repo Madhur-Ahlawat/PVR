@@ -1,198 +1,263 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     tools:context=".ui.login.otpVerify.OtpVerifyActivity">
 
-    <View
-        android:id="@+id/view11"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="75dp"
-        app:layout_constraintStart_toStartOf="@+id/view11"
-        app:layout_constraintTop_toTopOf="@+id/view11"
-        app:srcCompat="@drawable/pvr_new"
-        tools:ignore="ContentDescription,ImageContrastCheck" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="@string/verify_code"
-        android:textColor="@color/pvr_dark_black"
-        android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="@+id/view11"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+            <View
+                android:id="@+id/view11"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/montserrat_regular"
-        android:text="@string/sentCode"
-        android:textColor="@color/textColor"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/view11"
-        app:layout_constraintStart_toStartOf="@+id/view11"
-        app:layout_constraintTop_toBottomOf="@+id/textView12"
-        tools:ignore="TextContrastCheck" />
-
-
-    <com.kevinschildhorn.otpview.OTPView
-        android:id="@+id/otpEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
-        android:clipToPadding="true"
-        android:inputType="number"
-        android:layout_marginStart="-17dp"
-        app:layout_constraintStart_toStartOf="@+id/view11"
-        app:layout_constraintTop_toBottomOf="@+id/textView13"
-        app:otp_backgroundImage="@drawable/background"
-        app:otp_filledBackgroundImage="@drawable/background"
-        app:otp_highlightedBackgroundImage="@drawable/background_highlighted"
-        app:otp_itemCount="6"
-        app:otp_itemHeight="42dp"
-        app:otp_itemWidth="42dp"
-        app:otp_showCursor="false" />
-
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="30dp"
-        android:drawablePadding="@dimen/dimen_5dp"
-        android:fontFamily="@font/helvetica_neu_medium"
-        android:gravity="center"
-        android:text="@string/resend_otp"
-        android:textAllCaps="false"
-        android:textColor="#2f2f2f"
-        android:textSize="@dimen/dimen_14sp"
-        android:visibility="visible"
-        app:drawableEndCompat="@drawable/ic_yellow"
-        app:layout_constraintEnd_toEndOf="@+id/otpEditText"
-        app:layout_constraintTop_toBottomOf="@+id/otpEditText" />
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout38"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/view11"
-        app:layout_constraintStart_toStartOf="@+id/view11"
-        app:layout_constraintTop_toBottomOf="@+id/textView14">
-
-        <View
-            android:id="@+id/view105"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/name"
-            app:boxBackgroundColor="@color/white"
-            app:boxStrokeColor="#EDE8E9"
-            app:boxStrokeWidth="1dp"
-            app:endIconMode="custom"
-            app:errorEnabled="false"
-            app:layout_constraintEnd_toEndOf="@+id/view105"
-            app:layout_constraintStart_toStartOf="@+id/view105"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/name"
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:imeOptions="actionNext"
-                android:inputType="textPersonName"
-                android:textColor="@color/pvr_dark_black"
-                android:textSize="16sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="75dp"
+                app:layout_constraintStart_toStartOf="@+id/view11"
+                app:layout_constraintTop_toTopOf="@+id/view11"
+                app:srcCompat="@drawable/pvr_new"
+                tools:ignore="ContentDescription,ImageContrastCheck" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout2"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/email"
-            app:boxBackgroundColor="@color/white"
-            app:boxStrokeColor="#EDE8E9"
-            app:boxStrokeWidth="1dp"
-            app:endIconMode="custom"
-            app:errorEnabled="false"
-            app:layout_constraintEnd_toEndOf="@+id/view105"
-            app:layout_constraintStart_toStartOf="@+id/view105"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/email"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:imeOptions="actionDone"
-                android:inputType="textEmailAddress"
+                android:layout_gravity="center"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="@string/verify_code"
                 android:textColor="@color/pvr_dark_black"
-                android:textSize="16sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/view11"
+                app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
-        <TextView
-            android:id="@+id/textView158"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/montserrat_regular"
-            android:text="@string/keep_info_safe"
-            android:textSize="@dimen/dimen_14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/view105"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="@string/sentCode"
+                android:textColor="@color/textColor"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/view11"
+                app:layout_constraintStart_toStartOf="@+id/view11"
+                app:layout_constraintTop_toBottomOf="@+id/textView12"
+                tools:ignore="TextContrastCheck" />
 
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="@dimen/dimen_30dp"
-        android:layout_marginBottom="@dimen/dimen_30dp"
-        android:background="@drawable/btn_yellow_curve"
-        android:fontFamily="@font/montserrat_bold"
-        android:gravity="center"
-        android:text="@string/continue_txt"
-        android:textColor="@color/black"
-        android:textSize="@dimen/dimen_14sp"
-        app:layout_constraintEnd_toEndOf="@+id/view11"
-        app:layout_constraintStart_toStartOf="@+id/view11"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout38" />
+            <com.kevinschildhorn.otpview.OTPView
+                android:id="@+id/otpEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-17dp"
+                android:layout_marginTop="30dp"
+                android:clipToPadding="true"
+                android:inputType="number"
+                app:layout_constraintStart_toStartOf="@+id/view11"
+                app:layout_constraintTop_toBottomOf="@+id/textView13"
+                app:otp_backgroundImage="@drawable/background"
+                app:otp_filledBackgroundImage="@drawable/background"
+                app:otp_highlightedBackgroundImage="@drawable/background_highlighted"
+                app:otp_itemCount="6"
+                app:otp_itemHeight="42dp"
+                app:otp_itemWidth="42dp"
+                app:otp_showCursor="false" />
 
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:drawablePadding="@dimen/dimen_5dp"
+                android:fontFamily="@font/helvetica_neu_medium"
+                android:gravity="center"
+                android:text="@string/resend_otp"
+                android:textAllCaps="false"
+                android:textColor="#2f2f2f"
+                android:textSize="@dimen/dimen_14sp"
+                android:visibility="visible"
+                app:drawableEndCompat="@drawable/ic_yellow"
+                app:layout_constraintEnd_toEndOf="@+id/otpEditText"
+                app:layout_constraintTop_toBottomOf="@+id/otpEditText" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout38"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@+id/view11"
+                app:layout_constraintStart_toStartOf="@+id/view11"
+                app:layout_constraintTop_toBottomOf="@+id/textView14">
+
+                <View
+                    android:id="@+id/view105"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <RelativeLayout
+                    android:id="@+id/nameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_70dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/text_curve"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/dimen_10dp"
+                    android:paddingTop="@dimen/dimen_8dp"
+                    android:paddingEnd="@dimen/dimen_5dp"
+                    android:paddingBottom="@dimen/dimen_5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayout"
+                        style="@style/styledBlackTilEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="-8dp"
+                        android:hint="@string/name"
+                        app:boxBackgroundColor="@color/transparent"
+                        app:boxStrokeColor="@color/transparent"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:endIconMode="custom"
+                        app:hintTextColor="@color/textColor"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <EditText
+                            android:id="@+id/name"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:fontFamily="@font/sf_pro_text_bold"
+                            android:gravity="bottom"
+                            android:imeOptions="actionNext"
+                            android:importantForAutofill="auto"
+                            android:inputType="textPersonName"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/textColor"
+                            android:textSize="16sp"
+                            tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/emailLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_70dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/text_curve"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/dimen_10dp"
+                    android:paddingTop="@dimen/dimen_8dp"
+                    android:paddingEnd="@dimen/dimen_5dp"
+                    android:paddingBottom="@dimen/dimen_5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/nameLayout">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayout2"
+                        style="@style/styledBlackTilEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="-8dp"
+                        android:hint="@string/email"
+                        app:boxBackgroundColor="@color/transparent"
+                        app:boxStrokeColor="@color/transparent"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:endIconMode="custom"
+                        app:hintTextColor="@color/textColor"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <EditText
+                            android:id="@+id/email"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:fontFamily="@font/sf_pro_text_bold"
+                            android:gravity="bottom"
+                            android:importantForAutofill="no"
+                            android:imeOptions="actionDone"
+                            android:inputType="textEmailAddress"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/textColor"
+                            android:textSize="16sp"
+                            tools:ignore="LabelFor,SpeakableTextPresentCheck" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/textView158"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:text="@string/keep_info_safe"
+                    android:textSize="@dimen/dimen_14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/view105"
+                    app:layout_constraintTop_toBottomOf="@+id/emailLayout" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="@dimen/dimen_30dp"
+                android:layout_marginBottom="@dimen/dimen_30dp"
+                android:lineSpacingExtra="0.1dp"
+                android:background="@drawable/btn_yellow_curve"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:gravity="center"
+                android:text="@string/continue_txt"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
+                app:layout_constraintEnd_toEndOf="@+id/view11"
+                app:layout_constraintStart_toStartOf="@+id/view11"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout38" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

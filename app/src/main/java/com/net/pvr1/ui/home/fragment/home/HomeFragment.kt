@@ -66,10 +66,10 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     private var lang = "ALL"
     private var format = "ALL"
     private var special = "ALL"
-    private var cinema_type = "ALL"
+    private var cinemaType = "ALL"
     private var upcomingBooking = false
     private var buttonPressed = ArrayList<String>()
-    private var generseleced: ArrayList<String?>? = ArrayList<String?>()
+    private var generaSelected: ArrayList<String?>? = ArrayList<String?>()
 
     // story board
     private var bannerShow = 0
@@ -87,7 +87,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     private var reverse: View? = null
     private var tvButton: TextView? = null
     private var ivPlay: LinearLayout? = null
-    private var RlBanner: RelativeLayout? = null
+    private var rlBanner: RelativeLayout? = null
     private var stories: StoriesProgressView? = null
     private var listener: PlayPopup? = null
 
@@ -111,12 +111,15 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             .findViewById(R.id.ivBanner))
         ivPlay = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
             .findViewById(R.id.ivPlay))
-        skip = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout).findViewById(R.id.skip))
-        reverse =
-            (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout).findViewById(R.id.reverse))
-        ivCross = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout).findViewById(R.id.ivCross))
-        RlBanner = (requireActivity().findViewById(R.id.RlBanner))
-        stories = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout).findViewById(R.id.stories))
+        skip = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
+            .findViewById(R.id.skip))
+        reverse = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
+            .findViewById(R.id.reverse))
+        ivCross = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
+            .findViewById(R.id.ivCross))
+        rlBanner = (requireActivity().findViewById(R.id.RlBanner))
+        stories = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
+            .findViewById(R.id.stories))
 
         if (stories == null) {
             stories?.destroy()
@@ -124,7 +127,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
         (requireActivity().findViewById(R.id.include) as ConstraintLayout).show()
         (requireActivity().findViewById(R.id.notify) as ImageView).show()
-        (requireActivity().findViewById(R.id.locationBtn) as ImageView).show()
         (requireActivity().findViewById(R.id.scanQr) as ImageView).show()
         (requireActivity().findViewById(R.id.searchBtn) as ImageView).show()
         (requireActivity().findViewById(R.id.searchCinema) as ImageView).hide()
@@ -133,6 +135,13 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 val intent = Intent(requireActivity(), SearchHomeActivity::class.java)
                 startActivity(intent)
             }
+        }
+        if (preferences.getIsLogin()) {
+            (requireActivity().findViewById(R.id.profileBtn) as ImageView).show()
+
+        } else {
+            (requireActivity().findViewById(R.id.profileBtn) as ImageView).hide()
+
         }
 
         movedNext()
@@ -194,7 +203,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
         //banner
         ivCross?.setOnClickListener {
-            RlBanner?.hide()
+            rlBanner?.hide()
             listener?.onShowNotification()
             listener?.onShowPrivilege()
 //                Constant.PvrHB = ""
@@ -256,7 +265,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 }
                 is NetworkResult.Loading -> {
                     println("loadingHome--->")
-                    loader = LoaderDialog(R.string.pleasewait)
+                    loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(requireActivity().supportFragmentManager, null)
                 }
             }
@@ -264,6 +273,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun retrieveData(output: HomeResponse.Output) {
         PlaceHolder = output
         if (isAdded) {
@@ -291,15 +301,14 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         }
 
         //Promotion
-        if (output.ph.isNotEmpty())
-        updatePH(output.ph)
+        if (output.ph.isNotEmpty()) updatePH(output.ph)
         //Movies
         val gridLayoutMovies = GridLayoutManager(context, 2)
         binding?.recyclerMovies?.layoutManager = LinearLayoutManager(context)
         val adapterMovies = HomeMoviesAdapter(requireActivity(), output.mv, this)
         binding?.recyclerMovies?.layoutManager = gridLayoutMovies
         binding?.recyclerMovies?.adapter = adapterMovies
-        ViewCompat.setNestedScrollingEnabled(binding?.recyclerMovies!!, false);
+        ViewCompat.setNestedScrollingEnabled(binding?.recyclerMovies!!, false)
 
         //Trailer
         val layoutManager =
@@ -333,62 +342,54 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 filterPoints
             )
         }
-
-
-        if (output.rm != null) {
-            binding?.constraintLayout135?.show()
-            recommend(output.rm)
-        }else{
-            binding?.constraintLayout135?.hide()
-        }
+        binding?.constraintLayout135?.show()
 
         if (bannerShow == 0 && output.pu.isNotEmpty()) {
             initBanner(output.pu)
         }
-
+        recommend(output.rm)
     }
 
     @SuppressLint("SetTextI18n")
     private fun recommend(rm: HomeResponse.Rm) {
-            //image
-            Glide.with(this).load(rm.i).into(binding?.homeRecommend?.ivRecomm!!)
-            //trailer
-            binding?.homeRecommend?.playBtn?.setOnClickListener {
-                val intent = Intent(requireActivity(), PlayerActivity::class.java)
-                intent.putExtra("trailerUrl", rm.mtrailerurl)
-                startActivity(intent)
-            }
-            //title
-            binding?.homeRecommend?.tvMovie?.text = rm.n
+        //image
+        binding?.homeRecommend?.ivRecomm?.let { Glide.with(this).load(rm.i).into(it) }
+        //trailer
+        binding?.homeRecommend?.playBtn?.setOnClickListener {
+            val intent = Intent(requireActivity(), PlayerActivity::class.java)
+            intent.putExtra("trailerUrl", rm.mtrailerurl)
+            startActivity(intent)
+        }
+        //title
+        binding?.homeRecommend?.tvMovie?.text = rm.n
 
-            //trending
-            binding?.homeRecommend?.tvCensorLang?.text =
-                rm.ce + " • " + java.lang.String.join(",", rm.grs)
+        //trending
+        binding?.homeRecommend?.tvCensorLang?.text =
+            rm.ce + " • " + java.lang.String.join(",", rm.grs)
 
-            //    tvMovie.setSelected(true);
-            if (rm.otherlanguages.equals("",ignoreCase = true)) {
-                if (rm.otherlanguages.split(",").size > 2) {
-                    binding?.homeRecommend?.genrePlus?.visibility = View.VISIBLE
-                    binding?.homeRecommend?.genrePlus?.text =
-                        "+" + (rm.othergenres.split(",").size - 2)
-                    binding?.homeRecommend?.tvGenre?.text =
-                        rm.othergenres.split(",")[0] + " | " + rm.othergenres.split(",")[1]
-                } else {
-                    binding?.homeRecommend?.genrePlus?.visibility = View.GONE
-                    binding?.homeRecommend?.tvGenre?.text = rm.othergenres.replace(",", " | ")
-                }
+        //    tvMovie.setSelected(true);
+        if (rm.otherlanguages.equals("", ignoreCase = true)) {
+            if (rm.otherlanguages.split(",").size > 2) {
+                binding?.homeRecommend?.genrePlus?.visibility = View.VISIBLE
+                binding?.homeRecommend?.genrePlus?.text = "+" + (rm.othergenres.split(",").size - 2)
+                binding?.homeRecommend?.tvGenre?.text =
+                    rm.othergenres.split(",")[0] + " | " + rm.othergenres.split(",")[1]
             } else {
-                var string = ""
-                for (i in 0 until rm.grs.size) {
-                    string =
-                        if (i == rm.grs.size - 1) string + rm.grs[i] else string + rm.grs[i] + " • "
-                }
-                binding?.homeRecommend?.tvGenre?.text = string
+                binding?.homeRecommend?.genrePlus?.visibility = View.GONE
+                binding?.homeRecommend?.tvGenre?.text = rm.othergenres.replace(",", " | ")
             }
+        } else {
+            var string = ""
+            for (i in 0 until rm.grs.size) {
+                string =
+                    if (i == rm.grs.size - 1) string + rm.grs[i] else string + rm.grs[i] + " • "
+            }
+            binding?.homeRecommend?.tvGenre?.text = string
+        }
 
 
-            if (!TextUtils.isEmpty(rm.rtt)) binding?.homeRecommend?.tvRecomm?.text =
-                rm.rtt else binding?.homeRecommend?.tvRecomm?.text = "TRENDING"
+        if (!TextUtils.isEmpty(rm.rtt)) binding?.homeRecommend?.tvRecomm?.text =
+            rm.rtt else binding?.homeRecommend?.tvRecomm?.text = "TRENDING"
 
     }
 
@@ -435,7 +436,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         isSelected: Boolean,
         name: String
     ) {
-        println("filterItemSelected--->$type")
         if (type!!.size > 1) {
             binding?.filterFab?.setImageResource(R.drawable.filter_selected)
             appliedFilterItem = filterItemSelected!!
@@ -443,7 +443,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             if (containLanguage) {
                 val index = type.indexOf("language")
                 var value: String = filterItemSelected[type[index]]!!
-                if (value != null && !value.equals("", ignoreCase = true)) {
+                if (!value.equals("", ignoreCase = true)) {
                     buttonPressed.clear()
                     appliedFilterType = "language"
                     value = value.uppercase(Locale.getDefault())
@@ -461,30 +461,24 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             if (containGenres) {
                 val index = type.indexOf("geners")
                 var value: String = filterItemSelected[type[index]]!!
-                if (value != null && !value.equals("", ignoreCase = true)) {
+                if (!value.equals("", ignoreCase = true)) {
                     appliedFilterType = "geners"
-                    generseleced?.clear()
+                    generaSelected?.clear()
                     value = value.uppercase(Locale.getDefault())
                     val valuesString = value.split(",").toTypedArray()
                     for (s in valuesString) {
-                        if (!generseleced?.contains(s)!!) generseleced?.add("$s-geners")
+                        if (!generaSelected?.contains(s)!!) generaSelected?.add("$s-geners")
                     }
                     binding?.filterFab?.setImageResource(R.drawable.filter_selected)
                 } else {
                     binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
-                    generseleced?.clear()
+                    generaSelected?.clear()
                 }
             }
             val containAccessibility = type.contains("accessability")
             if (containAccessibility) {
                 val index = type.indexOf("accessability")
                 val value: String = filterItemSelected[type[index]]!!
-//
-//                if (value != null && !value.equals("", ignoreCase = true)) {
-//                    if (value.equals("Subtitle", ignoreCase = true)) special = output.getMspecial().get(0)
-//                } else {
-//                    special = "ALL"
-//                }
             }
             getMovieFormatFromApi(true)
         } else {
@@ -495,7 +489,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     override fun onReset() {
         binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
         buttonPressed = ArrayList()
-        generseleced = ArrayList()
+        generaSelected = ArrayList()
         appliedFilterItem = HashMap()
         authViewModel.home(
             preferences.getCityName(),
@@ -526,13 +520,13 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 for (i in 1 until buttonPressed.size) lang =
                     lang + "," + buttonPressed[i].split("-").toTypedArray()[0].trim { it <= ' ' }
             }
-        if (generseleced!!.isNotEmpty()) {
-            format = generseleced!![0]!!.split("-").toTypedArray()[0].trim { it <= ' ' }
-            for (i in 1 until generseleced!!.size) format =
-                format + "," + generseleced!![i]!!.split("-").toTypedArray()[0].trim { it <= ' ' }
+        if (generaSelected!!.isNotEmpty()) {
+            format = generaSelected!![0]!!.split("-").toTypedArray()[0].trim { it <= ' ' }
+            for (i in 1 until generaSelected!!.size) format =
+                format + "," + generaSelected!![i]!!.split("-").toTypedArray()[0].trim { it <= ' ' }
         }
 
-        if (!cinema_type.equals("All", ignoreCase = true)) {
+        if (!cinemaType.equals("All", ignoreCase = true)) {
             authViewModel.home(
                 preferences.getCityName(),
                 "",
@@ -540,7 +534,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 preferences.geMobileNumber(),
                 upcomingBooking,
                 "no",
-                cinema_type,
+                cinemaType,
                 lang,
                 format,
                 special,
@@ -569,14 +563,9 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             binding?.privilegeLogin?.pt?.text = PRIVILEGEPOINT
             binding?.privilegeLogin?.numVou?.text = PRIVILEGEVOUCHER
             binding?.privilegeLogin?.qrImgMainPage?.setOnClickListener {
-//                val intent = Intent(requireActivity(), PrivilegeDetailsActivity::class.java)
-//                startActivity(intent)
                 oPenDialogQR()
             }
 
-//            authViewModel.nextBooking(
-//                preferences.getUserId(), Constant().getDeviceId(requireActivity())
-//            )
         } else {
             binding?.privilegeLoginUi?.hide()
             binding?.privilegeLogOutUi?.show()
@@ -588,22 +577,23 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     private fun initBanner(bannerModels: ArrayList<HomeResponse.Pu>) {
         bannerShow += 1
         bannerModelsMain = bannerModels
-        if ((bannerModels != null) && bannerModels.isNotEmpty()) {
-            RlBanner?.show()
+        if (bannerModels.isNotEmpty()) {
+            rlBanner?.show()
             stories?.setStoriesCount(bannerModels.size) // <- set stories
             stories?.setStoryDuration(5000L) // <- set a story duration
             stories?.setStoriesListener(this) // <- set listener
             stories?.startStories() // <- start progress
             counterStory = 0
             if (!TextUtils.isEmpty(bannerModels[counterStory].i)) {
-                Picasso.get().load(bannerModels[counterStory].i).into(ivBanner!!, object : Callback {
-                    override fun onSuccess() {
-                        RlBanner?.show()
-                        //  storiesProgressView.startStories(); // <- start progress
-                    }
+                Picasso.get().load(bannerModels[counterStory].i)
+                    .into(ivBanner!!, object : Callback {
+                        override fun onSuccess() {
+                            rlBanner?.show()
+                            //  storiesProgressView.startStories(); // <- start progress
+                        }
 
-                    override fun onError(e: Exception?) {}
-                })
+                        override fun onError(e: Exception?) {}
+                    })
             }
 
             reverse?.setOnClickListener { stories?.reverse() }
@@ -612,16 +602,22 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             skip?.setOnClickListener { stories?.skip() }
             skip?.setOnTouchListener(onTouchListener)
             tvButton?.setOnClickListener {
-                RlBanner?.hide()
+                rlBanner?.hide()
                 listener?.onShowNotification()
                 listener?.onShowPrivilege()
-                if (bannerModels != null && bannerModels.size > 0 && bannerModels[counterStory].type.equals("image",ignoreCase = true)
+                if (bannerModels.size > 0 && bannerModels[counterStory].type.equals(
+                        "image",
+                        ignoreCase = true
+                    )
 //                        .equalsIgnoreCase("image")
                 ) {
-                    if (bannerModels[counterStory].redirectView.equals("DEEPLINK",ignoreCase = true)
+                    if (bannerModels[counterStory].redirectView.equals(
+                            "DEEPLINK",
+                            ignoreCase = true
+                        )
 //                        equalsIgnoreCase("DEEPLINK")
                     ) {
-                        if (bannerModels[counterStory].redirect_url != null && bannerModels[counterStory].redirect_url.equals("",ignoreCase = true)) {
+                        if (bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)) {
                             if (bannerModels[counterStory].redirect_url.lowercase(Locale.ROOT)
                                     .contains("/loyalty/home")
                             ) {
@@ -640,9 +636,13 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                                 startActivity(intent)
                             }
                         }
-                    } else if (bannerModels[counterStory].redirect_url.equals("INAPP",ignoreCase = true)
+                    } else if (bannerModels[counterStory].redirect_url.equals(
+                            "INAPP",
+                            ignoreCase = true
+                        )
                     ) {
-                        if (bannerModels[counterStory].redirect_url != null && bannerModels[counterStory].redirect_url.equals("",ignoreCase = true)
+                        if (bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)
+
                         ) {
 //                            val intent = Intent(context, PrivacyActivity::class.java)
 //                            intent.putExtra("url", bannerModels[counterStory].getRedirect_url())
@@ -650,10 +650,13 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 //                            intent.putExtra("title", bannerModels[counterStory].getName())
 //                            startActivity(intent)
                         }
-                    } else if (bannerModels[counterStory].redirect_url.equals("WEB",ignoreCase = true)
+                    } else if (bannerModels[counterStory].redirect_url.equals(
+                            "WEB",
+                            ignoreCase = true
+                        )
 //                            .equalsIgnoreCase("WEB")
                     ) {
-                        if (bannerModels[counterStory].redirect_url != null && bannerModels[counterStory].redirect_url.equals("",ignoreCase = true)
+                        if (bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)
 //                                .equalsIgnoreCase("")
                         ) {
 //                            val intent = Intent(
@@ -667,10 +670,13 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             (requireActivity().findViewById(R.id.bannerLayout) as RelativeLayout).show()
 
             ivPlay?.setOnClickListener {
-                RlBanner?.hide()
+                rlBanner?.hide()
                 listener?.onShowNotification()
                 listener?.onShowPrivilege()
-                if (bannerModels != null && bannerModels.size > 0 && bannerModels[counterStory].type.equals("video",ignoreCase = true)
+                if (bannerModels.size > 0 && bannerModels[counterStory].type.equals(
+                        "video",
+                        ignoreCase = true
+                    )
 //                        .equalsIgnoreCase("video")
 
                 ) {
@@ -678,17 +684,20 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             }
 
         } else {
-            RlBanner?.hide()
+            rlBanner?.hide()
             listener?.onShowNotification()
             listener?.onShowPrivilege()
         }
     }
 
     private fun showButton(bannerModel: HomeResponse.Pu) {
-        if (bannerModel.type.equals("video",ignoreCase = true)) {
+        if (bannerModel.type.equals("video", ignoreCase = true)) {
             ivPlay?.show()
             tvButton?.hide()
-        } else if (bannerModel.type.equals("image",ignoreCase = true)&& bannerModel.redirect_url.equals("",ignoreCase = true)
+        } else if (bannerModel.type.equals(
+                "image",
+                ignoreCase = true
+            ) && bannerModel.redirect_url.equals("", ignoreCase = true)
 //                .equalsIgnoreCase("")
         ) {
             ivPlay?.hide()
@@ -731,7 +740,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         stories?.destroy()
         stories?.startStories()
         currentPage = 0
-        RlBanner?.hide()
+        rlBanner?.hide()
         listener?.onShowNotification()
         listener?.onShowPrivilege()
     }
@@ -742,7 +751,10 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         dialogQR.setCancelable(false)
         dialogQR.setContentView(R.layout.activity_privilege_details)
         dialogQR.window?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
-        dialogQR.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        dialogQR.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
         dialogQR.window?.setGravity(Gravity.CENTER)
         dialogQR.setTitle("")
         val pointsPcTextView = dialogQR.findViewById<TextView>(R.id.points_txt)
@@ -790,7 +802,9 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                                 flag = true
                             }
                             if (flag) count++ else count--
-                            binding?.includePlaceHolder?.recyclerPromotion?.smoothScrollToPosition(count)
+                            binding?.includePlaceHolder?.recyclerPromotion?.smoothScrollToPosition(
+                                count
+                            )
                             handler.postDelayed(this, speedScroll.toLong())
                         }
                     }
@@ -801,6 +815,5 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             binding?.includePlaceHolder?.placeHolderView?.hide()
         }
     }
-
 
 }
