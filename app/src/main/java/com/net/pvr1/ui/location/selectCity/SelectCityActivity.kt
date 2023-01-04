@@ -89,7 +89,6 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
 
     @SuppressLint("SuspiciousIndentation")
     private fun movedNext() {
-
         // get Location
         binding?.imageView39?.setOnClickListener {
             if (Constant().locationServicesEnabled(this) && Constant.latitude != 0.0 && Constant.longitude != 0.0) {
@@ -122,7 +121,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         }
 
         //title
-        binding?.include37?.textView108?.gravity = Gravity.CENTER
+//        binding?.include37?.textView108?.gravity = Gravity.CENTER
         binding?.include37?.textView108?.text = getString(R.string.search_city)
 
         //Search city
@@ -228,9 +227,11 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
 
 
     private fun retrieveData(output: SelectCityResponse.Output) {
+        if (preferences.getIsLogin())
         preferences.saveCityName(output.cc.name)
+
+        
         if (enableLocation == 1) {
-            toast(output.cc.name)
             val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
             startActivity(intent)
             finish()

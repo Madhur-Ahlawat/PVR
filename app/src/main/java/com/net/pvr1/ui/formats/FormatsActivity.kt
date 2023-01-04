@@ -20,23 +20,33 @@ import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingActivity
 import com.net.pvr1.ui.webView.WebViewActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class FormatsActivity : AppCompatActivity() ,FormatCategoryAdapter.RecycleViewItemClickListener,FormatMoviesAdapter.RecycleViewItemClickListener{
     private var binding: ActivityFormatsBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: FormatsViewModel by viewModels()
-
+    @Inject
+    lateinit var preferences: PreferenceManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFormatsBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+        manageFunctions()
+    }
+
+    private fun manageFunctions() {
         //title
         binding?.toolbar?.textView108?.text=intent.getStringExtra("format").toString()
-
-        authViewModel.formats(intent.getStringExtra("format").toString(), "Delhi-NCR", "no")
+        //back
+        binding?.toolbar?.imageView58?.setOnClickListener {
+            finish()
+        }
+        authViewModel.formats(intent.getStringExtra("format").toString(), preferences.getCityName(), "no")
         formats()
     }
 
@@ -55,6 +65,7 @@ class FormatsActivity : AppCompatActivity() ,FormatCategoryAdapter.RecycleViewIt
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
                             positiveClick = {
+                                finish()
                             },
                             negativeClick = {
                             })

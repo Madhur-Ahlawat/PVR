@@ -630,4 +630,54 @@ class Constant {
             ""
         }
     }
+
+//    shimer
+    fun getData(textView: TextView?, textViewSecond: TextView?) {
+        try {
+            val titles = arrayOf(
+                "“You shoot me in a dream, you better wake up and apologize.”<br><i><small>(Reservoir Dogs)</i></small>",
+                "“I will have my vengeance, in this life or the next.”<br><i><small>(Gladiator)</i></small>",
+                "“I’m the king of the world!”<br><i><small>(Titanic)</i></small>",
+                "“Hasta la vista baby.”<br><i><small>(Terminator)</i></small>",
+                "“I must break you.”<br><i><small>(Rocky IV)</i></small>",
+                "“They may take our lives but they’ll never take our freedom.”<br><i><small>(Braveheart)</i></small>",
+                "“If you are good at something, never do it for free.”<br><i><small>(The Dark Knight)</i></small>",
+                "“Do I really look like a guy with a plan?”<br><i><small>(The Dark Knight)</i></small>",
+                "“Frankly my dear, I don’t give a damn.”<br><i><small>(Gone With The Wind)</i></small>",
+                "“I’m gonna make him an offer he can’t refuse.”<br><i><small>(The Godfather)</i></small>",
+                "“This life’s hard, man, but it’s harder if you are stupid.”<br><i><small>(The Friends Of Eddie Coyle)</i></small>",
+                "“You mustn’t be afraid to dream a little bigger, darling.”<br><i><small>(Inception)</i></small>",
+                "“Don’t let anybody tell you that you can’t do something.”<br><i><small>(The Pursuit Of Happiness)</i></small>",
+                "“It was Beauty killed the Beast.”<br><i><small>(The King-Kong)</i></small>",
+                "“They call it a Royale with cheese.”<br><i><small>(Pulp Fiction)</i></small>",
+                "“Magic Mirror on the wall, who is the fairest one of all?”<br><i><small>(Snow White And The 7 Dwarves)</i></small>",
+                "“My Precious.”<br><i><small>(The Lord Of The Rings)</i></small>",
+                "“Help me, Obi-Wan Kenobi. You're my only hope.”<br><i><small>(StarWars, 1997)</i></small>",
+                "“Just keep swimming.”<br><i><small>(Finding Nemo)</i></small>",
+                "“I am big! It's the pictures that got small.”<br><i><small>(Sunset Boulevard)</i></small>",
+                "“Keep your friends close but your enemies closer.”<br><i><small>(The Godfather, part II)</i></small>",
+                "“The greatest trick the devil ever pulled was convincing the world he didn't exist.”<br><i><small>(The Usual Suspects)</i></small>",
+                "“Show me the money!”<br><i><small>(Jerry Maguire)</i></small>",
+                "“Carpe diem. Seize the day, boys.”<br><i><small>(Dead Poets Society)</i></small>",
+                "“We don’t read and write poetry because it’s cute, we read and write poetry because we are members of the human race. And the human race is filled with passion.”<br><i><small>(Dead Poets Society)</i></small>",
+                "“There’s no crying in baseball.”<br><i><small>(A League Of Their Own)</i></small>",
+                "“You had me at hello.”<br><i><small>(Jerry Maguire)</i></small>",
+                "“To infinity and beyond.”<br><i><small>(Toy Story)</i></small>",
+                "“Why so serious?”<br><i><small>(The Dark Knight)</i></small>"
+            )
+            val r = Random()
+            val randomNumber = r.nextInt(titles.size)
+            textView?.text = Html.fromHtml(titles[randomNumber])
+            if (textViewSecond != null && textViewSecond.text.toString()
+                    .equals(textView?.text.toString(),ignoreCase = true)
+            ) {
+                val randomNumber1 = r.nextInt(titles.size)
+                textView?.text = Html.fromHtml(titles[randomNumber1])
+                textViewSecond?.text = Html.fromHtml(titles[randomNumber1])
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
 }

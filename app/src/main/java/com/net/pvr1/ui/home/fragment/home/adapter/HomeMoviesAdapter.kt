@@ -6,58 +6,96 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
+import com.net.pvr1.databinding.ItemHomeCinemaListBinding
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.show
 
 
 class HomeMoviesAdapter(
     private var context: Context,
     private var nowShowingList: List<HomeResponse.Mv>,
     private var listener: RecycleViewItemClickListener,
+    private var singleCheck: Boolean,
 
-    ) : RecyclerView.Adapter<HomeMoviesAdapter.MyViewHolderNowShowing>() {
+    ) : RecyclerView.Adapter<HomeMoviesAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderNowShowing {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_home_cinema_list, parent, false)
-        return MyViewHolderNowShowing(view)
+    inner class ViewHolder(val binding: ItemHomeCinemaListBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemHomeCinemaListBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return ViewHolder(binding)
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(holder: MyViewHolderNowShowing, position: Int) {
-        val comingSoonItem = nowShowingList[position]
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        with(holder) {
+            with(nowShowingList[position]) {
 
-        //Image
-        Glide.with(context).load(comingSoonItem.miv).error(R.drawable.app_icon).into(holder.image)
+                //Image
+                val lastIndex = nowShowingList.size - 1
+                if (singleCheck && position == lastIndex) {
+                    Glide.with(context)
+                        .load(this.mih)
+                        .error(R.drawable.app_icon)
+                        .into(binding.imageView16)
+                } else {
+                    Glide.with(context)
+                        .load(this.miv)
+                        .error(R.drawable.app_icon)
+                        .into(binding.imageView16)
+                }
 
-        holder.title.text = comingSoonItem.n
-        holder.rating.text =
-            comingSoonItem.ce +" "+ context.getString(R.string.dots) +" "+ comingSoonItem.lng
-        holder.language.text = comingSoonItem.tag
-        //Movie Click
-        holder.image.setOnClickListener {
-            listener.onMoviesClick(comingSoonItem)
+                //title
+                binding.textView42.text = this.n
+
+                //rating
+                binding.textView43.text = this.ce + " " + context.getString(R.string.dots) + " " + this.lng
+
+                //language
+                binding.textView45.text=this.tag
+
+                //Movie Click
+                binding.imageView16.setOnClickListener {
+                    listener.onMoviesClick(this)
+                }
+
+                //Book Click
+                binding.textView46.setOnClickListener {
+                    listener.onBookClick(this)
+                }
+
+                //trailer
+                if (this.mtrailerurl.isNotEmpty()) {
+                    binding.imageView35.show()
+                } else {
+                    binding.imageView35.hide()
+                }
+
+                binding.imageView35.setOnClickListener {
+                    listener.onTrailerClick(this.mtrailerurl)
+                }
+
+                censorLanguage(
+                    this.otherlanguages,
+                    this.lng,
+                    "",
+                    binding.textView45,
+                    context,
+                    binding.textView45)
+
+            }
         }
-        //Book Click
-        holder.book.setOnClickListener {
-            listener.onBookClick(comingSoonItem)
-        }
-
-        censorLanguage(
-            comingSoonItem.otherlanguages,
-            comingSoonItem.lng,
-            "",
-            holder.language,
-            context,
-            holder.language
-        )
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -102,16 +140,8 @@ class HomeMoviesAdapter(
         return if (nowShowingList.isNotEmpty()) nowShowingList.size else 0
     }
 
-    class MyViewHolderNowShowing(view: View) : RecyclerView.ViewHolder(view) {
-        var image: ImageView = view.findViewById(R.id.imageView16)
-        var title: TextView = view.findViewById(R.id.textView42)
-        var rating: TextView = view.findViewById(R.id.textView43)
-        var language: TextView = view.findViewById(R.id.textView45)
-        var book: TextView = view.findViewById(R.id.textView46)
-
-    }
-
     interface RecycleViewItemClickListener {
+        fun onTrailerClick(comingSoonItem: String)
         fun onMoviesClick(comingSoonItem: HomeResponse.Mv)
         fun onBookClick(comingSoonItem: HomeResponse.Mv)
     }

@@ -85,13 +85,13 @@
 
         <ImageView
             android:id="@+id/imageView109"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dimen_20dp"
+            android:layout_height="@dimen/dimen_20dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/view55"
             app:layout_constraintEnd_toStartOf="@+id/imageView39"
             app:layout_constraintTop_toTopOf="@+id/view55"
-            app:srcCompat="@drawable/close_notif"
+            app:srcCompat="@drawable/cross_search"
             tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -181,7 +181,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:spanCount="2"
-                        tools:itemCount="4"
+                        tools:itemCount="8"
                         tools:listitem="@layout/select_city_item_layout" />
 
                     <!-- View-->

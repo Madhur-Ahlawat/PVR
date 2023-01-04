@@ -2,9 +2,12 @@ package com.net.pvr1.ui.home.fragment.home
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.BroadcastReceiver
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -21,6 +24,7 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.SnapHelper
@@ -54,7 +58,7 @@ import javax.inject.Inject
 class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickListener,
     HomeSliderAdapter.RecycleViewItemClickListener,
     HomePromotionAdapter.RecycleViewItemClickListener,
-    HomeMoviesAdapter.RecycleViewItemClickListener, HomeTrailerAdapter.RecycleViewItemClickListener,
+    HomeMoviesAdapter.RecycleViewItemClickListener, HomeOfferAdapter.RecycleViewItemClickListener,
     GenericFilterHome.onButtonSelected, StoriesProgressView.StoriesListener {
     private var binding: FragmentHomeBinding? = null
 
@@ -91,6 +95,9 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     private var stories: StoriesProgressView? = null
     private var listener: PlayPopup? = null
 
+    //internet Check
+    private var broadcastReceiver: BroadcastReceiver? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -103,8 +110,21 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     @SuppressLint("CutPasteId")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        listener = activity as PlayPopup?
+// manage top bar ui
+        (requireActivity().findViewById(R.id.include) as ConstraintLayout).show()
+        (requireActivity().findViewById(R.id.notify) as ImageView).show()
+        (requireActivity().findViewById(R.id.scanQr) as ImageView).show()
+        (requireActivity().findViewById(R.id.searchBtn) as ImageView).show()
+        (requireActivity().findViewById(R.id.searchCinema) as ImageView).hide()
+        (requireActivity().findViewById(R.id.searchBtn) as ImageView).setOnClickListener {
+            if (isAdded) {
+                val intent = Intent(requireActivity(), SearchHomeActivity::class.java)
+                startActivity(intent)
+            }
+        }
 
+        //Poster
+        listener = activity as PlayPopup?
         tvButton = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
             .findViewById(R.id.tv_button))
         ivBanner = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
@@ -125,81 +145,76 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             stories?.destroy()
         }
 
-        (requireActivity().findViewById(R.id.include) as ConstraintLayout).show()
-        (requireActivity().findViewById(R.id.notify) as ImageView).show()
-        (requireActivity().findViewById(R.id.scanQr) as ImageView).show()
-        (requireActivity().findViewById(R.id.searchBtn) as ImageView).show()
-        (requireActivity().findViewById(R.id.searchCinema) as ImageView).hide()
-        (requireActivity().findViewById(R.id.searchBtn) as ImageView).setOnClickListener {
-            if (isAdded) {
-                val intent = Intent(requireActivity(), SearchHomeActivity::class.java)
-                startActivity(intent)
-            }
-        }
+
+//         manage login
         if (preferences.getIsLogin()) {
             (requireActivity().findViewById(R.id.profileBtn) as ImageView).show()
-
         } else {
             (requireActivity().findViewById(R.id.profileBtn) as ImageView).hide()
-
         }
 
+        // functions
+        getShimmerData()
         movedNext()
         homeApi()
         createQr()
         getMovieFormatFromApi(true)
+
+        //internet Check
+        broadcastReceiver = NetworkReceiver()
+        broadcastIntent()
+    }
+
+    private fun getShimmerData() {
+        Constant().getData(binding?.include38?.tvFirstText,binding?.include38?.tvSecondText)
+        Constant().getData(binding?.include38?.tvSecondText,null)
     }
 
     private fun movedNext() {
-        binding?.txtTrailers?.setOnClickListener {
-            binding?.txtTrailers?.setTextColor(
-                ContextCompat.getColor(
-                    requireActivity(), R.color.black
-                )
+        binding?.txtTrailers?.setTextColor(
+            ContextCompat.getColor(
+                requireActivity(), R.color.black
             )
+        )
 
-            binding?.txtMusic?.setTextColor(
-                ContextCompat.getColor(
-                    requireActivity(), R.color.textColorGray
-                )
+        binding?.txtMusic?.setTextColor(
+            ContextCompat.getColor(
+                requireActivity(), R.color.textColorGray
             )
+        )
 
-            binding?.view33?.setBackgroundColor(
-                ContextCompat.getColor(
-                    requireContext(), R.color.yellow
-                )
+        binding?.view33?.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(), R.color.yellow
             )
+        )
 
-            binding?.view34?.setBackgroundColor(
-                ContextCompat.getColor(
-                    requireContext(), R.color.gray
-                )
+        binding?.view34?.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(), R.color.gray
             )
-        }
+        )
 
-        binding?.txtMusic?.setOnClickListener {
-            binding?.txtMusic?.setTextColor(
-                ContextCompat.getColor(
-                    requireActivity(), R.color.black
-                )
+        binding?.txtMusic?.setTextColor(
+            ContextCompat.getColor(
+                requireActivity(), R.color.black
             )
-            binding?.txtTrailers?.setTextColor(
-                ContextCompat.getColor(
-                    requireActivity(), R.color.textColorGray
-                )
+        )
+        binding?.txtTrailers?.setTextColor(
+            ContextCompat.getColor(
+                requireActivity(), R.color.textColorGray
             )
-            binding?.view33?.setBackgroundColor(
-                ContextCompat.getColor(
-                    requireContext(), R.color.gray
-                )
+        )
+        binding?.view33?.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(), R.color.gray
             )
-            binding?.view34?.setBackgroundColor(
-                ContextCompat.getColor(
-                    requireContext(), R.color.yellow
-                )
+        )
+        binding?.view34?.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(), R.color.yellow
             )
-
-        }
+        )
 
         //banner
         ivCross?.setOnClickListener {
@@ -275,6 +290,11 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     @SuppressLint("SuspiciousIndentation")
     private fun retrieveData(output: HomeResponse.Output) {
+        //layout
+        binding?.constraintLayout144?.show()
+        //shimmer
+        binding?.constraintLayout145?.hide()
+
         PlaceHolder = output
         if (isAdded) {
             //Category
@@ -302,10 +322,36 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
         //Promotion
         if (output.ph.isNotEmpty()) updatePH(output.ph)
+
         //Movies
+
+        var size=0
+        var single=false
+        size = if ( ( output.mv.size % 2 ) == 0 ) {
+            //Is even
+            single= false
+            output.mv.size
+        } else {
+            //Is odd
+            single= true
+            output.mv.size-1
+        }
+
         val gridLayoutMovies = GridLayoutManager(context, 2)
         binding?.recyclerMovies?.layoutManager = LinearLayoutManager(context)
-        val adapterMovies = HomeMoviesAdapter(requireActivity(), output.mv, this)
+        gridLayoutMovies.spanSizeLookup = object : SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return if (position == size) {
+                    2
+                } else {
+
+                    1
+                }
+                return 1
+            }
+        }
+
+        val adapterMovies = HomeMoviesAdapter(requireActivity(), output.mv, this,single)
         binding?.recyclerMovies?.layoutManager = gridLayoutMovies
         binding?.recyclerMovies?.adapter = adapterMovies
         ViewCompat.setNestedScrollingEnabled(binding?.recyclerMovies!!, false)
@@ -317,7 +363,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         binding?.recyclerTrailer?.layoutManager = layoutManager
         binding?.recyclerTrailer?.onFlingListener = null
         snapHelper.attachToRecyclerView(binding?.recyclerTrailer!!)
-        val adapterTrailer = HomeTrailerAdapter(requireActivity(), output.cp, this)
+        val adapterTrailer = HomeOfferAdapter(requireActivity(), output.cp, this)
         binding?.recyclerTrailer?.layoutManager = layoutManager
         binding?.recyclerTrailer?.adapter = adapterTrailer
 
@@ -411,6 +457,12 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         startActivity(intent)
     }
 
+    override fun onTrailerClick(string: String) {
+        val intent = Intent(requireActivity(), PlayerActivity::class.java)
+        intent.putExtra("trailerUrl", string)
+        startActivity(intent)
+    }
+
     override fun onMoviesClick(comingSoonItem: HomeResponse.Mv) {
         val intent = Intent(requireActivity(), NowShowingActivity::class.java)
         intent.putExtra("mid", comingSoonItem.id)
@@ -424,7 +476,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     }
 
-    override fun onTrailerClick(comingSoonItem: HomeResponse.Cp) {
+    override fun onOfferClick(comingSoonItem: HomeResponse.Cp) {
         val intent = Intent(requireActivity(), PlayerActivity::class.java)
         intent.putExtra("trailerUrl", comingSoonItem.mtrailerurl)
         startActivity(intent)
@@ -814,6 +866,14 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         } else {
             binding?.includePlaceHolder?.placeHolderView?.hide()
         }
+    }
+
+    //Internet Check
+    private fun broadcastIntent() {
+        requireActivity().registerReceiver(
+            broadcastReceiver,
+            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        )
     }
 
 }
