@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">PVR NEW</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="blank_space"></string>
     <string name="txt_no_account_signup">Don\'t have an account? <font color="#2196F3">Register Now</font></string>
     <string name="txt_register_header">Create New Account</string>
     <string name="txt_register_subHeader">Please provide all the required information</string>
@@ -16,8 +16,8 @@
     <string name="txt_login_header">Welcome Back!</string>
     <string name="txt_login_subHeader">Login to access your notes</string>
     <string name="txt_login">Login</string>
-    <string name="checkNumber">Mobile Number Should Be 10 Digit</string>
-    <string name="enterMobileNo"> Please Enter Your Mobile Number</string>
+    <string name="checkNumber">Invalid mobile number</string>
+    <string name="enterMobileNo">Your mobile number is required</string>
     <string name="exitApp">Are You Sure You want to exit</string>
 
     <string name="txt_error_message">%1$S*</string>
@@ -42,7 +42,7 @@
     <string name="get_start">Get Started</string>
     <string name="verify_number">Verify\nPhone Number</string>
     <string name="toContinue">to continue, enter your mobile number</string>
-    <string name="mobile_number">Phone Number</string>
+    <string name="mobile_number">Mobile Number</string>
     <string name="continue_txt">Continue</string>
     <string name="verify_code">Verify\nOTP Code</string>
     <string name="sentCode">We’ve sent a code to your mobile number</string>
@@ -58,8 +58,8 @@
     <string name="pleaseWait">Please Wait for this process.....</string>
     <string name="no">No</string>
     <string name="enterOtp">Please Enter Your Otp</string>
-    <string name="enterName">Please Enter Your Name</string>
-    <string name="enterEmail">Please Enter Your Email</string>
+    <string name="enterName">Please Enter Your Complete Name</string>
+    <string name="enterEmail">Please Enter Your Correct Email</string>
     <string name="mobileNotAvailable">No phone numbers found</string>
     //Home
     <string name="home">Home</string>

@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
                 if (mobile == "") {
                     val dialog = OptionDialog(this,
                         R.mipmap.ic_launcher,
-                        R.string.app_name,
+                        R.string.blank_space,
                         getString(R.string.enterMobileNo),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
@@ -83,7 +83,7 @@ class LoginActivity : AppCompatActivity() {
                 } else if (!TextUtils.isEmpty(mobile) && mobile.length != 10) {
                     val dialog = OptionDialog(this,
                         R.mipmap.ic_launcher,
-                        R.string.app_name,
+                        R.string.blank_space,
                         getString(R.string.checkNumber),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
@@ -102,7 +102,7 @@ class LoginActivity : AppCompatActivity() {
             if (mobile == "") {
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
-                    R.string.app_name,
+                    R.string.blank_space,
                     getString(R.string.enterMobileNo),
                     positiveBtnText = R.string.ok,
                     negativeBtnText = R.string.no,
@@ -112,7 +112,7 @@ class LoginActivity : AppCompatActivity() {
             } else if (!TextUtils.isEmpty(mobile) && mobile.length != 10) {
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
-                    R.string.app_name,
+                    R.string.blank_space,
                     getString(R.string.checkNumber),
                     positiveBtnText = R.string.ok,
                     negativeBtnText = R.string.no,
@@ -129,7 +129,7 @@ class LoginActivity : AppCompatActivity() {
             if (!Constant().locationServicesEnabled(this@LoginActivity)) {
                 val intent = Intent(this@LoginActivity, EnableLocationActivity::class.java)
                 startActivity(intent)
-                finish()
+//                finish()
             } else if (preferences.getCityName() == "") {
                 val intent = Intent(this@LoginActivity, SelectCityActivity::class.java)
                 startActivity(intent)
@@ -161,7 +161,7 @@ class LoginActivity : AppCompatActivity() {
                     if (Constant.status == it.data?.result && SUCCESS_CODE == it.data.code) {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
-                            R.string.app_name,
+                            R.string.blank_space,
                             it.data.msg,
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
@@ -173,7 +173,7 @@ class LoginActivity : AppCompatActivity() {
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
-                            R.string.app_name,
+                            R.string.blank_space,
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
@@ -186,7 +186,7 @@ class LoginActivity : AppCompatActivity() {
                     loader?.dismiss()
                     val dialog = OptionDialog(this,
                         R.mipmap.ic_launcher,
-                        R.string.app_name,
+                        R.string.blank_space,
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,

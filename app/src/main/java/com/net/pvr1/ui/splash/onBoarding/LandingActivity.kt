@@ -75,8 +75,8 @@ class LandingActivity : AppCompatActivity() {
     private fun slider() {
         layouts = intArrayOf(
             R.layout.onboarding_layout_one,
-            R.layout.onboarding_layout_two,
             R.layout.onboarding_layout_three,
+            R.layout.onboarding_layout_two,
             R.layout.onboarding_layout_four
         )
 
@@ -91,24 +91,28 @@ class LandingActivity : AppCompatActivity() {
                     0 -> {
                         binding?.tvPrev?.hide()
                         binding?.tvNext?.show()
+                        binding?.movedToNext?.text = getString(R.string.skip)
                         binding?.changeText?.text = getString(R.string.onboard_txt1)
                     }
 
                     1 -> {
                         binding?.tvPrev?.show()
                         binding?.tvNext?.show()
-                        binding?.changeText?.text = getString(R.string.onboard_txt2)
+                        binding?.movedToNext?.text = getString(R.string.skip)
+                        binding?.changeText?.text = getString(R.string.onboard_txt3)
                     }
 
                     2 -> {
                         binding?.tvPrev?.show()
                         binding?.tvNext?.show()
-                        binding?.changeText?.text = getString(R.string.onboard_txt3)
+                        binding?.movedToNext?.text = getString(R.string.skip)
+                        binding?.changeText?.text = getString(R.string.onboard_txt2)
                     }
 
                     3 -> {
                         binding?.tvPrev?.show()
                         binding?.tvNext?.hide()
+                        binding?.movedToNext?.text = getString(R.string.get_started)
                         binding?.changeText?.text = getString(R.string.onboard_txt4)
                     }
                 }

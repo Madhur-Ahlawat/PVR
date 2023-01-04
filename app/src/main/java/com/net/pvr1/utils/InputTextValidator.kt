@@ -51,19 +51,6 @@ object InputTextValidator {
         return if (text.isEmpty()) false else Pattern.matches(EMAIL_REGEX, text)
     }
 
-    //    public static boolean validatePassword(EditText editTextPassword,EditText editTextConfirmPassword) {
-    //        String password = editTextPassword.getText().toString().trim();
-    //        String confirmPassword = editTextConfirmPassword.getText().toString().trim();
-    //
-    //        if ((password.length() == 0)|| (confirmPassword.length() == 0))
-    //            return false;
-    //
-    //        else if(!password.equals(confirmPassword))
-    //            return false;
-    //
-    //        else
-    //            return true;
-    //    }
     fun hasText(editText: EditText): Boolean {
         val string = editText.text.toString().trim { it <= ' ' }
         return !(string == null || string.isEmpty())

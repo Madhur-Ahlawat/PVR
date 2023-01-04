@@ -230,7 +230,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         if (preferences.getIsLogin())
         preferences.saveCityName(output.cc.name)
 
-        
+
         if (enableLocation == 1) {
             val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
             startActivity(intent)

@@ -145,12 +145,13 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             stories?.destroy()
         }
 
-
 //         manage login
         if (preferences.getIsLogin()) {
             (requireActivity().findViewById(R.id.profileBtn) as ImageView).show()
+            binding?.constraintLayout135?.show()
         } else {
             (requireActivity().findViewById(R.id.profileBtn) as ImageView).hide()
+            binding?.constraintLayout135?.hide()
         }
 
         // functions
@@ -388,11 +389,12 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 filterPoints
             )
         }
-        binding?.constraintLayout135?.show()
 
         if (bannerShow == 0 && output.pu.isNotEmpty()) {
             initBanner(output.pu)
         }
+
+        if (preferences.getIsLogin())
         recommend(output.rm)
     }
 

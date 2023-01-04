@@ -35,6 +35,7 @@ class OtpVerifyActivity : AppCompatActivity() {
     private var loader: LoaderDialog? = null
     private var mobile: String = ""
     private var newUser: String = ""
+    private var signUpClick = 0
 
     //Otp Read
     private val otpRead = 200
@@ -86,6 +87,7 @@ class OtpVerifyActivity : AppCompatActivity() {
     private fun movedNext() {
         //Resend Otp
         binding?.textView14?.setOnClickListener {
+            binding?.otpEditText?.clearText(true)
             authViewModel.loginMobileUser(mobile, preferences.getCityName(), "INDIA")
         }
 
@@ -113,35 +115,40 @@ class OtpVerifyActivity : AppCompatActivity() {
                     binding?.textView15?.setOnClickListener {
                         val name = binding?.name?.text.toString()
                         val email = binding?.email?.text.toString()
-                        binding?.constraintLayout38?.show()
-
-                        if (name == "") {
-                            val dialog = OptionDialog(this,
-                                R.mipmap.ic_launcher,
-                                R.string.app_name,
-                                getString(R.string.enterName),
-                                positiveBtnText = R.string.ok,
-                                negativeBtnText = R.string.no,
-                                positiveClick = {},
-                                negativeClick = {})
-                            dialog.show()
-                        } else if (email == "") {
-                            val dialog = OptionDialog(this,
-                                R.mipmap.ic_launcher,
-                                R.string.app_name,
-                                getString(R.string.enterEmail),
-                                positiveBtnText = R.string.ok,
-                                negativeBtnText = R.string.no,
-                                positiveClick = {},
-                                negativeClick = {})
-                            dialog.show()
-                        } else {
-                            authViewModel.resister(
-                                getHash(
-                                    "$mobile|$otp|$email"
-                                ), name, email, mobile, otp.toString(), "INDIA", false
-                            )
+                        if (signUpClick==0){
+                            binding?.constraintLayout38?.show()
+                            binding?.textView15?.text= getString(R.string.continue_txt)
+                            signUpClick+=1
+                        }else{
+                            if (InputTextValidator.checkFullName(binding?.name!!)) {
+                                val dialog = OptionDialog(this,
+                                    R.mipmap.ic_launcher,
+                                    R.string.app_name,
+                                    getString(R.string.enterName),
+                                    positiveBtnText = R.string.ok,
+                                    negativeBtnText = R.string.no,
+                                    positiveClick = {},
+                                    negativeClick = {})
+                                dialog.show()
+                            } else if (InputTextValidator.validateEmail(binding?.email!!)) {
+                                val dialog = OptionDialog(this,
+                                    R.mipmap.ic_launcher,
+                                    R.string.app_name,
+                                    getString(R.string.enterEmail),
+                                    positiveBtnText = R.string.ok,
+                                    negativeBtnText = R.string.no,
+                                    positiveClick = {},
+                                    negativeClick = {})
+                                dialog.show()
+                            } else {
+                                authViewModel.resister(
+                                    getHash(
+                                        "$mobile|$otp|$email"
+                                    ), name, email, mobile, otp.toString(), "INDIA", false
+                                )
+                            }
                         }
+
                     }
 
                 }
@@ -156,15 +163,15 @@ class OtpVerifyActivity : AppCompatActivity() {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        val dialog = OptionDialog(this,
-                            R.mipmap.ic_launcher,
-                            R.string.app_name,
-                            it.data.msg,
-                            positiveBtnText = R.string.ok,
-                            negativeBtnText = R.string.no,
-                            positiveClick = {},
-                            negativeClick = {})
-                        dialog.show()
+//                        val dialog = OptionDialog(this,
+//                            R.mipmap.ic_launcher,
+//                            R.string.app_name,
+//                            it.data.msg,
+//                            positiveBtnText = R.string.ok,
+//                            negativeBtnText = R.string.no,
+//                            positiveClick = {},
+//                            negativeClick = {})
+//                        dialog.show()
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,

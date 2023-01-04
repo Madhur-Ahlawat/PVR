@@ -30,26 +30,27 @@
                 android:id="@+id/progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:indeterminateTint="@color/yellow"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="MissingClass" />
-
 
             <TextView
                 android:id="@+id/pleaseWait"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:fontFamily="@font/helvetica_neu_medium"
-                android:gravity="center"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:gravity="start"
                 android:lineSpacingExtra="1dp"
+                android:paddingStart="@dimen/dimen_1dp"
+                android:paddingEnd="@dimen/dimen_50dp"
                 android:text="@string/pleaseWait"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimen_16sp"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/dimen_12sp"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/progress"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/progress"
                 app:layout_constraintTop_toTopOf="@+id/progress" />
 
