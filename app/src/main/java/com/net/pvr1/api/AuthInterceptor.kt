@@ -1,6 +1,6 @@
 package com.net.pvr1.api
 
-import com.net.pvr1.utils.PreferenceManager
+import com.net.pvr1.di.preference.PreferenceManager
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject

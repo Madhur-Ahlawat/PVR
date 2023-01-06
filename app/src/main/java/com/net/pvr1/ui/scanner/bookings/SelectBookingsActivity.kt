@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySelectBookingsBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.cinemaSession.CinemaSessionActivity
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.dailogs.LoaderDialog

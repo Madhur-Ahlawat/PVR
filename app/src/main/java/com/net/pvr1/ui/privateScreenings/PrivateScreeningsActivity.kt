@@ -4,11 +4,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.net.pvr1.databinding.ActivityPrivateScreeningsBinding
-import com.net.pvr1.di.preference.AppPreferences
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.privateScreenings.viewModel.PrivateScreenViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class PrivateScreeningsActivity : AppCompatActivity() {

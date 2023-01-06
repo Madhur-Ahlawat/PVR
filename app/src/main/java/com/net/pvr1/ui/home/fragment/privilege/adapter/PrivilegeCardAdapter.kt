@@ -13,7 +13,7 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.PrivilegeCardsBinding
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeCardData
 import com.net.pvr1.utils.Constant
-import com.net.pvr1.utils.PreferenceManager
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
 import com.squareup.picasso.Picasso

@@ -17,7 +17,6 @@ import com.net.pvr1.utils.show
 class CastAdapter(
     private var nowShowingList: List<MovieDetailsResponse.Mb.Cast>,
     private var context: Context,
-    private var listener: RecycleViewItemClickListener,
 ) :
     RecyclerView.Adapter<CastAdapter.MyViewHolderNowShowing>() {
 
@@ -39,14 +38,11 @@ class CastAdapter(
             holder.description.show()
             holder.description.text =cinemaItem.character
         }
-        //Click
-        holder.itemView.setOnClickListener {
-            listener.castClick(cinemaItem)
-        }
+
         //Image
             Glide.with(context)
             .load("https://"+cinemaItem.poster)
-            .error(R.drawable.app_icon)
+            .error(R.drawable.placeholder_vertical)
             .into(holder.image)
     }
 
@@ -60,8 +56,6 @@ class CastAdapter(
         var image: ImageView = view.findViewById(R.id.imageView30)
     }
 
-    interface RecycleViewItemClickListener {
-        fun castClick(comingSoonItem: MovieDetailsResponse.Mb.Cast)
-    }
+
 
 }

@@ -15,7 +15,6 @@ import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 class CrewAdapter(
     private var nowShowingList: List<MovieDetailsResponse.Mb.Crew>,
     private var context: Context,
-    private var listener: RecycleViewItemClickListener,
 ) :
     RecyclerView.Adapter<CrewAdapter.MyViewHolderNowShowing>() {
 
@@ -32,14 +31,11 @@ class CrewAdapter(
         holder.title.text =cinemaItem.roles[0].name
         //subTitle
         holder.description.text =cinemaItem.roles[0].department
-        //Click
-        holder.itemView.setOnClickListener {
-            listener.crewClick(cinemaItem)
-        }
+
         //Image
         Glide.with(context)
             .load("https://"+cinemaItem.roles[0].poster)
-            .error(R.drawable.app_icon)
+            .error(R.drawable.placeholder_vertical)
             .into(holder.image)
     }
 
@@ -53,8 +49,5 @@ class CrewAdapter(
         var image: ImageView = view.findViewById(R.id.imageView30)
     }
 
-    interface RecycleViewItemClickListener {
-        fun crewClick(comingSoonItem: MovieDetailsResponse.Mb.Crew)
-    }
 
 }

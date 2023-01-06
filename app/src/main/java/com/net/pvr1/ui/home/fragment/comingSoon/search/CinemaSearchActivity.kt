@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.home.fragment.commingSoon.search
+package com.net.pvr1.ui.home.fragment.comingSoon.search
 
 import android.content.Intent
 import android.os.Bundle
@@ -19,7 +19,7 @@ import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.search.searchHome.viewModel.HomeSearchViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.PreferenceManager
+import com.net.pvr1.di.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject

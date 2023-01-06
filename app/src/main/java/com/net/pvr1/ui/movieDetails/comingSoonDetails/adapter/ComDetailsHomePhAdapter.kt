@@ -12,7 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
-import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
+import com.net.pvr1.ui.home.fragment.comingSoon.response.CommingSoonResponse
 import com.net.pvr1.utils.Constant
 
 @Suppress("DEPRECATION")
@@ -26,7 +26,7 @@ class ComDetailsHomePhAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_home_prmotion, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_home_promotion, parent, false)
         // create ViewHolder
         context.windowManager.defaultDisplay.getMetrics(displayMetrics)
         screenWidth = displayMetrics.widthPixels

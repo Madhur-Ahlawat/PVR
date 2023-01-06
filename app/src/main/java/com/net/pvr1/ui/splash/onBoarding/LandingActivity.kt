@@ -15,7 +15,7 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityLandingBinding
 import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.utils.Constant.Companion.ON_BOARDING_CLICK
-import com.net.pvr1.utils.PreferenceManager
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
 import dagger.hilt.android.AndroidEntryPoint

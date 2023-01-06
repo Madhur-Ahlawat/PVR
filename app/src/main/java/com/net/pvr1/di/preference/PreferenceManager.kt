@@ -1,4 +1,4 @@
-package com.net.pvr1.utils
+package com.net.pvr1.di.preference
 
 import android.app.Activity
 import android.content.Context

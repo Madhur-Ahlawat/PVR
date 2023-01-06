@@ -25,9 +25,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class NowShowingActivity : AppCompatActivity(), CastAdapter.RecycleViewItemClickListener,
-    CrewAdapter.RecycleViewItemClickListener, MusicVideoAdapter.RecycleViewItemClickListener,
-    TrailerAdapter.RecycleViewItemClickListener, TrailerTrsAdapter.RecycleViewItemClickListener,
+class NowShowingActivity : AppCompatActivity(),
+    MusicVideoAdapter.RecycleViewItemClickListener,
+    TrailerAdapter.RecycleViewItemClickListener,
+    TrailerTrsAdapter.RecycleViewItemClickListener,
     MusicVideoTrsAdapter.RecycleViewItemClickListener {
     private var binding: ActivityNowShowingBinding? = null
     private var loader: LoaderDialog? = null
@@ -168,7 +169,7 @@ class NowShowingActivity : AppCompatActivity(), CastAdapter.RecycleViewItemClick
                 binding?.recyclerView4?.show()
                 binding?.textView67?.show()
                 val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-                val castAdapter = CastAdapter(output.mb.cast, this, this)
+                val castAdapter = CastAdapter(output.mb.cast, this)
                 binding?.recyclerView4?.layoutManager = layoutManager
                 binding?.recyclerView4?.adapter = castAdapter
 
@@ -183,7 +184,7 @@ class NowShowingActivity : AppCompatActivity(), CastAdapter.RecycleViewItemClick
                 binding?.textView68?.show()
                 val layoutManagerCrew =
                     GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-                val crewAdapter = CrewAdapter(output.mb.crew, this, this)
+                val crewAdapter = CrewAdapter(output.mb.crew, this)
                 binding?.recyclerCrew?.layoutManager = layoutManagerCrew
                 binding?.recyclerCrew?.adapter = crewAdapter
             } else {
@@ -252,14 +253,6 @@ class NowShowingActivity : AppCompatActivity(), CastAdapter.RecycleViewItemClick
                 }
             }
         }
-    }
-
-    override fun castClick(comingSoonItem: MovieDetailsResponse.Mb.Cast) {
-
-    }
-
-    override fun crewClick(comingSoonItem: MovieDetailsResponse.Mb.Crew) {
-
     }
 
     override fun musicVideo(comingSoonItem: MovieDetailsResponse.Mb.Crew.Role) {

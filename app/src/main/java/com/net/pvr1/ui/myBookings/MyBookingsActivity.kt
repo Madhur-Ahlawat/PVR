@@ -17,7 +17,7 @@ import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.myBookings.viewModel.MyBookingViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.PreferenceManager
+import com.net.pvr1.di.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

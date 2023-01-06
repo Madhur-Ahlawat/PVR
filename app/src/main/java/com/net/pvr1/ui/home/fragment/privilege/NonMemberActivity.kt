@@ -10,13 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
-import com.net.pvr1.databinding.ActivityPrivilegeLogInBinding
 import com.net.pvr1.databinding.FragmentPrivilegeBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.home.fragment.privilege.viewModel.PrivilegeLoginViewModel
-import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeTypeAdapter
 import com.net.pvr1.ui.home.fragment.privilege.response.PassportPlanResponse
 import com.net.pvr1.ui.webView.WebViewActivity

@@ -11,7 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
-import com.net.pvr1.databinding.ItemHomePrmotionBinding
+import com.net.pvr1.databinding.ItemHomePromotionBinding
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.utils.Constant
 
@@ -24,10 +24,10 @@ class BookingPlaceHolderAdapter(
     RecyclerView.Adapter<BookingPlaceHolderAdapter.ViewHolder>() {
     private var displayMetrics = DisplayMetrics()
     private var screenWidth = 0
-    inner class ViewHolder(val binding: ItemHomePrmotionBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(val binding: ItemHomePromotionBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemHomePrmotionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemHomePromotionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         context.windowManager.defaultDisplay.getMetrics(displayMetrics)
         screenWidth = displayMetrics.widthPixels
         return ViewHolder(binding)

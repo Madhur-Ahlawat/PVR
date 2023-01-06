@@ -30,6 +30,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.net.pvr1.R
 import com.net.pvr1.databinding.FragmentCinemasBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.cinemaSession.CinemaSessionActivity
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog

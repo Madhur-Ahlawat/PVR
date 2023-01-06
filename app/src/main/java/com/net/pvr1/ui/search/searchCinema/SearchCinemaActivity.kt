@@ -20,7 +20,7 @@ import com.net.pvr1.ui.search.searchHome.adapter.SearchHomeCinemaAdapter
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.PreferenceManager
+import com.net.pvr1.di.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject

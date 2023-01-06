@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.home.fragment.commingSoon.response
+package com.net.pvr1.ui.home.fragment.comingSoon.response
 
 import java.io.Serializable
 

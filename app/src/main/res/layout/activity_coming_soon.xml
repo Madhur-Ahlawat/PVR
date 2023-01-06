@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.fragment.commingSoon.ComingSoonActivity">
+    tools:context=".ui.home.fragment.comingSoon.ComingSoonActivity">
     
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout147"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,7 +92,7 @@
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout134"
             tools:ignore="SpeakableTextPresentCheck"
             tools:itemCount="2"
-            tools:listitem="@layout/item_home_prmotion" />
+            tools:listitem="@layout/item_home_promotion" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recComSoonMovie"
@@ -102,8 +102,10 @@
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="@+id/view12"
             app:layout_constraintEnd_toEndOf="@+id/view12"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/view12"
             app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+            app:layout_constraintVertical_bias="1.0"
             app:spanCount="2"
             tools:itemCount="10"
             tools:listitem="@layout/coming_soon_item_layout" />
@@ -158,7 +160,7 @@
         android:id="@+id/constraintLayout148"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

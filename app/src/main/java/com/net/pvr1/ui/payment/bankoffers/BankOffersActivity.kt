@@ -20,7 +20,7 @@ import com.net.pvr1.ui.payment.PaymentActivity
 import com.net.pvr1.ui.payment.bankoffers.adapter.BankOfferAdapter
 import com.net.pvr1.ui.payment.promoCode.viewModel.PromoCodeViewModel
 import com.net.pvr1.ui.payment.response.PaymentResponse
-import com.net.pvr1.utils.PreferenceManager
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

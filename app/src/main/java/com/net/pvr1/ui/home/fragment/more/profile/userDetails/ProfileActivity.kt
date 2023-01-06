@@ -25,7 +25,7 @@ import com.net.pvr1.ui.home.fragment.more.response.ProfileResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.ProfileResponseConst
 import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.PreferenceManager
+import com.net.pvr1.di.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.internal.and
 import java.security.MessageDigest

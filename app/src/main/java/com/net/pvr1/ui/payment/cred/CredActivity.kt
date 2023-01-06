@@ -18,7 +18,7 @@ import com.net.pvr1.ui.payment.promoCode.viewModel.PromoCodeViewModel
 import com.net.pvr1.ui.payment.viewModel.PaymentViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.PreferenceManager
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.utils.launchActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

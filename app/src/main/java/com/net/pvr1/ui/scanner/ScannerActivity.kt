@@ -11,7 +11,7 @@ import com.google.zxing.integration.android.IntentIntegrator
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityScannerBinding
 import com.net.pvr1.ui.scanner.bookings.SelectBookingsActivity
-import com.net.pvr1.utils.PreferenceManager
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
 import java.net.URI

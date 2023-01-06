@@ -235,7 +235,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:itemCount="2"
-                    tools:listitem="@layout/item_home_prmotion" />
+                    tools:listitem="@layout/item_home_promotion" />
 
                 <View
                     android:background="@drawable/line_seprator"

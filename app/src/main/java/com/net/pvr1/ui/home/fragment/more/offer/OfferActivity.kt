@@ -14,7 +14,7 @@ import com.net.pvr1.ui.home.fragment.more.offer.response.OfferLocalData
 import com.net.pvr1.ui.home.fragment.more.offer.viewModel.OfferViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.PreferenceManager
+import com.net.pvr1.di.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

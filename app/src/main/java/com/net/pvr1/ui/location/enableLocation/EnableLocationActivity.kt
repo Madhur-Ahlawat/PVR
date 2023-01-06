@@ -7,7 +7,7 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityEnableLocationBinding
 import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.utils.Constant
-import com.net.pvr1.utils.PreferenceManager
+import com.net.pvr1.di.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

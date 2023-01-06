@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.home.fragment.commingSoon.adapter
+package com.net.pvr1.ui.home.fragment.comingSoon.adapter
 
 import android.view.LayoutInflater
 import android.view.View

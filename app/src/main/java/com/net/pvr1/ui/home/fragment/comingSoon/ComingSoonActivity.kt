@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.home.fragment.commingSoon
+package com.net.pvr1.ui.home.fragment.comingSoon
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,14 +10,14 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityComingSoonBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.home.fragment.commingSoon.adapter.ComingSoonMovieAdapter
-import com.net.pvr1.ui.home.fragment.commingSoon.adapter.LanguageAdapter
-import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
-import com.net.pvr1.ui.home.fragment.commingSoon.viewModel.ComingSoonViewModel
+import com.net.pvr1.ui.home.fragment.comingSoon.adapter.ComingSoonMovieAdapter
+import com.net.pvr1.ui.home.fragment.comingSoon.adapter.LanguageAdapter
+import com.net.pvr1.ui.home.fragment.comingSoon.response.CommingSoonResponse
+import com.net.pvr1.ui.home.fragment.comingSoon.viewModel.ComingSoonViewModel
 import com.net.pvr1.ui.movieDetails.comingSoonDetails.ComingSoonDetailsActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.PreferenceManager
+import com.net.pvr1.di.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
