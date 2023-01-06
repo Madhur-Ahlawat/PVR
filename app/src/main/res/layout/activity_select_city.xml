@@ -136,7 +136,6 @@
                         android:id="@+id/txtSelectedLocation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dimen_12dp"
                         android:layout_marginTop="@dimen/dimen_12dp"
                         android:layout_marginBottom="@dimen/dimen_12dp"
                         android:text="@string/selected_location"
@@ -149,13 +148,13 @@
 
                     <TextView
                         android:id="@+id/txtSelectedCity"
-                        style="@style/H3SizeBold"
+                        android:fontFamily="@font/sf_pro_text_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/dimen_12dp"
                         app:layout_constraintBottom_toBottomOf="@+id/txtSelectedLocation"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/txtSelectedLocation"
+                        app:layout_constraintVertical_bias="1.0"
                         tools:text="Hyderabad" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -164,7 +163,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/consSelectedLocation">
@@ -181,7 +179,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:spanCount="2"
-                        tools:itemCount="8"
+                        tools:itemCount="2"
                         tools:listitem="@layout/select_city_item_layout" />
 
                     <!-- View-->
@@ -218,9 +216,9 @@
 
                         <TextView
                             android:id="@+id/txtOtherCity"
-                            style="@style/H3Size"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/sf_pro_text_bold"
                             android:text="@string/other_cities"
                             android:textColor="#757575"
                             app:layout_constraintBottom_toBottomOf="@+id/vwL"

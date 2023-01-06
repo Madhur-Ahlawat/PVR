@@ -85,6 +85,19 @@
                 app:otp_showCursor="false" />
 
             <TextView
+                android:id="@+id/textView383"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_5dp"
+                android:visibility="gone"
+                android:textColor="@color/red"
+                android:textSize="@dimen/dimen_12sp"
+                app:layout_constraintEnd_toEndOf="@+id/view11"
+                app:layout_constraintStart_toStartOf="@+id/view11"
+                app:layout_constraintTop_toBottomOf="@+id/otpEditText"
+                tools:text="TextView" />
+
+            <TextView
                 android:id="@+id/textView14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -100,7 +113,7 @@
                 android:visibility="visible"
                 app:drawableEndCompat="@drawable/ic_yellow"
                 app:layout_constraintEnd_toEndOf="@+id/otpEditText"
-                app:layout_constraintTop_toBottomOf="@+id/otpEditText" />
+                app:layout_constraintTop_toBottomOf="@+id/textView383" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout38"
@@ -174,6 +187,20 @@
                     </com.google.android.material.textfield.TextInputLayout>
                 </RelativeLayout>
 
+                <TextView
+                    android:id="@+id/textView384"
+                    android:visibility="gone"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_5dp"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/dimen_12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/nameLayout"
+                    tools:text="TextView" />
+
+
                 <RelativeLayout
                     android:id="@+id/emailLayout"
                     android:layout_width="match_parent"
@@ -187,7 +214,7 @@
                     android:paddingBottom="@dimen/dimen_5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/nameLayout">
+                    app:layout_constraintTop_toBottomOf="@+id/textView384">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayout2"
@@ -221,10 +248,23 @@
                             android:textColor="@color/black"
                             android:textColorHint="@color/textColor"
                             android:textSize="16sp"
-                            tools:ignore="LabelFor,SpeakableTextPresentCheck" />
+                            tools:ignore="LabelFor" />
 
                     </com.google.android.material.textfield.TextInputLayout>
                 </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/textView385"
+                    android:visibility="gone"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_5dp"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/dimen_12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/emailLayout"
+                    tools:text="TextView" />
 
                 <TextView
                     android:id="@+id/textView158"
@@ -236,7 +276,7 @@
                     android:textSize="@dimen/dimen_14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/view105"
-                    app:layout_constraintTop_toBottomOf="@+id/emailLayout" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView385" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

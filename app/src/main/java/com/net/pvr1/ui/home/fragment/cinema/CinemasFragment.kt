@@ -2,12 +2,15 @@ package com.net.pvr1.ui.home.fragment.cinema
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -65,9 +68,6 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
     private var limit = 500L
     private var counterStory = 0
     private var currentPage = 1
-    private var qrCode = ""
-    private var appliedFilterType = ""
-    private var appliedFilterItem = HashMap<String, String>()
     private var bannerModelsMain: ArrayList<CinemaResponse.Output.Pu> = ArrayList()
     private var ivBanner: ImageView? = null
     private var ivCross: ImageView? = null
@@ -78,6 +78,8 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
     private var RlBanner: RelativeLayout? = null
     private var stories: StoriesProgressView? = null
 
+    //internet Check
+    private var broadcastReceiver: BroadcastReceiver? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -116,15 +118,27 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
             stories?.destroy()
         }
 
-
         //Click Search
         (requireActivity().findViewById(R.id.searchCinema) as ImageView).setOnClickListener {
             val intent = Intent(requireActivity(), SearchCinemaActivity::class.java)
             startActivity(intent)
         }
+
+
+        // functions
+        getShimmerData()
         cinemaApi()
         setPreference()
         getLocation()
+
+        //internet Check
+        broadcastReceiver = NetworkReceiver()
+        broadcastIntent()
+    }
+
+    private fun getShimmerData() {
+        Constant().getData(binding?.include38?.tvFirstText,binding?.include38?.tvSecondText)
+        Constant().getData(binding?.include38?.tvSecondText,null)
     }
 
     private fun isLocationEnabled(): Boolean {
@@ -254,7 +268,6 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         printLog(it.data.msg)
-
                     }
                 }
                 is NetworkResult.Error -> {
@@ -273,10 +286,11 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                 }
             }
         }
-
     }
 
     private fun retrieveData(output: CinemaResponse.Output) {
+        binding?.recyclerCinema?.show()
+        binding?.constraintLayout146?.hide()
         val gridLayout2 = GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
         val comingSoonMovieAdapter =
             CinemaAdapter(output.c, requireActivity(), this, this, this, preferences.getIsLogin())
@@ -285,7 +299,6 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
 
         if (output.pu.isNotEmpty()){
             initBanner(output.pu)
-
         }
     }
 
@@ -477,4 +490,13 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
             Constant().getDeviceId(requireActivity())
         )
     }
+
+    //Internet Check
+    private fun broadcastIntent() {
+        requireActivity().registerReceiver(
+            broadcastReceiver,
+            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        )
+    }
+
 }

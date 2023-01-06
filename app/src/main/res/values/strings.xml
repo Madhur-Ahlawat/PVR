@@ -1,12 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">PVR NEW</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="blank_space"></string>
+    <string name="blank_space"> </string>
     <string name="txt_no_account_signup">Don\'t have an account? <font color="#2196F3">Register Now</font></string>
     <string name="txt_register_header">Create New Account</string>
     <string name="txt_register_subHeader">Please provide all the required information</string>
     <string name="txt_username">Username</string>
-    <string name="txt_username_hint">cheezycode</string>
+    <string name="txt_username_hint"> </string>
     <string name="txt_email">Email</string>
     <string name="txt_email_hint">cheezycode@gmail.com</string>
     <string name="txt_password">Password</string>
@@ -58,8 +58,10 @@
     <string name="pleaseWait">Please Wait for this process.....</string>
     <string name="no">No</string>
     <string name="enterOtp">Please Enter Your Otp</string>
-    <string name="enterName">Please Enter Your Complete Name</string>
-    <string name="enterEmail">Please Enter Your Correct Email</string>
+    <string name="enterName">Your name is required</string>
+    <string name="lastName">Your last name is required</string>
+    <string name="enterEmail">Your email address is required</string>
+    <string name="wrongEmail">You entered an invalid email address</string>
     <string name="mobileNotAvailable">No phone numbers found</string>
     //Home
     <string name="home">Home</string>
@@ -138,9 +140,9 @@
     <string name="book">Book</string>
     //Enable Location
     <string name="location_recommendation">If we know your location we will make better \n movie recommendations for you.</string>
-    <string name="enable_location">ENABLE LOCATION</string>
+    <string name="enable_location">Enable Location</string>
     <string name="battery_usage">we will keep the battery usage to minimum</string>
-    <string name="recommendation"><u>Not Now</u></string>
+    <string name="recommendation">Not Now</string>
     //Search
     <string name="search_hint_text">Search for a movie or cinema</string>
     <string name="cinemas">CINEMAS</string>

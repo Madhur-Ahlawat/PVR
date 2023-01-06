@@ -79,7 +79,12 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         cityName = preferences.getCityName()
         // Location City Name
-        binding?.txtSelectedCity?.text = preferences.getCityName()
+        if (preferences.getCityName().isEmpty()){
+            binding?.consSelectedLocation?.show()
+        }else{
+            binding?.txtSelectedCity?.text = preferences.getCityName()
+            binding?.consSelectedLocation?.show()
+        }
         //Get Intent  Qr Case
         cid = intent.getStringExtra("cid").toString()
         from = intent.getStringExtra("from").toString()
@@ -205,6 +210,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         list = arrayListOf(*city[position].subcities.split(",").toTypedArray())
         list.add(0, "All")
         binding?.searchCity?.setText("")
+        binding?.consSelectedLocation?.show()
         binding?.txtSelectedCity?.text = city[position].name
         preferences.saveCityName(city[position].name)
         preferences.saveLatitudeData(city[position].lat)
@@ -219,6 +225,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             } else {
                 val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
                 startActivity(intent)
+                finish()
             }
         } else {
             cityDialog(city[position].name)
@@ -261,13 +268,13 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
     ) {
         list = arrayListOf(*city[position].subcities.split(",").toTypedArray())
         list.add(0, "All")
+        binding?.consSelectedLocation?.show()
         binding?.txtSelectedCity?.text = city[position].name
         preferences.saveCityName(city[position].name)
         preferences.saveLatitudeData(city[position].lat)
         preferences.saveLongitudeData(city[position].lng)
 
         if (city[position].subcities.isEmpty()) {
-
             if (from == "qr") {
                 val intent = Intent(this@SelectCityActivity, SelectBookingsActivity::class.java)
                 intent.putExtra("from", "qr")
@@ -276,18 +283,17 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             } else {
                 val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
                 startActivity(intent)
+                finish()
             }
         } else {
             cityDialog(city[position].name)
         }
-
     }
 
-    override fun onItemClickCityImgCity(
-        city: ArrayList<SelectCityResponse.Output.Pc>, position: Int
-    ) {
+    override fun onItemClickCityImgCity(city: ArrayList<SelectCityResponse.Output.Pc>, position: Int) {
         list = arrayListOf(*city[position].subcities.split(",").toTypedArray())
         list.add(0, "All")
+        binding?.consSelectedLocation?.show()
         binding?.txtSelectedCity?.text = city[position].name
         preferences.saveCityName(city[position].name)
         preferences.saveLatitudeData(city[position].lat)
@@ -302,6 +308,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             } else {
                 val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
                 startActivity(intent)
+                finish()
             }
         } else {
             cityDialog(city[position].name)
@@ -382,6 +389,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         } else {
             val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 

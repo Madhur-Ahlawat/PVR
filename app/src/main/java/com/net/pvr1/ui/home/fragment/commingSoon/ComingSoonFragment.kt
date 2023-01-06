@@ -1,7 +1,10 @@
 package com.net.pvr1.ui.home.fragment.commingSoon
 
 import android.annotation.SuppressLint
+import android.content.BroadcastReceiver
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
@@ -76,6 +79,10 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
     private var RlBanner: RelativeLayout? = null
     private var stories: StoriesProgressView? = null
 
+
+    //internet Check
+    private var broadcastReceiver: BroadcastReceiver? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -104,33 +111,39 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
         if (stories == null) {
             stories?.destroy()
         }
+
+        //Functions
         comingSoonApi()
         movedNext()
         comingSoonAPICall()
+        getShimmerData()
+        //internet Check
+        broadcastReceiver = NetworkReceiver()
+        broadcastIntent()
     }
+    private fun getShimmerData() {
+        Constant().getData(binding?.include38?.tvFirstText,binding?.include38?.tvSecondText)
+        Constant().getData(binding?.include38?.tvSecondText,null)
+    }
+
     private fun comingSoonAPICall() {
-
         if (buttonPressed.isEmpty()){
-
             language="ALL"
         }
         else {
             var tempLang = buttonPressed[0].split("-").toTypedArray()[0].trim { it <= ' ' }
             for (i in 1 until buttonPressed.size) tempLang =
                 tempLang + "," + buttonPressed[i].split("-").toTypedArray()[0].trim { it <= ' ' }
-//            params.put("lang", tempLang)
             language=tempLang
         }
 
         if (generseleced.isEmpty()){
             genre="ALL"
-//            params.put("genre", "ALL")
         }
              else {
             var tempGenera = generseleced[0].split("-").toTypedArray()[0].trim { it <= ' ' }
             for (i in 1 until generseleced.size) tempGenera =
                 tempGenera + "," + generseleced[i].split("-").toTypedArray()[0].trim { it <= ' ' }
-//            params.put("genre", tempGener)
             genre=tempGenera
         }
         authViewModel.comingSoon(preferences.getCityName(), genre, language, preferences.getUserId())
@@ -184,6 +197,11 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
     }
 
     private fun retrieveData(output: CommingSoonResponse.Output) {
+        //shimmer
+        binding?.constraintLayout148?.hide()
+        //Ui
+        binding?.constraintLayout147?.show()
+
         clickTime+=1
         //Promotion
         if (output.ph!=null) {
@@ -197,8 +215,8 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
                 binding?.recyclerView?.adapter = adapter
             }
         }
+
         //ComingSoon}
-        printLog("movies--->${output.movies}")
         if (output.movies.isNotEmpty()){
             binding?.recComSoonMovie?.show()
             val gridLayout2 = GridLayoutManager(requireActivity(), 2, GridLayoutManager.VERTICAL, false)
@@ -495,6 +513,14 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
             tvButton?.hide()
         }
 
+    }
+
+    //Internet Check
+    private fun broadcastIntent() {
+        requireActivity().registerReceiver(
+            broadcastReceiver,
+            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        )
     }
 
 }

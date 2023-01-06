@@ -282,17 +282,17 @@ class CinemaSessionActivity : AppCompatActivity(),
 
             if (output.like) {
                 rowIndex = true
-                binding?.imageView43?.setImageResource(R.drawable.ic_favourite_theatre)
+                binding?.imageView43?.setImageResource(R.drawable.like)
             } else {
                 rowIndex = false
-                binding?.imageView43?.setImageResource(R.drawable.ic_un_favourite_theatre)
+                binding?.imageView43?.setImageResource(R.drawable.unlike)
             }
 
             binding?.imageView43?.setOnClickListener {
                 if (preferences.getIsLogin()) {
                     if (rowIndex) {
                         rowIndex = false
-                        binding?.imageView43?.setImageResource(R.drawable.ic_un_favourite_theatre)
+                        binding?.imageView43?.setImageResource(R.drawable.unlike)
                         authViewModel.cinemaPreference(
                             preferences.getUserId(),
                             intent.getStringExtra("cid").toString(),
@@ -302,7 +302,7 @@ class CinemaSessionActivity : AppCompatActivity(),
                         )
                     } else {
                         rowIndex = true
-                        binding?.imageView43?.setImageResource(R.drawable.ic_favourite_theatre)
+                        binding?.imageView43?.setImageResource(R.drawable.like)
                         authViewModel.cinemaPreference(
                             preferences.getUserId(),
                             intent.getStringExtra("cid").toString(),

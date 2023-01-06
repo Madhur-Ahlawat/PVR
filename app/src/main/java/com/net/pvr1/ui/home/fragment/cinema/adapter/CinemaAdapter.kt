@@ -50,7 +50,7 @@ class CinemaAdapter(
                 //Image
                 Glide.with(context)
                     .load(this.imob)
-                    .error(R.drawable.app_icon)
+                    .error(R.drawable.placeholder_horizental)
                     .into(binding.cinemaImg)
 
                 if (this.m.isNotEmpty()) {
@@ -65,9 +65,9 @@ class CinemaAdapter(
                 }
 
                 if (this.l=="true"){
-                    binding.cbFav.setImageResource(R.drawable.ic_favourite_theatre)
+                    binding.cbFav.setImageResource(R.drawable.like)
                 }else{
-                    binding.cbFav.setImageResource(R.drawable.ic_un_favourite_theatre)
+                    binding.cbFav.setImageResource(R.drawable.unlike)
                 }
 
                 //ShoW Hide
@@ -76,9 +76,7 @@ class CinemaAdapter(
                         showList=false
                         binding.llMovieList.show()
                         binding.imageView164.setImageResource(R.drawable.arrow_up)
-
                     }else{
-
                         binding.llMovieList.hide()
                         binding.imageView164.setImageResource(R.drawable.arrow_down)
                         showList=true
@@ -89,12 +87,12 @@ class CinemaAdapter(
                     if (isLogin) {
                         if (rowIndex){
                             rowIndex=false
-                            binding.cbFav.setImageResource(R.drawable.ic_un_favourite_theatre)
+                            binding.cbFav.setImageResource(R.drawable.unlike)
                             preference.onPreferenceClick(this,false)
 
                         }else {
                             rowIndex= true
-                            binding.cbFav.setImageResource(R.drawable.ic_favourite_theatre)
+                            binding.cbFav.setImageResource(R.drawable.like)
                             preference.onPreferenceClick(this,true)
                         }
 

@@ -32,8 +32,10 @@ class CinemaMovieAdapter(
         //Image
         Glide.with(context)
             .load(comingSoonItem.i)
-            .error(R.drawable.app_icon)
+            .error(R.drawable.placeholder_vertical)
             .into(holder.image)
+
+        //click
         holder.itemView.setOnClickListener {
             val intent = Intent(context, NowShowingActivity::class.java)
             intent.putExtra("mid", comingSoonItem.m)

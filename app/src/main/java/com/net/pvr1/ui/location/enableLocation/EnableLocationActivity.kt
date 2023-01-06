@@ -3,6 +3,7 @@ package com.net.pvr1.ui.location.enableLocation
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityEnableLocationBinding
 import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.utils.Constant
@@ -24,8 +25,6 @@ class EnableLocationActivity : AppCompatActivity() {
         val view = binding?.root
         setContentView(view)
 
-
-
         manageFunction()
     }
 
@@ -37,16 +36,18 @@ class EnableLocationActivity : AppCompatActivity() {
     }
 
     private fun movedNext() {
+        binding?.include39?.textView5?.text=getString(R.string.enable_location)
         //not Now
         binding?.noThanksTextView?.setOnClickListener {
             val intent = Intent(this@EnableLocationActivity, SelectCityActivity::class.java)
             intent.putExtra("from", from)
             intent.putExtra("cid", cid)
             startActivity(intent)
+            finish()
         }
 
         //Enable Location
-        binding?.enableLocationButton?.setOnClickListener {
+        binding?.include39?.textView5?.setOnClickListener {
             if (Constant().locationServicesEnabled(this) && Constant.latitude!=0.0 && Constant.longitude!= 0.0) {
                 preferences.saveLatitudeData(Constant.latitude.toString())
                 preferences.saveLongitudeData(Constant.longitude.toString())
@@ -54,6 +55,7 @@ class EnableLocationActivity : AppCompatActivity() {
                 intent.putExtra("from", from)
                 intent.putExtra("cid", cid)
                 startActivity(intent2)
+                finish()
             } else {
                 Constant().enableLocation(this)
             }

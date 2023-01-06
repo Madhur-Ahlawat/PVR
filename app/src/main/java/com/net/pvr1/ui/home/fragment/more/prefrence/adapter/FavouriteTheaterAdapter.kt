@@ -33,7 +33,7 @@ class FavouriteTheaterAdapter(
 //                binding.textView51.text=this.na
                 binding.textView53.hide()
                 binding.textView51.hide()
-                binding.imageView68.setImageResource(R.drawable.ic_favourite_theatre)
+                binding.imageView68.setImageResource(R.drawable.like)
 //                if (rowIndex==position){
 //                    binding.imageView68.setImageResource(R.drawable.ic_favourite_theatre)
 //                }else{

@@ -357,16 +357,16 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         binding?.recyclerMovies?.adapter = adapterMovies
         ViewCompat.setNestedScrollingEnabled(binding?.recyclerMovies!!, false)
 
-        //Trailer
+        //Offer
         val layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         val snapHelper: SnapHelper = PagerSnapHelper()
-        binding?.recyclerTrailer?.layoutManager = layoutManager
-        binding?.recyclerTrailer?.onFlingListener = null
-        snapHelper.attachToRecyclerView(binding?.recyclerTrailer!!)
+        binding?.recyclerOffer?.layoutManager = layoutManager
+        binding?.recyclerOffer?.onFlingListener = null
+        snapHelper.attachToRecyclerView(binding?.recyclerOffer!!)
         val adapterTrailer = HomeOfferAdapter(requireActivity(), output.cp, this)
-        binding?.recyclerTrailer?.layoutManager = layoutManager
-        binding?.recyclerTrailer?.adapter = adapterTrailer
+        binding?.recyclerOffer?.layoutManager = layoutManager
+        binding?.recyclerOffer?.adapter = adapterTrailer
 
         binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
         binding?.filterFab?.setOnClickListener {
@@ -479,9 +479,11 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     override fun onOfferClick(comingSoonItem: HomeResponse.Cp) {
-        val intent = Intent(requireActivity(), PlayerActivity::class.java)
-        intent.putExtra("trailerUrl", comingSoonItem.mtrailerurl)
-        startActivity(intent)
+        if (comingSoonItem.t!=null&& comingSoonItem.t.equals("campaign-VIDEO",ignoreCase = true)){
+            val intent = Intent(requireActivity(), PlayerActivity::class.java)
+            intent.putExtra("trailerUrl", comingSoonItem.mtrailerurl)
+            startActivity(intent)
+        }
     }
 
     override fun onApply(

@@ -39,14 +39,13 @@ class ProfileActivity : AppCompatActivity() {
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityProfileBinding? = null
-
     private val authViewModel: UserProfileViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var profileResponse: ProfileResponse.Output? = null
     private var dobClick = false
     private var dob: TextView? = null
     private var anniversary: TextView? = null
-    var dialog: BottomSheetDialog? = null
+    private var dialog: BottomSheetDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater, null, false)
@@ -331,7 +330,6 @@ class ProfileActivity : AppCompatActivity() {
     private fun retrieveData(output: ProfileResponse.Output) {
         ProfileResponseConst = output
         dialog?.dismiss()
-
     }
 
     @Throws(Exception::class)

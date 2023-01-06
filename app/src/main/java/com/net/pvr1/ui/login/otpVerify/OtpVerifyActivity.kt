@@ -95,15 +95,9 @@ class OtpVerifyActivity : AppCompatActivity() {
         binding?.textView15?.setOnClickListener {
             val otp = binding?.otpEditText?.getStringFromFields()
             if (binding?.otpEditText?.getStringFromFields()?.contains("null") == true) {
-                val dialog = OptionDialog(this,
-                    R.mipmap.ic_launcher,
-                    R.string.app_name,
-                    getString(R.string.enterOtp),
-                    positiveBtnText = R.string.ok,
-                    negativeBtnText = R.string.no,
-                    positiveClick = {},
-                    negativeClick = {})
-                dialog.show()
+                binding?.textView383?.show()
+                binding?.textView383?.text=getString(R.string.enterOtp)
+
             } else {
                 if (newUser == "false") {
                     authViewModel.otpVerify(
@@ -113,6 +107,7 @@ class OtpVerifyActivity : AppCompatActivity() {
                     )
                 } else {
                     binding?.textView15?.setOnClickListener {
+                        binding?.textView383?.hide()
                         val name = binding?.name?.text.toString()
                         val email = binding?.email?.text.toString()
                         if (signUpClick==0){
@@ -120,27 +115,25 @@ class OtpVerifyActivity : AppCompatActivity() {
                             binding?.textView15?.text= getString(R.string.continue_txt)
                             signUpClick+=1
                         }else{
-                            if (InputTextValidator.checkFullName(binding?.name!!)) {
-                                val dialog = OptionDialog(this,
-                                    R.mipmap.ic_launcher,
-                                    R.string.app_name,
-                                    getString(R.string.enterName),
-                                    positiveBtnText = R.string.ok,
-                                    negativeBtnText = R.string.no,
-                                    positiveClick = {},
-                                    negativeClick = {})
-                                dialog.show()
-                            } else if (InputTextValidator.validateEmail(binding?.email!!)) {
-                                val dialog = OptionDialog(this,
-                                    R.mipmap.ic_launcher,
-                                    R.string.app_name,
-                                    getString(R.string.enterEmail),
-                                    positiveBtnText = R.string.ok,
-                                    negativeBtnText = R.string.no,
-                                    positiveClick = {},
-                                    negativeClick = {})
-                                dialog.show()
+                            if (name==""){
+                                binding?.textView384?.show()
+                                binding?.textView384?.hide()
+                                binding?.textView384?.text=getString(R.string.enterName)
+                            }else if (!InputTextValidator.checkFullName(binding?.name!!)) {
+                                binding?.textView384?.hide()
+                                binding?.textView384?.show()
+                                binding?.textView384?.text=getString(R.string.lastName)
+                            } else if (email=="") {
+                                binding?.textView384?.hide()
+                                binding?.textView385?.show()
+                                binding?.textView385?.text=getString(R.string.enterEmail)
+                            } else if (!InputTextValidator.validateEmail(binding?.email!!)) {
+                                binding?.textView384?.hide()
+                                binding?.textView385?.show()
+                                binding?.textView385?.text=getString(R.string.wrongEmail)
                             } else {
+                                binding?.textView384?.hide()
+                                binding?.textView385?.hide()
                                 authViewModel.resister(
                                     getHash(
                                         "$mobile|$otp|$email"
@@ -148,11 +141,8 @@ class OtpVerifyActivity : AppCompatActivity() {
                                 )
                             }
                         }
-
                     }
-
                 }
-
             }
         }
     }
@@ -163,15 +153,7 @@ class OtpVerifyActivity : AppCompatActivity() {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-//                        val dialog = OptionDialog(this,
-//                            R.mipmap.ic_launcher,
-//                            R.string.app_name,
-//                            it.data.msg,
-//                            positiveBtnText = R.string.ok,
-//                            negativeBtnText = R.string.no,
-//                            positiveClick = {},
-//                            negativeClick = {})
-//                        dialog.show()
+
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,

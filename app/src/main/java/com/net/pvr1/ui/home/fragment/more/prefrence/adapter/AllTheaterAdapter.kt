@@ -35,7 +35,7 @@ class AllTheaterAdapter(
                 binding.textView51.hide()
 
                 if (rowIndex==position){
-                    binding.imageView68.setImageResource(R.drawable.ic_favourite_theatre)
+                    binding.imageView68.setImageResource(R.drawable.like)
                     binding.constraintLayout142.setBackgroundResource(R.drawable.ui_item_select)
                 }else{
                     binding.constraintLayout142.setBackgroundResource(R.drawable.ui_item_unselect)

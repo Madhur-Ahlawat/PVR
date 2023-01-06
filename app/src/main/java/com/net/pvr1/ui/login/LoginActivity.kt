@@ -7,7 +7,9 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.content.IntentSender
 import android.os.Bundle
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -25,13 +27,11 @@ import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.ui.login.otpVerify.OtpVerifyActivity
 import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.login.viewModel.LoginViewModel
-import com.net.pvr1.utils.Constant
+import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.SUCCESS_CODE
-import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.PreferenceManager
-import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
@@ -67,30 +67,37 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun movedNext() {
+        binding?.mobileNumber?.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+                if (s.toString()!=" "){
+                    binding?.textView382?.hide()
+                }else{
+                    binding?.textView382?.text=getString(R.string.checkNumber)
+                    binding?.textView382?.show()
+                }
+            }
+        })
         binding?.mobileNumber?.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val mobile = binding?.mobileNumber?.text.toString()
                 if (mobile == "") {
-                    val dialog = OptionDialog(this,
-                        R.mipmap.ic_launcher,
-                        R.string.blank_space,
-                        getString(R.string.enterMobileNo),
-                        positiveBtnText = R.string.ok,
-                        negativeBtnText = R.string.no,
-                        positiveClick = {},
-                        negativeClick = {})
-                    dialog.show()
+                    binding?.textView382?.show()
+                    binding?.textView382?.text=getString(R.string.enterMobileNo)
                 } else if (!TextUtils.isEmpty(mobile) && mobile.length != 10) {
-                    val dialog = OptionDialog(this,
-                        R.mipmap.ic_launcher,
-                        R.string.blank_space,
-                        getString(R.string.checkNumber),
-                        positiveBtnText = R.string.ok,
-                        negativeBtnText = R.string.no,
-                        positiveClick = {},
-                        negativeClick = {})
-                    dialog.show()
+                    binding?.textView382?.show()
+                    binding?.textView382?.text=getString(R.string.checkNumber)
                 } else {
+                    binding?.textView382?.hide()
                     authViewModel.loginMobileUser(mobile, preferences.getCityName(), "INDIA")
                 }
                 true
@@ -100,27 +107,14 @@ class LoginActivity : AppCompatActivity() {
         binding?.textView11?.setOnClickListener {
             val mobile = binding?.mobileNumber?.text.toString()
             if (mobile == "") {
-                val dialog = OptionDialog(this,
-                    R.mipmap.ic_launcher,
-                    R.string.blank_space,
-                    getString(R.string.enterMobileNo),
-                    positiveBtnText = R.string.ok,
-                    negativeBtnText = R.string.no,
-                    positiveClick = {},
-                    negativeClick = {})
-                dialog.show()
+                binding?.textView382?.show()
+                binding?.textView382?.text=getString(R.string.enterMobileNo)
             } else if (!TextUtils.isEmpty(mobile) && mobile.length != 10) {
-                val dialog = OptionDialog(this,
-                    R.mipmap.ic_launcher,
-                    R.string.blank_space,
-                    getString(R.string.checkNumber),
-                    positiveBtnText = R.string.ok,
-                    negativeBtnText = R.string.no,
-                    positiveClick = {},
-                    negativeClick = {})
-                dialog.show()
+                binding?.textView382?.show()
+                binding?.textView382?.text=getString(R.string.checkNumber)
             } else {
-                authViewModel.loginMobileUser(mobile, "", "INDIA")
+                binding?.textView382?.hide()
+                authViewModel.loginMobileUser(mobile, preferences.getCityName(), "INDIA")
             }
         }
 

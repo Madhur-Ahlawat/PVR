@@ -71,9 +71,8 @@
 
                     <ImageView
                         android:id="@+id/cbFav"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:scaleType="fitXY"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:checked="false"
                         android:layout_marginTop="@dimen/dimen_5dp"
                         android:layout_marginEnd="@dimen/dimen_5dp"
@@ -84,7 +83,7 @@
 
                     <TextView
                         android:id="@+id/cinemaName"
-                        style="@style/H4SizeBold"
+                        android:fontFamily="@font/sf_pro_text_bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layout_constraintEnd_toStartOf="@id/cbFav"

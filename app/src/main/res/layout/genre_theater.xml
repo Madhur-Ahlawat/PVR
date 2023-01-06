@@ -25,11 +25,11 @@
 
         <ImageView
             android:id="@+id/imageView103"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dimen_25dp"
+            android:layout_height="@dimen/dimen_25dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view161"
-            app:srcCompat="@drawable/ic_favourite_theatre"
+            app:srcCompat="@drawable/like"
             tools:ignore="ContentDescription" />
 
         <TextView

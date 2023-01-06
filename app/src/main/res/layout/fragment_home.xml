@@ -10,7 +10,7 @@
         android:id="@+id/constraintLayout144"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -290,7 +290,7 @@
                             android:layout_height="1dp"
                             android:background="@color/gray"
                             android:visibility="gone"
-                            app:layout_constraintBottom_toTopOf="@+id/recyclerTrailer"
+                            app:layout_constraintBottom_toTopOf="@+id/recyclerOffer"
                             app:layout_constraintEnd_toEndOf="@+id/txtTrailers"
                             app:layout_constraintStart_toStartOf="@+id/txtTrailers"
                             app:layout_constraintTop_toBottomOf="@+id/txtTrailers" />
@@ -301,13 +301,13 @@
                             android:layout_height="1dp"
                             android:background="@color/yellow"
                             android:visibility="gone"
-                            app:layout_constraintBottom_toTopOf="@+id/recyclerTrailer"
+                            app:layout_constraintBottom_toTopOf="@+id/recyclerOffer"
                             app:layout_constraintEnd_toEndOf="@+id/txtMusic"
                             app:layout_constraintStart_toEndOf="@+id/txtTrailers"
                             app:layout_constraintTop_toBottomOf="@+id/txtMusic" />
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyclerTrailer"
+                            android:id="@+id/recyclerOffer"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
@@ -348,6 +348,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout145"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -37,8 +37,12 @@ class ComingSoonMovieAdapter(
         val comingSoonItem = nowShowingList[position]
         //title
         holder.title.text = comingSoonItem.name
+
         //Image
-        Glide.with(context).load(comingSoonItem.miv).error(R.drawable.app_icon).into(holder.image)
+        Glide.with(context)
+            .load(comingSoonItem.miv)
+            .error(R.drawable.placeholder_vertical)
+            .into(holder.image)
 
         //Manage Video Play
         if ((comingSoonItem.videoUrl.contains("v=") || comingSoonItem.videoUrl.contains("list=")) && !TextUtils.isEmpty(
@@ -50,7 +54,7 @@ class ComingSoonMovieAdapter(
             holder.play.hide()
         }
 
-//        Video Play Click
+        //        Video Play Click
         holder.play.setOnClickListener {
             listener.onTrailerClick(comingSoonItem)
         }
@@ -60,7 +64,6 @@ class ComingSoonMovieAdapter(
         }
 
         //Manage Bookmark
-        println("checkLogin---->${comingSoonItem.ul}")
         if (!checkLogin) {
             if (comingSoonItem.ul) {
                 holder.wishlist.show()
@@ -72,6 +75,7 @@ class ComingSoonMovieAdapter(
                     ContextCompat.getDrawable(context, R.drawable.ic_wishlist_white)
             }
         }
+
         //Release Manage
         holder.release.text = comingSoonItem.date_caption
         //Manage Language
