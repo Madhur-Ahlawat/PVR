@@ -9,7 +9,7 @@ import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.ui.formats.response.FormatResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaPreferenceResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
-import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
+import com.net.pvr1.ui.home.fragment.comingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
 import com.net.pvr1.ui.home.fragment.more.contactUs.response.ContactUsResponse

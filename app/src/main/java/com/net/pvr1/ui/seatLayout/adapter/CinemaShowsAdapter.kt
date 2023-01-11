@@ -3,10 +3,9 @@ package com.net.pvr1.ui.seatLayout.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Typeface
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
@@ -19,10 +18,11 @@ import com.net.pvr1.utils.show
 class CinemaShowsAdapter(
     private var nowShowingList: ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>,
     private var context: Context,
-    private var listener: RecycleViewItemClickListener
+    private var listener: RecycleViewItemClickListener,
+    private var position: String
 ) :
     RecyclerView.Adapter<CinemaShowsAdapter.ViewHolder>() {
-    private var itemCount = 0
+    private var itemCount =position.toInt()
 
     inner class ViewHolder(val binding: SeatShowTimeItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -34,18 +34,18 @@ class CinemaShowsAdapter(
         return ViewHolder(binding)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
                 //Language
-                binding.textView199.text = this.et
+                binding.textView199.text = this.st
                 //click
                 holder.itemView.setOnClickListener {
                     itemCount = position
                     listener.cinemaShowsClick(this.sid)
                     notifyDataSetChanged()
                 }
+
                 if (position == itemCount) {
                     binding.textView199.setTextColor(ContextCompat.getColor(context, R.color.black))
                     binding.linearLayout.setBackgroundColor(

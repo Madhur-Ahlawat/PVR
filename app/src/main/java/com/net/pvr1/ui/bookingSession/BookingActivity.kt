@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityBookingBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.bookingSession.adapter.*
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.ui.bookingSession.response.BookingTheatreResponse

@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.util.EncodingUtils
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityPaymentWebBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.HomeActivity

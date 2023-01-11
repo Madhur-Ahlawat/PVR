@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import com.google.gson.Gson
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityMcouponBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.payment.PaymentActivity

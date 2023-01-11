@@ -11,7 +11,7 @@ import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.home.fragment.more.adapter.TermsConditionAdapter
 import com.net.pvr1.ui.webView.WebViewActivity
 import com.net.pvr1.utils.Constant
-import com.net.pvr1.utils.PreferenceManager
+import com.net.pvr1.di.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

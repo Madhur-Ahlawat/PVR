@@ -20,8 +20,7 @@ import com.net.pvr1.utils.show
 class CinemaSessionTimeAdapter(
     private var nowShowingList: ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>,
     private var context: Context,
-    private  var cinemaId: String?
-) :
+    private  var cinemaId: String?) :
     RecyclerView.Adapter<CinemaSessionTimeAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemCinemaDetailsShowTimeBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -66,11 +65,13 @@ class CinemaSessionTimeAdapter(
                 Constant.SESSION_ID = this.sid.toString()
                 Constant.CINEMA_ID = cinemaId.toString()
 
+                if (this.ss!=0&&this.ss!=3)
                 holder.itemView.setOnClickListener {
                     val intent = Intent(context, SeatLayoutActivity::class.java)
                     intent.putExtra("from", "cinema")
                     intent.putExtra("skip", "true")
                     intent.putExtra("CinemaShows", nowShowingList)
+                    intent.putExtra("position", position.toString())
                     context.startActivity(intent)
                 }
             }
@@ -79,9 +80,6 @@ class CinemaSessionTimeAdapter(
     }
 
     override fun getItemCount(): Int {
-        return if (nowShowingList.isNotEmpty()) nowShowingList.size else 0
+        return   if (nowShowingList.isNotEmpty()) nowShowingList.size else 0
     }
-
-
-
 }

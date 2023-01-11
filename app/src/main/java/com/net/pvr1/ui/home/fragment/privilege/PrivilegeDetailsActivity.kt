@@ -3,7 +3,7 @@ package com.net.pvr1.ui.home.fragment.privilege
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.net.pvr1.databinding.ActivityPrivilegeDetailsBinding
-import com.net.pvr1.utils.PreferenceManager
+import com.net.pvr1.di.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

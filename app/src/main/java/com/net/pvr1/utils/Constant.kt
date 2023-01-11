@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.NameNotFoundException
+import android.graphics.Color
 import android.location.*
 import android.net.Uri
 import android.provider.ContactsContract.Directory.PACKAGE_NAME
@@ -17,7 +18,9 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ForegroundColorSpan
 import android.text.style.ScaleXSpan
 import android.view.View
+import android.view.ViewGroup.MarginLayoutParams
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
@@ -571,8 +574,8 @@ class Constant {
 
             val criteria = Criteria()
             val bestProvider = locationManager?.getBestProvider(criteria, false)
-            val location: Location =
-                locationManager?.getLastKnownLocation(bestProvider.toString())!!
+            val location: Location? =
+                locationManager?.getLastKnownLocation(bestProvider.toString())
 
             if (location == null) {
                 Toast.makeText(activity, "Location Not found", Toast.LENGTH_LONG).show()
@@ -587,7 +590,6 @@ class Constant {
                     val cityName: String? = addresses?.get(0)?.getAddressLine(0)
                     val stateName: String? = addresses?.get(0)?.getAddressLine(1)
                     val countryName: String? = addresses?.get(0)?.getAddressLine(2)
-                    printLog("latLang---->${latitude}--->${longitude}--st->${stateName}--ct-->${cityName}-->cot--${countryName}")
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -673,11 +675,29 @@ class Constant {
             ) {
                 val randomNumber1 = r.nextInt(titles.size)
                 textView?.text = Html.fromHtml(titles[randomNumber1])
-                textViewSecond?.text = Html.fromHtml(titles[randomNumber1])
+                textViewSecond.text = Html.fromHtml(titles[randomNumber1])
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
+    //AppBar Hide
+    fun appBarHide(activity: Activity){
+        activity.window.apply {
+            clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            activity.window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            statusBarColor = Color.TRANSPARENT
+        }
+    }
+
+    fun setMargins(view: View, left: Int, top: Int, right: Int, bottom: Int) {
+        if (view.layoutParams is MarginLayoutParams) {
+            val p = view.layoutParams as MarginLayoutParams
+            p.setMargins(left, top, right, bottom)
+            view.requestLayout()
+        }
+    }
 }

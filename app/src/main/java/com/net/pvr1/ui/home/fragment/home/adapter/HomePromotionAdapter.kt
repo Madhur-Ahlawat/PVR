@@ -21,7 +21,7 @@ class HomePromotionAdapter(
     RecyclerView.Adapter<HomePromotionAdapter.MyViewHolderNowShowing>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderNowShowing {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_home_prmotion, parent, false)
+            .inflate(R.layout.item_home_promotion, parent, false)
         return MyViewHolderNowShowing(view)
     }
 

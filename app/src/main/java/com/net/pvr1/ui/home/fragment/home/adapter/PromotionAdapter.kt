@@ -9,7 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
-import com.net.pvr1.databinding.ItemHomePrmotionBinding
+import com.net.pvr1.databinding.ItemHomePromotionBinding
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.player.PlayerActivity
 import com.net.pvr1.ui.webView.WebViewActivity
@@ -25,13 +25,13 @@ class PromotionAdapter(
     private var displayMetrics = DisplayMetrics()
     private var screenWidth = 0
     override fun getItemCount() = movies.size
-    inner class ViewHolder(val binding: ItemHomePrmotionBinding) :
+    inner class ViewHolder(val binding: ItemHomePromotionBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context.windowManager.defaultDisplay.getMetrics(displayMetrics)
         screenWidth = displayMetrics.widthPixels
-        val binding = ItemHomePrmotionBinding.inflate(
+        val binding = ItemHomePromotionBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
         return ViewHolder(binding)
@@ -43,7 +43,7 @@ class PromotionAdapter(
                 //IMAGE
                 Glide.with(context)
                     .load(this.i)
-                    .error(R.drawable.dummy_prmotion)
+                    .error(R.drawable.placeholder_horizental)
                     .into(binding.sliderImg)
 
                 //ITEM WIDTH
@@ -94,24 +94,23 @@ class PromotionAdapter(
                     holder.itemView.layoutParams = layoutParams
                 }
 
-           //Manage Functions
-                if (this.type == "IMAGE" && this.redirectView=="DEEPLINK") {
+                //Manage Functions
+                if (this.type == "IMAGE" && this.redirectView == "DEEPLINK") {
                     binding.tvPlay.hide()
-                    Constant().shareData(context,"",this.redirectView)
+                    Constant().shareData(context, "", this.redirectView)
 
-                } else if (this.type == "IMAGE" && this.redirectView=="INAPP") {
+                } else if (this.type == "IMAGE" && this.redirectView == "INAPP") {
                     binding.tvPlay.hide()
                     //click
                     holder.itemView.setOnClickListener {
-                    val intent = Intent(context, WebViewActivity::class.java)
-                    intent.putExtra("from", "more")
-                    intent.putExtra("title", context.getString(R.string.terms_condition_text))
-                    intent.putExtra("getUrl", Constant.termsCondition)
-                    context.startActivity(intent)
-
+                        val intent = Intent(context, WebViewActivity::class.java)
+                        intent.putExtra("from", "more")
+                        intent.putExtra("title", context.getString(R.string.terms_condition_text))
+                        intent.putExtra("getUrl", Constant.termsCondition)
+                        context.startActivity(intent)
                     }
 
-                } else if (this.type == "VIDEO" && this.redirectView !="") {
+                } else if (this.type == "VIDEO" && this.redirectView != "") {
                     binding.tvPlay.show()
                     //click
                     holder.itemView.setOnClickListener {
@@ -119,11 +118,11 @@ class PromotionAdapter(
                         intent.putExtra("trailerUrl", this.trailerUrl)
                         context.startActivity(intent)
                     }
+
                 } else {
                     binding.tvPlay.hide()
 
                 }
-
 
             }
         }

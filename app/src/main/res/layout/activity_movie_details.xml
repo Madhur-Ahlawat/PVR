@@ -202,7 +202,7 @@
                     android:layout_width="0dp"
                     android:layout_height="178dp"
                     android:layout_marginTop="24dp"
-                    android:background="@drawable/ic_rectangle_gradient_pinnk"
+                    android:background="@drawable/ic_rectangle_gradient_pink"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView58">

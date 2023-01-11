@@ -35,11 +35,12 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="35dp"
                 android:fontFamily="@font/sf_pro_text_semi_bold"
-                android:textSize="@dimen/dimen_12sp"
                 android:textColor="#7A7A7A"
+                android:textSize="@dimen/dimen_12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TextContrastCheck"
                 tools:text="TextView" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -62,7 +63,6 @@
                     app:srcCompat="@drawable/sit_user"
                     tools:ignore="ContentDescription" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
 
             <ImageView
                 android:id="@+id/imageView49"

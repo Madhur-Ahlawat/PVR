@@ -69,7 +69,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.home.fragment.commingSoon.search.CinemaSearchActivity"
+            android:name=".ui.home.fragment.comingSoon.search.CinemaSearchActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -168,7 +168,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.home.fragment.commingSoon.ComingSoonActivity"
+            android:name=".ui.home.fragment.comingSoon.ComingSoonActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

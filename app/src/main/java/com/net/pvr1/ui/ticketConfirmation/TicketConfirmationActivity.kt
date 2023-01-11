@@ -23,7 +23,7 @@ import com.net.pvr1.ui.ticketConfirmation.response.TicketBookedResponse
 import com.net.pvr1.ui.ticketConfirmation.viewModel.TicketConfirmationViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.PreferenceManager
+import com.net.pvr1.di.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

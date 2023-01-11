@@ -19,6 +19,7 @@ import com.google.android.gms.auth.api.credentials.CredentialsApi
 import com.google.android.gms.auth.api.credentials.HintRequest
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityLoginBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.HomeActivity

@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.SnapHelper
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.FragmentHomeBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.bookingSession.BookingActivity
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog

@@ -26,7 +26,7 @@ class TicketPlaceHolderAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_home_prmotion, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_home_promotion, parent, false)
         // create ViewHolder
         context.windowManager.defaultDisplay.getMetrics(displayMetrics)
         screenWidth = displayMetrics.widthPixels

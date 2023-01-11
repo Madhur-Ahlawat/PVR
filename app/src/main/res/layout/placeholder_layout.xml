@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck"
-        tools:listitem="@layout/item_home_prmotion" />
+        tools:listitem="@layout/item_home_promotion" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

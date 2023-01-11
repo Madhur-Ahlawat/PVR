@@ -9,10 +9,12 @@ import com.net.pvr1.databinding.ItemCinemaSessionLangChildBinding
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 
 
+@Suppress("NAME_SHADOWING")
 class CinemaSessionCinChildLanguageAdapter(
     private var nowShowingList: ArrayList<CinemaSessionResponse.Child.Mv.Ml>,
     private var context: Context,
-    private var cinemaId: String?
+    private var cinemaId: String?,
+    private var showType:Int?
 ) : RecyclerView.Adapter<CinemaSessionCinChildLanguageAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemCinemaSessionLangChildBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -41,12 +43,14 @@ class CinemaSessionCinChildLanguageAdapter(
 
             }
         }
-
     }
 
     override fun getItemCount(): Int {
-        return if (nowShowingList.isNotEmpty()) nowShowingList.size else 0
+        return if (showType==0){
+            1
+        }else{
+            nowShowingList.size
+        }
     }
-
 
 }

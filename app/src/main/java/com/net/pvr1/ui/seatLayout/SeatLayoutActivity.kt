@@ -44,7 +44,6 @@ import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr1.utils.Constant.Companion.SELECTED_SEAT
-import com.net.pvr1.utils.Constant.Companion.SESSION_ID
 import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
 import dagger.hilt.android.AndroidEntryPoint
 import java.math.BigDecimal
@@ -99,11 +98,21 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         binding = ActivitySeatLayoutBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
+
+        manageFunctions()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun manageFunctions() {
         //from Movie
         if (intent.getStringExtra("from") == "cinema") {
+
             cinemaSessionShows =
                 intent.getSerializableExtra("CinemaShows") as ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>
-            cinemaShows()
+
+            val position=intent.getStringExtra("position").toString()
+            cinemaShows(position)
         } else {
             showsArray = intent.getSerializableExtra("shows") as ArrayList<Child.Sw.S>
             shows()
@@ -112,9 +121,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         // manage offer
         if (intent.getStringExtra("skip").toString() == "false") {
             binding?.constraintLayout60?.show()
-            binding?.textView202?.text = "(You’ll save ${getString(R.string.currency)}  ${
-                intent.getStringExtra("discountPrice").toString()
-            })"
+            binding?.textView202?.text = "(You’ll save ${getString(R.string.currency)}  ${intent.getStringExtra("discountPrice").toString()})"
             offerEnable = true
         } else {
             binding?.constraintLayout60?.hide()
@@ -126,15 +133,16 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             offerEnable = false
             binding?.constraintLayout60?.hide()
             authViewModel.seatLayout(
-                CINEMA_ID, SESSION_ID, "", "", "", offerEnable, ""
+                CINEMA_ID, Constant.SESSION_ID, "", "", "", offerEnable, ""
             )
         }
         //from Shows
-        sessionId = SESSION_ID
+        sessionId = Constant.SESSION_ID
 
         authViewModel.seatLayout(
             CINEMA_ID, sessionId, "", "", "", offerEnable, ""
         )
+
         seatLayout()
         reserveSeat()
         initTrans()
@@ -173,10 +181,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
         // Share data
         binding?.imageView96?.setOnClickListener {
-            val shareIntent = Intent(Intent.ACTION_SEND)
-            shareIntent.type = "text/plain"
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "http://codepath.com")
-            startActivity(Intent.createChooser(shareIntent, "Share link using"))
+            Constant().shareData(this,"","www.amarujala.com")
         }
 
     }
@@ -194,14 +199,15 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     }
 
     //From Cinema
-    private fun cinemaShows() {
+    private fun cinemaShows(position: String) {
         val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
         binding?.recyclerView27?.layoutManager = LinearLayoutManager(this)
-        val adapter = CinemaShowsAdapter(cinemaSessionShows, this, this)
+        val adapter = CinemaShowsAdapter(cinemaSessionShows, this, this,position)
         binding?.recyclerView27?.layoutManager = gridLayout
         binding?.recyclerView27?.adapter = adapter
 
     }
+
 
     //SeatLayout
     private fun seatLayout() {
@@ -304,13 +310,17 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     private fun retrieverReserveSeatData(output: ReserveSeatResponse.Output) {
         BOOKING_ID = output.bookingid
         SELECTED_SEAT = selectedSeats.size
-        if (output.nf == "true") {
-            startActivity(Intent(this, FoodActivity::class.java))
-        } else if (output.nf == "false") {
-            startActivity(Intent(this, OldFoodActivity::class.java))
-        } else {
-            startActivity(Intent(this, SummeryActivity::class.java))
+        when (output.nf) {
+            "true" -> {
+                startActivity(Intent(this, FoodActivity::class.java))
+            }
+            "false" -> {
+                startActivity(Intent(this, OldFoodActivity::class.java))
+            }
+            else -> {
+                startActivity(Intent(this, SummeryActivity::class.java))
 
+            }
         }
 
     }

@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.net.pvr1.databinding.ActivityCouponsBinding
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.summery.coupons.viewModel.CouponsViewModel
-import com.net.pvr1.utils.PreferenceManager
+import com.net.pvr1.di.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

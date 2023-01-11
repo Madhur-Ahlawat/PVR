@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.home.fragment.commingSoon
+package com.net.pvr1.ui.home.fragment.comingSoon
 
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
@@ -24,14 +24,15 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityComingSoonBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.filter.GenericFilterComing
-import com.net.pvr1.ui.home.fragment.commingSoon.adapter.ComingSoonMovieAdapter
-import com.net.pvr1.ui.home.fragment.commingSoon.adapter.LanguageAdapter
-import com.net.pvr1.ui.home.fragment.commingSoon.response.CommingSoonResponse
-import com.net.pvr1.ui.home.fragment.commingSoon.search.CinemaSearchActivity
-import com.net.pvr1.ui.home.fragment.commingSoon.viewModel.ComingSoonViewModel
+import com.net.pvr1.ui.home.fragment.comingSoon.adapter.ComingSoonMovieAdapter
+import com.net.pvr1.ui.home.fragment.comingSoon.adapter.LanguageAdapter
+import com.net.pvr1.ui.home.fragment.comingSoon.response.CommingSoonResponse
+import com.net.pvr1.ui.home.fragment.comingSoon.search.CinemaSearchActivity
+import com.net.pvr1.ui.home.fragment.comingSoon.viewModel.ComingSoonViewModel
 import com.net.pvr1.ui.movieDetails.comingSoonDetails.ComingSoonDetailsActivity
 import com.net.pvr1.ui.movieDetails.comingSoonDetails.adapter.ComDetailsHomePhAdapter
 import com.net.pvr1.ui.player.PlayerActivity
@@ -113,9 +114,10 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
         }
 
         //Functions
+        comingSoonAPICall()
+
         comingSoonApi()
         movedNext()
-        comingSoonAPICall()
         getShimmerData()
         //internet Check
         broadcastReceiver = NetworkReceiver()

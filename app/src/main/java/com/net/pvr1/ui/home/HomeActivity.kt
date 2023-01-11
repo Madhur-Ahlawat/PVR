@@ -28,11 +28,12 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityHomeBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.adapter.HomeOfferAdapter
 import com.net.pvr1.ui.home.fragment.cinema.CinemasFragment
-import com.net.pvr1.ui.home.fragment.commingSoon.ComingSoonFragment
+import com.net.pvr1.ui.home.fragment.comingSoon.ComingSoonFragment
 import com.net.pvr1.ui.home.fragment.home.HomeFragment
 import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
 import com.net.pvr1.ui.home.fragment.more.MoreFragment

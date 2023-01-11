@@ -1,18 +1,16 @@
 package com.net.pvr1.ui.movieDetails.nowShowing.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
+import com.net.pvr1.databinding.ItemDetailsMusicBinding
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.hide
-import com.net.pvr1.utils.printLog
 
 
 class TrailerTrsAdapter(
@@ -20,45 +18,52 @@ class TrailerTrsAdapter(
     private var context: Context,
     private var listener: RecycleViewItemClickListener,
 ) :
-    RecyclerView.Adapter<TrailerTrsAdapter.MyViewHolderNowShowing>() {
+    RecyclerView.Adapter<TrailerTrsAdapter.ViewHolder>() {
+    private var rowIndex = 0
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderNowShowing {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_home_trailer, parent, false)
-        return MyViewHolderNowShowing(view)
+    inner class ViewHolder(val binding: ItemDetailsMusicBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemDetailsMusicBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+        return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: MyViewHolderNowShowing, position: Int) {
-        val cinemaItem = nowShowingList[position]
-        //title
-        holder.title.text = cinemaItem.t
-        //subTitle
-        holder.subTitle.hide()
-        holder.subTitle.text = cinemaItem.d
+    override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
+        with(holder) {
+            with(nowShowingList[position]) {
+                if (rowIndex == position && position == 0) {
+                    Constant().setMargins(holder.itemView, 60, 0, 0, 0)
+                }
 
-        //moreDetails
-        holder.itemView.setOnClickListener {
-            listener.trailerTrsClick(cinemaItem)
+                //title
+                binding.textView82.text = this.t
+                //subTitle
+                binding.textView83.hide()
+                binding.textView83.text = this.d
+                //moreDetails
+                holder.itemView.setOnClickListener {
+                    rowIndex = position
+                    listener.trailerTrsClick(this)
+                    notifyDataSetChanged()
+                }
+                val videoId = Constant().extractYoutubeId(this.u)
+                val imageUrl =
+                    "https://img.youtube.com/vi/" + videoId.toString() + "/mqdefault.jpg" //
+
+                Glide.with(context)
+                    .load(imageUrl)
+                    .error(R.drawable.app_icon)
+                    .into(binding.imageView33)
+            }
         }
 
-        val videoId = Constant().extractYoutubeId(cinemaItem.u)
-        val imageUrl = "https://img.youtube.com/vi/" + videoId.toString() + "/mqdefault.jpg" //
-        printLog("ImageUrl--->${imageUrl}")
-        Glide.with(context)
-            .load(imageUrl)
-            .error(R.drawable.app_icon)
-            .into(holder.image)
     }
 
     override fun getItemCount(): Int {
         return if (nowShowingList.isNotEmpty()) nowShowingList.size else 0
-    }
-
-    class MyViewHolderNowShowing(view: View) : RecyclerView.ViewHolder(view) {
-        var title: TextView = view.findViewById(R.id.textView37)
-        var subTitle: TextView = view.findViewById(R.id.textView38)
-        var image: ImageView = view.findViewById(R.id.imageView11)
-        var play: ImageView = view.findViewById(R.id.imageView12)
     }
 
     interface RecycleViewItemClickListener {

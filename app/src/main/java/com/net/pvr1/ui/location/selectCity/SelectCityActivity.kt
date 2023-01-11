@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.*
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySelectCityBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.HomeActivity
@@ -114,7 +115,6 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
                         "no",
                         "no"
                     )
-
                 }
             } else {
                 Constant().enableLocation(this)
