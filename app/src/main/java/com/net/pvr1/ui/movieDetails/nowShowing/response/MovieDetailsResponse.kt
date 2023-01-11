@@ -33,7 +33,7 @@ data class MovieDetailsResponse(
         val othergenres: String,
         val otherlanguages: String,
         val p: String,
-        val ph: List<Ph>,
+        val ph: ArrayList<Ph>,
         val pu: List<Any>,
         val rt: String,
         val rtt: String,

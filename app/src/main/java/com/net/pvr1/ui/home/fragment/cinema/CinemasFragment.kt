@@ -202,16 +202,15 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                             lat = location.latitude.toString()
                             lng = location.longitude.toString()
                             authViewModel.cinema(cityName, lat, lng, preferences.getUserId(), "")
-
                         }
+
                     } catch (e: IOException) {
                         e.printStackTrace()
                     }
 
                 }
             } else {
-                Toast.makeText(requireActivity(), "Please turn on location", Toast.LENGTH_LONG)
-                    .show()
+                Toast.makeText(requireActivity(), "Please turn on location", Toast.LENGTH_LONG).show()
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 startActivity(intent)
             }
@@ -477,7 +476,6 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
         intent.putExtra("cid", comingSoonItem.cId.toString())
         intent.putExtra("lat", comingSoonItem.lat)
         intent.putExtra("lang", comingSoonItem.lang)
-        intent.putExtra("cityName", cityName)
         intent.putExtra("addressCinema", "yes")
         startActivity(intent)
     }

@@ -224,7 +224,6 @@ class SearchHomeActivity : AppCompatActivity(),
 
 
     override fun onSearchCinema(selectCityItemList: HomeSearchResponse.Output.T) {
-
         val intent = Intent(this, CinemaSessionActivity::class.java)
         intent.putExtra("cid", selectCityItemList.id)
         intent.putExtra("lat", selectCityItemList.lat)

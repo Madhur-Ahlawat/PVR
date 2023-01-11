@@ -18,6 +18,7 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ForegroundColorSpan
 import android.text.style.ScaleXSpan
 import android.view.View
+import android.view.ViewGroup.MarginLayoutParams
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
@@ -573,8 +574,8 @@ class Constant {
 
             val criteria = Criteria()
             val bestProvider = locationManager?.getBestProvider(criteria, false)
-            val location: Location =
-                locationManager?.getLastKnownLocation(bestProvider.toString())!!
+            val location: Location? =
+                locationManager?.getLastKnownLocation(bestProvider.toString())
 
             if (location == null) {
                 Toast.makeText(activity, "Location Not found", Toast.LENGTH_LONG).show()
@@ -589,7 +590,6 @@ class Constant {
                     val cityName: String? = addresses?.get(0)?.getAddressLine(0)
                     val stateName: String? = addresses?.get(0)?.getAddressLine(1)
                     val countryName: String? = addresses?.get(0)?.getAddressLine(2)
-                    printLog("latLang---->${latitude}--->${longitude}--st->${stateName}--ct-->${cityName}-->cot--${countryName}")
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -690,6 +690,14 @@ class Constant {
             decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
             activity.window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
             statusBarColor = Color.TRANSPARENT
+        }
+    }
+
+    fun setMargins(view: View, left: Int, top: Int, right: Int, bottom: Int) {
+        if (view.layoutParams is MarginLayoutParams) {
+            val p = view.layoutParams as MarginLayoutParams
+            p.setMargins(left, top, right, bottom)
+            view.requestLayout()
         }
     }
 }

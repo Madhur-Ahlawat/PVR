@@ -3,9 +3,13 @@ package com.net.pvr1.ui.movieDetails.nowShowing
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.SnapHelper
 import com.bumptech.glide.Glide
 import com.devs.readmoreoption.ReadMoreOption
 import com.net.pvr1.R
@@ -13,6 +17,8 @@ import com.net.pvr1.databinding.ActivityNowShowingBinding
 import com.net.pvr1.ui.bookingSession.BookingActivity
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.home.fragment.home.adapter.PromotionAdapter
+import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.movieDetails.nowShowing.adapter.*
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.ui.movieDetails.nowShowing.viewModel.MovieDetailsViewModel
@@ -159,11 +165,12 @@ class NowShowingActivity : AppCompatActivity(),
         }
         //Place Holder
         if (output.ph.isEmpty()) {
-            binding?.constraintLayout11?.hide()
+            binding?.constraintLayout11?.recyclerPromotion?.hide()
         } else {
-            binding?.constraintLayout11?.show()
+            binding?.constraintLayout11?.recyclerPromotion?.show()
         }
         if (output.mb != null && output.mb.name != null) {
+
             //Cast
             if (output.mb.cast.isNotEmpty()) {
                 binding?.recyclerView4?.show()
@@ -252,6 +259,49 @@ class NowShowingActivity : AppCompatActivity(),
                     binding?.recyclerMusic?.hide()
                 }
             }
+        }
+
+        //Promotion
+        if (output.ph.isNotEmpty()) updatePH(output.ph)
+    }
+
+    private fun updatePH(phd: ArrayList<MovieDetailsResponse.Ph>) {
+        if (phd != null && phd.size > 0) {
+             binding?.constraintLayout11?.recyclerPromotion?.show()
+            val layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            val snapHelper: SnapHelper = PagerSnapHelper()
+            binding?.constraintLayout11?.recyclerPromotion?.layoutManager = layoutManager
+            binding?.constraintLayout11?.recyclerPromotion?.onFlingListener = null
+            snapHelper.attachToRecyclerView( binding?.constraintLayout11?.recyclerPromotion!!)
+            binding?.constraintLayout11?.recyclerPromotion?.layoutManager = layoutManager
+            val adapter = PromotionAdapter(this, phd as ArrayList<HomeResponse.Ph>)
+            binding?.constraintLayout11?.recyclerPromotion?.adapter = adapter
+            if (phd.size > 1) {
+                val speedScroll = 5000
+                val handler = Handler()
+                val runnable: Runnable = object : Runnable {
+                    var count = 0
+                    var flag = true
+                    override fun run() {
+                        if (count < adapter.itemCount) {
+                            if (count == adapter.itemCount - 1) {
+                                flag = false
+                            } else if (count == 0) {
+                                flag = true
+                            }
+                            if (flag) count++ else count--
+                            binding?.constraintLayout11?.recyclerPromotion?.smoothScrollToPosition(
+                                count
+                            )
+                            handler.postDelayed(this, speedScroll.toLong())
+                        }
+                    }
+                }
+                handler.postDelayed(runnable, speedScroll.toLong())
+            }
+        } else {
+            binding?.constraintLayout11?.recyclerPromotion?.hide()
         }
     }
 

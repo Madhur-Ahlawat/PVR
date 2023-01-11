@@ -178,6 +178,7 @@
     <string name="scan_with_zxing">Scan with ZXing</string>
     <string name="developed_by_maulik_hirani">Developed by Akash Mishra</string>
     <string name="view_more">View more</string>
+    <string name="view_less">View less</string>
     <string name="also_close_to">Also close to</string>
     //Summery
     <string name="also_playing">Also playing</string>

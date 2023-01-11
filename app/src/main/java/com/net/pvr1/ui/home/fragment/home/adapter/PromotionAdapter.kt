@@ -41,7 +41,9 @@ class PromotionAdapter(
         with(holder) {
             with(movies[position]) {
                 //IMAGE
-                Glide.with(context).load(this.i).error(R.drawable.dummy_prmotion)
+                Glide.with(context)
+                    .load(this.i)
+                    .error(R.drawable.placeholder_horizental)
                     .into(binding.sliderImg)
 
                 //ITEM WIDTH
@@ -106,7 +108,6 @@ class PromotionAdapter(
                         intent.putExtra("title", context.getString(R.string.terms_condition_text))
                         intent.putExtra("getUrl", Constant.termsCondition)
                         context.startActivity(intent)
-
                     }
 
                 } else if (this.type == "VIDEO" && this.redirectView != "") {
@@ -117,11 +118,11 @@ class PromotionAdapter(
                         intent.putExtra("trailerUrl", this.trailerUrl)
                         context.startActivity(intent)
                     }
+
                 } else {
                     binding.tvPlay.hide()
 
                 }
-
 
             }
         }

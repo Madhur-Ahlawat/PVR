@@ -115,7 +115,6 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
                         "no",
                         "no"
                     )
-
                 }
             } else {
                 Constant().enableLocation(this)

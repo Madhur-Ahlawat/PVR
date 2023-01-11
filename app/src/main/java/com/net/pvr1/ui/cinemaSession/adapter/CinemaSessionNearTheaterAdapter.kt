@@ -59,8 +59,7 @@ class CinemaSessionNearTheaterAdapter(
                     listener.showsClick(this)
                 }
 
-                //click
-                holder.itemView.setOnClickListener {listener.nearTheaterClick(this)  }
+
             }
         }
 
@@ -72,7 +71,6 @@ class CinemaSessionNearTheaterAdapter(
 
 
     interface RecycleViewItemClickListenerCity {
-        fun nearTheaterClick(comingSoonItem: CinemaNearTheaterResponse.Output.C)
         fun showsClick(comingSoonItem: CinemaNearTheaterResponse.Output.C)
         fun nearTheaterDirectionClick(comingSoonItem: CinemaNearTheaterResponse.Output.C)
     }

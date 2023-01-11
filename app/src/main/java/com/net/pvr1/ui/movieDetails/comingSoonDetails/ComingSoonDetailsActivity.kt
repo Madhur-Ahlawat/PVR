@@ -1,6 +1,9 @@
 package com.net.pvr1.ui.movieDetails.comingSoonDetails
 
+import android.content.BroadcastReceiver
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +14,6 @@ import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityComingSoonDetailsBinding
 import com.net.pvr1.di.preference.PreferenceManager
-import com.net.pvr1.ui.bookingSession.BookingActivity
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.movieDetails.comingSoonDetails.adapter.ComDetailsPhAdapter
@@ -21,10 +23,7 @@ import com.net.pvr1.ui.movieDetails.nowShowing.adapter.*
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.ui.player.PlayerActivity
 import com.net.pvr1.ui.watchList.WatchListActivity
-import com.net.pvr1.utils.Constant
-import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.hide
-import com.net.pvr1.utils.show
+import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -42,6 +41,11 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
     private var loader: LoaderDialog? = null
     private  var cinemaId=""
     private val authViewModel: ComingSoonDetailsViewModel by viewModels()
+
+
+    //internet Check
+    private var broadcastReceiver: BroadcastReceiver? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityComingSoonDetailsBinding.inflate(layoutInflater, null, false)
@@ -50,8 +54,6 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
     }
 
     private fun manageFunction() {
-        //title
-        binding?.include?.textView5?.text = resources.getString(R.string.book_now)
 
         authViewModel.movieDetails(
             "UP",
@@ -61,6 +63,11 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
         )
 
         cinemaId= intent.getStringExtra("mid").toString()
+
+
+        //internet Check
+        broadcastReceiver = NetworkReceiver()
+        broadcastIntent()
 
         Constant().appBarHide(this)
         movieDetails()
@@ -194,6 +201,11 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
     }
 
     private fun retrieveData(output: MovieDetailsResponse.Output) {
+        //shimmer
+        binding?.constraintLayout148?.hide()
+        //uiShow
+        binding?.nestedScrollView?.show()
+
         //Promotion
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(binding?.include40?.recyclerPromotion)
@@ -250,6 +262,8 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
 
             //trailer
             if (trailerList.size != 0) {
+                val snapHelper = PagerSnapHelper()
+                snapHelper.attachToRecyclerView(binding?.recyclerView5)
                 val layoutManagerTrailer =
                     GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
                 val trailerAdapter = TrailerTrsAdapter(trailerList, this, this)
@@ -257,6 +271,8 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
                 binding?.recyclerView5?.adapter = trailerAdapter
             } else {
                 if (output.mb.videos.isNotEmpty()) {
+                    val snapHelper = PagerSnapHelper()
+                    snapHelper.attachToRecyclerView(binding?.recyclerView5)
                     binding?.trailer?.show()
                     binding?.textView69?.show()
                     val layoutManagerTrailer =
@@ -271,6 +287,8 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
 
         //MusicVideo
             if (musicVideoList.size != 0) {
+                val snapHelper = PagerSnapHelper()
+                snapHelper.attachToRecyclerView(binding?.recyclerMusic)
                 binding?.musicVideo?.show()
                 binding?.textView70?.show()
                 val layoutManagerTrailer =
@@ -281,6 +299,8 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
             } else {
                 if (output.mb != null && output.mb.name != null) {
                     if (output.mb.tracks.isNotEmpty()) {
+                        val snapHelper = PagerSnapHelper()
+                        snapHelper.attachToRecyclerView(binding?.recyclerMusic)
                         binding?.textView70?.show()
                         binding?.musicVideo?.show()
                         val layoutManagerTrailer =
@@ -343,12 +363,7 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
         binding?.textView77?.text = output.sm
         //SoundMix
         binding?.textView79?.text = output.p
-        //MovedNext
-        binding?.include?.textView5?.setOnClickListener {
-            val intent = Intent(this@ComingSoonDetailsActivity, BookingActivity::class.java)
-            intent.putExtra("mid", output.id)
-            startActivity(intent)
-        }
+
     }
 
     override fun musicVideo(comingSoonItem: MovieDetailsResponse.Mb.Crew.Role) {
@@ -376,4 +391,11 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
         startActivity(intent)
     }
 
+    //Internet Check
+    private fun broadcastIntent() {
+        registerReceiver(
+            broadcastReceiver,
+            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        )
+    }
 }

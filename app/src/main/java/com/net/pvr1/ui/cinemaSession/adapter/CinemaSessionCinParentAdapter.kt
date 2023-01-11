@@ -15,9 +15,9 @@ import com.net.pvr1.utils.show
 class CinemaSessionCinParentAdapter(
     private var nowShowingList: List<CinemaSessionResponse.Child>,
     private var context: Context,
-    private var listener: RecycleViewItemClickListenerCity,
     private var cinemaId: String) : RecyclerView.Adapter<CinemaSessionCinParentAdapter.ViewHolder>() {
     private var check = 1
+    private var rowIndex = 0
 
     inner class ViewHolder(val binding: ItemCinemaDetailsMoviesBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -40,22 +40,20 @@ class CinemaSessionCinParentAdapter(
                 binding.recyclerView16.adapter = cinemaSessionCinemasChildAdapter
 
                 binding.constraintLayout18.setOnClickListener {
+                    rowIndex = position
                     if (check == 1){
+                        binding.textView377.hide()
                         binding.imageView51.setImageResource(R.drawable.arrow_up)
                         binding.constraintLayout26.show()
                         check = 2
                         notifyDataSetChanged()
                     }else{
+                        binding.textView377.show()
                         binding.imageView51.setImageResource(R.drawable.arrow_down)
                         binding.constraintLayout26.hide()
                         check = 1
                         notifyDataSetChanged()
                     }
-                }
-
-                //click
-                holder.itemView.setOnClickListener {
-                    listener.cinemaClick(this)
                 }
 
             }
@@ -67,9 +65,5 @@ class CinemaSessionCinParentAdapter(
         return if (nowShowingList.isNotEmpty()) nowShowingList.size else 0
     }
 
-
-    interface RecycleViewItemClickListenerCity {
-        fun cinemaClick(comingSoonItem: CinemaSessionResponse.Child)
-    }
 
 }
