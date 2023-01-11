@@ -10,6 +10,7 @@ import android.text.TextUtils
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +24,8 @@ import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.HomeActivity.Companion.getCurrentItem
 import com.net.pvr1.ui.home.HomeActivity.Companion.review_position
 import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeCardAdapter
+import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeHistoreyAdapter
+import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeVochersAdapter
 import com.net.pvr1.ui.home.fragment.privilege.response.LoyaltyDataResponse
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeCardData
 import com.net.pvr1.ui.home.fragment.privilege.viewModel.PrivilegeLoginViewModel
@@ -32,11 +35,15 @@ import com.net.pvr1.utils.Constant.SharedPreference.Companion.LOYALITY_STATUS
 import com.net.pvr1.utils.Constant.SharedPreference.Companion.SUBSCRIPTION_STATUS
 import com.net.pvr1.utils.Constant.SharedPreference.Companion.SUBS_OPEN
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
-class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickListener {
+class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickListener,PrivilegeVochersAdapter.RecycleViewItemClickListener {
     private var binding: ActivityPrivilegeLogInBinding? = null
     private var loader: LoaderDialog? = null
 
@@ -68,6 +75,57 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
         )
         createQr()
         getProfileData()
+    }
+
+    private fun manageTabs(output: LoyaltyDataResponse.Output) {
+        var voucherList = ArrayList<LoyaltyDataResponse.Voucher>()
+        for (data in output.vou){
+            voucherList.addAll(data.vouchers)
+        }
+        voucherList.sortBy { it.ex }
+        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding?.privilegeList?.layoutManager = layoutManager
+        val cardAdapter =
+            PrivilegeVochersAdapter(voucherList, requireActivity(), preferences, this)
+        binding?.privilegeList?.adapter = cardAdapter
+//        MMM dd yyyy hh:mma
+        binding?.vocCard?.setOnClickListener {
+//            Toast.makeText(context, "called.....", Toast.LENGTH_SHORT).show()
+//            binding?.hisInactiveLayout?.show()
+//            binding?.vocCard?.show()
+//            binding?.historyCard?.hide()
+//            binding?.hisInactiveLayout?.hide()
+        }
+        binding?.historyCard?.setOnClickListener {
+//            binding?.hisInactiveLayout?.show()
+//            binding?.vocCard?.show()
+//            binding?.historyCard?.show()
+//            binding?.hisInactiveLayout?.show()
+        }
+        binding?.vocIncLayout?.setOnClickListener {
+            binding?.hisInactiveLayout?.show()
+            binding?.vocCard?.show()
+            binding?.historyCard?.hide()
+            binding?.vocIncLayout?.hide()
+            val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            binding?.privilegeList?.layoutManager = layoutManager
+            val cardAdapter =
+                PrivilegeVochersAdapter(voucherList, requireActivity(), preferences, this)
+            binding?.privilegeList?.adapter = cardAdapter
+            binding?.totalVocBox?.text = output.vou.size.toString()
+        }
+        binding?.hisInactiveLayout?.setOnClickListener {
+            binding?.hisInactiveLayout?.hide()
+            binding?.vocCard?.hide()
+            binding?.historyCard?.show()
+            binding?.vocIncLayout?.show()
+            val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            binding?.privilegeList?.layoutManager = layoutManager
+            val cardAdapter =
+                PrivilegeHistoreyAdapter(output.his, requireActivity(), preferences)
+            binding?.privilegeList?.adapter = cardAdapter
+            binding?.totalVocBox?.text = output.vou.size.toString()
+        }
     }
 
     private fun getProfileData() {
@@ -115,6 +173,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
         try {
             addLoyalty(output)
             updateHeaderView(output)
+            manageTabs(output)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -262,6 +321,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
             val cardAdapter =
                 PrivilegeCardAdapter(cardDataList, requireActivity(), preferences, this)
             binding?.privilegeCardList?.adapter = cardAdapter
+            binding?.privilegeCardList?.onFlingListener = null
             mSnapHelper.attachToRecyclerView(binding?.privilegeCardList!!)
             binding?.privilegeCardList?.addOnScrollListener(object :
                 RecyclerView.OnScrollListener() {
@@ -333,7 +393,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
                     super.onScrolled(recyclerView, dx, dy)
                 }
             })
-            if (requireArguments().getString("type") != null && !requireArguments().getString("type").equals("", ignoreCase = true)) {
+            if (!requireArguments().isEmpty && requireArguments().getString("type") != null && !requireArguments().getString("type").equals("", ignoreCase = true)) {
                 for (i in cardDataList.indices) {
                     if (cardDataList[i].type.equals(requireArguments().getString("type"))) {
                         if (requireArguments().getString("type").equals("T", ignoreCase = true)) {
@@ -374,7 +434,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
                         }
                         break
                     } else {
-                        if (requireArguments().getString("type").equals("T", ignoreCase = true)) {
+                        if (!requireArguments().isEmpty && requireArguments().getString("type").equals("T", ignoreCase = true)) {
                             review_position = 1
                             binding?.passportView?.show()
                             binding?.unLockView?.hide()
@@ -384,7 +444,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
                                 binding?.bookBtn?.isClickable = false
                             }
                         } else {
-                            if (requireArguments().getString("type").equals("C", ignoreCase = true)) {
+                            if (!requireArguments().isEmpty && requireArguments().getString("type").equals("C", ignoreCase = true)) {
                                 binding?.unLockView?.hide()
                                 binding?.cardBelowView?.show()
                                 binding?.passportView?.hide()
@@ -462,5 +522,9 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
             true
         }
         dialogQR.show()
+    }
+
+    override fun onItemClick() {
+
     }
 }

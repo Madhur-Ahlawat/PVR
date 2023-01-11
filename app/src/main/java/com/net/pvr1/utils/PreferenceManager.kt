@@ -134,7 +134,7 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
     }
 
     fun getLatitudeData(): String {
-        return prefs.getString(LATITUDE, "").toString()
+        return prefs.getString(LATITUDE, "0.0").toString()
     }
 
     fun saveString(key:String,bal :String) {
@@ -166,7 +166,7 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
     }
 
     fun getLongitudeData(): String {
-        return prefs.getString(LONGITUDE, "").toString()
+        return prefs.getString(LONGITUDE, "0.0").toString()
     }
 
     fun clearData(requireActivity: Activity) {

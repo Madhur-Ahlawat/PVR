@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_plus_icon" />
+
+    <ImageView
+        android:id="@+id/ivHistroy"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:scaleType="matrix"
+        android:src="@drawable/line_history"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/ivImage"
+        app:layout_constraintRight_toRightOf="@id/ivImage"
+        app:layout_constraintTop_toBottomOf="@id/ivImage" />
+
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/ivImage"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/voc_points"
+            android:layout_width="match_parent"
+            android:textColor="@color/pvr_dark_black"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:lineSpacingExtra="4sp"
+            android:textSize="14sp"
+            android:layout_height="wrap_content"
+            tools:text="45 points earned" />
+
+        <TextView
+            android:id="@+id/voc_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray_color_pvr"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:textSize="12sp"
+            tools:text="₹900 | Aug 20,2018" />
+
+
+
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

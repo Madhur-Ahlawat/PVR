@@ -514,6 +514,9 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                 .getString(Constant.SharedPreference.IS_HL)
             val isLy: String = preferences
                 .getString(Constant.SharedPreference.IS_LY)
+            val data = Bundle()
+            data.putString("type","P")
+            memberFragment.arguments = data
             println("ls--$ls---$isHl---$isLy")
             if (isLy.equals("true", ignoreCase = true)) {
                 if (ls != null && !ls.equals("", ignoreCase = true)) {

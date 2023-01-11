@@ -9,7 +9,7 @@ data class LoyaltyDataResponse(
     data class Output(
         val ct: String,
         val ex: String,
-        val his: List<Hi>,
+        val his: ArrayList<Hi>,
         val pt: String,
         val qr: String,
         val qrcard: String,
@@ -54,7 +54,7 @@ data class LoyaltyDataResponse(
         val cp: String,
         val nm: String,
         val tp: String,
-        val vouchers: List<Voucher>
+        val vouchers: ArrayList<Voucher>
     )
 
     data class Voucher(
