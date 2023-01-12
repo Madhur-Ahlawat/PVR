@@ -159,7 +159,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dim_h10"
-                    android:background="@drawable/line_seprator" />
+                    android:background="@drawable/line_separator" />
 
                 <TextView
                     android:id="@+id/bankOffers"
@@ -180,7 +180,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dim_h10"
-                    android:background="@drawable/line_seprator" />
+                    android:background="@drawable/line_separator" />
 
                 <TextView
                     android:id="@+id/textView325"
@@ -207,7 +207,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_10dp"
-                    android:background="@drawable/line_seprator" />
+                    android:background="@drawable/line_separator" />
 
                 <TextView
                     android:id="@+id/textView326"
@@ -233,7 +233,7 @@
 
 
                 <View
-                    android:background="@drawable/line_seprator"
+                    android:background="@drawable/line_separator"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_10dp" />
 
@@ -263,7 +263,7 @@
 
 
                 <View
-                    android:background="@drawable/line_seprator"
+                    android:background="@drawable/line_separator"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_10dp" />
 

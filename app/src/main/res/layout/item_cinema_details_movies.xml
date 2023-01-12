@@ -94,6 +94,6 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_10dp"
-        android:background="@drawable/line_seprator"/>
+        android:background="@drawable/line_separator"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -99,7 +99,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         val view = binding?.root
         setContentView(view)
 
-
         manageFunctions()
     }
 
@@ -181,7 +180,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
         // Share data
         binding?.imageView96?.setOnClickListener {
-            Constant().shareData(this,"","www.amarujala.com")
+            Constant().shareData(this,"","")
         }
 
     }

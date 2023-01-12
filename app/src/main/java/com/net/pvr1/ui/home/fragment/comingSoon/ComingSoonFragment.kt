@@ -431,15 +431,9 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
                         .equals("video",ignoreCase = true)
                 ) {
                     if (bannerModels[counterStory].trailerUrl != null) {
-//                        val intent = Intent(context, MovieTrailerActivity::class.java)
-//                        intent.putExtra("id", "")
-//                        intent.putExtra("name", "")
-//                        intent.putExtra("language", "")
-//                        intent.putExtra(
-//                            PCConstants.IntentKey.YOUTUBE_URL,
-//                            bannerModels[counterStory].trailerUrl
-//                        )
-//                        startActivity(intent)
+                        val intent = Intent(context, PlayerActivity::class.java)
+                        intent.putExtra("trailerUrl",  bannerModels[counterStory].trailerUrl)
+                        startActivity(intent)
                     }
                 }
 

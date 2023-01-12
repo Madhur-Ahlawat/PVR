@@ -16,7 +16,7 @@ class CrewAdapter(
     private var context: Context,
 ) :
     RecyclerView.Adapter<CrewAdapter.ViewHolder>() {
-    var rowIndex = 0
+    private var rowIndex = 0
     inner class ViewHolder(val binding: ItemDetailsCastBinding) :
         RecyclerView.ViewHolder(binding.root)
 

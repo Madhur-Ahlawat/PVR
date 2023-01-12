@@ -352,6 +352,4 @@ class PrivilegeVochersAdapter(
             return bmp
         }
     }
-
-
 }

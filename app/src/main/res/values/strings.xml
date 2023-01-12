@@ -63,12 +63,14 @@
     <string name="enterEmail">Your email address is required</string>
     <string name="wrongEmail">You entered an invalid email address</string>
     <string name="mobileNotAvailable">No phone numbers found</string>
+
     //Home
     <string name="home">Home</string>
     <string name="cinema">Cinemas</string>
     <string name="privilege">Privilege</string>
     <string name="comingSoon">Coming Soon</string>
     <string name="more">More</string>
+
     //More Section
     <string name="login_register">Login / Register</string>
     <string name="my_bookings">My Bookings</string>
@@ -93,6 +95,7 @@
     <string name="coming_soon">Coming Soon</string>
     <string name="points">Points</string>
     <string name="vouchers">Vouchers</string>
+
     //Cinema
     <string name="parking">Parking</string>
     <string name="f_amp_b"><![CDATA[F & B]]></string>
@@ -101,6 +104,7 @@
     <string name="dots">•</string>
     <string name="shows">Shows</string>
     <string name="loginCinema">Login to add Theatre to your\n Favorites?</string>
+
     //MyBookings
     <string name="ticket_food">Tickets &amp; Food</string>
     <string name="resend_text">Resend</string>
@@ -109,11 +113,13 @@
     <string name="view_parking">View Parking</string>
     <string name="add_food">Add Food</string>
     <string name="upcomingBooking">Upcoming Bookings: </string>
+
     //Offers
     <string name="featured_offers">Featured Offers</string>
     <string name="more_details">More Details</string>
     <string name="validTill">Valid till</string>
     <string name="send_request">SEND REQUEST</string>
+
     //Private Screening
     <string name="movie">Movie</string>
     <string name="movie_type">Movie Type</string>
@@ -124,7 +130,8 @@
     <string name="your_requirements">Your Requirements</string>
     <string name="copy_to_self">Copy To Self</string>
     <string name="no_of_seats">No. of Seats</string>
-    //
+
+    //gift Card
     <string name="active_gift_cards">Active Gift Cards</string>
     <string name="generic">Generic</string>
     <string name="create_gift_card">Create Gift Card</string>
@@ -138,15 +145,18 @@
     <string name="trailers">Trailers</string>
     <string name="music">Music</string>
     <string name="book">Book</string>
+
     //Enable Location
     <string name="location_recommendation">If we know your location we will make better \n movie recommendations for you.</string>
     <string name="enable_location">Enable Location</string>
     <string name="battery_usage">we will keep the battery usage to minimum</string>
     <string name="recommendation">Not Now</string>
+
     //Search
     <string name="search_hint_text">Search for a movie or cinema</string>
     <string name="cinemas">CINEMAS</string>
     <string name="cancel">Cancel</string>
+
     //MovieDetails
     <string name="book_now">Book Now</string>
     <string name="release_date">Release Date</string>
@@ -180,6 +190,7 @@
     <string name="view_more">View more</string>
     <string name="view_less">View less</string>
     <string name="also_close_to">Also close to</string>
+
     //Summery
     <string name="also_playing">Also playing</string>
     <string name="food_beverages">Food &amp; Beverages</string>
@@ -210,6 +221,7 @@
     <string name="your_session_expired_message">Your session has expired.</string>
     <string name="selected_seats">SELECTED SEATS</string>
     <string name="social_distance">Social\nDistance</string>
+
     //Food
     <string name="add">ADD</string>
     <string name="customize">Customize</string>
@@ -218,20 +230,25 @@
     <string name="min_item_msz">You can only order 0 items at a time.</string>
     <string name="proceed">Proceed</string>
     <string name="sub_total">Sub Total</string>
+
     //Offer
     <string name="new_offers_are_live">New offers are live!</string>
     <string name="your_experience">Your Experience</string>
+
     //trailer
     <string name="video_not_avail">Video not available</string>
+
     //Payment
     <string name="to_be_paid">To be paid</string>
     <string name="privilege_coupons">Privilege Coupons</string>
+
     //Experience
     <string name="how_was_your_experience">How was your experience with PVR Plaza Delhi for the movie ‘Joker’.</string>
     <string name="type_your_feedback_here">Type your feedback here…</string>
     <string name="thank_you_for_your_feedback">Thank you\n for your feedback</string>
     <string name="comment">Comment…</string>
     <string name="view">View</string>
+
     //Offer Details
     <string name="how_to_avail">How to Avail</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
@@ -266,15 +283,18 @@
     <string name="scan_a_code">Scan a QR Code</string>
     <string name="result_not_found">Result Not Found</string>
     <string name="show_scanner_from_fragment">Show Scanner From Fragment</string>
+
     //Logout
     <string name="logout">Are you sure you want to logout?</string>
     <string name="yes">Yes</string>
+
     //genre
     <string name="preferred_genres">Preferred Genres</string>
     <string name="all_genres">All Genres</string>
     <string name="select_all">Select All</string>
     <string name="occasions">Occasions</string>
     <string name="_0_seats">0 Seats</string>
+
     //Booking Retrival
     <string name="booking_retrival">Booking Retrival</string>
     <string name="enter_Booking_ID">Enter Booking ID </string>
@@ -289,6 +309,7 @@
     <string name="equal">=</string>
     <string name="gst">GST</string>
     <string name="convenince_fee">Convenince fee</string>
+
     //privilege
     <string name="tap_to_expand">Tap to\nExpand</string>
     <string name="available_visits">Available Visits:</string>
@@ -345,7 +366,6 @@
     <string name="we_promise_to_keep_the_noise_low">We promise to keep the noise low</string>
     <string name="personal_note">Personal Note</string>
     <string name="your_message_should_have_at_least_15_characters">Your message should have at least 15 characters</string>
-    //Set Alert
 
     //ContactUs
     <string name="enterMobile">Please Enter Your Mobile</string>
@@ -530,4 +550,7 @@
     <string name="get_500_voucher_on_100_profile_completion">Get ₹500 voucher on 100% profile completion</string>
     <string name="try_latter">Try Latter</string>
     <string name="sorry_we_could_not_find_what_you_were_looking_for">Sorry! We could not find what you were \nlooking for</string>
+
+    //Cinema Details
+    <string name="cinemaDetails">Cinema Details</string>
 </resources>

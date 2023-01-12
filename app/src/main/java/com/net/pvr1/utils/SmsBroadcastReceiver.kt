@@ -8,6 +8,7 @@ import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.common.api.Status
 
 
+@Suppress("DEPRECATION")
 class SmsBroadcastReceiver : BroadcastReceiver() {
     var smsBroadcastReceiverListener: SmsBroadcastReceiverListener? = null
     override fun onReceive(context: Context?, intent: Intent) {

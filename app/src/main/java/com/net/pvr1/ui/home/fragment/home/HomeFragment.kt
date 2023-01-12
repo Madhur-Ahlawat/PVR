@@ -168,8 +168,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     private fun getShimmerData() {
-        Constant().getData(binding?.include38?.tvFirstText,binding?.include38?.tvSecondText)
-        Constant().getData(binding?.include38?.tvSecondText,null)
+        Constant().getData(binding?.include38?.tvFirstText, binding?.include38?.tvSecondText)
+        Constant().getData(binding?.include38?.tvSecondText, null)
     }
 
     private fun movedNext() {
@@ -327,16 +327,16 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
         //Movies
 
-        var size=0
-        var single=false
-        size = if ( ( output.mv.size % 2 ) == 0 ) {
+        var size = 0
+        var single = false
+        size = if ((output.mv.size % 2) == 0) {
             //Is even
-            single= false
+            single = false
             output.mv.size
         } else {
             //Is odd
-            single= true
-            output.mv.size-1
+            single = true
+            output.mv.size - 1
         }
 
         val gridLayoutMovies = GridLayoutManager(context, 2)
@@ -353,7 +353,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             }
         }
 
-        val adapterMovies = HomeMoviesAdapter(requireActivity(), output.mv, this,single)
+        val adapterMovies = HomeMoviesAdapter(requireActivity(), output.mv, this, single)
         binding?.recyclerMovies?.layoutManager = gridLayoutMovies
         binding?.recyclerMovies?.adapter = adapterMovies
         ViewCompat.setNestedScrollingEnabled(binding?.recyclerMovies!!, false)
@@ -395,8 +395,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             initBanner(output.pu)
         }
 
-        if (preferences.getIsLogin())
-        recommend(output.rm)
+        if (preferences.getIsLogin()) recommend(output.rm)
     }
 
     @SuppressLint("SetTextI18n")
@@ -480,7 +479,11 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     override fun onOfferClick(comingSoonItem: HomeResponse.Cp) {
-        if (comingSoonItem.t!=null&& comingSoonItem.t.equals("campaign-VIDEO",ignoreCase = true)){
+        if (comingSoonItem.t != null && comingSoonItem.t.equals(
+                "campaign-VIDEO",
+                ignoreCase = true
+            )
+        ) {
             val intent = Intent(requireActivity(), PlayerActivity::class.java)
             intent.putExtra("trailerUrl", comingSoonItem.mtrailerurl)
             startActivity(intent)
@@ -663,14 +666,12 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 listener?.onShowNotification()
                 listener?.onShowPrivilege()
                 if (bannerModels.size > 0 && bannerModels[counterStory].type.equals(
-                        "image",
-                        ignoreCase = true
+                        "image", ignoreCase = true
                     )
 //                        .equalsIgnoreCase("image")
                 ) {
                     if (bannerModels[counterStory].redirectView.equals(
-                            "DEEPLINK",
-                            ignoreCase = true
+                            "DEEPLINK", ignoreCase = true
                         )
 //                        equalsIgnoreCase("DEEPLINK")
                     ) {
@@ -694,8 +695,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                             }
                         }
                     } else if (bannerModels[counterStory].redirect_url.equals(
-                            "INAPP",
-                            ignoreCase = true
+                            "INAPP", ignoreCase = true
                         )
                     ) {
                         if (bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)
@@ -708,8 +708,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 //                            startActivity(intent)
                         }
                     } else if (bannerModels[counterStory].redirect_url.equals(
-                            "WEB",
-                            ignoreCase = true
+                            "WEB", ignoreCase = true
                         )
 //                            .equalsIgnoreCase("WEB")
                     ) {
@@ -731,8 +730,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 listener?.onShowNotification()
                 listener?.onShowPrivilege()
                 if (bannerModels.size > 0 && bannerModels[counterStory].type.equals(
-                        "video",
-                        ignoreCase = true
+                        "video", ignoreCase = true
                     )
 //                        .equalsIgnoreCase("video")
 
@@ -752,8 +750,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             ivPlay?.show()
             tvButton?.hide()
         } else if (bannerModel.type.equals(
-                "image",
-                ignoreCase = true
+                "image", ignoreCase = true
             ) && bannerModel.redirect_url.equals("", ignoreCase = true)
 //                .equalsIgnoreCase("")
         ) {
@@ -809,8 +806,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         dialogQR.setContentView(R.layout.activity_privilege_details)
         dialogQR.window?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
         dialogQR.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
         )
         dialogQR.window?.setGravity(Gravity.CENTER)
         dialogQR.setTitle("")
@@ -876,8 +872,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     //Internet Check
     private fun broadcastIntent() {
         requireActivity().registerReceiver(
-            broadcastReceiver,
-            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+            broadcastReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         )
     }
 

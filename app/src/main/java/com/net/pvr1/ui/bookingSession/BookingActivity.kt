@@ -1,22 +1,29 @@
 package com.net.pvr1.ui.bookingSession
 
 import android.annotation.SuppressLint
-import android.app.Dialog
-import android.content.ActivityNotFoundException
+import android.app.Activity
+import android.content.BroadcastReceiver
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import android.view.Gravity
-import android.view.ViewGroup
-import android.view.Window
+import android.os.Handler
+import android.speech.RecognizerIntent
+import android.text.Editable
+import android.text.TextUtils
+import android.text.TextWatcher
+import android.view.*
+import android.widget.RelativeLayout
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.SnapHelper
+import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityBookingBinding
 import com.net.pvr1.di.preference.PreferenceManager
@@ -24,11 +31,17 @@ import com.net.pvr1.ui.bookingSession.adapter.*
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.ui.bookingSession.response.BookingTheatreResponse
 import com.net.pvr1.ui.bookingSession.viewModel.BookingViewModel
+import com.net.pvr1.ui.cinemaSession.cinemaDetails.CinemaDetailsActivity
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.filter.GenericFilterMsession
+import com.net.pvr1.ui.home.fragment.home.adapter.PromotionAdapter
+import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.utils.*
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import jp.shts.android.storiesprogressview.StoriesProgressView
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -36,13 +49,15 @@ import java.util.*
 import javax.inject.Inject
 
 
+@Suppress("UNCHECKED_CAST")
 @AndroidEntryPoint
 class BookingActivity : AppCompatActivity(),
     BookingShowsDaysAdapter.RecycleViewItemClickListenerCity,
     BookingShowsLanguageAdapter.RecycleViewItemClickListenerCity,
     BookingTheatreAdapter.RecycleViewItemClickListener,
     BookingPlaceHolderAdapter.RecycleViewItemClickListenerCity,
-    BookingShowsParentAdapter.RecycleViewItemClickListener, GenericFilterMsession.onButtonSelected {
+    BookingShowsParentAdapter.RecycleViewItemClickListener, GenericFilterMsession.onButtonSelected,
+    StoriesProgressView.StoriesListener {
 
     @Inject
     lateinit var preferences: PreferenceManager
@@ -59,19 +74,38 @@ class BookingActivity : AppCompatActivity(),
     private var price2 = "ALL"
     private var show1 = "ALL"
     private var hc = "ALL"
-    private var ad = "ALL"
-    private var cc = "ALL"
     private var show2 = "ALL"
     private var special = "ALL"
-    private var cinema_type = "ALL"
+    private var cinemaType = "ALL"
     private var appliedFilterItem = HashMap<String?, String?>()
     private var appliedFilterType = ""
+
+    private var bookingResponse: BookingResponse.Output? = null
+    private var bookingShowsParentAdapter: BookingShowsParentAdapter? = null
+
+
+    //internet Check
+    private var broadcastReceiver: BroadcastReceiver? = null
+
+    // story board
+    private var bannerShow = 0
+    private var pressTime = 0L
+    private var limit = 500L
+    private var counterStory = 0
+    private var currentPage = 1
+    private var bannerModelsMain: ArrayList<BookingResponse.Output.Pu> =
+        ArrayList<BookingResponse.Output.Pu>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBookingBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+        manageFunctions()
+    }
+
+    private fun manageFunctions() {
+        //Poster
         authViewModel.bookingTicket(
             preferences.getCityName(),
             intent.getStringExtra("mid").toString(),
@@ -83,16 +117,125 @@ class BookingActivity : AppCompatActivity(),
             preferences.getUserId()
         )
 
+        //internet Check
+        broadcastReceiver = NetworkReceiver()
+
         movedNext()
+        broadcastIntent()
+        getShimmerData()
         bookingTicketDataLoad()
         bookingTheatreDataLoad()
     }
 
     private fun movedNext() {
+        //back Click
         binding?.imageView53?.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
+        // search Cancel
+        binding?.include43?.cancelBtn?.setOnClickListener {
+            binding?.constraintLayout19?.show()
+            binding?.constraintLayout151?.hide()
+
+        }
+
+        // search Click
+        binding?.imageView55?.setOnClickListener {
+            binding?.constraintLayout19?.invisible()
+            binding?.constraintLayout151?.show()
+        }
+
+        //search
+        binding?.include43?.editTextTextPersonName?.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int, count: Int, after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int, before: Int, count: Int
+            ) {
+
+                if (bookingResponse != null) {
+                    try {
+                        filter(s.toString())
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+        })
+
+
+        binding?.include43?.voiceBtn?.setOnClickListener {
+            val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+            intent.putExtra(
+                RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+            )
+            intent.putExtra(
+                RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault()
+            )
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to text")
+
+            try {
+                resultLauncher.launch(intent)
+            } catch (e: Exception) {
+                Toast.makeText(
+                    this, " " + e.message, Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
+
+    //Shimmer text
+    private fun getShimmerData() {
+        Constant().getData(binding?.include38?.tvFirstText, binding?.include38?.tvSecondText)
+        Constant().getData(binding?.include38?.tvSecondText, null)
+    }
+
+    private fun filter(text: String) {
+        //new array list that will hold the filtered data
+        val filteredNames: ArrayList<BookingResponse.Output.Cinema> =
+            ArrayList<BookingResponse.Output.Cinema>()
+
+        //looping through existing elements
+        for (list in bookingResponse?.cinemas!!) {
+
+            //if the existing elements contains the search input
+            if (list.cn.lowercase(Locale.getDefault())
+                    .contains(text.lowercase(Locale.getDefault()))
+            ) {
+
+                //adding the element to filtered list
+                filteredNames.add(list)
+            }
+        }
+
+        //calling a method of the adapter class and passing the filtered list
+        if (filteredNames.size > 0) {
+            bookingShowsParentAdapter?.filterList(
+                filteredNames
+            )
+        } else {
+            bookingShowsParentAdapter?.filterList(
+                filteredNames
+            )
+        }
+
+
+        //calling a method of the adapter class and passing the filtered list
+        if (filteredNames.size > 0) {
+            bookingShowsParentAdapter?.filterList(
+                filteredNames
+            )
+        } else {
+            bookingShowsParentAdapter?.filterList(
+                filteredNames
+            )
+        }
+    }
+
 
     private fun bookingTicketDataLoad() {
         authViewModel.userResponseLiveData.observe(this) {
@@ -103,6 +246,7 @@ class BookingActivity : AppCompatActivity(),
                         if (!daysClick) {
                             daySessionResponse = it.data.output
                         }
+                        bookingResponse = it.data.output
                         retrieveData(it.data.output)
                     } else {
                         val dialog = OptionDialog(this,
@@ -129,7 +273,6 @@ class BookingActivity : AppCompatActivity(),
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    toast("loading")
                     loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(supportFragmentManager, null)
                 }
@@ -141,7 +284,6 @@ class BookingActivity : AppCompatActivity(),
         authViewModel.userResponseTheatreLiveData.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
-//                    loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         retrieveTheatreData(it.data.output)
                     } else {
@@ -157,25 +299,12 @@ class BookingActivity : AppCompatActivity(),
                     }
                 }
                 is NetworkResult.Error -> {
-                    loader?.dismiss()
-                    val dialog = OptionDialog(this,
-                        R.mipmap.ic_launcher,
-                        R.string.app_name,
-                        it.message.toString(),
-                        positiveBtnText = R.string.ok,
-                        negativeBtnText = R.string.no,
-                        positiveClick = {},
-                        negativeClick = {})
-                    dialog.show()
                 }
                 is NetworkResult.Loading -> {
-//                    loader = LoaderDialog(R.string.pleasewait)
-//                    loader?.show(supportFragmentManager, null)
                 }
             }
         }
     }
-
 
     private fun retrieveTheatreData(output: BookingTheatreResponse.Output) {
         if (output.m.isEmpty()) {
@@ -191,6 +320,11 @@ class BookingActivity : AppCompatActivity(),
 
     @SuppressLint("SetTextI18n")
     private fun retrieveData(output: BookingResponse.Output) {
+        //Layout
+        binding?.constraintLayout152?.show()
+
+        //Shimmer
+        binding?.constraintLayout145?.hide()
 
         if (!daysClick) {
             Constant.OfferDialogImage = output.mih
@@ -224,27 +358,15 @@ class BookingActivity : AppCompatActivity(),
 
         //Shows
         val gridLayout3 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        val bookingShowsParentAdapter = BookingShowsParentAdapter(output.cinemas, this, this)
+        bookingShowsParentAdapter = BookingShowsParentAdapter(output.cinemas, this, this)
         binding?.recyclerView8?.layoutManager = gridLayout3
         binding?.recyclerView8?.adapter = bookingShowsParentAdapter
-
-        //placeHolder
-        printLog("placeHolder--->${output.ph}")
-        if (output.ph.isNotEmpty()) {
-            binding?.constraintLayout123?.show()
-            val gridLayout4 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-            val bookingPlaceHolderAdapter = BookingPlaceHolderAdapter(output.ph, this, this)
-            binding?.recyclerView23?.layoutManager = gridLayout4
-            binding?.recyclerView23?.adapter = bookingPlaceHolderAdapter
-        } else {
-            binding?.constraintLayout123?.hide()
-        }
 
         for (data in output.cinemas) {
             cinemaId.add(data.cid.toString())
         }
-        val string: String = java.lang.String.join(",", cinemaId)
 
+        val string: String = java.lang.String.join(",", cinemaId)
         authViewModel.bookingTheatre(
             preferences.getCityName(),
             string,
@@ -255,40 +377,86 @@ class BookingActivity : AppCompatActivity(),
         )
 
 
-
-
-
         binding?.filterFab?.setOnClickListener {
             val gFilter = GenericFilterMsession()
             val filterPoints = HashMap<String, ArrayList<String>>()
-            if (output.lngs != null && output.lngs.size > 1
-            ) filterPoints[Constant.FilterType.LANG_FILTER] = output.lngs
-                 else filterPoints[Constant.FilterType.LANG_FILTER] = ArrayList()
+            if (output.lngs != null && output.lngs.size > 1) filterPoints[Constant.FilterType.LANG_FILTER] =
+                output.lngs
+            else filterPoints[Constant.FilterType.LANG_FILTER] = ArrayList()
             filterPoints[Constant.FilterType.GENERE_FILTER] = ArrayList()
-            if (output.icn != null && output.icn.size > 1
-            ) filterPoints[Constant.FilterType.FORMAT_FILTER] = output.icn else filterPoints[Constant.FilterType.FORMAT_FILTER] = ArrayList()
+            if (output.icn != null && output.icn.size > 1) filterPoints[Constant.FilterType.FORMAT_FILTER] =
+                output.icn else filterPoints[Constant.FilterType.FORMAT_FILTER] = ArrayList()
             filterPoints[Constant.FilterType.ACCESSABILITY_FILTER] =
-                ArrayList(Arrays.asList(*arrayOf("Wheelchair Friendly")))
+                ArrayList(listOf("Wheelchair Friendly"))
             filterPoints[Constant.FilterType.PRICE_FILTER] = ArrayList(
-                listOf(
-                    *arrayOf(
-                        "Below ₹300", "₹301 - 500", "₹501 - 1000", "₹1001 - 1500"
-                    )
-                )
+                listOf("Below ₹300", "₹301 - 500", "₹501 - 1000", "₹1001 - 1500")
             )
             filterPoints[Constant.FilterType.SHOWTIME_FILTER] = ArrayList()
-            if (output.ct != null && output.ct.size > 0
-            ) filterPoints[Constant.FilterType.CINEMA_FORMAT] = output.ct else filterPoints[Constant.FilterType.CINEMA_FORMAT] = ArrayList()
-            if (output.sps != null && output.sps.size > 0
-            ) filterPoints[Constant.FilterType.SPECIAL_SHOW] =
-                getSpsList() as ArrayList<String> else filterPoints[Constant.FilterType.SPECIAL_SHOW] = ArrayList()
+            if (output.ct != null && output.ct.size > 0) filterPoints[Constant.FilterType.CINEMA_FORMAT] =
+                output.ct else filterPoints[Constant.FilterType.CINEMA_FORMAT] = ArrayList()
+            if (output.sps != null && output.sps.size > 0) filterPoints[Constant.FilterType.SPECIAL_SHOW] =
+                getSpsList() as ArrayList<String> else filterPoints[Constant.FilterType.SPECIAL_SHOW] =
+                ArrayList()
             gFilter.openFilters(
                 this, "ShowTime", this, appliedFilterType, appliedFilterItem, filterPoints
             )
+        }
 
+        //placeHolder
+        printLog("placeHolder--->${output.ph}")
+        if (output.ph.isNotEmpty()) {
+            binding?.constraintLayout123?.show()
+            updatePH(output.ph as ArrayList<HomeResponse.Ph>)
+        } else {
+            binding?.constraintLayout123?.hide()
+        }
+
+
+        if (bannerShow == 0 && output.pu.isNotEmpty()) {
+            initBanner(output.pu)
         }
 
     }
+
+    private fun updatePH(phd: ArrayList<HomeResponse.Ph>) {
+        if (phd != null && phd.size > 0) {
+            binding?.include41?.placeHolderView?.show()
+            val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            val snapHelper: SnapHelper = PagerSnapHelper()
+            binding?.include41?.recyclerPromotion?.layoutManager = layoutManager
+            binding?.include41?.recyclerPromotion?.onFlingListener = null
+            snapHelper.attachToRecyclerView(binding?.include41?.recyclerPromotion!!)
+            binding?.include41?.recyclerPromotion?.layoutManager = layoutManager
+            val adapter = PromotionAdapter(this, phd)
+            binding?.include41?.recyclerPromotion?.adapter = adapter
+            if (phd.size > 1) {
+                val speedScroll = 5000
+                val handler = Handler()
+                val runnable: Runnable = object : Runnable {
+                    var count = 0
+                    var flag = true
+                    override fun run() {
+                        if (count < adapter.itemCount) {
+                            if (count == adapter.itemCount - 1) {
+                                flag = false
+                            } else if (count == 0) {
+                                flag = true
+                            }
+                            if (flag) count++ else count--
+                            binding?.include41?.recyclerPromotion?.smoothScrollToPosition(
+                                count
+                            )
+                            handler.postDelayed(this, speedScroll.toLong())
+                        }
+                    }
+                }
+                handler.postDelayed(runnable, speedScroll.toLong())
+            }
+        } else {
+            binding?.include41?.placeHolderView?.hide()
+        }
+    }
+
 
     private fun getSpsList(): Any {
         val data = ArrayList<String>()
@@ -330,47 +498,13 @@ class BookingActivity : AppCompatActivity(),
     }
 
     override fun alertClick(comingSoonItem: BookingResponse.Output.Cinema) {
-
-        bookingAlert(comingSoonItem)
+        val intent = Intent(this@BookingActivity, CinemaDetailsActivity::class.java)
+        intent.putExtra("cid",comingSoonItem.cid.toString())
+        startActivity(intent)
     }
 
-    private fun bookingAlert(comingSoonItem: BookingResponse.Output.Cinema) {
-        printLog("$comingSoonItem")
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.booking_alert)
-        dialog.window!!.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
-        dialog.window!!.setGravity(Gravity.BOTTOM)
-        dialog.show()
-        val ola = dialog.findViewById<CardView>(R.id.textView145)
-        ola.setOnClickListener {
-            val launchIntent = packageManager.getLaunchIntentForPackage("com.olacabs.customer")
-            if (launchIntent != null) {
-                startActivity(launchIntent) //null pointer check in case package name was not found
-            } else {
-                val uri = Uri.parse("market://details?id=com.olacabs.customer")
-                val goToMarket = Intent(Intent.ACTION_VIEW, uri)
-                goToMarket.addFlags(
-                    Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_NEW_DOCUMENT or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
-                )
-                try {
-                    startActivity(goToMarket)
-                } catch (e: ActivityNotFoundException) {
-                    startActivity(
-                        Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse("http://play.google.com/store/apps/details?id=com.olacabs.customer")
-                        )
-                    )
-                }
-            }
-        }
-    }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onApply(
         type: ArrayList<String?>,
         filterItemSelected: HashMap<String?, String?>,
@@ -380,8 +514,6 @@ class BookingActivity : AppCompatActivity(),
         if (type.size > 0) {
             binding?.filterFab?.setImageResource(R.drawable.filter_selected)
             appliedFilterItem = filterItemSelected
-//            binding?.appliedFilter.setVisibility(View.VISIBLE)
-            println("typeFilter--->$type---$filterItemSelected")
             val containLanguage = type.contains("language")
             if (containLanguage) {
                 val index = type.indexOf("language")
@@ -408,11 +540,10 @@ class BookingActivity : AppCompatActivity(),
                     val inputFormat: DateFormat = SimpleDateFormat("h:mma")
                     val outputFormatter: DateFormat = SimpleDateFormat("H:mm")
                     try {
-                        show1 = outputFormatter.format(inputFormat.parse(show1))
+                        show1 =
+                            inputFormat.parse(show1)?.let { outputFormatter.format(it) }.toString()
                         show2 = outputFormatter.format(show2)
-                        Log.d(
-                            "ShowSelection", "onAply filter time: " + show1 + "  " + show2
-                        )
+
                     } catch (e: ParseException) {
                         e.printStackTrace()
                     }
@@ -434,28 +565,21 @@ class BookingActivity : AppCompatActivity(),
             if (containCinemaFormat) {
                 val index = type.indexOf("cinema")
                 val value = filterItemSelected[type[index]]
-                if (value != null && !value.equals(
+                cinemaType = if (value != null && !value.equals(
                         "", ignoreCase = true
                     )
-                ) cinema_type =
-                    value else cinema_type =
-                    "ALL"
+                ) value else "ALL"
             }
             val containSpecialFormat = type.contains("special")
             if (containSpecialFormat) {
                 val index = type.indexOf("special")
                 val value = filterItemSelected[type[index]]
-                if (value != null && !value.equals(
+                special = if (value != null && !value.equals(
                         "", ignoreCase = true
                     )
-                ) special =
-                    value else special =
-                    "ALL"
+                ) value else "ALL"
             }
-            Log.d(
-                "ShowSelection",
-                "onAply filter format: " + special
-            )
+
             val containPrice = type.contains("price")
             if (containPrice) {
                 val index = type.indexOf("price")
@@ -465,28 +589,19 @@ class BookingActivity : AppCompatActivity(),
                     value = splitSymbol[1]
                     if (value.contains("-")) {
                         val split = value.split(" - ").toTypedArray()
-                        price1 =
-                            split[0]
-                        price2 =
-                            split[1]
+                        price1 = split[0]
+                        price2 = split[1]
                     } else if (splitSymbol[0].equals("Below ", ignoreCase = true)) {
-                        price1 =
-                            "0"
-                        price2 =
-                            value
+                        price1 = "0"
+                        price2 = value
                     } else {
-                        price1 =
-                            value
-                        price2 =
-                            "2500"
+                        price1 = value
+                        price2 = "2500"
                     }
-                    Log.d(
-                        "ShowSelection",
-                        "onAply filter price: " + price1 + " - " +price2
-                    )
+
                 } else {
-                   price1 = "ALL"
-                   price2 = "ALL"
+                    price1 = "ALL"
+                    price2 = "ALL"
                 }
             }
             val containAccessibility = type.contains("accessability")
@@ -494,16 +609,12 @@ class BookingActivity : AppCompatActivity(),
                 val index = type.indexOf("accessability")
                 val value = filterItemSelected[type[index]]
                 if (value != null && !value.equals("", ignoreCase = true)) {
-                    if (value.contains("Wheelchair")) hc =
-                        "hc"
-                    if (value.contains("Subtitles")) special =
-                        "RST"
+                    if (value.contains("Wheelchair")) hc = "hc"
+                    if (value.contains("Subtitles")) special = "RST"
                 } else {
                     hc = "ALL"
-                   special =
-                        "ALL"
+                    special = "ALL"
                 }
-                Log.d("ShowSelection", "onAply filter accessability: $value")
             }
 //            ShowSelectionLayout.getMovieShowDetailMSession(
 //                movieId,
@@ -542,7 +653,6 @@ class BookingActivity : AppCompatActivity(),
 
     override fun onReset() {
         binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
-//        appliedFilter.setVisibility(View.GONE)
         appliedFilterItem = HashMap()
 
         authViewModel.bookingTicket(
@@ -555,5 +665,202 @@ class BookingActivity : AppCompatActivity(),
             "no",
             preferences.getUserId()
         )
+    }
+
+
+    //Internet Check
+    private fun broadcastIntent() {
+        registerReceiver(
+            broadcastReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        )
+    }
+
+    //Voice search
+    private var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                if (result.resultCode == RESULT_OK) {
+                    val data: Intent? = result.data
+                    val result: ArrayList<String>? = data?.getStringArrayListExtra(
+                        RecognizerIntent.EXTRA_RESULTS
+                    )
+                    binding?.include43?.editTextTextPersonName?.setText(
+                        Objects.requireNonNull(result)!![0]
+                    )
+                }
+            }
+        }
+
+    //Banner
+    private fun initBanner(bannerModels: ArrayList<BookingResponse.Output.Pu>) {
+        bannerShow += 1
+        bannerModelsMain = bannerModels
+        if (bannerModels.isNotEmpty()) {
+            binding?.rlBanner?.show()
+            binding?.bannerLayout?.includeStoryLayout?.stories?.setStoriesCount(bannerModels.size) // <- set stories
+            binding?.bannerLayout?.includeStoryLayout?.stories?.setStoryDuration(5000L) // <- set a story duration
+            binding?.bannerLayout?.includeStoryLayout?.stories?.setStoriesListener(this) // <- set listener
+            binding?.bannerLayout?.includeStoryLayout?.stories?.startStories() // <- start progress
+            counterStory = 0
+            if (!TextUtils.isEmpty(bannerModels[counterStory].i)) {
+                Picasso.get().load(bannerModels[counterStory].i)
+                    .into(binding?.bannerLayout?.includeStoryLayout?.ivBanner!!, object : Callback {
+                        override fun onSuccess() {
+                            binding?.rlBanner?.show()
+                            //  storiesProgressView.startStories(); // <- start progress
+                        }
+
+                        override fun onError(e: Exception?) {}
+                    })
+            }
+
+            binding?.bannerLayout?.includeStoryLayout?.reverse?.setOnClickListener { binding?.bannerLayout?.includeStoryLayout?.stories?.reverse() }
+            binding?.bannerLayout?.includeStoryLayout?.reverse?.setOnTouchListener(onTouchListener)
+            showButton(bannerModels[0])
+            binding?.bannerLayout?.includeStoryLayout?.skip?.setOnClickListener { binding?.bannerLayout?.includeStoryLayout?.stories?.skip() }
+            binding?.bannerLayout?.includeStoryLayout?.skip?.setOnTouchListener(onTouchListener)
+            binding?.bannerLayout?.tvButton?.setOnClickListener {
+                binding?.rlBanner?.hide()
+                if (bannerModels.size > 0 && bannerModels[counterStory].type.equals(
+                        "image", ignoreCase = true
+                    )
+//                        .equalsIgnoreCase("image")
+                ) {
+                    if (bannerModels[counterStory].redirectView.equals(
+                            "DEEPLINK", ignoreCase = true
+                        )
+//                        equalsIgnoreCase("DEEPLINK")
+                    ) {
+                        if (bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)) {
+                            if (bannerModels[counterStory].redirect_url.lowercase(Locale.ROOT)
+                                    .contains("/loyalty/home")
+                            ) {
+//                                if (context is PCLandingActivity) (context as PCLandingActivity).PriviegeFragment(
+//                                    "C"
+//                                )
+                            } else {
+//                                .replaceAll("https", "app").replaceAll("http", "app")
+                                val intent = Intent(
+                                    Intent.ACTION_VIEW, Uri.parse(
+                                        bannerModels[counterStory].redirect_url.replace(
+                                            "https", "app"
+                                        )
+                                    )
+                                )
+                                startActivity(intent)
+                            }
+                        }
+                    } else if (bannerModels[counterStory].redirect_url.equals(
+                            "INAPP", ignoreCase = true
+                        )
+                    ) {
+                        if (bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)
+
+                        ) {
+//                            val intent = Intent(context, PrivacyActivity::class.java)
+//                            intent.putExtra("url", bannerModels[counterStory].getRedirect_url())
+//                            intent.putExtra(PCConstants.IS_FROM, 2000)
+//                            intent.putExtra("title", bannerModels[counterStory].getName())
+//                            startActivity(intent)
+                        }
+                    } else if (bannerModels[counterStory].redirect_url.equals(
+                            "WEB", ignoreCase = true
+                        )
+//                            .equalsIgnoreCase("WEB")
+                    ) {
+                        if (bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)
+//                                .equalsIgnoreCase("")
+                        ) {
+//                            val intent = Intent(
+//                                Intent.ACTION_VIEW,
+//                                Uri.parse(bannerModels[counterStory].redirect_url)
+//                                        activity.startActivity(intent)
+                        }
+                    }
+                }
+            }
+            (this.findViewById(R.id.bannerLayout) as RelativeLayout).show()
+
+            binding?.bannerLayout?.ivPlay?.setOnClickListener {
+                binding?.rlBanner?.hide()
+                if (bannerModels.size > 0 && bannerModels[counterStory].type.equals(
+                        "video", ignoreCase = true
+                    )
+                ) {
+                }
+            }
+
+        } else {
+            binding?.rlBanner?.hide()
+        }
+    }
+
+
+    private fun showButton(bannerModel: BookingResponse.Output.Pu) {
+        if (bannerModel.type.equals("video", ignoreCase = true)) {
+            binding?.bannerLayout?.ivPlay?.show()
+            binding?.bannerLayout?.tvButton?.hide()
+        } else if (bannerModel.type.equals(
+                "image", ignoreCase = true
+            ) && bannerModel.redirect_url.equals("", ignoreCase = true)
+        ) {
+            binding?.bannerLayout?.ivPlay?.hide()
+            binding?.bannerLayout?.tvButton?.text = bannerModel.buttonText
+            binding?.bannerLayout?.tvButton?.show()
+        } else {
+            binding?.bannerLayout?.ivPlay?.hide()
+            binding?.bannerLayout?.tvButton?.hide()
+        }
+
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private val onTouchListener = View.OnTouchListener { _, event ->
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                pressTime = System.currentTimeMillis()
+                binding?.bannerLayout?.includeStoryLayout?.stories?.pause()
+                return@OnTouchListener false
+            }
+            MotionEvent.ACTION_UP -> {
+                val now = System.currentTimeMillis()
+                binding?.bannerLayout?.includeStoryLayout?.stories?.resume()
+                return@OnTouchListener limit < now - pressTime
+            }
+        }
+        false
+    }
+
+    override fun onNext() {
+        try {
+            if (!TextUtils.isEmpty(bannerModelsMain[counterStory].i)) {
+                ++counterStory
+                showButton(bannerModelsMain[counterStory])
+                binding?.bannerLayout?.includeStoryLayout?.ivBanner?.let {
+                    Glide.with(this).load(bannerModelsMain[counterStory].i).into(it)
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun onPrev() {
+        if (counterStory - 1 < 0) return
+        if (!TextUtils.isEmpty(bannerModelsMain[counterStory].i)) {
+            --counterStory
+            showButton(bannerModelsMain[counterStory])
+            binding?.bannerLayout?.includeStoryLayout?.ivBanner?.let {
+                Glide.with(this).load(bannerModelsMain[counterStory].i).into(it)
+            }
+        }
+    }
+
+    override fun onComplete() {
+        binding?.bannerLayout?.includeStoryLayout?.stories?.destroy()
+        binding?.bannerLayout?.includeStoryLayout?.stories?.startStories()
+        currentPage = 0
+        binding?.rlBanner?.hide()
     }
 }

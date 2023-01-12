@@ -37,7 +37,7 @@ data class BookingResponse(
         val p: String,
         val ph: ArrayList<Ph>,
         val prs: Prs,
-        val pu: List<Any>,
+        val pu: ArrayList<Pu>,
         val rt: String,
         val sm: String,
         val sps: ArrayList<SPS>,
@@ -53,6 +53,22 @@ data class BookingResponse(
             val txt: String
         ):Serializable
         data class Ph(
+            val buttonText: String,
+            val cities: String,
+            val i: String,
+            val id: Int,
+            val location: String,
+            val name: String,
+            val platform: String,
+            val priority: Int,
+            val redirectView: String,
+            val redirect_url: String,
+            val screen: String,
+            val text: String,
+            val trailerUrl: String,
+            val type: String
+        ):Serializable
+        data class Pu(
             val buttonText: String,
             val cities: String,
             val i: String,

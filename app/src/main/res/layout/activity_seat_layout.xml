@@ -442,7 +442,8 @@
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toEndOf="@+id/textView204"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/seat_screen_two" />
+            app:srcCompat="@drawable/seat_screen_two"
+            tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -469,7 +470,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="8dp"
-            android:background="#ffffff"
+            android:background="@color/white"
             android:scrollbars="none"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

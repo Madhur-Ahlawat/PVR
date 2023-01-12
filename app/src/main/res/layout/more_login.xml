@@ -250,7 +250,7 @@
         android:id="@+id/view156"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dimen_10dp"
-        android:background="@drawable/line_seprator"
+        android:background="@drawable/line_separator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout74" />

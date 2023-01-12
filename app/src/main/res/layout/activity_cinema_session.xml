@@ -351,7 +351,7 @@
                 android:id="@+id/textView376"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_10dp"
-                android:background="@drawable/line_seprator"
+                android:background="@drawable/line_separator"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout15" />
@@ -396,7 +396,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_10dp"
-                android:background="@drawable/line_seprator"/>
+                android:background="@drawable/line_separator"/>
 
 
             <androidx.constraintlayout.widget.ConstraintLayout

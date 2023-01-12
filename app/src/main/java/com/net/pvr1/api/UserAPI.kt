@@ -2,6 +2,7 @@ package com.net.pvr1.api
 
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.ui.bookingSession.response.BookingTheatreResponse
+import com.net.pvr1.ui.cinemaSession.cinemaDetails.response.CinemaDetailsResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaNearTheaterResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.food.old.reponse.OldFoodResponse
@@ -481,6 +482,15 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<CinemaNearTheaterResponse>
+
+    @POST("content/cinedetail/{id}")
+    suspend fun cinemaDetails(
+        @Path("id") cid: String,
+        @Query("lat") lat: String,
+        @Query("lng") lng: String?,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<CinemaDetailsResponse>
 
     @POST("trans/getseatlayoutnew/{cinemacode}/{sessionid}")
     suspend fun seatLayout(

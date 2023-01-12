@@ -44,7 +44,7 @@
         android:id="@+id/view231"
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="@drawable/line_seprator" />
+        android:background="@drawable/line_separator" />
 
 
 </LinearLayout>

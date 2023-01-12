@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityCinemaSearchBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingActivity
@@ -19,7 +20,6 @@ import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.search.searchHome.viewModel.HomeSearchViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.di.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
@@ -28,12 +28,14 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CinemaSearchActivity : AppCompatActivity(),
     SearchHomeMovieAdapter.RecycleViewItemClickListenerCity {
+
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityCinemaSearchBinding? = null
     private val authViewModel: HomeSearchViewModel by viewModels()
     private val REQUEST_CODE_SPEECH_INPUT = 1
     private var loader: LoaderDialog? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCinemaSearchBinding.inflate(layoutInflater, null, false)
@@ -44,7 +46,7 @@ class CinemaSearchActivity : AppCompatActivity(),
         movedNext()
     }
     private fun movedNext() {
-        binding?.voiceBtn?.setOnClickListener {
+        binding?.include42?.voiceBtn?.setOnClickListener {
             val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
             intent.putExtra(
                 RecognizerIntent.EXTRA_LANGUAGE_MODEL,
@@ -69,22 +71,13 @@ class CinemaSearchActivity : AppCompatActivity(),
         }
 
 
-        binding?.cancelBtn?.setOnClickListener {
+        binding?.include42?.cancelBtn?.setOnClickListener {
             finish()
         }
 
-//        binding?.editTextTextPersonName?.addTextChangedListener(object : TextWatcher {
-//            override fun afterTextChanged(s: Editable?) {
-//            }
-//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//
-//            }
-//        })
-
-        binding?.editTextTextPersonName?.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+        binding?.include42?.editTextTextPersonName?.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                authViewModel.homeSearch(preferences.getCityName(),  binding?.editTextTextPersonName?.text.toString(), "", preferences.getLatitudeData(), preferences.getLongitudeData())
+                authViewModel.homeSearch(preferences.getCityName(),  binding?.include42?.editTextTextPersonName?.text.toString(), "", preferences.getLatitudeData(), preferences.getLongitudeData())
                 return@OnEditorActionListener true
             }
             false
@@ -153,7 +146,7 @@ class CinemaSearchActivity : AppCompatActivity(),
                     val result: ArrayList<String>? = data.getStringArrayListExtra(
                         RecognizerIntent.EXTRA_RESULTS
                     )
-                    binding?.editTextTextPersonName?.setText(
+                    binding?.include42?.editTextTextPersonName?.setText(
                         Objects.requireNonNull(result)!![0]
                     )
                 }

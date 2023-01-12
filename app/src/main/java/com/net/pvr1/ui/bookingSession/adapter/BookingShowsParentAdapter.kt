@@ -16,7 +16,7 @@ import com.net.pvr1.utils.show
 
 
 class BookingShowsParentAdapter(
-    private var nowShowingList: List<BookingResponse.Output.Cinema>,
+    private var nowShowingList: ArrayList<BookingResponse.Output.Cinema>,
     private var context: Context,
     private var listener: RecycleViewItemClickListener
 ) : RecyclerView.Adapter<BookingShowsParentAdapter.ViewHolder>() {
@@ -75,6 +75,13 @@ class BookingShowsParentAdapter(
 
     override fun getItemCount(): Int {
         return if (nowShowingList.isNotEmpty()) nowShowingList.size else 0
+    }
+
+
+    //and assigning it to the list with notifydatasetchanged method
+    fun filterList(filterdNames: ArrayList<BookingResponse.Output.Cinema>) {
+        this.nowShowingList = filterdNames
+        notifyDataSetChanged()
     }
 
 

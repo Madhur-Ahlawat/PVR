@@ -140,7 +140,7 @@
     <View
         android:visibility="visible"
         android:id="@+id/view229"
-        android:background="@drawable/line_seprator"
+        android:background="@drawable/line_separator"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout132"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
