@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
 import com.net.pvr1.databinding.HistoreyItemBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.home.fragment.privilege.response.LoyaltyDataResponse
-import com.net.pvr1.utils.PreferenceManager
 import com.net.pvr1.utils.hide
 
 
