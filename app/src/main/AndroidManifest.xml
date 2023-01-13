@@ -366,6 +366,11 @@
             android:name=".ui.payment.webView.PaytmWebActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.home.fragment.privilege.EnrollInPassportActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

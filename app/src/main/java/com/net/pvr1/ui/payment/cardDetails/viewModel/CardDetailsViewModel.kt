@@ -8,6 +8,7 @@ import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
 import com.net.pvr1.ui.payment.response.CouponResponse
 import com.net.pvr1.ui.payment.response.PaymentResponse
 import com.net.pvr1.ui.payment.response.PaytmHmacResponse
+import com.net.pvr1.ui.payment.response.RecurringInitResponse
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -33,6 +34,22 @@ class CardDetailsViewModel @Inject constructor(private val userRepository: UserR
     ) {
         viewModelScope.launch {
             userRepository.paytmHMAC(userid, bookingid, transid, unpaid, cardNo,booktype,ptype,isSpi,binOffer)
+        }
+    }
+
+
+    //Recurring BIN Check
+    val recurringBinLiveDataScope: LiveData<NetworkResult<RecurringInitResponse>> get() = userRepository.recurringBinResponseLiveData
+
+    fun recurringBinCheck(
+        userid: String,
+        bookingid: String,
+        token: String,
+        bin: String,
+        vpa: String
+    ) {
+        viewModelScope.launch {
+            userRepository.recurringBinCheck(userid, bookingid, token, bin, vpa)
         }
     }
 

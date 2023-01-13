@@ -37,6 +37,7 @@ import java.net.MalformedURLException
 import java.net.URL
 import java.security.MessageDigest
 import java.text.DecimalFormat
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -91,7 +92,7 @@ class Constant {
         const val CITY_CC = "City-Name"
         const val LATITUDE = "lat"
         const val LONGITUDE = "lang"
-        const val BOOK_TYPE = "BOOKING"
+        var BOOK_TYPE = "BOOKING"
         const val ON_BOARDING_CLICK = false
         const val SEAT_BOOKED = 2
         const val SEAT_SELECTED = 3
@@ -193,6 +194,29 @@ class Constant {
             }
             return sb.toString()
         }
+
+        fun getDate(oldformat: String, newformat: String, olddate: String): String? {
+            return try {
+                val newDateString: String
+                val sdf = SimpleDateFormat(oldformat)
+                val sdf1 = SimpleDateFormat(newformat)
+                var d: Date? = null
+                val d1: Date? = null
+                d = try {
+                    sdf.parse(olddate)
+                } catch (e: ParseException) {
+                    e.printStackTrace()
+                    sdf1.parse(olddate)
+                }
+                sdf.applyPattern(newformat)
+                newDateString = sdf.format(d)
+                newDateString
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+                ""
+            }
+        }
+
 
     }
 

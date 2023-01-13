@@ -282,6 +282,9 @@ class OtpVerifyActivity : AppCompatActivity() {
         output?.ph?.let { preferences.saveMobileNumber(it) }
         output?.token?.let { preferences.saveToken(it) }
         output?.dob?.let { preferences.saveDob(it) }
+        output?.ph?.let { preferences.saveString(Constant.SharedPreference.USER_NUMBER,it) }
+        output?.em?.let { preferences.saveString(Constant.SharedPreference.USER_EMAIL,it)  }
+        output?.gd?.let { preferences.saveString(Constant.SharedPreference.USER_GENDER,it)  }
         checkMoved()
     }
 

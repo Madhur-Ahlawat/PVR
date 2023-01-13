@@ -84,7 +84,6 @@ class NonMemberActivity : AppCompatActivity() {
         )
         getPlans()
 
-        makePageDataToShow()
     }
 
     private fun makePageDataToShow() {
@@ -240,10 +239,10 @@ class NonMemberActivity : AppCompatActivity() {
 //
 //                        startActivity(intent4)
                     } else if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(reviewPosition)?.ptype == ("PP")) {
-//                        val intent = Intent(this, Subscription_Form::class.java)
-//                        intent.putExtra("scheme_id", scheme_id)
-//                        intent.putExtra("scheme_price", scheme_price)
-//                        startActivity(intent)
+                        val intent = Intent(this, EnrollInPassportActivity::class.java)
+                        intent.putExtra("scheme_id", scheme_id)
+                        intent.putExtra("scheme_price", scheme_price)
+                        startActivity(intent)
                     } else {
 
                         val intent = Intent(this, WebViewActivity::class.java)
@@ -288,6 +287,10 @@ class NonMemberActivity : AppCompatActivity() {
     private fun retrieveData(output: PassportPlanResponse.Output) {
         NonMemberFragment.scheme_id = output.scheme[0].schemeid
         NonMemberFragment.scheme_price = output.scheme[0].price
+        NonMemberFragment.subPlans = output.scheme[0].subsplan
+        NonMemberFragment.retrymsg1 = output.scheme[0].retrymsgone
+        NonMemberFragment.retrymsg2 = output.scheme[0].retrymsgtwo
+        NonMemberFragment.visits = Constant.PrivilegeHomeResponseConst?.pinfo!![reviewPosition].visits
         binding?.passportView?.priceNewText?.text = ""
 
         val text =
@@ -296,6 +299,9 @@ class NonMemberActivity : AppCompatActivity() {
         binding?.passportView?.priceNewText?.text = Html.fromHtml(text)
 
         binding?.passportView?.textBelow?.setText(output.scheme[0].text)
+
+        makePageDataToShow()
+
     }
 
 }

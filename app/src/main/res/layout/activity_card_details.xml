@@ -65,8 +65,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:fontFamily="@font/sf_pro_text_semi_bold"
             android:text="@string/to_be_paid"
             android:textColor="@color/black"
@@ -92,7 +92,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout130"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -111,8 +111,8 @@
                 android:id="@+id/view221"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -122,8 +122,8 @@
             <RelativeLayout
                 android:id="@+id/mobileLayout"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/dimen_70dp"
-                android:layout_marginTop="40dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/text_curve"
                 android:gravity="center"
                 android:paddingStart="@dimen/dimen_10dp"
@@ -139,7 +139,6 @@
                     style="@style/styledBlackTilEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_marginTop="-8dp"
                     android:hint="@string/card_number"
                     app:boxBackgroundColor="@color/transparent"
@@ -149,7 +148,6 @@
                     app:endIconMode="custom"
                     app:errorEnabled="false"
                     app:hintTextColor="@color/textColor"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -171,13 +169,46 @@
                         tools:ignore="LabelFor,SpeakableTextPresentCheck" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/subs_valid_rect"
+                    android:layout_margin="@dimen/padding_10"
+                    android:padding="@dimen/dimen_15dp"
+                    android:id="@+id/subsView"
+                    android:visibility="gone"
+                    android:layout_below="@+id/textInputLayout">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/msg1"
+                        android:fontFamily="@font/sf_pro_text_medium"
+                        android:textSize="@dimen/dimen_14sp"
+                        android:textColor="#007D23"
+                        android:text="Card is valid for Automatic renewal"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:layout_marginTop="@dimen/dimen_5dp"
+                        android:id="@+id/msg2"
+                        android:textSize="@dimen/dimen_12sp"
+                        android:textColor="#000000"
+                        android:text="Card is valid for Automatic renewal"/>
+
+                </LinearLayout>
+
             </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/linearLayout11"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20dp"
+                android:layout_marginTop="@dimen/dimen_15dp"
                 android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:weightSum="2"
@@ -188,7 +219,7 @@
                 <RelativeLayout
                     android:id="@+id/relativeLayout3"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/dimen_70dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1.2"
                     android:background="@drawable/text_curve"
                     android:gravity="center"
@@ -245,7 +276,7 @@
                 <RelativeLayout
                     android:id="@+id/relativeLayout4"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/dimen_70dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_20dp"
                     android:layout_weight="0.8"
                     android:background="@drawable/text_curve"
@@ -305,8 +336,8 @@
             <RelativeLayout
                 android:id="@+id/relativeLayout5"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/dimen_70dp"
-                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_15dp"
                 android:background="@drawable/text_curve"
                 android:gravity="center"
                 android:paddingStart="@dimen/dimen_10dp"
@@ -359,8 +390,8 @@
             <RelativeLayout
                 android:id="@+id/relativeLayout6"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/dimen_70dp"
-                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_15dp"
                 android:background="@drawable/text_curve"
                 android:gravity="center"
                 android:paddingStart="@dimen/dimen_10dp"
@@ -447,6 +478,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="24dp"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="10"
         tools:listitem="@layout/item_net_banking"

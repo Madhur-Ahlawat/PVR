@@ -104,6 +104,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout110"
                 android:layout_width="0dp"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -159,6 +160,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dim_h10"
+                    android:id="@+id/bnView"
                     android:background="@drawable/line_separator" />
 
                 <TextView
@@ -232,6 +234,13 @@
                     tools:listitem="@layout/item_payment_list" />
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/otherPayView"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
                 <View
                     android:background="@drawable/line_separator"
                     android:layout_width="match_parent"
@@ -260,7 +269,14 @@
                     tools:listitem="@layout/item_payment_list" />
 
 
+                </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:id="@+id/offerView">
 
                 <View
                     android:background="@drawable/line_separator"
@@ -288,6 +304,56 @@
                     android:orientation="vertical"
                     tools:itemCount="2"
                     tools:listitem="@layout/item_payment_list" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_sectoken"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="10dp"
+                    android:background="#f3f3f3"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="5dp"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:fontFamily="@font/sf_pro_text_medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:text="Your transactions are secure and certified"
+                        android:textColor="#828282"
+                        android:textSize="13sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:visibility="visible">
+
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="36dp"
+                            android:layout_marginRight="5dp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/pcidss" />
+
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="36dp"
+                            android:layout_marginLeft="5dp"
+                            android:src="@drawable/norton" />
+
+                    </LinearLayout>
+                </LinearLayout>
 
             </LinearLayout>
 

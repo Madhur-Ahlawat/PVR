@@ -369,6 +369,30 @@ interface UserAPI {
         @Query("did") did: String
     ): Response<PassportPlanResponse>
 
+
+// Passport Save
+    @POST("api/offervoucher/loyalty-subscription/save")
+    suspend fun savePassport(
+        @Query("userid") userid: String,
+        @Query("city") city: String,
+        @Query("fname") fname: String,
+        @Query("lname") lname: String,
+        @Query("subsplan") subsplan: String,
+        @Query("dob") dob: String,
+        @Query("gender") gender: String,
+        @Query("scheme") scheme: String,
+        @Query("price") price: String,
+        @Query("mobile") mobile: String,
+        @Query("email") email: String,
+        @Query("av") av: String,
+        @Query("pt") pt: String,
+        @Query("did") did: String
+    ): Response<PassportPlanResponse>
+
+
+
+
+
     @POST("api/history/nextbooking")
     suspend fun nextBooking(
         @Query("userid") userid: String,
@@ -1004,5 +1028,29 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<UPIStatusResponse>
+
+
+    /*******************      Passport Recurring     *****************/
+
+    @POST("api/payment/recurring/passport/init")
+    suspend fun recurringInit(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<RecurringInitResponse>
+
+    @POST("api/payment/recurring/passport/bin/check")
+    suspend fun recurringBinCheck(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("token") token: String,
+        @Query("bin") bin: String,
+        @Query("vpa") vpa: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<RecurringInitResponse>
 
 }
