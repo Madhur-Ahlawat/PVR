@@ -41,7 +41,7 @@
             android:singleLine="true"
             android:text="@string/join_pvr_passport"
             android:textColor="@color/black"
-            app:letterspacing="@integer/tracking" />
+            />
 
 
     </RelativeLayout>
@@ -375,7 +375,7 @@
                     android:textColor="#828282"
                     android:textSize="@dimen/dimen_12sp"
                     android:visibility="gone"
-                    app:letterspacing="@integer/tracking" />
+                    />
 
                 <TextView
                     android:fontFamily="@font/sf_pro_text_regular"
@@ -466,7 +466,6 @@
         android:background="@drawable/round_corner_radius_rect"
         android:backgroundTint="@color/pvr_yellow"
         android:gravity="center"
-        android:letterSpacing="1.2"
         android:text="@string/submit_details"
         android:textAllCaps="true"
         android:textColor="@color/pvr_dark_black"

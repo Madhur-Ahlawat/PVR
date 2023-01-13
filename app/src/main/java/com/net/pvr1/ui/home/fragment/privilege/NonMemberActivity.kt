@@ -15,7 +15,7 @@ import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.HomeActivity
-import com.net.pvr1.ui.home.HomeActivity.Companion.review_position
+import com.net.pvr1.ui.home.HomeActivity.Companion.reviewPosition
 import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeTypeAdapter
 import com.net.pvr1.ui.home.fragment.privilege.response.PassportPlanResponse
 import com.net.pvr1.ui.home.fragment.privilege.viewModel.PrivilegeLoginViewModel
@@ -167,7 +167,7 @@ class NonMemberActivity : AppCompatActivity() {
 
                         HomeActivity.reviewPosition =
                             HomeActivity.getCurrentItem(binding?.privilegeCardList!!)
-                        println("review_position3--->${HomeActivity.reviewPosition}")
+                        println("reviewPosition3--->${HomeActivity.reviewPosition}")
 
                         if (HomeActivity.reviewPosition == -1) HomeActivity.reviewPosition = 0
                         if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(HomeActivity.reviewPosition)?.ptype.equals("PP")) {
@@ -230,7 +230,7 @@ class NonMemberActivity : AppCompatActivity() {
                     intent4.putExtra(Constant.PCBackStackActivity.OPEN_ACTIVITY_NAME, Constant.PCBackStackActivity.LOYALITY_NONMEMBER_ACTIVITY)
                     startActivity(intent4)
                 } else {
-                    if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(review_position)?.ptype == ("P")) {
+                    if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(reviewPosition)?.ptype == ("P")) {
 //
 //                            intent4 = Intent(this, EnrollmentActivity::class.java)
 //                            intent4.putExtra(
@@ -239,7 +239,7 @@ class NonMemberActivity : AppCompatActivity() {
 //                            )
 //
 //                        startActivity(intent4)
-                    } else if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(review_position)?.ptype == ("PP")) {
+                    } else if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(reviewPosition)?.ptype == ("PP")) {
 //                        val intent = Intent(this, Subscription_Form::class.java)
 //                        intent.putExtra("scheme_id", scheme_id)
 //                        intent.putExtra("scheme_price", scheme_price)

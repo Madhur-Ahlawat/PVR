@@ -1,6 +1,9 @@
 package com.net.pvr1.ui.home.fragment.privilege
 
+import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -8,40 +11,61 @@ import android.os.SystemClock
 import android.text.Html
 import android.text.TextUtils
 import android.view.*
+import android.view.View.OnTouchListener
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityPrivilegeLogInBinding
 import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.home.HomeActivity.Companion.getCurrentItem
 import com.net.pvr1.ui.home.HomeActivity.Companion.reviewPosition
+import com.net.pvr1.ui.home.fragment.privilege.adapter.HowItWorkAdapter
 import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeCardAdapter
 import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeHistoreyAdapter
 import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeVochersAdapter
 import com.net.pvr1.ui.home.fragment.privilege.response.LoyaltyDataResponse
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeCardData
 import com.net.pvr1.ui.home.fragment.privilege.viewModel.PrivilegeLoginViewModel
+import com.net.pvr1.ui.login.LoginActivity
+import com.net.pvr1.ui.webView.WebViewActivity
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.SharedPreference.Companion.ACTIVE
 import com.net.pvr1.utils.Constant.SharedPreference.Companion.LOYALITY_STATUS
 import com.net.pvr1.utils.Constant.SharedPreference.Companion.SUBSCRIPTION_STATUS
 import com.net.pvr1.utils.Constant.SharedPreference.Companion.SUBS_OPEN
+import com.net.pvr1.utils.view.CustomViewPager
 import dagger.hilt.android.AndroidEntryPoint
+import jp.shts.android.storiesprogressview.StoriesProgressView
+import jp.shts.android.storiesprogressview.StoriesProgressView.StoriesListener
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
-class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickListener,PrivilegeVochersAdapter.RecycleViewItemClickListener {
+class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickListener,PrivilegeVochersAdapter.RecycleViewItemClickListener,
+    StoriesListener,HowItWorkAdapter.RecycleViewItemClickListener {
+    var storiesProgressView: StoriesProgressView? = null
+    var storyDialog: Dialog? = null
+    var ivBanner: RecyclerView? = null
+    var counterStory = 0
+    var currentPage = 1
+    var pressTime = 0L
+    var recyclerAdapter: HowItWorkAdapter? = null
+    var limit = 500L
     private var binding: ActivityPrivilegeLogInBinding? = null
     private var loader: LoaderDialog? = null
 
@@ -73,10 +97,67 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
         )
         createQr()
         getProfileData()
+        manageClicks()
+    }
+
+    private fun manageClicks() {
+        binding?.bookBtn?.setOnClickListener {
+            val intent = Intent(context, HomeActivity::class.java)
+            startActivity(intent)
+        }
+        binding?.howWork?.setOnClickListener { openHowToWork() }
+
+        binding?.faq?.setOnClickListener{
+            val intent = Intent(context, WebViewActivity::class.java)
+            intent.putExtra("from", "privilege")
+            intent.putExtra("title", "Passport FAQ")
+            intent.putExtra("getUrl", Constant.PrivilegeHomeResponseConst?.faq)
+            startActivity(intent)
+        }
+
+        binding?.unLockView?.setOnClickListener {
+            if ( Constant.PrivilegeHomeResponseConst?.pinfo?.size == 1) {
+                val intent1 = Intent(context, NonMemberActivity::class.java)
+                intent1.putExtra("data",  Constant.PrivilegeHomeResponseConst?.pinfo)
+                intent1.putExtra("type",  Constant.PrivilegeHomeResponseConst?.pinfo?.get(0)?.ptype)
+                startActivity(intent1)
+            } else {
+                reviewPosition = if ( Constant.PrivilegeHomeResponseConst?.pinfo?.size == 2 && reviewPosition == 2) {
+                    1
+                } else {
+                    0
+                }
+                if ( Constant.PrivilegeHomeResponseConst?.pinfo?.get(reviewPosition)?.ptype == ("PP")) {
+                    if (!preferences.getIsLogin()) {
+                        val intent4 = Intent(requireActivity(), LoginActivity::class.java)
+                        intent4.putExtra(Constant.PCBackStackActivity.OPEN_ACTIVITY_NAME, Constant.PCBackStackActivity.LOYALITY_UNLIMITED_ACTIVITY)
+                        requireActivity().startActivity(intent4)
+                    } else {
+                        val intent1 = Intent(context, NonMemberActivity::class.java)
+                        intent1.putExtra("data", Constant.PrivilegeHomeResponseConst?.pinfo)
+                        intent1.putExtra("type", "PP")
+                        intent1.putExtra(
+                            Constant.PCBackStackActivity.OPEN_ACTIVITY_NAME,
+                            Constant.PCBackStackActivity.LANDING_ACTIVITY
+                        )
+                        startActivity(intent1)
+                    }
+                } else {
+                    val intent1 = Intent(context, NonMemberActivity::class.java)
+                    intent1.putExtra("data", Constant.PrivilegeHomeResponseConst?.pinfo)
+                    intent1.putExtra("type", "PPP")
+                    intent1.putExtra(
+                        Constant.PCBackStackActivity.OPEN_ACTIVITY_NAME,
+                        Constant.PCBackStackActivity.LANDING_ACTIVITY
+                    )
+                    startActivity(intent1)
+                }
+            }
+        }
     }
 
     private fun manageTabs(output: LoyaltyDataResponse.Output) {
-        var voucherList = ArrayList<LoyaltyDataResponse.Voucher>()
+        val voucherList = ArrayList<LoyaltyDataResponse.Voucher>()
         for (data in output.vou){
             voucherList.addAll(data.vouchers)
         }
@@ -181,8 +262,8 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
     private fun addLoyalty(output: LoyaltyDataResponse.Output) {
         if (!TextUtils.isEmpty(output.pt)) {
             val points: Float = output.pt.toFloat()
-            var pointsValue = ""
-            var percentage = 0f
+            var pointsValue: String
+            var percentage: Float
             var pointsValue1 = 0f
             val ls: String = preferences.getString(LOYALITY_STATUS)
             if (ls.equals("GOLD", ignoreCase = true)) {
@@ -522,7 +603,236 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
         dialogQR.show()
     }
 
-    override fun onItemClick() {
+    override fun onItemClick(nowShowingList: ArrayList<LoyaltyDataResponse.Voucher>, position: Int) {
+
+        openDialog(nowShowingList,position)
+    }
+
+    override fun onItemTermsClick(info: String) {
+        showATDialog(context,info)
+    }
+
+    private fun showATDialog(mContext: Context?, format: String) {
+        val dialog = Dialog(mContext!!)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.atinfo_dialoge)
+        dialog.window!!.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.window!!.setGravity(Gravity.CENTER)
+        val tv: TextView = dialog.findViewById<View>(R.id.message) as TextView
+        val cross: TextView = dialog.findViewById<View>(R.id.cross) as TextView
+        val close: TextView = dialog.findViewById<View>(R.id.close) as TextView
+        val dboxmessage: TextView = dialog.findViewById<View>(R.id.dboxmessage) as TextView
+        val logot = dialog.findViewById<View>(R.id.logot) as ImageView
+        close.setText("CLOSE")
+        val dboxview = dialog.findViewById<View>(R.id.dboxview)
+        logot.hide()
+        dboxview.hide()
+        dboxmessage.hide()
+        cross.text = "Terms & Conditions"
+        tv.text = format.replace("\\|".toRegex(), "\n")
+        cross.setOnClickListener(View.OnClickListener { dialog.dismiss() })
+        close.setOnClickListener(View.OnClickListener { dialog.dismiss() })
+        dialog.show()
+    }
+
+    fun openDialog(voucherNewCombineLists: ArrayList<LoyaltyDataResponse.Voucher>, pos: Int) {
+        val dialog = context?.let { Dialog(it) }
+        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog?.setCancelable(false)
+        dialog?.setContentView(R.layout.voc_detail_dailog_view)
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
+        dialog?.window?.setGravity(Gravity.CENTER)
+        dialog?.setTitle("")
+        val crossImageView = dialog?.findViewById<ImageView>(R.id.tvCross)
+        crossImageView?.setOnClickListener { dialog?.dismiss() }
+        val adapter: ViewPagerAdapter =
+            ViewPagerAdapter(requireContext(), voucherNewCombineLists)
+        val pager: CustomViewPager =
+            dialog?.findViewById<View>(R.id.overlap_pager) as CustomViewPager
+        pager.adapter = adapter
+        pager.currentItem = pos
+        val bundle1 = Bundle()
+        dialog?.show()
+    }
+
+    class ViewPagerAdapter(
+        private val mContext: Context,
+        voucherNewCombineLists: java.util.ArrayList<LoyaltyDataResponse.Voucher>
+    ) :
+        PagerAdapter() {
+        var voucherNewCombineLists: java.util.ArrayList<LoyaltyDataResponse.Voucher>
+
+        init {
+            this.voucherNewCombineLists = voucherNewCombineLists
+        }
+
+        override fun getCount(): Int {
+            return if (voucherNewCombineLists.size > 15) {
+                voucherNewCombineLists.size / 2
+            } else {
+                voucherNewCombineLists.size
+            }
+        }
+
+        override fun isViewFromObject(view: View, `object`: Any): Boolean {
+            return view === `object` as RelativeLayout
+        }
+
+        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+            container.removeView(`object` as RelativeLayout)
+        }
+
+        @SuppressLint("SetTextI18n")
+        override fun instantiateItem(container: ViewGroup, position: Int): Any {
+            val itemView: View = LayoutInflater.from(mContext)
+                .inflate(R.layout.privilege_voc_detail_item, container, false)
+            val qrImageView = itemView.findViewById(R.id.qr_code_pv) as ImageView
+            val qrCodeTextView: TextView = itemView.findViewById(R.id.qr_text) as TextView
+            val vocTypeDetailsTextView: TextView = itemView.findViewById(R.id.voc_type_details) as TextView
+            val detailsVocTextView: TextView = itemView.findViewById(R.id.details_voc) as TextView
+            //PCTextView subDetailsTextView=itemView.findViewById(R.id.voc_sub_details);
+            val exPcTextView: TextView = itemView.findViewById(R.id.ex_date) as TextView
+            val textValid: TextView = itemView.findViewById(R.id.text_valid) as TextView
+            PrivilegeVochersAdapter.generateQrcode(qrImageView).execute(
+                voucherNewCombineLists[position].cd
+            )
+            qrCodeTextView.text = voucherNewCombineLists[position].cd
+            vocTypeDetailsTextView.text = voucherNewCombineLists[position].tpt
+            detailsVocTextView.text = Html.fromHtml(
+                Html.fromHtml(
+                    voucherNewCombineLists[position].itd
+                ).toString()
+            ).toString() + " " + voucherNewCombineLists[position].itn
+            // subDetailsTextView.setText(voucherNewCombineLists.get(position).getVoucherVo().getItn());
+            if (getDays( voucherNewCombineLists[position].ex) > 1) {
+                exPcTextView.text = getDays( voucherNewCombineLists[position].ex).toString() + " days left"
+            } else {
+                exPcTextView.text = getDays( voucherNewCombineLists[position].ex).toString() + " day left"
+            }
+            textValid.text = voucherNewCombineLists[position].ex
+            container.addView(itemView)
+            return itemView
+        }
+    }
+
+    companion object{
+        fun getDays(ex:String):Int{
+                var vocEx: Date? = null
+                val today = Calendar.getInstance().time
+                val simpleDateFormat = SimpleDateFormat("MMM dd yyyy hh:mma", Locale.US)
+                try {
+                    vocEx = simpleDateFormat.parse(ex)
+                } catch (e: ParseException) {
+                    e.printStackTrace()
+                }
+            return if (today.time <= (vocEx?.time ?: 0)) {
+                val l = vocEx?.time ?: (0 - today.time)
+                val days = (l / (1000 * 60 * 60 * 24)).toInt()
+                days
+            } else {
+                0
+            }
+
+        }
+    }
+
+    private fun openHowToWork() {
+        storyDialog = Dialog(requireContext())
+        storyDialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        storyDialog?.setCancelable(false)
+        storyDialog?.setContentView(R.layout.how_it_work_layout)
+        storyDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        storyDialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        storyDialog?.window?.setGravity(Gravity.CENTER)
+        storyDialog?.setTitle("")
+        val RlBanner = storyDialog?.findViewById<View>(R.id.RlBannerl) as RelativeLayout
+        RlBanner.visibility = View.VISIBLE
+        storiesProgressView = storyDialog?.findViewById<View>(R.id.storiesl) as StoriesProgressView
+        storiesProgressView?.setStoriesCount(Constant.PrivilegeHomeResponseConst?.st?.size!!) // <- set stories
+        storiesProgressView?.setStoryDuration(5000L) // <- set a story duration
+        storiesProgressView?.setStoriesListener(this@MemberFragment) // <- set listener
+        storiesProgressView?.startStories() // <- start progress
+        counterStory = 0
+        val ivplay = storyDialog?.findViewById<View>(R.id.iv_play) as LinearLayout
+        val tv_button = storyDialog?.findViewById<View>(R.id.tv_button) as TextView
+        val ivCross: TextView = storyDialog?.findViewById<View>(R.id.crossText) as TextView
+        ivCross.setOnClickListener(View.OnClickListener {
+            storiesProgressView?.destroy()
+            currentPage = 0
+            storyDialog?.dismiss()
+        })
+        ivplay.visibility = View.GONE
+        tv_button.visibility = View.GONE
+        ivBanner = storyDialog?.findViewById<View>(R.id.storyList) as RecyclerView
+        val layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        ivBanner?.layoutManager = layoutManager
+        recyclerAdapter = HowItWorkAdapter(Constant.PrivilegeHomeResponseConst?.st!!, requireActivity(), this)
+        ivBanner?.adapter = recyclerAdapter
+        recyclerAdapter?.notifyDataSetChanged()
+        val reverse: View = storyDialog?.findViewById<View>(R.id.reversel) as View
+        reverse.setOnClickListener { storiesProgressView?.reverse() }
+        reverse.setOnTouchListener(onTouchListener)
+
+        // bind skip view
+        val skip: View = storyDialog?.findViewById<View>(R.id.skipl) as View
+        skip.setOnClickListener { // Toast.makeText(context, "called", Toast.LENGTH_SHORT).show();
+            storiesProgressView?.skip()
+        }
+        skip.setOnTouchListener(onTouchListener)
+        storyDialog?.show()
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private val onTouchListener = OnTouchListener { v, event ->
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                pressTime = System.currentTimeMillis()
+                storiesProgressView!!.pause()
+                return@OnTouchListener false
+            }
+            MotionEvent.ACTION_UP -> {
+                val now = System.currentTimeMillis()
+                storiesProgressView!!.resume()
+                return@OnTouchListener limit < now - pressTime
+            }
+        }
+        false
+    }
+    override fun onNext() {
+        if (!TextUtils.isEmpty(Constant.PrivilegeHomeResponseConst?.st?.get(counterStory)?.pi)) {
+            ++counterStory
+            ivBanner!!.smoothScrollToPosition(counterStory)
+        }
+    }
+
+    override fun onPrev() {
+        if (counterStory - 1 < 0) return
+        if (!TextUtils.isEmpty(Constant.PrivilegeHomeResponseConst?.st?.get(counterStory)?.pi)) {
+            --counterStory
+            ivBanner?.smoothScrollToPosition(counterStory)
+        }
+    }
+
+    override fun onComplete() {
+        storiesProgressView?.destroy()
+        currentPage = 0
+        if (storyDialog != null && storyDialog?.isShowing == true) {
+            storyDialog?.dismiss()
+        }
+        storiesProgressView?.startStories()
+    }
+
+    override fun openRedirection() {
 
     }
+
+
 }
