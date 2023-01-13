@@ -3,43 +3,44 @@ package com.net.pvr1.ui.seatLayout
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
+import android.content.BroadcastReceiver
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.util.TypedValue
-import android.view.Gravity
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.view.*
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySeatLayoutBinding
+import com.net.pvr1.databinding.SeatLayoutDilogBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.bookingSession.response.BookingResponse.Output.Cinema.*
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.FoodActivity
-import com.net.pvr1.ui.food.old.OldFoodActivity
 import com.net.pvr1.ui.seatLayout.adapter.CinemaShowsAdapter
 import com.net.pvr1.ui.seatLayout.adapter.ShowsAdapter
 import com.net.pvr1.ui.seatLayout.request.ReserveSeatRequest
 import com.net.pvr1.ui.seatLayout.response.*
 import com.net.pvr1.ui.seatLayout.viewModel.SeatLayoutViewModel
 import com.net.pvr1.ui.summery.SummeryActivity
+import com.net.pvr1.ui.webView.WebViewActivity
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
@@ -47,12 +48,16 @@ import com.net.pvr1.utils.Constant.Companion.SELECTED_SEAT
 import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
 import dagger.hilt.android.AndroidEntryPoint
 import java.math.BigDecimal
+import javax.inject.Inject
 
 
 @Suppress("DEPRECATION", "NAME_SHADOWING")
 @AndroidEntryPoint
 class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClickListenerCity,
     CinemaShowsAdapter.RecycleViewItemClickListener {
+
+    @Inject
+    lateinit var preferences: PreferenceManager
     private var binding: ActivitySeatLayoutBinding? = null
     private val authViewModel: SeatLayoutViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -91,6 +96,11 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     private var tncValue = 1
     private var offerEnable = false
 
+    //Bottom Dialog
+    private var dialog: BottomSheetDialog? = null
+
+    //internet Check
+    private var broadcastReceiver: BroadcastReceiver? = null
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -110,7 +120,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             cinemaSessionShows =
                 intent.getSerializableExtra("CinemaShows") as ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>
 
-            val position=intent.getStringExtra("position").toString()
+            val position = intent.getStringExtra("position").toString()
             cinemaShows(position)
         } else {
             showsArray = intent.getSerializableExtra("shows") as ArrayList<Child.Sw.S>
@@ -120,7 +130,9 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         // manage offer
         if (intent.getStringExtra("skip").toString() == "false") {
             binding?.constraintLayout60?.show()
-            binding?.textView202?.text = "(You’ll save ${getString(R.string.currency)}  ${intent.getStringExtra("discountPrice").toString()})"
+            binding?.textView202?.text = "(You’ll save ${getString(R.string.currency)}  ${
+                intent.getStringExtra("discountPrice").toString()
+            })"
             offerEnable = true
         } else {
             binding?.constraintLayout60?.hide()
@@ -146,33 +158,15 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         reserveSeat()
         initTrans()
         movedNext()
+        getShimmerData()
+    }
+
+    private fun getShimmerData() {
+        Constant().getData(binding?.include38?.tvFirstText, binding?.include38?.tvSecondText)
+        Constant().getData(binding?.include38?.tvSecondText, null)
     }
 
     private fun movedNext() {
-        //Alert Dialog
-        binding?.imageView97?.setOnClickListener {
-            val dialog = Dialog(this)
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialog.setContentView(R.layout.seat_layout_dilog)
-            dialog.window!!.setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-            val privacy = dialog.findViewById<TextView>(R.id.textView304)
-            val btnName = dialog.findViewById<TextView>(R.id.textView5)
-            privacy.paintFlags = privacy.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
-            dialog.window!!.setGravity(Gravity.BOTTOM)
-
-            btnName.text = getString(R.string.okay)
-
-            btnName.setOnClickListener {
-                dialog.dismiss()
-            }
-
-            dialog.show()
-        }
-
         // back btn
         binding?.imageView95?.setOnClickListener {
             onBackPressed()
@@ -180,9 +174,55 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
         // Share data
         binding?.imageView96?.setOnClickListener {
-            Constant().shareData(this,"","")
+            Constant().shareData(this, "", "")
         }
 
+        //Alert Dialog
+        binding?.imageView97?.setOnClickListener {
+
+            dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
+            dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+            //profileDialog
+            val inflater = LayoutInflater.from(this)
+            val bindingSeat = SeatLayoutDilogBinding.inflate(inflater)
+            val behavior: BottomSheetBehavior<FrameLayout>? = dialog?.behavior
+
+            behavior?.state = BottomSheetBehavior.STATE_EXPANDED
+            dialog?.setContentView(bindingSeat.root)
+            dialog?.window?.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+
+            dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog?.window?.attributes?.windowAnimations = R.style.DialogAnimation
+            dialog?.window?.setGravity(Gravity.BOTTOM)
+            dialog?.show()
+
+            dialog?.window?.setGravity(Gravity.BOTTOM)
+            // under line
+            bindingSeat.textView304.paintFlags =
+                bindingSeat.textView304.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+
+            //click
+            bindingSeat.textView304.setOnClickListener {
+                val intent = Intent(this, WebViewActivity::class.java)
+                intent.putExtra("from", "more")
+                intent.putExtra("title", getString(R.string.terms_condition_text))
+                intent.putExtra("getUrl", Constant.privacy)
+                startActivity(intent)
+            }
+
+            bindingSeat.include23.textView5.text = getString(R.string.okay)
+
+            bindingSeat.include23.textView5.setOnClickListener {
+                dialog?.dismiss()
+            }
+        }
+
+        //internet Check
+        broadcastReceiver = NetworkReceiver()
+        broadcastIntent()
     }
 
     //Shows
@@ -201,7 +241,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     private fun cinemaShows(position: String) {
         val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
         binding?.recyclerView27?.layoutManager = LinearLayoutManager(this)
-        val adapter = CinemaShowsAdapter(cinemaSessionShows, this, this,position)
+        val adapter = CinemaShowsAdapter(cinemaSessionShows, this, this, position)
         binding?.recyclerView27?.layoutManager = gridLayout
         binding?.recyclerView27?.adapter = adapter
 
@@ -269,9 +309,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-
                         retrieverReserveSeatData(it.data.output)
-
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -280,7 +318,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
                             positiveClick = {
-                                finish()
                             },
                             negativeClick = {})
                         dialog.show()
@@ -309,19 +346,20 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     private fun retrieverReserveSeatData(output: ReserveSeatResponse.Output) {
         BOOKING_ID = output.bookingid
         SELECTED_SEAT = selectedSeats.size
+        printLog("checkNf--->${output.nf}")
         when (output.nf) {
             "true" -> {
                 startActivity(Intent(this, FoodActivity::class.java))
             }
             "false" -> {
-                startActivity(Intent(this, OldFoodActivity::class.java))
+                startActivity(Intent(this, FoodActivity::class.java))
+//                startActivity(Intent(this, OldFoodActivity::class.java))
             }
             else -> {
                 startActivity(Intent(this, SummeryActivity::class.java))
 
             }
         }
-
     }
 
     //initTrans
@@ -389,11 +427,17 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     }
 
     private fun retrieveData(data: SeatResponse.Output) {
+        //shimmer
+        binding?.constraintLayout145?.hide()
+        //design
+        binding?.constraintLayout153?.show()
+
         if (data.ca_a) {
             binding?.imageView97?.show()
         } else {
             binding?.imageView97?.hide()
         }
+
         //title
         binding?.textView197?.text = data.mn
         //location
@@ -468,8 +512,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.seat_t_c_dialog_layout)
         dialog.window!!.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
@@ -1780,4 +1823,12 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             CINEMA_ID, sessionId, "", "", "", false, ""
         )
     }
+
+    //Internet Check
+    private fun broadcastIntent() {
+        registerReceiver(
+            broadcastReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        )
+    }
+
 }

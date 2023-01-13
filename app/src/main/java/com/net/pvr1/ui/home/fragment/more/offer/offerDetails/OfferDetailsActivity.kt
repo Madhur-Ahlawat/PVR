@@ -1,17 +1,16 @@
 package com.net.pvr1.ui.home.fragment.more.offer.offerDetails
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityOfferDetialsBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.more.offer.offerDetails.viewModel.OfferDetailsViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.di.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -44,11 +43,7 @@ class OfferDetailsActivity : AppCompatActivity() {
 
         //Share
         binding?.imageView93?.setOnClickListener {
-            val shareIntent = Intent()
-            shareIntent.action = Intent.ACTION_SEND
-            shareIntent.type = "text/plain"
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.")
-            startActivity(Intent.createChooser(shareIntent, getString(R.string.app_name)))
+            Constant().shareData(this,"","")
         }
     }
 

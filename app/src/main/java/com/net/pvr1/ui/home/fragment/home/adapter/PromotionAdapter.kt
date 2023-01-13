@@ -41,9 +41,7 @@ class PromotionAdapter(
         with(holder) {
             with(movies[position]) {
                 //IMAGE
-                Glide.with(context)
-                    .load(this.i)
-                    .error(R.drawable.placeholder_horizental)
+                Glide.with(context).load(this.i).error(R.drawable.placeholder_horizental)
                     .into(binding.sliderImg)
 
                 //ITEM WIDTH
@@ -95,34 +93,35 @@ class PromotionAdapter(
                 }
 
                 //Manage Functions
-                if (this.type == "IMAGE" && this.redirectView == "DEEPLINK") {
-                    binding.tvPlay.hide()
-                    Constant().shareData(context, "", this.redirectView)
+                holder.itemView.setOnClickListener {
+                    if (this.type == "IMAGE" && this.redirectView == "DEEPLINK") {
+                        binding.tvPlay.hide()
+                        Constant().shareData(context, "", this.redirectView)
 
-                } else if (this.type == "IMAGE" && this.redirectView == "INAPP") {
-                    binding.tvPlay.hide()
-                    //click
-                    holder.itemView.setOnClickListener {
+                    } else if (this.type == "IMAGE" && this.redirectView == "INAPP") {
+                        binding.tvPlay.hide()
+                        //click
                         val intent = Intent(context, WebViewActivity::class.java)
                         intent.putExtra("from", "more")
-                        intent.putExtra("title", context.getString(R.string.terms_condition_text))
+                        intent.putExtra(
+                            "title", context.getString(R.string.terms_condition_text)
+                        )
                         intent.putExtra("getUrl", Constant.termsCondition)
                         context.startActivity(intent)
-                    }
 
-                } else if (this.type == "VIDEO" && this.redirectView != "") {
-                    binding.tvPlay.show()
-                    //click
-                    holder.itemView.setOnClickListener {
+                    } else if (this.type == "VIDEO" && this.redirectView != "") {
+                        binding.tvPlay.show()
+                        //click
                         val intent = Intent(context, PlayerActivity::class.java)
                         intent.putExtra("trailerUrl", this.trailerUrl)
                         context.startActivity(intent)
+
+                    } else {
+                        binding.tvPlay.hide()
+
                     }
-
-                } else {
-                    binding.tvPlay.hide()
-
                 }
+
 
             }
         }

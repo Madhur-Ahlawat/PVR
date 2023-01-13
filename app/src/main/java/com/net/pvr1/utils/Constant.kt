@@ -80,13 +80,13 @@ class Constant {
         const val USER_ID = "user_id"
         const val SEAT_AVAILABEL = 1
         var TRANSACTION_ID = "0"
-        var OfferDialogImage = "0"
         var BOOKING_ID = "0"
+        var CINEMA_ID = "0"
+        var OfferDialogImage = "0"
         var SELECTED_SEAT = 0
         var SESSION_ID = "0"
         var PRIVILEGEPOINT = "0"
         var PRIVILEGEVOUCHER = "0"
-        var CINEMA_ID = "0"
         const val CITY = "Delhi-NCR"
         const val CITY_CC = "City-Name"
         const val LATITUDE = "lat"
@@ -152,7 +152,6 @@ class Constant {
 
 
         // OFFERS
-
         var PROMOCODE = "O104"
         var ACCENTIVE = "o111"
         var M_COUPON = "O102"
@@ -162,11 +161,9 @@ class Constant {
 
         fun isPackageInstalled(packageManager: PackageManager): Boolean {
             return try {
-                //            "com.dreamplug.androidapp.dev"
-                //           "com.dreamplug.androidapp"
                 packageManager.getPackageInfo("com.dreamplug.androidapp.dev", 0)
                 true
-            } catch (e: PackageManager.NameNotFoundException) {
+            } catch (e: NameNotFoundException) {
                 e.printStackTrace()
                 println("NameNotFoundException---" + e.message)
                 false

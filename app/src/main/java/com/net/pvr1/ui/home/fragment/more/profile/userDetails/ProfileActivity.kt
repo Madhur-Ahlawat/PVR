@@ -18,6 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityProfileBinding
 import com.net.pvr1.databinding.EditProfileDialogBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.more.profile.userDetails.viewModel.UserProfileViewModel
@@ -25,7 +26,6 @@ import com.net.pvr1.ui.home.fragment.more.response.ProfileResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.ProfileResponseConst
 import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.di.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.internal.and
 import java.security.MessageDigest
@@ -258,25 +258,9 @@ class ProfileActivity : AppCompatActivity() {
         //martial status
         binding?.textView223?.text = output.ms
         //anniversary
+        if (output.doa!=null)
         binding?.textView225?.text = output.doa.toString()
 
-//        //Update
-//        //name
-//        bindingProfile.name.setText(preferences.getUserName())
-//        //phone
-//        bindingProfile.phone.setText(profileResponse?.ph)
-//        //email
-//        bindingProfile.email.setText(profileResponse?.em)
-//        //gender
-//        bindingProfile.gender.setText(profileResponse?.g)
-//        //dob
-//        dob = bindingProfile.dob
-//        dob?.text = profileResponse?.dob
-//        //martial status
-//        bindingProfile.martialStatus.setText(profileResponse?.ms)
-//        //anniversary
-//        anniversary = bindingProfile.anniversary
-//        anniversary?.text = profileResponse?.doa.toString()
     }
 
     private fun profileUpdate() {

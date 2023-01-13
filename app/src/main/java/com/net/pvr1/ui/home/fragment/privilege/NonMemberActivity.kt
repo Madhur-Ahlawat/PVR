@@ -106,7 +106,7 @@ class NonMemberActivity : AppCompatActivity() {
                             )
                         )
                     ) {
-                        HomeActivity.review_position = i
+                        HomeActivity.reviewPosition = i
                         binding?.tvEnroll?.text = "Join Now"
                         binding?.privilegeView?.salted?.text = "Salted"
                         binding?.privilegeView?.points?.text =
@@ -117,7 +117,7 @@ class NonMemberActivity : AppCompatActivity() {
                 } else if (intent?.getStringExtra("type").equals("PP", ignoreCase = true)) {
                     try {
                         if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(i)?.ptype.equals(intent?.getStringExtra("type"))) {
-                            HomeActivity.review_position = i
+                            HomeActivity.reviewPosition = i
                             binding?.parrentView?.setBackgroundResource(R.drawable.gradient_passport)
                             binding?.passportView?.visitCount?.text = NonMemberFragment.visits
                             binding?.passportView?.topText?.text =
@@ -133,7 +133,7 @@ class NonMemberActivity : AppCompatActivity() {
                     }
                 } else {
                     if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(i)?.ptype.equals(intent?.getStringExtra("type"))) {
-                        HomeActivity.review_position = i
+                        HomeActivity.reviewPosition = i
                         binding?.tvEnroll?.text = "Apply Now"
                         binding?.privilegeView?.salted?.text = "Salted on your first visit after joining"
                         binding?.privilegeView?.points?.text = "on Tickets & Food items"
@@ -142,10 +142,10 @@ class NonMemberActivity : AppCompatActivity() {
                     }
                 }
             }
-            if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(HomeActivity.review_position)?.ptype.equals("P")) {
+            if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(HomeActivity.reviewPosition)?.ptype.equals("P")) {
                 binding?.passportView?.root?.hide()
                 binding?.privilegeView?.root?.show()
-            } else if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(HomeActivity.review_position)?.ptype.equals("PP")) {
+            } else if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(HomeActivity.reviewPosition)?.ptype.equals("PP")) {
                 binding?.privilegeView?.boxKotak?.hide()
                 binding?.passportView?.root?.show()
                 binding?.privilegeView?.root?.hide()
@@ -155,7 +155,7 @@ class NonMemberActivity : AppCompatActivity() {
                 binding?.privilegeView?.root?.show()
 
             }
-            binding?.privilegeCardList?.scrollToPosition(HomeActivity.review_position)
+            binding?.privilegeCardList?.scrollToPosition(HomeActivity.reviewPosition)
             binding?.privilegeCardList?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
@@ -163,12 +163,12 @@ class NonMemberActivity : AppCompatActivity() {
                         //Dragging
                     } else if (newState == RecyclerView.SCROLL_STATE_IDLE) {
 
-                        HomeActivity.review_position =
+                        HomeActivity.reviewPosition =
                             HomeActivity.getCurrentItem(binding?.privilegeCardList!!)
-                        println("review_position3--->${HomeActivity.review_position}")
+                        println("review_position3--->${HomeActivity.reviewPosition}")
 
-                        if (HomeActivity.review_position == -1) HomeActivity.review_position = 0
-                        if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(HomeActivity.review_position)?.ptype.equals("PP")) {
+                        if (HomeActivity.reviewPosition == -1) HomeActivity.reviewPosition = 0
+                        if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(HomeActivity.reviewPosition)?.ptype.equals("PP")) {
                             binding?.passportView?.root?.show()
                             binding?.tvTerms1?.show()
                             binding?.tvEnroll?.text = "Join for ₹" + NonMemberFragment.scheme_price.toInt() / 100
@@ -180,7 +180,7 @@ class NonMemberActivity : AppCompatActivity() {
                                 )
                             binding?.privilegeView?.boxKotak?.hide()
                             binding?.parrentView?.setBackgroundResource(R.drawable.gradient_passport)
-                        } else if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(HomeActivity.review_position)?.ptype.equals("PPP")) {
+                        } else if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(HomeActivity.reviewPosition)?.ptype.equals("PPP")) {
                             binding?.passportView?.root?.hide()
                             binding?.tvTerms1?.show()
                             binding?.privilegeView?.boxKotak?.show()
@@ -213,7 +213,7 @@ class NonMemberActivity : AppCompatActivity() {
                     /* Log.e ("VisibleItem", String.valueOf(firstVisibleItem));*/
                 }
             })
-            NonMemberFragment.visits = Constant.PrivilegeHomeResponseConst?.pinfo!![HomeActivity.review_position].visits
+            NonMemberFragment.visits = Constant.PrivilegeHomeResponseConst?.pinfo!![HomeActivity.reviewPosition].visits
         } catch (e: Exception) {
             e.printStackTrace()
         }

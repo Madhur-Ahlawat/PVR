@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.home
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.app.NotificationManager
 import android.content.Context
@@ -57,7 +58,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickListenerCity,
-    PrivilegeHomeDialogAdapter.RecycleViewItemClickListener,PlayPopup {
+    PrivilegeHomeDialogAdapter.RecycleViewItemClickListener, PlayPopup {
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityHomeBinding? = null
@@ -73,25 +74,27 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     private val fourthFragment = ComingSoonFragment()
     private val fifthFragment = MoreFragment()
 
-    companion object{
-        var review_position = 0
-        var pcheck = "0"
-        var pdays = "0"
+    companion object {
+        var reviewPosition = 0
+        var pCheck = "0"
+        var pDays = "0"
         fun getCurrentItem(recyclerView: RecyclerView): Int {
             return (Objects.requireNonNull(recyclerView.layoutManager) as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
         switchFragment()
+
         //setUserName
         if (preferences.getIsLogin()) {
             binding?.includeAppBar?.profileBtn?.show()
-            binding?.includeAppBar?.textView2?.text = "Hello, "+preferences.getUserName()
+            binding?.includeAppBar?.textView2?.text = "Hello, " + preferences.getUserName()
         } else {
             binding?.includeAppBar?.profileBtn?.hide()
             binding?.includeAppBar?.textView2?.text = "Hello!"
@@ -119,7 +122,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         // Profile
         binding?.includeAppBar?.profileBtn?.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
-            intent.putExtra("from","home")
+            intent.putExtra("from", "home")
             startActivity(intent)
         }
 
@@ -138,11 +141,11 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         setCurrentFragment(firstFragment)
         binding?.bottomNavigationView?.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.homeFragment ->{
+                R.id.homeFragment -> {
                     setCurrentFragment(firstFragment)
-                    if (offerShow){
+                    if (offerShow) {
                         binding?.constraintLayout55?.show()
-                    }else{
+                    } else {
                         binding?.constraintLayout55?.hide()
                     }
                 }
@@ -150,7 +153,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                     setCurrentFragment(secondFragment)
                     binding?.includeAppBar?.textView2?.text = getString(R.string.all_theaters)
                 }
-                R.id.privilegeFragment ->managePrivilege()
+                R.id.privilegeFragment -> managePrivilege()
                 R.id.comingSoonFragment -> setCurrentFragment(fourthFragment)
                 R.id.moreFragment -> setCurrentFragment(fifthFragment)
             }
@@ -163,8 +166,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.offer_dialog)
         dialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
@@ -197,8 +199,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window!!.setLayout(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         dialog.show()
 
@@ -206,9 +207,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         val icon = dialog.findViewById<ImageView>(R.id.logo)
         val turnOn = dialog.findViewById<TextView>(R.id.turnOn)
         //icon
-        Glide.with(this)
-            .load(PrivilegeHomeResponseConst?.pinfo?.get(0)?.plogo)
-            .into(icon!!)
+        Glide.with(this).load(PrivilegeHomeResponseConst?.pinfo?.get(0)?.plogo).into(icon!!)
 
         // add pager behavior
         val snapHelper = PagerSnapHelper()
@@ -217,24 +216,24 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
             GridLayoutManager(this@HomeActivity, 1, GridLayoutManager.HORIZONTAL, false)
         recyclerView?.layoutManager = LinearLayoutManager(this@HomeActivity)
         val adapter =
-            PrivilegeHomeResponseConst?.pinfo?.let { PrivilegeHomeDialogAdapter(it, this,0, this) }
+            PrivilegeHomeResponseConst?.pinfo?.let { PrivilegeHomeDialogAdapter(it, this, 0, this) }
         recyclerView?.layoutManager = gridLayout
         recyclerView?.adapter = adapter
         val mSnapHelper = PagerSnapHelper()
-        if ( PrivilegeHomeResponseConst?.pinfo?.size!! > 1) {
-            review_position = 0
+        if (PrivilegeHomeResponseConst?.pinfo?.size!! > 1) {
+            reviewPosition = 0
             recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
-                    println("review_positionnewState--->$newState")
+                    println("reviewPositionNewState--->$newState")
                     if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
                         //Dragging
                     } else if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        review_position = getCurrentItem(recyclerView)
+                        reviewPosition = getCurrentItem(recyclerView)
 
 
                         /*
-                    Here load the Image to image view with picaso
+                    Here load the Image to image view with Glide
                  */
                     }
                 }
@@ -261,51 +260,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.fragment, fragment)
             commit()
-    }
-
-//    private fun offerDataLoad() {
-//        authViewModel.userResponseOfferLiveData.observe(this) {
-//            when (it) {
-//                is NetworkResult.Success -> {
-//                    loader?.dismiss()
-//                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-//                        printLog("output--->${it.data.output}")
-//                        retrieveData(it.data.output)
-//                    } else {
-//                        val dialog = OptionDialog(this,
-//                            R.mipmap.ic_launcher,
-//                            R.string.app_name,
-//                            it.data?.msg.toString(),
-//                            positiveBtnText = R.string.ok,
-//                            negativeBtnText = R.string.no,
-//                            positiveClick = {
-//                            },
-//                            negativeClick = {
-//                            })
-//                        dialog.show()
-//                    }
-//                }
-//                is NetworkResult.Error -> {
-//                    loader?.dismiss()
-//                    val dialog = OptionDialog(this,
-//                        R.mipmap.ic_launcher,
-//                        R.string.app_name,
-//                        it.message.toString(),
-//                        positiveBtnText = R.string.ok,
-//                        negativeBtnText = R.string.no,
-//                        positiveClick = {
-//                        },
-//                        negativeClick = {
-//                        })
-//                    dialog.show()
-//                }
-//                is NetworkResult.Loading -> {
-////                    loader = LoaderDialog(R.string.pleasewait)
-////                    loader?.show(supportFragmentManager, null)
-//                }
-//            }
-//        }
-//    }
+        }
 
     private fun privilegeDataLoad() {
         authViewModel.privilegeHomeResponseLiveData.observe(this) {
@@ -313,23 +268,15 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        Constant.PRIVILEGEPOINT= it.data.output.pt
-                        PRIVILEGEVOUCHER= it.data.output.vou
+                        Constant.PRIVILEGEPOINT = it.data.output.pt
+                        PRIVILEGEVOUCHER = it.data.output.vou
                         privilegeRetrieveData(it.data.output)
                     } else {
-                        if (it?.data?.output!=null)
-                        privilegeRetrieveData(it.data.output)
-//                        val dialog = OptionDialog(this,
-//                            R.mipmap.ic_launcher,
-//                            R.string.app_name,
-//                            it.data?.msg.toString(),
-//                            positiveBtnText = R.string.ok,
-//                            negativeBtnText = R.string.no,
-//                            positiveClick = {
-//                            },
-//                            negativeClick = {
-//                            })
-//                        dialog.show()
+                        if (it.data?.output != null) it.data.output.let { it1 ->
+                            privilegeRetrieveData(
+                                it1
+                            )
+                        }
                     }
                 }
                 is NetworkResult.Error -> {
@@ -340,15 +287,11 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-//                    loader = LoaderDialog(R.string.pleasewait)
-//                    loader?.show(supportFragmentManager, null)
                 }
             }
         }
@@ -357,39 +300,25 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     private fun privilegeRetrieveData(output: PrivilegeHomeResponse.Output) {
         try {
             PrivilegeHomeResponseConst = output
-            pcheck = output.pcheck
+            pCheck = output.pcheck
             preferences.saveString("FAQ", output.faq)
-            pdays = output.pdays
+            pDays = output.pdays
             preferences.saveString(Constant.SharedPreference.pcities, output.pcities)
             preferences.saveString("KOTAK_URL", output.pkotakurl)
             val jsonObject1 = JSONObject()
             jsonObject1.put("points", output.pt)
             jsonObject1.put("voucher", output.vou)
-            preferences
-                .saveString(Constant.SharedPreference.LOYALITY_POINT, jsonObject1.toString())
-            preferences
-                .saveString(Constant.SharedPreference.LOYALITY_CARD, output.passportbuy.toString())
-            preferences
-                .saveString(Constant.SharedPreference.SUBS_OPEN, output.passport.toString())
-            preferences
-                .saveString(Constant.SharedPreference.LOYALITY_STATUS, output.ls)
-            preferences
-                .saveString(Constant.SharedPreference.SUBSCRIPTION_STATUS,output.ulm)
-        }catch (e:Exception){
-
+            preferences.saveString(Constant.SharedPreference.LOYALITY_POINT, jsonObject1.toString())
+            preferences.saveString(
+                    Constant.SharedPreference.LOYALITY_CARD,
+                    output.passportbuy.toString()
+                )
+            preferences.saveString(Constant.SharedPreference.SUBS_OPEN, output.passport.toString())
+            preferences.saveString(Constant.SharedPreference.LOYALITY_STATUS, output.ls)
+            preferences.saveString(Constant.SharedPreference.SUBSCRIPTION_STATUS, output.ulm)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-    }
-
-    private fun retrieveData(output: ArrayList<OfferResponse.Output>) {
-        if (output.isNotEmpty()){
-            offerShow=true
-            binding?.constraintLayout55?.show()
-        }else{
-            offerShow= false
-            binding?.constraintLayout55?.hide()
-        }
-        offerResponse = output
-        showOfferDialog()
     }
 
     override fun offerClick(comingSoonItem: OfferResponse.Output) {
@@ -405,10 +334,8 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                 getString(R.string.exitApp),
                 positiveBtnText = R.string.ok,
                 negativeBtnText = R.string.no,
-                positiveClick = {
-                },
-                negativeClick = {
-                })
+                positiveClick = {},
+                negativeClick = {})
             dialog.show()
             finish()
 
@@ -424,8 +351,8 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     override fun onShowNotification() {
         if (!areNotificationsEnabled()) {
             if (preferences.getString(Constant.SharedPreference.NT) == "true") {
-                showDialog( this@HomeActivity,
-                    preferences.getString(Constant.SharedPreference.NTBT)
+                showDialog(
+                    this@HomeActivity, preferences.getString(Constant.SharedPreference.NTBT)
                 )
             }
         }
@@ -460,33 +387,31 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         }
     }
 
+    @SuppressLint("InlinedApi")
     private fun showDialog(mContext: Context?, banner: String?) {
         if (hasMonthPassed()) {
-            preferences.saveLong("SHOW_POP", System.currentTimeMillis().toLong())
+            preferences.saveLong("SHOW_POP", System.currentTimeMillis())
             val dialog = BottomSheetDialog(mContext!!, R.style.NoBackgroundDialogTheme)
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog.setContentView(R.layout.notification_dialoge)
             dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
             dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog.window!!.setLayout(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
             )
             dialog.window!!.setGravity(Gravity.CENTER)
             val latter = dialog.findViewById<View>(R.id.latter) as TextView?
             val turnOn = dialog.findViewById<View>(R.id.turnOn) as TextView?
             val bannerImg = dialog.findViewById<View>(R.id.bannerImg) as ImageView?
-                          Glide.with(mContext)
-                    .load(banner)
-                              .error(R.drawable.placeholder_horizontal_movie)
-                   .into(bannerImg!!)
+            Glide.with(mContext).load(banner).error(R.drawable.placeholder_horizontal_movie)
+                .into(bannerImg!!)
 
 
             turnOn!!.setOnClickListener {
-                val settingsIntent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    .putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
-                    .putExtra(Settings.EXTRA_CHANNEL_ID, "WAP")
+                val settingsIntent =
+                    Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        .putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+                        .putExtra(Settings.EXTRA_CHANNEL_ID, "WAP")
                 startActivity(settingsIntent)
                 dialog.dismiss()
             }
@@ -507,32 +432,29 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         }
     }
 
-    private fun managePrivilege(){
-        if (preferences.getIsLogin()){
-            val ls = preferences
-                .getString(Constant.SharedPreference.LOYALITY_STATUS)
-            val isHl: String = preferences
-                .getString(Constant.SharedPreference.IS_HL)
-            val isLy: String = preferences
-                .getString(Constant.SharedPreference.IS_LY)
+    private fun managePrivilege() {
+        if (preferences.getIsLogin()) {
+            val ls = preferences.getString(Constant.SharedPreference.LOYALITY_STATUS)
+            val isHl: String = preferences.getString(Constant.SharedPreference.IS_HL)
+            val isLy: String = preferences.getString(Constant.SharedPreference.IS_LY)
             val data = Bundle()
-            data.putString("type","P")
+            data.putString("type", "P")
             memberFragment.arguments = data
             println("ls--$ls---$isHl---$isLy")
             if (isLy.equals("true", ignoreCase = true)) {
                 if (ls != null && !ls.equals("", ignoreCase = true)) {
                     if (isHl.equals("true", ignoreCase = true)) {
                         setCurrentFragment(memberFragment)
-                    }else{
+                    } else {
                         setCurrentFragment(thirdFragment)
                     }
-                }else{
+                } else {
                     setCurrentFragment(thirdFragment)
                 }
-            }else{
+            } else {
                 setCurrentFragment(thirdFragment)
             }
-        }else{
+        } else {
             setCurrentFragment(thirdFragment)
         }
     }

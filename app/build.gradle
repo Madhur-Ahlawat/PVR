@@ -20,9 +20,9 @@ android {
 
     buildTypes {
         debug {
-//            buildConfigField "String", "API_URL", "\"https://beta.pvrcinemas.com/PVRCinemasCMS/api/\""//Beta
-            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/api/\""//Prod
-//            buildConfigField "String", "API_URL", "\"https://demoapi.pvrcinemas.com/PVRCinemasCMS/api/\""//stage
+//            buildConfigField "String", "API_URL", "\"https://beta.pvrcinemas.com/PVRCinemasCMS/\""//Beta
+            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/\""//Prod
+//            buildConfigField "String", "API_URL", "\"https://demoapi.pvrcinemas.com/PVRCinemasCMS/\""//stage
 
             minifyEnabled false
             debuggable true
@@ -30,7 +30,7 @@ android {
             signingConfig signingConfigs.debug
         }
         release {
-            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/api/\""//Prod
+            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/\""//Prod
             debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -70,8 +70,8 @@ dependencies {
 
     //noinspection GradleDynamicVersion
     testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     //Hilt
     def hilt_version = "2.42"

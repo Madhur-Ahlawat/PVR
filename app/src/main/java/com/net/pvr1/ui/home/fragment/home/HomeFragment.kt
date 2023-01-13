@@ -56,17 +56,21 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickListener,
+class HomeFragment : Fragment(),
+    HomeCinemaCategoryAdapter.RecycleViewItemClickListener,
     HomeSliderAdapter.RecycleViewItemClickListener,
     HomePromotionAdapter.RecycleViewItemClickListener,
-    HomeMoviesAdapter.RecycleViewItemClickListener, HomeOfferAdapter.RecycleViewItemClickListener,
-    GenericFilterHome.onButtonSelected, StoriesProgressView.StoriesListener {
-    private var binding: FragmentHomeBinding? = null
+    HomeMoviesAdapter.RecycleViewItemClickListener,
+    HomeOfferAdapter.RecycleViewItemClickListener,
+    GenericFilterHome.onButtonSelected,
+    StoriesProgressView.StoriesListener {
 
+    private var binding: FragmentHomeBinding? = null
     @Inject
     lateinit var preferences: PreferenceManager
     private var loader: LoaderDialog? = null
     private val authViewModel by activityViewModels<HomeViewModel>()
+
     private var onButtonSelected: GenericFilterHome.onButtonSelected = this
     private var lang = "ALL"
     private var format = "ALL"
@@ -652,7 +656,9 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                             //  storiesProgressView.startStories(); // <- start progress
                         }
 
-                        override fun onError(e: Exception?) {}
+                        override fun onError(e: Exception) {
+                            e.printStackTrace()
+                        }
                     })
             }
 
@@ -673,7 +679,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                     if (bannerModels[counterStory].redirectView.equals(
                             "DEEPLINK", ignoreCase = true
                         )
-//                        equalsIgnoreCase("DEEPLINK")
                     ) {
                         if (bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)) {
                             if (bannerModels[counterStory].redirect_url.lowercase(Locale.ROOT)
@@ -723,6 +728,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                     }
                 }
             }
+
             (requireActivity().findViewById(R.id.bannerLayout) as RelativeLayout).show()
 
             ivPlay?.setOnClickListener {
@@ -730,11 +736,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 listener?.onShowNotification()
                 listener?.onShowPrivilege()
                 if (bannerModels.size > 0 && bannerModels[counterStory].type.equals(
-                        "video", ignoreCase = true
-                    )
-//                        .equalsIgnoreCase("video")
-
-                ) {
+                        "video", ignoreCase = true)) {
                 }
             }
 
@@ -751,9 +753,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             tvButton?.hide()
         } else if (bannerModel.type.equals(
                 "image", ignoreCase = true
-            ) && bannerModel.redirect_url.equals("", ignoreCase = true)
-//                .equalsIgnoreCase("")
-        ) {
+            ) && bannerModel.redirect_url.equals("", ignoreCase = true)) {
             ivPlay?.hide()
             tvButton?.text = bannerModel.buttonText
             tvButton?.show()

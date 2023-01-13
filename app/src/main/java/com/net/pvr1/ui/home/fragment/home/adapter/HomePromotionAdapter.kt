@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
-import com.net.pvr1.utils.printLog
 
 
 class HomePromotionAdapter(
@@ -31,10 +30,8 @@ class HomePromotionAdapter(
         //Image
         Glide.with(context)
             .load(comingSoonItem.url)
-            .error(R.drawable.app_icon)
+            .error(R.drawable.placeholder_horizental)
             .into(holder.image)
-
-        printLog("ImageUrl--->${comingSoonItem.url}")
 
         holder.image.setOnClickListener {
             listener.onPromotionClick(comingSoonItem)

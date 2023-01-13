@@ -9,6 +9,7 @@ import com.net.pvr1.ui.cinemaSession.cinemaDetails.response.CinemaDetailsRespons
 import com.net.pvr1.ui.cinemaSession.response.CinemaNearTheaterResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.food.old.reponse.OldFoodResponse
+import com.net.pvr1.ui.food.response.CancelTransResponse
 import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.ui.formats.response.FormatResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaPreferenceResponse
@@ -1136,6 +1137,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
     }
 
+
     //Old Food
     private val oldfoodLiveData = MutableLiveData<NetworkResult<OldFoodResponse>>()
     val oldFoodResponseLiveData: LiveData<NetworkResult<OldFoodResponse>>
@@ -1183,6 +1185,34 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             oldfoodLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             oldfoodLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    //cancelTrans
+    private val cancelTransLiveData = MutableLiveData<NetworkResult<CancelTransResponse>>()
+    val  cancelTransResponseLiveData: LiveData<NetworkResult<CancelTransResponse>>
+        get() = cancelTransLiveData
+
+    suspend fun cancelTrans(cinemacode: String, transid: String, bookingid: String) {
+        cancelTransLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.cancelTrans(
+            cinemacode,
+            transid,
+            bookingid,
+            Constant.version,
+            Constant.platform
+        )
+        cancelTransResponse(response)
+    }
+
+    private fun  cancelTransResponse(response: Response<CancelTransResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            cancelTransLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            cancelTransLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            cancelTransLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 

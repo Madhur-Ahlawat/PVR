@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.PVR" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
@@ -12,12 +12,12 @@
         <item name="colorSecondaryVariant">@color/black</item>
         <item name="colorOnSecondary">@color/yellow</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="m">@color/yellow</item>
+        <item name="android:statusBarColor" >@color/yellow</item>
+
         <!-- Customize your theme here. -->
         <item name="android:editTextStyle">@style/myEditText</item>
 
 <!--        splash white screen remove  -->
-        <!-- Customize your theme here. -->
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -25,6 +25,8 @@
         <item name="android:windowIsFloating">false</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+
+
     <style name="myEditText" parent="@android:style/Widget.Holo.Light.EditText">
         <item name="android:textCursorDrawable">@color/gray</item>
     </style>

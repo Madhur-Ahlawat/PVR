@@ -16,13 +16,16 @@ import com.net.pvr1.databinding.FragmentPrivilegeBinding
 import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.HomeActivity.Companion.getCurrentItem
-import com.net.pvr1.ui.home.HomeActivity.Companion.review_position
+import com.net.pvr1.ui.home.HomeActivity.Companion.reviewPosition
 import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeTypeAdapter
 import com.net.pvr1.ui.home.fragment.privilege.response.PassportPlanResponse
 import com.net.pvr1.ui.home.fragment.privilege.viewModel.PrivilegeLoginViewModel
 import com.net.pvr1.ui.webView.WebViewActivity
-import com.net.pvr1.utils.*
+import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.onShareClick
+import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -116,7 +119,7 @@ class NonMemberFragment : Fragment() {
                             )
                         )
                     ) {
-                        review_position = i
+                        reviewPosition = i
                         binding?.tvEnroll?.text = "Join Now"
                         binding?.privilegeView?.salted?.text = "Salted"
                         binding?.privilegeView?.points?.text =
@@ -127,7 +130,7 @@ class NonMemberFragment : Fragment() {
                 } else if (arguments?.getString("type").equals("PP", ignoreCase = true)) {
                     try {
                         if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(i)?.ptype.equals(arguments?.getString("type"))) {
-                            review_position = i
+                            reviewPosition = i
                             binding?.parrentView?.setBackgroundResource(R.drawable.gradient_passport)
                             binding?.passportView?.visitCount?.text = visits
                             binding?.passportView?.topText?.text =
@@ -141,7 +144,7 @@ class NonMemberFragment : Fragment() {
                     }
                 } else {
                     if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(i)?.ptype.equals(arguments?.getString("type"))) {
-                        review_position = i
+                        reviewPosition = i
                         binding?.tvEnroll?.text = "Apply Now"
                         binding?.privilegeView?.salted?.text = "Salted on your first visit after joining"
                         binding?.privilegeView?.points?.text = "on Tickets & Food items"
@@ -150,10 +153,10 @@ class NonMemberFragment : Fragment() {
                     }
                 }
             }
-            if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(review_position)?.ptype.equals("P")) {
+            if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(reviewPosition)?.ptype.equals("P")) {
                 binding?.passportView?.root?.hide()
                 binding?.privilegeView?.root?.show()
-            } else if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(review_position)?.ptype.equals("PP")) {
+            } else if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(reviewPosition)?.ptype.equals("PP")) {
                 binding?.privilegeView?.boxKotak?.hide()
                 binding?.passportView?.root?.show()
                 binding?.privilegeView?.root?.hide()
@@ -163,7 +166,7 @@ class NonMemberFragment : Fragment() {
                 binding?.privilegeView?.root?.show()
 
             }
-            binding?.privilegeCardList?.scrollToPosition(review_position)
+            binding?.privilegeCardList?.scrollToPosition(reviewPosition)
             binding?.privilegeCardList?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
@@ -171,11 +174,11 @@ class NonMemberFragment : Fragment() {
                         //Dragging
                     } else if (newState == RecyclerView.SCROLL_STATE_IDLE) {
 
-                        review_position = getCurrentItem(binding?.privilegeCardList!!)
-                        println("review_position3--->$review_position")
+                        reviewPosition = getCurrentItem(binding?.privilegeCardList!!)
+                        println("review_position3--->$reviewPosition")
 
-                        if (review_position == -1) review_position = 0
-                        if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(review_position)?.ptype.equals("PP")) {
+                        if (reviewPosition == -1) reviewPosition = 0
+                        if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(reviewPosition)?.ptype.equals("PP")) {
                             binding?.passportView?.root?.show()
                             binding?.tvTerms1?.show()
                             binding?.tvEnroll?.text = "Join for ₹" + scheme_price.toInt() / 100
@@ -185,7 +188,7 @@ class NonMemberFragment : Fragment() {
                                 binding?.passportView?.topText?.text.toString().replace("30".toRegex(), visits)
                             binding?.privilegeView?.boxKotak?.hide()
                             binding?.parrentView?.setBackgroundResource(R.drawable.gradient_passport)
-                        } else if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(review_position)?.ptype.equals("PPP")) {
+                        } else if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(reviewPosition)?.ptype.equals("PPP")) {
                             binding?.passportView?.root?.hide()
                             binding?.tvTerms1?.show()
                             binding?.privilegeView?.boxKotak?.show()
@@ -217,7 +220,7 @@ class NonMemberFragment : Fragment() {
                     /* Log.e ("VisibleItem", String.valueOf(firstVisibleItem));*/
                 }
             })
-            visits = Constant.PrivilegeHomeResponseConst?.pinfo!![review_position].visits
+            visits = Constant.PrivilegeHomeResponseConst?.pinfo!![reviewPosition].visits
         } catch (e: Exception) {
             e.printStackTrace()
         }

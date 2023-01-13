@@ -6,6 +6,7 @@ import com.net.pvr1.ui.cinemaSession.cinemaDetails.response.CinemaDetailsRespons
 import com.net.pvr1.ui.cinemaSession.response.CinemaNearTheaterResponse
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.food.old.reponse.OldFoodResponse
+import com.net.pvr1.ui.food.response.CancelTransResponse
 import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.ui.formats.response.FormatResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaPreferenceResponse
@@ -48,7 +49,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface UserAPI {
-    @POST("v2/user/login")
+    @POST("api/v2/user/login")
     suspend fun loginMobile(
         @Query("mobile") mobile: String,
         @Query("city") city: String,
@@ -57,7 +58,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<LoginResponse>
 
-    @POST("contactus")
+    @POST("api/contactus")
     suspend fun contactUs(
         @Query("comment") comment: String,
         @Query("email") email: String,
@@ -69,7 +70,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<ContactUsResponse>
 
-    @POST("v2/user/verify")
+    @POST("api/v2/user/verify")
     suspend fun otpVerify(
         @Query("mobile") mobile: String,
         @Header("X-Token") token: String,
@@ -78,7 +79,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<ResisterResponse>
 
-    @POST("loyalty/getcoupons")
+    @POST("api/loyalty/getcoupons")
     suspend fun getCoupons(
         @Query("mobile") mobile: String,
         @Query("city") city: String,
@@ -89,7 +90,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<CouponResponse>
 
-    @POST("payment/paytmex/hmac")
+    @POST("api/payment/paytmex/hmac")
     suspend fun paytmHMAC(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
@@ -104,7 +105,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<PaytmHmacResponse>
 
-    @POST("trans/getpaymode")
+    @POST("api/trans/getpaymode")
     suspend fun payMode(
         @Query("cinemacode") cinemacode: String,
         @Query("booktype") booktype: String,
@@ -118,7 +119,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<PaymentResponse>
 
-    @POST("v2/user/register")
+    @POST("api/v2/user/register")
     suspend fun resister(
         @Header("X-Token") hash: String,
         @Query("email") email: String,
@@ -131,7 +132,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<ResisterResponse>
 
-    @POST("content/comingsoon/v2")
+    @POST("api/content/comingsoon/v2")
     suspend fun comingSoon(
         @Query("city") city: String,
         @Query("genre") genre: String,
@@ -141,7 +142,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<CommingSoonResponse>
 
-    @POST("content/alltheater")
+    @POST("api/content/alltheater")
     suspend fun cinema(
         @Query("city") city: String,
         @Query("lat") lat: String,
@@ -152,7 +153,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<CinemaResponse>
 
-    @POST("user/setprefrenences")
+    @POST("api/user/setprefrenences")
     suspend fun cinemaPreference(
         @Query("userid") userid: String,
         @Query("id") id: String,
@@ -163,7 +164,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<CinemaPreferenceResponse>
 
-    @POST("history/giftcard")
+    @POST("api/history/giftcard")
     suspend fun giftCard(
         @Query("userid") userid: String,
         @Query("did") did: String,
@@ -171,7 +172,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<GiftCardResponse>
 
-    @POST("history/history-new/myticket")
+    @POST("api/history/history-new/myticket")
     suspend fun foodTicket(
         @Query("userid") userid: String,
         @Query("did") did: String,
@@ -183,15 +184,14 @@ interface UserAPI {
         @Query("pt") platform: String,
     ): Response<FoodTicketResponse>
 
-    @POST("deals/mobile")
+    @POST("api/deals/mobile")
     suspend fun offer(
         @Query("did") did: String,
         @Query("av") version: String,
         @Query("pt") platform: String,
     ): Response<OfferResponse>
 
-
-    @POST("user/editprofile")
+    @POST("api/user/editprofile")
     suspend fun editProfile(
         @Query("userid") userid: String,
         @Query("email") email: String,
@@ -205,8 +205,7 @@ interface UserAPI {
         @Query("pt") platform: String,
     ): Response<ProfileResponse>
 
-
-    @POST("deals/moffers")
+    @POST("api/deals/moffers")
     suspend fun mOfferList(
         @Query("did") did: String,
         @Query("city") city: String,
@@ -214,7 +213,7 @@ interface UserAPI {
         @Query("pt") platform: String,
     ): Response<MOfferResponse>
 
-    @POST("deals/mdetail")
+    @POST("api/deals/mdetail")
     suspend fun offerDetails(
         @Query("id") id: String,
         @Query("av") version: String,
@@ -222,7 +221,7 @@ interface UserAPI {
         @Query("did") did: String,
     ): Response<OfferResponse>
 
-    @POST("content/cities")
+    @POST("api/content/cities")
     suspend fun selectCity(
         @Query("lat") lat: String,
         @Query("lng") lng: String,
@@ -233,7 +232,7 @@ interface UserAPI {
         @Query("srilanka") srilanka: String
     ): Response<SelectCityResponse>
 
-    @POST("content/nowshowingnew2")
+    @POST("api/content/nowshowingnew2")
     suspend fun home(
         @Query("city") city: String,
         @Query("av") av: String,
@@ -250,7 +249,7 @@ interface UserAPI {
         @Query("isSpi") isSpi: String,
     ): Response<HomeResponse>
 
-    @POST("v2/user/optin/check")
+    @POST("api/v2/user/optin/check")
     suspend fun whatsappOpt(
         @Query("userid") userid: String,
         @Query("mobile") mobile: String,
@@ -261,7 +260,7 @@ interface UserAPI {
         @Query("did") did: String
     ): Response<WhatsAppOptStatus>
 
-    @POST("v2/user/optin")
+    @POST("api/v2/user/optin")
     suspend fun whatsappOptIn(
         @Query("userid") userid: String,
         @Query("mobile") mobile: String,
@@ -272,7 +271,7 @@ interface UserAPI {
         @Query("did") did: String
     ): Response<WhatsAppOptStatus>
 
-    @POST("v2/user/optout")
+    @POST("api/v2/user/optout")
     suspend fun whatsappOptOut(
         @Query("userid") userid: String,
         @Query("mobile") mobile: String,
@@ -283,7 +282,7 @@ interface UserAPI {
         @Query("did") did: String
     ): Response<WhatsAppOptStatus>
 
-    @POST("user/profile")
+    @POST("api/user/profile")
     suspend fun userProfile(
         @Query("city") city: String,
         @Query("userid") userid: String,
@@ -293,7 +292,7 @@ interface UserAPI {
         @Query("pt") platform: String,
     ): Response<ProfileResponse>
 
-    @POST("user/getprefrenences")
+    @POST("api/user/getprefrenences")
     suspend fun preference(
         @Query("city") city: String,
         @Query("userid") userid: String,
@@ -301,7 +300,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<PreferenceResponse>
 
-    @POST("content/getccode")
+    @POST("api/content/getccode")
     suspend fun getCode(
         @Query("cid") cid: String,
         @Query("cinetypeQR") cinetypeQR: String,
@@ -309,7 +308,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<PreferenceResponse>
 
-    @POST("content/checkuserlocation")
+    @POST("api/content/checkuserlocation")
     suspend fun userLocation(
         @Query("userid") userid: String,
         @Query("lat") lat: String,
@@ -319,7 +318,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<PreferenceResponse>
 
-    @POST("food/getfoods-outlet")
+    @POST("api/food/getfoods-outlet")
     suspend fun foodOutlet(
         @Query("userid") userid: String,
         @Query("ccode") ccode: String,
@@ -337,9 +336,9 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<GetFoodResponse>
 
-/************************ Privilege ************************/
+    /************************ Privilege ************************/
 
-    @POST("loyalty/home")
+    @POST("api/loyalty/home")
     suspend fun privilegeHome(
         @Query("mobile") mobile: String,
         @Query("city") city: String,
@@ -348,7 +347,7 @@ interface UserAPI {
     ): Response<PrivilegeHomeResponse>
 
 
-    @POST("loyalty/data")
+    @POST("api/loyalty/data")
     suspend fun loyaltyData(
         @Query("userid") userid: String,
         @Query("city") city: String,
@@ -361,7 +360,7 @@ interface UserAPI {
     ): Response<LoyaltyDataResponse>
 
 
-    @POST("offervoucher/loyalty-subscription/v2/plans")
+    @POST("api/offervoucher/loyalty-subscription/v2/plans")
     suspend fun passportPlans(
         @Query("userid") userid: String,
         @Query("city") city: String,
@@ -370,8 +369,7 @@ interface UserAPI {
         @Query("did") did: String
     ): Response<PassportPlanResponse>
 
-
-    @POST("history/nextbooking")
+    @POST("api/history/nextbooking")
     suspend fun nextBooking(
         @Query("userid") userid: String,
         @Query("did") did: String,
@@ -379,7 +377,7 @@ interface UserAPI {
         @Query("pt") pt: String
     ): Response<PrivilegeHomeResponse>
 
-    @POST("content/search")
+    @POST("api/content/search")
     suspend fun homeSearch(
         @Query("city") city: String,
         @Query("text") text: String,
@@ -390,7 +388,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<HomeSearchResponse>
 
-    @POST("content/getmovie")
+    @POST("api/content/getmovie")
     suspend fun movieDetails(
         @Query("city") city: String,
         @Query("mid") mid: String,
@@ -404,7 +402,7 @@ interface UserAPI {
         @Query("srilanka") srilanka: String
     ): Response<MovieDetailsResponse>
 
-    @POST("content/getmovie")
+    @POST("api/content/getmovie")
     suspend fun commingSoon(
         @Query("type") type: String,
         @Query("userid") userid: String,
@@ -414,8 +412,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<MovieDetailsResponse>
 
-
-    @POST("v1/movie-alert/get-alert")
+    @POST("api/v1/movie-alert/get-alert")
     suspend fun movieAlert(
         @Query("userid") userid: String,
         @Query("city") city: String,
@@ -425,7 +422,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<MovieDetailsResponse>
 
-    @POST("content/csessionsfilters")
+    @POST("api/content/csessionsfilters")
     suspend fun cinemaSession(
         @Query("city") city: String,
         @Query("cid") cid: String,
@@ -447,7 +444,7 @@ interface UserAPI {
         @Query("cinetypeQR") cinetypeQR: String
     ): Response<CinemaSessionResponse>
 
-    @POST("content/msessionsnewfilters")
+    @POST("api/content/msessionsnewfilters")
     suspend fun bookingSession(
         @Query("city") city: String,
         @Query("mid") mid: String,
@@ -461,7 +458,7 @@ interface UserAPI {
         @Query("userid") userid: String
     ): Response<BookingResponse>
 
-    @POST("content/movietheater")
+    @POST("api/content/movietheater")
     suspend fun bookingTheatre(
         @Query("city") city: String,
         @Query("cid") cid: String,
@@ -473,7 +470,7 @@ interface UserAPI {
         @Query("isSpi") isSpi: String
     ): Response<BookingTheatreResponse>
 
-    @POST("content/nearcinetheater")
+    @POST("api/content/nearcinetheater")
     suspend fun nearTheatre(
         @Query("city") city: String,
         @Query("lat") lat: String,
@@ -483,7 +480,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<CinemaNearTheaterResponse>
 
-    @POST("content/cinedetail/{id}")
+    @POST("api/content/cinedetail/{id}")
     suspend fun cinemaDetails(
         @Path("id") cid: String,
         @Query("lat") lat: String,
@@ -492,7 +489,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<CinemaDetailsResponse>
 
-    @POST("trans/getseatlayoutnew/{cinemacode}/{sessionid}")
+    @POST("api/trans/getseatlayoutnew/{cinemacode}/{sessionid}")
     suspend fun seatLayout(
         @Path("cinemacode") cinemacode: String,
         @Path("sessionid") sessionid: String,
@@ -505,7 +502,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<SeatResponse>
 
-    @POST("trans/reserveseats")
+    @POST("api/trans/reserveseats")
     suspend fun reserveSeatLayout(
         @Query("reserve") reserve: String,
         @Query("qr") qr: String,
@@ -515,7 +512,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<ReserveSeatResponse>
 
-    @POST("trans/initTrans/{cinemacode}/{sessionid}")
+    @POST("api/trans/initTrans/{cinemacode}/{sessionid}")
     suspend fun initTransSeatLayout(
         @Path("cinemacode") cinemacode: String,
         @Path("sessionid") sessionid: String,
@@ -530,7 +527,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<InitResponse>
 
-    @POST("v2/food/getfoods")
+    @POST("api/v2/food/getfoods")
     suspend fun food(
         @Query("userid") userid: String,
         @Query("ccode") ccode: String,
@@ -548,7 +545,16 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<FoodResponse>
 
-    @POST("food/getfoods")
+    @POST("canceltrans")
+    suspend fun cancelTrans(
+        @Query("cinemacode") cinemacode: String,
+        @Query("transid") transid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<CancelTransResponse>
+
+    @POST("api/food/getfoods")
     suspend fun oldFood(
         @Query("userid") userid: String,
         @Query("ccode") ccode: String,
@@ -566,7 +572,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<OldFoodResponse>
 
-    @POST("trans/tckdetails")
+    @POST("api/trans/tckdetails")
     suspend fun summery(
         @Query("transid") transid: String,
         @Query("cinemacode") cinemacode: String,
@@ -583,7 +589,7 @@ interface UserAPI {
     ): Response<SummeryResponse>
 
 
-    @POST("trans/ticketBooked")
+    @POST("api/trans/ticketBooked")
     suspend fun ticketConfirmation(
         @Query("booktype") booktype: String,
         @Query("bookingid") bookingid: String,
@@ -597,7 +603,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<TicketBookedResponse>
 
-    @POST("content/specialcine")
+    @POST("api/content/specialcine")
     suspend fun formats(
         @Query("type") type: String,
         @Query("city") city: String,
@@ -606,7 +612,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<FormatResponse>
 
-    @POST("trans/setfood")
+    @POST("api/trans/setfood")
     suspend fun ticketWithFood(
         @Query("foods") foods: String,
         @Query("transid") transid: String,
@@ -622,7 +628,7 @@ interface UserAPI {
     ): Response<SummeryResponse>
 
 
-    @POST("trans/setdonation")
+    @POST("api/trans/setdonation")
     suspend fun setDonation(
         @Query("bookingid") bookingid: String,
         @Query("transid") transid: String,
@@ -633,7 +639,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<SetDonationResponse>
 
-    @POST("content/splashtxt")
+    @POST("api/content/splashtxt")
     suspend fun splash(
         @Query("city") city: String,
         @Query("isSpi") isSpi: String,
@@ -641,7 +647,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<SplashResponse>
 
-    @POST("v1/movie-alert/get-all-alert")
+    @POST("api/v1/movie-alert/get-all-alert")
     suspend fun watchList(
         @Query("userid") userid: String,
         @Query("city") city: String,
@@ -650,7 +656,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<WatchListResponse>
 
-    @POST("v1/movie-alert/delete-alert")
+    @POST("api/v1/movie-alert/delete-alert")
     suspend fun deleteAlert(
         @Query("userid") userid: String,
         @Query("mcode") mcode: String,
@@ -659,7 +665,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<DeleteAlertResponse>
 
-    @POST("food/savefoods")
+    @POST("api/food/savefoods")
     suspend fun addFood(
         @Query("cinemacode") cinemacode: String,
         @Query("fb_totalprice") fb_totalprice: String,
@@ -677,7 +683,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<AddFoodResponse>
 
-    @POST("/PVRCinemasCMS/getgiftcard1")
+    @POST("api//PVRCinemasCMS/getgiftcard1")
     suspend fun giftCardMain(
         @Query("sWidth") sWidth: String,
         @Query("platform") platform: String,
@@ -686,7 +692,7 @@ interface UserAPI {
         @Query("pt") platform1: String
     ): Response<GiftCardResponse>
 
-    @POST("content/alltheater")
+    @POST("api/content/alltheater")
     suspend fun bookingRetrieval(
         @Query("city") city: String,
         @Query("lat") lat: String,
@@ -697,7 +703,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<BookingRetrievalResponse>
 
-    @POST("v1/movie-alert/set-alert")
+    @POST("api/v1/movie-alert/set-alert")
     suspend fun setAlert(
         @Query("userid") userid: String,
         @Query("city") city: String,
@@ -712,7 +718,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<BookingRetrievalResponse>
 
-    @POST("payment/paytmex/upistatus")
+    @POST("api/payment/paytmex/upistatus")
     suspend fun upiStatus(
         @Query("bookingid") bookingid: String,
         @Query("booktype") booktype: String,
@@ -722,7 +728,7 @@ interface UserAPI {
 
 
     //PhonpePe Api Call
-    @POST("payment/phonepe/signature")
+    @POST("api/payment/phonepe/signature")
     suspend fun phonepeHmac(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
@@ -732,7 +738,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<PhonepeHmacResponse>
 
-    @POST("payment/phonepe/paydone")
+    @POST("api/payment/phonepe/paydone")
     suspend fun phonepeStatus(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
@@ -745,7 +751,7 @@ interface UserAPI {
 
     /**    Paytm PostPaid Api        **/
 
-    @POST("payment/paytmpp/hmac")
+    @POST("api/payment/paytmpp/hmac")
     suspend fun postPaidHmac(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
@@ -758,7 +764,7 @@ interface UserAPI {
     ): Response<PaytmHmacResponse>
 
 
-    @POST("payment/paytmpp/pay")
+    @POST("api/payment/paytmpp/pay")
     suspend fun postPaidPay(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
@@ -770,8 +776,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<PaytmHmacResponse>
 
-
-    @POST("payment/paytmpp/sendotp")
+    @POST("api/payment/paytmpp/sendotp")
     suspend fun postPaidSendOTP(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
@@ -782,8 +787,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<PaytmHmacResponse>
 
-
-    @POST("payment/paytmpp/verifyotp")
+    @POST("api/payment/paytmpp/verifyotp")
     suspend fun postPaidVerifYOTP(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
@@ -796,7 +800,7 @@ interface UserAPI {
     ): Response<PaytmHmacResponse>
 
 
-    @POST("payment/paytm/withdraw")
+    @POST("api/payment/paytm/withdraw")
     suspend fun postPaidMakePayment(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
@@ -807,7 +811,7 @@ interface UserAPI {
     ): Response<PaytmHmacResponse>
 
 
-    @POST("payment/paytm/hmac")
+    @POST("api/payment/paytm/hmac")
     suspend fun paytmHmacOld(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
@@ -819,7 +823,7 @@ interface UserAPI {
 
     /***   AIRTEL PAY      *****/
 
-    @POST("payment/airtel/airtelhmac")
+    @POST("api/payment/airtel/airtelhmac")
     suspend fun airtelPay(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
@@ -832,7 +836,7 @@ interface UserAPI {
 
     /***   PROMO CODE       *****/
 
-    @POST("payment/promocode")
+    @POST("api/payment/promocode")
     suspend fun promoCode(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
@@ -846,7 +850,7 @@ interface UserAPI {
 
     /***   GYFTER CODE       *****/
 
-    @POST("payment/gyft")
+    @POST("api/payment/gyft")
     suspend fun promoGyft(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
@@ -860,7 +864,7 @@ interface UserAPI {
 
     /***   Zaggle CARD       *****/
 
-    @POST("payment/zaggle/pay")
+    @POST("api/payment/zaggle/pay")
     suspend fun zagglePay(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
@@ -876,7 +880,7 @@ interface UserAPI {
 
     /***   GIFT CARD       *****/
 
-    @POST("payment/qccard")
+    @POST("api/payment/qccard")
     suspend fun giftCardRedeem(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
@@ -891,7 +895,7 @@ interface UserAPI {
 
     /***   ACCENTIVE_PROMO       *****/
 
-    @POST("payment/accentive")
+    @POST("api/payment/accentive")
     suspend fun accentivePromo(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
@@ -904,7 +908,7 @@ interface UserAPI {
 
     /***   STARPASS       *****/
 
-    @POST("payment/starpass")
+    @POST("api/payment/starpass")
     suspend fun starpass(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
@@ -918,7 +922,7 @@ interface UserAPI {
 
     /***   MCOUPON       *****/
 
-    @POST("payment/mcoupon")
+    @POST("api/payment/mcoupon")
     suspend fun mcoupon(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
@@ -935,7 +939,7 @@ interface UserAPI {
 
     /***   HYATT       *****/
 
-    @POST("payment/hyatt/otp")
+    @POST("api/payment/hyatt/otp")
     suspend fun sendOTPHYATT(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
@@ -946,7 +950,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<PaytmHmacResponse>
 
-    @POST("payment/hyatt")
+    @POST("api/payment/hyatt")
     suspend fun verifyOTPHYATT(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
@@ -962,7 +966,7 @@ interface UserAPI {
     /********      CRED           ****************/
 
 
-    @POST("payment/cred/check")
+    @POST("api/payment/cred/check")
     suspend fun credCheck(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
@@ -976,7 +980,7 @@ interface UserAPI {
     ): Response<UPIStatusResponse>
 
 
-    @POST("payment/cred/hmac")
+    @POST("api/payment/cred/hmac")
     suspend fun credHmac(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
@@ -991,7 +995,7 @@ interface UserAPI {
     ): Response<PaytmHmacResponse>
 
 
-    @POST("payment/cred/status")
+    @POST("api/payment/cred/status")
     suspend fun credStatus(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,

@@ -20,7 +20,6 @@ import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ItemCinemaDetailsShowTimeBinding
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
-import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.seatLayout.SeatLayoutActivity
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr1.utils.Constant.Companion.OfferDialogImage
@@ -100,18 +99,6 @@ class BookingShowsTimeAdapter(
 
                         }
 
-                    } else {
-                        val dialog = OptionDialog(context,
-                            R.mipmap.ic_launcher,
-                            R.string.app_name,
-                            context.getString(R.string.enter_Booking_ID),
-                            positiveBtnText = R.string.ok,
-                            negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
-                        dialog.show()
                     }
                 }
             }
@@ -129,9 +116,9 @@ class BookingShowsTimeAdapter(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
-        dialog.window!!.setGravity(Gravity.BOTTOM)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+        dialog.window?.setGravity(Gravity.BOTTOM)
         dialog.show()
 
         val ticket = dialog.findViewById<TextView>(R.id.textView258)

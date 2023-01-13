@@ -10,7 +10,6 @@ import android.text.TextUtils
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,7 +22,7 @@ import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.HomeActivity.Companion.getCurrentItem
-import com.net.pvr1.ui.home.HomeActivity.Companion.review_position
+import com.net.pvr1.ui.home.HomeActivity.Companion.reviewPosition
 import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeCardAdapter
 import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeHistoreyAdapter
 import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeVochersAdapter
@@ -36,8 +35,6 @@ import com.net.pvr1.utils.Constant.SharedPreference.Companion.LOYALITY_STATUS
 import com.net.pvr1.utils.Constant.SharedPreference.Companion.SUBSCRIPTION_STATUS
 import com.net.pvr1.utils.Constant.SharedPreference.Companion.SUBS_OPEN
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
@@ -331,9 +328,9 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
                     if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
                         //Dragging
                     } else if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        review_position = getCurrentItem(binding?.privilegeCardList!!)
-                        if (review_position == 0) {
-                            if (cardDataList[review_position].lock == true) {
+                        reviewPosition = getCurrentItem(binding?.privilegeCardList!!)
+                        if (reviewPosition == 0) {
+                            if (cardDataList[reviewPosition].lock == true) {
                                 binding?.unLockView?.show()
                                 binding?.cardBelowView?.hide()
                                 binding?.passportView?.hide()
@@ -343,8 +340,8 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
                                 binding?.passportView?.hide()
                                 binding?.cardBelowView?.show()
                             }
-                        } else if (review_position == 1) {
-                            if (cardDataList[review_position].lock == true) {
+                        } else if (reviewPosition == 1) {
+                            if (cardDataList[reviewPosition].lock == true) {
                                 binding?.unLockView?.show()
                                 binding?.cardBelowView?.hide()
                                 binding?.passportView?.hide()
@@ -355,7 +352,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
                                 }
                             } else {
                                 binding?.cardBelowView?.hide()
-                                if (cardDataList[review_position].type.equals("PPP")) {
+                                if (cardDataList[reviewPosition].type.equals("PPP")) {
                                     binding?.passportView?.hide()
                                     binding?.unLockView?.hide()
                                     binding?.cardBelowView?.show()
@@ -375,8 +372,8 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
                                     }
                                 }
                             }
-                        } else if (review_position == 2) {
-                            if (cardDataList[review_position].lock == true) {
+                        } else if (reviewPosition == 2) {
+                            if (cardDataList[reviewPosition].lock == true) {
                                 binding?.unLockView?.show()
                                 binding?.cardBelowView?.hide()
                                 binding?.passportView?.hide()
@@ -398,7 +395,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
                 for (i in cardDataList.indices) {
                     if (cardDataList[i].type.equals(requireArguments().getString("type"))) {
                         if (requireArguments().getString("type").equals("T", ignoreCase = true)) {
-                            review_position = 1
+                            reviewPosition = 1
                             binding?.passportView?.show()
                             binding?.unLockView?.hide()
                             binding?.cardBelowView?.hide()
@@ -408,7 +405,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
                             }
                             break
                         } else {
-                            review_position = i
+                            reviewPosition = i
                             if (cardDataList[i].type.equals("PP")) {
                                 if (cardDataList[i].lock == true) {
                                     binding?.unLockView?.show()
@@ -417,7 +414,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
                                     binding?.titleUnlock?.text = "PVR Passport"
                                 }
                             } else if (requireArguments().getString("type").equals("T", ignoreCase = true)) {
-                                review_position = 1
+                                reviewPosition = 1
                                 binding?.passportView?.show()
                                 binding?.unLockView?.hide()
                                 binding?.cardBelowView?.hide()
@@ -436,7 +433,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
                         break
                     } else {
                         if (!requireArguments().isEmpty && requireArguments().getString("type").equals("T", ignoreCase = true)) {
-                            review_position = 1
+                            reviewPosition = 1
                             binding?.passportView?.show()
                             binding?.unLockView?.hide()
                             binding?.cardBelowView?.hide()
@@ -449,9 +446,9 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
                                 binding?.unLockView?.hide()
                                 binding?.cardBelowView?.show()
                                 binding?.passportView?.hide()
-                                review_position = 0
+                                reviewPosition = 0
                             } else {
-                                review_position = i
+                                reviewPosition = i
                                 if (cardDataList[i].type.equals("PP")) {
                                     if (cardDataList[i].lock == true) {
                                         binding?.unLockView?.show()
@@ -472,7 +469,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
                     }
                 }
                 if (preferences.getString(SUBSCRIPTION_STATUS) == ACTIVE && requireArguments().getString("type").equals("C", ignoreCase = true)) {
-                    review_position = 1
+                    reviewPosition = 1
                     binding?.unLockView?.hide()
                     binding?.cardBelowView?.hide()
                     binding?.passportView?.show()
@@ -482,7 +479,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
                         binding?.bookBtn?.isEnabled = false
                     }
                 }
-                binding?.privilegeCardList?.smoothScrollToPosition(review_position)
+                binding?.privilegeCardList?.smoothScrollToPosition(reviewPosition)
             }
         }
 
