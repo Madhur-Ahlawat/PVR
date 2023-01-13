@@ -87,6 +87,7 @@ class Constant {
         var SESSION_ID = "0"
         var PRIVILEGEPOINT = "0"
         var PRIVILEGEVOUCHER = "0"
+        var FOODENABLE = 0
         const val CITY = "Delhi-NCR"
         const val CITY_CC = "City-Name"
         const val LATITUDE = "lat"

@@ -1,7 +1,6 @@
 package com.net.pvr1.ui.summery
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Paint
@@ -9,9 +8,10 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Html
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.TextView
+import android.widget.FrameLayout
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,8 +20,11 @@ import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySummeryBinding
+import com.net.pvr1.databinding.CarveryDialogBinding
 import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
@@ -31,13 +34,16 @@ import com.net.pvr1.ui.seatLayout.adapter.AddFoodCartAdapter
 import com.net.pvr1.ui.summery.adapter.SeatListAdapter
 import com.net.pvr1.ui.summery.response.SummeryResponse
 import com.net.pvr1.ui.summery.viewModel.SummeryViewModel
+import com.net.pvr1.ui.webView.WebViewActivity
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
+import com.net.pvr1.utils.Constant.Companion.FOODENABLE
 import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemClickListenerCity {
     @Inject
@@ -50,12 +56,20 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     private var showTaxes = false
     private var paidAmount = ""
 
+
+    //Bottom Dialog
+    private var dialog: BottomSheetDialog? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySummeryBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
 
+        manageFunction()
+    }
+
+    private fun manageFunction() {
         try {
             cartModel = intent.getSerializableExtra("food") as ArrayList<CartModel>
             printLog("exception--->${cartModel}")
@@ -64,16 +78,20 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         }
 
         authViewModel.summery(
-            TRANSACTION_ID,
-            CINEMA_ID,
-            preferences.getUserId(),
-            BOOKING_ID
+            TRANSACTION_ID, CINEMA_ID, preferences.getUserId(), BOOKING_ID
         )
+
         movedNext()
         foodCart()
         summeryDetails()
         saveFood()
         setDonation()
+        getShimmerData()
+    }
+
+    private fun getShimmerData() {
+        Constant().getData(binding?.include38?.tvFirstText, binding?.include38?.tvSecondText)
+        Constant().getData(binding?.include38?.tvSecondText, null)
     }
 
     //CartFood
@@ -106,9 +124,9 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
 
                         authViewModel.setDonation(
-                            BOOKING_ID,
-                            TRANSACTION_ID, true, false, "NO"
+                            BOOKING_ID, TRANSACTION_ID, isDonate = true, istDonate = false, isSpi = "NO"
                         )
+
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -133,10 +151,8 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
@@ -155,9 +171,8 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-
                         val intent = Intent(this@SummeryActivity, PaymentActivity::class.java)
-                        intent.putExtra("paidAmount",paidAmount)
+                        intent.putExtra("paidAmount", paidAmount)
                         startActivity(intent)
 
                     } else {
@@ -184,10 +199,8 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
@@ -214,10 +227,8 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -229,10 +240,8 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
@@ -246,68 +255,65 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
     @SuppressLint("SetTextI18n")
     private fun retrieveData(output: SummeryResponse.Output) {
+        //shimmer
+        binding?.constraintLayout145?.hide()
+        //design
+        binding?.constraintLayout155?.show()
+
+        //privilege point
+        binding?.textView313?.text= "You will earn  "+output.pe+" Privilege Points."
+
+        //subtotal
+        binding?.textView168?.text= output.ft
+
         //movie Details
         binding?.textView111?.text =
             output.cen + getString(R.string.dots) + output.lg + getString(R.string.dots) + output.fmt
+
         //audi
         binding?.textView115?.text = output.audi + "-" + output.st
+
         //ticket
         binding?.textView119?.text = output.f[0].it[0].n
+
         //price
         binding?.textView120?.text = getString(R.string.currency) + output.f[0].it[0].v
-        //sub total
-        binding?.textView168?.text = ""
+
         //coupon
         binding?.textView169?.text = ""
 
-        var itList : List<SummeryResponse.Output.F.It> = ArrayList()
-        try {
 
-//           for (item in output.f){
-//
-//               if (item.n == "Taxes & Fees "){
-//
-//                   //taxes fee
-//                   binding?.textView170?.text =getString(R.string.currency) + item.v
-//                   itList = item.it
-//                   for (item in itList){
-//                       //Convenience fee
-//                       binding?.textView272?.text =getString(R.string.currency) + item.v
-//
-//                       //Convenience Heading
-//                       binding?.textView270?.text = item.n
-//                       //gst
-//                       binding?.textView273?.text = getString(R.string.currency) + item.v
-//                       //gst Heading
-//                       binding?.textView271?.text = item.n
-//                   }
-//               }
-//           }
+        for (data in output.f) {
+            if (data.n.contains("Taxes & Fees")){
 
-            //taxes fee
-            binding?.textView170?.text =getString(R.string.currency) + output.f[1].v
-            //Convenience fee
-            binding?.textView272?.text = output.f[1].it[0].v
-            //Convenience Heading
-            binding?.textView270?.text = output.f[1].it[0].n
-            //gst
-            binding?.textView273?.text = output.f[1].it[1].v
-            //gst Heading
-            binding?.textView271?.text = output.f[1].it[1].n
-        } catch (e: Exception) {
-            e.printStackTrace()
+                //taxes fee
+                binding?.textView170?.text = getString(R.string.currency) + data.v
+
+                //Convenience fee
+                binding?.textView272?.text = data.it[0].v
+
+                //Convenience Heading
+                binding?.textView270?.text = data.it[0].n
+
+                //gst
+                binding?.textView273?.text = data.it[1].v
+
+                //gst Heading
+                binding?.textView271?.text = data.it[1].n
+            }
+
         }
 
         //caver calling
         binding?.textView171?.text = ""
-        //2/ticket calling
-//        binding?.textView172?.text = ""
-//        grand total
-        paidAmount=output.a
+
+        //grand total
+        paidAmount = output.a
         binding?.textView173?.text = getString(R.string.currency) + output.a
-//       pay
-        binding?.textView174?.text =
-            getString(R.string.pay) + " " + getString(R.string.currency) + output.a + " |"
+
+        //pay
+        binding?.textView174?.text = getString(R.string.pay) + " " + getString(R.string.currency) + output.a + " |"
+
         //Image
         Glide.with(this)
             .load(output.imh)
@@ -315,13 +321,16 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
         //title
         binding?.textView110?.text = output.m
+
         //shows
         binding?.textView112?.text = output.md + ", " + output.t
+
         //location
         binding?.textView113?.text = output.c
         binding?.imageView60?.setOnClickListener {
             Constant().openMap(this, preferences.getLatitudeData(), preferences.getLongitudeData())
         }
+
         //total seat
         val ticketCount = output.seat.size * 2
         binding?.textView166?.text = ticketCount.toString() + "/" + getString(R.string.ticket)
@@ -340,14 +349,12 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         binding?.recyclerView31?.adapter = adapter
 
         //taxes UnderLine
-        binding?.textView164?.paintFlags =
-            binding?.textView164!!.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        binding?.textView164?.paintFlags = binding?.textView164!!.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
         //Show taxes
         binding?.textView164?.setOnClickListener {
             binding?.taxes?.show()
         }
-
 
         //manage taxes Shows
         binding?.imageView77?.setOnClickListener {
@@ -362,7 +369,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             }
         }
 
-        //Cavery Dialog
+        //Carvery Dialog
         binding?.imageView147?.setOnClickListener {
             carveryDialog(output.don_stext)
         }
@@ -371,14 +378,11 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         binding?.textView175?.setOnClickListener {
             cartModel.forEachIndexed { index, food ->
                 itemDescription = if (index == 0) {
-                    food.title + "|" + food.id + "|" + food.quantity +
-                            "|" + food.price + "|" + food.ho + "|" + food.mid
+                    food.title + "|" + food.id + "|" + food.quantity + "|" + food.price + "|" + food.ho + "|" + food.mid
                 } else {
-                    itemDescription + "#" + food.title + "|" + food.id + "|" + food.quantity +
-                            "|" + food.price + "|" + food.ho + "|" + food.mid
+                    itemDescription + "#" + food.title + "|" + food.id + "|" + food.quantity + "|" + food.price + "|" + food.ho + "|" + food.mid
                 }
             }
-//            printLog("seat--->${itemDescription},${TRANSACTION_ID},${CINEMA_ID},${ preferences.getUserId().toString()},${output.seats},${output.audi}")
             printLog(
                 "seat--->${itemDescription},${TRANSACTION_ID},${CINEMA_ID},${
                     preferences.getUserId()
@@ -399,31 +403,58 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                 )
             } else {
                 val intent = Intent(this@SummeryActivity, PaymentActivity::class.java)
-                intent.putExtra("paidAmount",output.a)
+                intent.putExtra("paidAmount", output.a)
                 startActivity(intent)
             }
+        }
 
+        //manageFood
+        if (FOODENABLE==1){
+            binding?.constraintLayout157?.hide()
+        }else{
+            binding?.constraintLayout157?.show()
+        }
 
+        //Add More Food
+        binding?.textView312?.setOnClickListener {
+            onBackPressed()
         }
     }
 
-    private fun carveryDialog(donStext: String) {
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.carvery_dialog)
-        dialog.window!!.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
-        dialog.window!!.setGravity(Gravity.BOTTOM)
-        dialog.show()
-        val terms = dialog.findViewById<TextView>(R.id.textView310)
-        val carveryText = dialog.findViewById<TextView>(R.id.textView154)
-        carveryText?.text = Html.fromHtml(donStext, Html.FROM_HTML_MODE_LEGACY)
-        terms.paintFlags = terms.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+    private fun carveryDialog(donText: String) {
 
+        dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
+        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val inflater = LayoutInflater.from(this)
+        val bindingCarvery = CarveryDialogBinding.inflate(inflater)
+        val behavior: BottomSheetBehavior<FrameLayout>? = dialog?.behavior
+
+        behavior?.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog?.setContentView(bindingCarvery.root)
+        dialog?.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.window?.setGravity(Gravity.BOTTOM)
+        dialog?.show()
+
+        bindingCarvery.textView154.text = Html.fromHtml(donText, Html.FROM_HTML_MODE_LEGACY)
+        bindingCarvery.textView310.paintFlags =  bindingCarvery.textView310.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+
+        //click privacy
+        bindingCarvery.textView310.setOnClickListener {
+            dialog?.dismiss()
+            val intent = Intent(this, WebViewActivity::class.java)
+            intent.putExtra("from", "CheckOut")
+            intent.putExtra("title", this.getString(R.string.terms_condition_text))
+            intent.putExtra("getUrl", Constant.donation)
+            startActivity(intent)
+        }
+//        dismiss dialog
+        bindingCarvery.include10.textView5.setOnClickListener {
+            dialog?.dismiss()
+        }
     }
 
     override fun increaseFoodClick(comingSoonItem: CartModel) {
@@ -435,10 +466,8 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                 getString(R.string.max_item_msz),
                 positiveBtnText = R.string.ok,
                 negativeBtnText = R.string.no,
-                positiveClick = {
-                },
-                negativeClick = {
-                })
+                positiveClick = {},
+                negativeClick = {})
             dialog.show()
         } else {
             num += 1
@@ -457,10 +486,8 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                 getString(R.string.min_item_msz),
                 positiveBtnText = R.string.ok,
                 negativeBtnText = R.string.no,
-                positiveClick = {
-                },
-                negativeClick = {
-                })
+                positiveClick = {},
+                negativeClick = {})
             dialog.show()
         } else {
             num -= 1
@@ -494,6 +521,17 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                 cartModel.remove(data)
             }
         }
+    }
+
+    override fun onBackPressed() {
+        if (FOODENABLE==0){
+            finish()
+        }else{
+            authViewModel.cancelTrans(
+                CINEMA_ID, TRANSACTION_ID, BOOKING_ID
+            )
+        }
+        onBackPressedDispatcher.onBackPressed()
     }
 
 }

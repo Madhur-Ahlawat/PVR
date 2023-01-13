@@ -50,6 +50,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     private var binding: ActivityFoodBinding? = null
     private val authViewModel: FoodViewModel by viewModels()
     private var loader: LoaderDialog? = null
+
     private val cartModel: ArrayList<CartModel> = arrayListOf()
     private var filterResponse: ArrayList<FoodResponse.Output.Mfl>? = null
     private var catFilter = ArrayList<FoodResponse.Output.Mfl>()
@@ -77,20 +78,29 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         binding = ActivityFoodBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-
         manageFunction()
     }
 
     private fun manageFunction() {
         authViewModel.food(
-            preferences.getUserId(), CINEMA_ID, BOOKING_ID, "", "", "", "", "", "", "no", "no", "no"
+            preferences.getUserId(),
+            CINEMA_ID,
+            BOOKING_ID,
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "no",
+            "no",
+            "no"
         )
-
 
         //internet Check
         broadcastReceiver = NetworkReceiver()
-
         broadcastIntent()
+
         movedNext()
         foodDetails()
         getShimmerData()

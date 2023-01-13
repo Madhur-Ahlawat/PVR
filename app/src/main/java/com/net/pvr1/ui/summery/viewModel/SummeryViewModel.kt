@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
+import com.net.pvr1.ui.food.response.CancelTransResponse
 import com.net.pvr1.ui.summery.response.SetDonationResponse
 import com.net.pvr1.ui.summery.response.SummeryResponse
 import com.net.pvr1.utils.NetworkResult
@@ -29,9 +30,29 @@ class SummeryViewModel @Inject constructor(private val userRepository: UserRepos
     val seatWithFoodDataScope: LiveData<NetworkResult<SummeryResponse>>
         get() = userRepository.seatWithFoodResponseLiveData
 
-    fun seatWithFood(foods: String, transid: String, cinemacode: String,userId: String, qr: String, infosys: String, isSpi: String, seat: String, audi: String) {
+    fun seatWithFood(
+        foods: String,
+        transid: String,
+        cinemacode: String,
+        userId: String,
+        qr: String,
+        infosys: String,
+        isSpi: String,
+        seat: String,
+        audi: String
+    ) {
         viewModelScope.launch {
-            userRepository.seatWithFoodLayout(foods, transid, cinemacode,userId, qr,infosys,isSpi,seat,audi)
+            userRepository.seatWithFoodLayout(
+                foods,
+                transid,
+                cinemacode,
+                userId,
+                qr,
+                infosys,
+                isSpi,
+                seat,
+                audi
+            )
         }
     }
 
@@ -40,9 +61,27 @@ class SummeryViewModel @Inject constructor(private val userRepository: UserRepos
     val setDonationDataScope: LiveData<NetworkResult<SetDonationResponse>>
         get() = userRepository.setDonationResponseLiveData
 
-    fun setDonation(bookingid: String, transid: String, isDonate: Boolean, istDonate: Boolean,isSpi:String) {
+    fun setDonation(
+        bookingid: String,
+        transid: String,
+        isDonate: Boolean,
+        istDonate: Boolean,
+        isSpi: String
+    ) {
         viewModelScope.launch {
-            userRepository.setDonationLayout(bookingid, transid, isDonate, istDonate,isSpi)
+            userRepository.setDonationLayout(bookingid, transid, isDonate, istDonate, isSpi)
+        }
+    }
+
+    //    Cancel trans
+    val cancelTransResponseLiveData: LiveData<NetworkResult<CancelTransResponse>>
+        get() = userRepository.cancelTransResponseLiveData
+
+    fun cancelTrans(
+        cinemacode: String, transid: String, bookingid: String
+    ) {
+        viewModelScope.launch {
+            userRepository.cancelTrans(cinemacode, transid, bookingid)
         }
     }
 }

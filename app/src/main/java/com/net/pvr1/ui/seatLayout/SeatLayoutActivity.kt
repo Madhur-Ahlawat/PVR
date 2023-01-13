@@ -44,6 +44,7 @@ import com.net.pvr1.ui.webView.WebViewActivity
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
+import com.net.pvr1.utils.Constant.Companion.FOODENABLE
 import com.net.pvr1.utils.Constant.Companion.SELECTED_SEAT
 import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
 import dagger.hilt.android.AndroidEntryPoint
@@ -346,18 +347,25 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     private fun retrieverReserveSeatData(output: ReserveSeatResponse.Output) {
         BOOKING_ID = output.bookingid
         SELECTED_SEAT = selectedSeats.size
-        printLog("checkNf--->${output.nf}")
-        when (output.nf) {
-            "true" -> {
-                startActivity(Intent(this, FoodActivity::class.java))
-            }
-            "false" -> {
-                startActivity(Intent(this, FoodActivity::class.java))
-//                startActivity(Intent(this, OldFoodActivity::class.java))
-            }
-            else -> {
-                startActivity(Intent(this, SummeryActivity::class.java))
 
+        if(output.fc=="false"){
+            FOODENABLE=1
+            startActivity(Intent(this, SummeryActivity::class.java))
+        }else{
+            when (output.nf) {
+                "true" -> {
+                    FOODENABLE=0
+                    startActivity(Intent(this, FoodActivity::class.java))
+                }
+                "false" -> {
+                    FOODENABLE=0
+                    startActivity(Intent(this, FoodActivity::class.java))
+                }
+                else -> {
+                    FOODENABLE=1
+                    startActivity(Intent(this, SummeryActivity::class.java))
+
+                }
             }
         }
     }

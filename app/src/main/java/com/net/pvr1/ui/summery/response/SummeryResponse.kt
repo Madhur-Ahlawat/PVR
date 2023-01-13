@@ -38,7 +38,7 @@ data class SummeryResponse(
         val dt: Any,
         val extraAmt: Any,
         val extraAmtMsg: Any,
-        val f: List<F>,
+        val f: ArrayList<F>,
         val fc: Int,
         val ffo: Boolean,
         val fmt: String,
@@ -79,21 +79,21 @@ data class SummeryResponse(
         data class Seat(
             val c: Int,
             val cp: String,
-            val `it`: List<Any>,
+            val it: List<Any>,
             val n: String,
             val v: String
         ):java.io.Serializable
         data class F(
             val c: Int,
             val cp: String,
-            val `it`: List<It>,
+            val it: ArrayList<It>,
             val n: String,
             val v: String
         ):java.io.Serializable{
             data class It(
                 val c: Int,
                 val cp: String,
-                val `it`: List<Any>,
+                val it: List<Any>,
                 val n: String,
                 val v: String
             ):java.io.Serializable
@@ -101,7 +101,7 @@ data class SummeryResponse(
         data class CaRf1(
             val c: Int,
             val cp: String,
-            val `it`: List<Any>,
+            val it: List<Any>,
             val n: String,
             val v: String
         ):java.io.Serializable
