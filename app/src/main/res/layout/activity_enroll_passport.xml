@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.home.fragment.privilege.EnrollInPassportActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/includeHeader"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/white"
+        android:elevation="5dp">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/back_btn_width"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:paddingLeft="@dimen/toolbar_left_right_padding"
+            android:visibility="gone"
+            android:paddingRight="@dimen/toolbar_left_right_padding"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:id="@+id/title"
+            android:fontFamily="@font/helvetica_neu_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toEndOf="@+id/btnBack"
+            android:gravity="start"
+            android:textSize="@dimen/dimen_16sp"
+            android:paddingStart="@dimen/dimen_16dp"
+            android:singleLine="true"
+            android:text="@string/join_pvr_passport"
+            android:textColor="@color/black"
+            app:letterspacing="@integer/tracking" />
+
+
+    </RelativeLayout>
+
+    <include layout="@layout/horizontal_line"
+        android:id="@+id/view"
+        android:layout_below="@id/includeHeader"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="fitXY"
+        android:visibility="gone"
+        android:src="@drawable/pvrprivback" />
+
+    <RelativeLayout
+        android:id="@+id/header_new"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/llprivilege_card"
+            android:layout_width="200dp"
+            android:layout_height="111dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="130dp"
+            android:background="@drawable/passport8x"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_15dp"
+                android:gravity="center"
+                android:text="@string/monthly_subscription_voucher_program"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </RelativeLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tvSend_request"
+        android:layout_below="@id/view"
+        android:scrollbars="none">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:visibility="gone"
+                android:text="@string/join_now_into_pvr_passport_pass"
+                android:textColor="@color/pvr_dark_black"
+                android:textSize="14sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:fontFamily="@font/sf_pro_text_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/first_name"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="14sp"
+                    android:visibility="gone">
+
+                </TextView>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/TextInputLayout_et_fname"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_24dp"
+                    android:hint="@string/full_name"
+                    android:visibility="visible"
+                    app:boxStrokeColor="#EDE8E9"
+                    app:boxStrokeWidth="1dp"
+                    app:hintEnabled="true"
+                    app:hintTextColor="#908E8E">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_fname"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:gravity="center|start"
+                        android:inputType="text"
+                        android:paddingStart="@dimen/dimen_5dp"
+                        android:textColor="@color/pvr_dark_black"
+                        android:textSize="16sp"
+                        tools:text="Full Name" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:fontFamily="@font/sf_pro_text_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/last_name"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="14sp"
+                    android:visibility="gone">
+
+                </TextView>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_layout_edob"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:hint="@string/dob_dd_mm_yyyy"
+                    app:boxStrokeColor="#EDE8E9"
+                    app:boxStrokeWidth="1dp"
+                    app:endIconMode="custom"
+                    app:hintEnabled="true"
+                    app:hintTextColor="#908E8E">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/dob_et"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:gravity="center|start"
+                        android:inputType="date"
+                        android:paddingStart="@dimen/dimen_5dp"
+                        android:textColor="@color/pvr_dark_black"
+                        android:textSize="16sp"
+                        tools:text="DOB" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/TextInputLayout_et_lname"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:hint="@string/last_name"
+                    android:visibility="gone"
+                    app:boxStrokeColor="#EDE8E9"
+                    app:boxStrokeWidth="1dp"
+                    app:hintEnabled="true"
+                    app:hintTextColor="#908E8E">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_lname"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:gravity="center|start"
+                        android:inputType="text"
+                        android:paddingStart="@dimen/dimen_5dp"
+                        android:textColor="@color/pvr_dark_black"
+                        android:textSize="16sp"
+                        tools:text="Last Name" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:fontFamily="@font/sf_pro_text_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/mobile_no"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="14sp"
+                    android:visibility="gone">
+
+                </TextView>
+
+
+                <TextView
+                    android:fontFamily="@font/sf_pro_text_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_15dp"
+                    android:text="@string/gender"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="14sp"
+                    android:visibility="gone">
+
+                </TextView>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_layout_gender"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:hint="@string/gender"
+                    android:visibility="gone"
+                    app:boxStrokeColor="#EDE8E9"
+                    app:boxStrokeWidth="1dp"
+                    app:hintEnabled="true"
+                    app:hintTextColor="#908E8E">
+
+                    <com.net.pvr1.utils.view.AutoCompleteDropDown
+                        android:id="@+id/Gender_autodrop"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:gravity="center|start"
+                        android:inputType="textNoSuggestions"
+                        android:paddingStart="@dimen/dimen_5dp"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:fontFamily="@font/sf_pro_text_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_15dp"
+                    android:text="@string/email_id"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="14sp"
+                    android:visibility="gone">
+
+                </TextView>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/TextInputLayout_et_email"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:hint="@string/email_address"
+                    android:visibility="visible"
+                    app:boxStrokeColor="#EDE8E9"
+                    app:boxStrokeWidth="1dp"
+                    app:hintEnabled="true"
+                    app:hintTextColor="#908E8E">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_email"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:gravity="center|start"
+                        android:inputType="textEmailAddress"
+                        android:paddingStart="@dimen/dimen_5dp"
+                        android:textColor="@color/pvr_dark_black"
+                        android:textSize="16sp"
+                        tools:text="Email" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/TextInputLayout_et_mobile"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:hint="@string/mobile_no"
+                    android:visibility="visible"
+                    app:boxStrokeColor="#EDE8E9"
+                    app:boxStrokeWidth="1dp"
+                    app:hintEnabled="true"
+
+                    app:hintTextColor="#908E8E">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_mobile"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:enabled="false"
+                        android:gravity="center|start"
+                        android:inputType="text"
+                        android:paddingStart="@dimen/dimen_5dp"
+                        android:textColor="@color/pvr_dark_black"
+                        android:textSize="16sp"
+                        tools:text="Mobile No" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <TextView
+                    android:fontFamily="@font/sf_pro_text_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_5dp"
+                    android:gravity="start"
+                    android:text="@string/we_have_above_email_address_in_our_records_for_sharing_an_otp_please_feel_free_to_edit_if_you_wish_to_change_it"
+                    android:textColor="#828282"
+                    android:textSize="@dimen/dimen_12sp"
+                    android:visibility="gone"
+                    app:letterspacing="@integer/tracking" />
+
+                <TextView
+                    android:fontFamily="@font/sf_pro_text_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_15dp"
+                    android:text="@string/date_of_birth"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="14sp"
+                    android:visibility="gone">
+
+                </TextView>
+
+
+                <TextView
+                    android:fontFamily="@font/sf_pro_text_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_15dp"
+                    android:text="@string/city"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="14sp"
+                    android:visibility="gone">
+
+                </TextView>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/TextInputLayout_et_city"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:hint="@string/city"
+                    android:visibility="gone"
+                    app:boxStrokeColor="#EDE8E9"
+                    app:boxStrokeWidth="1dp"
+                    app:hintEnabled="true"
+                    app:hintTextColor="#908E8E">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_city"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:gravity="center|start"
+                        android:inputType="text"
+                        android:paddingStart="@dimen/dimen_5dp"
+                        android:textColor="@color/pvr_dark_black"
+                        android:textSize="16sp" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <TextView
+                    android:id="@+id/cbCC"
+                    android:fontFamily="@font/helvetica_neu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20dp"
+                    android:layout_marginBottom="20dp"
+                    android:focusable="false"
+                    android:gravity="top"
+                    android:text="@string/you_will_be_auto_enrolled_into_pvr_privilege_program_and_get_its_benefits"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+    <TextView
+        android:id="@+id/tvSend_request"
+        android:fontFamily="@font/sfprodisplay_bold"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/dimen_30dp"
+        android:layout_marginTop="@dimen/dimen_30dp"
+        android:layout_marginEnd="@dimen/dimen_30dp"
+        android:layout_marginBottom="@dimen/dimen_30dp"
+        android:background="@drawable/round_corner_radius_rect"
+        android:backgroundTint="@color/pvr_yellow"
+        android:gravity="center"
+        android:letterSpacing="1.2"
+        android:text="@string/submit_details"
+        android:textAllCaps="true"
+        android:textColor="@color/pvr_dark_black"
+        android:textSize="22sp" />
+
+
+</RelativeLayout>

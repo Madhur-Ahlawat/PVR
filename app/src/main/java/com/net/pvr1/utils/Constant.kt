@@ -697,4 +697,32 @@ class Constant {
             view.requestLayout()
         }
     }
+
+    interface PCBackStackActivity {
+        companion object {
+            const val LOYALITY_SPECIFICATION_ACTIVITY = "loyalityspecificationactivity"
+            const val LOYALITY_NONMEMBER_ACTIVITY = "loyalitynonmemberactivity"
+            const val LOYALITY_UNLIMITED_ACTIVITY = "loyalityunlimited"
+            const val MAGAZINE_ACTIVITY = "magazineactivity"
+            const val SOUND_LIKE_PLANE_ACTIVITY = "soundlikeplan"
+            const val THEATER_ACTIVITY = "theatreActivity"
+            const val ALERT_ACTIVITY = "alertActivity"
+            const val THEATER_DETAILS = "theaterdetailsActivity"
+            const val PCSCAN_ACTIVITY = "PCCouponScan"
+            const val GRAB_ACTIVITY = "GrabABiteActivity"
+            const val VKAAO_PAGE = "PCTheatreDemandActivity"
+            const val PCPRE_ACTIVITY = "PCPreBookActivity"
+            const val MYTICKET_ACTIVITY = "myTicketActivity"
+            const val PREFERENCES_ACTIVITY = "preferencesActivity"
+            const val GIFT_CARD_ACTIVITY = "giftCardActivity"
+            const val OFFER_ACTIVITY = "offerActivity"
+            const val LANDING_ACTIVITY = "landingActivity"
+            const val SPLASH_ACTIVITY = "splashActivity"
+            const val OPEN_ACTIVITY_NAME = "activity_name"
+            const val SOCIAL_INFORMATION = "social_information"
+            const val ORDER_SNACKS = "ordersancks"
+            const val ORDER_SUMMARY = "ordersummary"
+            const val IN_SEAT_DINING = "inSeatDining"
+        }
+    }
 }
