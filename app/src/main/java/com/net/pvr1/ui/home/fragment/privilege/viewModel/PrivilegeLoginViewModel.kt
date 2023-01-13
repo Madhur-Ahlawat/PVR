@@ -36,6 +36,16 @@ class PrivilegeLoginViewModel @Inject constructor(private val userRepository: Us
     }
 
 
+    val passportSaveLiveData: LiveData<NetworkResult<PassportPlanResponse>>
+    get() = userRepository.passportSaveResponseLiveData
+
+    fun passportSave(userId: String, city: String, fname: String, lname: String, subsplan: String, dob: String, gender: String, scheme: String, price: String, mobile: String, email: String) {
+        viewModelScope.launch {
+            userRepository.passportSave(userId,city,fname,lname,subsplan,dob,gender,scheme,price,mobile,email)
+        }
+    }
+
+
     val loyaltyDataLiveData: LiveData<NetworkResult<LoyaltyDataResponse>>
     get() = userRepository.loyaltyDataResponseLiveData
 

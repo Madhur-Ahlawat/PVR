@@ -57,9 +57,7 @@ import com.net.pvr1.utils.Constant.Companion.ZAGGLE
 import com.phonepe.intent.sdk.api.PhonePe
 import com.phonepe.intent.sdk.api.TransactionRequestBuilder
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
@@ -80,6 +78,9 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
     private var upi_loader = false
 
     companion object {
+        var subsId = ""
+        var subsToken = ""
+        var createdAt = ""
         var isPromocodeApplied = false
         var offerList:ArrayList<PaymentResponse.Output.Binoffer> = ArrayList()
     }
@@ -110,7 +111,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
 //        //payMode
         authViewModel.payMode(
             CINEMA_ID,
-            "BOOKING",
+            BOOK_TYPE,
             preferences.getUserId().toString(),
             preferences.geMobileNumber().toString(),
             "",
@@ -128,19 +129,15 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
 //            Constant().getDeviceId(this)
 //        )
 //
-//        //payMode
-//        authViewModel.payMode(
-//            "GURM",
-//            "BOOKING",
-//            "pGnnlj1MEjb0MOKBx1EH5w==",
-//            "7800049994",
-//            "",
-//            "no",
-//            "",
-//            false
-//        )
 
 //        voucherDataLoad()
+        if (BOOK_TYPE == "RECURRING"){
+            authViewModel.recurringInit(
+                preferences.getUserId(),
+                BOOKING_ID
+            )
+            recurringInit()
+        }
         payModeDataLoad()
         paytmHMAC()
         credCheck()
@@ -255,8 +252,10 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         //Bank Offer
         if (output.binoffers.isNotEmpty()) {
             binding?.bankOffers?.show()
+            binding?.bnView?.show()
             offerList = output.binoffers
         } else {
+            binding?.bnView?.hide()
             binding?.bankOffers?.hide()
         }
 
@@ -274,15 +273,15 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         }
 
         //Other Payment Method
-        if (output.gateway.isNotEmpty()) {
-            binding?.recyclerView44?.show()
+        if (output.gateway.isNotEmpty() && payMethodFilter("GATEWAY").size>0) {
+            binding?.otherPayView?.show()
             val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
             val foodBestSellerAdapter = PaymentAdapter(payMethodFilter("GATEWAY"), this, this)
             binding?.recyclerView44?.layoutManager = layoutManagerCrew
             binding?.recyclerView44?.adapter = foodBestSellerAdapter
             binding?.recyclerView44?.setHasFixedSize(true)
         } else {
-            binding?.recyclerView44?.hide()
+            binding?.otherPayView?.hide()
         }
 
         //Wallets
@@ -299,14 +298,14 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
 
         // Offer
         if (output.offers.isNotEmpty()) {
-            binding?.recyclerView45?.show()
+            binding?.offerView?.show()
             val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
             val paymentExclusiveAdapter = PaymentExclusiveAdapter(output.offers, this, this)
             binding?.recyclerView45?.layoutManager = layoutManagerCrew
             binding?.recyclerView45?.adapter = paymentExclusiveAdapter
             binding?.recyclerView45?.setHasFixedSize(true)
         } else {
-            binding?.recyclerView45?.hide()
+            binding?.offerView?.hide()
         }
 
         binding?.bankOffers?.setOnClickListener {
@@ -518,6 +517,49 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         retrieveDataUpi(it.data.output)
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(this.supportFragmentManager, null)
+                }
+            }
+        }
+
+    }
+
+
+    private fun recurringInit() {
+        authViewModel.recurringInitLiveDataScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        subsId = it.data.output.subscriptionid
+                        subsToken = it.data.output.token
+                        createdAt = it.data.output.createdAt
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,

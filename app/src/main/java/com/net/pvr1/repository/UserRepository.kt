@@ -49,6 +49,7 @@ import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import org.json.JSONObject
 import retrofit2.Response
+import retrofit2.http.Query
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(private val userAPI: UserAPI) {
@@ -678,6 +679,33 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             }
         } else {
             passportPlanLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    // Passport Save
+    private val passportSaveLiveData = MutableLiveData<NetworkResult<PassportPlanResponse>>()
+    val passportSaveResponseLiveData: LiveData<NetworkResult<PassportPlanResponse>>
+        get() = passportSaveLiveData
+
+    suspend fun passportSave(userId: String, city: String, fname: String, lname: String, subsplan: String, dob: String, gender: String, scheme: String, price: String, mobile: String, email: String) {
+        passportSaveLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.savePassport(
+            userId, city,fname,lname,subsplan,dob,gender,scheme,price,mobile,email, Constant.version, Constant.platform, Constant.getDid())
+        passportSaveResponse(response)
+    }
+
+    private fun passportSaveResponse(response: Response<PassportPlanResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            passportSaveLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            try {
+                val errorObj = JSONObject(response.errorBody()?.charStream()?.readText())
+                passportSaveLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            }catch (e:Exception){
+                passportSaveLiveData.postValue(NetworkResult.Error(response.errorBody()?.charStream()?.readText().toString()))
+            }
+        } else {
+            passportSaveLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 
@@ -2527,4 +2555,50 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             foodOutletLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
+
+    /**************** Passport Recurring    ****************/
+
+    private val recurringInitLiveData = MutableLiveData<NetworkResult<RecurringInitResponse>>()
+    val recurringInitResponseLiveData: LiveData<NetworkResult<RecurringInitResponse>>
+        get() = recurringInitLiveData
+
+    suspend fun recurringInit(userid: String, bookingid: String) {
+        preferenceLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.recurringInit(userid, bookingid, Constant.version, Constant.platform,Constant.getDid())
+        recurringInitData(response)
+    }
+
+    private fun recurringInitData(response: Response<RecurringInitResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            recurringInitLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            recurringInitLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            recurringInitLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    private val recurringBinLiveData = MutableLiveData<NetworkResult<RecurringInitResponse>>()
+    val recurringBinResponseLiveData: LiveData<NetworkResult<RecurringInitResponse>>
+        get() = recurringBinLiveData
+
+    suspend fun recurringBinCheck(userid: String, bookingid: String, token: String, bin: String, vpa: String) {
+        preferenceLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.recurringBinCheck(userid, bookingid,token,bin,vpa ,Constant.version, Constant.platform,Constant.getDid())
+        recurringBinData(response)
+    }
+
+    private fun recurringBinData(response: Response<RecurringInitResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            recurringBinLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            recurringBinLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            recurringBinLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
 }

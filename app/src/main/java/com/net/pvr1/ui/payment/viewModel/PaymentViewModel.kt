@@ -5,10 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
-import com.net.pvr1.ui.payment.response.PaymentResponse
-import com.net.pvr1.ui.payment.response.PaytmHmacResponse
-import com.net.pvr1.ui.payment.response.PhonepeHmacResponse
-import com.net.pvr1.ui.payment.response.UPIStatusResponse
+import com.net.pvr1.ui.payment.response.*
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -146,7 +143,9 @@ class PaymentViewModel @Inject constructor(private val userRepository: UserRepos
         viewModelScope.launch {
             userRepository.credHmac(userid, bookingid,booktype,transid,unpaid,cred_present,spi,ptype)
         }
-    }//CRED Status
+    }
+
+    //CRED Status
     val credStatusLiveDataScope: LiveData<NetworkResult<UPIStatusResponse>> get() = userRepository.credStatusResponseLiveData
 
     fun credStatus(
@@ -159,4 +158,18 @@ class PaymentViewModel @Inject constructor(private val userRepository: UserRepos
             userRepository.credStatus(userid, bookingid,booktype,transid)
         }
     }
+
+
+    //Recurring Init
+    val recurringInitLiveDataScope: LiveData<NetworkResult<RecurringInitResponse>> get() = userRepository.recurringInitResponseLiveData
+
+    fun recurringInit(
+        userid: String,
+        bookingid: String
+    ) {
+        viewModelScope.launch {
+            userRepository.recurringInit(userid, bookingid)
+        }
+    }
+
 }

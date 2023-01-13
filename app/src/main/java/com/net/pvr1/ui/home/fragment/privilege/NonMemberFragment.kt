@@ -41,6 +41,10 @@ class NonMemberFragment : Fragment() {
     companion object {
         var scheme_id = ""
         var scheme_price = "0.0"
+        var maxtrycount = 0
+        var retrymsg1 = "NO"
+        var retrymsg2 = "NO"
+        var subPlans = "NO"
         var visits = "0.0"
 
     }
@@ -257,6 +261,9 @@ class NonMemberFragment : Fragment() {
     private fun retrieveData(output: PassportPlanResponse.Output) {
         scheme_id = output.scheme[0].schemeid
         scheme_price = output.scheme[0].price
+        subPlans = output.scheme[0].subsplan
+        retrymsg1 = output.scheme[0].retrymsgone
+        retrymsg2 = output.scheme[0].retrymsgtwo
         binding?.passportView?.priceNewText?.text = ""
 
         val text =

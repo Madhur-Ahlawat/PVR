@@ -2,18 +2,30 @@ package com.net.pvr1.ui.payment.cardDetails
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View.OnFocusChangeListener
+import android.view.ViewGroup
+import android.view.Window
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityCardDetailsBinding
 import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.home.fragment.privilege.EnrollInPassportActivity
+import com.net.pvr1.ui.home.fragment.privilege.NonMemberActivity
+import com.net.pvr1.ui.home.fragment.privilege.NonMemberFragment
+import com.net.pvr1.ui.home.fragment.privilege.NonMemberFragment.Companion.maxtrycount
+import com.net.pvr1.ui.payment.PaymentActivity
 import com.net.pvr1.ui.payment.cardDetails.adapter.NetBankingAdapter
 import com.net.pvr1.ui.payment.cardDetails.viewModel.CardDetailsViewModel
 import com.net.pvr1.ui.payment.response.PaytmHmacResponse
@@ -29,6 +41,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewItemClickListener {
     private var isNetBaking: Boolean = false
+    var hmacSubs = false
 
     @Inject
     lateinit var preferences: PreferenceManager
@@ -52,6 +65,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
     private var midNet = ""
     private var amountNet = ""
     private var hmackeyNet = ""
+    var callCount = 0
 
 
     @SuppressLint("SetTextI18n")
@@ -66,7 +80,8 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
             getString(R.string.pay) + " " + getString(R.string.currency) + intent.getStringExtra("paidAmount")
         movedNext()
         paytmHMAC()
-
+        if (BOOK_TYPE == "RECURRING")
+            checkBinForRecurring()
         if (paymentType.equals("116", ignoreCase = true)) {
             paymentType = getString(R.string.mobikwik_addmoney_payment_type_credit_card)
             binding?.constraintLayout130?.show()
@@ -220,6 +235,38 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                 isSavedCard = false
             }
         }
+
+        binding?.cardNumber?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                if (s.isNotEmpty() && s.length == 6) {
+                    if (BOOK_TYPE == "RECURRING") {
+                        if (maxtrycount>0) {
+                            if (maxtrycount != (callCount)) {
+                                authViewModel.recurringBinCheck(
+                                    preferences.getUserId(),
+                                    Constant.BOOKING_ID,
+                                    PaymentActivity.subsToken,
+                                    s.toString(),
+                                    ""
+                                )
+                            } else {
+                                show("Your card details are not valid for subscription, if you want to purchase passport one month then press on ok button! ")
+                            }
+                        } else {
+                            authViewModel.recurringBinCheck(
+                                preferences.getUserId(),
+                                Constant.BOOKING_ID,
+                                PaymentActivity.subsToken,
+                                s.toString(),
+                                ""
+                            )
+                        }
+                    }
+                }
+            }
+        })
     }
 
     private fun paytmHMAC() {
@@ -239,6 +286,49 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                             positiveClick = {},
                             negativeClick = {})
                         dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(this.supportFragmentManager, null)
+                }
+            }
+        }
+
+    }
+
+    private fun checkBinForRecurring() {
+        authViewModel.recurringBinLiveDataScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        hmacSubs = true
+                        binding?.subsView?.show()
+                        binding?.msg1?.text = it.data.output.tf
+                        binding?.msg2?.text = it.data.output.ts
+                        binding?.msg1?.setTextColor(Color.parseColor("#007D23"))
+                        binding?.subsView?.setBackgroundResource(R.drawable.subs_valid_rect)
+                    } else {
+                        hmacSubs = false
+                        binding?.msg1?.setTextColor(Color.parseColor("#ED1B2E"))
+                        binding?.msg1?.text = it.data?.output?.tf
+                        binding?.msg2?.text = it.data?.output?.ts
+                        binding?.subsView?.show()
+                        binding?.subsView?.setBackgroundResource(R.drawable.subs_invalid_rect)
+                        callCount += 1
                     }
                 }
                 is NetworkResult.Error -> {
@@ -350,6 +440,37 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
         intent.putExtra("TICKET_BOOKING_DETAILS", "paymentIntentData")
         startActivity(intent)
 
+    }
+
+    fun show(msg: String?) {
+        val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.retry_popup)
+        dialog.setCancelable(true)
+        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window!!.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        val cross_text = dialog.findViewById<TextView>(R.id.cross_text)
+        val cross_text_new = dialog.findViewById<TextView>(R.id.cross_text_new)
+        val cancel = dialog.findViewById<TextView>(R.id.cancel)
+        val ok_btn = dialog.findViewById<TextView>(R.id.ok_btn)
+        cross_text_new?.text = NonMemberFragment.retrymsg1
+        cross_text?.text = NonMemberFragment.retrymsg2
+        dialog.show()
+        ok_btn!!.setOnClickListener {
+           // genrateNeworder()
+            dialog.dismiss()
+        }
+        cancel!!.setOnClickListener {
+            val intent = Intent(this@CardDetailsActivity, EnrollInPassportActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+            finish()
+            dialog.dismiss()
+        }
     }
 
 

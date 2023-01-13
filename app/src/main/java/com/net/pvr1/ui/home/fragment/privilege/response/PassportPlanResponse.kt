@@ -10,7 +10,11 @@ data class PassportPlanResponse(
 ){
     data class Output(
         val scheme: ArrayList<Scheme>,
-        val selectedScheme: Any
+        val selectedScheme: Any,
+        val id: String,
+        val ta: String,
+        val booktype: String
+
     )
     data class Scheme(
         val cinema: String,
