@@ -553,4 +553,20 @@
 
     //Cinema Details
     <string name="cinemaDetails">Cinema Details</string>
+    <string name="dbox_dialog_show">D-BOX offers an incredible cinematic motion experience that moves your seat in sync with the action on the screen to immerse viewers in the movie so they feel like they’re in it.</string>
+    <string name="pvr_privilege_vouchers">PVR Privilege Vouchers</string>
+    <string name="join_pvr_passport">Join PVR Passport</string>
+    <string name="monthly_subscription_voucher_program">Monthly Subscription voucher Program</string>
+    <string name="join_now_into_pvr_passport_pass">Join Now into PVR Passport Pass</string>
+    <string name="last_name">Last Name</string>
+    <string name="dob_dd_mm_yyyy">DOB(DD/MM/YYYY)</string>
+    <string name="mobile_no">Mobile No</string>
+    <string name="we_have_above_email_address_in_our_records_for_sharing_an_otp_please_feel_free_to_edit_if_you_wish_to_change_it">We have above email address in our records for sharing an OTP, please feel free to edit if you wish to change it</string>
+    <string name="city">City</string>
+    <string name="you_will_be_auto_enrolled_into_pvr_privilege_program_and_get_its_benefits">You will be auto-enrolled into PVR Privilege Program and get its benefits.</string>
+    <string name="first_name">First Name</string>
+    <string name="full_name">Full Name</string>
+    <string name="submit_details">Submit Details</string>
+    <string name="email_address">Email Address</string>
+
 </resources>

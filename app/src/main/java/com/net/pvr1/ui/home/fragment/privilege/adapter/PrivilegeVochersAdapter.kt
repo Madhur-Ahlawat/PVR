@@ -301,10 +301,14 @@ class PrivilegeVochersAdapter(
 
         //createQR(voucherNewCombineLists.get(position).getVoucherVo().getCd(),holder.qrCodeImageView);
         holder.itemView.setOnClickListener {
-//            if (holder.qrCodeImageView.getVisibility() == View.VISIBLE) openDialog(
-//                unUsedVoucherNewCombineLists,
-//                position
-//            )
+            if (holder.binding.qrCodeImg.visibility == View.VISIBLE) {
+                listener.onItemClick(nowShowingList,position)
+            }
+
+        }
+
+        holder.binding.vocTermsDummy.setOnClickListener {
+            listener.onItemTermsClick(cardData.info)
         }
 
 //        if (position == voucherNewCombineLists.size - 1) holder.LastView.setVisibility(View.VISIBLE)
@@ -316,7 +320,8 @@ class PrivilegeVochersAdapter(
     }
 
     interface RecycleViewItemClickListener {
-        fun onItemClick()
+        fun onItemClick(nowShowingList: ArrayList<LoyaltyDataResponse.Voucher>, position: Int)
+        fun onItemTermsClick(info: String)
     }
 
     class generateQrcode(var bmImage: ImageView) :

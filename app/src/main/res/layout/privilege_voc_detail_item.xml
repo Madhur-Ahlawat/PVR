@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="15dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:background="@drawable/rectangle_shape_background_gray">
+
+
+        <TextView
+            android:id="@+id/voc_type_details"
+            android:fontFamily="@font/sfprodisplay_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/gradient_free_snacks"
+            android:paddingLeft="12dp"
+            android:paddingTop="3dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="3dp"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            tools:text="Tickets &amp; Snacks" />
+
+
+        <LinearLayout
+            android:id="@+id/voc_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/voc_type_details"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/details_voc"
+                android:fontFamily="@font/sf_pro_text_medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="4sp"
+                android:textColor="@color/pvr_dark_black"
+                android:textSize="16sp"
+                tools:text="1 Free Popcorn Regular Salted" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/llQr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="16dp"
+            android:background="@drawable/rectangle_shape_new"
+            android:gravity="center"
+            android:padding="12dp">
+
+
+            <ImageView
+                android:id="@+id/qr_code_pv"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_below="@+id/voc_details"
+                android:layout_gravity="center"
+                />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/qr_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/llQr"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:fontFamily="@font/sf_pro_text_regular"
+            tools:text="LBNEPPP" />
+
+
+
+        <TextView
+            android:id="@+id/text_valid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/qr_text"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:textColor="#000000"
+            android:layout_marginTop="10dp"
+            android:textSize="14sp"
+            android:fontFamily="@font/sf_pro_text_regular"
+            tools:text="LBNEPPP" />
+
+
+        <TextView
+            android:id="@+id/ex_date"
+            android:fontFamily="@font/sfprodisplay_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_valid"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rectangle_shape_yellow"
+            android:elevation="2dp"
+            android:minHeight="20dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
+            android:textColor="@color/white"
+            android:textSize="10sp" />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

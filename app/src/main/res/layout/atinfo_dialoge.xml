@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:orientation="vertical"
+    android:background="@drawable/top_curve_bottomsheet">
+
+    <TextView
+        android:id="@+id/cross"
+        android:fontFamily="@font/sfprodisplay_bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="12dp"
+        android:drawableRight="@drawable/close"
+        android:gravity="center"
+        android:text="Dolby Atmos"
+        android:textSize="22sp" />
+
+    <include layout="@layout/horizontal_line" />
+
+
+    <ImageView
+        android:id="@+id/logot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:padding="5dp"
+        android:src="@drawable/datmos"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/mtitle"
+        android:fontFamily="@font/sfprodisplay_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="20dp"
+        android:text="Become member of PVR Privilege program for Free."
+        android:visibility="gone" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHeight_max="450dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/benifit"
+                    android:fontFamily="@font/sfprodisplay_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="left|center"
+                    android:text="Benefits"
+                    android:textSize="18sp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/message"
+                    android:fontFamily="@font/sf_pro_text_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="left"
+                    android:lineSpacingExtra="3sp"
+                    android:text="Dolby Atmos is the name of a surround sound technology announced by Dolby Laboratories in April 2012 and released in June that year\nDolby Atmos technology allows up to 128 audio tracks plus associated spatial audio description metadata (most notably, location or pan automation data) to be distributed to theaters for optimal, dynamic rendering to loudspeakers based on the theater capabilities. "
+                    android:textSize="12sp" />
+
+
+                <View
+                    android:id="@+id/dboxview"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/gray"
+                    android:visibility="gone" />
+
+
+                <TextView
+                    android:id="@+id/dboxmessage"
+                    android:fontFamily="@font/sf_pro_text_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="left"
+                    android:lineSpacingExtra="3sp"
+                    android:text="@string/dbox_dialog_show"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+
+
+                <TextView
+                    android:id="@+id/text"
+                    android:fontFamily="@font/sf_pro_text_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="left"
+                    android:lineSpacingExtra="2.5sp"
+                    android:text="Details will be sent on your mobile number within 24 hours after first visit."
+                    android:textColor="#4c4c4c"
+                    android:textSize="10sp"
+                    android:visibility="gone" />
+
+
+                <TextView
+                    android:id="@+id/knowmore1"
+                    android:fontFamily="@font/sf_pro_text_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:text="Click here to opt out of PVR Privilege "
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="22dp"
+        android:background="@color/pvr_yellow"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/close"
+            android:fontFamily="@font/sfprodisplay_bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="CLOSE"
+            android:textSize="24sp"
+            app:textAllCaps="true" />
+
+    </LinearLayout>
+
+</LinearLayout>
