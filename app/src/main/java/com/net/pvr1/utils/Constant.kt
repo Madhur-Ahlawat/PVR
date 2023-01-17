@@ -80,6 +80,7 @@ class Constant {
         const val USER_ID = "user_id"
         const val SEAT_AVAILABEL = 1
         var TRANSACTION_ID = "0"
+        var DISCOUNT = 0.0
         var BOOKING_ID = "0"
         var CINEMA_ID = "0"
         var OfferDialogImage = "0"

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@drawable/bottom_corner">
+
+
+
+    <TextView
+        android:fontFamily="@font/sf_pro_text_medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/title"
+        android:layout_marginTop="@dimen/dimen_40dp"
+        android:layout_marginStart="@dimen/dimen_30dp"
+        android:layout_marginEnd="@dimen/dimen_30dp"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:lineSpacingExtra="@dimen/dimen_5dp"
+        android:text="Congratulations!"
+        />
+
+
+    <TextView
+        android:fontFamily="@font/sfprodisplay_regular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/message"
+        android:layout_marginTop="@dimen/dimen_20dp"
+        android:layout_marginStart="@dimen/dimen_30dp"
+        android:layout_marginEnd="@dimen/dimen_30dp"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:lineSpacingExtra="@dimen/dimen_5dp"
+        android:text="You have saved INR 400 using your PVR Passport voucher! Keep booking!"
+        />
+
+    <TextView
+        android:id="@+id/ok_btn"
+        android:fontFamily="@font/helvetica_neu_bold"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_40dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="@dimen/dimen_30dp"
+        android:layout_marginStart="@dimen/dimen_25dp"
+        android:layout_marginEnd="@dimen/dimen_25dp"
+        android:layout_marginTop="@dimen/dimen_60dp"
+        android:background="@drawable/yellow_book_curve"
+        android:gravity="center"
+        app:textAllCaps="true"
+        android:textSize="18sp"
+        android:text="Okay"
+        />
+
+
+</LinearLayout>

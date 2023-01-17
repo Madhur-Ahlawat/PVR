@@ -11,7 +11,7 @@ data class CouponResponse(
         val cp: String,
         val nm: String,
         val tp: String,
-        val vouchers: List<Voucher>
+        val vouchers: ArrayList<Voucher>
     ) : java.io.Serializable {
         data class Voucher(
             val TransScheme_strCtrlMsr: String,

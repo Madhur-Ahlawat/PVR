@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="280dp"
-    android:layout_height="162dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_gravity="left"
+    android:layout_gravity="start"
+    android:id="@+id/parrentView"
     >
 
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dimen_15dp"
         android:gravity="center">
         <RelativeLayout
@@ -18,7 +19,7 @@
             android:visibility="gone"
             android:background="@drawable/bg_black"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
             <ImageView
                 android:src="@drawable/ic_green"
                 android:layout_centerInParent="true"
@@ -30,14 +31,13 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
 
             <ImageView
                 android:id="@+id/ivSubs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/passportView"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
                 android:src="@drawable/voucher_1" />
@@ -46,8 +46,8 @@
                 android:id="@+id/passportView"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_36dp"
-                android:layout_alignParentBottom="true"
                 android:layout_marginTop="-5dp"
+                android:layout_below="@+id/ivSubs"
                 android:background="@drawable/bottom_loyalty_corner_8"
                 android:orientation="horizontal"
                 android:paddingTop="@dimen/dimen_8dp"
@@ -98,7 +98,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:orientation="vertical">
 
