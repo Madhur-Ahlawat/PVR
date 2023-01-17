@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Parcelable
+import android.os.SystemClock
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -98,15 +99,14 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         binding?.textView178?.text =
             getString(R.string.pay) + " " + getString(R.string.currency) + intent.getStringExtra("paidAmount")
         //voucher
-//        authViewModel.voucher(
-//            preferences.getToken().toString(),
-//            preferences.getUserId().toString(),
-//            CITY,
-//            "",
-//            "false",
-//            Constant().getDeviceId(this),
-//            ""
-//        )
+        val time = SystemClock.uptimeMillis()
+
+        authViewModel.voucher(Constant.getHash(preferences.getUserId() + "|" + preferences.getToken() + "|" + time),
+            preferences.getToken().toString(),
+            preferences.getCityName().toString(),
+            preferences.getUserId().toString(),
+            time.toString()
+        )
 
 //        //payMode
         authViewModel.payMode(
@@ -120,15 +120,6 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
             false
         )
 
-
-//        authViewModel.coupons(
-//            preferences.geMobileNumber().toString(),
-//            CITY,
-//            "",
-//            false,
-//            Constant().getDeviceId(this)
-//        )
-//
 
 //        voucherDataLoad()
         if (BOOK_TYPE == "RECURRING"){
@@ -144,54 +135,29 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         upiStatus()
         phonePeHmac()
         phonePeStatus()
+        voucherDataLoad()
         binding?.include26?.imageView58?.setOnClickListener {
             onBackPressed()
         }
     }
 
 
-//    private fun voucherDataLoad() {
-//        authViewModel.userResponseLiveData.observe(this) {
-//            when (it) {
-//                is NetworkResult.Success -> {
-//                    loader?.dismiss()
-//                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-//                        retrieveDataCoupon(it.data.output)
-//                    } else {
-//                        val dialog = OptionDialog(this,
-//                            R.mipmap.ic_launcher,
-//                            R.string.app_name,
-//                            it.data?.msg.toString(),
-//                            positiveBtnText = R.string.ok,
-//                            negativeBtnText = R.string.no,
-//                            positiveClick = {
-//                            },
-//                            negativeClick = {
-//                            })
-//                        dialog.show()
-//                    }
-//                }
-//                is NetworkResult.Error -> {
-//                    loader?.dismiss()
-//                    val dialog = OptionDialog(this,
-//                        R.mipmap.ic_launcher,
-//                        R.string.app_name,
-//                        it.message.toString(),
-//                        positiveBtnText = R.string.ok,
-//                        negativeBtnText = R.string.no,
-//                        positiveClick = {
-//                        },
-//                        negativeClick = {
-//                        })
-//                    dialog.show()
-//                }
-//                is NetworkResult.Loading -> {
-//                    loader = LoaderDialog(R.string.pleasewait)
-//                    loader?.show(supportFragmentManager, null)
-//                }
-//            }
-//        }
-//    }
+    private fun voucherDataLoad() {
+        authViewModel.userResponseLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        retrieveDataCoupon(it.data.output)
+                    }
+                }
+                is NetworkResult.Error -> {
+
+                }
+                is NetworkResult.Loading -> {
+                }
+            }
+        }
+    }
 
     private fun retrieveDataCoupon(output: ArrayList<CouponResponse.Output>) {
         if (output.isNotEmpty()) {

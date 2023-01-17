@@ -1,0 +1,9 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#fc9c02" />
+
+    <corners
+        android:bottomLeftRadius="@dimen/offer_radious"
+        android:bottomRightRadius="@dimen/offer_radious"
+        android:topLeftRadius="@dimen/offer_radious"
+        android:topRightRadius="@dimen/offer_radious" />
+</shape>

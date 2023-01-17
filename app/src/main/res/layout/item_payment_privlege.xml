@@ -1,75 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
+    android:layout_height="162dp"
+    android:orientation="vertical"
+    android:layout_gravity="left"
+    >
 
-    <androidx.cardview.widget.CardView
-        android:layout_marginStart="@dimen/dimen_24dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cardUseCompatPadding="true"
-        app:cardCornerRadius="@dimen/dimen_8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/dimen_15dp"
+        android:gravity="center">
+        <RelativeLayout
+            android:id="@+id/rl_tick"
+            android:elevation="@dimen/dimen_5dp"
+            android:visibility="gone"
+            android:background="@drawable/bg_black"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:src="@drawable/ic_green"
+                android:layout_centerInParent="true"
+                android:layout_width="@dimen/dimen_24dp"
+                android:layout_height="@dimen/dimen_24dp"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout47"
+
+            <ImageView
+                android:id="@+id/ivSubs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/payment_pri_curve"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_above="@+id/passportView"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/voucher_1" />
 
-                <ImageView
-                    android:id="@+id/imageView85"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="ContentDescription"
-                    tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            <RelativeLayout
+                android:id="@+id/passportView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_36dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="-5dp"
+                android:background="@drawable/bottom_loyalty_corner_8"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/dimen_8dp"
+                android:paddingBottom="@dimen/dimen_8dp"
+                android:visibility="visible">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout47">
-
-                <RadioButton
-                    android:id="@+id/radioButton"
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/redeemText"
+                    android:fontFamily="@font/sf_pro_text_regular"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="11dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:fontFamily="@font/sf_pro_text_medium"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/padding_10"
+                    android:drawableStart="@drawable/ic_gray_tick"
+                    android:drawablePadding="@dimen/dimen_8dp"
+                    android:text="Redeem"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/dimen_12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="  Redeem" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:textSize="12sp"
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+                    />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/ivRedeemed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/redeemed"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+
+
+
+        <ImageView
+            android:id="@+id/ivImage_subs"
+            android:layout_width="wrap_content"
+            android:layout_gravity="right|center"
+            android:visibility="gone"
+            android:src="@drawable/subs_privilrge"
+            android:layout_marginRight="@dimen/dimen_16dp"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/voucher_name"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:background="@drawable/gradient_free_snacks"
+                android:gravity="center_vertical"
+                android:textSize="11sp"
+                android:layout_marginTop="@dimen/padding_10"
+                android:layout_gravity="center_vertical"
+                android:singleLine="true"
+                android:drawablePadding="10dp"
+                android:text=""
+                android:textColor="@color/white"
+                android:visibility="visible" />
+
+            <TextView
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textSize="10sp"
+                android:id="@+id/new_voucher_type"
+                android:layout_gravity="center_vertical"
+                android:singleLine="true"
+                android:layout_marginLeft="9dp"
+                android:text=""
+                android:textColor="#ffffff"
+                android:visibility="visible"
+                android:layout_marginBottom="@dimen/dimen_8dp"/>
+
+            <TextView
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textSize="14sp"
+                android:id="@+id/price"
+                android:layout_gravity="center_vertical"
+                android:singleLine="true"
+                android:layout_marginLeft="9dp"
+                android:text=""
+                android:textColor="#ffffff"
+                android:visibility="visible"
+                android:layout_marginBottom="-8dp"/>
+            <TextView
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textSize="10sp"
+                android:id="@+id/sub_price"
+                android:layout_gravity="center_vertical"
+                android:singleLine="true"
+                android:layout_marginLeft="9dp"
+                android:text=""
+                android:textColor="@color/pvr_dark_black"
+                android:visibility="visible"/>
+
+
+            <TextView
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textSize="9sp"
+                android:id="@+id/code"
+                android:layout_gravity="center_vertical"
+                android:singleLine="true"
+                android:layout_marginLeft="9dp"
+                android:text=""
+                android:textColor="#ffffff"
+                android:visibility="visible"
+                android:layout_marginTop="2.5dp"
+                android:layout_marginBottom="-4dp"/>
+
+            <TextView
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textSize="9sp"
+                android:id="@+id/ex"
+                android:layout_gravity="center_vertical"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="#ffffff"
+                android:visibility="visible"
+                android:layout_marginLeft="9dp"/>
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/main"
+        android:layout_width="220dp"
+        android:layout_height="110dp"
+        android:layout_marginLeft="20dp"
+        android:visibility="gone"
+        android:clickable="false">
+
+    </FrameLayout>
+</LinearLayout>
+
+
