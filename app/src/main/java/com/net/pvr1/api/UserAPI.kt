@@ -79,16 +79,19 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<ResisterResponse>
 
-    @POST("api/loyalty/getcoupons")
+    @POST("api/loyalty/vouchers")
     suspend fun getCoupons(
+        @Header("X-Token") hash: String,
         @Query("mobile") mobile: String,
         @Query("city") city: String,
+        @Query("userid") userid: String,
+        @Query("timestamp") timestamp: String,
         @Query("status") status: String,
-        @Query("pay") pay: Boolean,
-        @Query("did") did: String,
+        @Query("pay") pay: String,
         @Query("av") version: String,
-        @Query("pt") platform: String
-    ): Response<CouponResponse>
+        @Query("pt") platform: String,
+        @Query("did") did: String
+        ): Response<CouponResponse>
 
     @POST("api/payment/paytmex/hmac")
     suspend fun paytmHMAC(

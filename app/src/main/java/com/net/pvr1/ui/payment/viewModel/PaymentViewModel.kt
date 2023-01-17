@@ -15,22 +15,14 @@ import javax.inject.Inject
 class PaymentViewModel @Inject constructor(private val userRepository: UserRepository) :
     ViewModel() {
     //voucher
-//    val userResponseLiveData: LiveData<NetworkResult<CouponResponse>>
-//        get() = userRepository.voucherResponseLiveData
-//
-//    fun voucher(
-//        mobile: String,
-//        userid: String,
-//        city: String,
-//        status: String,
-//        pay: String,
-//        did: String,
-//        timestamp: String
-//    ) {
-//        viewModelScope.launch {
-//            userRepository.coupons(mobile, userid, city, status, pay, did, timestamp)
-//        }
-//    }
+    val userResponseLiveData: LiveData<NetworkResult<CouponResponse>>
+        get() = userRepository.couponsResponseLiveData
+
+    fun voucher(token: String,mobile: String, city: String, userid: String, timestamp: String) {
+        viewModelScope.launch {
+            userRepository.coupons(token,mobile,  city,userid,timestamp)
+        }
+    }
 
     //payMode
     val payModeResponseLiveData: LiveData<NetworkResult<PaymentResponse>>

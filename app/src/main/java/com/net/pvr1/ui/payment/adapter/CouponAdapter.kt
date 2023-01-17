@@ -33,7 +33,7 @@ class CouponAdapter(
         with(holder) {
             with(nowShowingList[position]) {
                 //title
-                binding.radioButton.text = context.getString(R.string.redeem)
+//                binding.radioButton.text = context.getString(R.string.redeem)
             }
         }
     }

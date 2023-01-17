@@ -130,10 +130,10 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     val couponsResponseLiveData: LiveData<NetworkResult<CouponResponse>>
         get() = couponsLiveData
 
-    suspend fun coupons(mobile: String, city: String, status: String, pay: Boolean, did: String) {
+    suspend fun coupons(token: String,mobile: String, city: String, userid: String, timestamp: String) {
         otpVerifyLiveData.postValue(NetworkResult.Loading())
         val response =
-            userAPI.getCoupons(mobile, city, status, pay, did, Constant.version, Constant.platform)
+            userAPI.getCoupons(token,mobile, city,userid, timestamp , "V", "true", Constant.version, Constant.platform,Constant.getDid())
         couponsResponse(response)
     }
 
