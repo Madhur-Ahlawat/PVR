@@ -241,7 +241,8 @@
                             android:textColor="#808190"
                             android:textSize="@dimen/dimen_12sp"
                             app:layout_constraintStart_toStartOf="@+id/view79"
-                            app:layout_constraintTop_toTopOf="@+id/view79" />
+                            app:layout_constraintTop_toTopOf="@+id/view79"
+                            tools:ignore="TextContrastCheck" />
 
                         <TextView
                             android:id="@+id/textView115"
@@ -312,7 +313,8 @@
                             android:textColor="#808190"
                             android:textSize="@dimen/dimen_12sp"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/view81" />
+                            app:layout_constraintTop_toTopOf="@+id/view81"
+                            tools:ignore="TextContrastCheck" />
 
                         <TextView
                             android:id="@+id/textView119"
@@ -355,7 +357,8 @@
                                 android:textColor="#808190"
                                 android:textSize="@dimen/dimen_12sp"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:ignore="TextContrastCheck" />
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/recyclerView32"
@@ -570,7 +573,8 @@
                             android:textColor="#808190"
                             android:textSize="@dimen/dimen_13sp"
                             app:layout_constraintStart_toStartOf="@+id/view110"
-                            app:layout_constraintTop_toTopOf="@+id/view110" />
+                            app:layout_constraintTop_toTopOf="@+id/view110"
+                            tools:ignore="TextContrastCheck" />
 
                         <TextView
                             android:id="@+id/textView162"
@@ -763,7 +767,8 @@
                             android:textSize="@dimen/dimen_12sp"
                             app:layout_constraintBottom_toBottomOf="@+id/textView166"
                             app:layout_constraintEnd_toEndOf="@+id/textView171"
-                            app:layout_constraintTop_toBottomOf="@+id/textView165" />
+                            app:layout_constraintTop_toBottomOf="@+id/textView165"
+                            tools:ignore="TextContrastCheck" />
 
                         <TextView
                             android:id="@+id/textView173"
@@ -1111,13 +1116,13 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="-20dp"
                             android:background="#FFFDF5"
-                            android:paddingEnd="@dimen/dimen_14dp"
                             android:paddingStart="@dimen/dimen_14dp"
+                            android:paddingEnd="@dimen/dimen_14dp"
                             app:layout_constraintBottom_toTopOf="@+id/constraintLayout115"
                             app:layout_constraintEnd_toEndOf="@+id/constraintLayout115"
                             app:layout_constraintStart_toStartOf="@+id/constraintLayout115"
                             app:srcCompat="@drawable/suumery_cancel"
-                            tools:ignore="ContentDescription" />
+                            tools:ignore="ContentDescription,ImageContrastCheck" />
 
 
 

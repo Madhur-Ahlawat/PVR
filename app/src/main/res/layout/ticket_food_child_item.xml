@@ -38,19 +38,18 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView"
-                    app:cardCornerRadius="@dimen/dimen_8dp"
+                    app:cardCornerRadius="@dimen/dimen_3dp"
                     android:layout_marginStart="@dimen/padding_10"
                     android:layout_marginTop="@dimen/padding_10"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:layout_width="@dimen/dimen_100dp"
-                    android:layout_height="110dp"
-                    app:cardUseCompatPadding="true"
-                    >
+                    android:layout_width="60dp"
+                    android:layout_height="90dp">
                     <ImageView
                         android:id="@+id/imageView3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:adjustViewBounds="true"
                         app:srcCompat="@drawable/app_icon"
                         tools:ignore="ContentDescription" />
@@ -63,7 +62,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="3dp"
                     app:layout_constraintEnd_toStartOf="@+id/imageView4"
                     app:layout_constraintStart_toEndOf="@+id/cardView"
                     app:layout_constraintTop_toTopOf="@+id/cardView"
@@ -226,24 +225,26 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/bottom_curve_ui"
             android:orientation="horizontal"
             android:paddingTop="10dp"
-            android:paddingBottom="16dp"
+            android:paddingBottom="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/movieWithFoodUi">
 
             <TextView
                 android:id="@+id/orderId"
-                style="@style/H1Size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="14dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:textSize="@dimen/dimen_12sp"
+                android:textColor="#7D7D7D"
                 tools:ignore="TextContrastCheck"
                 tools:text="Order ID: BAT446883XV" />
 

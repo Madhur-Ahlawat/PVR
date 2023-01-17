@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.myBookings.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -31,6 +32,7 @@ class FoodTicketChildAdapter(
         return MyViewHolderNowShowing(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolderNowShowing, position: Int) {
         val cinemaItem = nowShowingList[position]
         //Image
@@ -68,30 +70,20 @@ class FoodTicketChildAdapter(
             holder.onlyFood.hide()
             holder.cinemaWithFood.show()
 
-////Food Item
-//            val gridLayout2 = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
-//            val foodTicketFoodAdapter = FoodTicketFoodAdapter(cinemaItem.f,"cinema")
-//            holder.recyclerView.layoutManager = gridLayout2
-//            holder.recyclerView.adapter = foodTicketFoodAdapter
-
         }
-
 
         holder.itemView.setOnClickListener {
             type = if (cinemaItem.is_only_fd){
                 "FOOD"
             }else{
                 "BOOKING"
-
             }
             val intent = Intent( context,TicketConfirmationActivity::class.java)
             intent.putExtra("bookingId",cinemaItem.bi)
             intent.putExtra("type","myBooking")
             intent.putExtra("bookType",type)
             context.startActivity(intent)
-
         }
-
     }
 
     override fun getItemCount(): Int {

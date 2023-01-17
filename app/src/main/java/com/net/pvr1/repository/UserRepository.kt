@@ -49,7 +49,6 @@ import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import org.json.JSONObject
 import retrofit2.Response
-import retrofit2.http.Query
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(private val userAPI: UserAPI) {
@@ -415,6 +414,32 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             foodTicketLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             foodTicketLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    //resend Mail
+    private val resendMailLiveData = MutableLiveData<NetworkResult<FoodTicketResponse>>()
+    val resendMailResponseLiveData: LiveData<NetworkResult<FoodTicketResponse>>
+        get() = resendMailLiveData
+
+    suspend fun resendMail(
+        userId: String, bookingId: String, type: String
+    ) {
+        resendMailLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.resendMail(
+            userId, bookingId,type, Constant.version, Constant.platform
+        )
+        resendMailResponse(response)
+    }
+
+    private fun resendMailResponse(response: Response<FoodTicketResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            resendMailLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            resendMailLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            resendMailLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 

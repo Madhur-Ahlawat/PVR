@@ -29,6 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <!--Account-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -109,7 +110,11 @@
                         android:id="@+id/privilegeLogOut"
                         layout="@layout/ph_slider_item_new"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
@@ -195,6 +200,7 @@
                         android:id="@+id/rlWhatsapp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
                         android:layout_marginTop="20dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -208,7 +214,6 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerInParent="true"
                             android:layout_gravity="center"
-                            android:layout_marginStart="16dp"
                             android:src="@drawable/whatsapp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -217,13 +222,15 @@
 
                         <TextView
                             android:id="@+id/tvEventName"
-                            style="@style/H2SizeDark"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginEnd="16dp"
                             android:layout_toEndOf="@+id/ic_whatsapp"
+                            android:fontFamily="@font/sf_pro_text_medium"
                             android:text="@string/whatsapp_notifications"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/checkState"
                             app:layout_constraintStart_toEndOf="@+id/ic_whatsapp"
@@ -256,39 +263,87 @@
                     android:background="@drawable/line_separator"
                     app:layout_constraintTop_toBottomOf="@+id/rlWhatsapp" />
 
-                <TextView
-                    android:id="@+id/tvTerm"
-                    style="@style/H1Size"
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="16dp"
-                    android:gravity="center_vertical"
-                    android:lineSpacingExtra="2sp"
-                    android:text="@string/terms_privacy" />
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvTerm"
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="21dp"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:gravity="center_vertical"
+                        android:lineSpacingExtra="2sp"
+                        android:text="@string/terms_privacy"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
-                <TextView
-                    android:id="@+id/tvContact"
-                    style="@style/H1Size"
-                    android:layout_width="match_parent"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="16dp"
-                    android:gravity="center_vertical"
-                    android:lineSpacingExtra="2sp"
-                    android:text="@string/contact_us"
-                    tools:ignore="TooManyViews" />
+                    <View
+                        android:id="@+id/view235"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dimen_1dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="24dp"
+                        android:background="@color/grayEd"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/tvTerm"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTerm" />
 
 
-                <TextView
-                    android:id="@+id/tvSignOut"
-                    style="@style/H1Size"
-                    android:layout_width="match_parent"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="16dp"
-                    android:gravity="center_vertical"
-                    android:lineSpacingExtra="2sp"
-                    android:text="@string/sign_out"
-                    android:textColor="#DD0000" />
+                    <TextView
+                        android:id="@+id/tvContact"
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:gravity="center_vertical"
+                        android:lineSpacingExtra="2sp"
+                        android:text="@string/contact_us"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view235"
+                        tools:ignore="TooManyViews" />
+
+
+                    <View
+                        android:id="@+id/view236"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dimen_1dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="24dp"
+                        android:background="@color/grayEd"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/tvContact"
+                        app:layout_constraintTop_toBottomOf="@+id/tvContact" />
+
+
+                    <TextView
+                        android:id="@+id/tvSignOut"
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:gravity="center_vertical"
+                        android:lineSpacingExtra="2sp"
+                        android:text="@string/sign_out"
+                        android:textColor="#DD0000"
+                        android:textSize="@dimen/dimen_14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view236" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             </LinearLayout>

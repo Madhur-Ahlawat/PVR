@@ -184,6 +184,15 @@ interface UserAPI {
         @Query("pt") platform: String,
     ): Response<FoodTicketResponse>
 
+    @POST("resendconfirm")
+    suspend fun resendMail(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("type") tpye: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+    ): Response<FoodTicketResponse>
+
     @POST("api/deals/mobile")
     suspend fun offer(
         @Query("did") did: String,

@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.bookingSession.response
 
+import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import java.io.Serializable
 
 
@@ -35,7 +36,7 @@ data class BookingResponse(
         val nm: String,
         val od: String,
         val p: String,
-        val ph: ArrayList<Ph>,
+        val ph: ArrayList<HomeResponse.Ph>,
         val prs: Prs,
         val pu: ArrayList<Pu>,
         val rt: String,

@@ -32,4 +32,14 @@ class MyBookingViewModel @Inject constructor(private val userRepository: UserRep
         }
     }
 
+    //resend Otp
+    val resendMailLiveData: LiveData<NetworkResult<FoodTicketResponse>>
+        get() = userRepository.resendMailResponseLiveData
+
+    fun resendMail(userId: String, bookingId: String, type: String) {
+        viewModelScope.launch {
+            userRepository.resendMail(userId,bookingId,type)
+        }
+    }
+
 }

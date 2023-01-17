@@ -10,8 +10,8 @@ import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.u
 import com.google.zxing.integration.android.IntentIntegrator
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityScannerBinding
-import com.net.pvr1.ui.scanner.bookings.SelectBookingsActivity
 import com.net.pvr1.di.preference.PreferenceManager
+import com.net.pvr1.ui.scanner.bookings.SelectBookingsActivity
 import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
 import java.net.URI
@@ -70,19 +70,17 @@ class ScannerActivity : AppCompatActivity() {
     }
 
     private fun handelResult(contents: String) {
-
         try {
             val uri = Uri.parse(contents)
             val server = uri.authority
             val path = uri.path
-            val parts = path!!.split("/").toTypedArray()
-            println("Result-->" + path + "=====" + parts.size)
-            if (path.contains("newpromo")) {
+            val parts = path?.split("/")?.toTypedArray()
+            if (path?.contains("newpromo") == true) {
                 getOfferCode()
-            } else if (path.contains("food") || path.contains("booking")) {
+            } else if (path?.contains("food") == true || path?.contains("booking") == true) {
 //                handler.postDelayed({
                     // close your dialog
-                    if (parts.size == 5) {
+                    if (parts?.size == 5) {
 //                            successIMG.setVisibility(View.VISIBLE)
 //                            fromScan = "scan"
 //                            val intent = Intent(this@PCCouponScan, GrabABiteActivity::class.java)
@@ -100,7 +98,7 @@ class ScannerActivity : AppCompatActivity() {
 //                            intent.putExtra("SEAT", parts[4])
 //                            intent.putExtra("AUDI", parts[3])
 //                            startActivity(intent)
-                    } else if (parts.size > 2) {
+                    } else if (parts?.size!! > 2) {
                         fromScan = "scan"
                         var type = ""
                         if (contents.contains("type")) {
@@ -141,9 +139,9 @@ class ScannerActivity : AppCompatActivity() {
 
                     }
 //                }, 300)
-            } else if (path.contains("getqrcode")) {
+            } else if (path?.contains("getqrcode") == true) {
 //                handler.postDelayed({ // close your dialog
-                    if (parts.size == 5) {
+                    if (parts?.size == 5) {
 //                            successIMG.setVisibility(View.VISIBLE)
 //                            fromScan = "scan"
 //                            val intent = Intent(this@PCCouponScan, GrabABiteActivity::class.java)
@@ -160,7 +158,7 @@ class ScannerActivity : AppCompatActivity() {
 //                            intent.putExtra("SEAT", parts[4])
 //                            intent.putExtra("AUDI", parts[3])
 //                            startActivity(intent)
-                    } else if (parts.size > 2) {
+                    } else if (parts?.size!! > 2) {
                         fromScan = "scan"
                         var type = ""
                         var option = ""
@@ -262,9 +260,7 @@ class ScannerActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 
-
     }
-
 
     private fun getOfferCode() {
 

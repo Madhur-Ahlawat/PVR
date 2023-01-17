@@ -19,11 +19,12 @@
         android:id="@+id/include2"
         layout="@layout/toolbar"
         android:layout_width="0dp"
-        android:layout_height="58dp"
+        android:layout_height="60dp"
         app:layout_constraintEnd_toEndOf="@+id/view14"
         app:layout_constraintStart_toStartOf="@+id/view14"
         app:layout_constraintTop_toTopOf="@+id/view14" />
 
+    <!--Button-->
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -53,14 +54,14 @@
 
             <TextView
                 android:id="@+id/textView4"
-                style="@style/H1Size"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_centerInParent="true"
+                android:textSize="@dimen/dimen_14sp"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:textColor="@color/black"
                 android:drawablePadding="@dimen/dimen_8dp"
                 android:gravity="center"
                 android:text="@string/ticket_food"
-                app:drawableStartCompat="@drawable/food_ticket"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/view15"
                 app:layout_constraintStart_toStartOf="@+id/view15"
@@ -94,14 +95,15 @@
 
             <TextView
                 android:id="@+id/textView52"
-                style="@style/H1Size"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_centerInParent="true"
+
+                android:textSize="@dimen/dimen_12sp"
+                android:fontFamily="@font/sf_pro_text_medium"
+                android:textColor="@color/black_40"
                 android:drawablePadding="@dimen/dimen_8dp"
                 android:gravity="center"
                 android:text="@string/gift_cards"
-                app:drawableStartCompat="@drawable/gift_card"
                 app:layout_constraintBottom_toTopOf="@+id/view18"
                 app:layout_constraintEnd_toEndOf="@+id/view16"
                 app:layout_constraintStart_toStartOf="@+id/view16"
@@ -118,17 +120,34 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/sf_pro_text_bold"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dimen_14sp"
+        app:layout_constraintEnd_toEndOf="@+id/view14"
+        app:layout_constraintStart_toStartOf="@+id/view14"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        tools:text="Akash Mishra " />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerMyBooking"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        tools:itemCount="2"
-        tools:listitem="@layout/ticket_food_item"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/view14"
         app:layout_constraintEnd_toEndOf="@+id/view14"
         app:layout_constraintStart_toStartOf="@+id/view14"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        tools:itemCount="2"
+        tools:listitem="@layout/ticket_food_item" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

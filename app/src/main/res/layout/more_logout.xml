@@ -39,7 +39,7 @@
             android:id="@+id/myBookings"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="visible"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="@+id/view155"
             app:layout_constraintStart_toStartOf="@+id/view155"
@@ -61,11 +61,13 @@
 
             <TextView
                 android:id="@+id/textView230"
-                style="@style/H2SizeDark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
+                android:fontFamily="@font/sf_pro_text_medium"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
                 android:text="@string/movie"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView100"
                 app:layout_constraintStart_toEndOf="@+id/imageView100"
@@ -80,7 +82,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"
+                app:tint="@color/gray_payment" />
 
 
             <View
@@ -120,11 +123,13 @@
 
             <TextView
                 android:id="@+id/textView231"
-                style="@style/H2SizeDark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
+                android:fontFamily="@font/sf_pro_text_medium"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
                 android:text="@string/pvr_cares"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView126"
                 app:layout_constraintStart_toEndOf="@+id/imageView126"
@@ -138,7 +143,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"
+                app:tint="@color/gray_payment"  />
 
 
             <View
@@ -176,11 +182,13 @@
 
             <TextView
                 android:id="@+id/textView232"
-                style="@style/H2SizeDark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
+                android:fontFamily="@font/sf_pro_text_medium"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
                 android:text="@string/merchandise"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView128"
                 app:layout_constraintStart_toEndOf="@+id/imageView128"
@@ -194,7 +202,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"
+                app:tint="@color/gray_payment" />
 
 
             <View
@@ -233,11 +242,13 @@
 
             <TextView
                 android:id="@+id/textView233"
-                style="@style/H2SizeDark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
+                android:fontFamily="@font/sf_pro_text_medium"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
                 android:text="@string/gift_cards"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView129"
                 app:layout_constraintStart_toEndOf="@+id/imageView129"
@@ -251,7 +262,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"
+                app:tint="@color/gray_payment" />
 
 
             <View
@@ -290,11 +302,13 @@
 
             <TextView
                 android:id="@+id/textView234"
-                style="@style/H2SizeDark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
+                android:fontFamily="@font/sf_pro_text_medium"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
                 android:text="@string/offers"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView130"
                 app:layout_constraintStart_toEndOf="@+id/imageView130"
@@ -308,7 +322,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"
+                app:tint="@color/gray_payment"  />
 
 
             <View
@@ -347,11 +362,13 @@
 
             <TextView
                 android:id="@+id/textView235"
-                style="@style/H2SizeDark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
+                android:fontFamily="@font/sf_pro_text_medium"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
                 android:text="@string/private_screening"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView131"
                 app:layout_constraintStart_toEndOf="@+id/imageView131"
@@ -365,8 +382,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="ContentDescription" />
-
+                tools:ignore="ContentDescription"
+                app:tint="@color/gray_payment" />
 
             <View
                 android:layout_width="match_parent"

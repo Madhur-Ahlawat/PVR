@@ -82,7 +82,6 @@ class MoreFragment : Fragment() {
 
         //SetName
         binding?.profileDetails?.textView205?.text = preferences.getUserName()
-
         manageFunctions()
     }
 
@@ -114,6 +113,7 @@ class MoreFragment : Fragment() {
             binding?.privilegeLogin?.qrImgMainPage?.setOnClickListener {
                 oPenDialogQR()
             }
+
             createQr()
 
         } else {
@@ -126,6 +126,7 @@ class MoreFragment : Fragment() {
             binding?.privilegeLoginUi?.hide()
             binding?.privilegeLogOutUi?.show()
         }
+
         movedNext()
         //whatsapp Status
         whatsappOptStatus()
@@ -135,6 +136,7 @@ class MoreFragment : Fragment() {
 
     //   Ui ClickAction
     private fun movedNext() {
+
         //Account
         binding?.profileDetails?.textView206?.setOnClickListener {
             val intent = Intent(requireContext(), ProfileActivity::class.java)
@@ -418,14 +420,13 @@ class MoreFragment : Fragment() {
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.profile_popup)
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val displayRectangle = Rect()
-        dialog.window!!.decorView
-            .getWindowVisibleDisplayFrame(displayRectangle)
+        dialog.window?.decorView?.getWindowVisibleDisplayFrame(displayRectangle)
         behavior.peekHeight = (displayRectangle.height() * 0.9f).toInt()
         behavior.maxHeight = (displayRectangle.height() * 0.9f).toInt()
         val mainView = dialog.findViewById<View>(R.id.mainView) as ConstraintLayout?
-        mainView!!.maxHeight = (displayRectangle.height() * 0.6f).toInt()
+        mainView?.maxHeight = (displayRectangle.height() * 0.6f).toInt()
         val progressBar2 = dialog.findViewById<ProgressBar>(R.id.progressBar2)
         val profileRecycler = dialog.findViewById<RecyclerView>(R.id.profileList)
         progressBar2?.progress =output.percentage
@@ -435,6 +436,4 @@ class MoreFragment : Fragment() {
         profileRecycler?.adapter = recyclerAdapter
         dialog.show()
     }
-
-
 }

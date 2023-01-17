@@ -403,15 +403,13 @@ class BookingActivity : AppCompatActivity(),
         }
 
         //placeHolder
-        printLog("placeHolder--->${output.ph}")
         if (output.ph.isNotEmpty()) {
             binding?.constraintLayout123?.show()
-            updatePH(output.ph as ArrayList<HomeResponse.Ph>)
+            updatePH(output.ph)
         } else {
             binding?.constraintLayout123?.hide()
         }
-
-
+        
         if (bannerShow == 0 && output.pu.isNotEmpty()) {
             initBanner(output.pu)
         }
