@@ -80,6 +80,7 @@ class Constant {
         const val USER_ID = "user_id"
         const val SEAT_AVAILABEL = 1
         var TRANSACTION_ID = "0"
+        var DISCOUNT = 0.0
         var BOOKING_ID = "0"
         var CINEMA_ID = "0"
         var OfferDialogImage = "0"
@@ -113,6 +114,7 @@ class Constant {
         // DisCount for payment
 
         var discount_val = "0.0"
+        var isPromoCode = ""
         var discount_txt = ""
 
 

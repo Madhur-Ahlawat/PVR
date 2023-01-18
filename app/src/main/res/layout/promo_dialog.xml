@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/back_btn" />
+
+        <TextView
+            android:id="@+id/titleText"
+            android:fontFamily="@font/sf_pro_text_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/dimen_15dp"
+            android:ellipsize="end"
+            android:gravity="center_horizontal"
+            android:singleLine="true"
+            android:text="Coupons"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/shadow"
+            app:layout_constraintStart_toEndOf="@+id/imageView4"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <ImageButton
+            android:id="@+id/shadow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/topshadow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_15dp"
+        android:background="@color/white"
+        android:layout_marginStart="@dimen/padding_10"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+        tools:listitem="@layout/offer_option_item" />
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dimen_50dp"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/padding_10"
+        android:layout_marginBottom="@dimen/padding_10"
+        android:layout_marginStart="@dimen/dimen_18dp"
+        android:layout_marginEnd="@dimen/dimen_18dp"
+        android:background="@drawable/round_corner_radius_rect"
+        android:focusableInTouchMode="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView">
+
+        <ImageView
+            android:id="@+id/searchIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="7dp"
+            android:src="@drawable/search" />
+
+        <EditText
+            android:id="@+id/searchTextView"
+            android:fontFamily="@font/sf_pro_text_medium"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignTop="@+id/searchIcon"
+            android:layout_alignBottom="@+id/searchIcon"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/padding_10"
+            android:layout_toLeftOf="@+id/clearBtn"
+            android:layout_toRightOf="@+id/searchIcon"
+            android:background="@color/transparent1"
+            android:ellipsize="end"
+            android:hint="Search"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:singleLine="true"
+            android:textColorHint="@color/pvr_light_gray"
+            android:textSize="14sp">
+
+            <requestFocus />
+        </EditText>
+
+        <ImageView
+            android:id="@+id/voice_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/padding_10"
+            android:src="@android:drawable/ic_btn_speak_now"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/clearBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/voice_btn"
+            android:paddingRight="10dp"
+            android:src="@drawable/cross_search"
+            android:visibility="gone" />
+
+
+    </RelativeLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        android:layout_margin="@dimen/dimen_15dp"
+        android:id="@+id/promoList"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rl"
+        tools:itemCount="3"
+        tools:listitem="@layout/promo_item" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

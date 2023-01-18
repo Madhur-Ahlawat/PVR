@@ -91,7 +91,22 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String,
         @Query("did") did: String
-        ): Response<CouponResponse>
+    ): Response<CouponResponse>
+
+    @POST("api/payment/loyaltypromo")
+    suspend fun loyaltyPromo(
+        @Query("promocode") promocode: String,
+        @Query("userid") userid: String,
+        @Query("booktype") booktype: String,
+        @Query("bookingid") bookingid: String,
+        @Query("transid") transid: String,
+        @Query("loyalitytype") loyalitytype: String,
+        @Query("unlimitedvoucher") unlimitedvoucher: String,
+        @Query("voucheramt") voucheramt: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<LoyaltyVocherApply>
 
     @POST("api/payment/paytmex/hmac")
     suspend fun paytmHMAC(
@@ -175,7 +190,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<GiftCardResponse>
 
-    @POST("api/history/history-new/myticket")
+    @POST("api/history/history-new/myticket/v2")
     suspend fun foodTicket(
         @Query("userid") userid: String,
         @Query("did") did: String,
@@ -382,7 +397,7 @@ interface UserAPI {
     ): Response<PassportPlanResponse>
 
 
-// Passport Save
+    // Passport Save
     @POST("api/offervoucher/loyalty-subscription/save")
     suspend fun savePassport(
         @Query("userid") userid: String,
@@ -400,9 +415,6 @@ interface UserAPI {
         @Query("pt") pt: String,
         @Query("did") did: String
     ): Response<PassportPlanResponse>
-
-
-
 
 
     @POST("api/history/nextbooking")
@@ -884,6 +896,17 @@ interface UserAPI {
     ): Response<PaytmHmacResponse>
 
 
+    @POST("api/payment/pcrollback")
+    suspend fun removePromoCode(
+        @Query("mobile") mobile: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("av") version: String,
+        @Query("pt") pt: String,
+        @Query("did") did: String
+    ): Response<PaytmHmacResponse>
+
+
     /***   GYFTER CODE       *****/
 
     @POST("api/payment/gyft")
@@ -1065,4 +1088,12 @@ interface UserAPI {
         @Query("did") did: String
     ): Response<RecurringInitResponse>
 
+    // promo list
+
+    @POST("api/deals/list")
+    suspend fun getPromoList(
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<PromoCodeList>
 }

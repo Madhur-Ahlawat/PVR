@@ -86,9 +86,9 @@ class BookingShowsTimeAdapter(
                 holder.itemView.setOnClickListener {
                     rowIndex=position
                     if (this.ss != 0 && this.ss != 3) {
-                        if (this.ba) {
-                            showOfferDialog()
-                        } else {
+//                        if (this.ba) {
+//                            showOfferDialog()
+//                        } else {
                             sidText = this.sid.toString()
                             ccText = this.cc
                             val intent = Intent(context, SeatLayoutActivity::class.java)
@@ -97,7 +97,7 @@ class BookingShowsTimeAdapter(
                             intent.putExtra("skip", "true")
                             context.startActivity(intent)
 
-                        }
+                       // }
 
                     }
                 }
@@ -135,9 +135,7 @@ class BookingShowsTimeAdapter(
 
         offerPrice.paintFlags = offerPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
 
-        val offerPriceText =
-            (progressDialog[0].p.toDouble().roundToInt() + progressDialog[0].bv.toDouble()
-                .roundToInt())
+        val offerPriceText = (progressDialog[0].p.toDouble().roundToInt() + progressDialog[0].bv.toDouble().roundToInt())
         ticket.text = context.getString(R.string.currency) + progressDialog[0].p
         food.text = context.getString(R.string.currency) + progressDialog[0].bv
         offerPrice.text = context.getString(R.string.currency) + offerPriceText

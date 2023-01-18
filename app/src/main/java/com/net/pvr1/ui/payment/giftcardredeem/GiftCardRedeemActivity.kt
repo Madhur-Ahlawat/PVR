@@ -13,6 +13,7 @@ import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.payment.PaymentActivity
+import com.net.pvr1.ui.payment.PaymentActivity.Companion.showTncDialog
 import com.net.pvr1.ui.payment.giftcardredeem.viewModel.GiftcardRedeemViewModel
 import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -206,6 +207,7 @@ class GiftCardRedeemActivity : AppCompatActivity() {
                                         PaymentActivity::class.java,
                                         Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                                     )
+                                    showTncDialog(this,it.data.output.di,"")
 
                                 }
                             }

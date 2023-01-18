@@ -232,6 +232,7 @@ class PromoCodeActivity : AppCompatActivity() {
                                 } else {
                                     Constant.discount_val = it.data.output.di
                                     Constant.discount_txt = it.data.output.txt
+                                    Constant.isPromoCode = binding?.ccEditText?.text.toString()
                                     launchActivity(PaymentActivity::class.java,
                                         Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                                     )
@@ -386,6 +387,7 @@ class PromoCodeActivity : AppCompatActivity() {
                                         Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                                     )
 
+
                                 }
                             }
                         }
@@ -506,6 +508,7 @@ class PromoCodeActivity : AppCompatActivity() {
                                     launchActivity(PaymentActivity::class.java,
                                         Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                                     )
+
 
                                 }
                             }

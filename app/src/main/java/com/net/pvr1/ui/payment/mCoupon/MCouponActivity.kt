@@ -379,6 +379,7 @@ lateinit var preferences: PreferenceManager
                                         PaymentActivity::class.java,
                                         Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                                     )
+                                    PaymentActivity.showTncDialog(this, it.data.output.di, "")
 
                                 }
                             }
@@ -454,6 +455,7 @@ lateinit var preferences: PreferenceManager
                                     launchActivity(PaymentActivity::class.java,
                                         Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                                     )
+                                    PaymentActivity.showTncDialog(this, it.data.output.di, "")
 
                                 }
                             }

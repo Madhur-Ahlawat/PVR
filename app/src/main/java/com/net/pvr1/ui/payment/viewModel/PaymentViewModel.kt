@@ -24,6 +24,54 @@ class PaymentViewModel @Inject constructor(private val userRepository: UserRepos
         }
     }
 
+    //voucher Apply
+    val voucherApplyLiveData: LiveData<NetworkResult<LoyaltyVocherApply>>
+        get() = userRepository.voucherApplyResponseLiveData
+
+    fun voucherApply(promocode: String, userid: String, booktype: String, bookingid: String, transid: String, loyalitytype: String, unlimitedvoucher: String, voucheramt: String) {
+        viewModelScope.launch {
+            userRepository.voucherApply(promocode,userid,  booktype,bookingid,transid,loyalitytype,unlimitedvoucher,voucheramt)
+        }
+    }
+
+    //Promo list
+    val promoListLiveData: LiveData<NetworkResult<PromoCodeList>>
+        get() = userRepository.promoListResponseLiveData
+
+    fun promoList() {
+        viewModelScope.launch {
+            userRepository.promoList()
+        }
+    }
+
+    // APPLY PROMOCODE
+    val livePromoCodeScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.promoCodeResponseLiveData
+
+    fun promoCode(
+        userid: String,
+        bookingid: String,
+        transid: String,
+        booktype: String,
+        promocode:String
+    ) {
+        viewModelScope.launch {
+            userRepository.promoCode(userid, bookingid, booktype, transid,promocode)
+        }
+    }
+
+    // REMOVE PROMOCODE
+    val removePromoCodeScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.removePromoResponseLiveData
+
+    fun removePromo(
+        mobile: String,
+        bookingid: String,
+        booktype: String
+    ) {
+        viewModelScope.launch {
+            userRepository.removePromo(mobile, bookingid, booktype)
+        }
+    }
+
     //payMode
     val payModeResponseLiveData: LiveData<NetworkResult<PaymentResponse>>
         get() = userRepository.payModeResponseLiveData

@@ -56,6 +56,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/discountVocher"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dimen_40dp"
+                android:fontFamily="@font/sf_pro_text_semi_bold"
+                android:text="@string/to_be_paid"
+                android:textColor="#007D23"
+                android:background="#26007D23"
+                android:visibility="gone"
+                android:gravity="center"
+                android:textSize="@dimen/dimen_14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout46"
                 android:layout_width="0dp"
@@ -63,7 +78,14 @@
                 android:background="#FFFDF5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/discountVocher">
+
+
+                <include layout="@layout/horizontal_line"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:id="@+id/topLine"/>
 
                 <View
                     android:id="@+id/view114"
@@ -72,7 +94,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/topLine" />
 
                 <TextView
                     android:id="@+id/textView177"
@@ -88,6 +110,20 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/cutPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="19dp"
+                    android:fontFamily="@font/sf_pro_text_semi_bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14sp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/textView178"
+                    app:layout_constraintTop_toTopOf="@+id/view114"
+                    tools:text="₹8888" />
+
+                <TextView
                     android:id="@+id/textView178"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -99,6 +135,10 @@
                     app:layout_constraintEnd_toEndOf="@+id/view114"
                     app:layout_constraintTop_toTopOf="@+id/view114"
                     tools:text="₹8888" />
+
+                <include layout="@layout/horizontal_line"
+                    app:layout_constraintTop_toBottomOf="@+id/view114"/>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -177,109 +217,59 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/promoView"
-                    android:layout_marginEnd="@dimen/dimen_24dp"
-                    android:layout_marginStart="@dimen/dimen_24dp"
+                    android:layout_marginBottom="@dimen/dimen_15dp"
                     android:background="@color/white"
                     android:orientation="vertical">
 
 
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:layout_marginTop="@dimen/dimen_15dp"
-                        android:fontFamily="@font/sf_pro_text_regular"
-                        android:text="@string/promocode"
-                        android:textSize="@dimen/dimen_12sp"
-                        app:layout_constraintStart_toStartOf="@+id/view115"
-                        app:layout_constraintTop_toTopOf="@+id/view115" />
+<!--                    <TextView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:layout_marginTop="@dimen/dimen_15dp"-->
+<!--                        android:fontFamily="@font/sf_pro_text_regular"-->
+<!--                        android:text="@string/promocode"-->
+<!--                        android:textSize="@dimen/dimen_12sp"-->
+<!--                        app:layout_constraintStart_toStartOf="@+id/view115"-->
+<!--                        app:layout_constraintTop_toTopOf="@+id/view115" />-->
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:visibility="gone"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="15dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_shape_copy"
-                            android:id="@+id/icon"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentLeft="true"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
-                            android:layout_toRightOf="@+id/icon"
-                            android:text="Promo codes"
-                            android:textColor="#f46713"
-                            android:textSize="17sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="17sp"
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp"
-                            android:visibility="gone"
-                            android:layout_centerVertical="true"
-                            android:paddingTop="2dp"
-                            android:paddingBottom="2dp"
-                            android:layout_marginLeft="10dp"
-                            android:background="@drawable/payment_option_offer_background"
-                            android:textColor="@color/white"
-                            android:text="3 Promos"/>
-
-                        <ImageView
-                            android:id="@+id/arrow_icon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_gravity="right"
-                            android:src="@drawable/down_24dp" />
-
-
-
-                    </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingRight="16dp"
-                        android:layout_marginTop="@dimen/padding_10"
+                        android:paddingTop="@dimen/padding_10"
+                        android:paddingBottom="@dimen/padding_10"
+                        android:paddingStart="@dimen/dimen_24dp"
+                        android:paddingEnd="@dimen/dimen_24dp"
                         android:id="@+id/applyCou"
+                        android:background="#FFFDF5"
                         android:visibility="gone"
                         android:orientation="vertical">
-                        <LinearLayout
+                        <TextView
+                            android:id="@+id/promoCodetxt"
+                            android:fontFamily="@font/sf_pro_text_regular"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-                            <ImageView
-                                android:layout_width="14dp"
-                                android:layout_height="14dp"
-                                android:layout_marginLeft="3dp"
-                                android:layout_gravity="center_vertical"
-                                android:src="@drawable/aply"/>
+                            android:layout_below="@+id/promoCode"
+                            android:visibility="visible"
+                            android:text="'PV000664288DD605068' Applied!"
+                            android:textColor="#2f2f2f" />
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="@dimen/dimen_3dp">
 
                             <TextView
                                 android:id="@+id/applyco"
                                 android:fontFamily="@font/sf_pro_text_medium"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
                                 android:textSize="13sp"
-                                android:textColor="#f46713"
-                                android:gravity="left"
-                                android:text="" />
+                                android:layout_alignParentStart="true"
+                                android:textColor="#1A8C2D"
+                                android:text="₹8888 Saved" />
 
                             <TextView
                                 android:id="@+id/removeoff"
@@ -287,37 +277,28 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="14sp"
-                                android:textColor="#2f2f2f"
-                                android:gravity="left"
-                                android:text="  • Remove" />
-                        </LinearLayout>
+                                android:layout_alignParentEnd="true"
+                                android:textColor="#DD0000"
+                                android:text="Change" />
+                        </RelativeLayout>
 
-                        <TextView
-                            android:id="@+id/promoCodetxt"
-                            android:fontFamily="@font/sf_pro_text_regular"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/promoCode"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginLeft="25dp"
-                            android:visibility="gone"
-                            android:text=""
-                            android:textColor="#2f2f2f" />
+
                     </LinearLayout>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:visibility="visible"
+                        android:layout_marginEnd="@dimen/dimen_24dp"
+                        android:layout_marginStart="@dimen/dimen_24dp"
                         android:id="@+id/couponView"
                         >
 
                         <RelativeLayout
                             android:id="@+id/rl"
                             android:layout_width="wrap_content"
-                            android:layout_height="38dp"
+                            android:layout_height="@dimen/dimen_60dp"
                             android:background="@drawable/offeraply"
-                            android:layout_toLeftOf="@+id/apply"
                             android:focusableInTouchMode="true"
                             android:layout_marginRight="10dp"
                             android:paddingLeft="10dp"
@@ -325,13 +306,15 @@
 
                             <EditText
                                 android:id="@+id/promoCode"
-                                android:fontFamily="@font/helvetica_neu_bold"
+                                android:fontFamily="@font/sfprodisplay_regular"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/edit_text_height"
                                 android:layout_centerVertical="true"
                                 android:background="@color/transparent1"
                                 android:hint="Enter promo code"
+                                android:textColorHint="#908E8E"
                                 android:inputType="textCapCharacters"
+                                android:textColor="#000000"
                                 android:maxLength="16"
                                 android:singleLine="true"
                                 android:textSize="15sp"
@@ -343,28 +326,30 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
-                                android:visibility="invisible"
+                                android:visibility="gone"
                                 android:paddingRight="10dp"
                                 android:src="@drawable/cross_search" />
+
+                            <TextView
+                                android:id="@+id/apply"
+                                android:fontFamily="@font/sf_pro_text_bold"
+                                android:layout_width="75dp"
+                                android:layout_height="30dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentBottom="false"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="right"
+                                android:layout_marginRight="5dp"
+                                android:background="@drawable/gradient_yellow_button"
+                                android:clickable="true"
+                                android:gravity="center"
+                                android:text=" APPLY "
+                                android:textColor="#2f2f2f"
+                                android:textSize="16sp"
+                                />
+
                         </RelativeLayout>
 
-                        <TextView
-                            android:id="@+id/apply"
-                            android:fontFamily="@font/helvetica_neu_bold"
-                            android:layout_width="75dp"
-                            android:layout_height="30dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentBottom="false"
-                            android:layout_centerVertical="true"
-                            android:layout_gravity="right"
-                            android:layout_marginRight="5dp"
-                            android:background="@drawable/gradient_yellow_button"
-                            android:clickable="true"
-                            android:gravity="center"
-                            android:text=" APPLY "
-                            android:textColor="#2f2f2f"
-                            android:textSize="16sp"
-                             />
 
                         <TextView
                             android:id="@+id/promoCodeValidationMessage"
@@ -381,6 +366,7 @@
                         android:id="@+id/view_apply_coupon"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
+                        android:visibility="gone"
                         android:layout_marginTop="@dimen/dimen_5dp"
                         android:background="#f5f5f5"
                         />
@@ -388,7 +374,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_40dp"
                         android:id="@+id/availOffers"
-                        android:layout_marginTop="@dimen/dimen_5dp"
+                        android:layout_marginEnd="@dimen/dimen_24dp"
+                        android:layout_marginStart="@dimen/dimen_24dp"
                         android:orientation="horizontal">
 
                         <ImageView
@@ -405,8 +392,8 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="10dp"
                             android:layout_toRightOf="@+id/icon1"
-                            android:text="Avail Offers"
-                            android:textColor="#f46713"
+                            android:text="Explore Offers"
+                            android:textColor="@color/black"
                             android:textSize="17sp" />
 
                         <TextView
@@ -601,22 +588,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:layout_marginTop="10dp"
-                    android:background="#f3f3f3"
+                    android:background="#FFFDF5"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="16dp"
+                    android:orientation="vertical"
                     android:paddingTop="10dp"
-                    android:paddingRight="16dp"
                     android:paddingBottom="5dp"
                     android:visibility="visible">
+                    <View
+                        android:background="@drawable/line_separator"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_10dp" />
 
                     <TextView
                         android:fontFamily="@font/sf_pro_text_medium"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="start"
+                        android:layout_marginTop="@dimen/dimen_25dp"
+                        android:gravity="center"
                         android:text="Your transactions are secure and certified"
                         android:textColor="#828282"
                         android:textSize="13sp" />
@@ -626,20 +615,22 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
                         android:layout_weight="1"
+                        android:layout_marginTop="@dimen/dimen_20dp"
+                        android:layout_marginBottom="@dimen/dimen_30dp"
                         android:gravity="center"
                         android:visibility="visible">
 
                         <ImageView
-                            android:layout_width="60dp"
-                            android:layout_height="36dp"
-                            android:layout_marginRight="5dp"
+                            android:layout_width="75dp"
+                            android:layout_height="40dp"
+                            android:layout_marginRight="10dp"
                             android:adjustViewBounds="true"
                             android:src="@drawable/pcidss" />
 
                         <ImageView
-                            android:layout_width="60dp"
-                            android:layout_height="36dp"
-                            android:layout_marginLeft="5dp"
+                            android:layout_width="75dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="@dimen/padding_10"
                             android:src="@drawable/norton" />
 
                     </LinearLayout>

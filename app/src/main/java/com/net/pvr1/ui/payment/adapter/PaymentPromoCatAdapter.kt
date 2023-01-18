@@ -5,24 +5,23 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.net.pvr1.databinding.ItemPaymentListBinding
-import com.net.pvr1.ui.payment.response.PaymentResponse
-import com.net.pvr1.utils.hide
-import com.net.pvr1.utils.show
+import com.net.pvr1.R
+import com.net.pvr1.databinding.OfferOptionItemBinding
 
 //category
 
-class PaymentExclusiveAdapter(
-    private var nowShowingList: ArrayList<PaymentResponse.Output.Offer>,
+class PaymentPromoCatAdapter(
+    private var nowShowingList: ArrayList<String>,
     private var context: Context,
     private var listener: RecycleViewItemClickListenerCity,
 ) :
-    RecyclerView.Adapter<PaymentExclusiveAdapter.ViewHolder>() {
-    inner class ViewHolder(val binding: ItemPaymentListBinding) :
+    RecyclerView.Adapter<PaymentPromoCatAdapter.ViewHolder>() {
+    private var rowIndex = 0
+    inner class ViewHolder(val binding: OfferOptionItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemPaymentListBinding.inflate(
+        val binding = OfferOptionItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -34,16 +33,20 @@ class PaymentExclusiveAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
-                if (position ==( nowShowingList.size-1)){
-                    binding.view220.hide()
-                }else{
-                    binding.view220.show()
-                }
 //                binding.imageView81.setImageResource(R.drawable.shows)
                 //title
-                binding.textView124.text = this.name
+                if (rowIndex == position){
+                    binding.options.isSelected = true
+                    binding.options.setTextColor(context.resources.getColor(R.color.black))
+                }else{
+                    binding.options.isSelected = false
+                    binding.options.setTextColor(context.resources.getColor(R.color.h8Point1Color))
+                }
+                binding.options.text = this
                 itemView.setOnClickListener{
-                    listener.paymentExclusiveClick(this)
+                    rowIndex = position
+                    listener.onItemCatClick(this ,position)
+                    notifyDataSetChanged()
                 }
 
             }
@@ -57,7 +60,7 @@ class PaymentExclusiveAdapter(
 
 
     interface RecycleViewItemClickListenerCity {
-        fun paymentExclusiveClick(comingSoonItem: PaymentResponse.Output.Offer)
+        fun onItemCatClick(cat: String, position: Int)
 
     }
 

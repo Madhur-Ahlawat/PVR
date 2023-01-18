@@ -49,6 +49,8 @@ import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import org.json.JSONObject
 import retrofit2.Response
+import retrofit2.http.Header
+import retrofit2.http.Query
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(private val userAPI: UserAPI) {
@@ -145,6 +147,30 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             couponsLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             couponsLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+//Apply Loyalty Vouchers
+    private val voucherApplyLiveData = MutableLiveData<NetworkResult<LoyaltyVocherApply>>()
+    val voucherApplyResponseLiveData: LiveData<NetworkResult<LoyaltyVocherApply>>
+        get() = voucherApplyLiveData
+
+    suspend fun voucherApply(promocode: String, userid: String, booktype: String, bookingid: String, transid: String, loyalitytype: String, unlimitedvoucher: String, voucheramt: String) {
+        otpVerifyLiveData.postValue(NetworkResult.Loading())
+        val response =
+            userAPI.loyaltyPromo(promocode,userid, booktype,bookingid,transid,loyalitytype ,unlimitedvoucher,voucheramt, Constant.version, Constant.platform,Constant.getDid())
+        voucherApplyResponse(response)
+    }
+
+
+    private fun voucherApplyResponse(response: Response<LoyaltyVocherApply>) {
+        if (response.isSuccessful && response.body() != null) {
+            voucherApplyLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            voucherApplyLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            voucherApplyLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 
@@ -1964,6 +1990,32 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
 
+    private val removePromoLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val removePromoResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = removePromoLiveData
+
+    suspend fun removePromo(
+        mobile: String, bookingid: String, booktype: String
+    ) {
+        removePromoLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.removePromoCode(
+            mobile, bookingid, booktype, Constant.version, Constant.platform,Constant.getDid()
+        )
+        removePromoResponse(response)
+    }
+
+    private fun removePromoResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            removePromoLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            removePromoLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            removePromoLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
     /*******  promoGyft      ****************/
 
 
@@ -2623,6 +2675,29 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             recurringBinLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             recurringBinLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+   //   Promo code list
+
+    private val promoListLiveData = MutableLiveData<NetworkResult<PromoCodeList>>()
+    val promoListResponseLiveData: LiveData<NetworkResult<PromoCodeList>>
+        get() = promoListLiveData
+
+    suspend fun promoList() {
+        preferenceLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.getPromoList(Constant.version, Constant.platform,Constant.getDid())
+        promoListData(response)
+    }
+
+    private fun promoListData(response: Response<PromoCodeList>) {
+        if (response.isSuccessful && response.body() != null) {
+            promoListLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            promoListLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            promoListLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 
