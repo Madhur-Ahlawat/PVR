@@ -40,31 +40,31 @@ class PaymentPromoListAdapter(
         with(holder) {
             with(nowShowingList[position]) {
 
-                if (this.image!="") {
-                    Glide.with(context)
-                        .load(this.image)
-                        .error(R.drawable.app_icon)
-                        .into(binding.imageView5)
-                } else {
-                    binding.imageView5.setImageResource(R.drawable.app_icon)
-                }
-                if (this.promocode == "") {
-                    binding.textView7.visibility = View.GONE
-                    binding.btnApplyCoupon.visibility = View.GONE
-                    binding.textView6.visibility = View.GONE
-                } else {
-                    binding.textView7.visibility = View.VISIBLE
-                    binding.btnApplyCoupon.visibility = View.VISIBLE
-                    binding.textView6.visibility = View.VISIBLE
-                }
+//                if (this.image!="") {
+//                    Glide.with(context)
+//                        .load(this.image)
+//                        .error(R.drawable.app_icon)
+//                        .into(binding.imageView5)
+//                } else {
+//                    binding.imageView5.setImageResource(R.drawable.app_icon)
+//                }
+//                if (this.promocode == "") {
+//                    binding.textView7.visibility = View.GONE
+//                    binding.btnApplyCoupon.visibility = View.GONE
+//                    binding.textView6.visibility = View.GONE
+//                } else {
+//                    binding.textView7.visibility = View.VISIBLE
+//                    binding.btnApplyCoupon.visibility = View.VISIBLE
+//                    binding.textView6.visibility = View.VISIBLE
+//                }
                 binding.titleText.text = this.title
                 binding.textView7.text = this.promocode
-                binding.btnApplyCoupon.setOnClickListener(View.OnClickListener {
+                holder.itemView.setOnClickListener(View.OnClickListener {
                     listener.applyClick(
                         this
                     )
                 })
-                binding.textView5.setOnClickListener(View.OnClickListener { listener.onTNCClick(this) })
+//                binding.textView5.setOnClickListener(View.OnClickListener { listener.onTNCClick(this) })
 
             }
         }
@@ -78,7 +78,7 @@ class PaymentPromoListAdapter(
 
     interface RecycleViewItemClickListenerCity {
         fun applyClick(data: PromoCodeList.Output)
-        fun onTNCClick(data: PromoCodeList.Output)
+//        fun onTNCClick(data: PromoCodeList.Output)
 
     }
 

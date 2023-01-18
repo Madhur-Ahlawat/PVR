@@ -6,6 +6,7 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
@@ -65,6 +66,8 @@ import com.net.pvr1.utils.Constant.Companion.STAR_PASS
 import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
 import com.net.pvr1.utils.Constant.Companion.UPI
 import com.net.pvr1.utils.Constant.Companion.ZAGGLE
+import com.net.pvr1.utils.Constant.Companion.discount_val
+import com.net.pvr1.utils.Constant.Companion.isPromoCode
 import com.phonepe.intent.sdk.api.PhonePe
 import com.phonepe.intent.sdk.api.TransactionRequestBuilder
 import dagger.hilt.android.AndroidEntryPoint
@@ -91,6 +94,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
     private var promoCodeList = ArrayList<PromoCodeList.Output>()
     private var promoNewCodeList =ArrayList<PromoCodeList.Output>()
     private var promoList:RecyclerView? = null
+    private var catList:RecyclerView? = null
     private var promoListAdapter:PaymentPromoListAdapter? = null
     private val UPI_PAYMENT = 0
     private var dcInfo = ""
@@ -98,6 +102,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
     private var upi_count = 0
     private var upi_loader = false
     private var showPopup = true
+    private var actualAmt = "0.0"
 
 
     companion object {
@@ -106,6 +111,29 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         var createdAt = ""
         var isPromocodeApplied = false
         var offerList: ArrayList<PaymentResponse.Output.Binoffer> = ArrayList()
+        fun showTncDialog(mContext: Context?, priceText: String,code:String) {
+            val dialog = Dialog(mContext!!, R.style.AppTheme_Dialog)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setContentView(R.layout.promo_success)
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.window!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            dialog.window!!.setGravity(Gravity.CENTER)
+            val done = dialog.findViewById<View>(R.id.done) as TextView?
+            val price = dialog.findViewById<View>(R.id.price) as TextView?
+            val promcode = dialog.findViewById<View>(R.id.promcode) as TextView?
+            price?.text = "$priceText\nsaved with this coupon code"
+            if (code!="") {
+                promcode?.text = "'$code'\nApplied"
+            }else{
+                promcode?.text = ""
+            }
+            done?.setOnClickListener { dialog.dismiss() }
+            dialog.show()
+        }
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -118,8 +146,8 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
 
         paidAmount = intent.getStringExtra("paidAmount").toString()
         //paidAmount
-        binding?.textView178?.text =
-            getString(R.string.pay) + " " + getString(R.string.currency) + intent.getStringExtra("paidAmount")
+        binding?.textView178?.text = getString(R.string.currency) + intent.getStringExtra("paidAmount")
+        actualAmt = intent.getStringExtra("paidAmount").toString()
         //voucher
         val time = SystemClock.uptimeMillis()
 
@@ -163,10 +191,12 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         voucherDataLoad()
         redeemLoyaltyVoucher()
         promoListData()
+        removePromo()
         callPromoData()
         binding?.include26?.imageView58?.setOnClickListener {
             onBackPressed()
         }
+        binding?.cutPrice?.paintFlags = binding?.cutPrice?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG
 
         binding?.availOffers?.setOnClickListener {
             openPromo()
@@ -177,6 +207,35 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 authViewModel.promoCode(preferences.getUserId(),BOOKING_ID, TRANSACTION_ID,
                     BOOK_TYPE,binding?.promoCode?.text.toString())
 
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(Constant.discount_val != "0.0"){
+            binding?.cutPrice?.show()
+            actualAmt = (intent.getStringExtra("paidAmount")?.toDouble()!! - Constant.discount_val.toDouble()).toString()
+            binding?.textView178?.text = getString(R.string.currency) + actualAmt
+            binding?.cutPrice?.text = getString(R.string.currency) + intent.getStringExtra("paidAmount").toString()
+            if (isPromoCode != "") {
+                binding?.promoCode?.setText(isPromoCode)
+                binding?.cutPrice?.paintFlags = binding?.cutPrice?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG
+                binding?.applyCou?.show()
+                binding?.cutPrice?.show()
+                binding?.couponView?.hide()
+                DISCOUNT += discount_val.toDouble()
+                binding?.promoCodetxt?.text = "'${binding?.promoCode?.text}' Applied"
+                binding?.applyco?.text = getString(R.string.currency)+discount_val+" Saved"
+                binding?.removeoff?.setOnClickListener {
+                    authViewModel.removePromo(preferences.getString(Constant.SharedPreference.USER_NUMBER),BOOKING_ID, BOOK_TYPE)
+                }
+                actualAmt = (intent.getStringExtra("paidAmount")?.toDouble()!! - DISCOUNT).toString()
+                binding?.textView178?.text = getString(R.string.currency) + actualAmt
+                binding?.cutPrice?.text = getString(R.string.currency) + intent.getStringExtra("paidAmount").toString()
+                showTncDialog(this, Constant.discount_val, isPromoCode)
+            }else{
+                showTncDialog(this, Constant.discount_val, "")
             }
         }
     }
@@ -225,6 +284,28 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 is NetworkResult.Success -> {
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         promoCodeList = it.data.output
+                    }
+                }
+                is NetworkResult.Error -> {
+
+                }
+                is NetworkResult.Loading -> {
+                }
+            }
+        }
+    }
+
+    private fun removePromo() {
+        authViewModel.removePromoCodeScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        binding?.couponView?.show()
+                        binding?.applyCou?.hide()
+                        binding?.promoCode?.setText("")
+                        actualAmt = (actualAmt.toDouble() + it.data.output.di.toDouble()).toString()
+                        binding?.textView178?.text = getString(R.string.currency) + actualAmt
+                        binding?.cutPrice?.hide()
                     }
                 }
                 is NetworkResult.Error -> {
@@ -370,7 +451,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
 
         binding?.bankOffers?.setOnClickListener {
             val intent = Intent(this@PaymentActivity, BankOffersActivity::class.java)
-            intent.putExtra("paidAmount", paidAmount)
+            intent.putExtra("paidAmount", actualAmt)
             startActivity(intent)
         }
     }
@@ -395,7 +476,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
             CREDIT_CARD -> {
                 val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
                 intent.putExtra("pTypeId", paymentItem.id)
-                intent.putExtra("paidAmount", paidAmount)
+                intent.putExtra("paidAmount", actualAmt)
                 intent.putExtra("title", paymentItem.name)
                 intent.putExtra("tc", paymentItem.tc)
                 startActivity(intent)
@@ -416,7 +497,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
             AIRTEL -> {
                 val intent = Intent(this@PaymentActivity, PaytmWebActivity::class.java)
                 intent.putExtra("pTypeId", paymentItem.id)
-                intent.putExtra("paidAmount", paidAmount)
+                intent.putExtra("paidAmount", actualAmt)
                 intent.putExtra("title", paymentItem.name)
                 intent.putExtra("tc", paymentItem.tc)
                 startActivity(intent)
@@ -424,7 +505,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
             DEBIT_CARD -> {
                 val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
                 intent.putExtra("pTypeId", paymentItem.id)
-                intent.putExtra("paidAmount", paidAmount)
+                intent.putExtra("paidAmount", actualAmt)
                 intent.putExtra("title", paymentItem.name)
                 intent.putExtra("tc", paymentItem.tc)
                 startActivity(intent)
@@ -434,7 +515,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 intent.putExtra("pTypeId", paymentItem.id)
                 intent.putExtra("tc", paymentItem.tc)
                 intent.putExtra("title", paymentItem.name)
-                intent.putExtra("paidAmount", paidAmount)
+                intent.putExtra("paidAmount", actualAmt)
                 startActivity(intent)
             }
             PHONE_PE -> {
@@ -452,7 +533,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 intent.putExtra("tc", paymentItem.tc)
                 intent.putExtra("ca_t", paymentItem.ca_t)
                 intent.putExtra("title", paymentItem.name)
-                intent.putExtra("paidAmount", paidAmount)
+                intent.putExtra("paidAmount", actualAmt)
                 startActivity(intent)
             }
             PAYTM_WALLET -> {
@@ -462,7 +543,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 intent.putExtra("tc", paymentItem.tc)
                 intent.putExtra("ca_t", paymentItem.ca_t)
                 intent.putExtra("title", paymentItem.name)
-                intent.putExtra("paidAmount", paidAmount)
+                intent.putExtra("paidAmount", actualAmt)
                 startActivity(intent)
             }
             GYFTR -> {
@@ -473,7 +554,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 intent.putExtra("ca_a", paymentItem.ca_a)
                 intent.putExtra("ca_t", paymentItem.ca_t)
                 intent.putExtra("title", paymentItem.name)
-                intent.putExtra("paidAmount", paidAmount)
+                intent.putExtra("paidAmount", actualAmt)
                 startActivity(intent)
             }
             GEIFT_CARD -> {
@@ -485,7 +566,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 intent.putExtra("ca_a", paymentItem.ca_a)
                 intent.putExtra("ca_t", paymentItem.ca_t)
                 intent.putExtra("title", paymentItem.name)
-                intent.putExtra("paidAmount", paidAmount)
+                intent.putExtra("paidAmount", actualAmt)
                 startActivity(intent)
             }
             ZAGGLE -> {
@@ -497,7 +578,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 intent.putExtra("ca_a", paymentItem.ca_a)
                 intent.putExtra("ca_t", paymentItem.ca_t)
                 intent.putExtra("title", paymentItem.name)
-                intent.putExtra("paidAmount", paidAmount)
+                intent.putExtra("paidAmount", actualAmt)
                 startActivity(intent)
             }
             ACCENTIVE -> {
@@ -508,7 +589,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 intent.putExtra("ca_a", paymentItem.ca_a)
                 intent.putExtra("ca_t", paymentItem.ca_t)
                 intent.putExtra("title", paymentItem.name)
-                intent.putExtra("paidAmount", paidAmount)
+                intent.putExtra("paidAmount", actualAmt)
                 startActivity(intent)
             }
         }
@@ -524,7 +605,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                             val intent = Intent(this@PaymentActivity, CredActivity::class.java)
                             intent.putExtra("bannertext", it.data.output.banner_txt)
                             intent.putExtra("icon", it.data.output.icon)
-                            intent.putExtra("paidAmount", paidAmount)
+                            intent.putExtra("paidAmount", actualAmt)
                             intent.putExtra("msg", it.data.output.msg)
                             intent.putExtra("mode", it.data.output.mode)
                             intent.putExtra("pid", paymentItemHold?.id)
@@ -805,7 +886,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 intent.putExtra("ca_a", paymentItem.ca_a)
                 intent.putExtra("ca_t", paymentItem.ca_t)
                 intent.putExtra("title", paymentItem.name)
-                intent.putExtra("paidAmount", paidAmount)
+                intent.putExtra("paidAmount", actualAmt)
 
                 //intent.putExtra(PCConstants.BI_PT,bi_pt);
                 try {
@@ -829,7 +910,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 intent.putExtra("ca_a", paymentItem.ca_a)
                 intent.putExtra("ca_t", paymentItem.ca_t)
                 intent.putExtra("title", paymentItem.name)
-                intent.putExtra("paidAmount", paidAmount)
+                intent.putExtra("paidAmount", actualAmt)
                 startActivity(intent)
             }
             HYATT -> {
@@ -840,7 +921,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 intent.putExtra("ca_a", paymentItem.ca_a)
                 intent.putExtra("ca_t", paymentItem.ca_t)
                 intent.putExtra("title", paymentItem.name)
-                intent.putExtra("paidAmount", paidAmount)
+                intent.putExtra("paidAmount", actualAmt)
                 startActivity(intent)
             }
             ACCENTIVE -> {
@@ -851,7 +932,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 intent.putExtra("ca_a", paymentItem.ca_a)
                 intent.putExtra("ca_t", paymentItem.ca_t)
                 intent.putExtra("title", paymentItem.name)
-                intent.putExtra("paidAmount", paidAmount)
+                intent.putExtra("paidAmount", actualAmt)
                 startActivity(intent)
             }
             STAR_PASS -> {
@@ -861,7 +942,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 intent.putExtra("tc", paymentItem.tc)
                 intent.putExtra("ca_t", paymentItem.ca_t)
                 intent.putExtra("title", paymentItem.name)
-                intent.putExtra("paidAmount", paidAmount)
+                intent.putExtra("paidAmount", actualAmt)
                 startActivity(intent)
             }
             M_COUPON -> {
@@ -871,7 +952,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 intent.putExtra("ca_a", paymentItem.ca_a)
                 intent.putExtra("ca_t", paymentItem.ca_t)
                 intent.putExtra("title", paymentItem.name)
-                intent.putExtra("paidAmount", paidAmount)
+                intent.putExtra("paidAmount", actualAmt)
                 startActivity(intent)
             }
         }
@@ -1093,18 +1174,21 @@ override fun onBackPressed() {
                         val isP: String = it.data.output.p
                         vocCount += 1
                         DISCOUNT += it.data.output.di.toDouble()
+                        binding?.discountVocher?.show()
+                        binding?.cutPrice?.show()
                         binding?.discountVocher?.text =
                             "$vocCount Vouchers worth $DISCOUNT Redeemed!"
-                        binding?.textView178?.text = getString(R.string.pay) + " " + getString(R.string.currency) + (intent.getStringExtra("paidAmount")?.toDouble()!! - DISCOUNT)
+                        actualAmt = (intent.getStringExtra("paidAmount")?.toDouble()!! - DISCOUNT).toString()
+                        binding?.textView178?.text = getString(R.string.currency) + actualAmt
                         binding?.cutPrice?.text = getString(R.string.currency) + intent.getStringExtra("paidAmount").toString()
                         newBinding?.parrentView?.isEnabled = false
                         printLog(voucherData?.voucher_type+voucherData?.type)
                         if (voucherData?.type.equals("SUBSCRIPTION", ignoreCase = true)) {
                             newBinding?.ivSubs?.setImageResource(R.drawable.subs_gray)
                         } else {
-                            if (voucherData?.tp == ("d")) {
+                            if (voucherData?.tp == ("D")) {
                                 newBinding?.ivSubs?.setImageResource(R.drawable.voucher_ticket_grey)
-                            } else if (voucherData?.tp == ("c")) {
+                            } else if (voucherData?.tp == ("C")) {
                                 if (voucherData?.sc == 27) {
                                     newBinding?.ivSubs?.setImageResource(R.drawable.voucher_popcorn_grey)
                                 } else if (voucherData?.sc == 35) {
@@ -1112,7 +1196,7 @@ override fun onBackPressed() {
                                 } else if (voucherData?.sc == 2) {
                                     newBinding?.ivSubs?.setImageResource(R.drawable.voucher_popcorn_grey)
                                 } else newBinding?.ivSubs?.setImageResource(R.drawable.voucher_f_n_b_grey)
-                            } else if (voucherData?.tp == ("t")) {
+                            } else if (voucherData?.tp == ("T")) {
                                 newBinding?.ivSubs?.setImageResource(R.drawable.voucher_ticket_grey)
                             } else if (voucherData?.tp == ("27")) {
                                 newBinding?.ivSubs?.setImageResource(R.drawable.voucher_popcorn_grey)
@@ -1224,16 +1308,16 @@ override fun onBackPressed() {
         promoDialog?.setContentView(R.layout.promo_dialog)
         val window: Window? = promoDialog?.window
         val wlp = window?.attributes
-        val catList: RecyclerView = promoDialog?.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView
+        catList = promoDialog?.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView
         val searchTextView: EditText = promoDialog?.findViewById<EditText>(R.id.searchTextView) as EditText
         val clearBtn: ImageView = promoDialog?.findViewById<ImageView>(R.id.clearBtn) as ImageView
         val cancel: ImageView = promoDialog?.findViewById<ImageView>(R.id.imageView4) as ImageView
         cancel.setOnClickListener { promoDialog?.dismiss() }
         val voice_btn: ImageView = promoDialog?.findViewById<ImageView>(R.id.voice_btn) as ImageView
         promoList = promoDialog?.findViewById<RecyclerView>(R.id.promoList) as RecyclerView
-        catList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        catList?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         val promoCatAdapter = PaymentPromoCatAdapter(getCatList()!!,this, this)
-        catList.adapter = promoCatAdapter
+        catList?.adapter = promoCatAdapter
         promoList?.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         promoListAdapter = PaymentPromoListAdapter(promoCodeList!!,promoCodeList!!,this,this)
         promoList?.adapter = promoListAdapter
@@ -1259,7 +1343,7 @@ override fun onBackPressed() {
         return list
     }
 
-    override fun onItemCatClick(cat:String) {
+    override fun onItemCatClick(cat: String, position: Int) {
         promoList!!.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         if (cat.equals("ALL", ignoreCase = true)) {
             promoListAdapter = PaymentPromoListAdapter(promoCodeList,promoCodeList,this, this)
@@ -1275,6 +1359,7 @@ override fun onBackPressed() {
             promoListAdapter = PaymentPromoListAdapter( list, list, this,this)
         }
         promoList!!.adapter = promoListAdapter
+        catList?.smoothScrollToPosition(position)
     }
 
 
@@ -1315,31 +1400,41 @@ override fun onBackPressed() {
     }
 
     override fun applyClick(data: PromoCodeList.Output) {
-        binding?.promoCode?.setText(data.promocode)
-        promoDialog!!.dismiss()
-        authViewModel.promoCode(preferences.getUserId(),BOOKING_ID, TRANSACTION_ID,
-            BOOK_TYPE,binding?.promoCode?.text.toString())
+
+        showPromDialog(data)
 
     }
 
-    override fun onTNCClick(data: PromoCodeList.Output) {
-        showTncDialog(this, data.tnc)
-    }
 
-    private fun showTncDialog(mContext: Context?, tnc: String?) {
-        val dialog = BottomSheetDialog(mContext!!, R.style.NoBackgroundDialogTheme)
+
+    private fun showPromDialog(data: PromoCodeList.Output) {
+        val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.tnc_popup)
+        dialog.setContentView(R.layout.promo_popup)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window!!.setLayout(
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         dialog.window!!.setGravity(Gravity.CENTER)
-        val cross = dialog.findViewById<View>(R.id.cross) as TextView?
-        val tncText = dialog.findViewById<View>(R.id.tncText) as TextView?
-        tncText!!.text = tnc
-        cross!!.setOnClickListener { dialog.dismiss() }
+        val imageView5 = dialog.findViewById<ImageView>(R.id.imageView5) as ImageView?
+        val titleText = dialog.findViewById<View>(R.id.titleText) as TextView?
+        val textView5 = dialog.findViewById<View>(R.id.textView5) as TextView?
+        val tncTxt = dialog.findViewById<View>(R.id.tncTxt) as TextView?
+        val btnApplyCoupon = dialog.findViewById<View>(R.id.btnApplyCoupon) as TextView?
+
+        tncTxt?.text = Html.fromHtml(data.tnc)
+        titleText?.text = Html.fromHtml(data.title)
+        if (data.promocode!=null && data.promocode!=""){
+            btnApplyCoupon?.show()
+        }
+        btnApplyCoupon?.setOnClickListener {
+            binding?.promoCode?.setText(data.promocode)
+            promoDialog!!.dismiss()
+            authViewModel.promoCode(preferences.getUserId(),BOOKING_ID, TRANSACTION_ID,
+                BOOK_TYPE,binding?.promoCode?.text.toString())
+            dialog.dismiss()
+        }
         dialog.show()
     }
 
@@ -1351,6 +1446,7 @@ override fun onBackPressed() {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         if (it.data.output.p != null) {
+                            showTncDialog(this,it.data.output.di.toString(),binding?.promoCode?.text.toString())
                             if (it.data.output.bin != null) {
                                 val binSeries: String = it.data.output.bin
                                 preferences.saveString(
@@ -1364,8 +1460,19 @@ override fun onBackPressed() {
                             if (it.data.output.p) {
                                 Constant().printTicket(this)
                             } else {
+                                println("callled this....")
+                                binding?.cutPrice?.paintFlags = binding?.cutPrice?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG
+                                binding?.applyCou?.show()
+                                binding?.cutPrice?.show()
+                                binding?.couponView?.hide()
                                 DISCOUNT += it.data.output.di.toDouble()
-                                binding?.textView178?.text = getString(R.string.pay) + " " + getString(R.string.currency) + (intent.getStringExtra("paidAmount")?.toDouble()!! - DISCOUNT)
+                                binding?.promoCodetxt?.text = "'${binding?.promoCode?.text}' Applied"
+                                binding?.applyco?.text = getString(R.string.currency)+it.data.output.di+" Saved"
+                                binding?.removeoff?.setOnClickListener {
+                                    authViewModel.removePromo(preferences.getString(Constant.SharedPreference.USER_NUMBER),BOOKING_ID, BOOK_TYPE)
+                                }
+                                actualAmt = (intent.getStringExtra("paidAmount")?.toDouble()!! - DISCOUNT).toString()
+                                binding?.textView178?.text = getString(R.string.currency) + actualAmt
                                 binding?.cutPrice?.text = getString(R.string.currency) + intent.getStringExtra("paidAmount").toString()
                             }
                         }

@@ -1990,6 +1990,32 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
 
+    private val removePromoLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val removePromoResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = removePromoLiveData
+
+    suspend fun removePromo(
+        mobile: String, bookingid: String, booktype: String
+    ) {
+        removePromoLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.removePromoCode(
+            mobile, bookingid, booktype, Constant.version, Constant.platform,Constant.getDid()
+        )
+        removePromoResponse(response)
+    }
+
+    private fun removePromoResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            removePromoLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            removePromoLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            removePromoLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
     /*******  promoGyft      ****************/
 
 

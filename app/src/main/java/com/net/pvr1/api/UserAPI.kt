@@ -190,7 +190,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<GiftCardResponse>
 
-    @POST("api/history/history-new/myticket")
+    @POST("api/history/history-new/myticket/v2")
     suspend fun foodTicket(
         @Query("userid") userid: String,
         @Query("did") did: String,
@@ -893,6 +893,17 @@ interface UserAPI {
         @Query("promocode") promocode: String,
         @Query("av") version: String,
         @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
+
+
+    @POST("api/payment/pcrollback")
+    suspend fun removePromoCode(
+        @Query("mobile") mobile: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("av") version: String,
+        @Query("pt") pt: String,
+        @Query("did") did: String
     ): Response<PaytmHmacResponse>
 
 

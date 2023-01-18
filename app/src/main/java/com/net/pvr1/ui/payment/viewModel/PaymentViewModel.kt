@@ -59,6 +59,19 @@ class PaymentViewModel @Inject constructor(private val userRepository: UserRepos
         }
     }
 
+    // REMOVE PROMOCODE
+    val removePromoCodeScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.removePromoResponseLiveData
+
+    fun removePromo(
+        mobile: String,
+        bookingid: String,
+        booktype: String
+    ) {
+        viewModelScope.launch {
+            userRepository.removePromo(mobile, bookingid, booktype)
+        }
+    }
+
     //payMode
     val payModeResponseLiveData: LiveData<NetworkResult<PaymentResponse>>
         get() = userRepository.payModeResponseLiveData

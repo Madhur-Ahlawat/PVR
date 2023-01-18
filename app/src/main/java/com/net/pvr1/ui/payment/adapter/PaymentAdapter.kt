@@ -10,6 +10,8 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ItemPaymentListBinding
 import com.net.pvr1.ui.payment.response.PaymentResponse
 import com.net.pvr1.utils.Constant
+import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.show
 import com.phonepe.intent.sdk.api.PhonePe.isAppInstalled
 import com.phonepe.intent.sdk.api.PhonePeInitException
 
@@ -37,6 +39,11 @@ class PaymentAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
+                if (position ==( nowShowingList.size-1)){
+                    binding.view220.hide()
+                }else{
+                    binding.view220.show()
+                }
                 if (this.id==Constant.PHONE_PE){
                     try {
                         if (isAppInstalled()) {

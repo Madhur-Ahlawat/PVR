@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.databinding.ItemPaymentListBinding
 import com.net.pvr1.ui.payment.response.PaymentResponse
+import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.show
 
 //category
 
@@ -32,6 +34,11 @@ class PaymentExclusiveAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
+                if (position ==( nowShowingList.size-1)){
+                    binding.view220.hide()
+                }else{
+                    binding.view220.show()
+                }
 //                binding.imageView81.setImageResource(R.drawable.shows)
                 //title
                 binding.textView124.text = this.name

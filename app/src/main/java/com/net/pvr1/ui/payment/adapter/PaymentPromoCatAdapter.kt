@@ -5,9 +5,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.net.pvr1.databinding.ItemPaymentListBinding
+import com.net.pvr1.R
 import com.net.pvr1.databinding.OfferOptionItemBinding
-import com.net.pvr1.ui.payment.response.PaymentResponse
 
 //category
 
@@ -17,6 +16,7 @@ class PaymentPromoCatAdapter(
     private var listener: RecycleViewItemClickListenerCity,
 ) :
     RecyclerView.Adapter<PaymentPromoCatAdapter.ViewHolder>() {
+    private var rowIndex = 0
     inner class ViewHolder(val binding: OfferOptionItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -35,9 +35,18 @@ class PaymentPromoCatAdapter(
             with(nowShowingList[position]) {
 //                binding.imageView81.setImageResource(R.drawable.shows)
                 //title
+                if (rowIndex == position){
+                    binding.options.isSelected = true
+                    binding.options.setTextColor(context.resources.getColor(R.color.black))
+                }else{
+                    binding.options.isSelected = false
+                    binding.options.setTextColor(context.resources.getColor(R.color.h8Point1Color))
+                }
                 binding.options.text = this
                 itemView.setOnClickListener{
-                    listener.onItemCatClick(this)
+                    rowIndex = position
+                    listener.onItemCatClick(this ,position)
+                    notifyDataSetChanged()
                 }
 
             }
@@ -51,7 +60,7 @@ class PaymentPromoCatAdapter(
 
 
     interface RecycleViewItemClickListenerCity {
-        fun onItemCatClick(cat:String)
+        fun onItemCatClick(cat: String, position: Int)
 
     }
 

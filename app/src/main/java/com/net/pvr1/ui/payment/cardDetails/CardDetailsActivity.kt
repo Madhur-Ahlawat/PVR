@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
@@ -22,7 +23,6 @@ import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.privilege.EnrollInPassportActivity
-import com.net.pvr1.ui.home.fragment.privilege.NonMemberActivity
 import com.net.pvr1.ui.home.fragment.privilege.NonMemberFragment
 import com.net.pvr1.ui.home.fragment.privilege.NonMemberFragment.Companion.maxtrycount
 import com.net.pvr1.ui.payment.PaymentActivity
@@ -37,6 +37,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewItemClickListener {
@@ -93,6 +94,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
         } else if (paymentType.equals("118", ignoreCase = true)) {
             paymentType = getString(R.string.mobikwik_addmoney_payment_type_net_banking)
             binding?.constraintLayout130?.hide()
+            binding?.recyclerView52?.show()
             isNetBaking = true
             authViewModel.paytmHMAC(
                 preferences.getUserId(),
@@ -107,6 +109,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
             )
         }
 
+        binding?.cardNumber?.addTextChangedListener(FourDigitCardFormatWatcher())
 
     }
 
@@ -470,6 +473,37 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
             startActivity(intent)
             finish()
             dialog.dismiss()
+        }
+    }
+
+    class FourDigitCardFormatWatcher : TextWatcher {
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+        override fun afterTextChanged(s: Editable) {
+            // Remove spacing char
+            if (s.isNotEmpty() && s.length % 5 == 0) {
+                val c = s[s.length - 1]
+                if (space == c) {
+                    s.delete(s.length - 1, s.length)
+                }
+            }
+            // Insert char where needed.
+            if (s.isNotEmpty() && s.length % 5 == 0) {
+                val c = s[s.length - 1]
+                // Only if its a digit where there should be a space we insert a space
+                if (Character.isDigit(c) && TextUtils.split(
+                        s.toString(),
+                        space.toString()
+                    ).size <= 3
+                ) {
+                    s.insert(s.length - 1, space.toString())
+                }
+            }
+        }
+
+        companion object {
+            // Change this to what you want... ' ', '-' etc..
+            private const val space = ' '
         }
     }
 

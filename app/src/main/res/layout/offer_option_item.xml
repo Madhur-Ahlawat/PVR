@@ -3,19 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/padding_10">
+    android:layout_margin="@dimen/dimen_5dp">
 
     <androidx.appcompat.widget.AppCompatCheckedTextView
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dimen_45dp"
         android:text="CREDIT CARD"
         android:gravity="center"
-        android:layout_marginStart="@dimen/padding_10"
-        android:layout_marginEnd="@dimen/padding_10"
         android:id="@+id/options"
         android:fontFamily="@font/helvetica_neu_bold"
         android:textColor="@color/black"
+        android:background="@drawable/offer_filter_text_selector"
         android:textSize="@dimen/dimen_14sp"
+        android:paddingStart="@dimen/dimen_15dp"
+        android:paddingEnd="@dimen/dimen_15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

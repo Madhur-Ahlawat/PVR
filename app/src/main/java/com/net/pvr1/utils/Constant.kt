@@ -114,6 +114,7 @@ class Constant {
         // DisCount for payment
 
         var discount_val = "0.0"
+        var isPromoCode = ""
         var discount_txt = ""
 
 
