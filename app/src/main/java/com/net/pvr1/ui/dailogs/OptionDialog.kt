@@ -12,6 +12,8 @@ import androidx.annotation.StringRes
 import com.net.pvr1.R
 import com.net.pvr1.databinding.DialogOptionBinding
 import com.net.pvr1.utils.Constant
+import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.show
 
 class OptionDialog(
     context: Context,
@@ -45,6 +47,13 @@ class OptionDialog(
             binding?.negativeBtn?.visibility = View.GONE
         }else{
             binding?.negativeBtn?.visibility = View.VISIBLE
+        }
+
+//        manage title show
+        if (context.getString(title) ==""){
+            binding?.title?.hide()
+        }else{
+            binding?.title?.show()
         }
 
         binding?.illustration?.setImageResource(R.mipmap.ic_launcher)

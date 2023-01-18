@@ -590,6 +590,7 @@ class Constant {
             ActivityCompat.requestPermissions(
                 activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), requestLocation
             )
+            enableLocation(activity)
         } else {
             locationManager = activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 

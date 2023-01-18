@@ -51,7 +51,8 @@
                 android:layout_marginTop="45dp"
                 android:layout_marginEnd="3dp"
                 android:drawablePadding="5dp"
-                android:fontFamily="@font/montserrat_medium"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/helvetica_neu_reg"
                 android:text="@string/skip"
                 android:textColor="@color/login_color"
                 android:textSize="@dimen/dimen_14sp"
@@ -171,6 +172,7 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
                 </RelativeLayout>
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"

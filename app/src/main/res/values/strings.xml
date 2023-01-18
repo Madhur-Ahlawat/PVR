@@ -41,11 +41,11 @@
     <string name="skip">Skip</string>
     <string name="get_start">Get Started</string>
     <string name="verify_number">Verify\nPhone Number</string>
-    <string name="toContinue">to continue, enter your mobile number</string>
-    <string name="mobile_number">Mobile Number</string>
+    <string name="toContinue">to continue, enter your phone number</string>
+    <string name="mobile_number">Phone Number</string>
     <string name="continue_txt">Continue</string>
     <string name="verify_code">Verify\nOTP Code</string>
-    <string name="sentCode">We’ve sent a code to your mobile number</string>
+    <string name="sentCode">We’ve sent a code to your phone number</string>
     <string name="resend_otp">Resend OTP</string>
     <string name="submit">Submit</string>
     <string name="keep_info_safe">We promise to keep your information safe</string>
@@ -368,7 +368,7 @@
     <string name="your_message_should_have_at_least_15_characters">Your message should have at least 15 characters</string>
 
     //ContactUs
-    <string name="enterMobile">Please Enter Your Mobile</string>
+    <string name="enterMobile">Please Enter Your Phone</string>
     <string name="enterComment">Please Enter Your Comment</string>
     <string name="trending_movies">trending movies</string>
     <string name="cinema_near_your">Cinemas near you</string>
@@ -572,7 +572,6 @@
     <string-array name="gender">
         <item>Male</item>
         <item>Female</item>
-
     </string-array>
 
 </resources>

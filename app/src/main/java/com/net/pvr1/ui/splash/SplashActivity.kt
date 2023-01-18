@@ -52,6 +52,7 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
         //OnBoarding Click Check
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE)
         clickOnBoarding = sharedpreferences?.getBoolean(OnBoardingClick, false)!!

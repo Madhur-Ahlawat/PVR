@@ -8,6 +8,16 @@
     android:background="@color/white"
     tools:context=".ui.splash.onBoarding.LandingActivity">
 
+    <View
+        android:id="@+id/view2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--Slider-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/consViewPager"
         android:layout_width="match_parent"
@@ -29,14 +39,7 @@
             tools:ignore="SpeakableTextPresentCheck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <View
-        android:id="@+id/view2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_2dp"
         android:background="@color/white"
-        android:paddingBottom="40dp"
+        android:paddingBottom="30dp"
         app:layout_constraintBottom_toBottomOf="@+id/view2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/view2"
@@ -54,20 +57,23 @@
         <TextView
             android:id="@+id/change_text"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dimen_100dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="40dp"
+            android:includeFontPadding="false"
             android:fontFamily="@font/montserrat_bold"
             android:gravity="center"
-            android:includeFontPadding="false"
+            android:maxLines="3"
+            android:minLines="3"
             android:text="@string/onboard_txt1"
             android:textColor="@color/black"
             android:textSize="@dimen/dimen_22sp"
             app:layout_constraintBottom_toTopOf="@+id/movedToNext"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/movedToNext"
@@ -77,7 +83,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginStart="@dimen/dimen_30dp"
             android:layout_marginEnd="@dimen/dimen_30dp"
-            android:layout_marginBottom="35dp"
+            android:layout_marginBottom="29dp"
             android:background="@drawable/background_sign_in"
             android:fontFamily="@font/sf_pro_text_bold"
             android:gravity="center"

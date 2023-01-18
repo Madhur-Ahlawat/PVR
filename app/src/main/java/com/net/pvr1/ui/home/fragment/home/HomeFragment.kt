@@ -115,6 +115,7 @@ class HomeFragment : Fragment(),
     @SuppressLint("CutPasteId")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 // manage top bar ui
         (requireActivity().findViewById(R.id.include) as ConstraintLayout).show()
         (requireActivity().findViewById(R.id.notify) as ImageView).show()
@@ -479,15 +480,10 @@ class HomeFragment : Fragment(),
         val intent = Intent(requireActivity(), BookingActivity::class.java)
         intent.putExtra("mid", comingSoonItem.id)
         startActivity(intent)
-
     }
 
     override fun onOfferClick(comingSoonItem: HomeResponse.Cp) {
-        if (comingSoonItem.t != null && comingSoonItem.t.equals(
-                "campaign-VIDEO",
-                ignoreCase = true
-            )
-        ) {
+        if (comingSoonItem.t != null && comingSoonItem.t.equals("campaign-VIDEO", ignoreCase = true)) {
             val intent = Intent(requireActivity(), PlayerActivity::class.java)
             intent.putExtra("trailerUrl", comingSoonItem.mtrailerurl)
             startActivity(intent)
