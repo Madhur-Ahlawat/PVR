@@ -270,6 +270,7 @@ class OtpVerifyActivity : AppCompatActivity() {
         output.ph.let { preferences.saveMobileNumber(it) }
         output.em.let { preferences.saveEmail(it) }
         output.token.let { preferences.saveToken(it) }
+        if (output.dob!=null)
         output.dob.let { preferences.saveDob(it) }
         checkMoved()
     }

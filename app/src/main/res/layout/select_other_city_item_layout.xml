@@ -4,9 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/dimen_4dp"
-    android:layout_marginEnd="@dimen/dimen_8dp">
+    android:layout_height="wrap_content">
 
 
     <androidx.cardview.widget.CardView
@@ -15,43 +13,42 @@
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:cardCornerRadius="@dimen/dimen_2dp">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout159"
+            android:background="@drawable/city_un_selectd_bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/otherCityName"
-                style="@style/H1Size"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_4dp"
+                android:layout_marginEnd="8dp"
                 android:ellipsize="end"
+                android:gravity="start"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:maxLines="1"
-                android:scrollHorizontally="true"
-                android:text=""
-                android:gravity="start"
                 android:textColor="@color/text_color_default"
                 android:textSize="@dimen/dim_h7"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageView85"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
                 tool:text="Hyderabad" />
 
-            <View
-                android:id="@+id/vwUnderline"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:visibility="gone"
-                android:background="@color/text_color_default"
-                app:layout_constraintEnd_toEndOf="@+id/otherCityName"
-                app:layout_constraintStart_toStartOf="@+id/otherCityName"
-                app:layout_constraintTop_toBottomOf="@+id/otherCityName" />
-
+            <ImageView
+                android:id="@+id/imageView85"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/arrow_down"
+                tool:ignore="ContentDescription" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

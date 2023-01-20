@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.myBookings
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +26,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemClickListener {
+
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityMyBookingBinding? = null
@@ -263,10 +265,10 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
     }
 
     //Food With Ticket Response
+    @SuppressLint("SetTextI18n")
     private fun retrieveFoodTicketData(output: List<FoodTicketResponse.Output.C>) {
         //title
         binding?.textView3?.text = getString(R.string.upcomingBooking) + output.size
-
 
         val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
         val foodTicketAdapter = FoodTicketChildAdapter(output, this)
@@ -289,5 +291,4 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
             "GIFTCARD"
         )
     }
-
 }

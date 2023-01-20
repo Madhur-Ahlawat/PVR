@@ -1,7 +1,6 @@
 package com.net.pvr1.ui.location.selectCity
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -9,17 +8,18 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.Window
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.FrameLayout
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.*
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySelectCityBinding
+import com.net.pvr1.databinding.CitySelectDialogBinding
 import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
@@ -51,7 +51,6 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
     private var searchCityAdapter: SearchCityAdapter? = null
     private var list: ArrayList<String> = arrayListOf()
 
-    private var recyclerViewDialog: RecyclerView? = null
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
     private var enableLocation = 0
 
@@ -59,6 +58,9 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
     private var cityNameMAin: String = ""
     private var from: String = ""
     private var cid: String = ""
+
+    private var dialog: BottomSheetDialog? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -121,13 +123,12 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             }
         }
         //On Back Press
-        binding?.include37?.imageView58?.setOnClickListener {
+        binding?.imageView58?.setOnClickListener {
             finish()
         }
 
         //title
-//        binding?.include37?.textView108?.gravity = Gravity.CENTER
-        binding?.include37?.textView108?.text = getString(R.string.search_city)
+        binding?.textView108?.text = getString(R.string.select_city)
 
         //Search city
         binding?.searchCity?.addTextChangedListener(object : TextWatcher {
@@ -255,7 +256,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             binding?.recyclerCity?.adapter = selectCityAdapter
 
             val gridLayout3 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-            searchCityAdapter = SearchCityAdapter(filterCityList!!, this, this)
+            searchCityAdapter = SearchCityAdapter(filterCityList!!,  this,preferences.getCityName())
             binding?.recyclerViewSearchCity?.layoutManager = gridLayout3
             binding?.recyclerViewSearchCity?.adapter = searchCityAdapter
 
@@ -345,34 +346,31 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
 
     private fun cityDialog(name: String) {
         cityNameMAin = name
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.city_select_dialog)
-        dialog.window!!.setLayout(
+        dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
+        val inflater = LayoutInflater.from(this)
+        val bindingCitySelect = CitySelectDialogBinding.inflate(inflater)
+        val behavior: BottomSheetBehavior<FrameLayout>? = dialog?.behavior
+        behavior?.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog?.setContentView(bindingCitySelect.root)
+        dialog?.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
-        dialog.window?.setGravity(Gravity.BOTTOM)
-        dialog.show()
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.window?.attributes?.windowAnimations = R.style.DialogAnimation
+        dialog?.window?.setGravity(Gravity.BOTTOM)
+        dialog?.show()
 
-        recyclerViewDialog = dialog.findViewById(R.id.recyclerViewCityDialog)
-        val cancel = dialog.findViewById<ImageView>(R.id.imgCross)
-        val tittle = dialog.findViewById<TextView>(R.id.textView108)
-        tittle.text = preferences.getCityName()
+        bindingCitySelect.textView108.text = preferences.getCityName()
 
         try {
             val gridLayout4 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
             val dialogCityAdapter = PopUpCityAdapter(list, this, this, cityName)
-            recyclerViewDialog?.layoutManager = gridLayout4
-            recyclerViewDialog?.adapter = dialogCityAdapter
+            bindingCitySelect.recyclerView60.layoutManager = gridLayout4
+            bindingCitySelect.recyclerView60.adapter = dialogCityAdapter
         } catch (e: Exception) {
             e.printStackTrace()
         }
 
-        cancel.setOnClickListener {
-            dialog.dismiss()
-        }
     }
 
     override fun onItemClickCityDialog(city: String) {

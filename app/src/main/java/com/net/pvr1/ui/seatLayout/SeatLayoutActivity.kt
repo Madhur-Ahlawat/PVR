@@ -418,12 +418,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         for (item in selectedSeats) {
             val price = item.priceCode
             val seatId = item.seatBookingId
-            println("price--->${price}--->${seatId}")
-            selectSeatPriceCode.add(
-                ReserveSeatRequest.Seat(
-                    price.toString(), seatId.toString()
-                )
-            )
+            selectSeatPriceCode.add(ReserveSeatRequest.Seat(price.toString(), seatId.toString()))
         }
 
         val reserve = ReserveSeatRequest(CINEMA_ID, selectSeatPriceCode, sessionId, output.transid)

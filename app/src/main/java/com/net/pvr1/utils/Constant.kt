@@ -602,7 +602,7 @@ class Constant {
                 locationManager?.getLastKnownLocation(bestProvider.toString())
 
             if (location == null) {
-                Toast.makeText(activity, "Location Not found", Toast.LENGTH_LONG).show()
+//                Toast.makeText(activity, "Location Not found", Toast.LENGTH_LONG).show()
             } else {
                 val geocoder = Geocoder(activity)
                 try {

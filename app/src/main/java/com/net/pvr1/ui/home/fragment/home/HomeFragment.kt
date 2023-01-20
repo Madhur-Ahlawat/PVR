@@ -405,45 +405,56 @@ class HomeFragment : Fragment(),
 
     @SuppressLint("SetTextI18n")
     private fun recommend(rm: HomeResponse.Rm) {
-        //image
-        binding?.homeRecommend?.ivRecomm?.let { Glide.with(this).load(rm.i).into(it) }
-        //trailer
-        binding?.homeRecommend?.playBtn?.setOnClickListener {
-            val intent = Intent(requireActivity(), PlayerActivity::class.java)
-            intent.putExtra("trailerUrl", rm.mtrailerurl)
-            startActivity(intent)
-        }
-        //title
-        binding?.homeRecommend?.tvMovie?.text = rm.n
+        if (rm!=null) {
+            binding?.constraintLayout135?.show()
+            //image
+            binding?.homeRecommend?.ivRecomm?.let {
+                Glide.with(requireActivity())
+                    .load(rm.i)
+                    .error(R.drawable.placeholder_horizental)
+                    .into(it)
+            }
 
-        //trending
-        binding?.homeRecommend?.tvCensorLang?.text =
-            rm.ce + " • " + java.lang.String.join(",", rm.grs)
+            //trailer
+            binding?.homeRecommend?.playBtn?.setOnClickListener {
+                val intent = Intent(requireActivity(), PlayerActivity::class.java)
+                intent.putExtra("trailerUrl", rm.mtrailerurl)
+                startActivity(intent)
+            }
+            //title
+            binding?.homeRecommend?.tvMovie?.text = rm.n
 
-        //    tvMovie.setSelected(true);
-        if (rm.otherlanguages.equals("", ignoreCase = true)) {
-            if (rm.otherlanguages.split(",").size > 2) {
-                binding?.homeRecommend?.genrePlus?.visibility = View.VISIBLE
-                binding?.homeRecommend?.genrePlus?.text = "+" + (rm.othergenres.split(",").size - 2)
-                binding?.homeRecommend?.tvGenre?.text =
-                    rm.othergenres.split(",")[0] + " | " + rm.othergenres.split(",")[1]
+            //trending
+            binding?.homeRecommend?.tvCensorLang?.text =
+                rm.ce + " • " + java.lang.String.join(",", rm.grs)
+
+            //    tvMovie.setSelected(true);
+            if (rm.otherlanguages.equals("", ignoreCase = true)) {
+                if (rm.otherlanguages.split(",").size > 2) {
+                    binding?.homeRecommend?.genrePlus?.visibility = View.VISIBLE
+                    binding?.homeRecommend?.genrePlus?.text =
+                        "+" + (rm.othergenres.split(",").size - 2)
+                    binding?.homeRecommend?.tvGenre?.text =
+                        rm.othergenres.split(",")[0] + " | " + rm.othergenres.split(",")[1]
+                } else {
+                    binding?.homeRecommend?.genrePlus?.visibility = View.GONE
+                    binding?.homeRecommend?.tvGenre?.text = rm.othergenres.replace(",", " | ")
+                }
             } else {
-                binding?.homeRecommend?.genrePlus?.visibility = View.GONE
-                binding?.homeRecommend?.tvGenre?.text = rm.othergenres.replace(",", " | ")
+                var string = ""
+                for (i in 0 until rm.grs.size) {
+                    string =
+                        if (i == rm.grs.size - 1) string + rm.grs[i] else string + rm.grs[i] + " • "
+                }
+                binding?.homeRecommend?.tvGenre?.text = string
             }
-        } else {
-            var string = ""
-            for (i in 0 until rm.grs.size) {
-                string =
-                    if (i == rm.grs.size - 1) string + rm.grs[i] else string + rm.grs[i] + " • "
-            }
-            binding?.homeRecommend?.tvGenre?.text = string
+
+
+            if (!TextUtils.isEmpty(rm.rtt)) binding?.homeRecommend?.tvRecomm?.text =
+                rm.rtt else binding?.homeRecommend?.tvRecomm?.text = "TRENDING"
+        }else{
+            binding?.constraintLayout135?.hide()
         }
-
-
-        if (!TextUtils.isEmpty(rm.rtt)) binding?.homeRecommend?.tvRecomm?.text =
-            rm.rtt else binding?.homeRecommend?.tvRecomm?.text = "TRENDING"
-
     }
 
     override fun onCategoryClick(comingSoonItem: HomeResponse.Mfi) {

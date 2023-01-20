@@ -111,9 +111,8 @@ class ProfileActivity : AppCompatActivity() {
         val behavior: BottomSheetBehavior<FrameLayout>? = dialog?.behavior
         behavior?.state = BottomSheetBehavior.STATE_EXPANDED
         dialog?.setContentView(bindingProfile.root)
-        dialog?.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
-        )
+
+        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.attributes?.windowAnimations = R.style.DialogAnimation
         dialog?.window?.setGravity(Gravity.BOTTOM)

@@ -7,27 +7,65 @@
     tools:context=".ui.location.selectCity.SelectCityActivity">
 
     <!-- Toolbar-->
-    <include
-        android:id="@+id/include37"
-        layout="@layout/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/dimen_60dp"
-        app:layout_constraintEnd_toEndOf="parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout158"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60dp">
+
+
+        <View
+            android:id="@+id/view74"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/textView108"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf_pro_text_semi_bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_16sp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView58"
+            app:layout_constraintEnd_toEndOf="@+id/view74"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageView58"
+            tools:text="TextView" />
+
+        <ImageView
+            android:id="@+id/imageView58"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/back"
+            tools:ignore="ContentDescription"
+            app:tint="@color/black" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Search -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/searchSelectCity"
         android:layout_width="0dp"
         android:layout_height="@dimen/dimen_40dp"
-        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="@dimen/dimen_8dp"
-        android:layout_marginEnd="@dimen/dimen_16dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/city_search_curve"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include37">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout158">
 
         <View
             android:id="@+id/view55"
@@ -42,7 +80,7 @@
             android:id="@+id/imageView38"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="14dp"
             app:layout_constraintBottom_toBottomOf="@+id/view55"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view55"
@@ -59,24 +97,20 @@
             app:layout_constraintBottom_toBottomOf="@+id/view55"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/location"
+            app:srcCompat="@drawable/location_city"
             tools:ignore="ContentDescription" />
 
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/searchCity"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="13dp"
             android:background="@null"
-            android:ems="10"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:hint="@string/search_city"
             android:imeOptions="actionSearch"
             android:importantForAutofill="no"
-            android:inputType="textPersonName"
-            android:textColorHint="#546E7A"
+            android:textColorHint="@color/otherCityColor"
             app:layout_constraintBottom_toBottomOf="@+id/view55"
             app:layout_constraintEnd_toStartOf="@+id/imageView109"
             app:layout_constraintStart_toEndOf="@+id/imageView38"
@@ -85,8 +119,9 @@
 
         <ImageView
             android:id="@+id/imageView109"
-            android:layout_width="@dimen/dimen_20dp"
-            android:layout_height="@dimen/dimen_20dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginEnd="5dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/view55"
             app:layout_constraintEnd_toStartOf="@+id/imageView39"
@@ -101,7 +136,9 @@
         android:id="@+id/nestedScrollView3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/dimen_8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -120,13 +157,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-<!--  Selected City -->
+                <!--  Selected City -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/consSelectedLocation"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_16dp"
-                    android:layout_marginEnd="@dimen/dimen_16dp"
                     android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -136,8 +171,6 @@
                         android:id="@+id/txtSelectedLocation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_12dp"
-                        android:layout_marginBottom="@dimen/dimen_12dp"
                         android:text="@string/selected_location"
                         android:textColor="@color/filter_text_color"
                         android:textSize="@dimen/dimen_16sp"
@@ -148,9 +181,11 @@
 
                     <TextView
                         android:id="@+id/txtSelectedCity"
-                        android:fontFamily="@font/sf_pro_text_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/txtSelectedLocation"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/txtSelectedLocation"
@@ -162,6 +197,7 @@
                     android:id="@+id/consSelectCity"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -172,14 +208,12 @@
                         android:id="@+id/recyclerCity"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dimen_8dp"
-                        android:layout_marginEnd="@dimen/dimen_8dp"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:spanCount="2"
-                        tools:itemCount="2"
+                        tools:itemCount="3"
                         tools:listitem="@layout/select_city_item_layout" />
 
                     <!-- View-->
@@ -196,8 +230,6 @@
                             android:id="@+id/vwMain"
                             android:layout_width="0dp"
                             android:layout_height="@dimen/dimen_40dp"
-                            android:layout_marginStart="@dimen/dimen_16dp"
-                            android:layout_marginEnd="@dimen/dimen_16dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -244,7 +276,6 @@
                         android:id="@+id/recyclerViewOtherCity"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dimen_12dp"
                         android:layout_marginTop="24dp"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -252,7 +283,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/constraintLayout86"
                         app:spanCount="2"
-                        tools:itemCount="20"
+                        tools:itemCount="9"
                         tools:listitem="@layout/select_dialog_city_item_layout" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -281,9 +312,12 @@
         android:id="@+id/recyclerViewSearchCity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_20dp"
-        android:layout_marginTop="@dimen/dimen_8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
         android:visibility="gone"
+        tools:itemCount="3"
+        tools:listitem="@layout/select_other_city_item_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchSelectCity" />
