@@ -31,11 +31,14 @@
             android:background="@drawable/top_curve"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <ImageView
+            <com.joooonho.SelectableRoundedImageView
                 android:id="@+id/giftCardImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
+                app:sriv_left_top_corner_radius="8dp"
+                app:sriv_right_top_corner_radius="8dp"
+                android:scaleType="fitXY"
                 android:src="@drawable/gift_card_placeholder"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

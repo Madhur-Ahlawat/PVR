@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="@dimen/alert_dialog_width"
-    android:background="@drawable/alert_dialog_background"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@drawable/top_curve_bottomsheet"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -9,7 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="top"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginLeft="@dimen/alert_dialog_margin_left_right"
         android:layout_marginRight="@dimen/alert_dialog_margin_left_right">
 
@@ -28,10 +29,12 @@
             android:id="@+id/titleText"
             android:layout_marginLeft="10dp"
             android:gravity="top|left"
+            android:fontFamily="@font/sf_pro_text_regular"
             android:layout_gravity="top"
             android:drawablePadding="10dp"
             android:drawableLeft="@drawable/ic_alert"
             style="@style/H1Size"
+            android:textSize="@dimen/dimen_15sp"
             android:text="Are you sure you want to cancel this ticket?"
             android:textColor="@color/pvr_light_black"
             />
@@ -56,21 +59,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/yellow_book_curve"
+        android:orientation="vertical"
 
         >
 
         <TextView
             android:id="@+id/no"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="40dp"
             android:gravity="center"
             android:text="NO"
+            android:layout_marginTop="@dimen/dimen_40dp"
+            android:background="@drawable/yellow_book_curve"
             android:textAllCaps="true"
             android:layout_weight="1"
-            android:layout_gravity="left"
+            android:layout_gravity="center_horizontal"
             android:textColor="@color/black"
+            android:backgroundTint="@color/black_with_fifteen_opacity"
             style="@style/H2SizeDark"
             />
 
@@ -80,8 +85,11 @@
             android:layout_height="40dp"
             android:gravity="center"
             android:layout_weight="1"
+            android:background="@drawable/yellow_book_curve"
             android:textAllCaps="true"
-            android:layout_gravity="right"
+            android:layout_marginBottom="@dimen/dimen_40dp"
+            android:layout_marginTop="@dimen/dimen_40dp"
+            android:layout_gravity="center_horizontal"
             android:text="Yes, cancel ticket"
             android:textColor="@color/black"
             style="@style/H2SizeDark"

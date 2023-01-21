@@ -416,7 +416,7 @@
     <string name="card_nickname">Card Nickname</string>
     <string name="securely_save_this_card_for_future_use">Securely save this card for future use</string>
     <string name="pay_via_card">Pay Via Card</string>
-    <string name="time">Time</string>
+    <string name="time">Show time (Approx)</string>
     <string name="seats_info">Seats INFO</string>
     <string name="order_id">oRDER ID</string>
     <string name="kiosk_code">KIOSK CODE</string>
@@ -445,6 +445,7 @@
     <string name="mobikwik_addmoney_payment_type_dedit_card">DC</string>
     <string name="mobikwik_addmoney_payment_type_net_banking">NB</string>
     <string name="booking_history">Booking History</string>
+    <string name="booking_past">Past Bookings</string>
     <string name="enjoy_your_show">Enjoy your show</string>
     <string name="seat_cushions_for_children_are_available_at_cinema">Seat cushions for children are available at cinema</string>
     <string name="privlege_point">You will earn 190.00 Privilege Points.</string>
@@ -568,7 +569,21 @@
     <string name="full_name">Full Name</string>
     <string name="submit_details">Submit Details</string>
     <string name="email_address">Email Address</string>
+    <string name="cancel_ticket_small">Cancel Ticket</string>
+    <string name="Partially_Cancel">Cancel / Partially Cancel Booking</string>
+    <string name="you_privilege">You are now a PVR Privilege member.Please allow up to 24 hours for Membership activation.</string>
+    <string name="know_more_new">Know More</string>
+    <string name="message_partialcancel">Since you have requested for a partial cancellation, you are not allowed to cancel all the tickets.</string>
 
+    <string name="food_voucher">\u2022 You will receive a voucher for the refundable amount with a validity of 60 days which can be redeemed on Ticket and F&amp;B
+                                \n\n\u2022  Other TnC apply</string>
+
+    <string name="refund_data">\u2022  2 hours before the show with 75% refund
+                                \n\n\u2022  Between 2 hours and 20 min before the show with 50% refund
+                                \n\n\u2022  100% Refund on F&amp;B
+                                \n\n\u2022  Other TnC apply</string>
+
+    <string name="Disclaimer">* Your previous booking with the food order will get\n cancelled, you will have to reorder the food again</string>
     <string-array name="gender">
         <item>Male</item>
         <item>Female</item>

@@ -33,6 +33,7 @@ import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
+import com.net.pvr1.ui.myBookings.response.ParkingResponse
 import com.net.pvr1.ui.payment.response.*
 import com.net.pvr1.ui.scanner.response.GetFoodResponse
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
@@ -47,6 +48,7 @@ import com.net.pvr1.ui.ticketConfirmation.response.TicketBookedResponse
 import com.net.pvr1.ui.watchList.response.WatchListResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.printLog
 import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.http.Header
@@ -1499,6 +1501,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
                 val errorObj = JSONObject(response.errorBody()?.charStream()?.readText())
                 splashLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
             }catch (e:Exception){
+                e.printStackTrace()
+                printLog(response.errorBody()?.charStream()?.readText())
                 splashLiveData.postValue(NetworkResult.Error(response.errorBody()?.charStream()?.readText().toString()))
             }
         } else {
@@ -2700,5 +2704,95 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             promoListLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
+
+
+    /***********   Parking       ***********************/
+
+    private val bookParkingLiveData = MutableLiveData<NetworkResult<ParkingResponse>>()
+    val bookParkingResponseLiveData: LiveData<NetworkResult<ParkingResponse>>
+        get() = bookParkingLiveData
+
+    suspend fun bookParking(bookingid: String) {
+        preferenceLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.bookParking(bookingid,Constant.version, Constant.platform,Constant.getDid())
+        bookParkingData(response)
+    }
+
+    private fun bookParkingData(response: Response<ParkingResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            bookParkingLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            bookParkingLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            bookParkingLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    private val showParkingLiveData = MutableLiveData<NetworkResult<ParkingResponse>>()
+    val showParkingResponseLiveData: LiveData<NetworkResult<ParkingResponse>>
+        get() = showParkingLiveData
+
+    suspend fun showParking(bookingid: String) {
+        preferenceLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.viewParking(bookingid,Constant.version, Constant.platform,Constant.getDid())
+        showParkingData(response)
+    }
+
+    private fun showParkingData(response: Response<ParkingResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            showParkingLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            showParkingLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            showParkingLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    /************         TICKET FROM HISTORY      ***********/
+    private val fnbTicketLiveData = MutableLiveData<NetworkResult<TicketBookedResponse>>()
+    val fnbTicketResponseLiveData: LiveData<NetworkResult<TicketBookedResponse>>
+        get() = fnbTicketLiveData
+
+    suspend fun fnbTicket(bookingid: String,userid: String,booktype: String) {
+        preferenceLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.fnbTicket(bookingid,userid,booktype,"0",Constant.version, Constant.platform,Constant.getDid())
+        foodTicketData(response)
+    }
+
+    private fun foodTicketData(response: Response<TicketBookedResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            fnbTicketLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            fnbTicketLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            fnbTicketLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    private val singleTicketLiveData = MutableLiveData<NetworkResult<TicketBookedResponse>>()
+    val singleTicketResponseLiveData: LiveData<NetworkResult<TicketBookedResponse>>
+        get() = singleTicketLiveData
+
+    suspend fun singleTicket(bookingid: String,userid: String,booktype: String) {
+        preferenceLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.singleTicket(bookingid,userid,booktype,"0",Constant.version, Constant.platform,Constant.getDid())
+        singleTicketData(response)
+    }
+
+    private fun singleTicketData(response: Response<TicketBookedResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            singleTicketLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            singleTicketLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            singleTicketLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
 
 }

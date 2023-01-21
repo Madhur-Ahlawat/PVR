@@ -4,8 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
+import com.net.pvr1.ui.bookingSession.response.BookingTheatreResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
+import com.net.pvr1.ui.myBookings.response.ParkingResponse
+import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -13,7 +16,26 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyBookingViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
-//GiftCard
+
+    //Book Parking
+    val bookParkResponseLiveData: LiveData<NetworkResult<ParkingResponse>>
+    get() = userRepository.bookParkingResponseLiveData
+
+    fun bookParking(bookingId: String) {
+        viewModelScope.launch {
+            userRepository.bookParking(bookingId)
+        }
+    }
+
+    //View Parking
+    val showParkingResponseLiveData: LiveData<NetworkResult<ParkingResponse>>
+    get() = userRepository.showParkingResponseLiveData
+
+    fun showParking(bookingId: String) {
+        viewModelScope.launch {
+            userRepository.showParking(bookingId)
+        }
+    }//GiftCard
     val userResponseLiveData: LiveData<NetworkResult<GiftCardResponse>>
     get() = userRepository.giftCardResponseLiveData
 
@@ -39,6 +61,17 @@ class MyBookingViewModel @Inject constructor(private val userRepository: UserRep
     fun resendMail(userId: String, bookingId: String, type: String) {
         viewModelScope.launch {
             userRepository.resendMail(userId,bookingId,type)
+        }
+    }
+
+    // Movies
+
+    val userResponseTheatreLiveData: LiveData<NetworkResult<BookingTheatreResponse>>
+        get() = userRepository.bookingTheatreResponseLiveData
+
+    fun bookingTheatre(city:String,cid:String,userid:String,mid:String,lng:String,isSpi:String) {
+        viewModelScope.launch {
+            userRepository.bookingTheatre(city,cid,userid,mid,lng,isSpi)
         }
     }
 
