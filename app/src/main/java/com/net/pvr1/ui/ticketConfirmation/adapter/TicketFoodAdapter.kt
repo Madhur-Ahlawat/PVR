@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.net.pvr1.R
 import com.net.pvr1.databinding.TicketConfirmationFoodItemBinding
 import com.net.pvr1.ui.ticketConfirmation.response.TicketBookedResponse
 
@@ -24,6 +25,11 @@ class TicketFoodAdapter(private val faqList: List<TicketBookedResponse.Food>) :
                 binding.textView332.text=this.h
                 //qt
                 binding.textView340.text="X${this.qt}"
+                if (this.veg){
+                    binding.imageView155.setImageResource(R.drawable.veg_ic)
+                }else{
+                    binding.imageView155.setImageResource(R.drawable.nonveg_ic)
+                }
             }
         }
     }

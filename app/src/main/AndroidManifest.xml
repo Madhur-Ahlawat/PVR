@@ -301,6 +301,12 @@
             android:name=".ui.myBookings.MyBookingsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.myBookings.PastBookingsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.login.otpVerify.OtpVerifyActivity"
             android:exported="false"

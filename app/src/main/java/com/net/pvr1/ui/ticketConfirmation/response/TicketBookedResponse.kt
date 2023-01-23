@@ -78,6 +78,7 @@ data class TicketBookedResponse(
         val m: String,
         val mc: String,
         val md: String,
+        val stgs: String,
         val mdt: Any,
         val mf: List<Any>,
         val mn: String,

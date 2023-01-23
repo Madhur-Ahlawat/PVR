@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
+import com.net.pvr1.ui.myBookings.response.ParkingResponse
 import com.net.pvr1.ui.summery.response.SummeryResponse
 import com.net.pvr1.ui.ticketConfirmation.response.TicketBookedResponse
 import com.net.pvr1.utils.NetworkResult
@@ -41,6 +42,62 @@ class TicketConfirmationViewModel @Inject constructor(private val userRepository
                 oldBookingId,
                 change
             )
+        }
+    }
+
+    //Single Ticket Confirmation
+    val singleTicketDataScope: LiveData<NetworkResult<TicketBookedResponse>>
+        get() = userRepository.singleTicketResponseLiveData
+
+    fun singleTicket(
+        bookingid: String,
+        userid: String,
+        booktype: String
+    ) {
+        viewModelScope.launch {
+            userRepository.singleTicket(
+                bookingid,
+                userid,
+                booktype
+            )
+        }
+    }
+
+    //Food Ticket Confirmation
+    val fnbTicketDataScope: LiveData<NetworkResult<TicketBookedResponse>>
+        get() = userRepository.fnbTicketResponseLiveData
+
+    fun fnbTicket(
+        bookingid: String,
+        userid: String,
+        booktype: String
+    ) {
+        viewModelScope.launch {
+            userRepository.fnbTicket(
+                bookingid,
+                userid,
+                booktype
+            )
+        }
+    }
+
+    //Book Parking
+    val bookParkResponseLiveData: LiveData<NetworkResult<ParkingResponse>>
+        get() = userRepository.bookParkingResponseLiveData
+
+    fun bookParking(bookingId: String) {
+        viewModelScope.launch {
+            userRepository.bookParking(bookingId)
+        }
+    }
+
+    //View Parking
+    val showParkingResponseLiveData: LiveData<NetworkResult<ParkingResponse>>
+        get() = userRepository.showParkingResponseLiveData
+
+    fun showParking(bookingId: String) {
+        viewModelScope.launch {
+            userRepository.showParking(bookingId)
         }
     }
 

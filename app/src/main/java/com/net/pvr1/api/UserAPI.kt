@@ -30,6 +30,7 @@ import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
+import com.net.pvr1.ui.myBookings.response.ParkingResponse
 import com.net.pvr1.ui.payment.response.*
 import com.net.pvr1.ui.scanner.response.GetFoodResponse
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
@@ -1096,4 +1097,47 @@ interface UserAPI {
         @Query("pt") platform: String,
         @Query("did") did: String
     ): Response<PromoCodeList>
+
+    /*************      PARKING       ***************/
+    @POST("api/history/parking")
+    suspend fun bookParking(
+        @Query("bookingid") bookingid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<ParkingResponse>
+
+    @POST("api/history/showparking")
+    suspend fun viewParking(
+        @Query("bookingid") bookingid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<ParkingResponse>
+
+    /***********         Ticket From History     ***************/
+
+    @POST("api/history/foodstatus")
+    suspend fun fnbTicket(
+        @Query("bookid") bookingid: String,
+        @Query("userid") userid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<TicketBookedResponse>
+
+
+    @POST("api/history/myticketsingle")
+    suspend fun singleTicket(
+        @Query("bookingid") bookingid: String,
+        @Query("userid") userid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<TicketBookedResponse>
+
 }

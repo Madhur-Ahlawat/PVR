@@ -11,9 +11,9 @@ data class FoodTicketResponse(
     val version: String
 ) : Serializable {
     data class Output(
-        val c: List<C>,
-        val p: List<P>,
-        val pb: List<Any>,
+        val c: ArrayList<C>,
+        val p: ArrayList<C>,
+        val pb: ArrayList<Any>,
         val rm: Any
     ) : Serializable {
         data class C(
@@ -83,7 +83,10 @@ data class FoodTicketResponse(
             val mn: String,
             val modification: Boolean,
             val ms: String,
+            val parking: Boolean,
+            val parkbooking: Boolean,
             val nf: Boolean,
+            val ptext: String,
             val part: String,
             val partialCancellationAllowed: Boolean,
             val pe: Any,
