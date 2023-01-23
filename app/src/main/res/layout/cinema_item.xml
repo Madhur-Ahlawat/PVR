@@ -63,7 +63,6 @@
                     android:id="@+id/relativeLayout2"
                     android:layout_width="match_parent"
                     android:layout_height="140dp"
-                    android:padding="@dimen/dimen_15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -83,15 +82,19 @@
 
                     <TextView
                         android:id="@+id/cinemaName"
-                        android:fontFamily="@font/sf_pro_text_bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toStartOf="@id/cbFav"
-                        app:layout_constraintBottom_toTopOf="@+id/multipleCinema"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginBottom="15dp"
                         android:ellipsize="end"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:includeFontPadding="false"
                         android:maxLines="2"
                         android:textColor="@color/white"
                         android:textSize="16sp"
+                        app:layout_constraintBottom_toTopOf="@+id/multipleCinema"
+                        app:layout_constraintEnd_toStartOf="@id/cbFav"
+                        app:layout_constraintStart_toStartOf="parent"
                         tools:ignore="TextContrastCheck"
                         tools:text="PVR Opulent Ghaziabad" />
 

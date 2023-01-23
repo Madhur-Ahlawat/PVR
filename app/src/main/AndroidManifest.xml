@@ -327,13 +327,12 @@
             android:name=".ui.home.HomeActivity"
             android:exported="true"
             android:screenOrientation="portrait" /> <!-- <queries> -->
-        <!-- <intent> -->
-        <!-- <action android:name="com.google.android.youtube.api.service.START" /> -->
-        <!-- </intent> -->
-        <!-- </queries> -->
-        <!--  -->
+
+
+<!--        Location Service-->
         <service android:name=".utils.FetchAddressIntentServices" />
 
+<!--        Network Service-->
         <receiver
             android:name=".utils.NetworkReceiver"
             android:exported="true">

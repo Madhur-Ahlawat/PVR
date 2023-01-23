@@ -13,6 +13,7 @@ import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.provider.Settings
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -25,6 +26,9 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.SnapHelper
 import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -37,6 +41,8 @@ import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.cinema.adapter.CinemaAdapter
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.cinema.viewModel.CinemaViewModel
+import com.net.pvr1.ui.home.fragment.home.adapter.PromotionAdapter
+import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.search.searchCinema.SearchCinemaActivity
 import com.net.pvr1.utils.*
 import com.squareup.picasso.Callback
@@ -50,7 +56,7 @@ import javax.inject.Inject
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
 class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Location,
-    CinemaAdapter.SetPreference , StoriesProgressView.StoriesListener {
+    CinemaAdapter.SetPreference, StoriesProgressView.StoriesListener {
     private var binding: FragmentCinemasBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel by activityViewModels<CinemaViewModel>()
@@ -76,7 +82,7 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
     private var reverse: View? = null
     private var tvButton: TextView? = null
     private var ivPlay: LinearLayout? = null
-    private var RlBanner: RelativeLayout? = null
+    private var rlBanner: RelativeLayout? = null
     private var stories: StoriesProgressView? = null
 
     //internet Check
@@ -89,6 +95,7 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
         return binding?.root
     }
 
+    @SuppressLint("CutPasteId")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
@@ -108,12 +115,15 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
             .findViewById(R.id.ivBanner))
         ivPlay = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
             .findViewById(R.id.ivPlay))
-        skip = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout).findViewById(R.id.skip))
-        reverse =
-            (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout).findViewById(R.id.reverse))
-        ivCross = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout).findViewById(R.id.ivCross))
-        RlBanner = (requireActivity().findViewById(R.id.RlBanner))
-        stories = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout).findViewById(R.id.stories))
+        skip = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
+            .findViewById(R.id.skip))
+        reverse = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
+            .findViewById(R.id.reverse))
+        ivCross = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
+            .findViewById(R.id.ivCross))
+        rlBanner = (requireActivity().findViewById(R.id.RlBanner))
+        stories = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
+            .findViewById(R.id.stories))
 
         if (stories == null) {
             stories?.destroy()
@@ -131,15 +141,25 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
         cinemaApi()
         setPreference()
         getLocation()
+        movedNext()
 
         //internet Check
         broadcastReceiver = NetworkReceiver()
         broadcastIntent()
     }
 
+    //
+    private fun movedNext() {
+        //banner
+        ivCross?.setOnClickListener {
+            rlBanner?.hide()
+        }
+    }
+
+
     private fun getShimmerData() {
-        Constant().getData(binding?.include38?.tvFirstText,binding?.include38?.tvSecondText)
-        Constant().getData(binding?.include38?.tvSecondText,null)
+        Constant().getData(binding?.include38?.tvFirstText, binding?.include38?.tvSecondText)
+        Constant().getData(binding?.include38?.tvSecondText, null)
     }
 
     private fun isLocationEnabled(): Boolean {
@@ -173,7 +193,8 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
     @Deprecated("Deprecated in Java")
     @SuppressLint("MissingSuperCall")
     override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        requestCode: Int, permissions: Array<String>, grantResults: IntArray
+    ) {
         if (requestCode == permissionId) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 getLocation()
@@ -210,7 +231,8 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
 
                 }
             } else {
-                Toast.makeText(requireActivity(), "Please turn on location", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireActivity(), "Please turn on location", Toast.LENGTH_LONG)
+                    .show()
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 startActivity(intent)
             }
@@ -289,24 +311,34 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
     }
 
     private fun retrieveData(output: CinemaResponse.Output) {
-        binding?.recyclerCinema?.show()
+//        Design
+        binding?.constraintLayout160?.show()
+
+//        Shimmer
         binding?.constraintLayout146?.hide()
+
+//        List
         val gridLayout2 = GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
         val comingSoonMovieAdapter =
             CinemaAdapter(output.c, requireActivity(), this, this, this, preferences.getIsLogin())
         binding?.recyclerCinema?.layoutManager = gridLayout2
         binding?.recyclerCinema?.adapter = comingSoonMovieAdapter
 
-        if (output.pu.isNotEmpty()){
+//        PlaceHolder
+        if (output.pu.isNotEmpty()) {
             initBanner(output.pu)
         }
+
+        //Promotion
+        if (output.ph.isNotEmpty()) updatePH(output.ph)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initBanner(bannerModels: ArrayList<CinemaResponse.Output.Pu>) {
         bannerShow += 1
         bannerModelsMain = bannerModels
         if ((bannerModels != null) && bannerModels.isNotEmpty()) {
-            RlBanner?.show()
+            rlBanner?.show()
             stories?.setStoriesCount(bannerModels.size) // <- set stories
             stories?.setStoryDuration(5000L) // <- set a story duration
             stories?.setStoriesListener(this) // <- set listener
@@ -316,7 +348,7 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                 Picasso.get().load(bannerModels[counterStory].i).into(ivBanner!!, object :
                     Callback {
                     override fun onSuccess() {
-                        RlBanner?.show()
+                        rlBanner?.show()
                         //  storiesProgressView.startStories(); // <- start progress
                     }
 
@@ -330,14 +362,18 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
             skip?.setOnClickListener { stories?.skip() }
             skip?.setOnTouchListener(onTouchListener)
             tvButton?.setOnClickListener {
-                RlBanner?.hide()
+                rlBanner?.hide()
 
                 if (bannerModels != null && bannerModels.size > 0 && bannerModels[counterStory].type
                         .equals("image", ignoreCase = true)
                 ) {
-                    if (bannerModels[counterStory].redirectView.equals("DEEPLINK",ignoreCase = true)) {
-                        if (bannerModels[counterStory].redirect_url!= null && !bannerModels[counterStory].redirect_url
-                                .equals("",ignoreCase = true)
+                    if (bannerModels[counterStory].redirectView.equals(
+                            "DEEPLINK",
+                            ignoreCase = true
+                        )
+                    ) {
+                        if (bannerModels[counterStory].redirect_url != null && !bannerModels[counterStory].redirect_url
+                                .equals("", ignoreCase = true)
                         ) {
                             if (bannerModels[counterStory].redirect_url
                                     .toLowerCase(Locale.ROOT).contains("/loyalty/home")
@@ -357,12 +393,11 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                             }
                         }
                     } else if (bannerModels[counterStory].redirectView
-                            .equals("INAPP",ignoreCase = true)
+                            .equals("INAPP", ignoreCase = true)
                     ) {
                         if (bannerModels[counterStory].redirect_url != null && !bannerModels[counterStory].redirect_url
-                                .equals("",ignoreCase = true)
-                        )
-                      {
+                                .equals("", ignoreCase = true)
+                        ) {
 //                            val intent = Intent(context, PrivacyActivity::class.java)
 //                            intent.putExtra("url", bannerModels[counterStory].redirect_url)
 //                            intent.putExtra(PCConstants.IS_FROM, 2000)
@@ -370,10 +405,10 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
 //                            startActivity(intent)
                         }
                     } else if (bannerModels[counterStory].redirectView
-                            .equals("WEB",ignoreCase = true)
+                            .equals("WEB", ignoreCase = true)
                     ) {
                         if (bannerModels[counterStory].redirect_url != null && !bannerModels[counterStory].redirect_url
-                                .equals("",ignoreCase = true)
+                                .equals("", ignoreCase = true)
                         ) {
                             val intent = Intent(
                                 Intent.ACTION_VIEW,
@@ -385,18 +420,21 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                 }
 
             }
-            (requireActivity().findViewById(R.id.bannerLayout) as RelativeLayout).show()
 
+            (requireActivity().findViewById(R.id.bannerLayout) as RelativeLayout).show()
             ivPlay?.setOnClickListener {
-                RlBanner?.hide()
-                if (bannerModels != null && bannerModels.size > 0 && bannerModels[counterStory].type.equals("video",ignoreCase = true)
+                rlBanner?.hide()
+                if (bannerModels != null && bannerModels.size > 0 && bannerModels[counterStory].type.equals(
+                        "video",
+                        ignoreCase = true
+                    )
 
                 ) {
                 }
             }
 
         } else {
-            RlBanner?.hide()
+            rlBanner?.hide()
         }
     }
 
@@ -417,11 +455,17 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
         false
     }
 
+
     private fun showButton(bannerModel: CinemaResponse.Output.Pu) {
-        if (bannerModel.type.equals("video",ignoreCase = true)) {
-            ivPlay?.show()
-            tvButton?.hide()
-        } else if (bannerModel.type.equals("image",ignoreCase = true) && bannerModel.redirect_url.equals("",ignoreCase = true)
+        printLog("buttonText---->${bannerModel.type}")
+        if (bannerModel.type
+                .contains("VIDEO") && bannerModel.trailerUrl != null && !bannerModel.trailerUrl
+                .contains("")
+        ) {
+            ivPlay?.visibility = View.VISIBLE
+            tvButton?.visibility = View.GONE
+        } else if (bannerModel.type.contains("IMAGE") && !bannerModel.redirect_url
+                .contains("")
         ) {
             ivPlay?.hide()
             tvButton?.text = bannerModel.buttonText
@@ -430,8 +474,8 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
             ivPlay?.hide()
             tvButton?.hide()
         }
-
     }
+
 
     override fun onNext() {
         try {
@@ -454,7 +498,10 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
             --counterStory
             showButton(bannerModelsMain[counterStory])
             ivBanner?.let {
-                Glide.with(this).load(bannerModelsMain[counterStory].i).into(it)
+                Glide
+                    .with(this)
+                    .load(bannerModelsMain[counterStory].i)
+                    .into(it)
             }
         }
     }
@@ -463,7 +510,7 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
         stories?.destroy()
         stories?.startStories()
         currentPage = 0
-        RlBanner?.hide()
+        rlBanner?.hide()
     }
 
 
@@ -498,4 +545,44 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
         )
     }
 
+    //    PlaceHolder
+    private fun updatePH(phd: ArrayList<HomeResponse.Ph>?) {
+        if (phd != null && phd.size > 0) {
+            binding?.include39?.placeHolderView?.show()
+            val layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            val snapHelper: SnapHelper = PagerSnapHelper()
+            binding?.include39?.recyclerPromotion?.layoutManager = layoutManager
+            binding?.include39?.recyclerPromotion?.onFlingListener = null
+            snapHelper.attachToRecyclerView(binding?.include39?.recyclerPromotion!!)
+            binding?.include39?.recyclerPromotion?.layoutManager = layoutManager
+            val adapter = PromotionAdapter(requireActivity(), phd)
+            binding?.include39?.recyclerPromotion?.adapter = adapter
+            if (phd.size > 1) {
+                val speedScroll = 5000
+                val handler = Handler()
+                val runnable: Runnable = object : Runnable {
+                    var count = 0
+                    var flag = true
+                    override fun run() {
+                        if (count < adapter.itemCount) {
+                            if (count == adapter.itemCount - 1) {
+                                flag = false
+                            } else if (count == 0) {
+                                flag = true
+                            }
+                            if (flag) count++ else count--
+                            binding?.include39?.recyclerPromotion?.smoothScrollToPosition(
+                                count
+                            )
+                            handler.postDelayed(this, speedScroll.toLong())
+                        }
+                    }
+                }
+                handler.postDelayed(runnable, speedScroll.toLong())
+            }
+        } else {
+            binding?.include39?.placeHolderView?.hide()
+        }
+    }
 }

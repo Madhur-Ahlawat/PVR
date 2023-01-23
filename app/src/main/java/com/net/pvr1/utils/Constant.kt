@@ -23,7 +23,6 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.net.pvr1.R
@@ -508,6 +507,22 @@ class Constant {
             const val Promo_Bin_Series = "promoBinSeries"
             const val Has_Bin_Series = "hasBinSeries"
             const val PROMOCODE = "promocode"
+
+
+            //static location
+
+            val RESULT_DATA_KEY: String =".RESULT_DATA_KEY"
+            val RECEVIER: String =   ".RECEVIER"
+            val LOCATION_DATA_EXTRA: String = ".LOCATION_DATA_EXTRA"
+            val ADDRESS: String = ".ADDRESS"
+            val LOCAITY: String =".LOCAITY"
+            val COUNTRY: String =".COUNTRY"
+            val DISTRICT: String = ".DISTRICT"
+            val POST_CODE: String = ".POST_CODE"
+            val STATE: String = ".STATE"
+
+            const val SUCCESS_RESULT = 1
+            const val FAILURE_RESULT = 0
         }
     }
 

@@ -15,7 +15,6 @@ import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
-import com.net.pvr1.utils.toast
 
 
 class CinemaAdapter(
@@ -72,7 +71,7 @@ class CinemaAdapter(
 
                 //ShoW Hide
                 binding.bottomView.setOnClickListener {
-                    if (showList){
+                    if (this.m.isNotEmpty() && showList){
                         showList=false
                         binding.llMovieList.show()
                         binding.imageView164.setImageResource(R.drawable.arrow_up)
@@ -99,7 +98,7 @@ class CinemaAdapter(
                     } else {
                         val dialog = OptionDialog(context,
                             R.mipmap.ic_launcher_foreground,
-                            R.string.app_name,
+                            R.string.blank_space,
                             context.getString(R.string.loginCinema),
                             positiveBtnText = R.string.yes,
                             negativeBtnText = R.string.no,
@@ -110,7 +109,6 @@ class CinemaAdapter(
                             negativeClick = {
                             })
                         dialog.show()
-                        context.toast("logout")
                     }
 
                 }

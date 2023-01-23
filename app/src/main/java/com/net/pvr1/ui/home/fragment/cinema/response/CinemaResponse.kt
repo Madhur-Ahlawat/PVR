@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.home.fragment.cinema.response
 
+import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import java.io.Serializable
 
 data class CinemaResponse(
@@ -12,7 +13,7 @@ data class CinemaResponse(
 ) : Serializable {
     data class Output(
         val c: List<C>,
-        val ph: List<Ph>,
+        val ph: ArrayList<HomeResponse.Ph>,
         val pu: ArrayList<Pu>
     ) : Serializable {
         data class C(
@@ -49,22 +50,6 @@ data class CinemaResponse(
                 val n: String
             ) : Serializable
         }
-
-        data class Ph(
-            val buttonText: String,
-            val cities: String,
-            val i: String,
-            val id: Int,
-            val location: String,
-            val name: String,
-            val platform: String,
-            val priority: Int,
-            val redirect_url: String,
-            val screen: String,
-            val trailerUrl: String,
-            val type: String
-        ) : Serializable
-
         data class Pu(
             val buttonText: String,
             val cities: String,

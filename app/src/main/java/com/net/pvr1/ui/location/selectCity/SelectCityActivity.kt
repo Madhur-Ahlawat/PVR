@@ -1,18 +1,25 @@
 package com.net.pvr1.ui.location.selectCity
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.location.Location
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.ResultReceiver
+import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.*
 import android.widget.FrameLayout
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.gms.location.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -20,6 +27,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySelectCityBinding
 import com.net.pvr1.databinding.CitySelectDialogBinding
+import com.net.pvr1.databinding.LocationDialogBinding
 import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
@@ -61,6 +69,8 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
 
     private var dialog: BottomSheetDialog? = null
 
+    private val LOCATION_PERMISSION_REQUEST_CODE = 1
+    private var resultReceiver: ResultReceiver? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +81,10 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
     }
 
     private fun manageFunction() {
+        resultReceiver = AddressResultReceiver(
+            Handler()
+        )
+
         selectCityViewModel.selectCity(
             preferences.getLatitudeData(),
             preferences.getLongitudeData(),
@@ -97,31 +111,24 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
 
     @SuppressLint("SuspiciousIndentation")
     private fun movedNext() {
+
         // get Location
         binding?.imageView39?.setOnClickListener {
-            if (Constant().locationServicesEnabled(this) && Constant.latitude != 0.0 && Constant.longitude != 0.0) {
-                preferences.saveLatitudeData(Constant.latitude.toString())
-                preferences.saveLatitudeData(Constant.longitude.toString())
-
-                if (from == "qr") {
-                    val intent = Intent(this@SelectCityActivity, SelectBookingsActivity::class.java)
-                    intent.putExtra("from", "qr")
-                    intent.putExtra("cid", cid)
-                    startActivity(intent)
-                } else {
-                    enableLocation = 1
-                    selectCityViewModel.selectCity(
-                        Constant.latitude.toString(),
-                        Constant.longitude.toString(),
-                        preferences.getUserId(),
-                        "no",
-                        "no"
-                    )
-                }
+            if (ContextCompat.checkSelfPermission(
+                    applicationContext,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this@SelectCityActivity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    this.LOCATION_PERMISSION_REQUEST_CODE
+                )
             } else {
-                Constant().enableLocation(this)
+                getCurrentLocation()
             }
+
         }
+
         //On Back Press
         binding?.imageView58?.setOnClickListener {
             finish()
@@ -233,11 +240,10 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         }
     }
 
-
     private fun retrieveData(output: SelectCityResponse.Output) {
-        if (preferences.getIsLogin())
-        preferences.saveCityName(output.cc.name)
-
+//        if (preferences.getIsLogin()){
+            preferences.saveCityName(output.cc.name)
+//        }
 
         if (enableLocation == 1) {
             val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
@@ -389,6 +395,127 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             startActivity(intent)
             finish()
         }
+    }
+
+    //Enable Location Condition
+
+    private fun getCurrentLocation() {
+        val locationRequest = LocationRequest()
+        locationRequest.interval = 10000
+        locationRequest.fastestInterval = 3000
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+        LocationServices.getFusedLocationProviderClient(this@SelectCityActivity)
+            .requestLocationUpdates(locationRequest, object : LocationCallback() {
+                override fun onLocationResult(locationResult: LocationResult) {
+                    super.onLocationResult(locationResult)
+                    LocationServices.getFusedLocationProviderClient(applicationContext)
+                        .removeLocationUpdates(this)
+                    if (locationResult.locations.size > 0) {
+                        val latestIndex = locationResult.locations.size - 1
+                        val lat = locationResult.locations[latestIndex].latitude
+                        val long = locationResult.locations[latestIndex].longitude
+
+                        val location = Location("providerNA")
+                        Constant.latitude = lat
+                        Constant.longitude = long
+                        preferences.saveLatitudeData(lat.toString())
+                        preferences.saveLongitudeData(long.toString())
+
+                        if (from == "qr") {
+                            val intent = Intent(this@SelectCityActivity, SelectBookingsActivity::class.java)
+                            intent.putExtra("from", "qr")
+                            intent.putExtra("cid", cid)
+                            startActivity(intent)
+                        } else {
+                            enableLocation = 1
+                            selectCityViewModel.selectCity(
+                                Constant.latitude.toString(),
+                                Constant.longitude.toString(),
+                                preferences.getUserId(),
+                                "no",
+                                "no"
+                            )
+                        }
+                        location.longitude = long
+                        location.latitude = lat
+                        fetchLocation(location)
+                    } else {
+                        printLog("")
+                    }
+                }
+            }, Looper.getMainLooper())
+    }
+
+    private class AddressResultReceiver(handler: Handler?) :
+        ResultReceiver(handler) {
+        override fun onReceiveResult(resultCode: Int, resultData: Bundle) {
+            super.onReceiveResult(resultCode, resultData)
+            if (resultCode == Constant.SUCCESS_RESULT) {
+                val address = resultData.getString(Constant.ADDRESS)
+                val locaity = resultData.getString(Constant.LOCAITY)
+                val state = resultData.getString(Constant.STATE)
+                val district = resultData.getString(Constant.DISTRICT)
+                val country = resultData.getString(Constant.COUNTRY)
+                val postcode = resultData.getString(Constant.POST_CODE)
+            }
+        }
+    }
+
+    private fun fetchLocation(location: Location) {
+        val intent = Intent(this, FetchAddressIntentServices::class.java)
+        intent.putExtra(Constant.RECEVIER, resultReceiver)
+        intent.putExtra(Constant.LOCATION_DATA_EXTRA, location)
+        startService(intent)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == this.LOCATION_PERMISSION_REQUEST_CODE && grantResults.isNotEmpty()) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getCurrentLocation()
+            } else {
+                enableLocation()
+            }
+        }
+    }
+//    Location Dialog
+    private fun enableLocation() {
+        val dialog = BottomSheetDialog(this@SelectCityActivity, R.style.NoBackgroundDialogTheme)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val inflater = LayoutInflater.from(this)
+        val locationDialog = LocationDialogBinding.inflate(inflater)
+        dialog.setContentView(locationDialog.root)
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.window?.setGravity(Gravity.CENTER)
+
+//        Dismiss Dialog
+        locationDialog.noThanksTextView.setOnClickListener {
+            dialog.dismiss()
+        }
+
+//        Open Setting
+        locationDialog.include39.textView5.setOnClickListener {
+            startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+        }
+        dialog.show()
     }
 
 }

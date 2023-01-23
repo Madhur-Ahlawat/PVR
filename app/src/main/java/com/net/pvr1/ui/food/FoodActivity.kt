@@ -430,7 +430,6 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     private fun bottomDialogAddFood(comingSoonItem: FoodResponse.Output.Bestseller) {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.food_bottom_add_food)
         val inflater = LayoutInflater.from(this)
         val bindingBottom = FoodBottomAddFoodBinding.inflate(inflater)
         dialog.setContentView(bindingBottom.root)

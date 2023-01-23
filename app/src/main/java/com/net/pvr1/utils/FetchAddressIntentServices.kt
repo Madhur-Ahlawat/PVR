@@ -5,17 +5,14 @@ import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
-import android.widget.Toast
 import android.os.Bundle
 import android.os.ResultReceiver
 import android.util.Log
-import java.lang.Exception
+import android.widget.Toast
 import java.util.*
 
 class FetchAddressIntentServices : IntentService("FetchAddressIntentServices") {
     var resultReceiver: ResultReceiver? = null
-
-    @Deprecated("Deprecated in Java")
     override fun onHandleIntent(intent: Intent?) {
         if (intent != null) {
             var errormessgae = ""
@@ -37,27 +34,22 @@ class FetchAddressIntentServices : IntentService("FetchAddressIntentServices") {
                 errormessgae = "No address found for the location"
                 Toast.makeText(this, "" + errormessgae, Toast.LENGTH_SHORT).show()
             } else {
-                try {
-                    val address = addresses[0]
-                    val str_postcode = address.postalCode
-                    val str_Country = address.countryName
-                    val str_state = address.adminArea
-                    val str_district = address.subAdminArea
-                    val str_locality = address.locality
-                    val str_address = address.featureName
-                    devliverResultToRecevier(
-                        Constant.SUCCESS_RESULT,
-                        str_address,
-                        str_locality,
-                        str_district,
-                        str_state,
-                        str_Country,
-                        str_postcode
-                    )
-                } catch (e: Exception) {
-                    println("println--->${e.message}")
-                }
-
+                val address = addresses[0]
+                val str_postcode = address.postalCode
+                val str_Country = address.countryName
+                val str_state = address.adminArea
+                val str_district = address.subAdminArea
+                val str_locality = address.locality
+                val str_address = address.featureName
+                devliverResultToRecevier(
+                    Constant.SUCCESS_RESULT,
+                    str_address,
+                    str_locality,
+                    str_district,
+                    str_state,
+                    str_Country,
+                    str_postcode
+                )
             }
         }
     }
@@ -78,6 +70,6 @@ class FetchAddressIntentServices : IntentService("FetchAddressIntentServices") {
         bundle.putString(Constant.STATE, state)
         bundle.putString(Constant.COUNTRY, country)
         bundle.putString(Constant.POST_CODE, postcode)
-        resultReceiver?.send(resultcode, bundle)
+        resultReceiver!!.send(resultcode, bundle)
     }
 }

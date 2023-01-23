@@ -165,7 +165,7 @@ class HomeFragment : Fragment(),
         movedNext()
         homeApi()
         createQr()
-        getMovieFormatFromApi(true)
+        getMovieFormatFromApi()
 
         //internet Check
         broadcastReceiver = NetworkReceiver()
@@ -551,7 +551,7 @@ class HomeFragment : Fragment(),
                 val index = type.indexOf("accessability")
                 val value: String = filterItemSelected[type[index]]!!
             }
-            getMovieFormatFromApi(true)
+            getMovieFormatFromApi()
         } else {
             binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
         }
@@ -577,7 +577,7 @@ class HomeFragment : Fragment(),
         )
     }
 
-    private fun getMovieFormatFromApi(isFirstTime: Boolean) {
+    private fun getMovieFormatFromApi() {
         getMoviesForUNowShowingHit()
     }
 
@@ -669,7 +669,9 @@ class HomeFragment : Fragment(),
                     })
             }
 
-            reverse?.setOnClickListener { stories?.reverse() }
+            reverse?.setOnClickListener {
+                stories?.reverse()
+            }
             reverse?.setOnTouchListener(onTouchListener)
             showButton(bannerModels[0])
             skip?.setOnClickListener { stories?.skip() }

@@ -1,8 +1,10 @@
 package com.net.pvr1.ui.login.otpVerify
 
+import android.app.Activity
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.phone.SmsRetriever
@@ -21,6 +23,7 @@ import com.net.pvr1.utils.SmsBroadcastReceiver.SmsBroadcastReceiverListener
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.internal.and
 import java.security.MessageDigest
+import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import javax.inject.Inject
@@ -63,8 +66,6 @@ class OtpVerifyActivity : AppCompatActivity() {
         startSmsUserConsent()
         //moved another Page
         movedNext()
-        //resend Otp
-        resendOtp()
         //verify Otp
         otpVerify()
         //newUser
@@ -148,44 +149,6 @@ class OtpVerifyActivity : AppCompatActivity() {
         }
     }
 
-    private fun resendOtp() {
-        authViewModel.resendResponseLiveData.observe(this) {
-            when (it) {
-                is NetworkResult.Success -> {
-                    loader?.dismiss()
-                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-
-                    } else {
-                        val dialog = OptionDialog(this,
-                            R.mipmap.ic_launcher,
-                            R.string.app_name,
-                            it.data?.msg.toString(),
-                            positiveBtnText = R.string.ok,
-                            negativeBtnText = R.string.no,
-                            positiveClick = {},
-                            negativeClick = {})
-                        dialog.show()
-                    }
-                }
-                is NetworkResult.Error -> {
-                    loader?.dismiss()
-                    val dialog = OptionDialog(this,
-                        R.mipmap.ic_launcher,
-                        R.string.app_name,
-                        it.message.toString(),
-                        positiveBtnText = R.string.ok,
-                        negativeBtnText = R.string.no,
-                        positiveClick = {},
-                        negativeClick = {})
-                    dialog.show()
-                }
-                is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleaseWait)
-                    loader?.show(supportFragmentManager, null)
-                }
-            }
-        }
-    }
 
     private fun otpVerify() {
         authViewModel.userResponseLiveData.observe(this) {
@@ -270,8 +233,9 @@ class OtpVerifyActivity : AppCompatActivity() {
         output.ph.let { preferences.saveMobileNumber(it) }
         output.em.let { preferences.saveEmail(it) }
         output.token.let { preferences.saveToken(it) }
-        if (output.dob!=null)
-        output.dob.let { preferences.saveDob(it) }
+        if (output.dob!=null){
+            output.dob.let { preferences.saveDob(it) }
+        }
         checkMoved()
     }
 
@@ -319,18 +283,18 @@ class OtpVerifyActivity : AppCompatActivity() {
         return sb.toString()
     }
 
-    @Deprecated("Deprecated in Java")
-    @Override
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == otpRead) {
-            if (resultCode == RESULT_OK && data != null) {
-                //That gives all message to us.
-                val message: String = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE)!!
-                getOtpFromMessage(message)
+
+    private var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                val data: Intent? = result.data
+                if (result.resultCode == RESULT_OK&& data != null) {
+                    val message: String = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE)!!
+                    getOtpFromMessage(message)
+                }
             }
         }
-    }
 
     private fun getOtpFromMessage(message: String) {
         // This will match any 6 digit number in the message
@@ -351,7 +315,9 @@ class OtpVerifyActivity : AppCompatActivity() {
         smsBroadcastReceiver = SmsBroadcastReceiver()
         smsBroadcastReceiver?.smsBroadcastReceiverListener = object : SmsBroadcastReceiverListener {
             override fun onSuccess(intent: Intent?) {
-                startActivityForResult(intent, otpRead)
+                resultLauncher.launch(intent)
+
+//                startActivityForResult(intent, otpRead)
             }
 
             override fun onFailure() {}

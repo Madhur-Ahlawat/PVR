@@ -1036,7 +1036,7 @@ private fun phonePeHmac() {
                     startActivityForResult(
                         PhonePe.getTransactionIntent(
                             transactionRequest2
-                        ), 300
+                        )!!, 300
                     )
 
                 } else {
