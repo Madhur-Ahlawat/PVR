@@ -590,4 +590,8 @@
         <item>Female</item>
     </string-array>
 
+    <string name="gift_card_text">Custom design feature is applicable only for e-gift card (not physical gift cards) &amp; that PVR reserves the right to refuse a request if picture used is not found to be legible/legal/correct</string>
+    <string name="custom_card_text">*Minimum card value allowed is Rs.150 and maximum card value allowed is Rs.5000. Amount should be in multiples of 50</string>
+
+
 </resources>

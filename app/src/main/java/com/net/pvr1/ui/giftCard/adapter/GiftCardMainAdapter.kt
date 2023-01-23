@@ -7,12 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.GiftCardMainBinding
-import com.net.pvr1.ui.giftCard.response.GiftCardResponse
+import com.net.pvr1.ui.giftCard.response.GiftCardListResponse
 
 
 class GiftCardMainAdapter(
-    private var nowShowingList: List<GiftCardResponse.Output.GiftCard>,
-    private var context: Context,private var listner : RecycleViewItemClickListener
+    private var nowShowingList: List<GiftCardListResponse.Output.GiftCard>,
+    private var context: Context, private var listner : RecycleViewItemClickListener
 ) :
     RecyclerView.Adapter<GiftCardMainAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: GiftCardMainBinding) : RecyclerView.ViewHolder(binding.root)
@@ -28,8 +28,9 @@ class GiftCardMainAdapter(
                 //Image
                 Glide.with(context)
                     .load(this.newImageUrl)
-                    .error(R.drawable.app_icon)
-                    .into(binding.imageView133)
+                    .error(R.drawable.placeholder_horizental)
+                    .placeholder(R.drawable.placeholder_horizental)
+                    .into(binding.ivImageGeneric)
 
                 holder.itemView.setOnClickListener {
                     listner.giftCardClick(this)
@@ -45,7 +46,7 @@ class GiftCardMainAdapter(
 
 
     interface RecycleViewItemClickListener {
-        fun giftCardClick(comingSoonItem: GiftCardResponse.Output.GiftCard)
+        fun giftCardClick(comingSoonItem: GiftCardListResponse.Output.GiftCard)
     }
 
 }

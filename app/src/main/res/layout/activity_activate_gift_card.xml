@@ -28,8 +28,51 @@
         android:id="@+id/recyclerView30"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/ll_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include12" />
+        app:layout_constraintTop_toBottomOf="@+id/include12"
+        tools:itemCount="5"
+        android:layout_marginBottom="@dimen/dimen_15dp"
+        tools:listitem="@layout/gift_card_item" />
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/view30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@color/bg_landing_screen" />
+
+        <TextView
+            android:id="@+id/tv_expired_gift"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/view_bottom"
+            android:layout_margin="@dimen/dimen_20dp"
+            android:background="@drawable/gray_border"
+            android:drawableRight="@drawable/ic_arrow_right_white"
+            android:drawableTint="@color/black"
+            android:paddingStart="@dimen/dimen_20dp"
+            android:paddingTop="@dimen/padding_10"
+            android:paddingEnd="@dimen/dimen_20dp"
+            android:paddingBottom="@dimen/padding_10"
+            android:text="Expierd Gift Card" />
+
+        <View
+            android:id="@+id/view_bottom"
+            android:layout_width="200dp"
+            android:layout_height="5dp"
+            android:layout_gravity="center"
+            android:background="@color/black" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

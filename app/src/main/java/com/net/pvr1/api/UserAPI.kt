@@ -9,6 +9,8 @@ import com.net.pvr1.ui.food.old.reponse.OldFoodResponse
 import com.net.pvr1.ui.food.response.CancelTransResponse
 import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.ui.formats.response.FormatResponse
+import com.net.pvr1.ui.giftCard.response.ActiveGCResponse
+import com.net.pvr1.ui.giftCard.response.GiftCardListResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaPreferenceResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.comingSoon.response.CommingSoonResponse
@@ -732,14 +734,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<AddFoodResponse>
 
-    @POST("api//PVRCinemasCMS/getgiftcard1")
-    suspend fun giftCardMain(
-        @Query("sWidth") sWidth: String,
-        @Query("platform") platform: String,
-        @Query("infosys") infosys: String,
-        @Query("av") version: String,
-        @Query("pt") platform1: String
-    ): Response<GiftCardResponse>
+
 
     @POST("api/content/alltheater")
     suspend fun bookingRetrieval(
@@ -1139,5 +1134,25 @@ interface UserAPI {
         @Query("pt") platform: String,
         @Query("did") did: String
     ): Response<TicketBookedResponse>
+
+    /*****************   GIFT CARD         ********************/
+
+    @POST("getgiftcard1")
+    suspend fun giftCardMain(
+        @Query("sWidth") sWidth: String,
+        @Query("platform") platform: String,
+        @Query("infosys") infosys: String,
+        @Query("av") version: String,
+        @Query("pt") platform1: String
+    ): Response<GiftCardListResponse>
+
+    @POST("api/history/giftcard/list")
+    suspend fun activeGiftCard(
+        @Query("userid") userid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String,
+        ): Response<ActiveGCResponse>
+
 
 }

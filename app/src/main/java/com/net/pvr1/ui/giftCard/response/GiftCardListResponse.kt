@@ -1,7 +1,7 @@
 package com.net.pvr1.ui.giftCard.response
 import java.io.Serializable
 
-data class GiftCardResponse(
+data class GiftCardListResponse(
     val code: Int,
     val minversion: Any,
     val msg: String,
@@ -14,7 +14,7 @@ data class GiftCardResponse(
         val c: String,
         val deliveryCharge: Int,
         val discount: Any,
-        val giftCards: List<GiftCard>,
+        val giftCards: ArrayList<GiftCard>,
         val imageUrl: String,
         val limit: Any,
         val promotional: Boolean,
@@ -33,9 +33,11 @@ data class GiftCardResponse(
             val productDescription: String,
             val sku: String,
             val skuPrice: Int,
+            val c: Int=allowedCount,
+            var count: Int =0,
             val skuQuantity: Int,
             val type: String,
-            val updateDate: Long
-        ):Serializable
+            val updateDate: Long,
+            ):Serializable
     }
 }
