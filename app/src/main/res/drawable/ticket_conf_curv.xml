@@ -13,9 +13,5 @@
         android:topLeftRadius="16dp"
         android:topRightRadius="16dp" />
 
-    <padding
-        android:bottom="@dimen/dimen_20dp"
-        android:top="@dimen/dimen_20dp"
-        android:left="@dimen/dimen_24dp"
-        android:right="@dimen/dimen_24dp"/>
+   
 </shape>

@@ -232,6 +232,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
         if (Constant.BOOK_TYPE == "BOOKING") {
             binding?.foodView?.hide()
             binding?.ticketView?.show()
+            binding?.bottomView?.show()
             if (output.food.isNotEmpty()){
                 binding?.imageView153?.show()
                 binding?.textView339?.show()
@@ -246,12 +247,34 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 binding?.constraintLayout123?.hide()
                 binding?.cushineView?.hide()
                 binding?.imageView157?.hide()
+                binding?.textView346?.hide()
                 binding?.ivCancelimage?.show()
+                binding?.llRefundCard?.show()
+                binding?.tvDiscountTxt?.show()
+                binding?.textView347?.text = "Book Again"
+                binding?.tvRefundTxtTitle?.text = output.ca_r_bot_txtb
+                binding?.tvRefundTxt?.text = output.ca_r_bot_txt
+                binding?.tvDiscountTxt?.text = output.ca_r_txt
             }else{
                 binding?.constraintLayout123?.show()
                 binding?.cushineView?.show()
                 binding?.imageView157?.show()
+                binding?.textView346?.show()
                 binding?.ivCancelimage?.hide()
+                binding?.tvDiscountTxt?.hide()
+                binding?.llRefundCard?.hide()
+                binding?.textView347?.text = "Add Location"
+            }
+
+            binding?.textView347?.setOnClickListener {
+                if (binding?.textView347?.text == "Book Again"){
+                    launchActivity(
+                        HomeActivity::class.java,
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    )
+                }else{
+
+                }
             }
 
             // Cancel Ticket
@@ -442,6 +465,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
         } else if (Constant.BOOK_TYPE == "FOOD") {
             binding?.foodView?.show()
             binding?.ticketView?.hide()
+            binding?.bottomView?.hide()
             Glide.with(this)
                 .load(output.im)
                 .error(R.drawable.placeholder_vertical)
