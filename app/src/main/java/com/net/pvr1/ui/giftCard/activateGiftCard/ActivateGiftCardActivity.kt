@@ -1,21 +1,23 @@
 package com.net.pvr1.ui.giftCard.activateGiftCard
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.util.DisplayMetrics
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityActivateGiftCardBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.giftCard.activateGiftCard.adapter.ActivateGiftCardAdapter
 import com.net.pvr1.ui.giftCard.activateGiftCard.viewModel.ActivateGiftCardViewModel
-import com.net.pvr1.ui.giftCard.response.GiftCardResponse
-import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
+import com.net.pvr1.ui.giftCard.response.ActiveGCResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
@@ -23,7 +25,10 @@ class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.Re
     private var binding: ActivityActivateGiftCardBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: ActivateGiftCardViewModel by viewModels()
-
+    @Inject
+    lateinit var preferences: PreferenceManager
+    private var activeGiftList = ArrayList<ActiveGCResponse.Gca>()
+    private var inActiveGiftList = ArrayList<ActiveGCResponse.Gca>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityActivateGiftCardBinding.inflate(layoutInflater, null, false)
@@ -36,17 +41,25 @@ class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.Re
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         val width = displayMetrics.widthPixels
         val height = displayMetrics.heightPixels
-        authViewModel.offer(width.toString(), "")
+        authViewModel.activeGiftCard(preferences.getUserId())
         activateGiftCard()
+
+        binding?.tvExpiredGift?.setOnClickListener {
+            val intent = Intent(this, ExpiredGiftCardActivity::class.java)
+            if (inActiveGiftList.size > 0) {
+                intent.putExtra("expiredList", inActiveGiftList)
+            }
+            startActivity(intent)
+        }
 
     }
     private fun activateGiftCard() {
-        authViewModel.userResponseLiveData.observe(this) {
+        authViewModel.activeGCResponseLiveData.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-//                        retrieveData(it.data.output)
+                        retrieveData(it.data.output)
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -83,15 +96,16 @@ class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.Re
         }
     }
 
-    private fun retrieveData(output: GiftCardResponse.Output) {
+    private fun retrieveData(output: ActiveGCResponse.Output) {
+        inActiveGiftList = output.gci
         val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        val giftCardMainAdapter2 = ActivateGiftCardAdapter(output.giftCards,  this, this)
+        val giftCardMainAdapter2 = ActivateGiftCardAdapter(output.gca,  this, this)
         binding?.recyclerView30?.layoutManager = gridLayout2
         binding?.recyclerView30?.adapter = giftCardMainAdapter2
 
     }
 
-    override fun activateGiftCard(comingSoonItem: CinemaResponse.Output.C) {
+    override fun activateGiftCard(comingSoonItem: ActiveGCResponse.Gca) {
 
     }
 

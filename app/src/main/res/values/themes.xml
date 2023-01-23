@@ -239,4 +239,25 @@
         <item name="android:windowEnterAnimation">@anim/slide_up</item>
         <item name="android:windowExitAnimation">@anim/slide_down</item>
     </style>
+
+    <style name="text_black_bold">
+        <item name="android:textSize">@dimen/dim_h19</item>
+        <item name="android:textColor">@color/pvr_dark_black</item>
+        <item name="fontFamily">@font/helvetica_neu_bold</item>
+        <item name="android:textStyle">bold</item>
+
+    </style>
+
+    <style name="text_black">
+        <item name="android:textSize">@dimen/dim_h7</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="typeface">helvetica_neu.ttf</item>
+    </style>
+
+    <style name="text_gray_gift">
+        <item name="android:textSize">@dimen/dim_h19</item>
+        <item name="android:textColor">@color/gray_</item>
+        <item name="fontFamily">@font/helvetica_neu_reg</item>
+    </style>
+
 </resources>

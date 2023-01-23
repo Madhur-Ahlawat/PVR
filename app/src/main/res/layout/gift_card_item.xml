@@ -12,9 +12,9 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:elevation="@dimen/padding_10"
-        android:layout_marginTop="@dimen/dimen_30dp"
-        android:layout_marginStart="@dimen/padding_10"
-        android:layout_marginEnd="@dimen/padding_10"
+        android:layout_marginTop="@dimen/dimen_24dp"
+        android:layout_marginStart="@dimen/dimen_24dp"
+        android:layout_marginEnd="@dimen/dimen_24dp"
         android:background="@color/transparent1">
 
 
@@ -34,12 +34,11 @@
             <com.joooonho.SelectableRoundedImageView
                 android:id="@+id/giftCardImage"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="175dp"
                 android:adjustViewBounds="true"
                 app:sriv_left_top_corner_radius="8dp"
                 app:sriv_right_top_corner_radius="8dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/gift_card_placeholder"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -56,6 +55,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardUi"
             tools:ignore="RtlSymmetry">
+
+            <ImageView
+                android:id="@+id/iv_expired"
+                android:layout_width="@dimen/dimen_80dp"
+                android:layout_height="@dimen/dimen_80dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/expired"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tvValue"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvGift"

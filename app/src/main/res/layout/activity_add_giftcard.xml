@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.giftCard.activateGiftCard.AddGiftCardActivity">
+
+
+    <View
+        android:id="@+id/view_top"
+        android:layout_width="@dimen/dimen_50dp"
+        android:layout_height="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dimen_5dp"
+        android:visibility="gone"
+        android:background="@color/gray" />
+
+    <!--//top view-->
+    <LinearLayout
+        android:id="@+id/ll_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_top"
+        android:layout_marginTop="@dimen/padding_10"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_10">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/dimen_30dp"
+            android:layout_height="@dimen/dimen_15dp"
+            android:layout_gravity="center"
+            android:src="@drawable/back_new"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/padding_10"
+            android:layout_marginEnd="@dimen/dimen_40dp"
+            android:gravity="center"
+            android:text="Add Amount"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_16sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_top_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/ll_top"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/padding_10"
+        android:background="@color/gray" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ll_bottom"
+        android:layout_below="@+id/view_top_bottom"
+        android:scrollIndicators="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/dimen_20dp"
+                android:layout_marginTop="@dimen/padding_10"
+                android:layout_marginEnd="@dimen/dimen_20dp"
+                android:background="@drawable/bg_grey_booking"
+                android:backgroundTint="@color/gray">
+
+                <com.joooonho.SelectableRoundedImageView
+                    android:id="@+id/iv_uploaded_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_centerInParent="true"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    app:sriv_left_bottom_corner_radius="8dp"
+                    app:sriv_left_top_corner_radius="8dp"
+                    app:sriv_right_bottom_corner_radius="8dp"
+                    app:sriv_right_top_corner_radius="8dp" />
+
+                <LinearLayout
+                    android:id="@+id/ll_pvr_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="@dimen/padding_10"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_50dp"
+                        android:layout_height="@dimen/dimen_20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/pvr_logo" />
+
+                    <View
+                        android:layout_width="@dimen/dimen_2dp"
+                        android:layout_height="@dimen/dimen_15dp"
+                        android:layout_gravity="center"
+                        android:background="@color/gray" />
+
+                    <TextView
+                        android:id="@+id/tv_gift_card_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/padding_10"
+                        android:text="Gift Card"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dimen_14sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <TextView
+                style="@style/text_black_bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/dimen_30dp"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:layout_marginEnd="@dimen/dimen_30dp"
+                android:gravity="center"
+                android:letterSpacing="0.1"
+                android:text="What can make a better Gift Card than a movie!"
+                android:textAlignment="center"
+                android:textColor="@color/black" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/ll_top"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="@dimen/dimen_20dp"
+                android:layout_marginTop="@dimen/dimen_15dp"
+                android:layout_marginEnd="@dimen/dimen_20dp"
+                android:background="@color/gray" />
+
+            <LinearLayout
+                android:id="@+id/ll_custom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/ll_custom_amount_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_20dp"
+                        android:layout_marginEnd="@dimen/padding_10"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_grey_booking"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/dimen_8dp">
+
+                        <TextView
+                            android:id="@+id/tv_number_amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/padding_10"
+                            android:gravity="center_vertical"
+                            android:text="@string/currency"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_14sp" />
+
+                        <EditText
+                            android:id="@+id/et_custom_amount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/padding_10"
+                            android:layout_marginEnd="@dimen/padding_10"
+                            android:background="@null"
+                            android:hint="Enter amount"
+                            android:inputType="number"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/gray_"
+                            android:textSize="@dimen/dimen_14sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/dimen_20dp"
+                        android:layout_marginEnd="@dimen/dimen_20dp"
+                        android:background="@drawable/bg_grey_booking"
+                        android:gravity="end"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/dimen_8dp">
+
+                        <LinearLayout
+                            android:id="@+id/ll_plus_minus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <View
+                                android:id="@+id/view_minus"
+                                android:layout_width="@dimen/padding_10"
+                                android:layout_height="@dimen/dimen_3dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="@dimen/padding_10"
+                                android:background="@color/black"
+                                android:padding="@dimen/dimen_5dp" />
+
+                            <TextView
+                                android:id="@+id/tv_number_amount_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/dimen_15dp"
+                                android:gravity="center_vertical"
+                                android:text="1"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen_14sp" />
+
+                            <TextView
+                                android:id="@+id/tv_plus_amount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/dimen_15dp"
+                                android:layout_marginEnd="@dimen/padding_10"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen_14sp"
+                                app:drawableRightCompat="@drawable/add_ic" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_add_amount_custom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_20dp"
+                            android:layout_marginEnd="@dimen/dimen_20dp"
+                            android:text="Add"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_14sp"
+                            android:visibility="visible" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_20dp"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:layout_marginEnd="@dimen/dimen_20dp"
+                    android:text="@string/custom_card_text"
+                    android:textColor="@color/gray"
+                    android:textSize="11sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/dimen_20dp"
+                    android:layout_marginTop="@dimen/dimen_15dp"
+                    android:layout_marginEnd="@dimen/dimen_20dp"
+                    android:background="@color/gray" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_custom_amount_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:itemCount="4"
+                tools:listitem="@layout/custom_gift_list"
+                android:layout_marginStart="@dimen/dimen_20dp"
+                android:layout_marginTop="@dimen/padding_10"
+                android:layout_marginEnd="@dimen/dimen_20dp"
+                android:layout_marginBottom="@dimen/padding_10"
+                android:nestedScrollingEnabled="false" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_amount_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_20dp"
+                android:layout_marginTop="@dimen/padding_10"
+                android:layout_marginEnd="@dimen/dimen_20dp"
+                android:layout_marginBottom="@dimen/padding_10"
+                android:nestedScrollingEnabled="false" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_landing_screen"
+            android:orientation="horizontal"
+            android:padding="@dimen/dimen_15dp">
+
+            <TextView
+                style="@style/text_black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_10"
+                android:layout_weight="1"
+                android:text="Grand Total"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp" />
+
+            <TextView
+                android:id="@+id/tv_total"
+                style="@style/text_black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_10"
+                android:layout_marginEnd="@dimen/padding_10"
+                android:text="Rs 0"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dimen_15dp"
+            android:layout_marginBottom="@dimen/padding_10"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_cancel_gift"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/dimen_20dp"
+                android:layout_marginEnd="@dimen/padding_10"
+                android:layout_weight="1"
+                android:background="@drawable/bg_grey_booking"
+                android:backgroundTint="@color/gray"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dimen_15dp">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_15dp"
+                    android:layout_height="@dimen/dimen_15dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/gift_card_default"
+                    android:visibility="gone" />
+
+                <TextView
+                    style="@style/text_black_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/padding_10"
+                    android:text="Cancel"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_proceed_gift"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/padding_10"
+                android:layout_marginEnd="@dimen/dimen_20dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_grey_booking"
+                android:backgroundTint="@color/yellow"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dimen_15dp"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/text_black_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/padding_10"
+                    android:text="Proceed"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_proceed_gift_unselect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/padding_10"
+                android:layout_marginEnd="@dimen/dimen_20dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_grey_booking"
+                android:backgroundTint="@color/yellow"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dimen_15dp"
+                android:visibility="visible">
+
+                <TextView
+                    style="@style/text_black_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/padding_10"
+                    android:text="Proceed"
+                    android:textAlignment="center"
+                    android:textColor="@color/black_75"
+                    android:textSize="@dimen/dimen_14sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="150dp"
+            android:layout_height="5dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/padding_10"
+            android:layout_marginBottom="@dimen/dimen_5dp"
+            android:background="@drawable/bg_grey_booking"
+            android:backgroundTint="@color/black" />
+
+    </LinearLayout>
+
+</RelativeLayout>

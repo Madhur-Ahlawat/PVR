@@ -12,6 +12,8 @@ import com.net.pvr1.ui.food.old.reponse.OldFoodResponse
 import com.net.pvr1.ui.food.response.CancelTransResponse
 import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.ui.formats.response.FormatResponse
+import com.net.pvr1.ui.giftCard.response.ActiveGCResponse
+import com.net.pvr1.ui.giftCard.response.GiftCardListResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaPreferenceResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.comingSoon.response.CommingSoonResponse
@@ -416,6 +418,29 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             giftCardLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             giftCardLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+    //Active GiftCard
+    private val activegiftCardLiveData = MutableLiveData<NetworkResult<ActiveGCResponse>>()
+    val activegiftCardResponseLiveData: LiveData<NetworkResult<ActiveGCResponse>>
+        get() = activegiftCardLiveData
+
+    suspend fun activeGiftCard(userId: String) {
+        giftCardLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.activeGiftCard(
+            userId, Constant.version, Constant.platform,Constant.getDid()
+        )
+        activeGiftCardResponse(response)
+    }
+
+    private fun activeGiftCardResponse(response: Response<ActiveGCResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            activegiftCardLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            activegiftCardLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            activegiftCardLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 
@@ -1613,8 +1638,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
 
 
     //GiftCardMain
-    private val giftCardMainLiveData = MutableLiveData<NetworkResult<GiftCardResponse>>()
-    val giftCardMainResponseLiveData: LiveData<NetworkResult<GiftCardResponse>>
+    private val giftCardMainLiveData = MutableLiveData<NetworkResult<GiftCardListResponse>>()
+    val giftCardMainResponseLiveData: LiveData<NetworkResult<GiftCardListResponse>>
         get() = giftCardMainLiveData
 
     suspend fun giftCardMainLayout(sWidth: String, infosys: String) {
@@ -1625,7 +1650,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         giftCardMainLayoutResponse(response)
     }
 
-    private fun giftCardMainLayoutResponse(response: Response<GiftCardResponse>) {
+    private fun giftCardMainLayoutResponse(response: Response<GiftCardListResponse>) {
         if (response.isSuccessful && response.body() != null) {
             giftCardMainLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
