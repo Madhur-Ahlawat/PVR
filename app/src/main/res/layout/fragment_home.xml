@@ -5,17 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.fragment.home.HomeFragment">
+<!--Top Bar-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout162"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            android:id="@+id/includeAppBar"
+            layout="@layout/toolbar_main"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--Design-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout144"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout162">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView4"

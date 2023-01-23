@@ -10,7 +10,7 @@ data class ProfileResponse(
 ):java.io.Serializable{
     data class Output(
         val cd: String,
-        val doa: Any,
+        val doa: String,
         val dob: String,
         val em: String,
         val g: String,

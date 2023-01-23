@@ -67,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
-            android:fontFamily="@font/montserrat_alternates_semi_bold"
+            android:fontFamily="@font/sf_pro_text_heavy"
             android:text="@string/booking_retrival"
             android:textColor="@color/black"
             android:textSize="@dimen/dimen_16sp"
@@ -80,32 +80,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
-            android:fontFamily="@font/montserrat_regular"
+            android:fontFamily="@font/sf_pro_text_regular"
             android:text="@string/booking_txt"
             android:textColor="@color/h8Point1Color"
-            android:textSize="@dimen/dimen_14sp"
+            android:textSize="@dimen/dimen_13sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
-        <TextView
-            android:id="@+id/textView36"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:drawablePadding="@dimen/dimen_8dp"
-            android:fontFamily="@font/montserrat_bold"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="@dimen/dimen_12sp"
-            app:drawableEndCompat="@drawable/arrow_down"
-            app:drawableStartCompat="@drawable/location_down"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7"
-            tools:text="Delhi" />
+            <TextView
+                android:id="@+id/textView36"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:drawablePadding="@dimen/dimen_8dp"
+                android:fontFamily="@font/sf_pro_text_heavy"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_12sp"
+                android:includeFontPadding="false"
+                app:drawableEndCompat="@drawable/arrow_down"
+                app:drawableStartCompat="@drawable/location_down"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView7"
+                tools:text="Delhi" />
 
-        <View
+            <View
             android:id="@+id/view162"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -117,64 +118,117 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView36" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout3"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/enter_Booking_ID"
-            android:textColorHint="@color/black"
-            app:boxBackgroundColor="@color/white"
-            app:boxStrokeColor="#EDE8E9"
-            app:boxStrokeWidth="1dp"
-            app:endIconMode="custom"
-            app:errorEnabled="false"
-            app:hintTextColor="@color/black"
-            app:layout_constraintEnd_toEndOf="@+id/view162"
-            app:layout_constraintStart_toStartOf="@+id/view162"
-            app:layout_constraintTop_toTopOf="@+id/view162">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
+            <RelativeLayout
+                android:id="@+id/textInputLayout3"
+                android:layout_marginTop="20dp"
+                android:layout_width="0dp"
+                android:paddingEnd="@dimen/dimen_5dp"
+                android:paddingBottom="@dimen/dimen_5dp"
+                android:paddingTop="@dimen/dimen_15dp"
+                android:gravity="center"
                 android:layout_height="wrap_content"
-                android:digits="1234567890"
-                android:imeOptions="actionNext"
-                android:inputType="phone"
-                android:maxLength="10"
-                android:textColor="@color/pvr_dark_black"
-                android:textSize="16sp"
-                tools:ignore="TextContrastCheck" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:background="@drawable/curve_field"
+                app:layout_constraintEnd_toEndOf="@+id/view162"
+                app:layout_constraintStart_toStartOf="@+id/view162"
+                app:layout_constraintTop_toTopOf="@+id/view162">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout4"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="@string/mobile_number"
-            android:textColorHint="@color/black"
-            app:boxBackgroundColor="@color/white"
-            app:boxStrokeColor="#EDE8E9"
-            app:boxStrokeWidth="1dp"
-            app:endIconMode="custom"
-            app:errorEnabled="false"
-            app:hintTextColor="@color/black"
-            app:layout_constraintEnd_toEndOf="@+id/view162"
-            app:layout_constraintStart_toStartOf="@+id/view162"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="phone"
+                    android:background="@null"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:boxStrokeColor="@color/transparent"
+                    app:boxBackgroundColor="@color/transparent"
+                    android:layout_marginTop="-8dp"
+                    style="@style/styledBlackTilEditText"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/dimen_5dp"
+                    android:hint="@string/enter_Booking_ID"
+                    android:importantForAutofill="no"
+                    android:longClickable="false"
+                    android:textColorHint="@color/textColor"
+                    app:hintTextColor="@color/textColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/bookingId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/textColor"
+                        android:textCursorDrawable="@null"
+                        android:textSize="@dimen/dimen_14sp"
+                        tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/textInputLayout4"
+                android:layout_marginTop="20dp"
+                android:layout_width="0dp"
+                android:paddingEnd="@dimen/dimen_5dp"
+                android:paddingBottom="@dimen/dimen_5dp"
+                android:paddingTop="@dimen/dimen_15dp"
+                android:gravity="center"
                 android:layout_height="wrap_content"
-                android:digits="1234567890"
-                android:imeOptions="actionDone"
-                android:inputType="phone"
-                android:maxLength="10"
-                android:textColor="@color/pvr_dark_black"
-                android:textSize="16sp"
-                tools:ignore="TextContrastCheck" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:background="@drawable/curve_field"
+                app:layout_constraintEnd_toEndOf="@+id/view162"
+                app:layout_constraintStart_toStartOf="@+id/view162"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="phone"
+                    android:background="@null"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:boxStrokeColor="@color/transparent"
+                    app:boxBackgroundColor="@color/transparent"
+                    android:layout_marginTop="-8dp"
+                    style="@style/styledBlackTilEditText"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/dimen_5dp"
+                    android:hint="@string/mobile_number"
+                    android:importantForAutofill="no"
+                    android:longClickable="false"
+                    android:textColorHint="@color/textColor"
+                    app:hintTextColor="@color/textColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/phoneNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:imeOptions="actionNext"
+                        android:inputType="phone"
+                        android:digits="1234567890"
+                        android:maxLength="10"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/textColor"
+                        android:textCursorDrawable="@null"
+                        android:textSize="@dimen/dimen_14sp"
+                        tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
 
         <View
             android:id="@+id/view163"
@@ -189,8 +243,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout81"
             android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="21dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/curve_search_reatrival"
             app:layout_constraintEnd_toEndOf="@+id/view162"
             app:layout_constraintStart_toStartOf="@+id/view162"
@@ -204,6 +258,7 @@
                 android:layout_marginEnd="@dimen/dimen_15dp"
                 android:autofillHints="name"
                 android:background="@null"
+                android:textSize="@dimen/dimen_14sp"
                 android:imeOptions="actionDone"
                 android:drawableStart="@drawable/search"
                 android:drawablePadding="@dimen/dimen_12dp"

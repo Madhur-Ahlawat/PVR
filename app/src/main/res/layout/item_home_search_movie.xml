@@ -11,18 +11,18 @@
         android:id="@+id/constraintLayout8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:paddingTop="@dimen/dimen_20dp"
-        android:paddingBottom="@dimen/padding_10">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView13"
             android:layout_width="@dimen/dimen_60dp"
-            android:layout_height="90dp"
-            app:cardUseCompatPadding="true"
+            android:layout_height="88.9dp"
             app:cardCornerRadius="@dimen/dimen_3dp"
+            app:cardUseCompatPadding="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -31,9 +31,9 @@
                 android:id="@+id/imageView25"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:adjustViewBounds="true"
                 android:layout_centerVertical="true"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
                 android:src="@color/placeholder_bg"
                 tools:ignore="ContentDescription,ImageContrastCheck" />
 
@@ -42,10 +42,10 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:orientation="vertical"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="@dimen/dimen_5dp"
             android:layout_marginStart="@dimen/dimen_16dp"
+            android:layout_marginTop="@dimen/dimen_5dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cardView13"
@@ -56,10 +56,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/montserrat_alternates_semi_bold"
                 android:gravity="center_vertical"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
-                android:fontFamily="@font/montserrat_bold"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:textSize="@dimen/dimen_14sp"
                 tools:text="Pvr Gurgaon" />
 
@@ -67,21 +70,24 @@
                 android:id="@+id/textView48"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:includeFontPadding="true"
+                android:fontFamily="@font/sf_pro_text_regular"
                 android:gravity="center_vertical"
                 android:textAllCaps="false"
-                android:fontFamily="@font/sf_pro_text_regular"
                 android:textColor="@color/black"
                 android:textSize="@dimen/dimen_12sp"
                 tools:text="Pvr Gurgaon" />
 
             <TextView
                 android:id="@+id/textView49"
-                android:fontFamily="@font/sf_pro_text_regular"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimen_12sp"                android:layout_width="match_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"                android:fontFamily="@font/sf_pro_text_regular"
                 android:gravity="center_vertical"
                 android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_12sp"
                 tools:text="Pvr Gurgaon" />
 
         </LinearLayout>

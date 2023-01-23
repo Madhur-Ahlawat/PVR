@@ -37,7 +37,6 @@ class NonMemberFragment : Fragment() {
     lateinit var preferences: PreferenceManager
     private val authViewModel by activityViewModels<PrivilegeLoginViewModel>()
 
-
     companion object {
         var scheme_id = ""
         var scheme_price = "0.0"

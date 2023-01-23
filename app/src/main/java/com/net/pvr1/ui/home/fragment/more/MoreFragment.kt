@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.home.fragment.more
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -54,10 +55,11 @@ class MoreFragment : Fragment() {
     private var binding: FragmentMoreBinding? = null
     private val authViewModel by activityViewModels<MoreViewModel>()
     private var loader: LoaderDialog? = null
-    private val profileList: ArrayList<ProfileModel> = ArrayList<ProfileModel>()
+    private val profileList: ArrayList<ProfileModel> = ArrayList()
 
     @Inject
     lateinit var preferences: PreferenceManager
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -68,7 +70,6 @@ class MoreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (requireActivity().findViewById(R.id.include) as ConstraintLayout).hide()
         preferences = PreferenceManager(requireActivity())
         timeStamp = (System.currentTimeMillis() / 1000).toString()
 
@@ -86,6 +87,11 @@ class MoreFragment : Fragment() {
     }
 
     private fun manageFunctions() {
+        movedNext()
+        //whatsapp Status
+        whatsappOptStatus()
+        //profileResponse
+        profileResponse()
         //mange privilege show hide
         if (preferences.getIsLogin()) {
             binding?.whatsappUi?.show()
@@ -126,17 +132,10 @@ class MoreFragment : Fragment() {
             binding?.privilegeLoginUi?.hide()
             binding?.privilegeLogOutUi?.show()
         }
-
-        movedNext()
-        //whatsapp Status
-        whatsappOptStatus()
-        //profileResponse
-        profileResponse()
     }
 
     //   Ui ClickAction
     private fun movedNext() {
-
         //Account
         binding?.profileDetails?.textView206?.setOnClickListener {
             val intent = Intent(requireContext(), ProfileActivity::class.java)
@@ -194,25 +193,30 @@ class MoreFragment : Fragment() {
             val intent = Intent(requireContext(), GiftCardActivity::class.java)
             startActivity(intent)
         }
+
         //Private Screen
         binding?.logout?.constraintLayout79?.setOnClickListener {
             val intent = Intent(requireContext(), PrivateScreeningsActivity::class.java)
             startActivity(intent)
         }
+
         //ScanQr
         binding?.imageView101?.setOnClickListener {
             val intent = Intent(requireContext(), ScannerActivity::class.java)
             startActivity(intent)
         }
+
         //Booking Retrieval
         binding?.login?.constraintLayout71?.setOnClickListener {
             val intent = Intent(requireContext(), BookingRetrievalActivity::class.java)
             startActivity(intent)
         }
+
         //LogOut
         binding?.tvSignOut?.setOnClickListener {
             logOut()
         }
+
         //Contact Us
         binding?.tvContact?.setOnClickListener {
             val intent = Intent(requireContext(), ContactUsActivity::class.java)
@@ -231,18 +235,16 @@ class MoreFragment : Fragment() {
         }
 
         //MovieAlert
-
         binding?.login?.constraintLayout72?.setOnClickListener {
             val intent = Intent(requireContext(), WatchListActivity::class.java)
             startActivity(intent)
         }
 
-        //Prefrence
+        //preference
         binding?.login?.constraintLayout73?.setOnClickListener {
             val intent = Intent(requireContext(), PreferenceActivity::class.java)
             startActivity(intent)
         }
-
     }
 
     private fun createQr() {
@@ -262,21 +264,32 @@ class MoreFragment : Fragment() {
         dialogQR.window?.setGravity(Gravity.CENTER)
         dialogQR.setTitle("")
         val pointsPcTextView = dialogQR.findViewById<TextView>(R.id.points_txt)
-        val vochersPcTextView = dialogQR.findViewById<TextView>(R.id.vouchers_txt_)
-        val TVusername: TextView = dialogQR.findViewById<View>(R.id.TVusername) as TextView
+        val voucher = dialogQR.findViewById<TextView>(R.id.vouchers_txt_)
+        val tvUserName: TextView = dialogQR.findViewById<View>(R.id.TVusername) as TextView
         val ivImage = dialogQR.findViewById<View>(R.id.ivImage) as ImageView
         val tvCross = dialogQR.findViewById<View>(R.id.tvCross) as ImageView
-        Glide.with(requireActivity()).load(qrCode).into(ivImage)
-        TVusername.text = preferences.getUserName()
+
+        Glide.with(requireActivity())
+            .load(qrCode)
+            .into(ivImage)
+
+        tvUserName.text = preferences.getUserName()
+
         pointsPcTextView.text = Constant.PRIVILEGEPOINT
-        vochersPcTextView.text = Constant.PRIVILEGEVOUCHER
-        tvCross.setOnClickListener { dialogQR.dismiss() }
+
+        voucher.text = Constant.PRIVILEGEVOUCHER
+
+        tvCross.setOnClickListener {
+            dialogQR.dismiss()
+        }
+
         dialogQR.setOnKeyListener { _, keyCode, _ ->
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 dialogQR.dismiss()
             }
             true
         }
+
         dialogQR.show()
     }
 
@@ -337,7 +350,7 @@ class MoreFragment : Fragment() {
 
     private fun retrieveData(data: Boolean) {
         binding?.checkState?.isChecked = data
-        binding?.checkState?.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding?.checkState?.setOnCheckedChangeListener { _, isChecked ->
             timeStamp = (System.currentTimeMillis() / 1000).toString()
             if (isChecked){
                 authViewModel.whatsappOptIn(
@@ -400,6 +413,7 @@ class MoreFragment : Fragment() {
 
     }
 
+    @SuppressLint("SetTextI18n")
     private fun retrieveProfileData(output: ProfileResponse.Output) {
         ProfileResponseConst=output
         binding?.profileDetails?.textView206?.text=output.cd

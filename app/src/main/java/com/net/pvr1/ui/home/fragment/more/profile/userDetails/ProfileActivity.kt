@@ -5,12 +5,8 @@ import android.app.DatePickerDialog.OnDateSetListener
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import android.view.Window
-import android.widget.FrameLayout
-import android.widget.TextView
+import android.view.*
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -46,6 +42,15 @@ class ProfileActivity : AppCompatActivity() {
     private var dob: TextView? = null
     private var anniversary: TextView? = null
     private var dialog: BottomSheetDialog? = null
+
+    //gender
+    private var selectedGender=""
+    var gender = arrayOf("Male", "Female", "Others")
+
+    //marital Status
+    private var selectedMarital=""
+    var maritalStatus = arrayOf("Married", "Unmarried", "Others")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater, null, false)
@@ -89,7 +94,7 @@ class ProfileActivity : AppCompatActivity() {
         //martial status
         binding?.textView223?.text = profileResponse?.ms
         //anniversary
-        binding?.textView225?.text = profileResponse?.doa.toString()
+        binding?.textView225?.text = profileResponse?.doa
     }
 
     private fun movedNext() {
@@ -100,6 +105,7 @@ class ProfileActivity : AppCompatActivity() {
             finish()
         }
     }
+
 
     private fun editProfileDialog() {
         dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
@@ -118,49 +124,114 @@ class ProfileActivity : AppCompatActivity() {
         dialog?.window?.setGravity(Gravity.BOTTOM)
         dialog?.show()
 
+
+        //Gender
+
+        val aa: ArrayAdapter<*> =
+            ArrayAdapter<Any?>(this, android.R.layout.simple_spinner_item, gender)
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        //Setting the ArrayAdapter data on the Spinner
+        bindingProfile.gender.adapter = aa
+
+
+        bindingProfile.gender.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                selectedGender = gender[position]
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+            }
+        }
+
+
+        //marital Status
+        val aaa: ArrayAdapter<*> =
+            ArrayAdapter<Any?>(this, android.R.layout.simple_spinner_item, maritalStatus)
+        aaa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        //Setting the ArrayAdapter data on the Spinner
+        bindingProfile.martialStatus.adapter = aaa
+
+        bindingProfile.martialStatus.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                selectedMarital = maritalStatus[position]
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+            }
+        }
+
         //name
         bindingProfile.name.setText(preferences.getUserName())
+
         //phone
         bindingProfile.phone.setText(profileResponse?.ph)
+
         //email
         bindingProfile.email.setText(profileResponse?.em)
+
         //gender
-        bindingProfile.gender.setText(profileResponse?.g)
+//        bindingProfile.gender.setText(profileResponse?.g)
+
         //dob
         dob = bindingProfile.dob
         dob?.text = profileResponse?.dob
         //martial status
-        bindingProfile.martialStatus.setText(profileResponse?.ms)
+//        bindingProfile.martialStatus.setText(profileResponse?.ms)
+
         //anniversary
         anniversary = bindingProfile.anniversary
-        anniversary?.text = profileResponse?.doa.toString()
+        anniversary?.text = profileResponse?.doa
 
         //Dob DatePicker
         bindingProfile.constraintLayout68.setOnClickListener {
             dobClick = true
-            DatePickerDialog(
-                this,
+            val year=myCalendar.get(Calendar.YEAR)
+            val newYear= year-13
+            val mDatePickerDialog = DatePickerDialog(    this,
                 dateD,
-                myCalendar.get(Calendar.YEAR),
+                newYear,
                 myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH)
-            ).show()
+                myCalendar.get(Calendar.DAY_OF_MONTH))
+
+            mDatePickerDialog.datePicker.maxDate = System.currentTimeMillis()  + 0 * 24 * 60 * 60 * 1000
+            mDatePickerDialog.show()
+
         }
+
         //anniversaryClick
-        bindingProfile.anniversaryClick.setOnClickListener {
-            dobClick = false
-            DatePickerDialog(
-                this,
-                dateD,
-                myCalendar.get(Calendar.YEAR),
-                myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH)
-            ).show()
+        if (selectedMarital=="Married"){
+            bindingProfile.anniversaryClick.setOnClickListener {
+                dobClick = false
+                val mDatePickerDialog = DatePickerDialog(    this,
+                    dateD,
+                    myCalendar.get(Calendar.YEAR),
+                    myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH))
+                mDatePickerDialog.datePicker.maxDate = System.currentTimeMillis() + 0 * 24 * 60 * 60 * 1000
+                mDatePickerDialog.show()
+
+            }
         }
+
         //dismiss Dialog
         bindingProfile.textView247.setOnClickListener {
             dialog?.dismiss()
         }
+
         //save
         bindingProfile.save.setOnClickListener {
             val dob = Constant().changeDateFormat(bindingProfile.dob.text.toString())
@@ -172,8 +243,8 @@ class ProfileActivity : AppCompatActivity() {
                 bindingProfile.phone.text.toString(),
                 bindingProfile.name.text.toString(),
                 dob.toString(),
-                bindingProfile.gender.text.toString(),
-                bindingProfile.martialStatus.text.toString(),
+                selectedGender,
+                selectedMarital,
                 anniversary.toString()
             )
         }
@@ -257,8 +328,7 @@ class ProfileActivity : AppCompatActivity() {
         //martial status
         binding?.textView223?.text = output.ms
         //anniversary
-        if (output.doa!=null)
-        binding?.textView225?.text = output.doa.toString()
+        binding?.textView225?.text = output.doa
 
     }
 

@@ -12,8 +12,8 @@ data class HomeSearchResponse(
 ) : Serializable {
     data class Output(
         val lr: List<Any>,
-        val m: List<M>,
-        val t: List<T>
+        val m: ArrayList<M>,
+        val t: ArrayList<T>
     ) : Serializable {
         data class T(
             val ad: String,

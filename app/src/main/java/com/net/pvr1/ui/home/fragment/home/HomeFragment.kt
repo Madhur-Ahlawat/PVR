@@ -18,8 +18,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -40,9 +38,12 @@ import com.net.pvr1.ui.formats.FormatsActivity
 import com.net.pvr1.ui.home.fragment.home.adapter.*
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
+import com.net.pvr1.ui.home.fragment.more.profile.userDetails.ProfileActivity
 import com.net.pvr1.ui.home.interfaces.PlayPopup
+import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingActivity
 import com.net.pvr1.ui.player.PlayerActivity
+import com.net.pvr1.ui.scanner.ScannerActivity
 import com.net.pvr1.ui.search.searchHome.SearchHomeActivity
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.PRIVILEGEPOINT
@@ -66,6 +67,7 @@ class HomeFragment : Fragment(),
     StoriesProgressView.StoriesListener {
 
     private var binding: FragmentHomeBinding? = null
+
     @Inject
     lateinit var preferences: PreferenceManager
     private var loader: LoaderDialog? = null
@@ -116,19 +118,6 @@ class HomeFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-// manage top bar ui
-        (requireActivity().findViewById(R.id.include) as ConstraintLayout).show()
-        (requireActivity().findViewById(R.id.notify) as ImageView).show()
-        (requireActivity().findViewById(R.id.scanQr) as ImageView).show()
-        (requireActivity().findViewById(R.id.searchBtn) as ImageView).show()
-        (requireActivity().findViewById(R.id.searchCinema) as ImageView).hide()
-        (requireActivity().findViewById(R.id.searchBtn) as ImageView).setOnClickListener {
-            if (isAdded) {
-                val intent = Intent(requireActivity(), SearchHomeActivity::class.java)
-                startActivity(intent)
-            }
-        }
-
         //Poster
         listener = activity as PlayPopup?
         tvButton = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
@@ -151,16 +140,24 @@ class HomeFragment : Fragment(),
             stories?.destroy()
         }
 
+
+        // functions
+
+        manageFunction()
+    }
+
+    private fun manageFunction() {
 //         manage login
         if (preferences.getIsLogin()) {
-            (requireActivity().findViewById(R.id.profileBtn) as ImageView).show()
+            binding?.includeAppBar?.profileBtn?.show()
             binding?.constraintLayout135?.show()
+
         } else {
-            (requireActivity().findViewById(R.id.profileBtn) as ImageView).hide()
+            binding?.includeAppBar?.profileBtn?.hide()
             binding?.constraintLayout135?.hide()
         }
 
-        // functions
+
         getShimmerData()
         movedNext()
         homeApi()
@@ -178,57 +175,45 @@ class HomeFragment : Fragment(),
     }
 
     private fun movedNext() {
-        binding?.txtTrailers?.setTextColor(
-            ContextCompat.getColor(
-                requireActivity(), R.color.black
-            )
-        )
+        // manage top bar ui
+        binding?.includeAppBar?.searchBtn?.setOnClickListener {
+            val intent = Intent(requireActivity(), SearchHomeActivity::class.java)
+            startActivity(intent)
+        }
 
-        binding?.txtMusic?.setTextColor(
-            ContextCompat.getColor(
-                requireActivity(), R.color.textColorGray
-            )
-        )
+        // Select City
+        binding?.includeAppBar?.txtCity?.setOnClickListener {
+            val intent = Intent(requireActivity(), SelectCityActivity::class.java)
+            startActivity(intent)
+        }
+        // Qr COde
+        binding?.includeAppBar?.scanQr?.setOnClickListener {
+            val intent = Intent(requireActivity(), ScannerActivity::class.java)
+            startActivity(intent)
+        }
+        // Profile
+        binding?.includeAppBar?.profileBtn?.setOnClickListener {
+            val intent = Intent(requireActivity(), ProfileActivity::class.java)
+            intent.putExtra("from", "home")
+            startActivity(intent)
+        }
 
-        binding?.view33?.setBackgroundColor(
-            ContextCompat.getColor(
-                requireContext(), R.color.yellow
-            )
-        )
+        //setUserName
+        if (preferences.getIsLogin()) {
+            binding?.includeAppBar?.profileBtn?.show()
+            binding?.includeAppBar?.textView2?.text = "Hello, " + preferences.getUserName()
+        } else {
+            binding?.includeAppBar?.profileBtn?.hide()
+            binding?.includeAppBar?.textView2?.text = "Hello!"
+        }
 
-        binding?.view34?.setBackgroundColor(
-            ContextCompat.getColor(
-                requireContext(), R.color.gray
-            )
-        )
-
-        binding?.txtMusic?.setTextColor(
-            ContextCompat.getColor(
-                requireActivity(), R.color.black
-            )
-        )
-        binding?.txtTrailers?.setTextColor(
-            ContextCompat.getColor(
-                requireActivity(), R.color.textColorGray
-            )
-        )
-        binding?.view33?.setBackgroundColor(
-            ContextCompat.getColor(
-                requireContext(), R.color.gray
-            )
-        )
-        binding?.view34?.setBackgroundColor(
-            ContextCompat.getColor(
-                requireContext(), R.color.yellow
-            )
-        )
+        binding?.includeAppBar?.txtCity?.text = preferences.getCityName()
 
         //banner
         ivCross?.setOnClickListener {
             rlBanner?.hide()
             listener?.onShowNotification()
             listener?.onShowPrivilege()
-//                Constant.PvrHB = ""
         }
 
     }
@@ -405,7 +390,7 @@ class HomeFragment : Fragment(),
 
     @SuppressLint("SetTextI18n")
     private fun recommend(rm: HomeResponse.Rm) {
-        if (rm!=null) {
+        if (rm != null) {
             binding?.constraintLayout135?.show()
             //image
             binding?.homeRecommend?.ivRecomm?.let {
@@ -452,7 +437,7 @@ class HomeFragment : Fragment(),
 
             if (!TextUtils.isEmpty(rm.rtt)) binding?.homeRecommend?.tvRecomm?.text =
                 rm.rtt else binding?.homeRecommend?.tvRecomm?.text = "TRENDING"
-        }else{
+        } else {
             binding?.constraintLayout135?.hide()
         }
     }
@@ -494,7 +479,11 @@ class HomeFragment : Fragment(),
     }
 
     override fun onOfferClick(comingSoonItem: HomeResponse.Cp) {
-        if (comingSoonItem.t != null && comingSoonItem.t.equals("campaign-VIDEO", ignoreCase = true)) {
+        if (comingSoonItem.t != null && comingSoonItem.t.equals(
+                "campaign-VIDEO",
+                ignoreCase = true
+            )
+        ) {
             val intent = Intent(requireActivity(), PlayerActivity::class.java)
             intent.putExtra("trailerUrl", comingSoonItem.mtrailerurl)
             startActivity(intent)
@@ -745,7 +734,9 @@ class HomeFragment : Fragment(),
                 listener?.onShowNotification()
                 listener?.onShowPrivilege()
                 if (bannerModels.size > 0 && bannerModels[counterStory].type.equals(
-                        "video", ignoreCase = true)) {
+                        "video", ignoreCase = true
+                    )
+                ) {
                 }
             }
 
@@ -762,7 +753,8 @@ class HomeFragment : Fragment(),
             tvButton?.hide()
         } else if (bannerModel.type.equals(
                 "image", ignoreCase = true
-            ) && bannerModel.redirect_url.equals("", ignoreCase = true)) {
+            ) && bannerModel.redirect_url.equals("", ignoreCase = true)
+        ) {
             ivPlay?.hide()
             tvButton?.text = bannerModel.buttonText
             tvButton?.show()

@@ -28,14 +28,23 @@ class SearchHomeMovieAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolderNowShowing, position: Int) {
         val selectCityItemList = selectCityList[position]
+//        title
         holder.title.text = selectCityItemList.n
-        holder.timeCategory.text = selectCityItemList.length + " | " + selectCityItemList.genre
-        holder.language.text = selectCityItemList.lng
+
+//        CAt
+        holder.timeCategory.text = selectCityItemList.c +" "+
+                context.getString(R.string.dots)+" "+
+                selectCityItemList.length+" "+
+                context.getString(R.string.dots)+" "+
+                selectCityItemList.genre
+
+//lng
+        holder.language.text = selectCityItemList.l
 
         //Image
         Glide.with(context)
             .load(selectCityItemList.im)
-            .error(R.drawable.app_icon)
+            .error(R.drawable.placeholder_vertical)
             .into(holder.image)
 
         holder.itemView.setOnClickListener {
@@ -57,6 +66,14 @@ class SearchHomeMovieAdapter(
 
     interface RecycleViewItemClickListenerCity {
         fun onSearchMovie(selectCityList: HomeSearchResponse.Output.M)
+    }
+
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun filterMovieList(filterList: ArrayList<HomeSearchResponse.Output.M>) {
+        // below line is to add our filtered
+        selectCityList = filterList
+        notifyDataSetChanged()
     }
 
 }

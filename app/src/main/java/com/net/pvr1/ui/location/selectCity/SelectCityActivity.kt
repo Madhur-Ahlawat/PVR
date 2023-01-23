@@ -92,9 +92,11 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             "no",
             "no"
         )
+
 //Location
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         cityName = preferences.getCityName()
+
         // Location City Name
         if (preferences.getCityName().isEmpty()){
             binding?.consSelectedLocation?.show()
@@ -102,6 +104,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             binding?.txtSelectedCity?.text = preferences.getCityName()
             binding?.consSelectedLocation?.show()
         }
+
         //Get Intent  Qr Case
         cid = intent.getStringExtra("cid").toString()
         from = intent.getStringExtra("from").toString()
@@ -111,7 +114,6 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
 
     @SuppressLint("SuspiciousIndentation")
     private fun movedNext() {
-
         // get Location
         binding?.imageView39?.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
@@ -126,7 +128,6 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             } else {
                 getCurrentLocation()
             }
-
         }
 
         //On Back Press

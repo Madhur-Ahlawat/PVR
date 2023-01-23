@@ -21,7 +21,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -43,6 +42,7 @@ import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.cinema.viewModel.CinemaViewModel
 import com.net.pvr1.ui.home.fragment.home.adapter.PromotionAdapter
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
+import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.ui.search.searchCinema.SearchCinemaActivity
 import com.net.pvr1.utils.*
 import com.squareup.picasso.Callback
@@ -99,15 +99,6 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-        (requireActivity().findViewById(R.id.include) as ConstraintLayout).show()
-        (requireActivity().findViewById(R.id.notify) as ImageView).hide()
-        (requireActivity().findViewById(R.id.profileBtn) as ImageView).hide()
-        (requireActivity().findViewById(R.id.scanQr) as ImageView).hide()
-        (requireActivity().findViewById(R.id.textView2) as TextView).show()
-        (requireActivity().findViewById(R.id.searchBtn) as ImageView).hide()
-        (requireActivity().findViewById(R.id.txtCity) as TextView).show()
-        (requireActivity().findViewById(R.id.searchCinema) as ImageView).show()
-
 
         tvButton = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
             .findViewById(R.id.tv_button))
@@ -129,33 +120,42 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
             stories?.destroy()
         }
 
-        //Click Search
-        (requireActivity().findViewById(R.id.searchCinema) as ImageView).setOnClickListener {
+        // functions
+        manageFunction()
+    }
+
+    private fun manageFunction() {
+        //City Name
+        binding?.txtCity?.text = preferences.getCityName()
+        //Shimmer
+        getShimmerData()
+        //internet Check
+        broadcastReceiver = NetworkReceiver()
+        broadcastIntent()
+
+        cinemaApi()
+        getLocation()
+        movedNext()
+    }
+
+    private fun movedNext() {
+//        Search
+        binding?.searchBtn?.setOnClickListener {
             val intent = Intent(requireActivity(), SearchCinemaActivity::class.java)
             startActivity(intent)
         }
 
+        //Select City
+        binding?.txtCity?.setOnClickListener {
+            val intent = Intent(requireActivity(), SelectCityActivity::class.java)
+            startActivity(intent)
+        }
 
-        // functions
-        getShimmerData()
-        cinemaApi()
-        setPreference()
-        getLocation()
-        movedNext()
-
-        //internet Check
-        broadcastReceiver = NetworkReceiver()
-        broadcastIntent()
-    }
-
-    //
-    private fun movedNext() {
         //banner
         ivCross?.setOnClickListener {
             rlBanner?.hide()
         }
     }
-
 
     private fun getShimmerData() {
         Constant().getData(binding?.include38?.tvFirstText, binding?.include38?.tvSecondText)
@@ -231,8 +231,6 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
 
                 }
             } else {
-                Toast.makeText(requireActivity(), "Please turn on location", Toast.LENGTH_LONG)
-                    .show()
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 startActivity(intent)
             }
@@ -282,34 +280,6 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
 
     }
 
-    //setPreference
-    private fun setPreference() {
-        authViewModel.cinemaPreferenceResponseLiveData.observe(viewLifecycleOwner) {
-            when (it) {
-                is NetworkResult.Success -> {
-                    loader?.dismiss()
-                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        printLog(it.data.msg)
-                    }
-                }
-                is NetworkResult.Error -> {
-                    loader?.dismiss()
-                    val dialog = OptionDialog(requireActivity(),
-                        R.mipmap.ic_launcher,
-                        R.string.app_name,
-                        it.message.toString(),
-                        positiveBtnText = R.string.ok,
-                        negativeBtnText = R.string.no,
-                        positiveClick = {},
-                        negativeClick = {})
-                    dialog.show()
-                }
-                is NetworkResult.Loading -> {
-                }
-            }
-        }
-    }
-
     private fun retrieveData(output: CinemaResponse.Output) {
 //        Design
         binding?.constraintLayout160?.show()
@@ -326,7 +296,10 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
 
 //        PlaceHolder
         if (output.pu.isNotEmpty()) {
+            binding?.constraintLayout161?.show()
             initBanner(output.pu)
+        } else {
+            binding?.constraintLayout161?.hide()
         }
 
         //Promotion
@@ -457,7 +430,6 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
 
 
     private fun showButton(bannerModel: CinemaResponse.Output.Pu) {
-        printLog("buttonText---->${bannerModel.type}")
         if (bannerModel.type
                 .contains("VIDEO") && bannerModel.trailerUrl != null && !bannerModel.trailerUrl
                 .contains("")

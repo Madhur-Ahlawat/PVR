@@ -1,6 +1,8 @@
 package com.net.pvr1.ui.home.fragment.more.bookingRetrieval
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityBookingRetrievalBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
@@ -16,8 +19,8 @@ import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetri
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.viewModel.BookingRetrievalViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.di.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 import javax.inject.Inject
 
 
@@ -28,12 +31,16 @@ class BookingRetrievalActivity : AppCompatActivity(),BookingRetrievalAdapter.Rec
     private var binding: ActivityBookingRetrievalBinding? = null
     private val authViewModel: BookingRetrievalViewModel by viewModels()
     private var loader: LoaderDialog? = null
+    private var filterCityList: ArrayList<BookingRetrievalResponse.Output.C>? = null
+    private var bookingRetrieval: BookingRetrievalAdapter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBookingRetrievalBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        authViewModel.bookingRetrieval("Chennai", preferences.getLongitudeData(), preferences.getLongitudeData(), preferences.getUserId().toString(), "")
+
+        authViewModel.bookingRetrieval(preferences.getCityName(), preferences.getLongitudeData(), preferences.getLongitudeData(), preferences.getUserId().toString(), "")
         binding?.textView36?.text=preferences.getCityName()
         bookingRetrievalApi()
         movedNext()
@@ -48,11 +55,26 @@ class BookingRetrievalActivity : AppCompatActivity(),BookingRetrievalAdapter.Rec
         binding?.editText?.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 //do here your stuff f
-                authViewModel.bookingRetrieval("Chennai", preferences.getLongitudeData(), preferences.getLongitudeData(), preferences.getUserId().toString(), binding?.editText?.text.toString())
-
+                authViewModel.bookingRetrieval(preferences.getCityName(), preferences.getLongitudeData(), preferences.getLongitudeData(),
+                    preferences.getUserId(), binding?.editText?.text.toString())
                 true
             } else false
         }
+
+        binding?.editText?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+//                binding?.editText?.text?.chars()
+                filter(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable) {
+
+            }
+        })
+
     }
 
     private fun bookingRetrievalApi() {
@@ -95,16 +117,38 @@ class BookingRetrievalActivity : AppCompatActivity(),BookingRetrievalAdapter.Rec
     }
 
     private fun retrieveData(output: BookingRetrievalResponse.Output) {
+//        Set Filter Data
+        filterCityList = output.c
+
+//        Array List
         val gridLayout =
             GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
         binding?.recyclerView32?.layoutManager = LinearLayoutManager(this)
-        val adapter = BookingRetrievalAdapter(this, output.c, this,binding?.include14?.textView5)
+        bookingRetrieval = BookingRetrievalAdapter(this, output.c, this,binding?.include14?.textView5)
         binding?.recyclerView32?.layoutManager = gridLayout
-        binding?.recyclerView32?.adapter = adapter
+        binding?.recyclerView32?.adapter = bookingRetrieval
     }
 
     override fun dateClick(comingSoonItem: BookingResponse.Output.Dy) {
 
+    }
+
+    private fun filter(text: String) {
+        val filtered: ArrayList<BookingRetrievalResponse.Output.C> = ArrayList()
+        val filtered1: ArrayList<BookingRetrievalResponse.Output.C> = ArrayList()
+        for (item in filterCityList!!) {
+            if (item.n.lowercase(Locale.getDefault())
+                    .contains(text.lowercase(Locale.getDefault()))
+            ) {
+                filtered.add(item)
+            }
+        }
+
+        if (filtered.isEmpty()) {
+            bookingRetrieval?.filterList(filtered1)
+        } else {
+            bookingRetrieval?.filterList(filtered)
+        }
     }
 
 }

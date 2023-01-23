@@ -15,7 +15,6 @@ import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.*
 import android.widget.RelativeLayout
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -181,9 +180,7 @@ class BookingActivity : AppCompatActivity(),
             try {
                 resultLauncher.launch(intent)
             } catch (e: Exception) {
-                Toast.makeText(
-                    this, " " + e.message, Toast.LENGTH_SHORT
-                ).show()
+                toast(e.message)
             }
         }
     }

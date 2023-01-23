@@ -1,11 +1,12 @@
 package com.net.pvr1.ui.home.fragment.comingSoon.search
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
-import android.view.inputmethod.EditorInfo
-import android.widget.TextView.OnEditorActionListener
-import android.widget.Toast
+import android.text.Editable
+import android.text.TextWatcher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,6 +21,7 @@ import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.search.searchHome.viewModel.HomeSearchViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
@@ -33,19 +35,27 @@ class CinemaSearchActivity : AppCompatActivity(),
     lateinit var preferences: PreferenceManager
     private var binding: ActivityCinemaSearchBinding? = null
     private val authViewModel: HomeSearchViewModel by viewModels()
-    private val REQUEST_CODE_SPEECH_INPUT = 1
     private var loader: LoaderDialog? = null
+
+    private var filterCinemaList: ArrayList<HomeSearchResponse.Output.M>? = null
+    private var searchHomeMovieAdapter: SearchHomeMovieAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCinemaSearchBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+        manageFunction()
+    }
+
+    private fun manageFunction() {
         authViewModel.homeSearch(preferences.getCityName(), "", "", preferences.getLatitudeData(), preferences.getLongitudeData())
         search()
         movedNext()
     }
+
     private fun movedNext() {
+//        Voice Search
         binding?.include42?.voiceBtn?.setOnClickListener {
             val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
             intent.putExtra(
@@ -57,31 +67,32 @@ class CinemaSearchActivity : AppCompatActivity(),
                 Locale.getDefault()
             )
             intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to text")
-
             try {
-                startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT)
+                resultLauncher.launch(intent)
             } catch (e: Exception) {
-                Toast
-                    .makeText(
-                        this@CinemaSearchActivity, " " + e.message,
-                        Toast.LENGTH_SHORT
-                    )
-                    .show()
+                toast(e.message)
             }
         }
 
-
+//        Cancel button
         binding?.include42?.cancelBtn?.setOnClickListener {
             finish()
         }
 
-        binding?.include42?.editTextTextPersonName?.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                authViewModel.homeSearch(preferences.getCityName(),  binding?.include42?.editTextTextPersonName?.text.toString(), "", preferences.getLatitudeData(), preferences.getLongitudeData())
-                return@OnEditorActionListener true
+//        search Text
+        binding?.include42?.editTextTextPersonName?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
-            false
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                filter(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable) {
+
+            }
         })
+
     }
 
     private fun search() {
@@ -129,30 +140,34 @@ class CinemaSearchActivity : AppCompatActivity(),
     }
 
     private fun retrieveData(output: HomeSearchResponse.Output) {
+//        SetData  Filter
+        filterCinemaList= output.m
+
+//        SetData
         val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        val otherCityAdapter = SearchHomeMovieAdapter(output.m, this, this)
+        searchHomeMovieAdapter = SearchHomeMovieAdapter(output.m, this, this)
         binding?.recyclerCinemaSearch?.layoutManager = gridLayout2
-        binding?.recyclerCinemaSearch?.adapter = otherCityAdapter
+        binding?.recyclerCinemaSearch?.adapter = searchHomeMovieAdapter
     }
 
-    @Deprecated("Deprecated in Java")
-    @Override
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_SPEECH_INPUT) {
-            if (resultCode == RESULT_OK && data != null) {
 
-                if (resultCode == RESULT_OK) {
-                    val result: ArrayList<String>? = data.getStringArrayListExtra(
+    //Voice search
+    private var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                if (result.resultCode == RESULT_OK) {
+                    val data: Intent? = result.data
+                    val result: ArrayList<String>? = data?.getStringArrayListExtra(
                         RecognizerIntent.EXTRA_RESULTS
                     )
+                    filter( Objects.requireNonNull(result)!![0])
                     binding?.include42?.editTextTextPersonName?.setText(
                         Objects.requireNonNull(result)!![0]
                     )
                 }
             }
         }
-    }
 
     override fun onSearchMovie(selectCityList: HomeSearchResponse.Output.M) {
         val intent = Intent(this, NowShowingActivity::class.java)
@@ -160,5 +175,22 @@ class CinemaSearchActivity : AppCompatActivity(),
         startActivity(intent)
     }
 
+
+    private fun filter(text: String) {
+        val filtered: ArrayList<HomeSearchResponse.Output.M> = ArrayList()
+        val filtered1: ArrayList<HomeSearchResponse.Output.M> = ArrayList()
+        for (item in filterCinemaList!!) {
+            if (item.n.lowercase(Locale.getDefault())
+                    .contains(text.lowercase(Locale.getDefault()))
+            ) {
+                filtered.add(item)
+            }
+        }
+        if (filtered.isEmpty()) {
+            searchHomeMovieAdapter?.filterMovieList(filtered1)
+        } else {
+            searchHomeMovieAdapter?.filterMovieList(filtered)
+        }
+    }
 
 }

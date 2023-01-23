@@ -30,10 +30,10 @@ class BookingRetrievalChildAdapter(
                 //name
                 binding.textView379.text="  "+this.ccn
                 if (rowIndex==position){
-                    binding.constraintLayout82.setBackgroundResource(R.drawable.ui_item_select)
+                    binding.constraintLayout82.setBackgroundResource(R.drawable.retreval_select)
                     binding.radioButton3.setImageResource(R.drawable.curve_select)
                 }else{
-                    binding.constraintLayout82.setBackgroundResource(R.drawable.ui_item_unselect)
+                    binding.constraintLayout82.setBackgroundResource(R.drawable.retreval_unselect)
                     binding.radioButton3.setImageResource(R.drawable.curve_unselect)
 
                 }

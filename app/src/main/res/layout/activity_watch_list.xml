@@ -7,58 +7,96 @@
     android:background="@color/background"
     tools:context=".ui.watchList.WatchListActivity">
 
-    <View
-        android:id="@+id/view175"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout136"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/constrainLayout165"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <include
-            android:id="@+id/include17"
-            layout="@layout/toolbar"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/view175"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout136"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                android:id="@+id/include17"
+                layout="@layout/toolbar"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/textView281"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:text="@string/we_ll_notify"
+            android:textColor="@color/h8Point1Color"
+            android:textSize="@dimen/dimen_13sp"
+            app:layout_constraintEnd_toEndOf="@+id/view175"
+            app:layout_constraintStart_toStartOf="@+id/view175"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout136" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView53"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textView281"
+            app:layout_constraintStart_toStartOf="@+id/textView281"
+            app:layout_constraintTop_toBottomOf="@+id/textView281"
+            tools:listitem="@layout/watchlist_item" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/textView281"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:fontFamily="@font/sf_pro_text_regular"
-        android:textSize="@dimen/dimen_13sp"
-        android:textColor="@color/h8Point1Color"
-        android:text="@string/we_ll_notify"
-        app:layout_constraintEnd_toEndOf="@+id/view175"
-        app:layout_constraintStart_toStartOf="@+id/view175"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout136" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView53"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="30dp"
-        tools:listitem="@layout/watchlist_item"
+    <!--Shimmer-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout164"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textView281"
-        app:layout_constraintStart_toStartOf="@+id/textView281"
-        app:layout_constraintTop_toBottomOf="@+id/textView281" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            android:id="@+id/include38"
+            layout="@layout/shimmer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -39,14 +39,11 @@ import com.net.pvr1.ui.home.fragment.home.HomeFragment
 import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
 import com.net.pvr1.ui.home.fragment.more.MoreFragment
 import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
-import com.net.pvr1.ui.home.fragment.more.profile.userDetails.ProfileActivity
 import com.net.pvr1.ui.home.fragment.privilege.MemberFragment
 import com.net.pvr1.ui.home.fragment.privilege.NonMemberFragment
 import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeHomeDialogAdapter
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.home.interfaces.PlayPopup
-import com.net.pvr1.ui.location.selectCity.SelectCityActivity
-import com.net.pvr1.ui.scanner.ScannerActivity
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.PRIVILEGEVOUCHER
 import com.net.pvr1.utils.Constant.Companion.PrivilegeHomeResponseConst
@@ -65,8 +62,8 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     private val authViewModel: HomeViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var offerShow: Boolean = false
-    private var offerResponse: ArrayList<OfferResponse.Output>? = null
 
+    private var offerResponse: ArrayList<OfferResponse.Output>? = null
     private val firstFragment = HomeFragment()
     private val secondFragment = CinemasFragment()
     private val thirdFragment = NonMemberFragment()
@@ -89,49 +86,26 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         binding = ActivityHomeBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
+        manageFunction()
+    }
+
+    private fun manageFunction() {
         switchFragment()
-
-        //setUserName
-        if (preferences.getIsLogin()) {
-            binding?.includeAppBar?.profileBtn?.show()
-            binding?.includeAppBar?.textView2?.text = "Hello, " + preferences.getUserName()
-        } else {
-            binding?.includeAppBar?.profileBtn?.hide()
-            binding?.includeAppBar?.textView2?.text = "Hello!"
-        }
-        binding?.includeAppBar?.txtCity?.text = preferences.getCityName()
-
-        // Call Loyalty Home Api
-        authViewModel.privilegeHome(preferences.geMobileNumber(), preferences.getCityName())
         privilegeDataLoad()
         movedNext()
+        // Call Loyalty Home Api
+        authViewModel.privilegeHome(preferences.geMobileNumber(), preferences.getCityName())
     }
 
     //ClickMovedNext
     private fun movedNext() {
-        // Select City
-        binding?.includeAppBar?.txtCity?.setOnClickListener {
-            val intent = Intent(this, SelectCityActivity::class.java)
-            startActivity(intent)
-        }
-        // Qr COde
-        binding?.includeAppBar?.scanQr?.setOnClickListener {
-            val intent = Intent(this, ScannerActivity::class.java)
-            startActivity(intent)
-        }
-        // Profile
-        binding?.includeAppBar?.profileBtn?.setOnClickListener {
-            val intent = Intent(this, ProfileActivity::class.java)
-            intent.putExtra("from", "home")
-            startActivity(intent)
-        }
-
-
-        //Close Offer Alert
+//      Close Offer Alert
         binding?.imageView78?.setOnClickListener {
             binding?.constraintLayout55?.hide()
         }
 
+//        Dialogs
         binding?.textView185?.setOnClickListener {
             showOfferDialog()
         }
@@ -151,7 +125,6 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                 }
                 R.id.cinemaFragment -> {
                     setCurrentFragment(secondFragment)
-                    binding?.includeAppBar?.textView2?.text = getString(R.string.all_theaters)
                 }
                 R.id.privilegeFragment -> managePrivilege()
                 R.id.comingSoonFragment -> setCurrentFragment(fourthFragment)

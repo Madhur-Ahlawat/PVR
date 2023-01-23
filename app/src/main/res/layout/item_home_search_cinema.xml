@@ -3,18 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/dimen_10dp">
+    android:layout_height="wrap_content">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_100dp"
-        android:layout_marginStart="@dimen/padding_10"
-        android:layout_marginTop="@dimen/dimen_15dp"
-        android:layout_marginEnd="@dimen/padding_10"
-        android:background="@drawable/white_round_shape"
-        android:padding="@dimen/dimen_15dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/retreval_unselect"
+        android:layout_marginBottom="@dimen/dimen_15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +18,6 @@
 
         <TextView
             android:id="@+id/textView50"
-            style="@style/H12Size"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -34,7 +29,9 @@
             android:singleLine="true"
             android:textAllCaps="false"
             android:textColor="@color/black"
-            android:textSize="@dimen/dimen_16sp"
+            android:textSize="@dimen/dimen_14sp"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/sf_pro_text_medium"
             app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -42,18 +39,19 @@
 
         <TextView
             android:id="@+id/textView51"
-            style="@style/H1RegSize"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView50"
             android:layout_marginStart="@dimen/dimen_3dp"
-            android:layout_marginTop="@dimen/dimen_5dp"
+            android:layout_marginTop="@dimen/dimen_6dp"
             android:gravity="top"
             android:textAllCaps="false"
             android:textColor="#6B6B6B"
-            android:textSize="@dimen/dimen_14sp"
+            android:textSize="@dimen/dimen_12sp"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/sf_pro_text_regular"
             app:layout_constraintEnd_toEndOf="@+id/textView50"
-            app:layout_constraintStart_toEndOf="@+id/imageView4"
+            app:layout_constraintStart_toStartOf="@+id/textView50"
             app:layout_constraintTop_toBottomOf="@+id/textView50"
             tools:text="Pvr" />
 
@@ -107,6 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding_10"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView50"
             app:srcCompat="@drawable/ic_vector_loc"

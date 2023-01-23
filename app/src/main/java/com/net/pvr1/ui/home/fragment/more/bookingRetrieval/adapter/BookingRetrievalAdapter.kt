@@ -11,6 +11,7 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.RetrievalItemBinding
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
+import com.net.pvr1.ui.location.selectCity.response.SelectCityResponse
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
 
@@ -66,12 +67,11 @@ class BookingRetrievalAdapter(
 
                 if (rowIndex==position){
                     binding.recyclerView33.scrollToPosition(position + 1)
-
                     if (this.childs.size <= 1) {
                         binding.imageView168.background = context.resources.getDrawable(R.drawable.curve_select)
-                        binding.constraintLayout139.setBackgroundResource(R.drawable.ui_item_select)
+                        binding.constraintLayout139.setBackgroundResource(R.drawable.retreval_select)
                     } else {
-                        binding.constraintLayout139.setBackgroundResource(R.drawable.ui_item_unselect)
+                        binding.constraintLayout139.setBackgroundResource(R.drawable.retreval_unselect)
                         binding.textView248.setCompoundDrawablesWithIntrinsicBounds(
                             0,
                             0,
@@ -82,7 +82,7 @@ class BookingRetrievalAdapter(
                 }else{
                     binding.imageView168.setImageResource(R.drawable.curve_unselect)
 
-                    binding.constraintLayout139.setBackgroundResource(R.drawable.ui_item_unselect)
+                    binding.constraintLayout139.setBackgroundResource(R.drawable.retreval_unselect)
                 }
 
                 itemView.setOnClickListener {
@@ -103,5 +103,12 @@ class BookingRetrievalAdapter(
     interface RecycleViewItemClickListener {
         fun dateClick(comingSoonItem: BookingResponse.Output.Dy)
     }
+
+    fun filterList(filterList: ArrayList<BookingRetrievalResponse.Output.C>) {
+        // below line is to add our filtered
+        nowShowingList = filterList
+        notifyDataSetChanged()
+    }
+
 
 }

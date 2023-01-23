@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityWatchListBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.movieDetails.comingSoonDetails.ComingSoonDetailsActivity
@@ -16,7 +17,7 @@ import com.net.pvr1.ui.watchList.response.WatchListResponse
 import com.net.pvr1.ui.watchList.viewModel.WatchListViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.di.preference.PreferenceManager
+import com.net.pvr1.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -33,10 +34,16 @@ class WatchListActivity : AppCompatActivity(),WatchListAdapter.RecycleViewItemCl
         binding = ActivityWatchListBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
+        manageFunctions()
+    }
+
+    private fun manageFunctions() {
         authViewModel.watchlist(preferences.getUserId(),preferences.getCityName(),Constant().getDeviceId(this))
         watchListData()
         deleteAlert()
         movedNext()
+        getShimmerData()
     }
 
     private fun movedNext() {
@@ -46,6 +53,11 @@ class WatchListActivity : AppCompatActivity(),WatchListAdapter.RecycleViewItemCl
         }
         //title
         binding?.include17?.textView108?.text=getString(R.string.watchlist)
+    }
+
+    private fun getShimmerData() {
+        Constant().getData(binding?.include38?.tvFirstText, binding?.include38?.tvSecondText)
+        Constant().getData(binding?.include38?.tvSecondText, null)
     }
 
     private fun watchListData() {
@@ -93,6 +105,11 @@ class WatchListActivity : AppCompatActivity(),WatchListAdapter.RecycleViewItemCl
     }
 
     private fun retrieveData(output: ArrayList<WatchListResponse.Output>) {
+        //shimmer
+        binding?.constraintLayout164?.show()
+        //details
+        binding?.constrainLayout165?.show()
+
         val gridLayout =
             GridLayoutManager(this@WatchListActivity, 1, GridLayoutManager.VERTICAL, false)
         binding?.recyclerView53?.layoutManager = LinearLayoutManager(this@WatchListActivity)
@@ -110,7 +127,6 @@ class WatchListActivity : AppCompatActivity(),WatchListAdapter.RecycleViewItemCl
     override fun deleteAlertClick(comingSoonItem: WatchListResponse.Output) {
         authViewModel.deleteAlert(preferences.getUserId(),comingSoonItem.moviecode,comingSoonItem.city)
     }
-
 
     private fun deleteAlert() {
         authViewModel.deleteAlertLiveDataScope.observe(this) {
@@ -153,7 +169,6 @@ class WatchListActivity : AppCompatActivity(),WatchListAdapter.RecycleViewItemCl
                 }
             }
         }
-
     }
 
 }

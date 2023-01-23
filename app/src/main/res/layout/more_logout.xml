@@ -39,7 +39,7 @@
             android:id="@+id/myBookings"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="visible"
+            android:visibility="gone"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="@+id/view155"
             app:layout_constraintStart_toStartOf="@+id/view155"
@@ -282,6 +282,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/view155"
             app:layout_constraintEnd_toEndOf="@+id/view155"
             app:layout_constraintStart_toStartOf="@+id/view155"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout77">
@@ -293,12 +294,11 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:src="@drawable/offer"
+                android:src="@drawable/offer_ac"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription" />
-
 
             <TextView
                 android:id="@+id/textView234"
@@ -307,9 +307,9 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/sf_pro_text_medium"
+                android:text="@string/offers"
                 android:textColor="@color/black"
                 android:textSize="@dimen/dimen_14sp"
-                android:text="@string/offers"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView130"
                 app:layout_constraintStart_toEndOf="@+id/imageView130"
                 app:layout_constraintTop_toTopOf="@+id/imageView130" />
@@ -322,15 +322,15 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="ContentDescription"
-                app:tint="@color/gray_payment"  />
-
+                app:tint="@color/gray_payment"
+                tools:ignore="ContentDescription" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="20dp"
                 android:background="@color/grayEd"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -341,6 +341,7 @@
             android:id="@+id/constraintLayout79"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="@+id/view155"
             app:layout_constraintStart_toStartOf="@+id/view155"

@@ -9,6 +9,9 @@
         android:id="@+id/constraintLayout9"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -16,7 +19,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout7"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="40dp"
             android:background="@drawable/round_corner_search"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/cancelBtn"
@@ -31,11 +34,12 @@
                 android:layout_marginEnd="1dp"
                 android:paddingStart="7dp"
                 android:paddingEnd="@dimen/dimen_2dp"
-                android:src="@drawable/search"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/editTextTextPersonName"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/search"
+                app:tint="@color/otherCityColor"
                 tools:ignore="ContentDescription" />
 
             <ImageView
@@ -50,6 +54,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName"
                 app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/black"
                 tools:ignore="ContentDescription" />
 
             <EditText
@@ -74,18 +79,18 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
+        <ImageView
             android:id="@+id/cancelBtn"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:gravity="center"
-            android:padding="10dp"
-            android:text="@string/cancel"
-            android:textColor="@color/black"
+            android:padding="@dimen/dimen_12dp"
+            android:src="@drawable/cross_search"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/constraintLayout7"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

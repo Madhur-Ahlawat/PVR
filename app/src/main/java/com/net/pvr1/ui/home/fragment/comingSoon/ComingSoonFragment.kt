@@ -16,7 +16,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -29,7 +28,6 @@ import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.filter.GenericFilterComing
 import com.net.pvr1.ui.home.fragment.comingSoon.adapter.ComingSoonMovieAdapter
-import com.net.pvr1.ui.home.fragment.comingSoon.adapter.LanguageAdapter
 import com.net.pvr1.ui.home.fragment.comingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.comingSoon.search.CinemaSearchActivity
 import com.net.pvr1.ui.home.fragment.comingSoon.viewModel.ComingSoonViewModel
@@ -45,7 +43,7 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListener,
+class ComingSoonFragment : Fragment(),
     ComingSoonMovieAdapter.VideoPlay, GenericFilterComing.onButtonSelected ,
     StoriesProgressView.StoriesListener{
     @Inject
@@ -62,14 +60,12 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
     private var language="ALL"
     private var genre="ALL"
 
-
     // story board
     private var bannerShow = 0
     private var pressTime = 0L
     private var limit = 500L
     private var counterStory = 0
     private var currentPage = 1
-    private var qrCode = ""
     private var bannerModelsMain: ArrayList<CommingSoonResponse.Output.Pu> = ArrayList()
     private var ivBanner: ImageView? = null
     private var ivCross: ImageView? = null
@@ -79,7 +75,6 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
     private var ivPlay: LinearLayout? = null
     private var RlBanner: RelativeLayout? = null
     private var stories: StoriesProgressView? = null
-
 
     //internet Check
     private var broadcastReceiver: BroadcastReceiver? = null
@@ -92,37 +87,42 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
         return binding?.root
     }
 
+    @SuppressLint("CutPasteId")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (requireActivity().findViewById(R.id.include) as ConstraintLayout).hide()
-
         tvButton = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
             .findViewById(R.id.tv_button))
         ivBanner = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
             .findViewById(R.id.ivBanner))
         ivPlay = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
             .findViewById(R.id.ivPlay))
-        skip = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout).findViewById(R.id.skip))
-        reverse =
-            (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout).findViewById(R.id.reverse))
-        ivCross = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout).findViewById(R.id.ivCross))
+        skip = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
+            .findViewById(R.id.skip))
+        reverse = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
+            .findViewById(R.id.reverse))
+        ivCross = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
+            .findViewById(R.id.ivCross))
         RlBanner = (requireActivity().findViewById(R.id.RlBanner))
-        stories = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout).findViewById(R.id.stories))
+        stories = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
+            .findViewById(R.id.stories))
 
         if (stories == null) {
             stories?.destroy()
         }
+        manageFunction()
+    }
 
-        //Functions
+    private fun manageFunction() {
         comingSoonAPICall()
-
         comingSoonApi()
         movedNext()
         getShimmerData()
+
         //internet Check
         broadcastReceiver = NetworkReceiver()
         broadcastIntent()
     }
+
     private fun getShimmerData() {
         Constant().getData(binding?.include38?.tvFirstText,binding?.include38?.tvSecondText)
         Constant().getData(binding?.include38?.tvSecondText,null)
@@ -232,6 +232,7 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
 
 
         val onButtonSelected: GenericFilterComing.onButtonSelected = this
+
         // Filter
         binding?.filterFab?.setOnClickListener {
             val gFilter = GenericFilterComing()
@@ -264,11 +265,6 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
         }
     }
 
-
-    override fun onDateClick(comingSoonItem: Any) {
-
-    }
-
     override fun onDateClick(comingSoonItem: CommingSoonResponse.Output.Movy) {
         val intent = Intent(requireActivity(), ComingSoonDetailsActivity::class.java)
         intent.putExtra("mid", comingSoonItem.masterMovieId)
@@ -294,7 +290,7 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
             val containLanguage = type.contains("language")
             if (containLanguage) {
                 val index = type.indexOf("language")
-                var value: String = filterItemSelected.get(type[index])!!
+                var value: String = filterItemSelected[type[index]]!!
                 if (!value.equals("", ignoreCase = true)) {
                     buttonPressed.clear()
                     value = value.uppercase(Locale.getDefault())
@@ -338,7 +334,6 @@ class ComingSoonFragment : Fragment(), LanguageAdapter.RecycleViewItemClickListe
         binding?.appliedFilter?.visibility = View.GONE
         appliedFilterItem = HashMap()
         authViewModel.comingSoon(preferences.getCityName(), "ALL", "ALL", preferences.getUserId())
-
     }
 
     private fun initBanner(bannerModels: ArrayList<CommingSoonResponse.Output.Pu>) {

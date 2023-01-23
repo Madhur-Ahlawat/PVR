@@ -8,97 +8,45 @@
 
     <View
         android:id="@+id/view36"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!--Search-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout7"
         android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:background="@drawable/round_corner_search"
-        android:layout_marginTop="@dimen/dimen_8dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dimen_8dp"
         android:layout_marginBottom="@dimen/dimen_8dp"
         app:layout_constraintEnd_toEndOf="@+id/view36"
-        app:layout_constraintStart_toEndOf="@+id/imageView23"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view36">
 
-
-        <ImageView
-            android:id="@+id/imageView24"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/search"
-            android:paddingStart="7dp"
-            android:paddingEnd="@dimen/dimen_2dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription" />
-
-        <ImageView
-            android:id="@+id/voice_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@android:drawable/ic_btn_speak_now"
-            android:visibility="visible"
+        <include
+            android:id="@+id/include42"
+            layout="@layout/search_item"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription" />
-
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/transparent1"
-            android:imeOptions="actionDone"
-            android:ellipsize="end"
-            android:ems="10"
-            android:hint="@string/search_hint_text"
-            android:inputType="textPersonName"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:singleLine="true"
-            android:textColorHint="@color/pvr_light_gray"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/voice_btn"
-            app:layout_constraintStart_toEndOf="@+id/imageView24"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="Autofill,TextContrastCheck" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/imageView23"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="10dp"
-        android:src="@drawable/back"
-        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout7"
-        app:layout_constraintEnd_toStartOf="@+id/constraintLayout7"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout7"
-        tools:ignore="ContentDescription"
-        app:tint="@color/black" />
-
-
+    <!--Buttons-->
     <LinearLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal"
-        android:visibility="visible"
         android:layout_marginStart="@dimen/dimen_24dp"
         android:layout_marginEnd="@dimen/dimen_24dp"
+        android:orientation="horizontal"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/view36"
         app:layout_constraintStart_toStartOf="@+id/view36"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout7"
@@ -110,23 +58,24 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/moviesBtn"
-                android:fontFamily="@font/sf_pro_text_bold"
-                android:textSize="@dimen/dimen_12sp"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:fontFamily="@font/sf_pro_text_bold"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="@string/movies"
                 android:textColor="@drawable/tab_text_color"
+                android:textSize="@dimen/dimen_12sp"
                 tools:ignore="NestedWeights" />
 
             <View
                 android:id="@+id/viewMovie"
-                android:background="@color/yellow"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_2dp"/>
+                android:layout_height="@dimen/dimen_2dp"
+                android:background="@color/yellow" />
         </LinearLayout>
 
         <LinearLayout
@@ -135,33 +84,42 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/cinema"
-                android:fontFamily="@font/sf_pro_text_bold"
-                android:textSize="@dimen/dimen_12sp"
-                android:gravity="center_vertical|center_horizontal"
                 android:layout_width="match_parent"
-                android:minHeight="@dimen/dimen_36dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:gravity="center_vertical|center_horizontal"
+                android:minHeight="@dimen/dimen_36dp"
                 android:text="@string/cinemas"
                 android:textColor="@color/textColorGray"
+                android:textSize="@dimen/dimen_12sp"
                 tools:ignore="NestedWeights" />
 
             <View
                 android:id="@+id/viewCinema"
-                android:background="@color/grayEd"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_2dp"/>
+                android:layout_height="@dimen/dimen_2dp"
+                android:background="@color/grayEd" />
 
         </LinearLayout>
-
-
-
-
-
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/textView302"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/sf_pro_text_regular"
+        android:text="@string/trending_movies"
+        android:textAllCaps="true"
+        android:textSize="@dimen/dimen_12sp"
+        app:layout_constraintStart_toStartOf="@+id/movieRecycler"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+
+    <!--List-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/movieRecycler"
         android:layout_width="0dp"
@@ -172,19 +130,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/view36"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView302" />
-
-    <TextView
-        android:id="@+id/textView302"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/sf_pro_text_regular"
-        android:textSize="@dimen/dimen_14sp"
-        android:textAllCaps="true"
-        android:text="@string/trending_movies"
-        app:layout_constraintStart_toStartOf="@+id/movieRecycler"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
-
+        app:layout_constraintTop_toBottomOf="@+id/textView302"
+        tools:listitem="@layout/item_home_search_movie" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

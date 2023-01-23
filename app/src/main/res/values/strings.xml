@@ -98,6 +98,7 @@
 
     //Cinema
     <string name="parking">Parking</string>
+    <string name="movieForYou">Movie for You</string>
     <string name="f_amp_b"><![CDATA[F & B]]></string>
     <string name="metro">Metro nearby</string>
     <string name="directions">Directions</string>

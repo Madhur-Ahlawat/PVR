@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
-import kotlin.collections.ArrayList
 
 class SearchHomeCinemaAdapter(
     private var selectCityList: ArrayList<HomeSearchResponse.Output.T>,
@@ -56,4 +55,11 @@ class SearchHomeCinemaAdapter(
         fun onSearchCinema(selectCityItemList: HomeSearchResponse.Output.T)
         fun onSearchCinemaDirection(selectCityItemList: HomeSearchResponse.Output.T)
     }
+
+    fun filterCinemaList(filterList: ArrayList<HomeSearchResponse.Output.T>) {
+        // below line is to add our filtered
+        selectCityList = filterList
+        notifyDataSetChanged()
+    }
+
 }
