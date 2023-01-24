@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/dialog_gift_card_pin"
+    android:orientation="vertical"
+    android:layout_gravity="bottom"
+    android:layout_marginBottom="-50dp"
+    android:background="@drawable/bg_circle_see_all"
+    android:backgroundTint="@color/white"
+    android:padding="@dimen/padding_10">
+
+    <View
+        android:layout_width="@dimen/dimen_50dp"
+        android:layout_height="@dimen/dimen_5dp"
+        android:layout_gravity="center"
+        android:background="@color/gray"/>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_10"
+        android:gravity="center"
+        android:text=" Gift card Details"
+        android:textColor="@color/black"
+        android:layout_gravity="center"
+        android:textSize="@dimen/dimen_20sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/padding_10"
+        android:background="@color/gray"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_top_bottom"
+        android:layout_marginStart="@dimen/dimen_20dp"
+        android:layout_marginTop="@dimen/dimen_20dp"
+        android:layout_marginEnd="@dimen/dimen_20dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_grey_booking"
+        android:backgroundTint="@color/gray">
+
+        <com.joooonho.SelectableRoundedImageView
+            android:id="@+id/iv_gift_image"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_centerInParent="true"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            app:sriv_left_bottom_corner_radius="8dp"
+            app:sriv_left_top_corner_radius="8dp"
+            app:sriv_right_bottom_corner_radius="8dp"
+            app:sriv_right_top_corner_radius="8dp" />
+
+        <LinearLayout
+            android:id="@+id/ll_pvr_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/padding_10"
+            android:layout_marginTop="@dimen/padding_10"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/dimen_50dp"
+                android:layout_height="@dimen/dimen_20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/pvr_logo" />
+
+            <View
+                android:layout_width="@dimen/dimen_2dp"
+                android:layout_height="@dimen/dimen_15dp"
+                android:layout_gravity="center"
+                android:background="@color/gray" />
+
+            <TextView
+                android:id="@+id/tv_gift_card_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/padding_10"
+                android:text="Gift Card"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/dimen_15dp"
+        android:layout_marginTop="@dimen/padding_10"
+        android:layout_marginBottom="@dimen/dimen_5dp"
+        android:layout_marginStart="@dimen/dimen_20dp"
+        android:layout_marginEnd="@dimen/dimen_20dp"
+        android:background="@drawable/bg_grey_booking">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enter Card Pin"
+            android:layout_marginStart="@dimen/dimen_5dp"
+            android:textColor="@color/gray"
+            android:lineSpacingExtra="@dimen/dimen_4sp"
+            android:textSize="@dimen/dimen_12sp" />
+
+        <EditText
+            android:id="@+id/et_card_pin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_10"
+            android:inputType="number"
+            android:hint="Enter pin here"
+            android:textColorHint="@color/gray"
+            android:textColor="@color/black"
+            style="@style/text_black_bold"
+            android:textStyle="bold"
+            android:focusable="true"
+            android:layout_marginTop="@dimen/dimen_5dp"
+            android:background="@null"
+            android:textSize="@dimen/dimen_14sp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_5dp"
+        android:text="We promise to keep your card number safe"
+        android:layout_marginStart="@dimen/dimen_20dp"
+        android:layout_marginEnd="@dimen/dimen_20dp"
+        android:textColor="@color/gray"
+        android:lineSpacingExtra="@dimen/dimen_4sp"
+        android:textSize="@dimen/dimen_12sp" />
+
+    <TextView
+        android:id="@+id/tv_proceed_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Proceed"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/black"
+        style="@style/text_black_bold"
+        android:textStyle="bold"
+        android:paddingTop="@dimen/dimen_15dp"
+        android:paddingBottom="@dimen/dimen_15dp"
+        android:paddingStart="@dimen/dimen_20dp"
+        android:paddingEnd="@dimen/dimen_20dp"
+        android:layout_above="@+id/view_bottom"
+        android:layout_margin="@dimen/dimen_20dp"
+        android:background="@drawable/bg_grey_booking"
+        android:backgroundTint="@color/yellow"/>
+
+    <View
+        android:id="@+id/view_bottom"
+        android:layout_width="200dp"
+        android:layout_height="5dp"
+        android:layout_marginBottom="@dimen/dimen_50dp"
+        android:layout_gravity="center"
+        android:background="@color/black"/>
+
+</LinearLayout>

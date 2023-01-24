@@ -35,4 +35,14 @@ class ActivateGiftCardViewModel @Inject constructor(private val userRepository: 
         }
     }
 
+    //Redeem GiftCard
+    val redeemGCResponseLiveData: LiveData<NetworkResult<ActiveGCResponse>>
+        get() = userRepository.redeemGiftCardResponseLiveData
+
+    fun redeemGC(userId: String,giftcardid:String,pin:String) {
+        viewModelScope.launch {
+            userRepository.redeemGiftCard(userId, giftcardid,pin)
+        }
+    }
+
 }
