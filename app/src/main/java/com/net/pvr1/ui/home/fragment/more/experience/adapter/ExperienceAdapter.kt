@@ -1,30 +1,27 @@
 package com.net.pvr1.ui.home.fragment.more.experience.adapter
 
-import android.app.Activity
-import android.util.DisplayMetrics
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.databinding.FormatsItemBinding
 import com.net.pvr1.ui.home.fragment.more.experience.model.ExperienceResponse
+import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.show
 
 
 class ExperienceAdapter(
     private var nowShowingList: ArrayList<ExperienceResponse.Output.Format>,
-    private var context: Activity,
+    private var context: Context,
     private var listener: RecycleViewItemClickListener,
 ) :
     RecyclerView.Adapter<ExperienceAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: FormatsItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    private val displayMetrics = DisplayMetrics()
-    private var screenWidth = 0
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        context.windowManager.defaultDisplay.getMetrics(displayMetrics)
-        screenWidth = displayMetrics.widthPixels
+
         val binding = FormatsItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -36,15 +33,26 @@ class ExperienceAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
-                val lp = holder.itemView.layoutParams
-                lp.height = lp.height
-                lp.width = ((screenWidth-40)/1.17f).toInt()
-                holder.itemView.layoutParams = lp
+                binding.constraintLayout165.show()
 
                 //title
+                binding.textView190.text= this.text
+
+//                image
                 Glide.with(context)
                     .load(this.imageUrl)
                     .into(binding.imageView141)
+
+                if (this.rurl!=""){
+                    binding.imageView142.show()
+                }else{
+                    binding.imageView142.hide()
+
+                }
+
+                binding.imageView142.setOnClickListener {
+                    listener.itemPlayerClick(this)
+                }
 
                 itemView.setOnClickListener {
                     listener.itemClick(this)
@@ -59,6 +67,8 @@ class ExperienceAdapter(
 
 
     interface RecycleViewItemClickListener {
+        fun itemPlayerClick(comingSoonItem: ExperienceResponse.Output.Format)
+
         fun itemClick(comingSoonItem: ExperienceResponse.Output.Format)
     }
 

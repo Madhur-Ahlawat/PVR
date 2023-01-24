@@ -17,6 +17,7 @@ import com.net.pvr1.ui.home.fragment.comingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
 import com.net.pvr1.ui.home.fragment.more.contactUs.response.ContactUsResponse
+import com.net.pvr1.ui.home.fragment.more.experience.model.ExperienceResponse
 import com.net.pvr1.ui.home.fragment.more.offer.offerDetails.response.OfferDetailsResponse
 import com.net.pvr1.ui.home.fragment.more.offer.response.MOfferResponse
 import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
@@ -664,6 +665,13 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<FormatResponse>
 
+    @POST("api/content/formats")
+    suspend fun experience(
+        @Query("city") city: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<ExperienceResponse>
+
     @POST("api/trans/setfood")
     suspend fun ticketWithFood(
         @Query("foods") foods: String,
@@ -734,7 +742,6 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<AddFoodResponse>
-
 
 
     @POST("api/content/alltheater")
@@ -1153,7 +1160,7 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String,
         @Query("did") did: String,
-        ): Response<ActiveGCResponse>
+    ): Response<ActiveGCResponse>
 
     @POST("api/history/giftcard/reedem/history")
     suspend fun getDetailGiftCard(
@@ -1163,7 +1170,7 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String,
         @Query("did") did: String,
-        ): Response<ActiveGCResponse>
+    ): Response<ActiveGCResponse>
 
 
 }
