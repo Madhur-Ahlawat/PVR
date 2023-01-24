@@ -28,6 +28,7 @@ import com.net.pvr1.ui.giftCard.GiftCardActivity
 import com.net.pvr1.ui.home.fragment.more.adapter.ProfileCompleteAdapter
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.BookingRetrievalActivity
 import com.net.pvr1.ui.home.fragment.more.contactUs.ContactUsActivity
+import com.net.pvr1.ui.home.fragment.more.experience.ExperienceActivity
 import com.net.pvr1.ui.home.fragment.more.model.ProfileModel
 import com.net.pvr1.ui.home.fragment.more.offer.OfferActivity
 import com.net.pvr1.ui.home.fragment.more.prefrence.PreferenceActivity
@@ -87,6 +88,10 @@ class MoreFragment : Fragment() {
     }
 
     private fun manageFunctions() {
+
+        //Manage ui
+        binding?.tvLoginButton?.textView5?.text = getString(R.string.login)
+
         movedNext()
         //whatsapp Status
         whatsappOptStatus()
@@ -101,12 +106,14 @@ class MoreFragment : Fragment() {
                 timeStamp,
                 getHash(preferences.getUserId() + "|" + preferences.getToken() + "|" + "optin-info" + "|" + timeStamp)
             )
+
 //profile
             authViewModel.userProfile(
                 preferences.getCityName(), preferences.getUserId(), timeStamp, getHashProfile(
                     preferences.getUserId() + "|" + timeStamp
                 )
             )
+
             binding?.privilegeLoginUi?.show()
             binding?.privilegeLogOutUi?.hide()
             binding?.llBookingSection?.show()
@@ -145,6 +152,12 @@ class MoreFragment : Fragment() {
         //MyBookings
         binding?.login?.constraintLayout70?.setOnClickListener {
             val intent = Intent(requireContext(), MyBookingsActivity::class.java)
+            startActivity(intent)
+        }
+
+        //Experience
+        binding?.logout?.experience?.setOnClickListener {
+            val intent = Intent(requireContext(), ExperienceActivity::class.java)
             startActivity(intent)
         }
 
@@ -216,15 +229,12 @@ class MoreFragment : Fragment() {
         binding?.tvSignOut?.setOnClickListener {
             logOut()
         }
-
         //Contact Us
         binding?.tvContact?.setOnClickListener {
             val intent = Intent(requireContext(), ContactUsActivity::class.java)
             startActivity(intent)
         }
 
-        //Manage ui
-        binding?.tvLoginButton?.textView5?.text = getString(R.string.login)
 
         //Login
         binding?.tvLoginButton?.textView5?.setOnClickListener {

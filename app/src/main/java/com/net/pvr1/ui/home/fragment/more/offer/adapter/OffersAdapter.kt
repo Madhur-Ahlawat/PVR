@@ -22,6 +22,8 @@ import com.net.pvr1.ui.home.fragment.more.offer.adapter.PHAdapter.OpenRedirectio
 import com.net.pvr1.ui.home.fragment.more.offer.list.OfferListActivity
 import com.net.pvr1.ui.home.fragment.more.offer.response.MOfferResponse
 import com.net.pvr1.ui.home.fragment.more.offer.response.OfferLocalData
+import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.printLog
 import com.net.pvr1.utils.toast
 import java.util.*
 
@@ -66,6 +68,7 @@ class OffersAdapter(
         } else {
             holder.mainView.setBackgroundColor(Color.parseColor("#FFFFFF"))
         }
+
         val layoutParams: ViewGroup.LayoutParams = LinearLayout.LayoutParams(
             displayMetrics.widthPixels, ViewGroup.LayoutParams.WRAP_CONTENT
         )
@@ -76,18 +79,22 @@ class OffersAdapter(
         holder.offerRecList.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         if (cat.equals("", ignoreCase = true)) {
-            val list = Arrays.asList(
-                *offerList!![0].offerList[0].catp.replace("Trending,".toRegex(), "")
-                    .replace("TREND,".toRegex(), "").split("\\s*,\\s*").toTypedArray()
-            )
-            val adapter1 = OfferFilterAdapter(list, context, this, rowIndex, holder.offerRecList)
+
+            val list: List<String> =
+                offerList!![0].offerList[0].catp.replace("Trending,", "",ignoreCase = true).replace("TREND,", "",ignoreCase = true).split(",")
+
+            printLog("catList---->$list")
+
+
+            val adapter1 = OfferFilterAdapter(list , context, this, rowIndex, holder.offerRecList)
             holder.offerRecList.adapter = adapter1
-            if (rowIndex >= 0 && rowIndex < list.size) holder.offerRecList.smoothScrollToPosition(
+            if (rowIndex >= 0 && rowIndex < list.size)
+                holder.offerRecList.smoothScrollToPosition(
                 rowIndex + 1
             )
-            holder.titlePcTextView.visibility = View.GONE
-            holder.headerView.visibility = View.GONE
-            holder.seeAll.visibility = View.GONE
+            holder.titlePcTextView.hide()
+            holder.headerView.hide()
+            holder.seeAll.hide()
             if (phList != null && phList!!.size > 0) {
                 holder.upperView.visibility = View.VISIBLE
                 phList = phList
@@ -121,6 +128,7 @@ class OffersAdapter(
             holder.titlePcTextView.visibility = View.VISIBLE
             holder.headerView.visibility = View.VISIBLE
         }
+
         holder.seeAll.setOnClickListener {
             val intent = Intent(context, OfferListActivity::class.java)
             intent.putExtra("title",cat)

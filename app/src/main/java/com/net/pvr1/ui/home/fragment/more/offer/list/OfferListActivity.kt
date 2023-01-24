@@ -4,15 +4,15 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.net.pvr1.databinding.ActivityOfferListBinding
-import com.net.pvr1.ui.home.fragment.more.offer.adapter.OffersFAdapter
+import com.net.pvr1.ui.food.response.FoodResponse
+import com.net.pvr1.ui.home.fragment.more.offer.list.adapter.OfferListAdapter
 import com.net.pvr1.ui.home.fragment.more.offer.response.MOfferResponse
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class OfferListActivity : AppCompatActivity() {
+class OfferListActivity : AppCompatActivity(),OfferListAdapter.RecycleViewItemClickListenerCity {
     private var binding: ActivityOfferListBinding? = null
-    private var offerList: ArrayList<MOfferResponse.Output.Offer> = arrayListOf()
-
+//    private var offerList: ArrayList<MOfferResponse.Output.Offer> = arrayListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOfferListBinding.inflate(layoutInflater, null, false)
@@ -22,7 +22,6 @@ class OfferListActivity : AppCompatActivity() {
     }
 
     private fun manageFunction() {
-        offerList = intent.getSerializableExtra("food") as ArrayList<MOfferResponse.Output.Offer>
         movedNext()
         loadData()
     }
@@ -30,7 +29,7 @@ class OfferListActivity : AppCompatActivity() {
     private fun loadData() {
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding?.recyclerView59?.layoutManager = layoutManager
-        val adapter = OffersFAdapter(this, offerList, "F")
+        val adapter = OfferListAdapter(this,this,  intent.getSerializableExtra("list") as ArrayList<MOfferResponse.Output.Offer>)
         binding?.recyclerView59?.adapter = adapter
     }
 
@@ -41,5 +40,9 @@ class OfferListActivity : AppCompatActivity() {
         binding?.include36?.imageView58?.setOnClickListener {
             finish()
         }
+    }
+
+    override fun itemClick(comingSoonItem: FoodResponse.Output.Mfl) {
+
     }
 }

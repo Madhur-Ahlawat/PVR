@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityOfferBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.more.offer.adapter.OffersAdapter
@@ -14,7 +15,6 @@ import com.net.pvr1.ui.home.fragment.more.offer.response.OfferLocalData
 import com.net.pvr1.ui.home.fragment.more.offer.viewModel.OfferViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.di.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -35,10 +35,21 @@ class OfferActivity : AppCompatActivity(), OffersAdapter.RecycleViewItemClickLis
         binding = ActivityOfferBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        binding?.include4?.textView108?.text = getString(R.string.offers)
-        authViewModel.offer(Constant().getDeviceId(this), "Delhi-NCR")
-        offerDataLoad()
 
+        manageFunction()
+    }
+
+    private fun manageFunction() {
+        binding?.include4?.textView108?.text = getString(R.string.offers)
+        authViewModel.offer(Constant().getDeviceId(this), preferences.getCityName())
+        offerDataLoad()
+        movedNext()
+    }
+
+    private fun movedNext() {
+        binding?.include4?.imageView58?.setOnClickListener {
+            finish()
+        }
     }
 
     private fun offerDataLoad() {
@@ -94,6 +105,7 @@ class OfferActivity : AppCompatActivity(), OffersAdapter.RecycleViewItemClickLis
     }
 
     private fun updateAdapter(offer: ArrayList<OfferLocalData>) {
+
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding?.recyclerView?.layoutManager = layoutManager
         val adapter = OffersAdapter(this, offer, offer, this)

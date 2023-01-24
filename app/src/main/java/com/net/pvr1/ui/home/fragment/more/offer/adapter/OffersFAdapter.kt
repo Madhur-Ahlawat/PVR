@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.home.fragment.more.offer.adapter
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.util.DisplayMetrics
@@ -8,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -17,7 +17,6 @@ import com.net.pvr1.ui.home.fragment.more.offer.offerDetails.OfferDetailsActivit
 import com.net.pvr1.ui.home.fragment.more.offer.response.MOfferResponse
 import com.net.pvr1.utils.Util
 
-//context: Activity, offerList: List<Datum>?, type: String
 class OffersFAdapter(
     private var context: Activity,
     private var offerList: ArrayList<MOfferResponse.Output.Offer>,
@@ -35,10 +34,10 @@ class OffersFAdapter(
         return ViewHolder(itemLayoutView)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         screenWidth = context.resources.displayMetrics.widthPixels
         val obj: MOfferResponse.Output.Offer = offerList[position]
-        Toast.makeText(context, "Valid till ", Toast.LENGTH_SHORT).show()
         holder.name.text = obj.c
         holder.name.isSelected = true
         holder.expiry.text = "Valid till " + obj.vt
@@ -77,7 +76,8 @@ class OffersFAdapter(
         holder.itemView.setOnClickListener {
             val intent = Intent(context, OfferDetailsActivity::class.java)
             intent.putExtra("title", obj.c)
-            intent.putExtra("description", obj.description)
+            intent.putExtra("disc", obj.vt)
+            intent.putExtra("id", obj.id.toString())
             context.startActivity(intent)
         }
     }

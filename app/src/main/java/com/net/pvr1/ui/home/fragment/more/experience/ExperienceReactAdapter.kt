@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.home.experience
+package com.net.pvr1.ui.home.fragment.more.experience
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ExperienceReactBinding
-import com.net.pvr1.ui.home.experience.model.ReactModel
+import com.net.pvr1.ui.home.fragment.more.experience.model.ReactModel
 
 
 class ExperienceReactAdapter(

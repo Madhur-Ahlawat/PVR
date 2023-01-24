@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
-import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
+import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -28,7 +28,7 @@ class HomeViewModel @Inject constructor(private val userRepository: UserReposito
 
     //offer
     val userResponseOfferLiveData: LiveData<NetworkResult<OfferResponse>>
-        get() = userRepository.offerDetailsResponseLiveData
+        get() = userRepository.offerResponseLiveData
 
     fun offer(id:String) {
         viewModelScope.launch {

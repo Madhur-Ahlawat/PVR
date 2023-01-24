@@ -42,6 +42,7 @@ class OfferFilterAdapter(
             holder.name.isSelected = false
             holder.name.setTextColor(context.resources.getColor(R.color.h8Point1Color))
         }
+
         holder.itemView.setOnClickListener {
             if (rowIndex == position) {
                 rowIndex = -1

@@ -15,6 +15,7 @@ import com.net.pvr1.utils.Constant.Companion.USER_ID
 import com.net.pvr1.utils.Constant.Companion.USER_MO_NUMBER
 import com.net.pvr1.utils.Constant.Companion.USER_NAME
 import com.net.pvr1.utils.Constant.Companion.USER_TOKEN
+import com.net.pvr1.utils.Constant.SharedPreference.Companion.PS
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -169,15 +170,29 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
         return prefs.getString(LONGITUDE, "0.0").toString()
     }
 
+
+    fun getLong(s: String): Long {
+        return prefs.getLong(s, 0)
+    }
+
+
+    fun savePS(ps: String) {
+        editor = prefs.edit()
+        editor?.putString(PS, ps)
+        editor?.apply()
+    }
+
+    fun getPS(): String {
+        return prefs.getString(PS, "0.0").toString()
+    }
+
+
+
+
     fun clearData(requireActivity: Activity) {
         editor = prefs.edit()
         editor?.clear()
         editor?.commit()
 
     }
-
-    fun getLong(s: String): Long {
-        return prefs.getLong(s, 0)
-    }
-
 }

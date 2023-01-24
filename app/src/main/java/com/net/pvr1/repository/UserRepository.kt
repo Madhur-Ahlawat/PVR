@@ -20,6 +20,7 @@ import com.net.pvr1.ui.home.fragment.comingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
 import com.net.pvr1.ui.home.fragment.more.contactUs.response.ContactUsResponse
+import com.net.pvr1.ui.home.fragment.more.offer.offerDetails.response.OfferDetailsResponse
 import com.net.pvr1.ui.home.fragment.more.offer.response.MOfferResponse
 import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr1.ui.home.fragment.more.prefrence.response.PreferenceResponse
@@ -53,8 +54,6 @@ import com.net.pvr1.utils.NetworkResult
 import com.net.pvr1.utils.printLog
 import org.json.JSONObject
 import retrofit2.Response
-import retrofit2.http.Header
-import retrofit2.http.Query
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(private val userAPI: UserAPI) {
@@ -574,8 +573,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
 
 
     //Offer Details
-    private val offerDetailsLiveData = MutableLiveData<NetworkResult<OfferResponse>>()
-    val offerDetailsResponseLiveData: LiveData<NetworkResult<OfferResponse>>
+    private val offerDetailsLiveData = MutableLiveData<NetworkResult<OfferDetailsResponse>>()
+    val offerDetailsResponseLiveData: LiveData<NetworkResult<OfferDetailsResponse>>
         get() = offerDetailsLiveData
 
     suspend fun offerDetails(id: String, did: String) {
@@ -584,7 +583,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         offerDetailsResponse(response)
     }
 
-    private fun offerDetailsResponse(response: Response<OfferResponse>) {
+    private fun offerDetailsResponse(response: Response<OfferDetailsResponse>) {
         if (response.isSuccessful && response.body() != null) {
             offerDetailsLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {

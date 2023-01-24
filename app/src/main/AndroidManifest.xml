@@ -29,6 +29,9 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
         <activity
+            android:name=".ui.home.fragment.more.experience.ExperienceActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.cinemaSession.cinemaDetails.CinemaDetailsActivity"
             android:exported="false">
             <meta-data
@@ -215,7 +218,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".ui.giftCard.activateGiftCard.ExpiredGiftCardActivity"
             android:exported="false"
@@ -224,7 +226,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".ui.giftCard.activateGiftCard.CreateGiftCardActivity"
             android:exported="false"
@@ -233,7 +234,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".ui.giftCard.activateGiftCard.AddGiftCardActivity"
             android:exported="false"
@@ -330,12 +330,10 @@
             android:name=".ui.myBookings.MyBookingsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.myBookings.PastBookingsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.login.otpVerify.OtpVerifyActivity"
             android:exported="false"
@@ -349,6 +347,22 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.home.HomeActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" /> <!-- <queries> -->
+        <activity
+            android:name=".ui.payment.paytmpostpaid.PaytmPostPaidActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.payment.webView.PaytmWebActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.fragment.privilege.EnrollInPassportActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.splash.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait">
@@ -357,17 +371,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".ui.home.HomeActivity"
-            android:exported="true"
-            android:screenOrientation="portrait" /> <!-- <queries> -->
-
-
-<!--        Location Service-->
-        <service android:name=".utils.FetchAddressIntentServices" />
-
-<!--        Network Service-->
+        </activity> <!-- Location Service -->
+        <service android:name=".utils.FetchAddressIntentServices" /> <!-- Network Service -->
         <receiver
             android:name=".utils.NetworkReceiver"
             android:exported="true">
@@ -391,20 +396,6 @@
         <meta-data
             android:name="com.phonepe.android.sdk.Debuggable"
             android:value="true" />
-
-        <activity
-            android:name=".ui.payment.paytmpostpaid.PaytmPostPaidActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.payment.webView.PaytmWebActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".ui.home.fragment.privilege.EnrollInPassportActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

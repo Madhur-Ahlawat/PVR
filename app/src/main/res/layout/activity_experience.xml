@@ -4,36 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.fragment.more.offer.list.OfferListActivity">
+    tools:context=".ui.home.fragment.more.experience.ExperienceActivity">
 
     <View
-        android:id="@+id/view232"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/view13"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <include
-        android:id="@+id/include36"
+        android:id="@+id/include45"
         layout="@layout/toolbar"
         android:layout_width="0dp"
         android:layout_height="@dimen/dimen_60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/view13" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView59"
+        android:id="@+id/recyclerView61"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
+        tools:listitem="@layout/formats_item"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include36"
-        tools:listitem="@layout/offer_item" />
+        app:layout_constraintTop_toBottomOf="@+id/include45" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

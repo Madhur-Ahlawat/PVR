@@ -17,6 +17,7 @@ import com.net.pvr1.ui.home.fragment.comingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
 import com.net.pvr1.ui.home.fragment.more.contactUs.response.ContactUsResponse
+import com.net.pvr1.ui.home.fragment.more.offer.offerDetails.response.OfferDetailsResponse
 import com.net.pvr1.ui.home.fragment.more.offer.response.MOfferResponse
 import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr1.ui.home.fragment.more.prefrence.response.PreferenceResponse
@@ -249,7 +250,7 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String,
         @Query("did") did: String,
-    ): Response<OfferResponse>
+    ): Response<OfferDetailsResponse>
 
     @POST("api/content/cities")
     suspend fun selectCity(
