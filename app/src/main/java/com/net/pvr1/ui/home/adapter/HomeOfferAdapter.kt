@@ -30,7 +30,7 @@ class HomeOfferAdapter(
         //Image
             Glide.with(context)
             .load(cinemaItem.i)
-            .error(R.drawable.app_icon)
+            .error(R.drawable.placeholder_horizental)
             .into(holder.image)
 
         //moreDetails

@@ -20,7 +20,8 @@ import com.net.pvr1.ui.home.fragment.comingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
 import com.net.pvr1.ui.home.fragment.more.contactUs.response.ContactUsResponse
-import com.net.pvr1.ui.home.fragment.more.experience.model.ExperienceResponse
+import com.net.pvr1.ui.home.fragment.more.experience.response.ExperienceDetailsResponse
+import com.net.pvr1.ui.home.fragment.more.experience.response.ExperienceResponse
 import com.net.pvr1.ui.home.fragment.more.offer.offerDetails.response.OfferDetailsResponse
 import com.net.pvr1.ui.home.fragment.more.offer.response.MOfferResponse
 import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
@@ -525,9 +526,9 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     val offerResponseLiveData: LiveData<NetworkResult<OfferResponse>>
         get() = offerLiveData
 
-    suspend fun offer(did: String) {
+    suspend fun offer(city: String, userId: String, did: String, isSpi: String) {
         offerLiveData.postValue(NetworkResult.Loading())
-        val response = userAPI.offer(did, Constant.version, Constant.platform)
+        val response = userAPI.offer(city,userId,did,isSpi, Constant.version, Constant.platform)
         offerResponse(response)
     }
 
@@ -1478,6 +1479,29 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             experienceLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
+
+//    ExperienceDetails
+    private val experienceDetailsLiveData = MutableLiveData<NetworkResult<ExperienceDetailsResponse>>()
+    val  experienceDetailsResponseLiveData: LiveData<NetworkResult<ExperienceDetailsResponse>>
+        get() = experienceDetailsLiveData
+    suspend fun  experienceDetailsLayout(city: String, type: String) {
+        experienceDetailsLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.experienceDetails(
+            city,type, Constant.version, Constant.platform
+        )
+        experienceDetailsLayoutResponse(response)
+    }
+    private fun  experienceDetailsLayoutResponse(response: Response<ExperienceDetailsResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            experienceDetailsLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            experienceDetailsLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            experienceDetailsLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
 
     //Seat With Food
     private val seatWithFoodLiveData = MutableLiveData<NetworkResult<SummeryResponse>>()

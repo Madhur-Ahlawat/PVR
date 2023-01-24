@@ -18,7 +18,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout101"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_56dp"
+        android:layout_height="@dimen/dimen_60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -39,6 +39,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout103"
@@ -55,7 +56,6 @@
                 android:id="@+id/recyclerView40"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_8dp"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="3"
@@ -63,54 +63,53 @@
 
             <RelativeLayout
                 android:id="@+id/mobileLayout"
-                android:layout_marginTop="40dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:paddingEnd="@dimen/dimen_5dp"
-                android:paddingBottom="@dimen/dimen_5dp"
-                android:paddingTop="@dimen/dimen_8dp"
-                android:gravity="center"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView10"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_70dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/text_curve"
+                android:gravity="center"
                 android:paddingStart="@dimen/dimen_10dp"
-                android:background="@drawable/text_curve">
+                android:paddingTop="@dimen/dimen_8dp"
+                android:paddingEnd="@dimen/dimen_5dp"
+                android:paddingBottom="@dimen/dimen_5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView10">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp"
-                    app:boxStrokeColor="@color/transparent"
-                    app:boxBackgroundColor="@color/transparent"
-                    android:layout_marginTop="-8dp"
+                    android:id="@+id/textInputLayout"
                     style="@style/styledBlackTilEditText"
-                    android:layout_centerVertical="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:hintTextColor="@color/textColor"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="-8dp"
                     android:hint="@string/mobile_number"
+                    app:boxBackgroundColor="@color/transparent"
+                    app:boxStrokeColor="@color/transparent"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
                     app:endIconMode="custom"
                     app:errorEnabled="false"
-                    android:id="@+id/textInputLayout"
-                    >
+                    app:hintTextColor="@color/textColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <EditText
+                    <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/mobileNumber"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/sf_pro_text_bold"
+                        android:background="@null"
                         android:digits="1234567890"
+                        android:fontFamily="@font/sf_pro_text_bold"
+                        android:gravity="bottom"
                         android:imeOptions="actionDone"
                         android:inputType="phone"
                         android:maxLength="10"
-                        android:gravity="bottom"
-                        android:textColorHint="@color/textColor"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:background="@null" />
+                        android:textColorHint="@color/textColor"
+                        android:textSize="16sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
             </RelativeLayout>
@@ -129,52 +128,51 @@
 
             <RelativeLayout
                 android:id="@+id/emailLayout"
-                android:layout_marginTop="40dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:paddingEnd="@dimen/dimen_5dp"
-                android:paddingBottom="@dimen/dimen_5dp"
-                android:paddingTop="@dimen/dimen_8dp"
-                android:gravity="center"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView10"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_70dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/text_curve"
+                android:gravity="center"
                 android:paddingStart="@dimen/dimen_10dp"
-                android:background="@drawable/text_curve">
+                android:paddingTop="@dimen/dimen_8dp"
+                android:paddingEnd="@dimen/dimen_5dp"
+                android:paddingBottom="@dimen/dimen_5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView10">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp"
-                    app:boxStrokeColor="@color/transparent"
-                    app:boxBackgroundColor="@color/transparent"
-                    android:layout_marginTop="-8dp"
+                    android:id="@+id/emailInputLayout"
                     style="@style/styledBlackTilEditText"
-                    android:layout_centerVertical="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:hintTextColor="@color/textColor"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="-8dp"
                     android:hint="@string/email_id"
+                    app:boxBackgroundColor="@color/transparent"
+                    app:boxStrokeColor="@color/transparent"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
                     app:endIconMode="custom"
                     app:errorEnabled="false"
-                    android:id="@+id/emailInputLayout"
-                    >
+                    app:hintTextColor="@color/textColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <EditText
+                    <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/email"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@null"
                         android:fontFamily="@font/sf_pro_text_bold"
+                        android:gravity="bottom"
                         android:imeOptions="actionNext"
                         android:inputType="textEmailAddress"
-                        android:gravity="bottom"
-                        android:textColorHint="@color/textColor"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:background="@null" />
+                        android:textColorHint="@color/textColor"
+                        android:textSize="16sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
             </RelativeLayout>
@@ -193,55 +191,55 @@
 
             <RelativeLayout
                 android:id="@+id/perosnalNotesLayout"
-                android:layout_marginTop="40dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:paddingEnd="@dimen/dimen_5dp"
-                android:paddingBottom="@dimen/dimen_5dp"
-                android:paddingTop="@dimen/dimen_8dp"
-                android:gravity="center"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/text_curve"
+                android:gravity="center"
                 android:paddingStart="@dimen/dimen_10dp"
-                android:background="@drawable/text_curve">
+                android:paddingTop="@dimen/dimen_8dp"
+                android:paddingEnd="@dimen/dimen_5dp"
+                android:paddingBottom="@dimen/dimen_5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView10">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp"
-                    app:boxStrokeColor="@color/transparent"
-                    app:boxBackgroundColor="@color/transparent"
-                    android:layout_marginTop="-8dp"
+                    android:id="@+id/notesInputLayout"
                     style="@style/styledBlackTilEditText"
-                    android:layout_centerVertical="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:hintTextColor="@color/textColor"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="-8dp"
                     android:hint="@string/personal_note"
+                    app:boxBackgroundColor="@color/transparent"
+                    app:boxStrokeColor="@color/transparent"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="100"
                     app:endIconMode="custom"
                     app:errorEnabled="false"
-                    app:counterMaxLength="100"
-                    app:counterEnabled="true"
-                    android:id="@+id/notesInputLayout"
-                    >
+                    app:hintTextColor="@color/textColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <EditText
+                    <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/notes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@null"
                         android:fontFamily="@font/sf_pro_text_bold"
-                        android:imeOptions="actionDone"
-                        android:inputType="textEmailAddress"
-                        android:maxLength="100"
                         android:gravity="bottom"
-                        android:textColorHint="@color/textColor"
+                        android:imeOptions="actionDone"
+                        android:maxLength="100"
+                        android:ems="15"
+                        android:inputType="textMultiLine"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:background="@null" />
+                        android:textColorHint="@color/textColor"
+                        android:textSize="16sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
             </RelativeLayout>

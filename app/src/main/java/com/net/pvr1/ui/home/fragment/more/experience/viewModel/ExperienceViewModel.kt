@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
-import com.net.pvr1.ui.home.fragment.more.experience.model.ExperienceResponse
+import com.net.pvr1.ui.home.fragment.more.experience.response.ExperienceDetailsResponse
+import com.net.pvr1.ui.home.fragment.more.experience.response.ExperienceResponse
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -20,6 +21,16 @@ class ExperienceViewModel @Inject constructor(private val userRepository: UserRe
     fun experience(city: String) {
         viewModelScope.launch {
             userRepository.experienceLayout(city)
+        }
+    }
+
+    //experience Details
+    val experienceLiveDataScope: LiveData<NetworkResult<ExperienceDetailsResponse>>
+        get() = userRepository.experienceDetailsResponseLiveData
+
+    fun experienceDetails(city: String,type: String) {
+        viewModelScope.launch {
+            userRepository.experienceDetailsLayout(city,type)
         }
     }
 }

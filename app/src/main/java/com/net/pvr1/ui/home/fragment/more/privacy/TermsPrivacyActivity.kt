@@ -7,11 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityTermsPrivacyBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.home.fragment.more.adapter.TermsConditionAdapter
 import com.net.pvr1.ui.webView.WebViewActivity
 import com.net.pvr1.utils.Constant
-import com.net.pvr1.di.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -28,6 +28,10 @@ class TermsPrivacyActivity : AppCompatActivity(),
         val view = binding?.root
         setContentView(view)
 
+        manageFunction()
+    }
+
+    private fun manageFunction() {
         //title
         binding?.toolbar?.textView108?.text = getString(R.string.terms_condition_text)
         movedNext()
@@ -55,15 +59,17 @@ class TermsPrivacyActivity : AppCompatActivity(),
     override fun alsoPlaying(comingSoonItem: String, position: Int) {
         val intent = Intent(this, WebViewActivity::class.java)
         intent.putExtra("from", "more")
-        intent.putExtra("title", getString(R.string.terms_condition_text))
         when (position) {
             0 -> {
+                intent.putExtra("title", comingSoonItem)
                 intent.putExtra("getUrl", Constant.privacy)
             }
             1 -> {
+                intent.putExtra("title", comingSoonItem)
                 intent.putExtra("getUrl", Constant.termsUse)
             }
             2 -> {
+                intent.putExtra("title", comingSoonItem)
                 intent.putExtra("getUrl", Constant.termsCondition)
             }
         }

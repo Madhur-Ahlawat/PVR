@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.databinding.FormatsItemBinding
-import com.net.pvr1.ui.home.fragment.more.experience.model.ExperienceResponse
+import com.net.pvr1.ui.home.fragment.more.experience.response.ExperienceResponse
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
 
@@ -47,7 +47,6 @@ class ExperienceAdapter(
                     binding.imageView142.show()
                 }else{
                     binding.imageView142.hide()
-
                 }
 
                 binding.imageView142.setOnClickListener {
@@ -57,6 +56,7 @@ class ExperienceAdapter(
                 itemView.setOnClickListener {
                     listener.itemClick(this)
                 }
+
                 }
             }
     }

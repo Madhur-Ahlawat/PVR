@@ -35,7 +35,7 @@
     <!--    Story Board-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout55"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_width="0dp"
         android:layout_height="@dimen/dimen_50dp"
         android:layout_marginStart="8dp"

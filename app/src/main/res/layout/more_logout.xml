@@ -190,6 +190,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:fontFamily="@font/sf_pro_text_medium"
                 android:textColor="@color/black"
                 android:textSize="@dimen/dimen_14sp"
@@ -242,13 +244,14 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription" />
 
-
             <TextView
                 android:id="@+id/textView232"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:fontFamily="@font/sf_pro_text_medium"
                 android:textColor="@color/black"
                 android:textSize="@dimen/dimen_14sp"
@@ -267,7 +270,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription"
                 app:tint="@color/gray_payment" />
-
 
             <View
                 android:layout_width="match_parent"
@@ -309,6 +311,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:fontFamily="@font/sf_pro_text_medium"
                 android:textColor="@color/black"
                 android:textSize="@dimen/dimen_14sp"
@@ -369,6 +373,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:fontFamily="@font/sf_pro_text_medium"
                 android:text="@string/offers"
                 android:textColor="@color/black"

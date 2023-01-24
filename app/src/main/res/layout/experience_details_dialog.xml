@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent">
+
+    <View
+        android:id="@+id/view32"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/bottom_corner"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view32">
+
+        <View
+            android:id="@+id/view166"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <View
+            android:id="@+id/view167"
+            android:layout_width="28dp"
+            android:layout_height="5dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/unSelectBg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <include
+            android:id="@+id/include46"
+            layout="@layout/placeholder_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view167"/>
+
+        <ImageView
+            android:id="@+id/imageView173"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginTop="16dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/placeholder_horizental"
+            app:layout_constraintStart_toStartOf="@+id/view166"
+            app:layout_constraintTop_toBottomOf="@+id/include46"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/textView391"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_alternates_bold"
+            android:textSize="@dimen/dimen_16sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/dimen_16dp"
+            tools:text="The world’s most immersive cinema experience"
+            app:layout_constraintEnd_toEndOf="@+id/view166"
+            app:layout_constraintStart_toStartOf="@+id/view166"
+            app:layout_constraintTop_toBottomOf="@+id/imageView173"/>
+
+        <TextView
+            android:id="@+id/textView392"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:textSize="@dimen/dimen_16sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/dimen_10dp"
+            tools:text="The world’s most immersive cinema experience"
+            app:layout_constraintEnd_toEndOf="@+id/view166"
+            app:layout_constraintStart_toStartOf="@+id/view166"
+            app:layout_constraintTop_toBottomOf="@+id/textView391"/>
+
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_50dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/yellow_book_curve"
+            android:fontFamily="@font/sf_pro_text_bold"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@string/book_now"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_14sp"
+            app:layout_constraintEnd_toEndOf="@+id/view166"
+            app:layout_constraintStart_toStartOf="@+id/view166"
+            app:layout_constraintTop_toBottomOf="@+id/textView392" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

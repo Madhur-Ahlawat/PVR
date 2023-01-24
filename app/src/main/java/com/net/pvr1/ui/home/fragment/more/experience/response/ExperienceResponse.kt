@@ -1,4 +1,4 @@
-package com.net.pvr1.ui.home.fragment.more.experience.model
+package com.net.pvr1.ui.home.fragment.more.experience.response
 
 data class ExperienceResponse(
     val code: Int,

@@ -406,6 +406,21 @@ class HomeFragment : Fragment(),
                 intent.putExtra("trailerUrl", rm.mtrailerurl)
                 startActivity(intent)
             }
+
+            //details
+            binding?.homeRecommend?.rlRecomm?.setOnClickListener {
+                val intent = Intent(requireActivity(), NowShowingActivity::class.java)
+                intent.putExtra("mid", rm.id)
+                startActivity(intent)
+            }
+
+            //book
+            binding?.homeRecommend?.tvBook?.setOnClickListener {
+                val intent = Intent(requireActivity(), BookingActivity::class.java)
+                intent.putExtra("mid", rm.id)
+                startActivity(intent)
+            }
+
             //title
             binding?.homeRecommend?.tvMovie?.text = rm.n
 

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityContactUsBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.more.contactUs.adapter.ContactUsItemAdapter
@@ -14,43 +15,55 @@ import com.net.pvr1.ui.home.fragment.more.contactUs.viewModel.ContactUsViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewItemClickListener {
     private var binding: ActivityContactUsBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: ContactUsViewModel by viewModels()
-    var list: ArrayList<String> = ArrayList()
-    var type: String = ""
+    private var listData: ArrayList<String> = ArrayList()
+    private  var type: String = ""
+
+    @Inject
+    lateinit var preferences: PreferenceManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityContactUsBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+        manageFunction()
+    }
+
+    private fun manageFunction() {
         binding?.include22?.textView5?.text = getString(R.string.submit)
         binding?.toolbar?.textView108?.text=getString(R.string.contact_us)
-//List
-        list.add("Feedback")
-        list.add("Advertising/Corporate")
-        list.add("Bulk Booking")
+//mobile
+        binding?.mobileNumber?.setText(preferences.geMobileNumber())
+//email
+        binding?.email?.setText(preferences.getEmail())
 
-        type=list[0]
+//List
+        listData.add("Feedback")
+        listData.add("Advertising/Corporate")
+        listData.add("Bulk Booking")
+
+        type=listData[0]
 
         //Set Data
         val gridLayout =
             GridLayoutManager(this@ContactUsActivity, 1, GridLayoutManager.VERTICAL, false)
         binding?.recyclerView40?.layoutManager = LinearLayoutManager(this@ContactUsActivity)
-        val adapter = ContactUsItemAdapter(list, this, this)
+        val adapter = ContactUsItemAdapter(listData, this, this)
         binding?.recyclerView40?.layoutManager = gridLayout
         binding?.recyclerView40?.adapter = adapter
         movedNext()
-        contactUs()
-    }
+        contactUs()    }
 
     private fun movedNext() {
-//toolbar Back
+        //toolbar Back
         binding?.toolbar?.imageView58?.setOnClickListener {
-            onBackPressed()
+            finish()
         }
 
         //Click Submit
@@ -121,8 +134,8 @@ class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewI
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
-                            R.string.app_name,
-                            it.data.msg,
+                            R.string.blank_space,
+                            "Submitted Successfully",
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
                             positiveClick = {
@@ -168,8 +181,8 @@ class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewI
     }
 
     private fun retrieveData() {
-       binding?.mobileNumber?.text?.clear()
-       binding?.email?.text?.clear()
+//       binding?.mobileNumber?.text?.clear()
+//       binding?.email?.text?.clear()
        binding?.notes?.text?.clear()
     }
 

@@ -61,7 +61,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     private var binding: ActivityHomeBinding? = null
     private val authViewModel: HomeViewModel by viewModels()
     private var loader: LoaderDialog? = null
-    private var offerShow: Boolean = false
+    private var offerShow=0
 
     private var offerResponse: ArrayList<OfferResponse.Output>? = null
     private val firstFragment = HomeFragment()
@@ -93,9 +93,15 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     private fun manageFunction() {
         switchFragment()
         privilegeDataLoad()
+        offerDataLoad()
         movedNext()
         // Call Loyalty Home Api
         authViewModel.privilegeHome(preferences.geMobileNumber(), preferences.getCityName())
+
+        //offer
+        if (preferences.getIsLogin()){
+            authViewModel.offer(preferences.getCityName(),preferences.getUserId(),Constant().getDeviceId(this),"no")
+        }
     }
 
     //ClickMovedNext
@@ -117,7 +123,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
             when (item.itemId) {
                 R.id.homeFragment -> {
                     setCurrentFragment(firstFragment)
-                    if (offerShow) {
+                    if (offerShow==1) {
                         binding?.constraintLayout55?.show()
                     } else {
                         binding?.constraintLayout55?.hide()
@@ -268,6 +274,37 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                 }
             }
         }
+    }
+
+    //Offer
+    private fun offerDataLoad() {
+        authViewModel.offerLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        retrieveOffer(it.data.output)
+                    }
+                }
+                is NetworkResult.Error -> {
+
+                }
+                is NetworkResult.Loading -> {
+                }
+            }
+        }
+    }
+
+    private fun retrieveOffer(output: ArrayList<OfferResponse.Output>) {
+//        Set Data
+        offerResponse= output
+
+        //Manage Show Hide
+        offerShow = if (output.isNotEmpty()){
+            1
+        }else{
+            0
+        }
+
     }
 
     private fun privilegeRetrieveData(output: PrivilegeHomeResponse.Output) {

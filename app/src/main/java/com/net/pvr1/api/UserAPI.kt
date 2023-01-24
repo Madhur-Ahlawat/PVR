@@ -17,7 +17,8 @@ import com.net.pvr1.ui.home.fragment.comingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
 import com.net.pvr1.ui.home.fragment.more.contactUs.response.ContactUsResponse
-import com.net.pvr1.ui.home.fragment.more.experience.model.ExperienceResponse
+import com.net.pvr1.ui.home.fragment.more.experience.response.ExperienceDetailsResponse
+import com.net.pvr1.ui.home.fragment.more.experience.response.ExperienceResponse
 import com.net.pvr1.ui.home.fragment.more.offer.offerDetails.response.OfferDetailsResponse
 import com.net.pvr1.ui.home.fragment.more.offer.response.MOfferResponse
 import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
@@ -216,9 +217,12 @@ interface UserAPI {
         @Query("pt") platform: String,
     ): Response<FoodTicketResponse>
 
-    @POST("api/deals/mobile")
+    @POST("api/content/homepage/offer/discovery")
     suspend fun offer(
+        @Query("city") city: String,
+        @Query("userid") userid: String,
         @Query("did") did: String,
+        @Query("isSpi") isSpi: String,
         @Query("av") version: String,
         @Query("pt") platform: String,
     ): Response<OfferResponse>
@@ -671,6 +675,14 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<ExperienceResponse>
+
+  @POST("api/content/getformat")
+    suspend fun experienceDetails(
+        @Query("city") city: String,
+        @Query("type") type: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<ExperienceDetailsResponse>
 
     @POST("api/trans/setfood")
     suspend fun ticketWithFood(

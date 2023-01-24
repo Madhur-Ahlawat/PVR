@@ -27,12 +27,12 @@ class HomeViewModel @Inject constructor(private val userRepository: UserReposito
 
 
     //offer
-    val userResponseOfferLiveData: LiveData<NetworkResult<OfferResponse>>
+    val offerLiveData: LiveData<NetworkResult<OfferResponse>>
         get() = userRepository.offerResponseLiveData
 
-    fun offer(id:String) {
+    fun offer(city:String,userId:String,did:String,isSpi:String) {
         viewModelScope.launch {
-            userRepository.offer(id)
+            userRepository.offer(city,userId,did,isSpi)
         }
     }
 
