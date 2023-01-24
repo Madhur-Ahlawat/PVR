@@ -1154,5 +1154,15 @@ interface UserAPI {
         @Query("did") did: String,
         ): Response<ActiveGCResponse>
 
+    @POST("api/history/giftcard/reedem/history")
+    suspend fun getDetailGiftCard(
+        @Query("userid") userid: String,
+        @Query("giftcardid") giftcardid: String,
+        @Query("pin") pin: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String,
+        ): Response<ActiveGCResponse>
+
 
 }

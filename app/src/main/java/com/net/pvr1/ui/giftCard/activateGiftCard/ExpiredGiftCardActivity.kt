@@ -31,7 +31,9 @@ class ExpiredGiftCardActivity : AppCompatActivity(),
         val view = binding?.root
         setContentView(view)
         binding?.include12?.titleCommonToolbar?.text = "Expired Gift Card"
-
+        binding?.include12?.btnBack?.setOnClickListener {
+            onBackPressed()
+        }
         //Screen Width
 
         var inActiveGiftList = ArrayList<ActiveGCResponse.Gca>()

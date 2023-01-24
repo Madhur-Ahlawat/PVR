@@ -1,11 +1,20 @@
 package com.net.pvr1.ui.giftCard.activateGiftCard
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.view.Gravity
+import android.view.ViewGroup
+import android.view.Window
+import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.joooonho.SelectableRoundedImageView
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityActivateGiftCardBinding
 import com.net.pvr1.di.preference.PreferenceManager
@@ -35,6 +44,9 @@ class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.Re
         val view = binding?.root
         setContentView(view)
         binding?.include12?.titleCommonToolbar?.text = "Activate Gift Card"
+        binding?.include12?.btnBack?.setOnClickListener {
+            onBackPressed()
+        }
 
         //Screen Width
         val displayMetrics = DisplayMetrics()
@@ -106,7 +118,46 @@ class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.Re
     }
 
     override fun activateGiftCard(comingSoonItem: ActiveGCResponse.Gca) {
-
+        showDialog(comingSoonItem.id)
     }
+
+    private fun showDialog(giftId: String) {
+        val pinDialog = Dialog(this)
+        pinDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        pinDialog.setCancelable(true)
+        pinDialog.setCanceledOnTouchOutside(true)
+        pinDialog.setContentView(R.layout.gift_pin_dialog)
+        pinDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        pinDialog.window!!.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        pinDialog.window!!.setGravity(Gravity.BOTTOM)
+        val et_card_pin = pinDialog.findViewById<EditText>(R.id.et_card_pin)
+        val tv_proceed_detail = pinDialog.findViewById<TextView>(R.id.tv_proceed_detail)
+        val iv_gift_image = pinDialog.findViewById<SelectableRoundedImageView>(R.id.iv_gift_image)
+        tv_proceed_detail.setOnClickListener {
+            if (et_card_pin.text.toString().isNotEmpty()) {
+                authViewModel.redeemGC(preferences.getUserId(), giftId.replace("ID:", "").trim(),et_card_pin.text.toString())
+                et_card_pin.setText("")
+                pinDialog.dismiss()
+            } else {
+                val dialog = OptionDialog(this,
+                    R.mipmap.ic_launcher,
+                    R.string.app_name,
+                    "Please enter Card Pin",
+                    positiveBtnText = R.string.ok,
+                    negativeBtnText = R.string.no,
+                    positiveClick = {
+                    },
+                    negativeClick = {
+                    })
+                dialog.show()
+            }
+        }
+        pinDialog.window!!.setWindowAnimations(R.style.AppTheme_Slide)
+        pinDialog.show()
+    }
+
 
 }

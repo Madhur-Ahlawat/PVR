@@ -227,38 +227,6 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
     }
 
 
-    private fun uploadPhoto() {
-        val intent = Intent(
-            Intent.ACTION_PICK,
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        )
-        intent.type = "image/*"
-        startActivityForResult(
-            Intent.createChooser(intent, "Select File"),
-            REQUEST_SELECT_FILE
-        )
-    }
-
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            202 -> if (grantResults.isNotEmpty()) {
-                val cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED
-                val readAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED
-                val writeAccepted = grantResults[2] == PackageManager.PERMISSION_GRANTED
-                if (cameraAccepted && readAccepted && writeAccepted) {
-                    uploadPhoto()
-                } else {
-                }
-            }
-        }
-    }
-
     private fun setCustomAmountAdapter() {
         binding?.rvCustomAmountList?.layoutManager = LinearLayoutManager(this)
         customGiftCardAdapter = CustomGiftCardAdapter( customizedGiftList, this,Uri.parse(imageValue))

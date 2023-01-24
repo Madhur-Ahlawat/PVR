@@ -58,8 +58,8 @@ class ActivateGiftCardAdapter(
             holder.date.text = cinemaItem.dn + " • " + cinemaItem.tn
 
 
-    holder.tvresend.setOnClickListener {
-
+    holder.itemView.setOnClickListener {
+        listener.activateGiftCard(cinemaItem)
     }
 
 //    holder.item_active_gift_card.setOnClickListener(

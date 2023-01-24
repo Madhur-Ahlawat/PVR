@@ -444,6 +444,30 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
     }
 
+    //Redeem GiftCard
+    private val redeemGiftCardLiveData = MutableLiveData<NetworkResult<ActiveGCResponse>>()
+    val redeemGiftCardResponseLiveData: LiveData<NetworkResult<ActiveGCResponse>>
+        get() = redeemGiftCardLiveData
+
+    suspend fun redeemGiftCard(userId: String,giftcardid: String,pin: String) {
+        giftCardLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.getDetailGiftCard(
+            userId, giftcardid ,pin,Constant.version, Constant.platform,Constant.getDid()
+        )
+        redeemGiftCardResponse(response)
+    }
+
+    private fun redeemGiftCardResponse(response: Response<ActiveGCResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            redeemGiftCardLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            redeemGiftCardLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            redeemGiftCardLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
     //FoodTicket
     private val foodTicketLiveData = MutableLiveData<NetworkResult<FoodTicketResponse>>()
     val foodTicketResponseLiveData: LiveData<NetworkResult<FoodTicketResponse>>
