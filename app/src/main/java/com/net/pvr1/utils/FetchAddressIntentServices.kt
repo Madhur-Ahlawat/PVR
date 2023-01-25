@@ -43,12 +43,12 @@ class FetchAddressIntentServices : IntentService("FetchAddressIntentServices") {
                 val str_address = address.featureName
                 devliverResultToRecevier(
                     Constant.SUCCESS_RESULT,
-                    str_address,
-                    str_locality,
-                    str_district,
-                    str_state,
-                    str_Country,
-                    str_postcode
+                    str_address?:"",
+                    str_locality?:"",
+                    str_district?:"",
+                    str_state?:"",
+                    str_Country?:"",
+                    str_postcode?:""
                 )
             }
         }

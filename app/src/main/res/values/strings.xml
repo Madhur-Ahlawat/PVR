@@ -647,5 +647,5 @@
     <string name="we_wanna_turn">“We wanna turn that into a smile. Tell us what we can improve”</string>
     <string name="logoutBack">Your booking is not yet complete.</string>
     <string name="show_end_time_approx">Show end time approx</string>
-
+    <string name="nicelyDone">Nicely done!</string>
 </resources>
