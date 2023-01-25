@@ -31,6 +31,7 @@ import com.net.pvr1.databinding.ItemPaymentPrivlegeBinding
 import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.giftCard.GiftCardActivity
 import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.payment.adapter.*
 import com.net.pvr1.ui.payment.bankoffers.BankOffersActivity
@@ -148,16 +149,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         //paidAmount
         binding?.textView178?.text = getString(R.string.currency) + intent.getStringExtra("paidAmount")
         actualAmt = intent.getStringExtra("paidAmount").toString()
-        //voucher
-        val time = SystemClock.uptimeMillis()
 
-        authViewModel.voucher(
-            Constant.getHash(preferences.getUserId() + "|" + preferences.getToken() + "|" + time),
-            preferences.getToken().toString(),
-            preferences.getCityName().toString(),
-            preferences.getUserId().toString(),
-            time.toString()
-        )
 
         authViewModel.promoList()
 
@@ -208,6 +200,22 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                     BOOK_TYPE,binding?.promoCode?.text.toString())
 
             }
+        }
+
+        if (BOOK_TYPE == "BOOKING" || BOOK_TYPE == "FOOD"){
+            binding?.constraintLayout110?.show()
+            //voucher
+            val time = SystemClock.uptimeMillis()
+
+            authViewModel.voucher(
+                Constant.getHash(preferences.getUserId() + "|" + preferences.getToken() + "|" + time),
+                preferences.getToken().toString(),
+                preferences.getCityName().toString(),
+                preferences.getUserId().toString(),
+                time.toString()
+            )
+        }else{
+            binding?.constraintLayout110?.hide()
         }
     }
 
@@ -427,14 +435,14 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
 
         //Wallets
         if (output.gateway.isNotEmpty()) {
-            binding?.recyclerView43?.show()
+            binding?.walletView?.show()
             val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
             val foodBestSellerAdapter = PaymentAdapter(payMethodFilter("WALLET"), this, this)
             binding?.recyclerView43?.layoutManager = layoutManagerCrew
             binding?.recyclerView43?.adapter = foodBestSellerAdapter
             binding?.recyclerView43?.setHasFixedSize(true)
         } else {
-            binding?.recyclerView43?.hide()
+            binding?.walletView?.hide()
         }
 
         // Offer
@@ -1135,10 +1143,17 @@ override fun onBackPressed() {
         positiveBtnText = R.string.ok,
         negativeBtnText = R.string.no,
         positiveClick = {
-            launchActivity(
-                HomeActivity::class.java,
-                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-            )
+            if (BOOK_TYPE == "GIFTCARD") {
+                launchActivity(
+                    GiftCardActivity::class.java,
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                )
+            }else{
+                launchActivity(
+                    HomeActivity::class.java,
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                )
+            }
         },
         negativeClick = {
         })

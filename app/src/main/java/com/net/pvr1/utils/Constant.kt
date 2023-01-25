@@ -424,6 +424,8 @@ class Constant {
 
     interface SharedPreference {
         companion object {
+            var GIFT_CARD_DETAILS = "gift_card_details"
+
             const val WALK_THROUGH = "walk"
             const val USER_NAME = "user_name"
             const val USER_TOKEN = "user_token"

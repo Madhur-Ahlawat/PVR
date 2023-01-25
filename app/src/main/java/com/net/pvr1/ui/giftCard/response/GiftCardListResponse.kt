@@ -16,7 +16,7 @@ data class GiftCardListResponse(
         val discount: Any,
         val giftCards: ArrayList<GiftCard>,
         val imageUrl: String,
-        val limit: Any,
+        val limit: String,
         val promotional: Boolean,
         val timer: Int
     ) : Serializable {

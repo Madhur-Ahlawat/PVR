@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.ui.giftCard.activateGiftCard.AddGiftCardActivity
 import com.net.pvr1.ui.giftCard.response.ActiveGCResponse
@@ -40,12 +41,18 @@ class GiftCardAddAmtAdapter(
         holder.tv_gift_value.text =
             context.resources.getString(R.string.currency) + (cinemaItem.giftValue/100).toString()
         holder.tv_number_amount.text = String.valueOf(cinemaItem.count)
-        if (imageUri != null) {
-            holder.iv_add_gift_image.setImageURI(imageUri)
+        println("imageUri----$imageUri----${cinemaItem.newImageUrl}")
+        if (imageUri != null && imageUri.toString()!="") {
+            Glide.with(context)
+                .load(imageUri)
+                .error(R.drawable.gift_card_default)
+                .placeholder(R.drawable.gift_card_default)
+                .into(holder.iv_add_gift_image)
         } else {
-            Picasso.get()
+            Glide.with(context)
                 .load(cinemaItem.newImageUrl)
-                .placeholder(context.resources.getDrawable(R.drawable.gift_card_default))
+                .error(R.drawable.gift_card_default)
+                .placeholder(R.drawable.gift_card_default)
                 .into(holder.iv_add_gift_image)
         }
         if (cinemaItem.count == 0) {
@@ -90,7 +97,7 @@ class GiftCardAddAmtAdapter(
     class MyViewHolderNowShowing(view: View) : RecyclerView.ViewHolder(view) {
 
         var tv_gift_value = itemView.findViewById<TextView?>(R.id.tv_gift_value)
-        var iv_add_gift_image = itemView.findViewById<android.widget.ImageView?>(R.id.iv_add_gift_image)
+        var iv_add_gift_image = itemView.findViewById<ImageView?>(R.id.iv_add_gift_image)
         var item_add_amount = itemView.findViewById<LinearLayout?>(R.id.item_add_amount)
         var ll_plus_minus = itemView.findViewById<LinearLayout?>(R.id.ll_plus_minus)
         var tv_number_amount = itemView.findViewById<TextView?>(R.id.tv_number_amount)
