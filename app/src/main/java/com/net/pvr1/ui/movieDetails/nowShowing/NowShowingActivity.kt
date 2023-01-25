@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.devs.readmoreoption.ReadMoreOption
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityNowShowingBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.bookingSession.BookingActivity
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
@@ -28,27 +29,43 @@ import com.net.pvr1.utils.NetworkResult
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class NowShowingActivity : AppCompatActivity(),
-    MusicVideoAdapter.RecycleViewItemClickListener,
-    TrailerAdapter.RecycleViewItemClickListener,
-    TrailerTrsAdapter.RecycleViewItemClickListener,
+class NowShowingActivity : AppCompatActivity(), MusicVideoAdapter.RecycleViewItemClickListener,
+    TrailerAdapter.RecycleViewItemClickListener, TrailerTrsAdapter.RecycleViewItemClickListener,
     MusicVideoTrsAdapter.RecycleViewItemClickListener {
     private var binding: ActivityNowShowingBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: MovieDetailsViewModel by viewModels()
+
+    @Inject
+    lateinit var preferences: PreferenceManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNowShowingBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
+        manageFunction()
+    }
+
+    private fun manageFunction() {
         movieDetails()
+
+//        title
         binding?.include?.textView5?.text = resources.getString(R.string.book_now)
 
         authViewModel.movieDetails(
-            "Delhi-NCR", intent.getStringExtra("mid").toString(), "", "", "", "", "no", "no"
+            preferences.getCityName(),
+            intent.getStringExtra("mid").toString(),
+            "",
+            "",
+            "",
+            "",
+            "no",
+            "no"
         )
     }
 
@@ -112,7 +129,7 @@ class NowShowingActivity : AppCompatActivity(),
         }
         //Share
         binding?.imageView28?.setOnClickListener {
-            Constant().shareData(this,"","")
+            Constant().shareData(this, "", "")
         }
         //Back
         binding?.imageView27?.setOnClickListener {
@@ -267,13 +284,12 @@ class NowShowingActivity : AppCompatActivity(),
 
     private fun updatePH(phd: ArrayList<MovieDetailsResponse.Ph>) {
         if (phd != null && phd.size > 0) {
-             binding?.constraintLayout11?.recyclerPromotion?.show()
-            val layoutManager =
-                LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            binding?.constraintLayout11?.recyclerPromotion?.show()
+            val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
             val snapHelper: SnapHelper = PagerSnapHelper()
             binding?.constraintLayout11?.recyclerPromotion?.layoutManager = layoutManager
             binding?.constraintLayout11?.recyclerPromotion?.onFlingListener = null
-            snapHelper.attachToRecyclerView( binding?.constraintLayout11?.recyclerPromotion!!)
+            snapHelper.attachToRecyclerView(binding?.constraintLayout11?.recyclerPromotion!!)
             binding?.constraintLayout11?.recyclerPromotion?.layoutManager = layoutManager
             val adapter = PromotionAdapter(this, phd as ArrayList<HomeResponse.Ph>)
             binding?.constraintLayout11?.recyclerPromotion?.adapter = adapter

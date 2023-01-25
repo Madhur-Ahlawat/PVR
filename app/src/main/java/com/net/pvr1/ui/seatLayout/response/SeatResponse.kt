@@ -20,7 +20,7 @@ data class SeatResponse(
         val cinemaCode: String,
         val cn: String,
         val dit: Boolean,
-        val et: Int,
+        val et: String,
         val hc: Boolean,
         val hcm: String,
         val im: String,

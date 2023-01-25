@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
+import com.net.pvr1.ui.food.response.CancelTransResponse
 import com.net.pvr1.ui.seatLayout.response.InitResponse
 import com.net.pvr1.ui.seatLayout.response.ReserveSeatResponse
 import com.net.pvr1.ui.seatLayout.response.SeatResponse
@@ -54,4 +55,20 @@ class SeatLayoutViewModel @Inject constructor(private val userRepository: UserRe
             userRepository.initTransSeatLayout(cinemacode,sessionid)
         }
     }
+
+
+//cancel trans
+    val cancelTransResponseLiveData: LiveData<NetworkResult<CancelTransResponse>>
+        get() = userRepository.cancelTransResponseLiveData
+
+    fun cancelTrans(
+        cinemacode: String,
+        transid: String,
+        bookingid: String
+    ) {
+        viewModelScope.launch {
+            userRepository.cancelTrans(cinemacode,transid,bookingid)
+        }
+    }
+
 }

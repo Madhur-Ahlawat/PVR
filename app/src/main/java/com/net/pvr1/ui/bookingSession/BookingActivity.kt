@@ -783,6 +783,7 @@ class BookingActivity : AppCompatActivity(),
                         "video", ignoreCase = true
                     )
                 ) {
+
                 }
             }
 
@@ -793,10 +794,10 @@ class BookingActivity : AppCompatActivity(),
 
 
     private fun showButton(bannerModel: BookingResponse.Output.Pu) {
-        if (bannerModel.type.equals("video", ignoreCase = true)) {
+        if (bannerModel.type.contains("video", ignoreCase = true)) {
             binding?.bannerLayout?.ivPlay?.show()
             binding?.bannerLayout?.tvButton?.hide()
-        } else if (bannerModel.type.equals(
+        } else if (bannerModel.type.contains(
                 "image", ignoreCase = true
             ) && bannerModel.redirect_url.equals("", ignoreCase = true)
         ) {

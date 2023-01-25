@@ -11,7 +11,7 @@
         android:id="@+id/constraintLayout153"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -381,71 +381,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout56"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dimen_50dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="21dp"
-                android:background="@drawable/yellow_seat_curve"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/view132"
-                app:layout_constraintStart_toStartOf="@+id/view132">
-
-
-                <View
-                    android:id="@+id/view133"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textView195"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dimen_14sp"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@+id/view133"
-                    app:layout_constraintStart_toStartOf="@+id/view133"
-                    app:layout_constraintTop_toTopOf="@+id/view133"
-                    tools:text="TextView" />
-
-                <TextView
-                    android:id="@+id/textView196"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="@dimen/dimen_15dp"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dimen_14sp"
-                    android:visibility="gone"
-                    app:drawableEndCompat="@drawable/right_arrow"
-                    app:layout_constraintBottom_toBottomOf="@+id/view133"
-                    app:layout_constraintEnd_toEndOf="@+id/view133"
-                    app:layout_constraintTop_toTopOf="@+id/view133"
-                    tools:text="TextView" />
-
-                <TextView
-                    android:id="@+id/textView200"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sf_pro_text_bold"
-                    android:text="@string/_0_seats"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dimen_14sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/view133"
-                    app:layout_constraintStart_toStartOf="@+id/view133"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
+            <!--SEAT AVAIL COLOR-->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -453,7 +389,7 @@
                 android:layout_marginBottom="14dp"
                 android:gravity="center"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@+id/constraintLayout56"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout166"
                 app:layout_constraintEnd_toEndOf="@+id/constraintLayout56"
                 app:layout_constraintStart_toStartOf="@+id/constraintLayout56"
                 app:layout_constraintTop_toTopOf="parent">
@@ -534,6 +470,120 @@
 
             </LinearLayout>
 
+            <!--END TIME-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout166"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout56"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:id="@+id/imageView23"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/time"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/textView191"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:text="@string/show_end_time_approx"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/dimen_14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView23"
+                    app:layout_constraintStart_toEndOf="@+id/imageView23"
+                    app:layout_constraintTop_toTopOf="@+id/imageView23" />
+
+                <TextView
+                    android:id="@+id/textView393"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:fontFamily="@font/montserrat_alternates_bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView191"
+                    app:layout_constraintStart_toEndOf="@+id/textView191"
+                    app:layout_constraintTop_toTopOf="@+id/textView191"
+                    tools:text="TextView" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--BUTTONS-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout56"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dimen_50dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="21dp"
+                android:background="@drawable/yellow_seat_curve"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/view132"
+                app:layout_constraintStart_toStartOf="@+id/view132">
+
+
+                <View
+                    android:id="@+id/view133"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView195"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14sp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/view133"
+                    app:layout_constraintStart_toStartOf="@+id/view133"
+                    app:layout_constraintTop_toTopOf="@+id/view133"
+                    tools:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView196"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/dimen_15dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14sp"
+                    android:visibility="gone"
+                    app:drawableEndCompat="@drawable/right_arrow"
+                    app:layout_constraintBottom_toBottomOf="@+id/view133"
+                    app:layout_constraintEnd_toEndOf="@+id/view133"
+                    app:layout_constraintTop_toTopOf="@+id/view133"
+                    tools:text="TextView" />
+
+                <TextView
+                    android:id="@+id/textView200"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sf_pro_text_bold"
+                    android:text="@string/_0_seats"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/view133"
+                    app:layout_constraintStart_toStartOf="@+id/view133"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -542,7 +592,7 @@
     <!--Shimmer-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout145"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

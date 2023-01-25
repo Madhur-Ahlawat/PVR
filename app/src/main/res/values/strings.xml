@@ -236,6 +236,7 @@
     //Offer
     <string name="new_offers_are_live">New offers are live!</string>
     <string name="your_experience">Your Experience</string>
+    <string name="nicelyDone">Nicely done!</string>
 
     //trailer
     <string name="video_not_avail">Video not available</string>
@@ -593,6 +594,9 @@
 
     <string name="gift_card_text">Custom design feature is applicable only for e-gift card (not physical gift cards) &amp; that PVR reserves the right to refuse a request if picture used is not found to be legible/legal/correct</string>
     <string name="custom_card_text">*Minimum card value allowed is Rs.150 and maximum card value allowed is Rs.5000. Amount should be in multiples of 50</string>
+    <string name="we_wanna_turn">“We wanna turn that into a smile. Tell us what we can improve”</string>
+    <string name="logoutBack">Your booking is not yet complete.</string>
+    <string name="show_end_time_approx">Show end time approx</string>
 
 
 </resources>

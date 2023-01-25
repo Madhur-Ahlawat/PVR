@@ -60,6 +60,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     private var bestSellerFoodAdapter: BestSellerFoodAdapter? = null
     private var bottomFoodAdapter: BottomFoodAdapter? = null
     private var allFoodAdapter: AllFoodAdapter? = null
+
     private var masterId: String? = "0"
     private var categoryName: String = "ALL"
     private var itemCheckPriceCart: Int = 0
@@ -78,6 +79,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         binding = ActivityFoodBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
         manageFunction()
     }
 
@@ -127,6 +129,8 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
                         retrieveData(it.data.output)
 
                     } else {
+                        //shimmer
+                        binding?.constraintLayout145?.hide()
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
                             R.string.app_name,
@@ -151,9 +155,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    printLog("Loading--->")
-                    loader = LoaderDialog(R.string.pleaseWait)
-                    loader?.show(this.supportFragmentManager, null)
+
                 }
             }
         }
@@ -552,9 +554,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         }
     }
 
-    private fun getFilterBestSellerList(
-        category: Boolean, menuType: Int, bestSellerType: String
-    ): List<FoodResponse.Output.Bestseller> {
+    private fun getFilterBestSellerList(category: Boolean, menuType: Int, bestSellerType: String): List<FoodResponse.Output.Bestseller> {
         val categoryFilterNew = ArrayList<FoodResponse.Output.Bestseller>()
         when (menuType) {
             0 -> {
@@ -593,7 +593,6 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
                         }
                     }
                 }
-
             }
             else -> {
                 if (bestSellerType == "ALL") {
@@ -605,10 +604,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
                         if (data.veg == category) categoryFilterNew.add(data)
                     }
                 }
-
-
             }
-
         }
         return categoryFilterNew
     }
@@ -1075,7 +1071,6 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         }
     }
 
-    @SuppressLint("SetTextI18n", "UseCompatLoadingForDrawables")
     private fun bottomDialogAllFood(comingSoonItem: FoodResponse.Output.Mfl) {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -1091,9 +1086,9 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         dialog.show()
 //Manage Veg-NonVeg
         if (comingSoonItem.veg) {
-            bindingBottom.imageView69.setImageDrawable(this.getDrawable(R.drawable.veg_ic))
+            bindingBottom.imageView69.setImageDrawable(getDrawable(R.drawable.veg_ic))
         } else {
-            bindingBottom.imageView69.setImageDrawable(this.getDrawable(R.drawable.nonveg_ic))
+            bindingBottom.imageView69.setImageDrawable(getDrawable(R.drawable.nonveg_ic))
         }
         //Image View
         Glide.with(this).load(comingSoonItem.mi).error(R.drawable.app_icon)
@@ -1137,7 +1132,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         bindingBottom.uiPlusMinus.plus.setOnClickListener {
             var num = comingSoonItem.qt
             if (num > foodLimit || num == foodLimit) {
-                val dialog = OptionDialog(this,
+                val dialog2 = OptionDialog(this,
                     R.mipmap.ic_launcher,
                     R.string.app_name,
                     getString(R.string.max_item_msz) + " " + foodLimit + " " + getString(R.string.items_a_time),
@@ -1145,7 +1140,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
                     negativeBtnText = R.string.no,
                     positiveClick = {},
                     negativeClick = {})
-                dialog.show()
+                dialog2.show()
             } else {
                 num += 1
                 comingSoonItem.qt = num
@@ -1159,7 +1154,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         bindingBottom.uiPlusMinus.minus.setOnClickListener {
             var num = comingSoonItem.qt
             if (num < 0 || num == 0) {
-                val dialog = OptionDialog(this,
+                val dialog2 = OptionDialog(this,
                     R.mipmap.ic_launcher,
                     R.string.app_name,
                     getString(R.string.min_item_msz),
@@ -1167,7 +1162,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
                     negativeBtnText = R.string.no,
                     positiveClick = {},
                     negativeClick = {})
-                dialog.show()
+                dialog2.show()
             } else {
                 num -= 1
                 comingSoonItem.qt = num
@@ -1225,9 +1220,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
 
     override fun onBackPressed() {
         onBackPressedDispatcher.onBackPressed()
-        authViewModel.cancelTrans(
-            CINEMA_ID, TRANSACTION_ID, BOOKING_ID
-        )
+        authViewModel.cancelTrans(CINEMA_ID, TRANSACTION_ID, BOOKING_ID)
     }
 
     //Internet Check

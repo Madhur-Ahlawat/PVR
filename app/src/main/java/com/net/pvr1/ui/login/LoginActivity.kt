@@ -71,19 +71,17 @@ class LoginActivity : AppCompatActivity() {
         binding?.mobileNumber?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {}
             override fun beforeTextChanged(
-                s: CharSequence, start: Int,
-                count: Int, after: Int
+                s: CharSequence, start: Int, count: Int, after: Int
             ) {
             }
 
             override fun onTextChanged(
-                s: CharSequence, start: Int,
-                before: Int, count: Int
+                s: CharSequence, start: Int, before: Int, count: Int
             ) {
-                if (s.toString()!=" "){
+                if (s.toString() != " ") {
                     binding?.textView382?.hide()
-                }else{
-                    binding?.textView382?.text=getString(R.string.checkNumber)
+                } else {
+                    binding?.textView382?.text = getString(R.string.checkNumber)
                     binding?.textView382?.show()
                 }
             }
@@ -93,10 +91,10 @@ class LoginActivity : AppCompatActivity() {
                 val mobile = binding?.mobileNumber?.text.toString()
                 if (mobile == "") {
                     binding?.textView382?.show()
-                    binding?.textView382?.text=getString(R.string.enterMobileNo)
+                    binding?.textView382?.text = getString(R.string.enterMobileNo)
                 } else if (!TextUtils.isEmpty(mobile) && mobile.length != 10) {
                     binding?.textView382?.show()
-                    binding?.textView382?.text=getString(R.string.checkNumber)
+                    binding?.textView382?.text = getString(R.string.checkNumber)
                 } else {
                     binding?.textView382?.hide()
                     authViewModel.loginMobileUser(mobile, preferences.getCityName(), "INDIA")
@@ -109,10 +107,10 @@ class LoginActivity : AppCompatActivity() {
             val mobile = binding?.mobileNumber?.text.toString()
             if (mobile == "") {
                 binding?.textView382?.show()
-                binding?.textView382?.text=getString(R.string.enterMobileNo)
+                binding?.textView382?.text = getString(R.string.enterMobileNo)
             } else if (!TextUtils.isEmpty(mobile) && mobile.length != 10) {
                 binding?.textView382?.show()
-                binding?.textView382?.text=getString(R.string.checkNumber)
+                binding?.textView382?.text = getString(R.string.checkNumber)
             } else {
                 binding?.textView382?.hide()
                 authViewModel.loginMobileUser(mobile, preferences.getCityName(), "INDIA")
@@ -204,7 +202,6 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    @Deprecated("Deprecated in Java")
     @SuppressLint("SetTextI18n")
     @Override
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -229,5 +226,28 @@ class LoginActivity : AppCompatActivity() {
             // *** No phone numbers available ***
             printLog("numberNotFound---->")
         }
+    }
+
+    override fun onBackPressed() {
+        if (intent.getStringExtra("from") == "seat") {
+            seatRedirectDialog()
+        }
+    }
+
+    private fun seatRedirectDialog() {
+        val dialog = OptionDialog(this,
+            R.mipmap.ic_launcher_foreground,
+            R.string.blank_space,
+            getString(R.string.logoutBack),
+            positiveBtnText = R.string.yes,
+            negativeBtnText = R.string.no,
+            positiveClick = {
+                val intent = Intent(this, HomeActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                finish()
+            },
+            negativeClick = {})
+        dialog.show()
     }
 }

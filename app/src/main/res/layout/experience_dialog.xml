@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/transparent">
 
     <View
@@ -39,17 +39,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/view116"
             app:layout_constraintStart_toStartOf="@+id/view116"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/line_dialog"
             tools:ignore="ContentDescription,ImageContrastCheck" />
-
+        <!--            Feedback Reaction       -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout54"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             app:layout_constraintEnd_toEndOf="@+id/view116"
             app:layout_constraintStart_toStartOf="@+id/view116"
             app:layout_constraintTop_toBottomOf="@+id/imageView86">
@@ -59,9 +59,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="@string/your_experience"
+                android:text="@string/nicelyDone"
                 android:textColor="@color/black"
-                android:textSize="@dimen/dimen_18sp"
+                android:textSize="@dimen/dimen_16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -71,7 +71,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:fontFamily="@font/montserrat_medium"
+                android:fontFamily="@font/montserrat_regular"
+                android:gravity="center"
                 android:text="@string/how_was_your_experience"
                 android:textColor="@color/black"
                 android:textSize="@dimen/dimen_16sp"
@@ -82,7 +83,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView24"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/dimen_50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="35dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -96,6 +97,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <!--            Feedback Comment        -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout48"
             android:layout_width="0dp"
@@ -117,141 +119,65 @@
                 android:id="@+id/textView176"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
                 android:background="@drawable/experience_txt_curve"
-                android:fontFamily="@font/montserrat_regular"
+                android:fontFamily="@font/sf_pro_text_regular"
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="@dimen/dimen_14sp"
                 app:layout_constraintEnd_toEndOf="@+id/view118"
                 app:layout_constraintStart_toStartOf="@+id/view118"
                 app:layout_constraintTop_toTopOf="@+id/view118"
-                tools:text="“We wanna turn that into a smile. Tell us what we can improve”" />
+                android:text="@string/we_wanna_turn" />
 
 
-            <EditText
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/editText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:background="@null"
-                android:fontFamily="@font/montserrat_regular"
-                android:hint="@string/comment"
-                android:importantForAutofill="no"
-                android:maxLines="1"
-                android:textColor="@color/black"
-                android:textColorHint="#6C6C6C"
-                android:textSize="@dimen/dimen_14sp"
+                android:background="@drawable/experience_input_txt_curve"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView176"
-                tools:ignore="TextFields,TouchTargetSizeCheck" />
+                tools:ignore="TextFields,TouchTargetSizeCheck">
 
-            <View
-                android:id="@+id/view123"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/dimen_2dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText" />
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/textView182"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@null"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:gravity="top|start"
+                    android:hint="@string/type_your_feedback_here"
+                    android:importantForAutofill="no"
+                    android:minLines="8"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    android:textColorHint="#6C6C6C"
+                    android:textSize="@dimen/dimen_14sp"
+                    android:imeOptions="actionDone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TextFields" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="16dp"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view123"
-                tools:itemCount="3"
-                tools:listitem="@layout/experience_comment_item" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout51"
-            android:layout_width="@dimen/dimen_0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@+id/view116"
-            app:layout_constraintStart_toStartOf="@+id/view116"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout48">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView25"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:itemCount="5"
-                tools:listitem="@layout/experience_type_txt" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="38dp"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerView25"
-                app:spanCount="4"
-                tools:itemCount="8"
-                tools:listitem="@layout/experience_type_item" />
-
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout52"
-            android:layout_width="@dimen/dimen_0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/experience_input_txt_curve"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@+id/view116"
-            app:layout_constraintStart_toStartOf="@+id/view116"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout48">
-
-
-            <EditText
-                android:id="@+id/textView182"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="20dp"
-                android:fontFamily="@font/montserrat_regular"
-                android:gravity="top|start"
-                android:hint="@string/type_your_feedback_here"
-                android:importantForAutofill="no"
-                android:minLines="8"
-                android:textAlignment="textStart"
-                android:textColor="@color/black"
-                android:textColorHint="#6C6C6C"
-                android:textSize="@dimen/dimen_14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="TextFields" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+        <!--            FeedBACK thanks   -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout53"
             android:layout_width="@dimen/dimen_0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_50dp"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="@+id/view116"
             app:layout_constraintStart_toStartOf="@+id/view116"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout48">
@@ -265,6 +191,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -274,7 +201,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -285,6 +212,7 @@
             layout="@layout/button_next"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

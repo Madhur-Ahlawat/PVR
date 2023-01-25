@@ -34,6 +34,7 @@ import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.FoodActivity
+import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.ui.seatLayout.adapter.CinemaShowsAdapter
 import com.net.pvr1.ui.seatLayout.adapter.ShowsAdapter
 import com.net.pvr1.ui.seatLayout.request.ReserveSeatRequest
@@ -54,7 +55,8 @@ import javax.inject.Inject
 
 @Suppress("DEPRECATION", "NAME_SHADOWING")
 @AndroidEntryPoint
-class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClickListenerCity,
+class SeatLayoutActivity : AppCompatActivity(),
+    ShowsAdapter.RecycleViewItemClickListenerCity,
     CinemaShowsAdapter.RecycleViewItemClickListener {
 
     @Inject
@@ -74,12 +76,14 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     private var caCount1 = 0
     private var hcCount = 0
     private var caCount = 0
+
     private var keyData = ""
     private var seatsN: ArrayList<String>? = null
     private var coupleSeat = 0
     private var messageText = ""
     private var sessionId = ""
     private var isDit = false
+
     private var noOfRowsSmall: ArrayList<SeatResponse.Output.Row>? = null
     private var priceMap: Map<String, SeatResponse.Output.PriceList.Price>? = null
     private var selectedSeats = ArrayList<Seat>()
@@ -109,7 +113,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         binding = ActivitySeatLayoutBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-
         manageFunctions()
     }
 
@@ -117,7 +120,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     private fun manageFunctions() {
         //from Movie
         if (intent.getStringExtra("from") == "cinema") {
-
             cinemaSessionShows =
                 intent.getSerializableExtra("CinemaShows") as ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>
 
@@ -139,6 +141,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             binding?.constraintLayout60?.hide()
             offerEnable = false
         }
+
         //Remove Offer
         binding?.textView203?.setOnClickListener {
             binding?.llRowName?.removeAllViews()
@@ -148,6 +151,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 CINEMA_ID, Constant.SESSION_ID, "", "", "", offerEnable, ""
             )
         }
+
         //from Shows
         sessionId = Constant.SESSION_ID
 
@@ -256,20 +260,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-
-                        if (tncValue == 1) {
-                            if (it.data.output.tnc == "") {
-                                tncValue = 1
-                            } else {
-                                seatTermsDialog()
-                                textTermsAndCondition?.text = it.data.output.tnc
-                                tncValue = 2
-                            }
-                        }
-
-                        priceMap = it.data.output.priceList
-                        noOfRowsSmall = it.data.output.rows
-                        drawColumn(it.data.output.rows)
                         retrieveData(it.data.output)
                     } else {
                         val dialog = OptionDialog(this,
@@ -348,26 +338,38 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         BOOKING_ID = output.bookingid
         SELECTED_SEAT = selectedSeats.size
 
-        if(output.fc=="false"){
-            FOODENABLE=1
-            startActivity(Intent(this, SummeryActivity::class.java))
-        }else{
-            when (output.nf) {
-                "true" -> {
-                    FOODENABLE=0
-                    startActivity(Intent(this, FoodActivity::class.java))
-                }
-                "false" -> {
-                    FOODENABLE=0
-                    startActivity(Intent(this, FoodActivity::class.java))
-                }
-                else -> {
-                    FOODENABLE=1
-                    startActivity(Intent(this, SummeryActivity::class.java))
+        if (preferences.getIsLogin()){
+            if(output.fc=="false"){
+                FOODENABLE=1
+                startActivity(Intent(this, SummeryActivity::class.java))
+            }else{
+                when (output.nf) {
+                    "true" -> {
+                        FOODENABLE=0
+                        startActivity(Intent(this, FoodActivity::class.java))
+                    }
+                    "false" -> {
+                        FOODENABLE=0
+                        startActivity(Intent(this, FoodActivity::class.java))
+                    }
+                    else -> {
+                        FOODENABLE=1
+                        startActivity(Intent(this, SummeryActivity::class.java))
 
+                    }
                 }
             }
         }
+        else{
+            authViewModel.cancelTrans(CINEMA_ID, TRANSACTION_ID, BOOKING_ID)
+            val intent = Intent(this@SeatLayoutActivity, LoginActivity::class.java)
+            intent.putExtra("from","seat")
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
+
+        }
+
     }
 
     //initTrans
@@ -430,6 +432,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     }
 
     private fun retrieveData(data: SeatResponse.Output) {
+
         //shimmer
         binding?.constraintLayout145?.hide()
         //design
@@ -443,8 +446,27 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
         //title
         binding?.textView197?.text = data.mn
+
         //location
         binding?.textView198?.text = data.cn
+
+        //Show  end time
+        binding?.textView393?.text = data.et
+
+
+        if (tncValue == 1) {
+            if (data.tnc == "") {
+                tncValue = 1
+            } else {
+                seatTermsDialog()
+                textTermsAndCondition?.text = data.tnc
+                tncValue = 2
+            }
+        }
+        
+        priceMap = data.priceList
+        noOfRowsSmall = data.rows
+        drawColumn(data.rows)
     }
 
     private fun drawColumn(noOfRows: List<SeatResponse.Output.Row>) {
