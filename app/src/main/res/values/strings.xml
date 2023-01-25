@@ -236,7 +236,6 @@
     //Offer
     <string name="new_offers_are_live">New offers are live!</string>
     <string name="your_experience">Your Experience</string>
-    <string name="nicelyDone">Nicely done!</string>
 
     //trailer
     <string name="video_not_avail">Video not available</string>
@@ -507,6 +506,7 @@
     <string name="password_msg_invalid">You entered an invalid password</string>
     <string name="otp_sent">OTP Sent</string>
     <string name="terms_amp_condition"><![CDATA[Terms & Condition]]></string>
+    <string name="terms_amp_condition_gc">I agree to the terms &amp; conditions</string>
     <string name="avail_offers">AVAIL OFFERS</string>
 
     <string name="languages">Languages</string>
@@ -594,9 +594,54 @@
 
     <string name="gift_card_text">Custom design feature is applicable only for e-gift card (not physical gift cards) &amp; that PVR reserves the right to refuse a request if picture used is not found to be legible/legal/correct</string>
     <string name="custom_card_text">*Minimum card value allowed is Rs.150 and maximum card value allowed is Rs.5000. Amount should be in multiples of 50</string>
-    <string name="we_wanna_turn">“We wanna turn that into a smile. Tell us what we can improve”</string>
-    <string name="logoutBack">Your booking is not yet complete.</string>
-    <string name="show_end_time_approx">Show end time approx</string>
+    <string name="gift_card_is_self_msg">Gifting Card to someone else?</string>
+    <string name="recipient_name">Recipient Name</string>
+    <string name="personal_message">Personal Message</string>
+    <string name="address_">Address</string>
+    <string name="address_reci">Recipient Address</string>
+    <string name="city_">City</string>
+    <string name="email_address_id">Recipient Email Id</string>
+    <string name="pincode_">Pincode</string>
+    <string name="recipient_details">Recipient Details</string>
+    <string name="name_text">Name</string>
+    <string name="mobile_number_new">Recipient Mobile Number</string>
+    <string name="email_id_">Email Id</string>
+    <string name="your_card_">YOUR CARD</string>
+    <string name="delivery_address_">Delivery Address</string>
+    <string name="Delivery_data">Delivery Charges</string>
+    <string name="recipient_details_">Recipient Details</string>
 
+    <string name="gift_card_place_order">PLACE ORDER</string>
+    <string name="gift_card_total">Gift Card Total</string>
+    <string name="gift_card_name_msg_required">Recipient name is required.</string>
+
+    <string name="gift_card_address_msg_required">Address is required.</string>
+    <string name="gift_card_city_msg_required">City is required.</string>
+    <string name="gift_card_pincode_msg_required">Pincode is required.</string>
+    <string name="gift_card_pincode_msg_invalid">Pincode is invalid.</string>
+    <string name="gift_card_name_msg">we promise, we will keep your name safe.</string>
+
+
+    <string name="gift_card_personal_msg">we promise, we will keep your message safe.</string>
+    <string name="gift_card_address_msg">please ensure your address is correct.</string>
+    <string name="gift_card_city_msg">please ensure your city name is correct.</string>
+    <string name="gift_card_pincode_msg">please ensure correct pincode for faster delievery.</string>
+    <string name="title_activity_gift_card_order_summary">GiftCardOrderSummary</string>
+    <string name="gift_card_header_order_summary">ORDER SUMMARY</string>
+    <string name="country_code">91</string>
+    <string name="email_msg_invalid">You entered an invalid email address</string>
+    <string name="details">Details</string>
+    <string name="note_data">\u2022  Masks are mandatory in the cinemas at all times unless eating.
+        \n\n\u2022  Social distancing will be maintained between seats.
+        \n\n\u2022  You are advised to show the Aarogya Setu App at the cinema entrance.
+        \n\n\u2022  Temperature Screening will be performed at the entrance. Guests with high temperature will be prohibited from entering the cinema and full ticket amount will be refunded.
+        \n\n\u2022  Sanitizers available for patrons.
+        \n\n\u2022  Regular sanitization of Audis between shows.
+        \n\n\u2022  Contactless food purchases.
+        \n\n\u2022  Encouraging digital payments.
+        \n\n\u2022  Thermal scanning at entry points.
+        \n\n\u2022  Outside FnB is not allowed.
+
+    </string>
 
 </resources>

@@ -27,7 +27,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/NoActionBar">
+        android:theme="@style/NoActionBar"
+        android:requestLegacyExternalStorage="true">
         <activity
             android:name=".ui.home.fragment.more.experience.ExperienceActivity"
             android:exported="false" />
@@ -236,6 +237,24 @@
         </activity>
         <activity
             android:name=".ui.giftCard.activateGiftCard.AddGiftCardActivity"
+            android:exported="false"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+        <activity
+            android:name=".ui.giftCard.activateGiftCard.GiftCardPlaceOrderActivity"
+            android:exported="false"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+        <activity
+            android:name=".ui.giftCard.GiftCardSummaryActivity"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data

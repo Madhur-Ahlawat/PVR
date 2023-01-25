@@ -51,14 +51,13 @@ class CreateGiftCardActivity : AppCompatActivity(), View.OnClickListener {
 
         if (intent != null) {
             if (intent.hasExtra("genericList")) {
-                giftCardListFilter =
-                    intent.getSerializableExtra("genericList") as ArrayList<GiftCardListResponse.Output.GiftCard>
+                giftCardListFilter = intent.getSerializableExtra("genericList") as ArrayList<GiftCardListResponse.Output.GiftCard>
             }
             if (intent.hasExtra("key")) {
                 card_type = intent.getStringExtra("key").toString()
             }
             if (intent.hasExtra("limit")) {
-                limit = intent.getStringExtra("limit")!!.toInt()
+                limit = intent.getStringExtra("limit")?.toInt() ?: 0
             }
         }
 

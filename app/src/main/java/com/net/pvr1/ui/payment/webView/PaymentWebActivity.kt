@@ -1,6 +1,7 @@
 package com.net.pvr1.ui.payment.webView
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Bitmap
 import android.net.UrlQuerySanitizer
 import android.os.Build
@@ -11,9 +12,13 @@ import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.util.Enc
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityPaymentWebBinding
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.giftCard.GiftCardActivity
+import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr1.utils.Constant.Companion.BOOK_TYPE
+import com.net.pvr1.utils.launchActivity
+import com.net.pvr1.utils.launchPrivilegeActivity
 import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
 import java.net.URLEncoder
@@ -283,7 +288,24 @@ class PaymentWebActivity : AppCompatActivity() {
                                     dialog.show()
                                 }
                             } else if (value.equals("success", ignoreCase = true)) {
-                               Constant().printTicket(this@PaymentWebActivity)
+                                when (BOOK_TYPE) {
+                                    "BOOKING", "FOOD" -> {
+                                        Constant().printTicket(this@PaymentWebActivity)
+                                    }
+                                    "GIFTCARD" -> {
+                                        launchPrivilegeActivity(
+                                            GiftCardActivity::class.java,
+                                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,"",amount,
+                                            BOOKING_ID,"GC")
+                                    }
+                                    else -> {
+                                        launchPrivilegeActivity(
+                                            HomeActivity::class.java,
+                                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,"",amount,
+                                            BOOKING_ID,"PP")
+
+                                    }
+                                }
                             }
                         } else {
                             printLog("---->")

@@ -1,0 +1,687 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <View
+        android:id="@+id/view_top"
+        android:layout_width="@dimen/dimen_50dp"
+        android:layout_height="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/padding_10"
+        android:background="@color/gray" />
+
+    <!--//top view-->
+    <LinearLayout
+        android:id="@+id/ll_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_top"
+        android:layout_marginTop="@dimen/padding_10"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_10">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/dimen_30dp"
+            android:layout_height="@dimen/dimen_15dp"
+            android:layout_gravity="center"
+            android:src="@drawable/back_new"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/padding_10"
+            android:layout_marginEnd="@dimen/dimen_40dp"
+            android:gravity="center"
+            android:text="Place Order"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_16sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_top_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/ll_top"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/padding_10"
+        android:background="@color/gray" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/view_top_bottom"
+        android:layout_above="@+id/ll_bottom"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="50dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/padding_10"
+                android:background="@drawable/bg_genre_yellow"
+                android:backgroundTint="#F9F9F9"
+                android:orientation="horizontal"
+                android:padding="@dimen/padding_10"
+                tools:ignore="UseSwitchCompatOrMaterialXml">
+
+                <TextView
+                    android:fontFamily="@font/sf_pro_text_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/gift_card_is_self_msg"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <Switch
+                    android:id="@+id/switch_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                </Switch>
+
+
+            </LinearLayout>
+
+            <RadioGroup
+                android:id="@+id/isSelfSelectorTab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <RadioButton
+                    android:id="@+id/radioYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/movie_detail_margin_left"
+                    android:button="@drawable/radio_selector_payment"
+                    android:checked="true"
+                    android:paddingLeft="@dimen/forms_margin_right"
+                    android:text="@string/yes"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/radio_selector_payment"
+                    android:paddingLeft="@dimen/forms_margin_right"
+                    android:text="@string/no"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="16sp" />
+            </RadioGroup>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_layout_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/mobile_ll"
+                android:layout_gravity="center_vertical"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                android:layout_marginTop="@dimen/dimen_15dp"
+                android:background="@drawable/bg_grey_booking"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15dp">
+
+                <EditText
+                    android:id="@+id/recipientName"
+                    style="@style/StyledTilEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@color/transparent1"
+                    android:gravity="center_vertical"
+                    android:hint="@string/recipient_name"
+                    android:inputType="text"
+                    android:maxLength="50"
+                    android:textColor="@color/pvr_dark_black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <!--<EditText
+                android:id="@+id/recipientName"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edit_text_height"
+                android:layout_marginTop="@dimen/form_margin_large"
+                android:background="@drawable/edittext_default_selector"
+                android:hint="Recipient Name"
+                android:padding="@dimen/user_login_padding_default1"
+                android:maxLength="50"
+                style="@style/H11Style"
+                android:singleLine="true"
+                />-->
+
+            <TextView
+                android:id="@+id/nameValidationMessage"
+                android:fontFamily="@font/sf_pro_text_medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_between_msg_and_editext_top"
+                android:layout_marginBottom="@dimen/spacing_between_msg_and_editext_bottom"
+                android:paddingBottom="@dimen/textview_padding_bottom"
+                android:text="@string/gift_card_name_msg"
+                android:textColor="@color/pvr_light_gray"
+                android:visibility="gone" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_emailAddressEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/mobile_ll"
+                android:layout_marginTop="@dimen/dimen_15dp"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                android:background="@drawable/bg_grey_booking"
+                android:padding="@dimen/dimen_15dp">
+
+                <EditText
+                    android:id="@+id/emailAddressEditText"
+                    style="@style/StyledTilEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent1"
+                    android:hint="@string/email_address_id"
+                    android:inputType="textWebEmailAddress"
+                    android:textColor="@color/pvr_dark_black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_mobileEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/mobile_ll"
+                android:layout_marginTop="@dimen/dimen_15dp"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                android:background="@drawable/bg_grey_booking"
+                android:padding="@dimen/dimen_15dp">
+
+                <EditText
+                    android:id="@+id/mobileEditText"
+                    style="@style/StyledTilEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent1"
+                    android:hint="@string/mobile_number_new"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:textColor="@color/pvr_dark_black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/e_cart_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+
+                <TextView
+                    android:id="@+id/emailValidationMessage"
+                    android:fontFamily="@font/sf_pro_text_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_between_msg_and_editext_top"
+                    android:layout_marginBottom="@dimen/spacing_between_msg_and_editext_bottom"
+                    android:paddingBottom="@dimen/textview_padding_bottom"
+                    android:text="@string/email_msg"
+                    android:textColor="@color/pvr_light_gray"
+                    android:visibility="gone" />
+
+
+                <TextView
+                    android:id="@+id/mobileValidationMessage"
+                    android:fontFamily="@font/sf_pro_text_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_between_msg_and_editext_top"
+                    android:layout_marginBottom="@dimen/spacing_between_msg_and_editext_bottom"
+                    android:paddingBottom="@dimen/textview_padding_bottom"
+                    android:text="@string/mobile_msg"
+                    android:textColor="@color/pvr_light_gray"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/p_cart_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_delAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    android:layout_below="@+id/mobile_ll"
+                    android:padding="@dimen/dimen_15dp"
+                    android:background="@drawable/bg_grey_booking"
+                    android:layout_marginTop="@dimen/dimen_15dp">
+
+                    <EditText
+                        android:id="@+id/delAddress"
+                        style="@style/StyledTilEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/address_reci"
+                        android:inputType="text"
+                        android:background="@color/transparent1"
+                        android:maxLength="100"
+                        android:textColor="@color/pvr_dark_black" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <!-- <EditText
+                     android:id="@+id/delAddress"
+                     android:layout_width="match_parent"
+                     android:layout_height="@dimen/edit_text_height"
+                     android:background="@drawable/edittext_default_selector"
+                     android:hint="Address"
+                     android:maxLength="100"
+                     android:padding="@dimen/user_login_padding_default1"
+                     style="@style/H11Style"
+                     android:singleLine="true"
+                     />-->
+
+                <TextView
+                    android:id="@+id/delAddressValidationMessage"
+                    android:fontFamily="@font/sf_pro_text_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_between_msg_and_editext_top"
+                    android:layout_marginBottom="@dimen/spacing_between_msg_and_editext_bottom"
+                    android:paddingBottom="@dimen/textview_padding_bottom"
+                    android:text="@string/gift_card_address_msg"
+                    android:textColor="@color/pvr_light_gray"
+                    android:visibility="gone" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_15dp"
+                    android:weightSum="2">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/text_city"
+                        android:layout_width="0dp"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/mobile_ll"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/bg_grey_booking"
+                        android:padding="@dimen/dimen_15dp"
+                        android:layout_weight="1">
+
+                        <EditText
+                            android:id="@+id/city"
+                            style="@style/StyledTilEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/city_"
+                            android:inputType="text"
+                            android:maxLength="20"
+                            android:background="@color/transparent1"
+                            android:textColor="@color/pvr_dark_black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/text_pincode"
+                        android:layout_width="0dp"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/mobile_ll"
+                        android:layout_marginLeft="8dp"
+                        android:padding="@dimen/dimen_15dp"
+                        android:background="@drawable/bg_grey_booking"
+                        android:layout_weight="1">
+
+                        <EditText
+                            android:id="@+id/pincode"
+                            style="@style/StyledTilEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/pincode_"
+                            android:background="@color/transparent1"
+                            android:inputType="number"
+                            android:maxLength="6"
+                            android:textColor="@color/pvr_dark_black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                </LinearLayout>
+
+
+                <!--   <EditText
+                       android:id="@+id/city"
+                       android:layout_width="match_parent"
+                       android:layout_height="@dimen/edit_text_height"
+                       android:background="@drawable/edittext_default_selector"
+                       android:hint="City"
+                       android:padding="@dimen/user_login_padding_default1"
+                       style="@style/H11Style"
+                       android:maxLength="20"
+                       android:singleLine="true"
+                       />-->
+
+                <TextView
+                    android:id="@+id/cityValidationMessage"
+                    android:fontFamily="@font/sf_pro_text_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_between_msg_and_editext_top"
+                    android:layout_marginBottom="@dimen/spacing_between_msg_and_editext_bottom"
+                    android:paddingBottom="@dimen/textview_padding_bottom"
+                    android:text="@string/gift_card_city_msg"
+                    android:textColor="@color/pvr_light_gray"
+                    android:visibility="gone" />
+
+
+                <!--  <EditText
+                      android:id="@+id/pincode"
+                      android:layout_width="match_parent"
+                      android:layout_height="@dimen/edit_text_height"
+                      android:background="@drawable/edittext_default_selector"
+                      android:hint="Pincode"
+                      android:inputType="number"
+                      android:maxLength="6"
+                      android:padding="@dimen/user_login_padding_default1"
+                      style="@style/H11Style"
+                      android:singleLine="true"
+                      />-->
+
+                <TextView
+                    android:id="@+id/pincodeValidationMessage"
+                    android:fontFamily="@font/sf_pro_text_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_between_msg_and_editext_top"
+                    android:layout_marginBottom="@dimen/spacing_between_msg_and_editext_bottom"
+                    android:paddingBottom="@dimen/textview_padding_bottom"
+                    android:text="@string/gift_card_pincode_msg"
+                    android:textColor="@color/pvr_light_gray"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <!--<com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_personalMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:counterEnabled="true"
+                app:counterMaxLength="100"
+                android:layout_marginTop="32dp">
+
+               &lt;!&ndash; <EditText
+                    android:id="@+id/personalMessage"
+                    style="@style/StyledTilEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/personal_message"
+                    android:inputType="text"
+                    android:maxLength="100"
+                    android:textColor="@color/pvr_dark_black" />&ndash;&gt;
+            </com.google.android.material.textfield.TextInputLayout>-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_grey_booking"
+                android:layout_marginTop="@dimen/dimen_15dp"
+                android:padding="@dimen/dimen_15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/TVPersonal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/personal_message"
+                    android:textColor="@color/gray_"
+                    android:textSize="12sp">
+
+                </TextView>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="4dp">
+
+                    <EditText
+                        android:id="@+id/personalMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="2dp"
+                        android:layout_toLeftOf="@id/TvCounter"
+                        android:background="@color/transparent1"
+                        android:gravity="top|start"
+                        android:maxLength="100"
+                        android:textSize="16sp"
+                        tools:text="dsvbjvsbvjdbdvdsbjbvsdjvndvvd bjvvjvbd jvn vsjvsd jvsd bjvdbvsdjnv svdvdbjvds bvdv d bjvdbjvdbvdjvdb">
+
+                    </EditText>
+
+                    <TextView
+                        android:id="@+id/TvCounter"
+                        android:layout_width="35dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/drawable_round_black"
+                        android:backgroundTint="#e4e4e4"
+                        android:gravity="center"
+                        android:text="100" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/personalMessageView"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="#e6e6e6"
+                android:visibility="gone" />
+
+            <!-- <EditText
+                 android:id="@+id/personalMessage"
+                 android:layout_width="match_parent"
+                 android:layout_height="@dimen/edit_text_height"
+                 android:background="@drawable/edittext_default_selector"
+                 android:hint="Personal Message"
+                 android:inputType="textWebEmailAddress"
+                 android:maxLength="100"
+                 android:padding="@dimen/user_login_padding_default1"
+                 style="@style/H11Style"
+                 android:singleLine="true"
+                 />-->
+
+            <TextView
+                android:id="@+id/personalMessageValidationMessage"
+                android:fontFamily="@font/sf_pro_text_medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_between_msg_and_editext_top"
+                android:layout_marginBottom="@dimen/spacing_between_msg_and_editext_bottom"
+                android:paddingBottom="@dimen/textview_padding_bottom"
+                android:text="@string/gift_card_personal_msg"
+                android:textColor="@color/pvr_light_gray"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/btncontinue"
+        android:fontFamily="@font/helvetica_neu_bold"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_button_height"
+        android:background="@drawable/gradient_gift"
+        android:textSize="22sp"
+        android:visibility="gone"
+        app:text="@string/continue_txt" />
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:layout_marginBottom="@dimen/padding_10"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_cancel_gift"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/dimen_20dp"
+                android:layout_marginEnd="@dimen/padding_10"
+                android:layout_weight="1"
+                android:background="@drawable/bg_grey_booking"
+                android:backgroundTint="@color/grayEd"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dimen_15dp">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_15dp"
+                    android:layout_height="@dimen/dimen_15dp"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    android:src="@drawable/gift_card_default" />
+
+                <TextView
+                    style="@style/text_black_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/padding_10"
+                    android:text="Cancel"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_proceed_gift"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/padding_10"
+                android:layout_marginEnd="@dimen/dimen_20dp"
+                android:layout_weight="1"
+                android:visibility="visible"
+                android:background="@drawable/bg_grey_booking"
+                android:backgroundTint="@color/yellow"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dimen_15dp">
+
+                <TextView
+                    style="@style/text_black_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/padding_10"
+                    android:text="Proceed"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_proceed_gift_unselect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/padding_10"
+                android:layout_marginEnd="@dimen/dimen_20dp"
+                android:layout_weight="1"
+                android:visibility="gone"
+                android:background="@drawable/bg_grey_booking"
+                android:backgroundTint="@color/yellow"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dimen_15dp">
+
+                <TextView
+                    style="@style/text_black_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/padding_10"
+                    android:text="Proceed"
+                    android:textAlignment="center"
+                    android:textColor="@color/black_75"
+                    android:textSize="@dimen/dimen_14sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="150dp"
+            android:layout_height="5dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/padding_10"
+            android:layout_marginBottom="@dimen/dimen_5dp"
+            android:background="@drawable/bg_grey_booking"
+            android:backgroundTint="@color/black" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/erroLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/includeHeader"
+        android:visibility="gone">
+
+    </RelativeLayout>
+</RelativeLayout>

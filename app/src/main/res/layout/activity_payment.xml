@@ -483,6 +483,12 @@
                     tools:itemCount="2"
                     tools:listitem="@layout/item_payment_list" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/walletView">
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_10dp"
@@ -510,7 +516,7 @@
                     tools:itemCount="2"
                     tools:listitem="@layout/item_payment_list" />
 
-
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

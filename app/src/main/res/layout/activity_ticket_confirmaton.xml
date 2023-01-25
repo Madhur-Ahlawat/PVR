@@ -385,7 +385,7 @@
                 android:id="@+id/ticketView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="visible">
+                android:visibility="gone">
 
 
                 <TextView
@@ -1523,6 +1523,14 @@ ididunt ut labore et dolore magna aliqua." />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--            // Gift Card Ticket-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/GCView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

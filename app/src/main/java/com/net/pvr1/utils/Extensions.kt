@@ -37,4 +37,23 @@ fun Context.launchActivity(cls: Class<*>, flags: Int) {
     this.startActivity(intent)
 
 }
+fun Context.launchGiftActivity(cls: Class<*>, flags: Int) {
+    val intent = Intent(this, cls).apply {
+        addFlags(flags)
+    }
+    this.startActivity(intent)
+
+}
+
+fun Context.launchPrivilegeActivity(cls: Class<*>, flags: Int,date:String,amt:String,id:String,from:String) {
+    val intent = Intent(this, cls).apply {
+        putExtra("id",id)
+        putExtra("date",date)
+        putExtra("amt",amt)
+        putExtra("from",from)
+        addFlags(flags)
+    }
+    this.startActivity(intent)
+
+}
 

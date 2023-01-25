@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <include layout="@layout/horizontal_line" />
+    <RelativeLayout
+        android:id="@+id/rlMainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/terms_and_conditions_recycler_item_height"
+        android:paddingLeft="@dimen/payment_option_margin_left_right"
+        android:paddingRight="@dimen/payment_option_margin_left_right">
+        <!-- title -->
+        <TextView
+            android:id="@+id/showTitle"
+            android:fontFamily="@font/sf_pro_text_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_toLeftOf="@+id/rightArrow"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="@string/other_payment_method"
+            android:textAllCaps="false" />
+
+        <!-- icon -->
+        <ImageView
+            android:id="@+id/rightArrow"
+            android:src="@drawable/chevron"
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            />
+
+    </RelativeLayout>
+    <include layout="@layout/horizontal_line" />
+
+
+
+</LinearLayout>

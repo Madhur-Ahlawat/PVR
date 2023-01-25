@@ -28,8 +28,8 @@ class GiftCardMainAdapter(
                 //Image
                 Glide.with(context)
                     .load(this.newImageUrl)
-                    .error(R.drawable.placeholder_horizental)
-                    .placeholder(R.drawable.placeholder_horizental)
+                    .error(R.drawable.gift_card_default)
+                    .placeholder(R.drawable.gift_card_default)
                     .into(binding.ivImageGeneric)
 
                 holder.itemView.setOnClickListener {

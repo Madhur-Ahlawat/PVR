@@ -13,7 +13,9 @@ import com.net.pvr1.ui.food.response.CancelTransResponse
 import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.ui.formats.response.FormatResponse
 import com.net.pvr1.ui.giftCard.response.ActiveGCResponse
+import com.net.pvr1.ui.giftCard.response.GiftCardDetailResponse
 import com.net.pvr1.ui.giftCard.response.GiftCardListResponse
+import com.net.pvr1.ui.giftCard.response.UploadImageGC
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaPreferenceResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.comingSoon.response.CommingSoonResponse
@@ -54,8 +56,11 @@ import com.net.pvr1.ui.watchList.response.WatchListResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import com.net.pvr1.utils.printLog
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.json.JSONObject
 import retrofit2.Response
+import retrofit2.http.Query
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(private val userAPI: UserAPI) {
@@ -466,6 +471,76 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             redeemGiftCardLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             redeemGiftCardLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    // GiftCard Details
+    private val detailGiftCardLiveData = MutableLiveData<NetworkResult<GiftCardDetailResponse>>()
+    val detailGiftCardResponseLiveData: LiveData<NetworkResult<GiftCardDetailResponse>>
+        get() = detailGiftCardLiveData
+
+    suspend fun detailGiftCard(giftcardid: String,userid: String) {
+        giftCardLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.giftcardDetails(giftcardid ,userid,Constant.version, Constant.platform,Constant.getDid())
+        detailGiftCardResponse(response)
+    }
+
+    private fun detailGiftCardResponse(response: Response<GiftCardDetailResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            detailGiftCardLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            detailGiftCardLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            detailGiftCardLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    //Save GiftCard
+    private val saveGiftCardLiveData = MutableLiveData<NetworkResult<UploadImageGC>>()
+    val saveGiftCardResponseLiveData: LiveData<NetworkResult<UploadImageGC>>
+        get() = saveGiftCardLiveData
+
+
+    suspend fun saveGiftCard(rName: String,rEmail: String,rMobile: String,gc_channel: String,gtype: String,
+                             pkGiftId: String,pincode: String,personalMessage: String,delAddress: String,denomination: String,quantity: String,userEmail: String
+                             ,ifSelf: String,totalAmount: String,customImage: String,customName:String) {
+        giftCardLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.saveGiftCard(rName, rEmail ,rMobile,gc_channel,gtype,pkGiftId,pincode,personalMessage,delAddress,denomination,quantity,userEmail,ifSelf,totalAmount,customImage,customName,"","NO",Constant.version, Constant.platform,Constant.getDid())
+        saveGiftCardResponse(response)
+    }
+
+    private fun saveGiftCardResponse(response: Response<UploadImageGC>) {
+        if (response.isSuccessful && response.body() != null) {
+            saveGiftCardLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            saveGiftCardLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            saveGiftCardLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+ //UPLOAD GiftCard
+    private val uploadGiftCardLiveData = MutableLiveData<NetworkResult<UploadImageGC>>()
+    val uploadGiftCardResponseLiveData: LiveData<NetworkResult<UploadImageGC>>
+        get() = uploadGiftCardLiveData
+
+    suspend fun uploadGiftCard(image: MultipartBody.Part,name: RequestBody) {
+        giftCardLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.uploadGCImage(image,name)
+        uploadGiftCardResponse(response)
+    }
+
+    private fun uploadGiftCardResponse(response: Response<UploadImageGC>) {
+        if (response.isSuccessful && response.body() != null) {
+            uploadGiftCardLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            uploadGiftCardLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            uploadGiftCardLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 
@@ -1598,8 +1673,16 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
                 splashLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
             }catch (e:Exception){
                 e.printStackTrace()
-                printLog(response.errorBody()?.charStream()?.readText())
-                splashLiveData.postValue(NetworkResult.Error(response.errorBody()?.charStream()?.readText().toString()))
+                if (response.errorBody()?.charStream()?.readText() == ""){
+                    splashLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+                }else {
+                    printLog(response.errorBody()?.charStream()?.readText())
+                    splashLiveData.postValue(
+                        NetworkResult.Error(
+                            response.errorBody()?.charStream()?.readText().toString()
+                        )
+                    )
+                }
             }
         } else {
             splashLiveData.postValue(NetworkResult.Error("Something Went Wrong"))

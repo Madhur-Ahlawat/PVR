@@ -10,7 +10,9 @@ import com.net.pvr1.ui.food.response.CancelTransResponse
 import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.ui.formats.response.FormatResponse
 import com.net.pvr1.ui.giftCard.response.ActiveGCResponse
+import com.net.pvr1.ui.giftCard.response.GiftCardDetailResponse
 import com.net.pvr1.ui.giftCard.response.GiftCardListResponse
+import com.net.pvr1.ui.giftCard.response.UploadImageGC
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaPreferenceResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.comingSoon.response.CommingSoonResponse
@@ -48,11 +50,10 @@ import com.net.pvr1.ui.summery.response.SetDonationResponse
 import com.net.pvr1.ui.summery.response.SummeryResponse
 import com.net.pvr1.ui.ticketConfirmation.response.TicketBookedResponse
 import com.net.pvr1.ui.watchList.response.WatchListResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
-import retrofit2.http.Header
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface UserAPI {
     @POST("api/v2/user/login")
@@ -1183,6 +1184,48 @@ interface UserAPI {
         @Query("pt") platform: String,
         @Query("did") did: String,
     ): Response<ActiveGCResponse>
+
+    @POST("api/giftcard/savegiftcard")
+    suspend fun saveGiftCard(
+        @Query("rName") rName: String,
+        @Query("rEmail") rEmail: String,
+        @Query("rMobile") rMobile: String,
+        @Query("gc_channel") gc_channel: String,
+        @Query("gtype") gtype: String,
+        @Query("pkGiftId") pkGiftId: String,
+        @Query("pincode") pincode: String,
+        @Query("personalMessage") personalMessage: String,
+        @Query("delAddress") delAddress: String,
+        @Query("denomination") denomination: String,
+        @Query("quantity") quantity: String,
+        @Query("userEmail") userEmail: String,
+        @Query("ifSelf") ifSelf: String,
+        @Query("totalAmount") totalAmount: String,
+        @Query("customImage") customImage: String,
+        @Query("customName") customName: String,
+        @Query("infosys") infosys: String,
+        @Query("isSpi") isSpi: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String,
+    ): Response<UploadImageGC>
+
+    @Multipart
+    @POST("api/giftcard/save/image")
+    suspend fun uploadGCImage(
+        @Part fileImage: MultipartBody.Part,
+        @Part("name") name: RequestBody
+    ): Response<UploadImageGC>
+
+
+    @POST("api/giftcard/purchasedetails")
+    suspend fun giftcardDetails(
+        @Query("gcorderid") gcorderid: String,
+        @Query("userid") userid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<GiftCardDetailResponse>
 
 
 }

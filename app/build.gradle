@@ -20,11 +20,10 @@ android {
 
     buildTypes {
         debug {
-//            buildConfigField "String", "API_URL", "\"https://b2c-main.pvrcinemas.com/PVRCinemasCMS/\""//New dev
-//            buildConfigField "String", "API_URL", "\"https://devapi.pvrcinemas.com/PVRCinemasCMS/\""//dev
+            buildConfigField "String", "API_URL", "\"https://devapi.pvrcinemas.com/PVRCinemasCMS/\""//dev
 //            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/\""//Prod
 //            buildConfigField "String", "API_URL", "\"https://preprodapi.pvrcinemas.com/PVRCinemasCMS/\""//PreProd
-            buildConfigField "String", "API_URL", "\"https://demoapi.pvrcinemas.com/PVRCinemasCMS/\""//stage
+//            buildConfigField "String", "API_URL", "\"https://demoapi.pvrcinemas.com/PVRCinemasCMS/\""//stage
 
             minifyEnabled false
             debuggable true

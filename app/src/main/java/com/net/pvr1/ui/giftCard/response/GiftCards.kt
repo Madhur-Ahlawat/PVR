@@ -1,5 +1,7 @@
 package com.net.pvr1.ui.giftCard.response
 
+import java.io.Serializable
+
 data class GiftCards(
     var d: String,
 
@@ -8,4 +10,4 @@ data class GiftCards(
     val type: String,
 
     val alias: String
-)
+): Serializable
