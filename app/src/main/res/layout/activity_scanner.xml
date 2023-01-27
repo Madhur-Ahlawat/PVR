@@ -57,5 +57,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/site_name_key" />
 
+    <com.journeyapps.barcodescanner.DecoratedBarcodeView
+        android:id="@+id/zxing_barcode_scanner"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/includeHeader"
+        app:zxing_scanner_layout="@layout/custom_barcode_scanner" >
+
+        <TextView
+            android:id="@+id/switch_flashlight"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_45dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/dimen_40dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/yellow_book_curve"
+            android:gravity="center"
+            android:fontFamily="@font/sf_pro_text_bold"
+            android:backgroundTint="@color/yellow"
+            android:textColor="@color/black"
+            android:layout_centerHorizontal="true"
+            android:text="Turn off Flashlight" />
+    </com.journeyapps.barcodescanner.DecoratedBarcodeView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

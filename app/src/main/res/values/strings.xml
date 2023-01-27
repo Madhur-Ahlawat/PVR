@@ -648,5 +648,6 @@
     <string name="logoutBack">Your booking is not yet complete.</string>
     <string name="show_end_time_approx">Show end time approx</string>
     <string name="nicelyDone">Nicely done!</string>
-    <string name="extend">Extend</string>
+    <string name="adult_msz">This movie has been rated \'A\' and is for audiences above the age of 18. Please carry a valid photo ID/age proof to the theatre. No refund of tickets once bought.</string>
+
 </resources>

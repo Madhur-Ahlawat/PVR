@@ -92,11 +92,17 @@ class PromotionAdapter(
                     holder.itemView.layoutParams = layoutParams
                 }
 
+                if (this.type == "VIDEO"){
+                    binding.tvPlay.show()
+                }else{
+                    binding.tvPlay.hide()
+                }
+
                 //Manage Functions
                 holder.itemView.setOnClickListener {
                     if (this.type == "IMAGE" && this.redirectView == "DEEPLINK") {
                         binding.tvPlay.hide()
-                        Constant().shareData(context, "", this.redirectView)
+                       // Constant().shareData(context, "", this.redirectView)
 
                     } else if (this.type == "IMAGE" && this.redirectView == "INAPP") {
                         binding.tvPlay.hide()
@@ -110,14 +116,14 @@ class PromotionAdapter(
                         context.startActivity(intent)
 
                     } else if (this.type == "VIDEO" && this.redirectView != "") {
-                        binding.tvPlay.show()
+
                         //click
                         val intent = Intent(context, PlayerActivity::class.java)
                         intent.putExtra("trailerUrl", this.trailerUrl)
                         context.startActivity(intent)
 
                     } else {
-                        binding.tvPlay.hide()
+
 
                     }
                 }

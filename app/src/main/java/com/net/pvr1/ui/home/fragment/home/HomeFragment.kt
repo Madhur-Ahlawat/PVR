@@ -395,7 +395,7 @@ class HomeFragment : Fragment(),
             //image
             binding?.homeRecommend?.ivRecomm?.let {
                 Glide.with(requireActivity())
-                    .load(rm.i)
+                    .load(rm.mih)
                     .error(R.drawable.placeholder_horizental)
                     .into(it)
             }

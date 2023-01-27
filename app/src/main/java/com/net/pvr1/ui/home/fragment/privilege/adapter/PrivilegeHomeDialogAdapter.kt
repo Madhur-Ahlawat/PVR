@@ -1,23 +1,27 @@
 package com.net.pvr1.ui.home.fragment.privilege.adapter
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.text.Html
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.PrivilegeHomeItemBinding
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
+import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
 
 
 class PrivilegeHomeDialogAdapter(
     private var nowShowingList: List<PrivilegeHomeResponse.Output.Pinfo>,
-    private var context: Context,
+    private var context: Activity,
     private var type: Int,
     private var listener: RecycleViewItemClickListener
 ) :
@@ -33,6 +37,17 @@ class PrivilegeHomeDialogAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val displayMetrics = DisplayMetrics()
+        context.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        val width: Int = displayMetrics.widthPixels
+        holder.itemView.layoutParams = LinearLayout.LayoutParams(
+            width - Constant().convertDpToPixel(
+                40f,
+                context
+            ), ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+
         with(holder) {
             with(nowShowingList[position]) {
                 //Language  .lng+this.lk

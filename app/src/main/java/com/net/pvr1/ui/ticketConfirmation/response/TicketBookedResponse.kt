@@ -1,5 +1,8 @@
 package com.net.pvr1.ui.ticketConfirmation.response
 
+import com.net.pvr1.ui.home.fragment.home.HomeFragment
+import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
+
 data class TicketBookedResponse(
     val code: Int,
     val minversion: Any,
@@ -91,7 +94,7 @@ data class TicketBookedResponse(
         val partialCancellationAllowed: Boolean,
         val pe: String,
         val pf: Boolean,
-        val ph: List<Ph>,
+        val ph: ArrayList<HomeResponse.Ph>,
         val preDetails: List<Any>,
         val ptext: String,
         val pttr: Any,

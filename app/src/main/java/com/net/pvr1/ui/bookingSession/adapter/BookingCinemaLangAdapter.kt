@@ -14,6 +14,9 @@ class BookingCinemaLangAdapter(
     private var nowShowingList: List<BookingResponse.Output.Cinema.Child.Sw>,
     private var context: Context,
     private val ccid: String,
+    private val ccn: String,
+    private val at: String,
+    private val adlt: Boolean,
 ) :
     RecyclerView.Adapter<BookingCinemaLangAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemBookingCinemaLangBinding) :
@@ -40,7 +43,7 @@ class BookingCinemaLangAdapter(
                 layoutManager.justifyContent = JustifyContent.FLEX_START
                 layoutManager.alignItems = AlignItems.FLEX_START
                 val bookingShowsParentAdapter =
-                    BookingShowsTimeAdapter(this.s!!, context, ccid)
+                    BookingShowsTimeAdapter(this.s!!, context, ccid,ccn,at,adlt)
                 binding.recyclerView11.layoutManager = layoutManager
                 binding.recyclerView11.adapter = bookingShowsParentAdapter
             }

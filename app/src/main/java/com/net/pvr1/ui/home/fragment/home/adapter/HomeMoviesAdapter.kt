@@ -60,7 +60,7 @@ class HomeMoviesAdapter(
                 binding.textView42.text = this.n
 
                 //rating
-                binding.textView43.text = this.ce + " " + context.getString(R.string.dots) + " " + this.lng
+//                binding.textView43.text = this.ce + " " + context.getString(R.string.dots) + " " + this.otherlanguages
 
                 //language
                 binding.textView45.text=this.tag
@@ -89,10 +89,10 @@ class HomeMoviesAdapter(
                 censorLanguage(
                     this.otherlanguages,
                     this.lng,
-                    "",
-                    binding.textView45,
+                    this.ce,
+                    binding.textView43,
                     context,
-                    binding.textView45)
+                    binding.textView43)
 
             }
         }
@@ -117,14 +117,14 @@ class HomeMoviesAdapter(
         )
         if (otherLang != null && otherLang != "") {
             if (otherLang.split(",").toTypedArray().size > 2) {
-                otherLanguage.visibility = View.VISIBLE
-                otherLanguage.text = "+" + (otherLang.split(",").toTypedArray().size - 2)
+//                otherLanguage.visibility = View.VISIBLE
+//                otherLanguage.text = "+" + (otherLang.split(",").toTypedArray().size - 2)
                 stringBuilder.append(
                     otherLang.split(",").toTypedArray()[0] + " | " + otherLang.split(",")
                         .toTypedArray()[1]
                 )
             } else {
-                otherLanguage.hide()
+//                otherLanguage.hide()
                 stringBuilder.append(otherLang.replace(",".toRegex(), " | "))
             }
         } else {

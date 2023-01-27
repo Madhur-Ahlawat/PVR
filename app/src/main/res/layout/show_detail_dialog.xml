@@ -1,0 +1,41 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    android:layout_margin="10dp"
+    android:background="@drawable/flat_corner_rect"
+    android:id="@+id/mainView"
+    android:orientation="vertical">
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:singleLine="true"-->
+    <!--android:ellipsize="end"-->
+    <!--android:id="@+id/cinema"-->
+    <!--style="@style/H8Style"-->
+    <!--android:text="Cinema Name"/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="2"-->
+    <!--android:layout_marginRight="10dp"-->
+    <!--android:id="@+id/time"-->
+    <!--android:gravity="right"-->
+    <!--style="@style/H4Point1Style"-->
+    <!--android:text="09:30"/>-->
+    <!--</LinearLayout>-->
+
+
+
+
+
+</LinearLayout>

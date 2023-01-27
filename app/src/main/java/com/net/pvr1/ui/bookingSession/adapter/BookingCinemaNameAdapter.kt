@@ -12,13 +12,12 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ItemBookingSessionCinemaLanguageBinding
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.utils.hide
-import com.net.pvr1.utils.printLog
 import com.net.pvr1.utils.show
-import com.net.pvr1.utils.toast
 
 class BookingCinemaNameAdapter(
     private var nowShowingList: List<BookingResponse.Output.Cinema.Child>,
     private var context: Context,
+    private val adlt: Boolean,
 ) :
     RecyclerView.Adapter<BookingCinemaNameAdapter.ViewHolder>() {
 
@@ -54,7 +53,7 @@ class BookingCinemaNameAdapter(
                 val layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 val bookingShowsParentAdapter =
-                    BookingCinemaLangAdapter(this.sws, context, this.ccid)
+                    BookingCinemaLangAdapter(this.sws, context, this.ccid,this.ccn,this.at,adlt)
                 binding.recyclerView11.layoutManager = layoutManager
                 binding.recyclerView11.adapter = bookingShowsParentAdapter
             }

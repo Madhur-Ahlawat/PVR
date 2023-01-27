@@ -18,7 +18,8 @@ import com.net.pvr1.utils.show
 class BookingShowsParentAdapter(
     private var nowShowingList: ArrayList<BookingResponse.Output.Cinema>,
     private var context: Context,
-    private var listener: RecycleViewItemClickListener
+    private var listener: RecycleViewItemClickListener,
+    private var adlt: Boolean
 ) : RecyclerView.Adapter<BookingShowsParentAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemBookingSessionCinemaLocationBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -51,14 +52,19 @@ class BookingShowsParentAdapter(
                         val gridLayout3 =
                             GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
                         val bookingShowsParentAdapter =
-                            BookingCinemaNameAdapter(this.childs, context)
+                            BookingCinemaNameAdapter(this.childs, context,adlt)
                         binding.recyclerView7.layoutManager = gridLayout3
                         binding.recyclerView7.adapter = bookingShowsParentAdapter
                     } else {
                         val gridLayout3 =
                             GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
                         val bookingShowsParentAdapter = BookingCinemaLangAdapter(
-                            this.childs[0].sws, context, this.childs[0].ccid
+                            this.childs[0].sws,
+                            context,
+                            this.childs[0].ccid,
+                            this.childs[0].ccn,
+                            this.childs[0].at,
+                            adlt
                         )
                         binding.recyclerView7.layoutManager = gridLayout3
                         binding.recyclerView7.adapter = bookingShowsParentAdapter

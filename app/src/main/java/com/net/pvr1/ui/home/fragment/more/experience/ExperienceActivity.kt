@@ -35,6 +35,7 @@ import com.net.pvr1.ui.home.fragment.more.experience.adapter.ExperienceAdapter
 import com.net.pvr1.ui.home.fragment.more.experience.response.ExperienceDetailsResponse
 import com.net.pvr1.ui.home.fragment.more.experience.response.ExperienceResponse
 import com.net.pvr1.ui.home.fragment.more.experience.viewModel.ExperienceViewModel
+import com.net.pvr1.ui.ticketConfirmation.adapter.TicketPlaceHolderAdapter
 import com.net.pvr1.ui.webView.WebViewActivity
 import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -258,7 +259,7 @@ class ExperienceActivity : AppCompatActivity(), ExperienceAdapter.RecycleViewIte
             bindingBottom.include46.recyclerPromotion.onFlingListener = null
             snapHelper.attachToRecyclerView(bindingBottom.include46.recyclerPromotion)
             bindingBottom.include46.recyclerPromotion.layoutManager = layoutManager
-            val adapter = PromotionAdapter(this, phd)
+            val adapter = TicketPlaceHolderAdapter(this, phd)
             bindingBottom.include46.recyclerPromotion.adapter = adapter
             if (phd.size > 1) {
                 val speedScroll = 5000

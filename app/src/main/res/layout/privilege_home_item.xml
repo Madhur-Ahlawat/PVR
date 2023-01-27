@@ -32,13 +32,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView274" />
 
-    <ImageView
+    <com.joooonho.SelectableRoundedImageView
         android:id="@+id/imageView110"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
         android:layout_marginTop="24dp"
         android:adjustViewBounds="true"
-        tools:srcCompat="@tools:sample/backgrounds/scenic"
+        app:sriv_left_bottom_corner_radius="6dp"
+        app:sriv_left_top_corner_radius="6dp"
+        app:sriv_right_bottom_corner_radius="6dp"
+        app:sriv_right_top_corner_radius="6dp"
+        tools:srcCompat="@drawable/placeholder_horizental"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

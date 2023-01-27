@@ -6,7 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Html
-import android.view.View
+import android.view.WindowManager
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.net.pvr1.R
@@ -14,6 +14,7 @@ import com.net.pvr1.databinding.DialogOptionBinding
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
+import kotlin.math.roundToInt
 
 class OptionDialog(
     context: Context,
@@ -33,6 +34,10 @@ class OptionDialog(
          binding = DialogOptionBinding.inflate(layoutInflater, null, false)
         setContentView(binding?.root!!)
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val width = (context.resources.displayMetrics.widthPixels * 0.70)
+
+        window?.setLayout(width.roundToInt(), WindowManager.LayoutParams.WRAP_CONTENT);
+
         setCancelable(false)
 
         if (Constant.DISPLAY ==0){
@@ -42,11 +47,11 @@ class OptionDialog(
             //binding?.subtitle?.gravity = Gravity.CENTER
         }
 
-
+        println("positiveBtnText--$positiveBtnText")
         if (positiveBtnText==R.string.ok){
-            binding?.negativeBtn?.visibility = View.GONE
+            binding?.negativeBtn?.hide()
         }else{
-            binding?.negativeBtn?.visibility = View.VISIBLE
+            binding?.negativeBtn?.show()
         }
 
 //        manage title show
