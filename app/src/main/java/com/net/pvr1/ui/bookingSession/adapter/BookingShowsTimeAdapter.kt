@@ -14,7 +14,6 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -27,6 +26,7 @@ import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr1.utils.Constant.Companion.OfferDialogImage
 import com.net.pvr1.utils.Constant.Companion.SESSION_ID
 import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.invisible
 import com.net.pvr1.utils.show
 import kotlin.math.roundToInt
 
@@ -62,8 +62,7 @@ class BookingShowsTimeAdapter(
                 val colorCode = "#" + this.cc
 
                 binding.textView96.setTextColor(Color.parseColor(colorCode))
-                binding.imageView48.setColorFilter(Color.parseColor(colorCode))
-                binding.imageView49.setColorFilter(Color.parseColor(colorCode))
+
 
                 //between 0-255
                 val alpha = 10
@@ -85,8 +84,39 @@ class BookingShowsTimeAdapter(
                 if (this.hc) {
                     binding.constraintLayout133.show()
                 } else {
-                    binding.constraintLayout133.hide()
+                    binding.constraintLayout133.invisible()
                 }
+
+                if (!TextUtils.isEmpty(this.comm)) {
+                    binding.imageView49.show()
+                    when (this.comm) {
+                        ("RST") -> {
+                            binding.imageView49.setImageResource(R.drawable.line_arrow)
+                        }
+                        ("CC") -> {
+                            binding.imageView49.setImageResource(R.drawable.ic_cc_gray)
+                        }
+                        ("AD") -> {
+                            binding.imageView49.setImageResource(R.drawable.ic_audio_icon_gray)
+                        }
+                        else -> {
+                            binding.imageView49.invisible()
+                        }
+                    }
+                }else{
+                    binding.imageView49.invisible()
+                }
+
+                if (!TextUtils.isEmpty(this.txt) && this.txt == ("sens")) {
+                    binding.imageView50.show()
+                    binding.imageView50.setImageResource(R.drawable.ic_sens_icon_gray)
+                }else{
+                    binding.imageView50.invisible()
+                }
+
+                binding.imageView48.setColorFilter(Color.parseColor(colorCode))
+                binding.imageView49.setColorFilter(Color.parseColor(colorCode))
+                binding.imageView50.setColorFilter(Color.parseColor(colorCode))
 
                 holder.itemView.setOnClickListener {
                     rowIndex = position
@@ -100,6 +130,7 @@ class BookingShowsTimeAdapter(
                             intent.putExtra("clickPosition", rowIndex.toString())
                             intent.putExtra("shows", nowShowingList)
                             intent.putExtra("skip", "true")
+                            intent.putExtra("from", "movie")
                             if (adlt) {
                                 val dialog = OptionDialog(context,
                                     R.mipmap.ic_launcher,
@@ -203,19 +234,19 @@ class BookingShowsTimeAdapter(
 
                         }
 
-                        holder.itemView.setOnLongClickListener {
-
-                            showChangeLangDialogNew(
-                                context,
-                                ccn,
-                                this,
-                                holder.itemView
-                            )
-
-                            return@setOnLongClickListener true
-                        }
-
                     }
+                }
+
+                holder.itemView.setOnLongClickListener {
+
+                    showChangeLangDialogNew(
+                        context,
+                        ccn,
+                        this,
+                        holder.itemView
+                    )
+
+                    return@setOnLongClickListener true
                 }
             }
         }
@@ -398,6 +429,8 @@ class BookingShowsTimeAdapter(
 
         Glide.with(context)
             .load(OfferDialogImage)
+            .error(R.drawable.placeholder_horizental)
+            .placeholder(R.drawable.placeholder_horizental)
             .into(image)
 
         offerPrice.paintFlags = offerPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
@@ -420,6 +453,7 @@ class BookingShowsTimeAdapter(
             intent.putExtra("clickPosition", rowIndex.toString())
             intent.putExtra("shows", nowShowingList)
             intent.putExtra("skip", "true")
+            intent.putExtra("from", "movie")
             if (adlt) {
                 val dialog = OptionDialog(context,
                     R.mipmap.ic_launcher,
@@ -530,7 +564,9 @@ class BookingShowsTimeAdapter(
             val intent = Intent(context, SeatLayoutActivity::class.java)
             intent.putExtra("clickPosition", rowIndex.toString())
             intent.putExtra("shows", nowShowingList)
-            intent.putExtra("skip", "true")
+            intent.putExtra("skip", "false")
+            intent.putExtra("from", "movie")
+            intent.putExtra("discountPrice", discountPrice.toString())
             if (adlt) {
                 val dialog = OptionDialog(context,
                     R.mipmap.ic_launcher,

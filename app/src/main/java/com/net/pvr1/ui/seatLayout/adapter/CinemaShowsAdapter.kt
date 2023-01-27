@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Typeface
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
@@ -42,7 +42,7 @@ class CinemaShowsAdapter(
                 //click
                 holder.itemView.setOnClickListener {
                     itemCount = position
-                    listener.cinemaShowsClick(this.sid)
+                    listener.cinemaShowsClick(this.sid,holder.itemView)
                     notifyDataSetChanged()
                 }
 
@@ -85,7 +85,7 @@ class CinemaShowsAdapter(
 
 
     interface RecycleViewItemClickListener {
-        fun cinemaShowsClick(comingSoonItem: Int)
+        fun cinemaShowsClick(comingSoonItem: Int, itemView: View)
     }
 
 }

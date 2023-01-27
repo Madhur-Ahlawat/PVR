@@ -51,7 +51,7 @@ data class SeatResponse(
             val n: String,
             val s: List<S>,
             val t: String,
-            val c: String,
+            val c: String="",
         ):Serializable{
 
             data class S(

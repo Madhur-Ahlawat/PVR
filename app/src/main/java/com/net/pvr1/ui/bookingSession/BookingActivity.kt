@@ -462,7 +462,7 @@ class BookingActivity : AppCompatActivity(),
     }
 
 
-    override fun showsDaysClick(comingSoonItem: BookingResponse.Output.Dy) {
+    override fun showsDaysClick(comingSoonItem: BookingResponse.Output.Dy, itemView: View) {
         daysClick = true
         authViewModel.bookingTicket(
             preferences.getCityName(),
@@ -474,6 +474,7 @@ class BookingActivity : AppCompatActivity(),
             "no",
             preferences.getUserId()
         )
+        Constant.focusOnView(itemView,binding?.recyclerView9!!)
     }
 
     override fun languageClick(comingSoonItem: String) {

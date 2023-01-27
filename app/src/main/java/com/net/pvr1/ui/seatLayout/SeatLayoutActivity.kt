@@ -122,14 +122,16 @@ class SeatLayoutActivity : AppCompatActivity(),
         //from Movie
         if (intent.getStringExtra("from") == "cinema") {
             cinemaSessionShows =
-                intent.getSerializableExtra("CinemaShows") as ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>
-
-            position = intent.getStringExtra("position").toString()
+                intent.getSerializableExtra("shows") as ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>
+            position = intent.getStringExtra("clickPosition").toString()
             cinemaShows(position)
         } else {
+            position = intent.getStringExtra("clickPosition").toString()
             showsArray = intent.getSerializableExtra("shows") as ArrayList<Child.Sw.S>
             shows()
         }
+
+
 
         // manage offer
         if (intent.getStringExtra("skip").toString() == "false") {
@@ -233,13 +235,14 @@ class SeatLayoutActivity : AppCompatActivity(),
 
     //Shows
     private fun shows() {
-        val itemPosition = intent.getStringExtra("clickPosition")
-        val position = itemPosition?.toInt()
         val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
         binding?.recyclerView27?.layoutManager = LinearLayoutManager(this)
-        val adapter = ShowsAdapter(showsArray, this, this, position,binding?.recyclerView27!!)
+        val adapter =
+            ShowsAdapter(showsArray, this, this, position.toInt(), binding?.recyclerView27!!)
         binding?.recyclerView27?.layoutManager = gridLayout
         binding?.recyclerView27?.adapter = adapter
+        println("itemCount--->$position")
+
 
     }
 
@@ -339,32 +342,31 @@ class SeatLayoutActivity : AppCompatActivity(),
         BOOKING_ID = output.bookingid
         SELECTED_SEAT = selectedSeats.size
 
-        if (preferences.getIsLogin()){
-            if(output.fc=="false"){
-                FOODENABLE=1
+        if (preferences.getIsLogin()) {
+            if (output.fc == "false") {
+                FOODENABLE = 1
                 startActivity(Intent(this, SummeryActivity::class.java))
-            }else{
+            } else {
                 when (output.nf) {
                     "true" -> {
-                        FOODENABLE=0
+                        FOODENABLE = 0
                         startActivity(Intent(this, FoodActivity::class.java))
                     }
                     "false" -> {
-                        FOODENABLE=0
+                        FOODENABLE = 0
                         startActivity(Intent(this, FoodActivity::class.java))
                     }
                     else -> {
-                        FOODENABLE=1
+                        FOODENABLE = 1
                         startActivity(Intent(this, SummeryActivity::class.java))
 
                     }
                 }
             }
-        }
-        else{
+        } else {
             authViewModel.cancelTrans(CINEMA_ID, TRANSACTION_ID, BOOKING_ID)
             val intent = Intent(this@SeatLayoutActivity, LoginActivity::class.java)
-            intent.putExtra("from","seat")
+            intent.putExtra("from", "seat")
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             finish()
@@ -452,7 +454,11 @@ class SeatLayoutActivity : AppCompatActivity(),
         binding?.textView198?.text = data.cn
 
         //Show  end time
-        binding?.textView393?.text = showsArray[position.toInt()].et
+        if (intent.getStringExtra("from") == "cinema") {
+            binding?.textView393?.text = cinemaSessionShows[position.toInt()].et
+        } else {
+            binding?.textView393?.text = showsArray[position.toInt()].et
+        }
 
 
         if (tncValue == 1) {
@@ -464,7 +470,7 @@ class SeatLayoutActivity : AppCompatActivity(),
                 tncValue = 2
             }
         }
-        
+
         priceMap = data.priceList
         noOfRowsSmall = data.rows
         drawColumn(data.rows)
@@ -1831,7 +1837,7 @@ class SeatLayoutActivity : AppCompatActivity(),
         dialog.show()
     }
 
-    override fun showsClick(comingSoonItem: Int) {
+    override fun showsClick(comingSoonItem: Int, itemView: View) {
         sessionId = comingSoonItem.toString()
 
         binding?.llRowName?.removeAllViews()
@@ -1842,12 +1848,13 @@ class SeatLayoutActivity : AppCompatActivity(),
 
     }
 
-    override fun cinemaShowsClick(comingSoonItem: Int) {
+    override fun cinemaShowsClick(comingSoonItem: Int, itemView: View) {
         sessionId = comingSoonItem.toString()
         binding?.llRowName?.removeAllViews()
         authViewModel.seatLayout(
             CINEMA_ID, sessionId, "", "", "", false, ""
         )
+        Constant.focusOnView(itemView, binding?.recyclerView27!!)
     }
 
     //Internet Check

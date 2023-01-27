@@ -37,17 +37,23 @@ class BookingShowsParentAdapter(
                 //Language
                 binding.textView105.text = this.cn
                 //Recycler
-
+                if(this.hc){
+                    binding.hcIcon.show()
+                }else{
+                    binding.hcIcon.hide()
+                }
                 binding.constraintLayout121.setOnClickListener {
                     printLog("size--->${this.childs[0].sws.size}")
                     if (binding.recyclerView7.visibility == View.GONE) {
                         binding.recyclerView7.show()
+                        binding.hcIcon.hide()
                         binding.imageView56.setImageResource(R.drawable.arrow_up)
                     } else {
                         binding.imageView56.setImageResource(R.drawable.arrow_down)
                         binding.recyclerView7.hide()
+                        binding.hcIcon.show()
                     }
-                    val cellSize = this.childs[0].sws.size
+                    val cellSize = this.childs.size
                     if (cellSize > 1) {
                         val gridLayout3 =
                             GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)

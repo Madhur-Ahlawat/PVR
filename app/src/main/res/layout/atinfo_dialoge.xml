@@ -154,18 +154,22 @@
         android:layout_height="45dp"
         android:layout_gravity="bottom"
         android:layout_marginTop="22dp"
-        android:background="@color/pvr_yellow"
+        android:layout_marginBottom="@dimen/dimen_30dp"
+        android:layout_marginStart="@dimen/dimen_30dp"
+        android:layout_marginEnd="@dimen/dimen_30dp"
+        android:background="@drawable/yellow_book_curve"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/close"
-            android:fontFamily="@font/sfprodisplay_bold"
+            android:fontFamily="@font/sf_pro_text_bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textColor="@color/black"
             android:text="CLOSE"
-            android:textSize="24sp"
+            android:textSize="@dimen/dimen_16sp"
             app:textAllCaps="true" />
 
     </LinearLayout>

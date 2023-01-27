@@ -39,14 +39,21 @@ class BookingCinemaNameAdapter(
             with(nowShowingList[position]) {
                 //Language  .lng+this.lk
                 binding.textView106.text = this.ccn
+//                if(this.hc){
+//                    binding.hcIcon.show()
+//                }else{
+//                    binding.hcIcon.hide()
+//                }
 
                 binding.constraintLayout111.setOnClickListener {
                     if (binding.recyclerView11.visibility == View.GONE) {
                         binding.recyclerView11.show()
+                       // binding.hcIcon.hide()
                         binding.imageView56.setImageResource(R.drawable.arrow_up)
                     } else {
                         binding.imageView56.setImageResource(R.drawable.arrow_down)
-                        binding.recyclerView11.hide()
+                       // binding.recyclerView11.hide()
+                        binding.hcIcon.show()
                     }
                 }
                 //Recycler

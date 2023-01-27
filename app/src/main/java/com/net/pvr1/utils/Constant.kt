@@ -11,6 +11,7 @@ import android.content.pm.PackageManager.NameNotFoundException
 import android.graphics.Color
 import android.location.*
 import android.net.Uri
+import android.os.Handler
 import android.provider.ContactsContract.Directory.PACKAGE_NAME
 import android.provider.Settings
 import android.text.*
@@ -25,6 +26,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
@@ -215,6 +217,15 @@ class Constant {
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
                 ""
+            }
+        }
+
+         fun focusOnView(view: View,session_scrool: RecyclerView) {
+            Handler().post {
+                val vLeft = view.left
+                val vRight = view.right
+                val sWidth: Int = session_scrool.width
+                session_scrool.smoothScrollBy((vLeft + vRight - sWidth) / 2, 0)
             }
         }
 
