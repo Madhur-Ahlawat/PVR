@@ -20,7 +20,6 @@ import com.net.pvr1.ui.giftCard.activateGiftCard.viewModel.ActivateGiftCardViewM
 import com.net.pvr1.ui.giftCard.response.GiftCardListResponse
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
-import com.net.pvr1.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

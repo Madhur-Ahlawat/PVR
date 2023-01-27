@@ -394,6 +394,7 @@
             </intent-filter>
         </activity> <!-- Location Service -->
         <service android:name=".utils.FetchAddressIntentServices" /> <!-- Network Service -->
+        <service android:name=".utils.BroadcastService" /> <!-- Network Service -->
         <receiver
             android:name=".utils.NetworkReceiver"
             android:exported="true">

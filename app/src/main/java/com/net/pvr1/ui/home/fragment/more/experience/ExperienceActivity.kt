@@ -29,7 +29,6 @@ import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.formats.FormatsActivity
-import com.net.pvr1.ui.home.fragment.home.adapter.PromotionAdapter
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.more.experience.adapter.ExperienceAdapter
 import com.net.pvr1.ui.home.fragment.more.experience.response.ExperienceDetailsResponse

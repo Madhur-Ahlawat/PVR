@@ -17,7 +17,6 @@ import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr1.utils.Constant.Companion.BOOK_TYPE
-import com.net.pvr1.utils.launchActivity
 import com.net.pvr1.utils.launchPrivilegeActivity
 import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint

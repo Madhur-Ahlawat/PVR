@@ -1,28 +1,19 @@
 package com.net.pvr1.ui.myBookings
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.net.pvr1.R
-import com.net.pvr1.databinding.ActivityMyBookingBinding
 import com.net.pvr1.databinding.ActivityPastBookingBinding
 import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.myBookings.adapter.FoodTicketChildAdapter
-import com.net.pvr1.ui.myBookings.adapter.GiftCardAdapter
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
-import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.myBookings.viewModel.MyBookingViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.hide
-import com.net.pvr1.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

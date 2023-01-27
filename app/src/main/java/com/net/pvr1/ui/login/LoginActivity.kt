@@ -43,9 +43,6 @@ class LoginActivity : AppCompatActivity() {
     private val authViewModel: LoginViewModel by viewModels()
     private val mobileRequest = 1
 
-    //timer
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater, null, false)
@@ -55,6 +52,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun manageFunction() {
+        //moved Another Pages
+        movedNext()
+        timerManage()
+
         //Auto Show Mobile Number
         val hintRequest = HintRequest.Builder().setPhoneNumberIdentifierSupported(true).build()
         val intent: PendingIntent = Credentials.getClient(this).getHintPickerIntent(hintRequest)
@@ -64,9 +65,6 @@ class LoginActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 
-        //moved Another Pages
-        movedNext()
-        timerManage()
     }
 
 
@@ -146,6 +144,7 @@ class LoginActivity : AppCompatActivity() {
 
         //Login
         loginApi()
+
     }
 
     private fun loginApi() {
@@ -290,7 +289,7 @@ class LoginActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
-    @SuppressLint("DefaultLocale")
+    @SuppressLint("DefaultLocale", "SetTextI18n")
     private fun updateGUI(intent: Intent) {
         if (intent.extras != null) {
             val millisUntilFinished = intent.getLongExtra("countdown", 0)
@@ -298,7 +297,7 @@ class LoginActivity : AppCompatActivity() {
             val minutes = millisUntilFinished / (1000 * 60) % 60
             val display = java.lang.String.format("%02d:%02d", minutes, second)
 
-            binding?.include47?.textView394?.text=display
+            binding?.include47?.textView394?.text=display + " " +getString(R.string.minRemaining)
 
 
             binding?.include47?.textView395?.setOnClickListener {
