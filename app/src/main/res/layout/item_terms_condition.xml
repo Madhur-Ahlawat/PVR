@@ -10,8 +10,9 @@
         android:id="@+id/rlMainLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/terms_and_conditions_recycler_item_height"
-        android:paddingLeft="@dimen/recycler_list_item_padding"
-        android:paddingRight="@dimen/recycler_list_item_padding">
+        android:paddingLeft="@dimen/dimen_18dp"
+        android:paddingRight="@dimen/dimen_18dp">
+
         <!-- title -->
         <TextView
             android:id="@+id/showTitle"
@@ -19,6 +20,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:singleLine="true"
+            android:textColor="@color/black"
             android:text="@string/privacy"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/rightArrow"

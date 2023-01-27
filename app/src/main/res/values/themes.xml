@@ -17,15 +17,8 @@
         <!-- Customize your theme here. -->
         <item name="android:editTextStyle">@style/myEditText</item>
 
-<!--        splash white screen remove  -->
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:backgroundDimEnabled">false</item>
-    </style>
 
+    </style>
 
     <style name="myEditText" parent="@android:style/Widget.Holo.Light.EditText">
         <item name="android:textCursorDrawable">@color/gray</item>
@@ -37,12 +30,13 @@
     </style>
 
     <style name="NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowDisablePreview">true</item>
+
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:statusBarColor">@color/yellow</item>
-
         <item name="android:windowTranslucentStatus">false</item>
 
     </style>

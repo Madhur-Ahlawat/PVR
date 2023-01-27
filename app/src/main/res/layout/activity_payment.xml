@@ -6,25 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".ui.payment.PaymentActivity">
 
-    <View
-        android:id="@+id/view112"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+    <!--Design-->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout44"
-        android:layout_width="0dp"
-        android:layout_height="58dp"
-        app:layout_constraintEnd_toEndOf="@+id/view112"
-        app:layout_constraintStart_toStartOf="@+id/view112"
-        app:layout_constraintTop_toTopOf="@+id/view112">
+        android:id="@+id/constrainLayout166"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <View
-            android:id="@+id/view113"
+            android:id="@+id/view112"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -32,622 +21,672 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <include
-            android:id="@+id/include26"
-            layout="@layout/toolbar"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/view113"
-            app:layout_constraintEnd_toEndOf="@+id/view113"
-            app:layout_constraintStart_toStartOf="@+id/view113"
-            app:layout_constraintTop_toTopOf="@+id/view113" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout44">
-
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:id="@+id/constraintLayout44"
+            android:layout_width="0dp"
+            android:layout_height="58dp"
+            app:layout_constraintEnd_toEndOf="@+id/view112"
+            app:layout_constraintStart_toStartOf="@+id/view112"
+            app:layout_constraintTop_toTopOf="@+id/view112">
 
-            <TextView
-                android:id="@+id/discountVocher"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dimen_40dp"
-                android:fontFamily="@font/sf_pro_text_semi_bold"
-                android:text="@string/to_be_paid"
-                android:textColor="#007D23"
-                android:background="#26007D23"
-                android:visibility="gone"
-                android:gravity="center"
-                android:textSize="@dimen/dimen_14sp"
+            <View
+                android:id="@+id/view113"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout46"
+            <include
+                android:id="@+id/include26"
+                layout="@layout/toolbar"
                 android:layout_width="0dp"
-                android:layout_height="52dp"
-                android:background="#FFFDF5"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/discountVocher">
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@+id/view113"
+                app:layout_constraintEnd_toEndOf="@+id/view113"
+                app:layout_constraintStart_toStartOf="@+id/view113"
+                app:layout_constraintTop_toTopOf="@+id/view113" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout44">
 
-                <include layout="@layout/horizontal_line"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:id="@+id/topLine"/>
-
-                <View
-                    android:id="@+id/view114"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/topLine" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/textView177"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
+                    android:id="@+id/discountVocher"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimen_40dp"
                     android:fontFamily="@font/sf_pro_text_semi_bold"
                     android:text="@string/to_be_paid"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dimen_14sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/view114"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/cutPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="19dp"
-                    android:fontFamily="@font/sf_pro_text_semi_bold"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dimen_14sp"
+                    android:textColor="#007D23"
+                    android:background="#26007D23"
                     android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/textView178"
-                    app:layout_constraintTop_toTopOf="@+id/view114"
-                    tools:text="₹8888" />
-
-                <TextView
-                    android:id="@+id/textView178"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="19dp"
-                    android:fontFamily="@font/sf_pro_text_semi_bold"
-                    android:textColor="@color/black"
+                    android:gravity="center"
                     android:textSize="@dimen/dimen_14sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/view114"
-                    app:layout_constraintTop_toTopOf="@+id/view114"
-                    tools:text="₹8888" />
-
-                <include layout="@layout/horizontal_line"
-                    app:layout_constraintTop_toBottomOf="@+id/view114"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout46">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout110"
-                    android:layout_width="match_parent"
-                    android:visibility="visible"
-                    android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    >
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <View
-                        android:id="@+id/llView"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dim_h10"
-                        android:background="@drawable/line_separator"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout46"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:background="#FFFDF5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/discountVocher">
+
+
+                    <include layout="@layout/horizontal_line"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:id="@+id/topLine"/>
 
                     <View
-                        android:id="@+id/view115"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
+                        android:id="@+id/view114"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/llView" />
+                        app:layout_constraintTop_toBottomOf="@+id/topLine" />
 
                     <TextView
-                        android:id="@+id/textView180"
+                        android:id="@+id/textView177"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:fontFamily="@font/sf_pro_text_semi_bold"
+                        android:text="@string/to_be_paid"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/view114"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/cutPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="19dp"
+                        android:fontFamily="@font/sf_pro_text_semi_bold"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14sp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/textView178"
+                        app:layout_constraintTop_toTopOf="@+id/view114"
+                        tools:text="₹8888" />
+
+                    <TextView
+                        android:id="@+id/textView178"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="19dp"
+                        android:fontFamily="@font/sf_pro_text_semi_bold"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/view114"
+                        app:layout_constraintTop_toTopOf="@+id/view114"
+                        tools:text="₹8888" />
+
+                    <include layout="@layout/horizontal_line"
+                        app:layout_constraintTop_toBottomOf="@+id/view114"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout46">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout110"
+                        android:layout_width="match_parent"
+                        android:visibility="visible"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        >
+
+                        <View
+                            android:id="@+id/llView"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dim_h10"
+                            android:background="@drawable/line_separator"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/view115"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/llView" />
+
+                        <TextView
+                            android:id="@+id/textView180"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginTop="20dp"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:text="@string/privilege_coupons"
+                            android:textSize="@dimen/dimen_12sp"
+                            app:layout_constraintStart_toStartOf="@+id/view115"
+                            app:layout_constraintTop_toTopOf="@+id/view115" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerView46"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="20dp"
+                            android:orientation="horizontal"
+                            android:visibility="visible"
+                            android:layout_marginEnd="@dimen/dimen_24dp"
+                            android:layout_marginStart="@dimen/dimen_24dp"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/view115"
+                            app:layout_constraintTop_toBottomOf="@+id/textView180"
+                            tools:itemCount="2"
+                            tools:listitem="@layout/item_payment_privlege" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_h10"
+                        android:background="@drawable/line_separator" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/promoView"
+                        android:layout_marginBottom="@dimen/dimen_15dp"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+
+
+                        <!--                    <TextView-->
+                        <!--                        android:layout_width="match_parent"-->
+                        <!--                        android:layout_height="wrap_content"-->
+                        <!--                        android:gravity="center_vertical"-->
+                        <!--                        android:layout_marginTop="@dimen/dimen_15dp"-->
+                        <!--                        android:fontFamily="@font/sf_pro_text_regular"-->
+                        <!--                        android:text="@string/promocode"-->
+                        <!--                        android:textSize="@dimen/dimen_12sp"-->
+                        <!--                        app:layout_constraintStart_toStartOf="@+id/view115"-->
+                        <!--                        app:layout_constraintTop_toTopOf="@+id/view115" />-->
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/padding_10"
+                            android:paddingBottom="@dimen/padding_10"
+                            android:paddingStart="@dimen/dimen_24dp"
+                            android:paddingEnd="@dimen/dimen_24dp"
+                            android:id="@+id/applyCou"
+                            android:background="#FFFDF5"
+                            android:visibility="gone"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/promoCodetxt"
+                                android:fontFamily="@font/sf_pro_text_regular"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/promoCode"
+                                android:visibility="visible"
+                                android:text="'PV000664288DD605068' Applied!"
+                                android:textColor="#2f2f2f" />
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="@dimen/dimen_3dp">
+
+                                <TextView
+                                    android:id="@+id/applyco"
+                                    android:fontFamily="@font/sf_pro_text_medium"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="13sp"
+                                    android:layout_alignParentStart="true"
+                                    android:textColor="#1A8C2D"
+                                    android:text="₹8888 Saved" />
+
+                                <TextView
+                                    android:id="@+id/removeoff"
+                                    android:fontFamily="@font/sf_pro_text_medium"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="14sp"
+                                    android:layout_alignParentEnd="true"
+                                    android:textColor="#DD0000"
+                                    android:text="Change" />
+                            </RelativeLayout>
+
+
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="visible"
+                            android:layout_marginEnd="@dimen/dimen_24dp"
+                            android:layout_marginStart="@dimen/dimen_24dp"
+                            android:id="@+id/couponView"
+                            >
+
+                            <RelativeLayout
+                                android:id="@+id/rl"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/dimen_60dp"
+                                android:background="@drawable/offeraply"
+                                android:focusableInTouchMode="true"
+                                android:layout_marginRight="10dp"
+                                android:paddingLeft="10dp"
+                                android:layout_centerVertical="true">
+
+                                <EditText
+                                    android:id="@+id/promoCode"
+                                    android:fontFamily="@font/sfprodisplay_regular"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/edit_text_height"
+                                    android:layout_centerVertical="true"
+                                    android:background="@color/transparent1"
+                                    android:hint="Enter promo code"
+                                    android:textColorHint="#908E8E"
+                                    android:inputType="textCapCharacters"
+                                    android:textColor="#000000"
+                                    android:maxLength="16"
+                                    android:singleLine="true"
+                                    android:textSize="15sp"
+                                    android:visibility="visible" />
+
+                                <ImageView
+                                    android:id="@+id/clearBtn"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:visibility="gone"
+                                    android:paddingRight="10dp"
+                                    android:src="@drawable/cross_search" />
+
+                                <TextView
+                                    android:id="@+id/apply"
+                                    android:fontFamily="@font/sf_pro_text_bold"
+                                    android:layout_width="75dp"
+                                    android:layout_height="30dp"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentBottom="false"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="right"
+                                    android:layout_marginRight="5dp"
+                                    android:background="@drawable/gradient_yellow_button"
+                                    android:clickable="true"
+                                    android:gravity="center"
+                                    android:text=" APPLY "
+                                    android:textColor="#2f2f2f"
+                                    android:textSize="16sp"
+                                    />
+
+                            </RelativeLayout>
+
+
+                            <TextView
+                                android:id="@+id/promoCodeValidationMessage"
+                                android:fontFamily="@font/sf_pro_text_regular"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/rl"
+                                android:layout_marginTop="20dp"
+                                android:text=""
+                                android:textColor="@color/red" />
+                        </RelativeLayout>
+
+                        <View
+                            android:id="@+id/view_apply_coupon"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:visibility="gone"
+                            android:layout_marginTop="@dimen/dimen_5dp"
+                            android:background="#f5f5f5"
+                            />
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dimen_40dp"
+                            android:id="@+id/availOffers"
+                            android:layout_marginEnd="@dimen/dimen_24dp"
+                            android:layout_marginStart="@dimen/dimen_24dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_shape_copy"
+                                android:id="@+id/icon1"
+                                android:layout_centerVertical="true"
+                                android:layout_alignParentLeft="true"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/icon1"
+                                android:text="Explore Offers"
+                                android:textColor="@color/black"
+                                android:textSize="17sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:background="@drawable/payment_option_offer_background"
+                                android:paddingLeft="5dp"
+                                android:paddingTop="2dp"
+                                android:paddingRight="5dp"
+                                android:paddingBottom="2dp"
+                                android:text="3 Promos"
+                                android:textColor="@color/white"
+                                android:textSize="17sp"
+                                android:visibility="gone" />
+
+                            <ImageView
+                                android:id="@+id/arrow_icon1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="right"
+                                android:src="@drawable/ic_right" />
+
+
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bnkOfferView"
+                        android:orientation="vertical">
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dim_h10"
+                            android:id="@+id/bnView"
+                            android:background="@drawable/line_separator" />
+
+                        <TextView
+                            android:id="@+id/bankOffers"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dimen_50dp"
+                            android:layout_marginStart="24dp"
+                            android:gravity="center_vertical"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:drawableEnd="@drawable/ic_skip_arrow"
+                            android:drawablePadding="@dimen/dimen_5dp"
+                            android:paddingEnd="@dimen/dimen_25dp"
+                            android:text="@string/bank_offer"
+                            android:textSize="@dimen/dimen_12sp"
+                            app:layout_constraintStart_toStartOf="@+id/view115"
+                            app:layout_constraintTop_toTopOf="@+id/view115" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_h10"
+                        android:background="@drawable/line_separator" />
+
+                    <TextView
+                        android:id="@+id/textView325"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/sf_pro_text_regular"
-                        android:text="@string/privilege_coupons"
+                        android:text="@string/payment_method"
                         android:textSize="@dimen/dimen_12sp"
                         app:layout_constraintStart_toStartOf="@+id/view115"
                         app:layout_constraintTop_toTopOf="@+id/view115" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerView46"
-                        android:layout_width="0dp"
+                        android:id="@+id/recyclerView42"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="20dp"
-                        android:orientation="horizontal"
-                        android:visibility="visible"
                         android:layout_marginEnd="@dimen/dimen_24dp"
                         android:layout_marginStart="@dimen/dimen_24dp"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/view115"
-                        app:layout_constraintTop_toBottomOf="@+id/textView180"
+                        android:orientation="vertical"
                         tools:itemCount="2"
-                        tools:listitem="@layout/item_payment_privlege" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dim_h10"
-                    android:background="@drawable/line_separator" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/promoView"
-                    android:layout_marginBottom="@dimen/dimen_15dp"
-                    android:background="@color/white"
-                    android:orientation="vertical">
-
-
-
-<!--                    <TextView-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:gravity="center_vertical"-->
-<!--                        android:layout_marginTop="@dimen/dimen_15dp"-->
-<!--                        android:fontFamily="@font/sf_pro_text_regular"-->
-<!--                        android:text="@string/promocode"-->
-<!--                        android:textSize="@dimen/dimen_12sp"-->
-<!--                        app:layout_constraintStart_toStartOf="@+id/view115"-->
-<!--                        app:layout_constraintTop_toTopOf="@+id/view115" />-->
-
+                        tools:listitem="@layout/item_payment_list" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/padding_10"
-                        android:paddingBottom="@dimen/padding_10"
-                        android:paddingStart="@dimen/dimen_24dp"
-                        android:paddingEnd="@dimen/dimen_24dp"
-                        android:id="@+id/applyCou"
-                        android:background="#FFFDF5"
+                        android:orientation="horizontal"
+                        android:id="@+id/walletView">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dimen_10dp"
+                            android:background="@drawable/line_separator" />
+
+                        <TextView
+                            android:id="@+id/textView326"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginTop="20dp"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:text="@string/wallets"
+                            android:textSize="@dimen/dimen_12sp"
+                            app:layout_constraintStart_toStartOf="@+id/view115"
+                            app:layout_constraintTop_toTopOf="@+id/view115" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerView43"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginEnd="@dimen/dimen_24dp"
+                            android:layout_marginStart="@dimen/dimen_24dp"
+                            tools:itemCount="2"
+                            tools:listitem="@layout/item_payment_list" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/otherPayView"
                         android:visibility="gone"
                         android:orientation="vertical">
+
+                        <View
+                            android:background="@drawable/line_separator"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dimen_10dp" />
+
                         <TextView
-                            android:id="@+id/promoCodetxt"
+                            android:id="@+id/textView327"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginTop="20dp"
                             android:fontFamily="@font/sf_pro_text_regular"
+                            android:text="@string/other_payment_method"
+                            android:textSize="@dimen/dimen_12sp"
+                            app:layout_constraintStart_toStartOf="@+id/view115"
+                            app:layout_constraintTop_toTopOf="@+id/view115" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerView44"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/promoCode"
-                            android:visibility="visible"
-                            android:text="'PV000664288DD605068' Applied!"
-                            android:textColor="#2f2f2f" />
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="@dimen/dimen_3dp">
-
-                            <TextView
-                                android:id="@+id/applyco"
-                                android:fontFamily="@font/sf_pro_text_medium"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="13sp"
-                                android:layout_alignParentStart="true"
-                                android:textColor="#1A8C2D"
-                                android:text="₹8888 Saved" />
-
-                            <TextView
-                                android:id="@+id/removeoff"
-                                android:fontFamily="@font/sf_pro_text_medium"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="14sp"
-                                android:layout_alignParentEnd="true"
-                                android:textColor="#DD0000"
-                                android:text="Change" />
-                        </RelativeLayout>
+                            android:orientation="vertical"
+                            android:layout_marginEnd="@dimen/dimen_24dp"
+                            android:layout_marginStart="@dimen/dimen_24dp"
+                            tools:itemCount="2"
+                            tools:listitem="@layout/item_payment_list" />
 
 
                     </LinearLayout>
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="visible"
-                        android:layout_marginEnd="@dimen/dimen_24dp"
-                        android:layout_marginStart="@dimen/dimen_24dp"
-                        android:id="@+id/couponView"
-                        >
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:id="@+id/offerView">
 
-                        <RelativeLayout
-                            android:id="@+id/rl"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/dimen_60dp"
-                            android:background="@drawable/offeraply"
-                            android:focusableInTouchMode="true"
-                            android:layout_marginRight="10dp"
-                            android:paddingLeft="10dp"
-                            android:layout_centerVertical="true">
-
-                            <EditText
-                                android:id="@+id/promoCode"
-                                android:fontFamily="@font/sfprodisplay_regular"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/edit_text_height"
-                                android:layout_centerVertical="true"
-                                android:background="@color/transparent1"
-                                android:hint="Enter promo code"
-                                android:textColorHint="#908E8E"
-                                android:inputType="textCapCharacters"
-                                android:textColor="#000000"
-                                android:maxLength="16"
-                                android:singleLine="true"
-                                android:textSize="15sp"
-                                android:visibility="visible" />
-
-                            <ImageView
-                                android:id="@+id/clearBtn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerVertical="true"
-                                android:visibility="gone"
-                                android:paddingRight="10dp"
-                                android:src="@drawable/cross_search" />
-
-                            <TextView
-                                android:id="@+id/apply"
-                                android:fontFamily="@font/sf_pro_text_bold"
-                                android:layout_width="75dp"
-                                android:layout_height="30dp"
-                                android:layout_alignParentRight="true"
-                                android:layout_alignParentBottom="false"
-                                android:layout_centerVertical="true"
-                                android:layout_gravity="right"
-                                android:layout_marginRight="5dp"
-                                android:background="@drawable/gradient_yellow_button"
-                                android:clickable="true"
-                                android:gravity="center"
-                                android:text=" APPLY "
-                                android:textColor="#2f2f2f"
-                                android:textSize="16sp"
-                                />
-
-                        </RelativeLayout>
-
+                        <View
+                            android:background="@drawable/line_separator"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dimen_10dp" />
 
                         <TextView
-                            android:id="@+id/promoCodeValidationMessage"
+                            android:id="@+id/textView328"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginTop="20dp"
                             android:fontFamily="@font/sf_pro_text_regular"
+                            android:text="@string/pvr_exclusives"
+                            android:textSize="@dimen/dimen_12sp"
+                            app:layout_constraintStart_toStartOf="@+id/view115"
+                            app:layout_constraintTop_toTopOf="@+id/view115" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerView45"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/rl"
-                            android:layout_marginTop="20dp"
-                            android:text=""
-                            android:textColor="@color/red" />
-                    </RelativeLayout>
-
-                    <View
-                        android:id="@+id/view_apply_coupon"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:visibility="gone"
-                        android:layout_marginTop="@dimen/dimen_5dp"
-                        android:background="#f5f5f5"
-                        />
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dimen_40dp"
-                        android:id="@+id/availOffers"
-                        android:layout_marginEnd="@dimen/dimen_24dp"
-                        android:layout_marginStart="@dimen/dimen_24dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_shape_copy"
-                            android:id="@+id/icon1"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentLeft="true"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
-                            android:layout_toRightOf="@+id/icon1"
-                            android:text="Explore Offers"
-                            android:textColor="@color/black"
-                            android:textSize="17sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
-                            android:background="@drawable/payment_option_offer_background"
-                            android:paddingLeft="5dp"
-                            android:paddingTop="2dp"
-                            android:paddingRight="5dp"
-                            android:paddingBottom="2dp"
-                            android:text="3 Promos"
-                            android:textColor="@color/white"
-                            android:textSize="17sp"
-                            android:visibility="gone" />
-
-                        <ImageView
-                            android:id="@+id/arrow_icon1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_gravity="right"
-                            android:src="@drawable/ic_right" />
-
-
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/bnkOfferView"
-                    android:orientation="vertical">
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dim_h10"
-                    android:id="@+id/bnView"
-                    android:background="@drawable/line_separator" />
-
-                <TextView
-                    android:id="@+id/bankOffers"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_50dp"
-                    android:layout_marginStart="24dp"
-                    android:gravity="center_vertical"
-                    android:fontFamily="@font/sf_pro_text_regular"
-                    android:drawableEnd="@drawable/ic_skip_arrow"
-                    android:drawablePadding="@dimen/dimen_5dp"
-                    android:paddingEnd="@dimen/dimen_25dp"
-                    android:text="@string/bank_offer"
-                    android:textSize="@dimen/dimen_12sp"
-                    app:layout_constraintStart_toStartOf="@+id/view115"
-                    app:layout_constraintTop_toTopOf="@+id/view115" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dim_h10"
-                    android:background="@drawable/line_separator" />
-
-                <TextView
-                    android:id="@+id/textView325"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/sf_pro_text_regular"
-                    android:text="@string/payment_method"
-                    android:textSize="@dimen/dimen_12sp"
-                    app:layout_constraintStart_toStartOf="@+id/view115"
-                    app:layout_constraintTop_toTopOf="@+id/view115" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView42"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/dimen_24dp"
-                    android:layout_marginStart="@dimen/dimen_24dp"
-                    android:orientation="vertical"
-                    tools:itemCount="2"
-                    tools:listitem="@layout/item_payment_list" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:id="@+id/walletView">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_10dp"
-                    android:background="@drawable/line_separator" />
-
-                <TextView
-                    android:id="@+id/textView326"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/sf_pro_text_regular"
-                    android:text="@string/wallets"
-                    android:textSize="@dimen/dimen_12sp"
-                    app:layout_constraintStart_toStartOf="@+id/view115"
-                    app:layout_constraintTop_toTopOf="@+id/view115" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView43"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginEnd="@dimen/dimen_24dp"
-                    android:layout_marginStart="@dimen/dimen_24dp"
-                    tools:itemCount="2"
-                    tools:listitem="@layout/item_payment_list" />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/otherPayView"
-                    android:visibility="gone"
-                    android:orientation="vertical">
-
-                <View
-                    android:background="@drawable/line_separator"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_10dp" />
-
-                <TextView
-                    android:id="@+id/textView327"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/sf_pro_text_regular"
-                    android:text="@string/other_payment_method"
-                    android:textSize="@dimen/dimen_12sp"
-                    app:layout_constraintStart_toStartOf="@+id/view115"
-                    app:layout_constraintTop_toTopOf="@+id/view115" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView44"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginEnd="@dimen/dimen_24dp"
-                    android:layout_marginStart="@dimen/dimen_24dp"
-                    tools:itemCount="2"
-                    tools:listitem="@layout/item_payment_list" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone"
-                    android:id="@+id/offerView">
-
-                <View
-                    android:background="@drawable/line_separator"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_10dp" />
-
-                <TextView
-                    android:id="@+id/textView328"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/sf_pro_text_regular"
-                    android:text="@string/pvr_exclusives"
-                    android:textSize="@dimen/dimen_12sp"
-                    app:layout_constraintStart_toStartOf="@+id/view115"
-                    app:layout_constraintTop_toTopOf="@+id/view115" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView45"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/dimen_24dp"
-                    android:layout_marginStart="@dimen/dimen_24dp"
-                    android:orientation="vertical"
-                    tools:itemCount="2"
-                    tools:listitem="@layout/item_payment_list" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_sectoken"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:background="#FFFDF5"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="5dp"
-                    android:visibility="visible">
-                    <View
-                        android:background="@drawable/line_separator"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dimen_10dp" />
-
-                    <TextView
-                        android:fontFamily="@font/sf_pro_text_medium"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginTop="@dimen/dimen_25dp"
-                        android:gravity="center"
-                        android:text="Your transactions are secure and certified"
-                        android:textColor="#828282"
-                        android:textSize="13sp" />
+                            android:layout_marginEnd="@dimen/dimen_24dp"
+                            android:layout_marginStart="@dimen/dimen_24dp"
+                            android:orientation="vertical"
+                            tools:itemCount="2"
+                            tools:listitem="@layout/item_payment_list" />
+                    </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_sectoken"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:layout_weight="1"
-                        android:layout_marginTop="@dimen/dimen_20dp"
-                        android:layout_marginBottom="@dimen/dimen_30dp"
-                        android:gravity="center"
+                        android:background="#FFFDF5"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="5dp"
                         android:visibility="visible">
+                        <View
+                            android:background="@drawable/line_separator"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dimen_10dp" />
 
-                        <ImageView
-                            android:layout_width="75dp"
-                            android:layout_height="40dp"
-                            android:layout_marginRight="10dp"
-                            android:adjustViewBounds="true"
-                            android:src="@drawable/pcidss" />
+                        <TextView
+                            android:fontFamily="@font/sf_pro_text_medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginTop="@dimen/dimen_25dp"
+                            android:gravity="center"
+                            android:text="Your transactions are secure and certified"
+                            android:textColor="#828282"
+                            android:textSize="13sp" />
 
-                        <ImageView
-                            android:layout_width="75dp"
-                            android:layout_height="40dp"
-                            android:layout_marginLeft="@dimen/padding_10"
-                            android:src="@drawable/norton" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_weight="1"
+                            android:layout_marginTop="@dimen/dimen_20dp"
+                            android:layout_marginBottom="@dimen/dimen_30dp"
+                            android:gravity="center"
+                            android:visibility="visible">
 
+                            <ImageView
+                                android:layout_width="75dp"
+                                android:layout_height="40dp"
+                                android:layout_marginRight="10dp"
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/pcidss" />
+
+                            <ImageView
+                                android:layout_width="75dp"
+                                android:layout_height="40dp"
+                                android:layout_marginLeft="@dimen/padding_10"
+                                android:src="@drawable/norton" />
+
+                        </LinearLayout>
                     </LinearLayout>
+
                 </LinearLayout>
 
-            </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <include
+            layout="@layout/extend_timer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout44" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--Shimmer-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout145"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout27">
+
+        <include
+            android:id="@+id/include38"
+            layout="@layout/shimmer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.core.widget.NestedScrollView>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

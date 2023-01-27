@@ -3,11 +3,14 @@ package com.net.pvr1.ui.payment
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -75,11 +78,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
 
-@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClickListenerCity,
     PaymentExclusiveAdapter.RecycleViewItemClickListenerCity,
-    CouponAdapter.RecycleViewItemClickListenerCity ,PaymentPromoCatAdapter.RecycleViewItemClickListenerCity,PaymentPromoListAdapter.RecycleViewItemClickListenerCity{
+    CouponAdapter.RecycleViewItemClickListenerCity,
+    PaymentPromoCatAdapter.RecycleViewItemClickListenerCity,
+    PaymentPromoListAdapter.RecycleViewItemClickListenerCity {
+
     @Inject
     lateinit var preferences: PreferenceManager
     private var newBinding: ItemPaymentPrivlegeBinding? = null
@@ -91,20 +96,21 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
     private var paymentItemHold: PaymentResponse.Output.Gateway? = null
     private var catFilterPayment = ArrayList<PaymentResponse.Output.Gateway>()
     private var paidAmount = ""
-    private var promoDialog:Dialog? = null
+    private var promoDialog: Dialog? = null
     private var promoCodeList = ArrayList<PromoCodeList.Output>()
-    private var promoNewCodeList =ArrayList<PromoCodeList.Output>()
-    private var promoList:RecyclerView? = null
-    private var catList:RecyclerView? = null
-    private var promoListAdapter:PaymentPromoListAdapter? = null
-    private val UPI_PAYMENT = 0
+    private var promoNewCodeList = ArrayList<PromoCodeList.Output>()
+    private var promoList: RecyclerView? = null
+    private var catList: RecyclerView? = null
+    private var promoListAdapter: PaymentPromoListAdapter? = null
     private var dcInfo = ""
     private var dc = false
-    private var upi_count = 0
-    private var upi_loader = false
+    private var upiCount = 0
+    private var upiLoader = false
     private var showPopup = true
     private var actualAmt = "0.0"
 
+    //internet Check
+    private var broadcastReceiver: BroadcastReceiver? = null
 
     companion object {
         var subsId = ""
@@ -112,25 +118,27 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         var createdAt = ""
         var isPromocodeApplied = false
         var offerList: ArrayList<PaymentResponse.Output.Binoffer> = ArrayList()
-        fun showTncDialog(mContext: Context?, priceText: String,code:String) {
+
+        @SuppressLint("SetTextI18n")
+        fun showTncDialog(mContext: Context?, priceText: String, code: String) {
             val dialog = Dialog(mContext!!, R.style.AppTheme_Dialog)
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog.setContentView(R.layout.promo_success)
             dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog.window!!.setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
             )
             dialog.window!!.setGravity(Gravity.CENTER)
             val done = dialog.findViewById<View>(R.id.done) as TextView?
             val price = dialog.findViewById<View>(R.id.price) as TextView?
-            val promcode = dialog.findViewById<View>(R.id.promcode) as TextView?
+            val promCode = dialog.findViewById<View>(R.id.promcode) as TextView?
             price?.text = "$priceText\nsaved with this coupon code"
-            if (code!="") {
-                promcode?.text = "'$code'\nApplied"
-            }else{
-                promcode?.text = ""
+            if (code != "") {
+                promCode?.text = "'$code'\nApplied"
+            } else {
+                promCode?.text = ""
             }
+
             done?.setOnClickListener { dialog.dismiss() }
             dialog.show()
         }
@@ -143,11 +151,20 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         binding = ActivityPaymentBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
+        manageFunction()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun manageFunction() {
+//        title
         binding?.include26?.textView108?.text = getString(R.string.payment)
 
-        paidAmount = intent.getStringExtra("paidAmount").toString()
         //paidAmount
-        binding?.textView178?.text = getString(R.string.currency) + intent.getStringExtra("paidAmount")
+        binding?.textView178?.text =
+            getString(R.string.currency) + intent.getStringExtra("paidAmount")
+
+        paidAmount = intent.getStringExtra("paidAmount").toString()
         actualAmt = intent.getStringExtra("paidAmount").toString()
 
 
@@ -157,23 +174,41 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         authViewModel.payMode(
             CINEMA_ID,
             BOOK_TYPE,
-            preferences.getUserId().toString(),
-            preferences.geMobileNumber().toString(),
+            preferences.getUserId(),
+            preferences.geMobileNumber(),
             "",
             "no",
             "",
             false
         )
 
-
 //        voucherDataLoad()
         if (BOOK_TYPE == "RECURRING") {
             authViewModel.recurringInit(
-                preferences.getUserId(),
-                BOOKING_ID
+                preferences.getUserId(), BOOKING_ID
             )
             recurringInit()
         }
+
+        if (BOOK_TYPE == "BOOKING" || BOOK_TYPE == "FOOD") {
+            binding?.constraintLayout110?.show()
+            //voucher
+            val time = SystemClock.uptimeMillis()
+            authViewModel.voucher(
+                Constant.getHash(preferences.getUserId() + "|" + preferences.getToken() + "|" + time),
+                preferences.getToken().toString(),
+                preferences.getCityName(),
+                preferences.getUserId(),
+                time.toString()
+            )
+        } else {
+            binding?.constraintLayout110?.hide()
+        }
+
+        //internet Check
+        broadcastReceiver = NetworkReceiver()
+        broadcastIntent()
+
         payModeDataLoad()
         paytmHMAC()
         credCheck()
@@ -185,65 +220,70 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         promoListData()
         removePromo()
         callPromoData()
+        movedNext()
+    }
+
+    private fun movedNext() {
         binding?.include26?.imageView58?.setOnClickListener {
-            onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
         }
-        binding?.cutPrice?.paintFlags = binding?.cutPrice?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG
+
+        binding?.cutPrice?.paintFlags =
+            binding?.cutPrice?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG
 
         binding?.availOffers?.setOnClickListener {
             openPromo()
         }
 
-        binding?.apply?.setOnClickListener{
+        binding?.apply?.setOnClickListener {
             if (validateInputFields()) {
-                authViewModel.promoCode(preferences.getUserId(),BOOKING_ID, TRANSACTION_ID,
-                    BOOK_TYPE,binding?.promoCode?.text.toString())
+                authViewModel.promoCode(
+                    preferences.getUserId(),
+                    BOOKING_ID,
+                    TRANSACTION_ID,
+                    BOOK_TYPE,
+                    binding?.promoCode?.text.toString()
+                )
 
             }
         }
-
-        if (BOOK_TYPE == "BOOKING" || BOOK_TYPE == "FOOD"){
-            binding?.constraintLayout110?.show()
-            //voucher
-            val time = SystemClock.uptimeMillis()
-
-            authViewModel.voucher(
-                Constant.getHash(preferences.getUserId() + "|" + preferences.getToken() + "|" + time),
-                preferences.getToken().toString(),
-                preferences.getCityName().toString(),
-                preferences.getUserId().toString(),
-                time.toString()
-            )
-        }else{
-            binding?.constraintLayout110?.hide()
-        }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onResume() {
         super.onResume()
-        if(Constant.discount_val != "0.0"){
+        if (discount_val != "0.0") {
             binding?.cutPrice?.show()
-            actualAmt = (intent.getStringExtra("paidAmount")?.toDouble()!! - Constant.discount_val.toDouble()).toString()
+            actualAmt = (intent.getStringExtra("paidAmount")
+                ?.toDouble()!! - discount_val.toDouble()).toString()
             binding?.textView178?.text = getString(R.string.currency) + actualAmt
-            binding?.cutPrice?.text = getString(R.string.currency) + intent.getStringExtra("paidAmount").toString()
+            binding?.cutPrice?.text =
+                getString(R.string.currency) + intent.getStringExtra("paidAmount").toString()
             if (isPromoCode != "") {
                 binding?.promoCode?.setText(isPromoCode)
-                binding?.cutPrice?.paintFlags = binding?.cutPrice?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG
+                binding?.cutPrice?.paintFlags =
+                    binding?.cutPrice?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG
                 binding?.applyCou?.show()
                 binding?.cutPrice?.show()
                 binding?.couponView?.hide()
                 DISCOUNT += discount_val.toDouble()
                 binding?.promoCodetxt?.text = "'${binding?.promoCode?.text}' Applied"
-                binding?.applyco?.text = getString(R.string.currency)+discount_val+" Saved"
+                binding?.applyco?.text = getString(R.string.currency) + discount_val + " Saved"
                 binding?.removeoff?.setOnClickListener {
-                    authViewModel.removePromo(preferences.getString(Constant.SharedPreference.USER_NUMBER),BOOKING_ID, BOOK_TYPE)
+                    authViewModel.removePromo(
+                        preferences.getString(Constant.SharedPreference.USER_NUMBER),
+                        BOOKING_ID,
+                        BOOK_TYPE
+                    )
                 }
-                actualAmt = (intent.getStringExtra("paidAmount")?.toDouble()!! - DISCOUNT).toString()
+                actualAmt =
+                    (intent.getStringExtra("paidAmount")?.toDouble()!! - DISCOUNT).toString()
                 binding?.textView178?.text = getString(R.string.currency) + actualAmt
-                binding?.cutPrice?.text = getString(R.string.currency) + intent.getStringExtra("paidAmount").toString()
-                showTncDialog(this, Constant.discount_val, isPromoCode)
-            }else{
-                showTncDialog(this, Constant.discount_val, "")
+                binding?.cutPrice?.text =
+                    getString(R.string.currency) + intent.getStringExtra("paidAmount").toString()
+                showTncDialog(this, discount_val, isPromoCode)
+            } else {
+                showTncDialog(this, discount_val, "")
             }
         }
     }
@@ -251,23 +291,24 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
     private fun validateInputFields(): Boolean {
         if (!InputTextValidator.hasText(binding?.promoCode!!)) {
             binding?.promoCodeValidationMessage?.text = getString(R.string.promo_code_msg_required)
-        } else {
-
         }
 
         if (!InputTextValidator.validatePromoCode(binding?.promoCode!!)) {
             // promoCode.setBackground(ContextCompat.getDrawable(this, R.drawable.offeraply));
             if (binding?.promoCode?.text.toString().trim { it <= ' ' }.isEmpty()) {
-                binding?.promoCodeValidationMessage?.text = getString(R.string.promo_code_msg_required)
-            } else binding?.promoCodeValidationMessage?.text = getString(R.string.promo_code_msg_invalid)
+                binding?.promoCodeValidationMessage?.text =
+                    getString(R.string.promo_code_msg_required)
+            } else binding?.promoCodeValidationMessage?.text =
+                getString(R.string.promo_code_msg_invalid)
         } else {
             //  promoCode.setBackground(ContextCompat.getDrawable(this, R.drawable.offeraply));
 //            promoCodeValidationMessage.setText(getString(R.string.promo_code_msg));
         }
 
-        return InputTextValidator.hasText(binding?.promoCode!!) && InputTextValidator.validatePromoCode(binding?.promoCode!!)
+        return InputTextValidator.hasText(binding?.promoCode!!) && InputTextValidator.validatePromoCode(
+            binding?.promoCode!!
+        )
     }
-
 
     private fun voucherDataLoad() {
         authViewModel.userResponseLiveData.observe(this) {
@@ -283,6 +324,25 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 is NetworkResult.Loading -> {
                 }
             }
+        }
+    }
+
+    private fun retrieveDataCoupon(output: ArrayList<CouponResponse.Output>) {
+        if (output.isNotEmpty()) {
+            binding?.recyclerView46?.show()
+            binding?.textView180?.show()
+            val list = ArrayList<CouponResponse.Output.Voucher>()
+            for (data in output) {
+                list.addAll(data.vouchers)
+            }
+            val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+            val foodBestSellerAdapter = CouponAdapter(list, this, this, preferences)
+            binding?.recyclerView46?.layoutManager = layoutManagerCrew
+            binding?.recyclerView46?.adapter = foodBestSellerAdapter
+            binding?.recyclerView46?.setHasFixedSize(true)
+        } else {
+            binding?.textView180?.hide()
+            binding?.recyclerView46?.hide()
         }
     }
 
@@ -322,25 +382,6 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 is NetworkResult.Loading -> {
                 }
             }
-        }
-    }
-
-    private fun retrieveDataCoupon(output: ArrayList<CouponResponse.Output>) {
-        if (output.isNotEmpty()) {
-            binding?.recyclerView46?.show()
-            binding?.textView180?.show()
-            val list = ArrayList<CouponResponse.Output.Voucher>()
-            for (data in output) {
-                list.addAll(data.vouchers)
-            }
-            val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-            val foodBestSellerAdapter = CouponAdapter(list, this, this, preferences)
-            binding?.recyclerView46?.layoutManager = layoutManagerCrew
-            binding?.recyclerView46?.adapter = foodBestSellerAdapter
-            binding?.recyclerView46?.setHasFixedSize(true)
-        } else {
-            binding?.textView180?.hide()
-            binding?.recyclerView46?.hide()
         }
     }
 
@@ -385,15 +426,12 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
     }
 
     private fun retrieveData(output: PaymentResponse.Output) {
+        //design
+        binding?.constrainLayout166?.show()
 
+        //shimmer
+        binding?.constraintLayout145?.hide()
 
-//                        if (data.getData().getCa_a()==true && bookType.equalsIgnoreCase("BOOKING")){
-//                            cancel_message.setVisibility(View.VISIBLE);
-//                            loyalty_text.setVisibility(View.VISIBLE);
-//                        }else {
-//                            cancel_message.setVisibility(View.GONE);
-//                            loyalty_text.setVisibility(View.GONE);
-//                        }
         if (output.dcinfo != null) {
             dcInfo = output.dcinfo
             dc = output.dc
@@ -462,20 +500,20 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
             intent.putExtra("paidAmount", actualAmt)
             startActivity(intent)
         }
+
     }
 
     //Payment Option Clicks
     override fun paymentClick(paymentItem: PaymentResponse.Output.Gateway) {
-
-        when (paymentItem.id.toUpperCase()) {
+        when (paymentItem.id.uppercase(Locale.getDefault())) {
             UPI -> {
                 authViewModel.paytmHMAC(
                     preferences.getUserId(),
-                    Constant.BOOKING_ID,
-                    Constant.TRANSACTION_ID,
+                    BOOKING_ID,
+                    TRANSACTION_ID,
                     false,
                     "",
-                    Constant.BOOK_TYPE,
+                    BOOK_TYPE,
                     paymentItem.name,
                     "no",
                     "NO"
@@ -493,9 +531,9 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 paymentItemHold = paymentItem
                 authViewModel.credCheck(
                     preferences.getUserId(),
-                    Constant.BOOKING_ID,
-                    Constant.BOOK_TYPE,
-                    Constant.TRANSACTION_ID,
+                    BOOKING_ID,
+                    BOOK_TYPE,
+                    TRANSACTION_ID,
                     "false",
                     Constant.isPackageInstalled(packageManager).toString(),
                     "false"
@@ -528,10 +566,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
             }
             PHONE_PE -> {
                 authViewModel.phonepeHMAC(
-                    preferences.getUserId(),
-                    BOOKING_ID,
-                    BOOK_TYPE,
-                    TRANSACTION_ID
+                    preferences.getUserId(), BOOKING_ID, BOOK_TYPE, TRANSACTION_ID
                 )
             }
             PAYTMPOSTPAID -> {
@@ -658,7 +693,6 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
 
     }
 
-
     private fun paytmHMAC() {
         authViewModel.liveDataScope.observe(this) {
             when (it) {
@@ -698,7 +732,6 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         }
 
     }
-
 
     private fun recurringInit() {
         authViewModel.recurringInitLiveDataScope.observe(this) {
@@ -773,7 +806,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    if (!upi_loader) {
+                    if (!upiLoader) {
                         loader = LoaderDialog(R.string.pleaseWait)
                         loader?.show(this.supportFragmentManager, null)
                     }
@@ -784,18 +817,17 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
     }
 
     private fun retrieveStatusUpi(output: UPIStatusResponse.Output) {
-        upi_loader = true;
+        upiLoader = true
         if (output.p.equals("PAID", ignoreCase = true)) {
             loader?.dismiss()
             Constant().printTicket(this@PaymentActivity)
         } else if (output.p.equals("PENDING", ignoreCase = true)) {
-            if (upi_count <= 6) {
+            if (upiCount <= 6) {
                 val handler = Handler()
-                upi_count += 1
+                upiCount += 1
                 handler.postDelayed({ // close your dialog
                     authViewModel.upiStatus(
-                        BOOKING_ID,
-                        BOOK_TYPE
+                        BOOKING_ID, BOOK_TYPE
                     )
                 }, 10000)
             } else {
@@ -824,12 +856,20 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         }
     }
 
-
     private fun retrieveDataUpi(output: PaytmHmacResponse.Output) {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(output.deepLink)
         startActivityForResult(intent, 120)
+//        resultLauncher.launch(intent,120)
     }
+
+//    var resultLauncher = registerForActivityResult(StartActivityForResult()) { result ->
+//        if (result.resultCode == Activity.RESULT_OK) {
+//            // There are no request codes
+//            val data: Intent? = result.data
+//            doSomeOperations()
+//        }
+//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -839,11 +879,9 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                     toast("LOYALTYUNLIMITED")
                 } else {
                     authViewModel.upiStatus(
-                        BOOKING_ID,
-                        BOOK_TYPE
+                        BOOKING_ID, BOOK_TYPE
                     )
                 }
-
             } else {
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
@@ -861,10 +899,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
             if (data != null) {
                 if (resultCode == RESULT_OK) {
                     authViewModel.phonepeStatus(
-                        preferences.getUserId(),
-                        BOOKING_ID,
-                        BOOK_TYPE,
-                        TRANSACTION_ID
+                        preferences.getUserId(), BOOKING_ID, BOOK_TYPE, TRANSACTION_ID
                     )
                 } else if (resultCode == RESULT_CANCELED) {
                     val dialog = OptionDialog(this,
@@ -883,7 +918,6 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         }
     }
 
-
     override fun paymentExclusiveClick(paymentItem: PaymentResponse.Output.Offer) {
         when (paymentItem.id) {
             PROMOCODE -> {
@@ -898,11 +932,10 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
 
                 //intent.putExtra(PCConstants.BI_PT,bi_pt);
                 try {
-                    if (paymentItem?.promomap != null) {
+                    if (paymentItem.promomap != null) {
                         val bundle = Bundle()
                         bundle.putParcelableArrayList(
-                            "Promomaplist",
-                            paymentItem.promomap as ArrayList<out Parcelable?>
+                            "Promomaplist", paymentItem.promomap as ArrayList<out Parcelable?>
                         )
                         intent.putExtras(bundle)
                     }
@@ -969,9 +1002,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
     }
 
     override fun couponClick(
-        data: CouponResponse.Output.Voucher,
-        position: Int,
-        binding: ItemPaymentPrivlegeBinding
+        data: CouponResponse.Output.Voucher, position: Int, binding: ItemPaymentPrivlegeBinding
     ) {
         newBinding = binding
         voucherData = data
@@ -982,18 +1013,18 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 authViewModel.voucherApply(
                     data.cd,
                     preferences.getUserId(),
-                    Constant.BOOK_TYPE,
+                    BOOK_TYPE,
                     BOOKING_ID,
                     TRANSACTION_ID,
                     data.tp,
                     "YES",
                     (data.amt * 100).toString()
                 )
-            }else{
+            } else {
                 authViewModel.voucherApply(
                     data.cd,
                     preferences.getUserId(),
-                    Constant.BOOK_TYPE,
+                    BOOK_TYPE,
                     BOOKING_ID,
                     TRANSACTION_ID,
                     data.tp,
@@ -1004,92 +1035,49 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
             // view.setAlpha(0.5f);
         }
 
-}
-
-private fun payMethodFilter(
-    category: String
-): ArrayList<PaymentResponse.Output.Gateway> {
-    val categoryPaymentNew = ArrayList<PaymentResponse.Output.Gateway>()
-    when (category) {
-        "WALLET" -> {
-            for (data in catFilterPayment) {
-                if (data.pty == category) categoryPaymentNew.add(data)
-            }
-        }
-        "GATEWAY" -> {
-            for (data in catFilterPayment) {
-                if (data.pty == category) categoryPaymentNew.add(data)
-            }
-        }
-        "PAYMENT-METHOD" -> {
-            for (data in catFilterPayment) {
-                if (data.pty == category) categoryPaymentNew.add(data)
-            }
-        }
     }
-    return categoryPaymentNew
-}
 
-private fun phonePeHmac() {
-    authViewModel.phonepeLiveDataScope.observe(this) {
-        when (it) {
-            is NetworkResult.Success -> {
-                if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                    val transactionRequest2 = TransactionRequestBuilder()
-                        .setData(it.data.output.bs)
-                        .setChecksum(it.data.output.bs)
-                        .setUrl(it.data.output.bs)
-                        .build()
-
-                    startActivityForResult(
-                        PhonePe.getTransactionIntent(
-                            transactionRequest2
-                        )!!, 300
-                    )
-
-                } else {
-                    loader?.dismiss()
-                    val dialog = OptionDialog(this,
-                        R.mipmap.ic_launcher,
-                        R.string.app_name,
-                        it.data?.msg.toString(),
-                        positiveBtnText = R.string.ok,
-                        negativeBtnText = R.string.no,
-                        positiveClick = {},
-                        negativeClick = {})
-                    dialog.show()
+    private fun payMethodFilter(
+        category: String
+    ): ArrayList<PaymentResponse.Output.Gateway> {
+        val categoryPaymentNew = ArrayList<PaymentResponse.Output.Gateway>()
+        when (category) {
+            "WALLET" -> {
+                for (data in catFilterPayment) {
+                    if (data.pty == category) categoryPaymentNew.add(data)
                 }
             }
-            is NetworkResult.Error -> {
-                val dialog = OptionDialog(this,
-                    R.mipmap.ic_launcher,
-                    R.string.app_name,
-                    it.message.toString(),
-                    positiveBtnText = R.string.ok,
-                    negativeBtnText = R.string.no,
-                    positiveClick = {},
-                    negativeClick = {})
-                dialog.show()
+            "GATEWAY" -> {
+                for (data in catFilterPayment) {
+                    if (data.pty == category) categoryPaymentNew.add(data)
+                }
             }
-            is NetworkResult.Loading -> {
-                if (!upi_loader) {
-                    loader = LoaderDialog(R.string.pleaseWait)
-                    loader?.show(this.supportFragmentManager, null)
+            "PAYMENT-METHOD" -> {
+                for (data in catFilterPayment) {
+                    if (data.pty == category) categoryPaymentNew.add(data)
                 }
             }
         }
+        return categoryPaymentNew
     }
-}
 
-private fun phonePeStatus() {
-    authViewModel.phonepeStatusLiveDataScope.observe(this) {
-        when (it) {
-            is NetworkResult.Success -> {
-                if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+    private fun phonePeHmac() {
+        authViewModel.phonepeLiveDataScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        val transactionRequest2 =
+                            TransactionRequestBuilder().setData(it.data.output.bs)
+                                .setChecksum(it.data.output.bs).setUrl(it.data.output.bs).build()
 
-                    if (it.data.output.p != "false") {
-                        Constant().printTicket(this@PaymentActivity)
+                        startActivityForResult(
+                            PhonePe.getTransactionIntent(
+                                transactionRequest2
+                            )!!, 300
+                        )
+
                     } else {
+                        loader?.dismiss()
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
                             R.string.app_name,
@@ -1100,65 +1088,105 @@ private fun phonePeStatus() {
                             negativeClick = {})
                         dialog.show()
                     }
-
-                } else {
-                    loader?.dismiss()
+                }
+                is NetworkResult.Error -> {
                     val dialog = OptionDialog(this,
                         R.mipmap.ic_launcher,
                         R.string.app_name,
-                        it.data?.msg.toString(),
+                        it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
                         positiveClick = {},
                         negativeClick = {})
                     dialog.show()
                 }
-            }
-            is NetworkResult.Error -> {
-                val dialog = OptionDialog(this,
-                    R.mipmap.ic_launcher,
-                    R.string.app_name,
-                    it.message.toString(),
-                    positiveBtnText = R.string.ok,
-                    negativeBtnText = R.string.no,
-                    positiveClick = {},
-                    negativeClick = {})
-                dialog.show()
-            }
-            is NetworkResult.Loading -> {
-                if (!upi_loader) {
-                    loader = LoaderDialog(R.string.pleaseWait)
-                    loader?.show(this.supportFragmentManager, null)
+                is NetworkResult.Loading -> {
+                    if (!upiLoader) {
+                        loader = LoaderDialog(R.string.pleaseWait)
+                        loader?.show(this.supportFragmentManager, null)
+                    }
                 }
             }
         }
     }
-}
 
-override fun onBackPressed() {
-    val dialog = OptionDialog(this,
-        R.mipmap.ic_launcher,
-        R.string.app_name,
-        "Do you want to end the session?",
-        positiveBtnText = R.string.ok,
-        negativeBtnText = R.string.no,
-        positiveClick = {
-            if (BOOK_TYPE == "GIFTCARD") {
-                launchActivity(
-                    GiftCardActivity::class.java,
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                )
-            }else{
-                launchActivity(
-                    HomeActivity::class.java,
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                )
+    private fun phonePeStatus() {
+        authViewModel.phonepeStatusLiveDataScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+
+                        if (it.data.output.p != "false") {
+                            Constant().printTicket(this@PaymentActivity)
+                        } else {
+                            val dialog = OptionDialog(this,
+                                R.mipmap.ic_launcher,
+                                R.string.app_name,
+                                it.data.msg.toString(),
+                                positiveBtnText = R.string.ok,
+                                negativeBtnText = R.string.no,
+                                positiveClick = {},
+                                negativeClick = {})
+                            dialog.show()
+                        }
+
+                    } else {
+                        loader?.dismiss()
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    if (!upiLoader) {
+                        loader = LoaderDialog(R.string.pleaseWait)
+                        loader?.show(this.supportFragmentManager, null)
+                    }
+                }
             }
-        },
-        negativeClick = {
-        })
-    dialog.show()
-}
+        }
+    }
+
+    override fun onBackPressed() {
+        val dialog = OptionDialog(this,
+            R.mipmap.ic_launcher,
+            R.string.app_name,
+            "Do you want to end the session?",
+            positiveBtnText = R.string.ok,
+            negativeBtnText = R.string.no,
+            positiveClick = {
+                if (BOOK_TYPE == "GIFTCARD") {
+                    launchActivity(
+                        GiftCardActivity::class.java,
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    )
+                } else {
+                    launchActivity(
+                        HomeActivity::class.java,
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    )
+                }
+            },
+            negativeClick = {})
+        dialog.show()
+    }
 
     private fun showPopup(mContext: Context, text: String?) {
         val dialog = BottomSheetDialog(mContext, R.style.NoBackgroundDialogTheme)
@@ -1166,16 +1194,15 @@ override fun onBackPressed() {
         dialog.setContentView(R.layout.loyalty_instruction)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window!!.setLayout(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         dialog.window!!.setGravity(Gravity.CENTER)
-        val title: TextView = dialog.findViewById<TextView>(R.id.title)  as TextView
+        val title: TextView = dialog.findViewById<TextView>(R.id.title) as TextView
         val crossImg = dialog.findViewById<ImageView>(R.id.crossImg)
         val proceed: TextView = dialog.findViewById<TextView>(R.id.tvSubmitFeedback) as TextView
         title.text = Html.fromHtml(text)
         crossImg!!.setOnClickListener { dialog.dismiss() }
-        proceed.setOnClickListener{ dialog.dismiss() }
+        proceed.setOnClickListener { dialog.dismiss() }
         dialog.show()
         showPopup = false
     }
@@ -1193,30 +1220,44 @@ override fun onBackPressed() {
                         binding?.cutPrice?.show()
                         binding?.discountVocher?.text =
                             "$vocCount Vouchers worth $DISCOUNT Redeemed!"
-                        actualAmt = (intent.getStringExtra("paidAmount")?.toDouble()!! - DISCOUNT).toString()
+                        actualAmt = (intent.getStringExtra("paidAmount")
+                            ?.toDouble()!! - DISCOUNT).toString()
                         binding?.textView178?.text = getString(R.string.currency) + actualAmt
-                        binding?.cutPrice?.text = getString(R.string.currency) + intent.getStringExtra("paidAmount").toString()
+                        binding?.cutPrice?.text =
+                            getString(R.string.currency) + intent.getStringExtra("paidAmount")
+                                .toString()
                         newBinding?.parrentView?.isEnabled = false
-                        printLog(voucherData?.voucher_type+voucherData?.type)
+                        printLog(voucherData?.voucher_type + voucherData?.type)
                         if (voucherData?.type.equals("SUBSCRIPTION", ignoreCase = true)) {
                             newBinding?.ivSubs?.setImageResource(R.drawable.subs_gray)
                         } else {
-                            if (voucherData?.tp == ("D")) {
-                                newBinding?.ivSubs?.setImageResource(R.drawable.voucher_ticket_grey)
-                            } else if (voucherData?.tp == ("C")) {
-                                if (voucherData?.sc == 27) {
+                            when (voucherData?.tp) {
+                                ("D") -> {
+                                    newBinding?.ivSubs?.setImageResource(R.drawable.voucher_ticket_grey)
+                                }
+                                ("C") -> {
+                                    when (voucherData?.sc) {
+                                        27 -> {
+                                            newBinding?.ivSubs?.setImageResource(R.drawable.voucher_popcorn_grey)
+                                        }
+                                        35 -> {
+                                            newBinding?.ivSubs?.setImageResource(R.drawable.voucher_popcorn_grey)
+                                        }
+                                        2 -> {
+                                            newBinding?.ivSubs?.setImageResource(R.drawable.voucher_popcorn_grey)
+                                        }
+                                        else -> newBinding?.ivSubs?.setImageResource(R.drawable.voucher_f_n_b_grey)
+                                    }
+                                }
+                                ("T") -> {
+                                    newBinding?.ivSubs?.setImageResource(R.drawable.voucher_ticket_grey)
+                                }
+                                ("27") -> {
                                     newBinding?.ivSubs?.setImageResource(R.drawable.voucher_popcorn_grey)
-                                } else if (voucherData?.sc == 35) {
+                                }
+                                ("35") -> {
                                     newBinding?.ivSubs?.setImageResource(R.drawable.voucher_popcorn_grey)
-                                } else if (voucherData?.sc == 2) {
-                                    newBinding?.ivSubs?.setImageResource(R.drawable.voucher_popcorn_grey)
-                                } else newBinding?.ivSubs?.setImageResource(R.drawable.voucher_f_n_b_grey)
-                            } else if (voucherData?.tp == ("T")) {
-                                newBinding?.ivSubs?.setImageResource(R.drawable.voucher_ticket_grey)
-                            } else if (voucherData?.tp == ("27")) {
-                                newBinding?.ivSubs?.setImageResource(R.drawable.voucher_popcorn_grey)
-                            } else if (voucherData?.tp == ("35")) {
-                                newBinding?.ivSubs?.setImageResource(R.drawable.voucher_popcorn_grey)
+                                }
                             }
                         }
 
@@ -1225,23 +1266,15 @@ override fun onBackPressed() {
                             val newColor = resources.getColor(R.color.gray)
                             if (voucherData?.type == "SUBSCRIPTION") {
                                 showDialogLoyalty(
-                                    this,
-                                    "Congratulations!",
-                                    "YES",
-                                    true,
-                                    it.data.output.di
+                                    this, "Congratulations!", "YES", true, it.data.output.di
                                 )
-                            }else{
+                            } else {
                                 showDialogLoyalty(
-                                    this,
-                                    "Congratulations!",
-                                    "NO",
-                                    true,
-                                    it.data.output.di
+                                    this, "Congratulations!", "NO", true, it.data.output.di
                                 )
                             }
                         } else if (isP.equals("true", ignoreCase = true)) {
-                          Constant().printTicket(this)
+                            Constant().printTicket(this)
                         }
                     } else {
                         loader?.dismiss()
@@ -1268,7 +1301,7 @@ override fun onBackPressed() {
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    if (!upi_loader) {
+                    if (!upiLoader) {
                         loader = LoaderDialog(R.string.pleaseWait)
                         loader?.show(this.supportFragmentManager, null)
                     }
@@ -1278,12 +1311,9 @@ override fun onBackPressed() {
 
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showDialogLoyalty(
-        mContext: Context?,
-        title_text: String?,
-        message_text: String,
-        success: Boolean,
-        dis: String
+        mContext: Context?, title_text: String?, message_text: String, success: Boolean, dis: String
     ) {
         val dialog = BottomSheetDialog(mContext!!, R.style.NoBackgroundDialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -1292,54 +1322,46 @@ override fun onBackPressed() {
         dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window!!.setLayout(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         dialog.window!!.setGravity(Gravity.CENTER)
         val title = dialog.findViewById<TextView>(R.id.title) as TextView
         val message = dialog.findViewById<TextView>(R.id.message) as TextView
-        val ok_btn = dialog.findViewById<TextView>(R.id.ok_btn) as TextView
+        val okBtn = dialog.findViewById<TextView>(R.id.ok_btn) as TextView
         if (success) {
             title.setTextColor(resources.getColor(R.color.black))
         } else {
             title.setTextColor(resources.getColor(R.color.red))
         }
-        title!!.text = title_text
+        title.text = title_text
         if (message_text.equals("YES", ignoreCase = true)) {
-            message!!.text = "You have saved ₹$dis using your PVR Passport voucher! Keep booking!"
+            message.text = "You have saved ₹$dis using your PVR Passport voucher! Keep booking!"
         } else if (message_text.equals("NO", ignoreCase = true)) {
-            message!!.text = "You have saved ₹$dis using your PVR Privilege voucher! Keep booking!"
+            message.text = "You have saved ₹$dis using your PVR Privilege voucher! Keep booking!"
         } else {
-            message!!.text = Html.fromHtml(message_text)
+            message.text = Html.fromHtml(message_text)
         }
-        ok_btn!!.setOnClickListener { dialog.dismiss() }
+        okBtn.setOnClickListener { dialog.dismiss() }
         dialog.show()
     }
-
 
     private fun openPromo() {
         promoDialog = Dialog(this, R.style.AppTheme_FullScreenDialog)
         promoDialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         promoDialog?.setContentView(R.layout.promo_dialog)
-        val window: Window? = promoDialog?.window
-        val wlp = window?.attributes
-        catList = promoDialog?.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView
-        val searchTextView: EditText = promoDialog?.findViewById<EditText>(R.id.searchTextView) as EditText
-        val clearBtn: ImageView = promoDialog?.findViewById<ImageView>(R.id.clearBtn) as ImageView
-        val cancel: ImageView = promoDialog?.findViewById<ImageView>(R.id.imageView4) as ImageView
+        catList = promoDialog?.findViewById(R.id.recyclerView) as RecyclerView
+        val searchTextView: EditText = promoDialog?.findViewById(R.id.searchTextView) as EditText
+        val clearBtn: ImageView = promoDialog?.findViewById(R.id.clearBtn) as ImageView
+        val cancel: ImageView = promoDialog?.findViewById(R.id.imageView4) as ImageView
         cancel.setOnClickListener { promoDialog?.dismiss() }
-        val voice_btn: ImageView = promoDialog?.findViewById<ImageView>(R.id.voice_btn) as ImageView
-        promoList = promoDialog?.findViewById<RecyclerView>(R.id.promoList) as RecyclerView
+        promoList = promoDialog?.findViewById(R.id.promoList) as RecyclerView
         catList?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        val promoCatAdapter = PaymentPromoCatAdapter(getCatList()!!,this, this)
+        val promoCatAdapter = PaymentPromoCatAdapter(getCatList()!!, this, this)
         catList?.adapter = promoCatAdapter
         promoList?.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        promoListAdapter = PaymentPromoListAdapter(promoCodeList!!,promoCodeList!!,this,this)
+        promoListAdapter = PaymentPromoListAdapter(promoCodeList, promoCodeList, this, this)
         promoList?.adapter = promoListAdapter
 
-//        wlp.gravity = Gravity.CENTER;
-//        wlp.flags &= ~WindowManager.LayoutParams.FLAG_BLUR_BEHIND;
-//        window.setAttributes(wlp);
         val width = ViewGroup.LayoutParams.MATCH_PARENT
         val height = ViewGroup.LayoutParams.MATCH_PARENT
         promoDialog?.window?.setLayout(width, height)
@@ -1349,8 +1371,8 @@ override fun onBackPressed() {
         clearBtn.setOnClickListener { searchTextView.setText("") }
     }
 
-    private fun getCatList(): java.util.ArrayList<String>? {
-        val list = java.util.ArrayList<String>()
+    private fun getCatList(): ArrayList<String>? {
+        val list = ArrayList<String>()
         list.add("ALL")
         for (i in promoCodeList.indices) {
             if (!list.contains(promoCodeList[i].category)) list.add(promoCodeList[i].category)
@@ -1361,7 +1383,7 @@ override fun onBackPressed() {
     override fun onItemCatClick(cat: String, position: Int) {
         promoList!!.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         if (cat.equals("ALL", ignoreCase = true)) {
-            promoListAdapter = PaymentPromoListAdapter(promoCodeList,promoCodeList,this, this)
+            promoListAdapter = PaymentPromoListAdapter(promoCodeList, promoCodeList, this, this)
             promoNewCodeList = promoCodeList
         } else {
             val list = ArrayList<PromoCodeList.Output>()
@@ -1371,23 +1393,19 @@ override fun onBackPressed() {
                 }
             }
             promoNewCodeList = list
-            promoListAdapter = PaymentPromoListAdapter( list, list, this,this)
+            promoListAdapter = PaymentPromoListAdapter(list, list, this, this)
         }
         promoList!!.adapter = promoListAdapter
         catList?.smoothScrollToPosition(position)
     }
 
-
     private fun setSearchFilter(
-        searchPcTextView: EditText,
-        clearBtn: ImageView,
-        activity: Activity
+        searchPcTextView: EditText, clearBtn: ImageView, activity: Activity
     ) {
         searchPcTextView.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(cs: CharSequence, arg1: Int, arg2: Int, arg3: Int) {}
             override fun beforeTextChanged(
-                arg0: CharSequence, arg1: Int, arg2: Int,
-                arg3: Int
+                arg0: CharSequence, arg1: Int, arg2: Int, arg3: Int
             ) {
             }
 
@@ -1403,10 +1421,7 @@ override fun onBackPressed() {
                 }
                 if (cs.toString().isEmpty()) {
                     promoListAdapter = PaymentPromoListAdapter(
-                        promoNewCodeList,
-                        promoNewCodeList,
-                        activity,
-                        this@PaymentActivity
+                        promoNewCodeList, promoNewCodeList, activity, this@PaymentActivity
                     )
                     promoList!!.adapter = promoListAdapter
                 }
@@ -1420,34 +1435,34 @@ override fun onBackPressed() {
 
     }
 
-
-
     private fun showPromDialog(data: PromoCodeList.Output) {
         val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.promo_popup)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window!!.setLayout(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         dialog.window!!.setGravity(Gravity.CENTER)
-        val imageView5 = dialog.findViewById<ImageView>(R.id.imageView5) as ImageView?
         val titleText = dialog.findViewById<View>(R.id.titleText) as TextView?
-        val textView5 = dialog.findViewById<View>(R.id.textView5) as TextView?
         val tncTxt = dialog.findViewById<View>(R.id.tncTxt) as TextView?
         val btnApplyCoupon = dialog.findViewById<View>(R.id.btnApplyCoupon) as TextView?
 
         tncTxt?.text = Html.fromHtml(data.tnc)
         titleText?.text = Html.fromHtml(data.title)
-        if (data.promocode!=null && data.promocode!=""){
+        if (data.promocode != null && data.promocode != "") {
             btnApplyCoupon?.show()
         }
         btnApplyCoupon?.setOnClickListener {
             binding?.promoCode?.setText(data.promocode)
             promoDialog!!.dismiss()
-            authViewModel.promoCode(preferences.getUserId(),BOOKING_ID, TRANSACTION_ID,
-                BOOK_TYPE,binding?.promoCode?.text.toString())
+            authViewModel.promoCode(
+                preferences.getUserId(),
+                BOOKING_ID,
+                TRANSACTION_ID,
+                BOOK_TYPE,
+                binding?.promoCode?.text.toString()
+            )
             dialog.dismiss()
         }
         dialog.show()
@@ -1461,34 +1476,49 @@ override fun onBackPressed() {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         if (it.data.output.p != null) {
-                            showTncDialog(this,it.data.output.di.toString(),binding?.promoCode?.text.toString())
+                            showTncDialog(
+                                this, it.data.output.di, binding?.promoCode?.text.toString()
+                            )
                             if (it.data.output.bin != null) {
                                 val binSeries: String = it.data.output.bin
                                 preferences.saveString(
-                                    Constant.SharedPreference.Promo_Bin_Series,
-                                    binSeries
+                                    Constant.SharedPreference.Promo_Bin_Series, binSeries
                                 )
-                                preferences.saveBoolean(Constant.SharedPreference.Has_Bin_Series, true)
-                            } else
-                                preferences.saveBoolean(Constant.SharedPreference.Has_Bin_Series, false)
-                            PaymentActivity.isPromocodeApplied = it.data.output.creditCardOnly
+                                preferences.saveBoolean(
+                                    Constant.SharedPreference.Has_Bin_Series, true
+                                )
+                            } else preferences.saveBoolean(
+                                Constant.SharedPreference.Has_Bin_Series, false
+                            )
+                            isPromocodeApplied = it.data.output.creditCardOnly
                             if (it.data.output.p) {
                                 Constant().printTicket(this)
                             } else {
                                 println("callled this....")
-                                binding?.cutPrice?.paintFlags = binding?.cutPrice?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG
+                                binding?.cutPrice?.paintFlags =
+                                    binding?.cutPrice?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG
                                 binding?.applyCou?.show()
                                 binding?.cutPrice?.show()
                                 binding?.couponView?.hide()
                                 DISCOUNT += it.data.output.di.toDouble()
-                                binding?.promoCodetxt?.text = "'${binding?.promoCode?.text}' Applied"
-                                binding?.applyco?.text = getString(R.string.currency)+it.data.output.di+" Saved"
+                                binding?.promoCodetxt?.text =
+                                    "'${binding?.promoCode?.text}' Applied"
+                                binding?.applyco?.text =
+                                    getString(R.string.currency) + it.data.output.di + " Saved"
                                 binding?.removeoff?.setOnClickListener {
-                                    authViewModel.removePromo(preferences.getString(Constant.SharedPreference.USER_NUMBER),BOOKING_ID, BOOK_TYPE)
+                                    authViewModel.removePromo(
+                                        preferences.getString(Constant.SharedPreference.USER_NUMBER),
+                                        BOOKING_ID,
+                                        BOOK_TYPE
+                                    )
                                 }
-                                actualAmt = (intent.getStringExtra("paidAmount")?.toDouble()!! - DISCOUNT).toString()
-                                binding?.textView178?.text = getString(R.string.currency) + actualAmt
-                                binding?.cutPrice?.text = getString(R.string.currency) + intent.getStringExtra("paidAmount").toString()
+                                actualAmt = (intent.getStringExtra("paidAmount")
+                                    ?.toDouble()!! - DISCOUNT).toString()
+                                binding?.textView178?.text =
+                                    getString(R.string.currency) + actualAmt
+                                binding?.cutPrice?.text =
+                                    getString(R.string.currency) + intent.getStringExtra("paidAmount")
+                                        .toString()
                             }
                         }
                     } else {
@@ -1524,5 +1554,10 @@ override fun onBackPressed() {
 
     }
 
-
+    //Internet Check
+    private fun broadcastIntent() {
+        registerReceiver(
+            broadcastReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        )
+    }
 }

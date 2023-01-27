@@ -29,7 +29,6 @@ import java.util.regex.Pattern
 import javax.inject.Inject
 
 
-@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class OtpVerifyActivity : AppCompatActivity() {
     @Inject

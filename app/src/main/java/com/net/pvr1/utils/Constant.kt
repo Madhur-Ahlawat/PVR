@@ -60,6 +60,7 @@ class Constant {
 
         const val IS_LOGIN = "is_login"
         var DISPLAY = 1
+        var TimerTime = 10000
 
         const val SUCCESS_RESULT = 1
         const val RECEVIER = "$PACKAGE_NAME.RECEVIER"
@@ -104,7 +105,6 @@ class Constant {
         const val SUV = 6
         const val BIKE = 7
         const val BIKE_SEAT_BOOKED = 8
-        const val LETTER_SPACING = 1
         var PrivilegeHomeResponseConst: PrivilegeHomeResponse.Output? = null
         var ProfileResponseConst: ProfileResponse.Output? = null
         var PlaceHolder: HomeResponse.Output? = null

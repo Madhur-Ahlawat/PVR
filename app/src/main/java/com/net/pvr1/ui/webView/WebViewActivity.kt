@@ -2,11 +2,14 @@ package com.net.pvr1.ui.webView
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.graphics.Bitmap
 import android.net.http.SslError
 import android.os.Bundle
 import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
+import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityWebViewBinding
+import com.net.pvr1.ui.dailogs.LoaderDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -15,6 +18,8 @@ class WebViewActivity : AppCompatActivity() {
     private var from: String = ""
     private var title: String = ""
     private var get: String = ""
+
+    private var loader: LoaderDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,8 +76,15 @@ class WebViewActivity : AppCompatActivity() {
                 return false
             }
 
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+                loader = LoaderDialog(R.string.pleaseWait)
+                loader?.show(supportFragmentManager, null)
+            }
+
             override fun onPageFinished(view: WebView, url: String) {
                 super.onPageFinished(view, url)
+                loader?.dismiss()
             }
 
             override fun onReceivedError(
@@ -81,6 +93,8 @@ class WebViewActivity : AppCompatActivity() {
                 error: WebResourceError
             ) {
                 super.onReceivedError(view, request, error)
+                loader?.dismiss()
+
             }
 
             override fun onReceivedHttpError(
@@ -89,6 +103,8 @@ class WebViewActivity : AppCompatActivity() {
                 errorResponse: WebResourceResponse
             ) {
                 super.onReceivedHttpError(view, request, errorResponse)
+                loader?.dismiss()
+
             }
 
             override fun onReceivedSslError(
@@ -97,6 +113,8 @@ class WebViewActivity : AppCompatActivity() {
                 error: SslError
             ) {
                 super.onReceivedSslError(view, handler, error)
+                loader?.dismiss()
+
             }
         }
     }

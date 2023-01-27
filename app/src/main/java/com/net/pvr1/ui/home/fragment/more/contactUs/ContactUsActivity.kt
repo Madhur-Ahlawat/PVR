@@ -38,10 +38,13 @@ class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewI
     private fun manageFunction() {
         binding?.include22?.textView5?.text = getString(R.string.submit)
         binding?.toolbar?.textView108?.text=getString(R.string.contact_us)
-//mobile
-        binding?.mobileNumber?.setText(preferences.geMobileNumber())
-//email
-        binding?.email?.setText(preferences.getEmail())
+        if (preferences.getIsLogin()){
+            //mobile
+            binding?.mobileNumber?.setText(preferences.geMobileNumber())
+            //email
+            binding?.email?.setText(preferences.getEmail())
+        }
+
 
 //List
         listData.add("Feedback")

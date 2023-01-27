@@ -648,4 +648,5 @@
     <string name="logoutBack">Your booking is not yet complete.</string>
     <string name="show_end_time_approx">Show end time approx</string>
     <string name="nicelyDone">Nicely done!</string>
+    <string name="extend">Extend</string>
 </resources>

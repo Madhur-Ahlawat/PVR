@@ -4,8 +4,7 @@ package com.net.pvr1.ui.login
 
 import android.annotation.SuppressLint
 import android.app.PendingIntent
-import android.content.Intent
-import android.content.IntentSender
+import android.content.*
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -29,6 +28,7 @@ import com.net.pvr1.ui.login.otpVerify.OtpVerifyActivity
 import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.login.viewModel.LoginViewModel
 import com.net.pvr1.utils.*
+import com.net.pvr1.utils.BroadcastService
 import com.net.pvr1.utils.Constant.Companion.SUCCESS_CODE
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -43,6 +43,9 @@ class LoginActivity : AppCompatActivity() {
     private val authViewModel: LoginViewModel by viewModels()
     private val mobileRequest = 1
 
+    //timer
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater, null, false)
@@ -56,16 +59,21 @@ class LoginActivity : AppCompatActivity() {
         val hintRequest = HintRequest.Builder().setPhoneNumberIdentifierSupported(true).build()
         val intent: PendingIntent = Credentials.getClient(this).getHintPickerIntent(hintRequest)
         try {
-            startIntentSenderForResult(
-                intent.intentSender, mobileRequest, null, 0, 0, 0, Bundle()
-            )
+            startIntentSenderForResult(intent.intentSender, mobileRequest, null, 0, 0, 0, Bundle())
+//            resultLauncher.launch(intent.intentSender, mobileRequest, null, 0, 0, 0, Bundle())
+
+//            startIntentSenderForResult(
+//                intent.intentSender, mobileRequest, null, 0, 0, 0, Bundle()
+//            )
         } catch (e: IntentSender.SendIntentException) {
             e.printStackTrace()
         }
 
         //moved Another Pages
         movedNext()
+        timerManage()
     }
+
 
     private fun movedNext() {
         binding?.mobileNumber?.addTextChangedListener(object : TextWatcher {
@@ -122,7 +130,6 @@ class LoginActivity : AppCompatActivity() {
             if (!Constant().locationServicesEnabled(this@LoginActivity)) {
                 val intent = Intent(this@LoginActivity, EnableLocationActivity::class.java)
                 startActivity(intent)
-//                finish()
             } else if (preferences.getCityName() == "") {
                 val intent = Intent(this@LoginActivity, SelectCityActivity::class.java)
                 startActivity(intent)
@@ -202,8 +209,35 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    @SuppressLint("SetTextI18n")
-    @Override
+
+
+
+//    @SuppressLint("SetTextI18n")
+//    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+//        if (result.resultCode == Activity.RESULT_OK) {
+//            // There are no request codes
+//            val data: Intent? = result.data
+//            val cred: Credential = data?.getParcelableExtra(Credential.EXTRA_KEY)!!
+//            try {
+//                if (!TextUtils.isEmpty(cred.id) && cred.id.length > 4) {
+//                    if (cred.id.startsWith("+91")) {
+//                        binding?.mobileNumber?.setText("" + cred.id.substring(3, cred.id.length))
+//                    } else {
+//                        binding?.mobileNumber?.setText("" + cred.id)
+//                    }
+//                }
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//            }
+//        }else if (result.resultCode == mobileRequest && result.resultCode == CredentialsApi.ACTIVITY_RESULT_NO_HINTS_AVAILABLE) {
+//            // *** No phone numbers available ***
+//            printLog("numberNotFound---->")
+//        }
+//    }
+
+
+//    @SuppressLint("SetTextI18n")
+//    @Override
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == mobileRequest && resultCode == RESULT_OK) {
@@ -249,5 +283,59 @@ class LoginActivity : AppCompatActivity() {
             },
             negativeClick = {})
         dialog.show()
+    }
+
+
+    private fun timerManage() {
+        startService(Intent(this, BroadcastService::class.java))
+
+    }
+
+    private val br: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+            updateGUI(intent) // or whatever method used to update your GUI fields
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        registerReceiver(br, IntentFilter(BroadcastService.COUNTDOWN_BR))
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unregisterReceiver(br)
+    }
+
+    override fun onStop() {
+        try {
+            unregisterReceiver(br)
+        } catch (e: java.lang.Exception) {
+            // Receiver was probably already stopped in onPause()
+        }
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        stopService(Intent(this, BroadcastService::class.java))
+        super.onDestroy()
+    }
+
+    @SuppressLint("DefaultLocale")
+    private fun updateGUI(intent: Intent) {
+        if (intent.extras != null) {
+            val millisUntilFinished = intent.getLongExtra("countdown", 0)
+            val second = millisUntilFinished / 1000 % 60
+            val minutes = millisUntilFinished / (1000 * 60) % 60
+            val display = java.lang.String.format("%02d:%02d", minutes, second)
+
+            binding?.include47?.textView394?.text=display
+
+
+            binding?.include47?.textView395?.setOnClickListener {
+                Constant.TimerTime= (minutes * 60 + second).toInt()
+            }
+
+        }
     }
 }
