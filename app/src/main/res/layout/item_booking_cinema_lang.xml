@@ -17,6 +17,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/at_info"
+        android:id="@+id/atInfo"
+        android:visibility="gone"
+        android:padding="@dimen/dimen_6dp"
+        android:layout_marginTop="-6dp"
+        android:layout_marginStart="-3dp"
+        app:layout_constraintStart_toEndOf="@+id/textView106"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView11"
         android:layout_width="match_parent"

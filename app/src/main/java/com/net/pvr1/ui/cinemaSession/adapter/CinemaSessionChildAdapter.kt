@@ -19,7 +19,10 @@ import com.net.pvr1.utils.show
 class CinemaSessionChildAdapter(
     private var nowShowingList: ArrayList<CinemaSessionResponse.Child.Mv>,
     private var context: Context,
-    private var cinemaId: String?) : RecyclerView.Adapter<CinemaSessionChildAdapter.ViewHolder>() {
+    private var cinemaId: String?,
+    private var ccn: String,
+    private var at: String
+) : RecyclerView.Adapter<CinemaSessionChildAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemCinemaSessionMovieDetailsBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -55,7 +58,7 @@ class CinemaSessionChildAdapter(
                 //RecyclerView
                 val layoutManager = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
                 val cinemaSessionLanguageAdapter =
-                    CinemaSessionCinChildLanguageAdapter(this.ml, context, cinemaId,0)
+                    CinemaSessionCinChildLanguageAdapter(this.ml, context, cinemaId,0,ccn,this.adlt,at,this.mih)
                 binding.recyclerView17.layoutManager = layoutManager
                 binding.recyclerView17.adapter = cinemaSessionLanguageAdapter
 
@@ -75,7 +78,7 @@ class CinemaSessionChildAdapter(
 
                         val layoutManager = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
                         val cinemaSessionLanguageAdapter =
-                            CinemaSessionCinChildLanguageAdapter(this.ml, context, cinemaId,0)
+                            CinemaSessionCinChildLanguageAdapter(this.ml, context, cinemaId,0,ccn,this.adlt,at,this.mih)
                         binding.recyclerView17.layoutManager = layoutManager
                         binding.recyclerView17.adapter = cinemaSessionLanguageAdapter
 
@@ -85,7 +88,7 @@ class CinemaSessionChildAdapter(
 
                         val layoutManager = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
                         val cinemaSessionLanguageAdapter =
-                            CinemaSessionCinChildLanguageAdapter(this.ml, context, cinemaId,1)
+                            CinemaSessionCinChildLanguageAdapter(this.ml, context, cinemaId,1,ccn,this.adlt,at,this.mih)
                         binding.recyclerView17.layoutManager = layoutManager
                         binding.recyclerView17.adapter = cinemaSessionLanguageAdapter
                     }

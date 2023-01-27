@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Typeface
 import android.os.Build
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
 import com.net.pvr1.databinding.SeatShowTimeItemBinding
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
+import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.invisible
 import com.net.pvr1.utils.show
 
@@ -45,9 +47,9 @@ class ShowsAdapter(
                 holder.itemView.setOnClickListener {
                     itemCount = position
                     notifyDataSetChanged()
-                    listener.showsClick(this.sid)
-
+                    listener.showsClick(this.sid,holder.itemView)
                 }
+                itemCount?.let { recyclerView27.scrollToPosition(it) }
                 if (position == itemCount) {
                     binding.textView199.setTextColor(ContextCompat.getColor(context, R.color.black))
                     binding.linearLayout.setBackgroundColor(
@@ -61,7 +63,8 @@ class ShowsAdapter(
                     binding.textView199.textSize = 16f
                     binding.textView199.typeface = heavy
 
-                    recyclerView27.smoothScrollToPosition(position+1)
+                    Constant.focusOnView(itemView, recyclerView27)
+
 
                 } else {
                     binding.textView199.setTextColor(
@@ -90,7 +93,7 @@ class ShowsAdapter(
 
 
     interface RecycleViewItemClickListenerCity {
-        fun showsClick(comingSoonItem: Int)
+        fun showsClick(comingSoonItem: Int, itemView: View)
     }
 
 }

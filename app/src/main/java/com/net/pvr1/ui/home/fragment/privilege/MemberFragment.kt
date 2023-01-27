@@ -638,7 +638,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
         dialog.show()
     }
 
-    fun openDialog(voucherNewCombineLists: ArrayList<LoyaltyDataResponse.Voucher>, pos: Int) {
+    private fun openDialog(voucherNewCombineLists: ArrayList<LoyaltyDataResponse.Voucher>, pos: Int) {
         val dialog = context?.let { Dialog(it) }
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog?.setCancelable(false)

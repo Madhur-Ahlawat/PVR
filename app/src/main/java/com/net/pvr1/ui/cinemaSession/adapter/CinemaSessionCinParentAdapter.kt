@@ -35,7 +35,7 @@ class CinemaSessionCinParentAdapter(
                 cinemaId= this.ccid
                 //RecyclerView
                 val gridLayout = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
-                val cinemaSessionCinemasChildAdapter = CinemaSessionChildAdapter(this.mvs, context,cinemaId)
+                val cinemaSessionCinemasChildAdapter = CinemaSessionChildAdapter(this.mvs, context,cinemaId,this.ccn,this.at)
                 binding.recyclerView16.layoutManager = gridLayout
                 binding.recyclerView16.adapter = cinemaSessionCinemasChildAdapter
 

@@ -88,7 +88,6 @@
     <string name="gift_cards">Gift Cards</string>
     <string name="scan_qr">Scan QR</string>
     <string name="merchandise">Merchandise</string>
-    <string name="macmerise">Macmerise</string>
     <string name="experience">Experience</string>
     <string name="pvr_cares">PVR Cares</string>
     <string name="movies">Movies</string>
@@ -651,6 +650,19 @@
     <string name="nicelyDone">Nicely done!</string>
     <string name="adult_msz">This movie has been rated \'A\' and is for audiences above the age of 18. Please carry a valid photo ID/age proof to the theatre. No refund of tickets once bought.</string>
     <string name="extend">Extend</string>
-    <string name="sessionExpired">Session Expired</string>
-    <string name="minRemaining">min. remaining</string>
+
+    <string name="atmos_text">Dolby Atmos is the name of a surround sound technology announced by Dolby Laboratories in April 2012 and released in June that year\nDolby Atmos technology allows up to 128 audio tracks plus associated spatial audio description metadata (most notably, location or pan automation data) to be distributed to theaters for optimal, dynamic rendering to loudspeakers based on the theater capabilities.</string>
+
+
+    <string name="imax_text">IMAX - THE WORLD\'S MOST IMMERSIVE MOVIE EXPERIENCE IMAX is an entertainment experience so real you feel it in your bones, so magical it takes you places you have never been; so all-encompassing you\'re not just peeking through the window, but part of the action. Behind it is a world of high technology - proprietary software, architecture and equipment pioneered by IMAX. IMAX is unique - not an entertainment or technology or distribution company but all three at once: an innovator with patented technology; a Hollywood insider that partners with the world\'s most celebrated moviemakers to enhance their biggest blockbusters and documentaries; and a global enterprise with more than 837 theatres in 57 countries. There\'s only one IMAX, and once experienced there\'s no going back
+
+
+
+IMAX Corporation is one of the world\'s leading entertainment technology companies, specialising in immersive motion picture technologies.</string>
+    <string name="fdx_text">A Revolutionary Cinematic Experience\n4DX is widely considered to be the biggest innovation in cinematic technology to date. It is a revolutionary cinematic experience which stimulates all five senses with high-tech motion seats and special effects including wind, fog, lightning, bubbles, water, rain and scents, in both 2D and 3D formats. These effects work in perfect synchronicity with the action on screen - creating the most un-miss able and exhilarating cinematic experience yet.
+        \n\n\nThis immersive screening experience is the preferred way to see the latest blockbusters in more than 20 countries throughout Asia, Europe and the Americas. PVR brings this revolution in entertainment to India with the launch of its first 92-seat 4DX theater in Logix City Centre Mall, Noida.</string>
+    <string name="playhouse_text">Kids Auditorium\n\nPVR Playhouse is a dream world created by kids for kids aged 3 to 12 years of age. A special movie auditorium showcasing children\'s movies/ animated content. The child themed colorful wall art is a treat for the eyes. A mix of Premier seating (for accompanying Adults ) with Bean bag seating sets this auditorium apart from regular cinemas. What\'s more? Playhouse also has an In Audi slider for young kids who prefer to move about during the show. Our handpicked Kinds menu offers just the right portion sizes for kids (12 exciting Kids Combos to choose from) making this the ultimate party destination to host Kids Birthday Parties.</string>
+    <string name="pvrgold_text">This cinema format is luxurious and intended for an audience segment who desires a great and exclusive experience. To add to this a wide variety of freshly prepared food &amp; beverage for total indulgence with service on seat.</string>
+    <string name="pvronyx_text">Pvr launches the next generation of cinema technology, offering a projector-less movie going experience by bringing the visual power of led picture quality to the big screen.</string>
+
 </resources>

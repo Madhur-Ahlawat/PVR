@@ -28,6 +28,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar"
+        android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true">
         <activity
             android:name=".ui.home.fragment.more.experience.ExperienceActivity"
