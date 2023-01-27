@@ -664,5 +664,6 @@ IMAX Corporation is one of the world\'s leading entertainment technology compani
     <string name="playhouse_text">Kids Auditorium\n\nPVR Playhouse is a dream world created by kids for kids aged 3 to 12 years of age. A special movie auditorium showcasing children\'s movies/ animated content. The child themed colorful wall art is a treat for the eyes. A mix of Premier seating (for accompanying Adults ) with Bean bag seating sets this auditorium apart from regular cinemas. What\'s more? Playhouse also has an In Audi slider for young kids who prefer to move about during the show. Our handpicked Kinds menu offers just the right portion sizes for kids (12 exciting Kids Combos to choose from) making this the ultimate party destination to host Kids Birthday Parties.</string>
     <string name="pvrgold_text">This cinema format is luxurious and intended for an audience segment who desires a great and exclusive experience. To add to this a wide variety of freshly prepared food &amp; beverage for total indulgence with service on seat.</string>
     <string name="pvronyx_text">Pvr launches the next generation of cinema technology, offering a projector-less movie going experience by bringing the visual power of led picture quality to the big screen.</string>
-
+    <string name="sessionExpired">Session Expired</string>
+    <string name="minRemaining">min. remaining</string>
 </resources>
