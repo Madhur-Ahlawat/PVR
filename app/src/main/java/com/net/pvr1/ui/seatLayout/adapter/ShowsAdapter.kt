@@ -20,7 +20,8 @@ class ShowsAdapter(
     private var nowShowingList: ArrayList<BookingResponse.Output.Cinema.Child.Sw.S>,
     private var context: Context,
     private var listener: RecycleViewItemClickListenerCity,
-    private val position: Int?
+    private val position: Int?,
+    private val recyclerView27: RecyclerView
 ) :
     RecyclerView.Adapter<ShowsAdapter.ViewHolder>() {
     private var itemCount = position
@@ -59,6 +60,8 @@ class ShowsAdapter(
                     val heavy: Typeface = context.resources.getFont(R.font.montserrat_bold)
                     binding.textView199.textSize = 16f
                     binding.textView199.typeface = heavy
+
+                    recyclerView27.smoothScrollToPosition(position+1)
 
                 } else {
                     binding.textView199.setTextColor(

@@ -99,6 +99,7 @@ class SeatLayoutActivity : AppCompatActivity(),
     private var cinemaSessionShows = ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>()
     private var textTermsAndCondition: TextView? = null
     private var tncValue = 1
+    private var position = "0"
     private var offerEnable = false
 
     //Bottom Dialog
@@ -123,7 +124,7 @@ class SeatLayoutActivity : AppCompatActivity(),
             cinemaSessionShows =
                 intent.getSerializableExtra("CinemaShows") as ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>
 
-            val position = intent.getStringExtra("position").toString()
+            position = intent.getStringExtra("position").toString()
             cinemaShows(position)
         } else {
             showsArray = intent.getSerializableExtra("shows") as ArrayList<Child.Sw.S>
@@ -236,7 +237,7 @@ class SeatLayoutActivity : AppCompatActivity(),
         val position = itemPosition?.toInt()
         val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
         binding?.recyclerView27?.layoutManager = LinearLayoutManager(this)
-        val adapter = ShowsAdapter(showsArray, this, this, position)
+        val adapter = ShowsAdapter(showsArray, this, this, position,binding?.recyclerView27!!)
         binding?.recyclerView27?.layoutManager = gridLayout
         binding?.recyclerView27?.adapter = adapter
 
@@ -451,7 +452,7 @@ class SeatLayoutActivity : AppCompatActivity(),
         binding?.textView198?.text = data.cn
 
         //Show  end time
-        binding?.textView393?.text = data.et
+        binding?.textView393?.text = showsArray[position.toInt()].et
 
 
         if (tncValue == 1) {

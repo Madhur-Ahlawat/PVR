@@ -355,7 +355,7 @@ class BookingActivity : AppCompatActivity(),
 
         //Shows
         val gridLayout3 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        bookingShowsParentAdapter = BookingShowsParentAdapter(output.cinemas, this, this)
+        bookingShowsParentAdapter = BookingShowsParentAdapter(output.cinemas, this, this,output.adlt)
         binding?.recyclerView8?.layoutManager = gridLayout3
         binding?.recyclerView8?.adapter = bookingShowsParentAdapter
 

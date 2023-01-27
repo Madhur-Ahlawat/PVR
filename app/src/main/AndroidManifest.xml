@@ -308,7 +308,9 @@
         <activity
             android:name=".ui.scanner.ScannerActivity"
             android:exported="false"
-            android:screenOrientation="locked" />
+            android:screenOrientation="fullSensor"
+            tools:replace="android:screenOrientation"
+            android:stateNotNeeded="true"/>
         <activity
             android:name=".ui.location.selectCity.SelectCityActivity"
             android:exported="false"

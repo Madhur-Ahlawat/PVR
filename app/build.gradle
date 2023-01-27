@@ -20,8 +20,8 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField "String", "API_URL", "\"https://devapi.pvrcinemas.com/PVRCinemasCMS/\""//dev
-//            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/\""//Prod
+//            buildConfigField "String", "API_URL", "\"https://devapi.pvrcinemas.com/PVRCinemasCMS/\""//dev
+            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/\""//Prod
 //            buildConfigField "String", "API_URL", "\"https://preprodapi.pvrcinemas.com/PVRCinemasCMS/\""//PreProd
 //            buildConfigField "String", "API_URL", "\"https://demoapi.pvrcinemas.com/PVRCinemasCMS/\""//stage
 
@@ -138,7 +138,7 @@ dependencies {
     implementation 'com.mikhaellopez:circularimageview:4.3.0'
 
     // QrCodeScanner
-    implementation "com.journeyapps:zxing-android-embedded:4.2.0"
+    implementation "com.journeyapps:zxing-android-embedded:4.3.0"
 
     //Moshi
     implementation("com.squareup.moshi:moshi-kotlin:1.9.2")

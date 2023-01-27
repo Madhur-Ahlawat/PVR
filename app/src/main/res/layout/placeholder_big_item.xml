@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:elevation="@dimen/dimen_5dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:src="@drawable/play"
                 tools:ignore="ContentDescription"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -40,7 +40,7 @@
             <ImageView
                 android:id="@+id/sliderImg"
                 android:layout_width="match_parent"
-                android:layout_height="102dp"
+                android:layout_height="160dp"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
                 android:src="@drawable/rectangle_default"

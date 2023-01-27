@@ -1,13 +1,19 @@
 package com.net.pvr1.ui.scanner
 
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.KeyEvent
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.NameValuePair
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URLEncodedUtils
 import com.google.zxing.integration.android.IntentIntegrator
+import com.journeyapps.barcodescanner.*
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityScannerBinding
 import com.net.pvr1.di.preference.PreferenceManager
@@ -16,27 +22,65 @@ import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
 import java.net.URI
 import java.net.URISyntaxException
+import java.util.*
 import javax.inject.Inject
+
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
-class ScannerActivity : AppCompatActivity() {
+class ScannerActivity : AppCompatActivity(),DecoratedBarcodeView.TorchListener {
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityScannerBinding? = null
     private var fromScan: String? = ""
     private var qrScanIntegrator: IntentIntegrator? = null
-
+    private var capture: CaptureManager? = null
+    private var barcodeScannerView: DecoratedBarcodeView? = null
+    private var viewfinderView: ViewfinderView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityScannerBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        qrScanIntegrator = IntentIntegrator(this)
+//        qrScanIntegrator = IntentIntegrator(this)
 
+        barcodeScannerView = findViewById(R.id.zxing_barcode_scanner)
+        barcodeScannerView?.setTorchListener(this)
+
+        viewfinderView = findViewById(R.id.zxing_viewfinder_view)
+
+        // if the device does not have flashlight in its camera,
+        // then remove the switch flashlight button...
+
+        // if the device does not have flashlight in its camera,
+        // then remove the switch flashlight button...
+        if (!hasFlash()) {
+            binding?.switchFlashlight?.visibility = View.GONE
+        }
+
+        capture = CaptureManager(this, barcodeScannerView)
+        capture?.initializeFromIntent(intent, savedInstanceState)
+        capture?.setShowMissingCameraPermissionDialog(true)
+//        capture?.decode()
+        barcodeScannerView?.decodeContinuous {
+            handelResult(it.text)
+        }
+        changeMaskColor(null)
+        changeLaserVisibility(true)
         performAction()
         movedNext()
+
+        //Flash ON/OFF
+        binding?.switchFlashlight?.setOnClickListener {
+            if ("Turn off Flashlight" == binding?.switchFlashlight?.text) {
+                barcodeScannerView?.setTorchOn()
+            } else {
+                barcodeScannerView?.setTorchOff()
+            }
+        }
     }
+
+
 
     private fun movedNext() {
     //title
@@ -51,23 +95,10 @@ class ScannerActivity : AppCompatActivity() {
 
 
     private fun performAction() {
-        // Code to perform action when button is .
-        qrScanIntegrator?.initiateScan()
+        val options = ScanOptions()
+        //barcodeLauncher.launch(options)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-        if (result != null) {
-            // If QRCode has no data.
-            if (result.contents == null) {
-                finish()
-            } else {
-                handelResult(result.contents)
-                binding?.name?.text = result.contents
-            }
-        }
-    }
 
     private fun handelResult(contents: String) {
         try {
@@ -262,8 +293,66 @@ class ScannerActivity : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        capture?.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        capture?.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        capture?.onDestroy()
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        return barcodeScannerView?.onKeyDown(keyCode, event) == true || super.onKeyDown(keyCode, event)
+    }
+
+    /**
+     * Check if the device's camera has a Flashlight.
+     * @return true if there is Flashlight, otherwise false.
+     */
+    private fun hasFlash(): Boolean {
+        return applicationContext.packageManager
+            .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)
+    }
+
+
+
+    private fun changeMaskColor(view: View?) {
+        val rnd = Random()
+        val color: Int = Color.argb(100, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
+        viewfinderView?.setMaskColor(color)
+    }
+
+    private fun changeLaserVisibility(visible: Boolean) {
+        viewfinderView?.setLaserVisibility(visible)
+    }
+
     private fun getOfferCode() {
 
     }
+
+    override fun onTorchOn() {
+        binding?.switchFlashlight?.text = "Turn on Flashlight";
+    }
+
+    override fun onTorchOff() {
+        binding?.switchFlashlight?.text = "Turn off Flashlight"
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        capture?.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
 
 }

@@ -1,6 +1,7 @@
 package com.net.pvr1.ui.bookingSession.adapter
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -8,18 +9,19 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import android.view.Window
+import android.text.TextUtils
+import android.view.*
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ItemCinemaDetailsShowTimeBinding
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
+import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.seatLayout.SeatLayoutActivity
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr1.utils.Constant.Companion.OfferDialogImage
@@ -32,13 +34,16 @@ import kotlin.math.roundToInt
 class BookingShowsTimeAdapter(
     private var nowShowingList: ArrayList<BookingResponse.Output.Cinema.Child.Sw.S>,
     private var context: Context,
-    private var ccid: String
+    private var ccid: String,
+    private var ccn: String,
+    private val at: String,
+    private val adlt: Boolean
 ) :
     RecyclerView.Adapter<BookingShowsTimeAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemCinemaDetailsShowTimeBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    private  var rowIndex:Int=0
+    private var rowIndex: Int = 0
     private var sidText: String = ""
     private var ccText: String = ""
 
@@ -77,27 +82,138 @@ class BookingShowsTimeAdapter(
                 CINEMA_ID = ccid
 
                 //Handicap
-                if (this.hc){
+                if (this.hc) {
                     binding.constraintLayout133.show()
-                }else{
+                } else {
                     binding.constraintLayout133.hide()
                 }
 
                 holder.itemView.setOnClickListener {
-                    rowIndex=position
+                    rowIndex = position
                     if (this.ss != 0 && this.ss != 3) {
-//                        if (this.ba) {
-//                            showOfferDialog()
-//                        } else {
+                        if (this.ba) {
+                            showOfferDialog(this.sid,this.cc,this.at)
+                        } else {
                             sidText = this.sid.toString()
                             ccText = this.cc
                             val intent = Intent(context, SeatLayoutActivity::class.java)
                             intent.putExtra("clickPosition", rowIndex.toString())
                             intent.putExtra("shows", nowShowingList)
                             intent.putExtra("skip", "true")
-                            context.startActivity(intent)
+                            if (adlt) {
+                                val dialog = OptionDialog(context,
+                                    R.mipmap.ic_launcher,
+                                    R.string.app_name,
+                                    context.getString(R.string.adult_msz),
+                                    positiveBtnText = R.string.yes,
+                                    negativeBtnText = R.string.cancel,
+                                    positiveClick = {
+                                        if (at != "") {
+                                            val dialog = OptionDialog(context,
+                                                R.mipmap.ic_launcher,
+                                                R.string.app_name,
+                                                at,
+                                                positiveBtnText = R.string.yes,
+                                                negativeBtnText = R.string.cancel,
+                                                positiveClick = {
+                                                    if (this.at != "") {
+                                                        val dialog = OptionDialog(context,
+                                                            R.mipmap.ic_launcher,
+                                                            R.string.app_name,
+                                                            this.at,
+                                                            positiveBtnText = R.string.yes,
+                                                            negativeBtnText = R.string.cancel,
+                                                            positiveClick = {
+                                                                context.startActivity(intent)
+                                                            },
+                                                            negativeClick = {})
+                                                        dialog.show()
+                                                    } else {
+                                                        context.startActivity(intent)
+                                                    }
+                                                },
+                                                negativeClick = {})
+                                            dialog.show()
+                                        } else {
+                                            if (this.at != "") {
+                                                val dialog = OptionDialog(context,
+                                                    R.mipmap.ic_launcher,
+                                                    R.string.app_name,
+                                                    this.at,
+                                                    positiveBtnText = R.string.yes,
+                                                    negativeBtnText = R.string.cancel,
+                                                    positiveClick = {
+                                                        context.startActivity(intent)
+                                                    },
+                                                    negativeClick = {})
+                                                dialog.show()
+                                            } else {
+                                                context.startActivity(intent)
+                                            }
+                                        }
+                                    },
+                                    negativeClick = {})
+                                dialog.show()
 
-                       // }
+                            } else {
+                                if (at != "") {
+                                    val dialog = OptionDialog(context,
+                                        R.mipmap.ic_launcher,
+                                        R.string.app_name,
+                                        at,
+                                        positiveBtnText = R.string.yes,
+                                        negativeBtnText = R.string.cancel,
+                                        positiveClick = {
+                                            if (this.at != "") {
+                                                val dialog = OptionDialog(context,
+                                                    R.mipmap.ic_launcher,
+                                                    R.string.app_name,
+                                                    this.at,
+                                                    positiveBtnText = R.string.yes,
+                                                    negativeBtnText = R.string.cancel,
+                                                    positiveClick = {
+                                                        context.startActivity(intent)
+                                                    },
+                                                    negativeClick = {})
+                                                dialog.show()
+                                            } else {
+                                                context.startActivity(intent)
+                                            }
+                                        },
+                                        negativeClick = {})
+                                    dialog.show()
+                                } else {
+                                    if (this.at != "") {
+                                        val dialog = OptionDialog(context,
+                                            R.mipmap.ic_launcher,
+                                            R.string.app_name,
+                                            this.at,
+                                            positiveBtnText = R.string.yes,
+                                            negativeBtnText = R.string.cancel,
+                                            positiveClick = {
+                                                context.startActivity(intent)
+                                            },
+                                            negativeClick = {})
+                                        dialog.show()
+                                    } else {
+                                        context.startActivity(intent)
+                                    }
+                                }
+                            }
+
+                        }
+
+                        holder.itemView.setOnLongClickListener {
+
+                            showChangeLangDialogNew(
+                                context,
+                                ccn,
+                                this,
+                                holder.itemView
+                            )
+
+                            return@setOnLongClickListener true
+                        }
 
                     }
                 }
@@ -106,8 +222,159 @@ class BookingShowsTimeAdapter(
 
     }
 
+    private fun showChangeLangDialogNew(
+        context: Context,
+        ccn: String,
+        item: BookingResponse.Output.Cinema.Child.Sw.S,
+        itemView: View
+    ) {
+        val dialogBuilder = AlertDialog.Builder(context)
+        val priceDaos: List<BookingResponse.Output.Cinema.Child.Sw.S.Pr> = item.prs
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val dialogView = inflater.inflate(R.layout.show_detail_dialog, null)
+        dialogBuilder.setView(dialogView)
+
+        val linearLayout = dialogView.findViewById<LinearLayout>(R.id.mainView)
+
+        val layout1 = LinearLayout(context)
+
+        val params = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.MATCH_PARENT
+        )
+        layout1.layoutParams = params
+        layout1.orientation = LinearLayout.HORIZONTAL
+
+//CinemaName
+
+//CinemaName
+        val cinema_name = TextView(context)
+        val params1 = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.MATCH_PARENT
+        )
+        params1.setMargins(0, 10, 0, 20)
+        params1.gravity = Gravity.TOP
+        params1.weight = 1.0f
+        cinema_name.isSingleLine = true
+        cinema_name.ellipsize = TextUtils.TruncateAt.END
+        cinema_name.layoutParams = params1
+        cinema_name.text = ccn
+        cinema_name.setTextAppearance(context, R.style.text_black)
+        layout1.addView(cinema_name)
+
+//ShowTime
+
+//ShowTime
+        val time = TextView(context)
+        val params2 = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.MATCH_PARENT
+        )
+        params2.weight = 3.5f
+        params2.gravity = Gravity.TOP
+        params2.setMargins(0, 18, 0, 20)
+        time.layoutParams = params2
+        time.setTextAppearance(context, R.style.text_gray_gift)
+        time.text = item.st
+        layout1.addView(time)
+        linearLayout.addView(layout1)
+
+//Create ShowType
+
+//Create ShowType
+        for (i in priceDaos.indices) {
+            val priceDao: BookingResponse.Output.Cinema.Child.Sw.S.Pr = priceDaos[i]
+            val layout = LinearLayout(context)
+            val params4 = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+            )
+            layout.layoutParams = params4
+            layout.orientation = LinearLayout.HORIZONTAL
+            val params3 = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+            )
+            params3.weight = 1.0f
+            params3.gravity = Gravity.TOP
+            params3.setMargins(0, 40, 0, 0)
+            val title = TextView(context)
+            title.layoutParams = params3
+            title.isSingleLine = true
+            // title.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+            title.ellipsize = TextUtils.TruncateAt.END
+            title.setTextAppearance(context, R.style.text_black)
+            // title.setTypeface(title.getTypeface(), Typeface.BOLD);
+            title.setText(priceDao.n)
+            layout.addView(title)
+            val params5 = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+            )
+            params5.weight = 3.5f
+            params5.gravity = Gravity.TOP
+            params5.setMargins(0, 40, 0, 0)
+            val value = TextView(context)
+            value.layoutParams = params5
+            value.setTextAppearance(context, R.style.text_gray_gift)
+            // value.setTypeface(value.getTypeface(), Typeface.BOLD);
+            value.text = "₹ " + priceDao.p + ".0"
+            layout.addView(value)
+            linearLayout.addView(layout)
+        }
+
+        if (item.et != ("")) {
+            val et_layout1 = LinearLayout(context)
+            val et_params = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+            )
+            et_layout1.layoutParams = et_params
+            et_layout1.orientation = LinearLayout.HORIZONTAL
+            val et_text = TextView(context)
+            val params_et_text = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+            )
+            params_et_text.setMargins(0, 40, 0, 0)
+            params_et_text.gravity = Gravity.TOP
+            params_et_text.weight = 1.0f
+            et_text.isSingleLine = true
+            et_text.ellipsize = TextUtils.TruncateAt.END
+            et_text.layoutParams = params_et_text
+            et_text.text = "Show end time approx"
+            et_text.setTextAppearance(context, R.style.text_black)
+            et_layout1.addView(et_text)
+            val et = TextView(context)
+            val paramset = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+            )
+            paramset.weight = 3.5f
+            paramset.gravity = Gravity.TOP
+            paramset.setMargins(0, 40, 0, 0)
+            et.layoutParams = paramset
+            et.setTextAppearance(context, R.style.text_gray_gift)
+            et.text = item.et
+            et_layout1.addView(et)
+            linearLayout.addView(et_layout1)
+        }
+// dialogBuilder.setMessage("Enter text below");
+
+
+        // dialogBuilder.setMessage("Enter text below");
+        val b = dialogBuilder.create()
+        dialogView.setOnClickListener {
+            b.cancel()
+        }
+        b.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        b.setCancelable(true)
+        b.show()
+    }
+
     @SuppressLint("SetTextI18n")
-    private fun showOfferDialog() {
+    private fun showOfferDialog(sid: Int, cc: String,newAt:String) {
         val progressDialog = nowShowingList[0].prs
         val dialog = Dialog(context)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -135,32 +402,235 @@ class BookingShowsTimeAdapter(
 
         offerPrice.paintFlags = offerPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
 
-        val offerPriceText = (progressDialog[0].p.toDouble().roundToInt() + progressDialog[0].bv.toDouble().roundToInt())
+        val offerPriceText =
+            (progressDialog[0].p.toDouble().roundToInt() + progressDialog[0].bv.toDouble()
+                .roundToInt())
         ticket.text = context.getString(R.string.currency) + progressDialog[0].p
         food.text = context.getString(R.string.currency) + progressDialog[0].bv
         offerPrice.text = context.getString(R.string.currency) + offerPriceText
         totalPrice.text = context.getString(R.string.currency) + progressDialog[0].bp
-        val discountPrice=offerPriceText - progressDialog[0].bp.toInt()
+        val discountPrice = offerPriceText - progressDialog[0].bp.toInt()
 
 
         skip.setOnClickListener {
             dialog.dismiss()
+            sidText = sid.toString()
+            ccText = cc
             val intent = Intent(context, SeatLayoutActivity::class.java)
             intent.putExtra("clickPosition", rowIndex.toString())
             intent.putExtra("shows", nowShowingList)
             intent.putExtra("skip", "true")
-            context.startActivity(intent)
+            if (adlt) {
+                val dialog = OptionDialog(context,
+                    R.mipmap.ic_launcher,
+                    R.string.app_name,
+                    context.getString(R.string.adult_msz),
+                    positiveBtnText = R.string.yes,
+                    negativeBtnText = R.string.cancel,
+                    positiveClick = {
+                        if (at != "") {
+                            val dialog = OptionDialog(context,
+                                R.mipmap.ic_launcher,
+                                R.string.app_name,
+                                at,
+                                positiveBtnText = R.string.yes,
+                                negativeBtnText = R.string.cancel,
+                                positiveClick = {
+                                    if (newAt != "") {
+                                        val dialog = OptionDialog(context,
+                                            R.mipmap.ic_launcher,
+                                            R.string.app_name,
+                                            this.at,
+                                            positiveBtnText = R.string.yes,
+                                            negativeBtnText = R.string.cancel,
+                                            positiveClick = {
+                                                context.startActivity(intent)
+                                            },
+                                            negativeClick = {})
+                                        dialog.show()
+                                    } else {
+                                        context.startActivity(intent)
+                                    }
+                                },
+                                negativeClick = {})
+                            dialog.show()
+                        } else {
+                            if (newAt != "") {
+                                val dialog = OptionDialog(context,
+                                    R.mipmap.ic_launcher,
+                                    R.string.app_name,
+                                    this.at,
+                                    positiveBtnText = R.string.yes,
+                                    negativeBtnText = R.string.cancel,
+                                    positiveClick = {
+                                        context.startActivity(intent)
+                                    },
+                                    negativeClick = {})
+                                dialog.show()
+                            } else {
+                                context.startActivity(intent)
+                            }
+                        }
+                    },
+                    negativeClick = {})
+                dialog.show()
+
+            } else {
+                if (at != "") {
+                    val dialog = OptionDialog(context,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        at,
+                        positiveBtnText = R.string.yes,
+                        negativeBtnText = R.string.cancel,
+                        positiveClick = {
+                            if (newAt != "") {
+                                val dialog = OptionDialog(context,
+                                    R.mipmap.ic_launcher,
+                                    R.string.app_name,
+                                    this.at,
+                                    positiveBtnText = R.string.yes,
+                                    negativeBtnText = R.string.cancel,
+                                    positiveClick = {
+                                        context.startActivity(intent)
+                                    },
+                                    negativeClick = {})
+                                dialog.show()
+                            } else {
+                                context.startActivity(intent)
+                            }
+                        },
+                        negativeClick = {})
+                    dialog.show()
+                } else {
+                    if (newAt != "") {
+                        val dialog = OptionDialog(context,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            this.at,
+                            positiveBtnText = R.string.yes,
+                            negativeBtnText = R.string.cancel,
+                            positiveClick = {
+                                context.startActivity(intent)
+                            },
+                            negativeClick = {})
+                        dialog.show()
+                    } else {
+                        context.startActivity(intent)
+                    }
+                }
+            }
 
         }
 
         applyOffer.setOnClickListener {
             dialog.dismiss()
+            sidText = sid.toString()
+            ccText = cc
             val intent = Intent(context, SeatLayoutActivity::class.java)
             intent.putExtra("clickPosition", rowIndex.toString())
             intent.putExtra("shows", nowShowingList)
-            intent.putExtra("discountPrice", discountPrice.toString())
-            intent.putExtra("skip", "false")
-            context.startActivity(intent)
+            intent.putExtra("skip", "true")
+            if (adlt) {
+                val dialog = OptionDialog(context,
+                    R.mipmap.ic_launcher,
+                    R.string.app_name,
+                    context.getString(R.string.adult_msz),
+                    positiveBtnText = R.string.yes,
+                    negativeBtnText = R.string.cancel,
+                    positiveClick = {
+                        if (at != "") {
+                            val dialog = OptionDialog(context,
+                                R.mipmap.ic_launcher,
+                                R.string.app_name,
+                                at,
+                                positiveBtnText = R.string.yes,
+                                negativeBtnText = R.string.cancel,
+                                positiveClick = {
+                                    if (this.at != "") {
+                                        val dialog = OptionDialog(context,
+                                            R.mipmap.ic_launcher,
+                                            R.string.app_name,
+                                            this.at,
+                                            positiveBtnText = R.string.yes,
+                                            negativeBtnText = R.string.cancel,
+                                            positiveClick = {
+                                                context.startActivity(intent)
+                                            },
+                                            negativeClick = {})
+                                        dialog.show()
+                                    } else {
+                                        context.startActivity(intent)
+                                    }
+                                },
+                                negativeClick = {})
+                            dialog.show()
+                        } else {
+                            if (this.at != "") {
+                                val dialog = OptionDialog(context,
+                                    R.mipmap.ic_launcher,
+                                    R.string.app_name,
+                                    this.at,
+                                    positiveBtnText = R.string.yes,
+                                    negativeBtnText = R.string.cancel,
+                                    positiveClick = {
+                                        context.startActivity(intent)
+                                    },
+                                    negativeClick = {})
+                                dialog.show()
+                            } else {
+                                context.startActivity(intent)
+                            }
+                        }
+                    },
+                    negativeClick = {})
+                dialog.show()
+
+            } else {
+                if (at != "") {
+                    val dialog = OptionDialog(context,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        at,
+                        positiveBtnText = R.string.yes,
+                        negativeBtnText = R.string.cancel,
+                        positiveClick = {
+                            if (this.at != "") {
+                                val dialog = OptionDialog(context,
+                                    R.mipmap.ic_launcher,
+                                    R.string.app_name,
+                                    this.at,
+                                    positiveBtnText = R.string.yes,
+                                    negativeBtnText = R.string.cancel,
+                                    positiveClick = {
+                                        context.startActivity(intent)
+                                    },
+                                    negativeClick = {})
+                                dialog.show()
+                            } else {
+                                context.startActivity(intent)
+                            }
+                        },
+                        negativeClick = {})
+                    dialog.show()
+                } else {
+                    if (this.at != "") {
+                        val dialog = OptionDialog(context,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            this.at,
+                            positiveBtnText = R.string.yes,
+                            negativeBtnText = R.string.cancel,
+                            positiveClick = {
+                                context.startActivity(intent)
+                            },
+                            negativeClick = {})
+                        dialog.show()
+                    } else {
+                        context.startActivity(intent)
+                    }
+                }
+            }
         }
     }
 

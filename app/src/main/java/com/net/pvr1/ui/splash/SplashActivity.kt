@@ -150,7 +150,6 @@ class SplashActivity : AppCompatActivity() {
         authViewModel.liveDataScope.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
-                    loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         retrieveData(it.data.output)
                     } else {
@@ -166,7 +165,6 @@ class SplashActivity : AppCompatActivity() {
                     }
                 }
                 is NetworkResult.Error -> {
-                    loader?.dismiss()
                     val dialog = OptionDialog(this,
                         R.mipmap.ic_launcher,
                         R.string.app_name,
@@ -178,8 +176,6 @@ class SplashActivity : AppCompatActivity() {
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleaseWait)
-                    loader?.show(this.supportFragmentManager, null)
                 }
             }
         }
