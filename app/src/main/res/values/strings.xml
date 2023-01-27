@@ -88,6 +88,7 @@
     <string name="gift_cards">Gift Cards</string>
     <string name="scan_qr">Scan QR</string>
     <string name="merchandise">Merchandise</string>
+    <string name="macmerise">Macmerise</string>
     <string name="experience">Experience</string>
     <string name="pvr_cares">PVR Cares</string>
     <string name="movies">Movies</string>
@@ -648,7 +649,6 @@
     <string name="logoutBack">Your booking is not yet complete.</string>
     <string name="show_end_time_approx">Show end time approx</string>
     <string name="nicelyDone">Nicely done!</string>
-    <string name="adult_msz">This movie has been rated \'A\' and is for audiences above the age of 18. Please carry a valid photo ID/age proof to the theatre. No refund of tickets once bought.</string>
     <string name="extend">Extend</string>
-
+    <string name="sessionExpired">Session Expired</string>
 </resources>

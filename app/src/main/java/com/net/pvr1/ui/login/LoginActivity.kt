@@ -60,11 +60,6 @@ class LoginActivity : AppCompatActivity() {
         val intent: PendingIntent = Credentials.getClient(this).getHintPickerIntent(hintRequest)
         try {
             startIntentSenderForResult(intent.intentSender, mobileRequest, null, 0, 0, 0, Bundle())
-//            resultLauncher.launch(intent.intentSender, mobileRequest, null, 0, 0, 0, Bundle())
-
-//            startIntentSenderForResult(
-//                intent.intentSender, mobileRequest, null, 0, 0, 0, Bundle()
-//            )
         } catch (e: IntentSender.SendIntentException) {
             e.printStackTrace()
         }
@@ -208,32 +203,6 @@ class LoginActivity : AppCompatActivity() {
         intent.putExtra("newUser", output?.nu)
         startActivity(intent)
     }
-
-
-
-
-//    @SuppressLint("SetTextI18n")
-//    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//        if (result.resultCode == Activity.RESULT_OK) {
-//            // There are no request codes
-//            val data: Intent? = result.data
-//            val cred: Credential = data?.getParcelableExtra(Credential.EXTRA_KEY)!!
-//            try {
-//                if (!TextUtils.isEmpty(cred.id) && cred.id.length > 4) {
-//                    if (cred.id.startsWith("+91")) {
-//                        binding?.mobileNumber?.setText("" + cred.id.substring(3, cred.id.length))
-//                    } else {
-//                        binding?.mobileNumber?.setText("" + cred.id)
-//                    }
-//                }
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//            }
-//        }else if (result.resultCode == mobileRequest && result.resultCode == CredentialsApi.ACTIVITY_RESULT_NO_HINTS_AVAILABLE) {
-//            // *** No phone numbers available ***
-//            printLog("numberNotFound---->")
-//        }
-//    }
 
 
 //    @SuppressLint("SetTextI18n")

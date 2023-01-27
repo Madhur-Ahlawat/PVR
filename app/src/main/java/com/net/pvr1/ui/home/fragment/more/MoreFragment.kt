@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.base.Splitter
 import com.net.pvr1.R
 import com.net.pvr1.databinding.FragmentMoreBinding
 import com.net.pvr1.di.preference.PreferenceManager
@@ -44,9 +45,11 @@ import com.net.pvr1.ui.watchList.WatchListActivity
 import com.net.pvr1.ui.webView.WebViewActivity
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.ProfileResponseConst
+import com.net.pvr1.utils.Constant.Companion.newTag
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.internal.and
 import java.security.MessageDigest
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -88,7 +91,6 @@ class MoreFragment : Fragment() {
     }
 
     private fun manageFunctions() {
-
         //Manage ui
         binding?.tvLoginButton?.textView5?.text = getString(R.string.login)
 
@@ -97,6 +99,7 @@ class MoreFragment : Fragment() {
         whatsappOptStatus()
         //profileResponse
         profileResponse()
+        newTagShow()
         //mange privilege show hide
         if (preferences.getIsLogin()) {
             binding?.whatsappUi?.show()
@@ -138,6 +141,44 @@ class MoreFragment : Fragment() {
             binding?.loginUi?.hide()
             binding?.privilegeLoginUi?.hide()
             binding?.privilegeLogOutUi?.show()
+        }
+    }
+
+    private fun newTagShow() {
+        val str = newTag
+        val list = Splitter.on(",").splitToList(str)
+        for (i in 0 until list.size) {
+            if (list[i].contains("Experience")) {
+                binding?.logout?.includeExperience?.cardView19?.show()
+
+            } else if (list[i].contains("PVR Cares")) {
+                binding?.logout?.includePvrCare?.cardView19?.show()
+
+            } else if (list[i].contains("Merchandise")) {
+                binding?.logout?.includeMerchandise?.cardView19?.show()
+
+            } else if (list[i].contains("Gift Cards")) {
+                binding?.logout?.includeGiftCard?.cardView19?.show()
+
+            } else if (list[i].contains("Offers")) {
+                binding?.logout?.includeOffers?.cardView19?.show()
+
+            } else if (list[i].contains("My Bookings")) {
+                binding?.login?.includeMyBooking?.cardView19?.show()
+
+            } else if (list[i].contains("Booking Retrieval")) {
+                binding?.login?.includeBookingRetrieval?.cardView19?.show()
+
+            } else if (list[i].contains("Movie Alerts")) {
+                binding?.login?.includeMovieAlert?.cardView19?.show()
+
+            } else if (list[i].contains("My Preferences")) {
+                binding?.login?.includeMyPreference?.cardView19?.show()
+
+            } else if (list[i].contains("Macmerise")) {
+                binding?.logout?.includeMacmerise?.cardView19?.show()
+
+            }
         }
     }
 
@@ -185,6 +226,15 @@ class MoreFragment : Fragment() {
             startActivity(intent1)
         }
 
+        // Macmerise
+        binding?.logout?.constraintLayout167?.setOnClickListener {
+            val intent1 = Intent(requireContext(), WebViewActivity::class.java)
+            intent1.putExtra("from", "more")
+            intent1.putExtra("title", "Macmerise")
+            intent1.putExtra("getUrl", Constant.macmerise)
+            startActivity(intent1)
+        }
+
         // PVR care
         binding?.logout?.constraintLayout75?.setOnClickListener {
             val intent1 = Intent(requireContext(), WebViewActivity::class.java)
@@ -229,6 +279,7 @@ class MoreFragment : Fragment() {
         binding?.tvSignOut?.setOnClickListener {
             logOut()
         }
+
         //Contact Us
         binding?.tvContact?.setOnClickListener {
             val intent = Intent(requireContext(), ContactUsActivity::class.java)
@@ -279,9 +330,7 @@ class MoreFragment : Fragment() {
         val ivImage = dialogQR.findViewById<View>(R.id.ivImage) as ImageView
         val tvCross = dialogQR.findViewById<View>(R.id.tvCross) as ImageView
 
-        Glide.with(requireActivity())
-            .load(qrCode)
-            .into(ivImage)
+        Glide.with(requireActivity()).load(qrCode).into(ivImage)
 
         tvUserName.text = preferences.getUserName()
 
@@ -332,6 +381,7 @@ class MoreFragment : Fragment() {
         }
         return sb.toString()
     }
+
     @Throws(Exception::class)
     fun getHashProfile(text: String): String {
         val mdText = MessageDigest.getInstance("SHA-512")
@@ -362,14 +412,14 @@ class MoreFragment : Fragment() {
         binding?.checkState?.isChecked = data
         binding?.checkState?.setOnCheckedChangeListener { _, isChecked ->
             timeStamp = (System.currentTimeMillis() / 1000).toString()
-            if (isChecked){
+            if (isChecked) {
                 authViewModel.whatsappOptIn(
                     preferences.getUserId(),
                     preferences.getToken().toString(),
                     timeStamp,
                     getHash(preferences.getUserId() + "|" + preferences.getToken() + "|" + "opt-in" + "|" + timeStamp)
                 )
-            }else{
+            } else {
                 authViewModel.whatsappOptOut(
                     preferences.getUserId(),
                     preferences.getToken().toString(),
@@ -425,9 +475,9 @@ class MoreFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun retrieveProfileData(output: ProfileResponse.Output) {
-        ProfileResponseConst=output
-        binding?.profileDetails?.textView206?.text=output.cd
-        binding?.profileDetails?.textView208?.text= output.percentage.toString() + "%"
+        ProfileResponseConst = output
+        binding?.profileDetails?.textView206?.text = output.cd
+        binding?.profileDetails?.textView208?.text = output.percentage.toString() + "%"
         binding?.profileDetails?.progressBar?.progress = output.percentage
 
         //profile Complete
@@ -435,7 +485,6 @@ class MoreFragment : Fragment() {
             openProfilePopup(output)
         }
     }
-
 
 
     private fun openProfilePopup(output: ProfileResponse.Output) {
@@ -453,7 +502,7 @@ class MoreFragment : Fragment() {
         mainView?.maxHeight = (displayRectangle.height() * 0.6f).toInt()
         val progressBar2 = dialog.findViewById<ProgressBar>(R.id.progressBar2)
         val profileRecycler = dialog.findViewById<RecyclerView>(R.id.profileList)
-        progressBar2?.progress =output.percentage
+        progressBar2?.progress = output.percentage
         val layoutManager = LinearLayoutManager(context)
         profileRecycler?.layoutManager = layoutManager
         val recyclerAdapter = ProfileCompleteAdapter(requireActivity(), profileList, output.params)

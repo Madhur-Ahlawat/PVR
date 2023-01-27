@@ -54,6 +54,7 @@ class Constant {
         const val donation = "https://www.pvrcinemas.com/pvrstatic/donation/tnc.html"
         const val pvrCare = " https://www.pvrcinemas.com/pvrstatic/pvr-care/index.html"
         const val merchandise = "https://pvr.macmerise.com/?user_agent=pvr"
+        const val macmerise = "https://pvr.macmerise.com/?user_agent=pvr"
         const val termsCondition = "https://www.pvrcinemas.com/pvrstatic/tnc.html"
         const val termsUse = "https://www.pvrcinemas.com/pvrstatic/pvr-terms.html"
         const val privacy = "https://www.pvrcinemas.com/pvrstatic/pvr-privacy.html"
@@ -61,6 +62,7 @@ class Constant {
         const val IS_LOGIN = "is_login"
         var DISPLAY = 1
         var TimerTime = 10000
+        var newTag = ""
 
         const val SUCCESS_RESULT = 1
         const val RECEVIER = "$PACKAGE_NAME.RECEVIER"

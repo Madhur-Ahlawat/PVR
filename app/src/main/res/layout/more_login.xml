@@ -86,6 +86,16 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
+            <include
+                android:id="@+id/includeMyBooking"
+                layout="@layout/new_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView226"
+                app:layout_constraintStart_toEndOf="@+id/textView226"
+                app:layout_constraintTop_toTopOf="@+id/textView226" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -139,6 +149,16 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
+            <include
+                android:id="@+id/includeBookingRetrieval"
+                layout="@layout/new_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView227"
+                app:layout_constraintStart_toEndOf="@+id/textView227"
+                app:layout_constraintTop_toTopOf="@+id/textView227" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -192,6 +212,16 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
+            <include
+                android:id="@+id/includeMovieAlert"
+                layout="@layout/new_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView228"
+                app:layout_constraintStart_toEndOf="@+id/textView228"
+                app:layout_constraintTop_toTopOf="@+id/textView228" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -247,6 +277,16 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
+            <include
+                android:id="@+id/includeMyPreference"
+                layout="@layout/new_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView229"
+                app:layout_constraintStart_toEndOf="@+id/textView229"
+                app:layout_constraintTop_toTopOf="@+id/textView229" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

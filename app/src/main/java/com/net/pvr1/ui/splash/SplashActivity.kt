@@ -29,6 +29,7 @@ import com.net.pvr1.ui.splash.onBoarding.LandingActivity
 import com.net.pvr1.ui.splash.response.SplashResponse
 import com.net.pvr1.ui.splash.viewModel.SplashViewModel
 import com.net.pvr1.utils.*
+import com.net.pvr1.utils.Constant.Companion.newTag
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -42,6 +43,7 @@ class SplashActivity : AppCompatActivity() {
     private var networkDialog: Dialog? = null
     private val authViewModel: SplashViewModel by viewModels()
     private var loader: LoaderDialog? = null
+
     private val MyPREFERENCES = "MyPrefs"
     private var sharedpreferences: SharedPreferences? = null
     private val OnBoardingClick = "Name"
@@ -183,6 +185,8 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun retrieveData(output: SplashResponse.Output) {
+        newTag= output.ntb
+
         preferences.saveString(Constant.SharedPreference.NT, output.nt)
         preferences.saveString(Constant.SharedPreference.NTBT, output.ntbn)
         preferences.saveString(Constant.SharedPreference.IS_HL, output.hl)
