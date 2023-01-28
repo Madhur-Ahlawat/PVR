@@ -115,7 +115,7 @@ class Constant {
         var PrivilegeHomeResponseConst: PrivilegeHomeResponse.Output? = null
         var ProfileResponseConst: ProfileResponse.Output? = null
         var PlaceHolder: HomeResponse.Output? = null
-        var DECIFORMAT = DecimalFormat("0.000")
+        var DECIFORMAT = DecimalFormat("0.00")
 
         // DisCount for payment
 

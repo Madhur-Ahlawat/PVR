@@ -8,42 +8,53 @@ import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
+import android.net.Uri
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import android.view.Window
+import android.os.Handler
+import android.text.TextUtils
+import android.view.*
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.*
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityFoodBinding
 import com.net.pvr1.databinding.FoodBottomAddFoodBinding
 import com.net.pvr1.di.preference.PreferenceManager
+import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.adapter.*
 import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.ui.food.viewModel.FoodViewModel
+import com.net.pvr1.ui.home.fragment.home.adapter.PromotionAdapter
+import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.summery.SummeryActivity
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr1.utils.Constant.Companion.BOOK_TYPE
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import jp.shts.android.storiesprogressview.StoriesProgressView
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
+
 
 @AndroidEntryPoint
 class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemClickListenerCity,
     CategoryAdapter.RecycleViewItemClickListenerCity,
     AllFoodAdapter.RecycleViewItemClickListenerCity,
     BottomFoodAdapter.RecycleViewItemClickListenerCity,
-    CartAdapter.RecycleViewItemClickListenerCity {
+    CartAdapter.RecycleViewItemClickListenerCity,PreviousFoodAdapter.RecycleViewItemClickListenerCity,
+    StoriesProgressView.StoriesListener {
 
     @Inject
     lateinit var preferences: PreferenceManager
@@ -60,6 +71,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     private var bestSellerFoodAdapter: BestSellerFoodAdapter? = null
     private var bottomFoodAdapter: BottomFoodAdapter? = null
     private var allFoodAdapter: AllFoodAdapter? = null
+    private var previousFoodAdapter: PreviousFoodAdapter? = null
 
     private var masterId: String? = "0"
     private var categoryName: String = "ALL"
@@ -73,6 +85,15 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
 
     //internet Check
     private var broadcastReceiver: BroadcastReceiver? = null
+
+    // story board
+    private var bannerShow = 0
+    private var pressTime = 0L
+    private var limit = 500L
+    private var counterStory = 0
+    private var currentPage = 1
+    private var bannerModelsMain: java.util.ArrayList<BookingResponse.Output.Pu> =
+        java.util.ArrayList<BookingResponse.Output.Pu>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -117,7 +138,6 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         authViewModel.userResponseLiveData.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
-                    loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         foodLimit = it.data.output.aqt
                         foodResponse = it.data.output
@@ -127,6 +147,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
                         catFilter = it.data.output.mfl
                         catFilterBestSeller = it.data.output.bestsellers
                         retrieveData(it.data.output)
+                        loader?.dismiss()
 
                     } else {
                         //shimmer
@@ -140,6 +161,8 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
                             positiveClick = {},
                             negativeClick = {})
                         dialog.show()
+                        loader?.dismiss()
+
                     }
                 }
                 is NetworkResult.Error -> {
@@ -168,6 +191,17 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         //ui Data Load
         binding?.constraintLayout154?.show()
 
+        // Past Food
+
+        if (output.pastfoods.isNotEmpty()){
+            val list = getPastFoodList(output)
+            val layoutManagerCrew2 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+            previousFoodAdapter = PreviousFoodAdapter(list, this, this,"past")
+            binding?.previousFoodList?.adapter = previousFoodAdapter
+            binding?.previousFoodList?.setHasFixedSize(true)
+            binding?.previousFoodList?.layoutManager = layoutManagerCrew2
+        }
+
         //Food
         val layoutManagerCrew = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
         bestSellerFoodAdapter = BestSellerFoodAdapter(output.bestsellers, this, this)
@@ -177,17 +211,52 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
 
         //Category
         val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-        val categoryAdapter = CategoryAdapter(foodResponseCategory, this, this)
+        val categoryAdapter = CategoryAdapter(foodResponseCategory, this, this, binding?.recyclerView20!!)
         binding?.recyclerView20?.layoutManager = layoutManager
         binding?.recyclerView20?.adapter = categoryAdapter
         binding?.recyclerView20?.setHasFixedSize(true)
 
         //All Food
         val layoutManagerCrew2 = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
-        allFoodAdapter = AllFoodAdapter(getFilterAllMfl(true, menuType, "ALL"), this, this)
+        allFoodAdapter = AllFoodAdapter(getFilterAllMfl(true, menuType, "ALL"), this, this, "")
         binding?.recyclerView21?.adapter = allFoodAdapter
         binding?.recyclerView21?.setHasFixedSize(true)
         binding?.recyclerView21?.layoutManager = layoutManagerCrew2
+
+        // Food Banners
+        if (output.banners.isNotEmpty()){
+            binding?.ppBanners?.show()
+            val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            binding?.pramotionBanner?.layoutManager = layoutManager
+            val adapter = FoodBannersAdapter(this, output.banners)
+            binding?.pramotionBanner?.adapter = adapter
+        }else{
+            binding?.ppBanners?.hide()
+        }
+        // Food PlaceHolders
+        if (output.ph.isNotEmpty()){
+            binding?.constraintLayout123?.show()
+            updatePH(output.ph)
+        }else{
+            binding?.constraintLayout123?.hide()
+        }
+        // Food Popups
+        if (output.pu.isNotEmpty()){
+            binding?.rlBanner?.show()
+            initBanner(output.pu)
+        }else{
+            binding?.rlBanner?.hide()
+        }
+    }
+
+    private fun getPastFoodList(output: FoodResponse.Output): ArrayList<FoodResponse.Output.Mfl> {
+        var list = ArrayList<FoodResponse.Output.Mfl>()
+        for (data in output.mfl){
+            if (output.pastfoods.contains(data.mid.toString())){
+                list.add(data)
+            }
+        }
+        return list
     }
 
     private fun movedNext() {
@@ -223,7 +292,12 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
                 val layoutManagerCrew2 =
                     GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
                 allFoodAdapter =
-                    AllFoodAdapter(getFilterAllMfl(true, menuType, categoryName), this, this)
+                    AllFoodAdapter(
+                        getFilterAllMfl(true, menuType, categoryName),
+                        this,
+                        this,
+                        ""
+                    )
                 binding?.recyclerView21?.adapter = allFoodAdapter
                 binding?.recyclerView21?.setHasFixedSize(true)
                 binding?.recyclerView21?.layoutManager = layoutManagerCrew2
@@ -245,7 +319,12 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
                     val layoutManagerCrew2 =
                         GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
                     allFoodAdapter =
-                        AllFoodAdapter(getFilterAllMfl(true, menuType, categoryName), this, this)
+                        AllFoodAdapter(
+                            getFilterAllMfl(true, menuType, categoryName),
+                            this,
+                            this,
+                            ""
+                        )
                     binding?.recyclerView21?.adapter = allFoodAdapter
                     binding?.recyclerView21?.setHasFixedSize(true)
                     binding?.recyclerView21?.layoutManager = layoutManagerCrew2
@@ -275,7 +354,12 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
                 val layoutManagerCrew2 =
                     GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
                 allFoodAdapter =
-                    AllFoodAdapter(getFilterAllMfl(true, menuType, categoryName), this, this)
+                    AllFoodAdapter(
+                        getFilterAllMfl(true, menuType, categoryName),
+                        this,
+                        this,
+                        ""
+                    )
                 binding?.recyclerView21?.adapter = allFoodAdapter
                 binding?.recyclerView21?.setHasFixedSize(true)
                 binding?.recyclerView21?.layoutManager = layoutManagerCrew2
@@ -299,7 +383,12 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
                     val layoutManagerCrew2 =
                         GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
                     allFoodAdapter =
-                        AllFoodAdapter(getFilterAllMfl(true, menuType, categoryName), this, this)
+                        AllFoodAdapter(
+                            getFilterAllMfl(true, menuType, categoryName),
+                            this,
+                            this,
+                            ""
+                        )
                     binding?.recyclerView21?.adapter = allFoodAdapter
                     binding?.recyclerView21?.setHasFixedSize(true)
                     binding?.recyclerView21?.layoutManager = layoutManagerCrew2
@@ -327,14 +416,24 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         if (comingSoonItem.name == "ALL") {
             val layoutManagerCrew = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
             allFoodAdapter =
-                AllFoodAdapter(getFilterAllMfl(true, menuType, comingSoonItem.name), this, this)
+                AllFoodAdapter(
+                    getFilterAllMfl(true, menuType, comingSoonItem.name),
+                    this,
+                    this,
+                    ""
+                )
             binding?.recyclerView21?.adapter = allFoodAdapter
             binding?.recyclerView21?.setHasFixedSize(true)
             binding?.recyclerView21?.layoutManager = layoutManagerCrew
         } else {
             val layoutManagerCrew = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
             allFoodAdapter =
-                AllFoodAdapter(getFilterAllMfl(true, menuType, comingSoonItem.name), this, this)
+                AllFoodAdapter(
+                    getFilterAllMfl(true, menuType, comingSoonItem.name),
+                    this,
+                    this,
+                    ""
+                )
             binding?.recyclerView21?.adapter = allFoodAdapter
             binding?.recyclerView21?.setHasFixedSize(true)
             binding?.recyclerView21?.layoutManager = layoutManagerCrew
@@ -831,20 +930,38 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         bestSellerFoodAdapter?.notifyDataSetChanged()
         bottomFoodAdapter?.notifyDataSetChanged()
         allFoodAdapter?.notifyDataSetChanged()
-
+        previousFoodAdapter?.notifyDataSetChanged()
+        val newLayoutParams:ConstraintLayout.LayoutParams = binding?.constraintLayout154?.layoutParams as ConstraintLayout.LayoutParams
+        newLayoutParams.topMargin = 0
+        newLayoutParams.leftMargin = 0
+        newLayoutParams.rightMargin = 0
+        binding?.constraintLayout154?.layoutParams = newLayoutParams
         if (cartModel.isEmpty()) {
             binding?.constraintLayout30?.hide()
+            newLayoutParams.topMargin = 0
+            newLayoutParams.leftMargin = 0
+            newLayoutParams.rightMargin = 0
+            newLayoutParams.bottomMargin = 0
+            binding?.constraintLayout154?.layoutParams = newLayoutParams
         } else {
+            newLayoutParams.topMargin = 0
+            newLayoutParams.leftMargin = 0
+            newLayoutParams.rightMargin = 0
+            newLayoutParams.bottomMargin = Constant().convertDpToPixel(160f,this)
+            binding?.constraintLayout154?.layoutParams = newLayoutParams
             binding?.constraintLayout30?.show()
-            binding?.imageView74?.setOnClickListener {
-                cartShow = if (cartShow) {
-                    binding?.imageView74?.setImageDrawable(this.getDrawable(R.drawable.arrow_up))
+            binding?.textView149?.setOnClickListener {
+                cartShow = if (!cartShow) {
+                    binding?.textView149?.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.food_arrow_down,0)
                     binding?.constraintLayout112?.show()
-                    false
-                } else {
-                    binding?.imageView74?.setImageDrawable(this.getDrawable(R.drawable.arrow_down))
-                    binding?.constraintLayout112?.hide()
+                    binding?.constraintLayout30?.setBackgroundColor(getColor(R.color.transparent2))
                     true
+                } else {
+                    binding?.textView149?.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.food_arrow_up,0)
+                    binding?.constraintLayout112?.hide()
+                    binding?.constraintLayout30?.setBackgroundColor(getColor(R.color.transparent1))
+
+                    false
                 }
             }
 
@@ -886,7 +1003,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     private fun updateCartMainList(recyclerData: CartModel) {
         for (item in foodResponse!!.bestsellers) {
             if (item.cid == recyclerData.id) {
-                if (recyclerData.id == item.cid) {
+                if (recyclerData.id == item.r[0].id) {
                     item.qt = recyclerData.quantity
                 }
             }
@@ -942,8 +1059,10 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     }
 
     private fun updateCategoryItemExist(foodItem: FoodResponse.Output.Mfl): Boolean {
+        println("categoryFoodMinus123--->$foodItem------$cartModel")
+
         for (item in cartModel) {
-            if (item.id == foodItem.cid) {
+            if (item.id == foodItem.r[0].id) {
                 return true
             }
         }
@@ -1229,4 +1348,224 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
             broadcastReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         )
     }
+
+
+    //Popup Banners
+    private fun initBanner(bannerModels: java.util.ArrayList<BookingResponse.Output.Pu>) {
+        bannerShow += 1
+        bannerModelsMain = bannerModels
+        if (bannerModels.isNotEmpty()) {
+            binding?.rlBanner?.show()
+            binding?.bannerLayout?.includeStoryLayout?.stories?.setStoriesCount(bannerModels.size) // <- set stories
+            binding?.bannerLayout?.includeStoryLayout?.stories?.setStoryDuration(5000L) // <- set a story duration
+            binding?.bannerLayout?.includeStoryLayout?.stories?.setStoriesListener(this) // <- set listener
+            binding?.bannerLayout?.includeStoryLayout?.stories?.startStories() // <- start progress
+            counterStory = 0
+            if (!TextUtils.isEmpty(bannerModels[counterStory].i)) {
+                Picasso.get().load(bannerModels[counterStory].i)
+                    .into(binding?.bannerLayout?.includeStoryLayout?.ivBanner!!, object : Callback {
+                        override fun onSuccess() {
+                            binding?.rlBanner?.show()
+                            //  storiesProgressView.startStories(); // <- start progress
+                        }
+
+                        override fun onError(e: Exception?) {}
+                    })
+            }
+
+            binding?.bannerLayout?.includeStoryLayout?.reverse?.setOnClickListener { binding?.bannerLayout?.includeStoryLayout?.stories?.reverse() }
+            binding?.bannerLayout?.includeStoryLayout?.reverse?.setOnTouchListener(onTouchListener)
+            showButton(bannerModels[0])
+            binding?.bannerLayout?.includeStoryLayout?.skip?.setOnClickListener { binding?.bannerLayout?.includeStoryLayout?.stories?.skip() }
+            binding?.bannerLayout?.includeStoryLayout?.skip?.setOnTouchListener(onTouchListener)
+            binding?.bannerLayout?.tvButton?.setOnClickListener {
+                binding?.rlBanner?.hide()
+                if (bannerModels.size > 0 && bannerModels[counterStory].type.equals(
+                        "image", ignoreCase = true
+                    )
+//                        .equalsIgnoreCase("image")
+                ) {
+                    if (bannerModels[counterStory].redirectView.equals(
+                            "DEEPLINK", ignoreCase = true
+                        )
+//                        equalsIgnoreCase("DEEPLINK")
+                    ) {
+                        if (bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)) {
+                            if (bannerModels[counterStory].redirect_url.lowercase(Locale.ROOT)
+                                    .contains("/loyalty/home")
+                            ) {
+//                                if (context is PCLandingActivity) (context as PCLandingActivity).PriviegeFragment(
+//                                    "C"
+//                                )
+                            } else {
+//                                .replaceAll("https", "app").replaceAll("http", "app")
+                                val intent = Intent(
+                                    Intent.ACTION_VIEW, Uri.parse(
+                                        bannerModels[counterStory].redirect_url.replace(
+                                            "https", "app"
+                                        )
+                                    )
+                                )
+                                startActivity(intent)
+                            }
+                        }
+                    } else if (bannerModels[counterStory].redirect_url.equals(
+                            "INAPP", ignoreCase = true
+                        )
+                    ) {
+                        if (bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)
+
+                        ) {
+//                            val intent = Intent(context, PrivacyActivity::class.java)
+//                            intent.putExtra("url", bannerModels[counterStory].getRedirect_url())
+//                            intent.putExtra(PCConstants.IS_FROM, 2000)
+//                            intent.putExtra("title", bannerModels[counterStory].getName())
+//                            startActivity(intent)
+                        }
+                    } else if (bannerModels[counterStory].redirect_url.equals(
+                            "WEB", ignoreCase = true
+                        )
+//                            .equalsIgnoreCase("WEB")
+                    ) {
+                        if (bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)
+//                                .equalsIgnoreCase("")
+                        ) {
+//                            val intent = Intent(
+//                                Intent.ACTION_VIEW,
+//                                Uri.parse(bannerModels[counterStory].redirect_url)
+//                                        activity.startActivity(intent)
+                        }
+                    }
+                }
+            }
+            (this.findViewById(R.id.bannerLayout) as RelativeLayout).show()
+
+            binding?.bannerLayout?.ivPlay?.setOnClickListener {
+                binding?.rlBanner?.hide()
+                if (bannerModels.size > 0 && bannerModels[counterStory].type.equals(
+                        "video", ignoreCase = true
+                    )
+                ) {
+
+                }
+            }
+
+            binding?.bannerLayout?.ivCross?.setOnClickListener {
+                binding?.rlBanner?.hide()
+            }
+
+        } else {
+            binding?.rlBanner?.hide()
+        }
+    }
+
+
+    private fun showButton(bannerModel: BookingResponse.Output.Pu) {
+        if (bannerModel.type.contains("video", ignoreCase = true)) {
+            binding?.bannerLayout?.ivPlay?.show()
+            binding?.bannerLayout?.tvButton?.hide()
+        } else if (bannerModel.type.contains(
+                "image", ignoreCase = true
+            ) && bannerModel.redirect_url.equals("", ignoreCase = true)
+        ) {
+            binding?.bannerLayout?.ivPlay?.hide()
+            binding?.bannerLayout?.tvButton?.text = bannerModel.buttonText
+            binding?.bannerLayout?.tvButton?.show()
+        } else {
+            binding?.bannerLayout?.ivPlay?.hide()
+            binding?.bannerLayout?.tvButton?.hide()
+        }
+
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private val onTouchListener = View.OnTouchListener { _, event ->
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                pressTime = System.currentTimeMillis()
+                binding?.bannerLayout?.includeStoryLayout?.stories?.pause()
+                return@OnTouchListener false
+            }
+            MotionEvent.ACTION_UP -> {
+                val now = System.currentTimeMillis()
+                binding?.bannerLayout?.includeStoryLayout?.stories?.resume()
+                return@OnTouchListener limit < now - pressTime
+            }
+        }
+        false
+    }
+
+    override fun onNext() {
+        try {
+            if (!TextUtils.isEmpty(bannerModelsMain[counterStory].i)) {
+                ++counterStory
+                showButton(bannerModelsMain[counterStory])
+                binding?.bannerLayout?.includeStoryLayout?.ivBanner?.let {
+                    Glide.with(this).load(bannerModelsMain[counterStory].i).into(it)
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun onPrev() {
+        if (counterStory - 1 < 0) return
+        if (!TextUtils.isEmpty(bannerModelsMain[counterStory].i)) {
+            --counterStory
+            showButton(bannerModelsMain[counterStory])
+            binding?.bannerLayout?.includeStoryLayout?.ivBanner?.let {
+                Glide.with(this).load(bannerModelsMain[counterStory].i).into(it)
+            }
+        }
+    }
+
+    override fun onComplete() {
+        binding?.bannerLayout?.includeStoryLayout?.stories?.destroy()
+        binding?.bannerLayout?.includeStoryLayout?.stories?.startStories()
+        currentPage = 0
+        binding?.rlBanner?.hide()
+    }
+
+    // Place Holder
+    private fun updatePH(phd: java.util.ArrayList<HomeResponse.Ph>) {
+        if (phd != null && phd.size > 0) {
+            binding?.include41?.placeHolderView?.show()
+            val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            val snapHelper: SnapHelper = PagerSnapHelper()
+            binding?.include41?.recyclerPromotion?.layoutManager = layoutManager
+            binding?.include41?.recyclerPromotion?.onFlingListener = null
+            snapHelper.attachToRecyclerView(binding?.include41?.recyclerPromotion!!)
+            binding?.include41?.recyclerPromotion?.layoutManager = layoutManager
+            val adapter = PromotionAdapter(this, phd)
+            binding?.include41?.recyclerPromotion?.adapter = adapter
+            if (phd.size > 1) {
+                val speedScroll = 5000
+                val handler = Handler()
+                val runnable: Runnable = object : Runnable {
+                    var count = 0
+                    var flag = true
+                    override fun run() {
+                        if (count < adapter.itemCount) {
+                            if (count == adapter.itemCount - 1) {
+                                flag = false
+                            } else if (count == 0) {
+                                flag = true
+                            }
+                            if (flag) count++ else count--
+                            binding?.include41?.recyclerPromotion?.smoothScrollToPosition(
+                                count
+                            )
+                            handler.postDelayed(this, speedScroll.toLong())
+                        }
+                    }
+                }
+                handler.postDelayed(runnable, speedScroll.toLong())
+            }
+        } else {
+            binding?.include41?.placeHolderView?.hide()
+        }
+    }
+
+
 }

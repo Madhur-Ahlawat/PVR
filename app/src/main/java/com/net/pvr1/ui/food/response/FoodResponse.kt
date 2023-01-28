@@ -1,5 +1,7 @@
 package com.net.pvr1.ui.food.response
 
+import com.net.pvr1.ui.bookingSession.response.BookingResponse
+import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import java.io.Serializable
 
 data class FoodResponse(
@@ -12,7 +14,7 @@ data class FoodResponse(
 ) : Serializable {
     data class Output(
         val aqt: Int,
-        val banners: List<Any>,
+        val banners: ArrayList<Banners>,
         val bestsellers: ArrayList<Bestseller>,
         val c: String,
         val cat: ArrayList<Cat>,
@@ -25,8 +27,8 @@ data class FoodResponse(
         val na: String,
         val nams: String,
         val pastfoods: String,
-        val ph: List<Any>,
-        val pu: List<Any>,
+        val ph: ArrayList<HomeResponse.Ph>,
+        val pu: ArrayList<BookingResponse.Output.Pu>,
         val ra: Boolean,
         val st: String,
         val typ: String
@@ -84,6 +86,20 @@ data class FoodResponse(
             var qt: Int,
             val r: ArrayList<Bestseller.R>,
             val veg: Boolean
+        ) : Serializable
+
+
+        data class Banners(
+            val categoryId: Int,
+            val name: String,
+            val categoryName: String,
+            val itemId: String,
+            val url: String,
+            val type: String,
+            val i: String,
+            var priority: Int,
+            var validto: Long,
+            var validfrom: Long
         ) : Serializable
     }
 }
