@@ -61,9 +61,11 @@ class Constant {
         const val termsUse = "https://www.pvrcinemas.com/pvrstatic/pvr-terms.html"
         const val privacy = "https://www.pvrcinemas.com/pvrstatic/pvr-privacy.html"
 
+        var EXTANDTIME = 0
+        var AVAILABETIME = 0
+
         const val IS_LOGIN = "is_login"
         var DISPLAY = 1
-        var TimerTime = 10000
         var newTag = ""
 
         const val SUCCESS_RESULT = 1
@@ -84,6 +86,7 @@ class Constant {
         const val USER_ID = "user_id"
         const val SEAT_AVAILABEL = 1
         var TRANSACTION_ID = "0"
+
         var DISCOUNT = 0.0
         var BOOKING_ID = "0"
         var CINEMA_ID = "0"
@@ -222,7 +225,7 @@ class Constant {
             }
         }
 
-         fun focusOnView(view: View,session_scrool: RecyclerView) {
+        fun focusOnView(view: View, session_scrool: RecyclerView) {
             Handler().post {
                 val vLeft = view.left
                 val vRight = view.right
@@ -526,12 +529,12 @@ class Constant {
 
             //static location
 
-            val RESULT_DATA_KEY: String =".RESULT_DATA_KEY"
-            val RECEVIER: String =   ".RECEVIER"
+            val RESULT_DATA_KEY: String = ".RESULT_DATA_KEY"
+            val RECEVIER: String = ".RECEVIER"
             val LOCATION_DATA_EXTRA: String = ".LOCATION_DATA_EXTRA"
             val ADDRESS: String = ".ADDRESS"
-            val LOCAITY: String =".LOCAITY"
-            val COUNTRY: String =".COUNTRY"
+            val LOCAITY: String = ".LOCAITY"
+            val COUNTRY: String = ".COUNTRY"
             val DISTRICT: String = ".DISTRICT"
             val POST_CODE: String = ".POST_CODE"
             val STATE: String = ".STATE"
@@ -587,7 +590,8 @@ class Constant {
     //Manage Location
     fun enableLocation(activity: Activity) {
         ActivityCompat.requestPermissions(
-            activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), requestLocation)
+            activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), requestLocation
+        )
         locationManager = activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         if (locationManager?.isProviderEnabled(LocationManager.GPS_PROVIDER) != true) {
             onGPS(activity)
@@ -628,8 +632,7 @@ class Constant {
 
             val criteria = Criteria()
             val bestProvider = locationManager?.getBestProvider(criteria, false)
-            val location: Location? =
-                locationManager?.getLastKnownLocation(bestProvider.toString())
+            val location: Location? = locationManager?.getLastKnownLocation(bestProvider.toString())
 
             if (location == null) {
 //                Toast.makeText(activity, "Location Not found", Toast.LENGTH_LONG).show()
@@ -640,7 +643,8 @@ class Constant {
                     latitude = user?.get(0)?.latitude as Double
                     longitude = user[0]?.longitude as Double
                     val geocoder = Geocoder(activity, Locale.getDefault())
-                    val addresses: List<Address>? = geocoder.getFromLocation(latitude!!, longitude!!, 1)
+                    val addresses: List<Address>? =
+                        geocoder.getFromLocation(latitude!!, longitude!!, 1)
                     val cityName: String? = addresses?.get(0)?.getAddressLine(0)
                     val stateName: String? = addresses?.get(0)?.getAddressLine(1)
                     val countryName: String? = addresses?.get(0)?.getAddressLine(2)
@@ -687,7 +691,7 @@ class Constant {
         }
     }
 
-//    shimer
+    //    shimer
     fun getData(textView: TextView?, textViewSecond: TextView?) {
         try {
             val titles = arrayOf(
@@ -725,7 +729,7 @@ class Constant {
             val randomNumber = r.nextInt(titles.size)
             textView?.text = Html.fromHtml(titles[randomNumber])
             if (textViewSecond != null && textViewSecond.text.toString()
-                    .equals(textView?.text.toString(),ignoreCase = true)
+                    .equals(textView?.text.toString(), ignoreCase = true)
             ) {
                 val randomNumber1 = r.nextInt(titles.size)
                 textView?.text = Html.fromHtml(titles[randomNumber1])
@@ -737,12 +741,15 @@ class Constant {
     }
 
     //AppBar Hide
-    fun appBarHide(activity: Activity){
+    fun appBarHide(activity: Activity) {
         activity.window.apply {
             clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            activity.window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            activity.window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
             statusBarColor = Color.TRANSPARENT
         }
     }
@@ -782,4 +789,9 @@ class Constant {
             const val IN_SEAT_DINING = "inSeatDining"
         }
     }
+
+    fun convertTime(timeString: Int): Int {
+        return timeString * 60 * 1000
+    }
+
 }

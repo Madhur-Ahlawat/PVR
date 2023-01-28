@@ -29,6 +29,8 @@ import com.net.pvr1.ui.login.response.LoginResponse
 import com.net.pvr1.ui.login.viewModel.LoginViewModel
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.BroadcastService
+import com.net.pvr1.utils.Constant.Companion.AVAILABETIME
+import com.net.pvr1.utils.Constant.Companion.EXTANDTIME
 import com.net.pvr1.utils.Constant.Companion.SUCCESS_CODE
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -49,6 +51,7 @@ class LoginActivity : AppCompatActivity() {
         val view = binding?.root
         setContentView(view)
         manageFunction()
+        printLog("et--->$EXTANDTIME----at---->$AVAILABETIME")
     }
 
     private fun manageFunction() {
@@ -298,10 +301,19 @@ class LoginActivity : AppCompatActivity() {
             val display = java.lang.String.format("%02d:%02d", minutes, second)
 
             binding?.include47?.textView394?.text=display + " " +getString(R.string.minRemaining)
+            println("timesssssss----->$millisUntilFinished------>$AVAILABETIME")
 
+            if (millisUntilFinished.toString() > AVAILABETIME.toString()){
+                binding?.constraintLayout168?.show()
+            }else{
+                binding?.constraintLayout168?.hide()
+
+            }
 
             binding?.include47?.textView395?.setOnClickListener {
-                Constant.TimerTime= (minutes * 60 + second).toInt()
+//                Constant.TimerTime= (minutes * 60 + second).toInt()
+                unregisterReceiver(br)
+
             }
 
         }

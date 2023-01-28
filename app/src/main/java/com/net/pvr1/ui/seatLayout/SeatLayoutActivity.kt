@@ -43,8 +43,10 @@ import com.net.pvr1.ui.seatLayout.viewModel.SeatLayoutViewModel
 import com.net.pvr1.ui.summery.SummeryActivity
 import com.net.pvr1.ui.webView.WebViewActivity
 import com.net.pvr1.utils.*
+import com.net.pvr1.utils.Constant.Companion.AVAILABETIME
 import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
+import com.net.pvr1.utils.Constant.Companion.EXTANDTIME
 import com.net.pvr1.utils.Constant.Companion.FOODENABLE
 import com.net.pvr1.utils.Constant.Companion.SELECTED_SEAT
 import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
@@ -420,6 +422,11 @@ class SeatLayoutActivity : AppCompatActivity(),
     //InitResponse
     private fun retrieverInitData(output: InitResponse.Output) {
         TRANSACTION_ID = output.transid
+        //extand time
+        EXTANDTIME= Constant().convertTime(output.et.toInt())
+        //AVAIL TIME
+        AVAILABETIME= Constant().convertTime(output.at.toInt())
+
         for (item in selectedSeats) {
             val price = item.priceCode
             val seatId = item.seatBookingId

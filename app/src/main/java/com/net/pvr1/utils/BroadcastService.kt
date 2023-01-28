@@ -4,7 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.CountDownTimer
 import android.os.IBinder
-import com.net.pvr1.utils.Constant.Companion.TimerTime
+import com.net.pvr1.utils.Constant.Companion.EXTANDTIME
 
 
 class BroadcastService : Service() {
@@ -15,7 +15,7 @@ class BroadcastService : Service() {
         super.onCreate()
 
 
-        cdt = object : CountDownTimer(TimerTime.toLong(), 1000) {
+        cdt = object : CountDownTimer(EXTANDTIME.toLong(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 bi.putExtra("countdown", millisUntilFinished)
                 sendBroadcast(bi)
@@ -44,7 +44,6 @@ class BroadcastService : Service() {
     }
 
     companion object {
-        private const val TAG = "BroadcastService"
         const val COUNTDOWN_BR = "your_package_name.countdown_br"
     }
 }

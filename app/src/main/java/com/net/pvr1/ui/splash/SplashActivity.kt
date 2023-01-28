@@ -55,6 +55,13 @@ class SplashActivity : AppCompatActivity() {
         val view = binding?.root
         setContentView(view)
 
+        //extandTime
+        Constant.EXTANDTIME = Constant().convertTime(2)
+
+        //AVAIL TIME
+        Constant.AVAILABETIME = Constant().convertTime(1)
+
+
         //OnBoarding Click Check
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE)
         clickOnBoarding = sharedpreferences?.getBoolean(OnBoardingClick, false)!!

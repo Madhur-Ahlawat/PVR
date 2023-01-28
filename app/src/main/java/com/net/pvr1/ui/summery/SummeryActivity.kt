@@ -1,7 +1,10 @@
 package com.net.pvr1.ui.summery
 
 import android.annotation.SuppressLint
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
@@ -87,7 +90,9 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         saveFood()
         setDonation()
         getShimmerData()
+        timerManage()
     }
+
 
     private fun getShimmerData() {
         Constant().getData(binding?.include38?.tvFirstText, binding?.include38?.tvSecondText)
@@ -534,4 +539,64 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         onBackPressedDispatcher.onBackPressed()
     }
 
+
+
+    //timerManage
+
+    private fun timerManage() {
+        startService(Intent(this, BroadcastService::class.java))
+    }
+
+    private val br: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+            updateGUI(intent) // or whatever method used to update your GUI fields
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        registerReceiver(br, IntentFilter(BroadcastService.COUNTDOWN_BR))
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unregisterReceiver(br)
+    }
+
+    override fun onStop() {
+        try {
+            unregisterReceiver(br)
+        } catch (e: java.lang.Exception) {
+            // Receiver was probably already stopped in onPause()
+        }
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        stopService(Intent(this, BroadcastService::class.java))
+        super.onDestroy()
+    }
+
+    @SuppressLint("DefaultLocale", "SetTextI18n")
+    private fun updateGUI(intent: Intent) {
+        if (intent.extras != null) {
+            val millisUntilFinished = intent.getLongExtra("countdown", 0)
+            val second = millisUntilFinished / 1000 % 60
+            val minutes = millisUntilFinished / (1000 * 60) % 60
+            val display = java.lang.String.format("%02d:%02d", minutes, second)
+
+
+
+            if (display== Constant.AVAILABETIME.toString()){
+                binding?.constrainLayout169?.show()
+            }
+
+            binding?.include48?.textView394?.text=display + " " +getString(R.string.minRemaining)
+
+            binding?.include48?.textView395?.setOnClickListener {
+//                Constant.TimerTime= (minutes * 60 + second).toInt()
+            }
+
+        }
+    }
 }
