@@ -91,7 +91,7 @@ class SeatLayoutActivity : AppCompatActivity(),
     private var selectedSeats = ArrayList<Seat>()
     private var noOfSeatsSelected = ArrayList<SeatTagData>()
     private var selectedSeatsBox: ArrayList<SeatHC>? = null
-    private var selectedSeats1: ArrayList<SeatHC>? = null
+    private var selectedSeats1 = ArrayList<SeatHC>()
 
     //Shows
     private var showsArray = ArrayList<Child.Sw.S>()
@@ -132,7 +132,6 @@ class SeatLayoutActivity : AppCompatActivity(),
             showsArray = intent.getSerializableExtra("shows") as ArrayList<Child.Sw.S>
             shows()
         }
-
 
 
         // manage offer
@@ -423,9 +422,9 @@ class SeatLayoutActivity : AppCompatActivity(),
     private fun retrieverInitData(output: InitResponse.Output) {
         TRANSACTION_ID = output.transid
         //extand time
-        EXTANDTIME= Constant().convertTime(output.et.toInt())
+        EXTANDTIME = Constant().convertTime(output.et.toInt())
         //AVAIL TIME
-        AVAILABETIME= Constant().convertTime(output.at.toInt())
+        AVAILABETIME = Constant().convertTime(output.at.toInt())
 
         for (item in selectedSeats) {
             val price = item.priceCode
@@ -809,7 +808,7 @@ class SeatLayoutActivity : AppCompatActivity(),
                     if (seat.st == 1) {
                         printLog("printSeat--->${seat.st}")
 
-                        buttonClicked(this, seatView, num1, num2)
+                        buttonClicked(seatView, num1, num2)
                     } else {
                         if (seat.st == 2) {
                             hcSeat = caCount1 > hcCount1
@@ -924,7 +923,7 @@ class SeatLayoutActivity : AppCompatActivity(),
 
                 } else if (seat.s == Constant.SEAT_SELECTED) {
                     if (seat.st == 1 && !flagHc) {
-                        removeHC(this)
+                        removeHC(this, seat, seatView)
                     } else {
                         seat.s = Constant.SEAT_AVAILABEL
                         when (seat.st) {
@@ -966,7 +965,7 @@ class SeatLayoutActivity : AppCompatActivity(),
                     }
                 } else if (seat.s == Constant.HATCHBACK) {
                     if (seat.st == 1) {
-                        buttonClicked(this, seatView, num1, num2)
+                        buttonClicked(seatView, num1, num2)
                     } else {
                         if (seat.st == 2) {
                             hcSeat = caCount1 > hcCount1
@@ -1078,7 +1077,7 @@ class SeatLayoutActivity : AppCompatActivity(),
                     }
                 } else if (seat.s == Constant.BIKE) {
                     if (seat.st == 1) {
-                        buttonClicked(this, seatView, num1, num2)
+                        buttonClicked(seatView, num1, num2)
                     } else {
                         if (seat.st == 2) {
                             hcSeat = caCount1 > hcCount1
@@ -1189,7 +1188,7 @@ class SeatLayoutActivity : AppCompatActivity(),
                     }
                 } else if (seat.s == Constant.SUV) {
                     if (seat.st == 1) {
-                        buttonClicked(this, seatView, num1, num2)
+                        buttonClicked(seatView, num1, num2)
                     } else {
                         if (seat.st == 2) {
                             hcSeat = caCount1 > hcCount1
@@ -1302,7 +1301,7 @@ class SeatLayoutActivity : AppCompatActivity(),
                     }
                 } else if (seat.s == Constant.SEAT_SELECTED_HATCHBACK) {
                     if (seat.st == 1 && !flagHc) {
-                        removeHC(this)
+                        removeHC(this, seat, seatView)
                     } else {
                         seat.s = Constant.HATCHBACK
                         when (seat.st) {
@@ -1346,7 +1345,7 @@ class SeatLayoutActivity : AppCompatActivity(),
                     }
                 } else if (seat.s == Constant.SEAT_SELECTED_BIKE) {
                     if (seat.st == 1 && !flagHc) {
-                        removeHC(this)
+                        removeHC(this, seat, seatView)
                     } else {
                         seat.s = Constant.BIKE
                         when (seat.st) {
@@ -1390,7 +1389,7 @@ class SeatLayoutActivity : AppCompatActivity(),
                     }
                 } else if (seat.s == Constant.SEAT_SELECTED_SUV) {
                     if (seat.st == 1 && !flagHc) {
-                        removeHC(this)
+                        removeHC(this, seat, seatView)
                     } else {
                         seat.s = Constant.SUV
                         when (seat.st) {
@@ -1636,7 +1635,6 @@ class SeatLayoutActivity : AppCompatActivity(),
     }
 
     private fun addSelectedSeats(seat: SeatTagData, seatView: TextView, num1: Int, num2: Int) {
-        printLog("SeatClick--->${seat.st}")
         when (seat.st) {
             1 -> {
                 hcSeat = true
@@ -1670,27 +1668,32 @@ class SeatLayoutActivity : AppCompatActivity(),
         selectedSeat1.st = seat.st
         selectedSeat1.priceCode = price?.priceCode
         selectedSeat1.seatBookingId = seat.b
-        selectedSeats1?.add(selectedSeat1)
+        selectedSeats1.add(selectedSeat1)
         selectedSeatsBox?.add(selectedSeat1)
         calculatePrice()
+        printLog("SeatClick--->${selectedSeat1}")
+
     }
 
     @SuppressLint("SetTextI18n")
-    private fun buttonClicked(context: Activity, seatView: TextView, num1: Int, num2: Int) {
+    private fun buttonClicked(seatView: TextView, num1: Int, num2: Int) {
         // custom dialog
         val messagePcTextView: TextView
         val titleText: TextView
         val cancel: TextView
         val delete: TextView
         val icon: ImageView
-        val dialog = Dialog(context)
+        val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.ticket_cancel)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val behavior: BottomSheetBehavior<FrameLayout> = dialog.behavior
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+        dialog.window?.setGravity(Gravity.BOTTOM)
         dialog.window!!.setLayout(
-            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        dialog.window!!.setGravity(Gravity.CENTER)
         dialog.setTitle("")
         val seat = seatView.tag as SeatTagData
         messagePcTextView = dialog.findViewById<View>(R.id.message) as TextView
@@ -1811,7 +1814,11 @@ class SeatLayoutActivity : AppCompatActivity(),
     }
 
     @SuppressLint("SetTextI18n")
-    private fun removeHC(context: Activity) {
+    private fun removeHC(
+        context: Activity,
+        seat: SeatTagData,
+        seatView: TextView
+    ) {
         // custom dialog
         val messagePcTextView: TextView
         val titleText: TextView
@@ -1840,6 +1847,81 @@ class SeatLayoutActivity : AppCompatActivity(),
         delete.text = "NO"
         delete.setOnClickListener { dialog.dismiss() }
         cancel = dialog.findViewById<View>(R.id.yes) as TextView
+        cancel.setOnClickListener {
+
+            seat.s = Constant.SEAT_AVAILABEL
+
+            when (seat.st) {
+                1 -> {
+                    hcSeat = false
+                }
+                2 -> {
+                    caSeat = false
+                }
+                3 -> {
+                    selectBuddy = false
+                }
+            }
+
+            when (seat.st) {
+                1 -> {
+                    seatView.text = ""
+                    seatView.setBackgroundResource(R.drawable.ic_hcseat)
+                }
+                2 -> {
+                    seatView.text = ""
+                    seatView.setBackgroundResource(R.drawable.ic_camp)
+                }
+                3 -> {
+                    seatView.text = ""
+                    seatView.setBackgroundResource(R.drawable.buddy)
+                }
+                else -> {
+                    seatView.setBackgroundResource(R.drawable.ic_vacant)
+                    seatView.setTextColor(resources.getColor(R.color.black_with_fifteen_opacity))
+                }
+            }
+
+            removeSelectedSeats(seat)
+
+            println("selectedSeats1--->"+selectedSeats1?.size+selectedSeats1)
+            for (data in selectedSeats1!!) {
+                flagHc = true
+                if (data.st == 1 || data.st == 2) {
+                    val seat = data.seatView.tag as SeatTagData
+                    seat.s = Constant.SEAT_AVAILABEL
+                    if (seat.st == 1) {
+                        hcSeat = false
+                    } else if (seat.st == 2) {
+                        caSeat = false
+                    } else if (seat.st == 3) {
+                        selectBuddy = false
+                    }
+                    when (seat.st) {
+                        1 -> {
+                            data.seatView.text = ""
+                            data.seatView.setBackgroundResource(R.drawable.ic_hcseat)
+                        }
+                        2 -> {
+                            data.seatView.text = ""
+                            data.seatView.setBackgroundResource(R.drawable.ic_camp)
+                        }
+                        3 -> {
+                            data.seatView.text = ""
+                            data.seatView.setBackgroundResource(R.drawable.buddy)
+                        }
+                        else -> {
+                            data.seatView.setBackgroundResource(R.drawable.ic_vacant)
+                            data.seatView.setTextColor(resources.getColor(R.color.black_with_fifteen_opacity))
+                        }
+                    }
+
+                    removeSelectedSeats(seat)
+                }
+            }
+            flagHc = false
+            dialog.dismiss()
+        }
         cancel.text = "YES"
         dialog.show()
     }

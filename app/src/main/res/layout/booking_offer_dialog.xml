@@ -39,7 +39,7 @@
             android:id="@+id/linearLayout4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="16dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -57,6 +57,40 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/tncView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/view169">
+
+                <TextView
+                    android:id="@+id/viewTnc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textSize="@dimen/dimen_14sp"
+                    android:drawablePadding="4dp"
+                    android:includeFontPadding="false"
+                    android:drawableEnd="@drawable/arrow_down_home"
+                    android:fontFamily="@font/sf_pro_text_medium"
+                    android:layout_marginBottom="@dimen/padding_10"
+                    android:textColor="@color/black"
+                    android:text="View T&amp;C"
+                    app:layout_constraintStart_toStartOf="@+id/view168"
+                    app:layout_constraintTop_toBottomOf="@+id/textView257" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tncData"
+                    android:visibility="gone"
+                    android:layout_marginBottom="@dimen/dimen_15dp"
+                    android:orientation="vertical"/>
+
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/textView266"
                 android:layout_width="@dimen/dimen_100dp"
@@ -70,7 +104,7 @@
                 android:textSize="@dimen/dimen_14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/view169"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/view169" />
+                app:layout_constraintTop_toBottomOf="@+id/tncView" />
 
             <TextView
                 android:id="@+id/textView267"
@@ -86,7 +120,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView266"
-                app:layout_constraintTop_toTopOf="@+id/view169" />
+                app:layout_constraintTop_toBottomOf="@+id/tncView" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView

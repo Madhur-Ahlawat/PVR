@@ -80,6 +80,8 @@ class BookingActivity : AppCompatActivity(),
     private var appliedFilterType = ""
 
     private var bookingResponse: BookingResponse.Output? = null
+    private var su = ""
+    private var sm = ""
     private var bookingShowsParentAdapter: BookingShowsParentAdapter? = null
 
 
@@ -94,6 +96,10 @@ class BookingActivity : AppCompatActivity(),
     private var currentPage = 1
     private var bannerModelsMain: ArrayList<BookingResponse.Output.Pu> =
         ArrayList<BookingResponse.Output.Pu>()
+
+    companion object{
+        var btnc = ""
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,6 +124,10 @@ class BookingActivity : AppCompatActivity(),
 
         //internet Check
         broadcastReceiver = NetworkReceiver()
+
+        binding?.imageView54?.setOnClickListener {
+            Constant.onShareClick(this, su,sm)
+        }
 
         movedNext()
         broadcastIntent()
@@ -244,6 +254,9 @@ class BookingActivity : AppCompatActivity(),
                             daySessionResponse = it.data.output
                         }
                         bookingResponse = it.data.output
+                        su = it.data.output.su
+                        sm = it.data.output.sm
+                        btnc = it.data.output.btnc
                         retrieveData(it.data.output)
                     } else {
                         val dialog = OptionDialog(this,

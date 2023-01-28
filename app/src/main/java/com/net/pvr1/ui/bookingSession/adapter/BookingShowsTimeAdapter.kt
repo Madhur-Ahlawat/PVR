@@ -10,6 +10,7 @@ import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
 import android.text.TextUtils
+import android.util.TypedValue
 import android.view.*
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ItemCinemaDetailsShowTimeBinding
+import com.net.pvr1.ui.bookingSession.BookingActivity.Companion.btnc
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.seatLayout.SeatLayoutActivity
@@ -28,6 +30,7 @@ import com.net.pvr1.utils.Constant.Companion.SESSION_ID
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.invisible
 import com.net.pvr1.utils.show
+import java.util.*
 import kotlin.math.roundToInt
 
 @Suppress("DEPRECATION")
@@ -430,12 +433,39 @@ class BookingShowsTimeAdapter(
         val skip = dialog.findViewById<TextView>(R.id.textView266)
         val image = dialog.findViewById<ImageView>(R.id.imageView108)
         val applyOffer = dialog.findViewById<TextView>(R.id.textView267)
+        val viewTnc = dialog.findViewById<TextView>(R.id.viewTnc)
+        val tncData = dialog.findViewById<LinearLayout>(R.id.tncData)
 
         Glide.with(context)
             .load(OfferDialogImage)
             .error(R.drawable.placeholder_horizental)
             .placeholder(R.drawable.placeholder_horizental)
             .into(image)
+
+        viewTnc.setOnClickListener {
+            if (tncData.visibility == View.VISIBLE){
+                tncData.hide()
+            }else{
+                tncData.show()
+            }
+        }
+
+        if (!TextUtils.isEmpty(btnc)) {
+            val st = StringTokenizer(btnc, "|")
+
+            while (st.hasMoreElements()) {
+                val view: View =
+                    LayoutInflater.from(context).inflate(R.layout.dynamic_bullet_row, tncData, false)
+                val tvMessage:TextView = view.findViewById(R.id.tvMessage1) as TextView
+                val tvDot:TextView = view.findViewById(R.id.tvDot1) as TextView
+                tvDot.setTextColor(context.resources.getColor(R.color.gray_))
+                tvMessage.setTextColor(context.resources.getColor(R.color.gray_))
+                tvMessage.text = st.nextElement().toString()
+                tvDot.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+                tvMessage.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+                tncData.addView(view)
+            }
+        }
 
         offerPrice.paintFlags = offerPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
 
@@ -478,7 +508,7 @@ class BookingShowsTimeAdapter(
                                         val dialog = OptionDialog(context,
                                             R.mipmap.ic_launcher,
                                             R.string.app_name,
-                                            this.at,
+                                            newAt,
                                             positiveBtnText = R.string.yes,
                                             negativeBtnText = R.string.cancel,
                                             positiveClick = {
@@ -497,7 +527,7 @@ class BookingShowsTimeAdapter(
                                 val dialog = OptionDialog(context,
                                     R.mipmap.ic_launcher,
                                     R.string.app_name,
-                                    this.at,
+                                    newAt,
                                     positiveBtnText = R.string.yes,
                                     negativeBtnText = R.string.cancel,
                                     positiveClick = {
@@ -526,7 +556,7 @@ class BookingShowsTimeAdapter(
                                 val dialog = OptionDialog(context,
                                     R.mipmap.ic_launcher,
                                     R.string.app_name,
-                                    this.at,
+                                    newAt,
                                     positiveBtnText = R.string.yes,
                                     negativeBtnText = R.string.cancel,
                                     positiveClick = {
@@ -545,7 +575,7 @@ class BookingShowsTimeAdapter(
                         val dialog = OptionDialog(context,
                             R.mipmap.ic_launcher,
                             R.string.app_name,
-                            this.at,
+                            newAt,
                             positiveBtnText = R.string.yes,
                             negativeBtnText = R.string.cancel,
                             positiveClick = {
@@ -587,11 +617,11 @@ class BookingShowsTimeAdapter(
                                 positiveBtnText = R.string.yes,
                                 negativeBtnText = R.string.cancel,
                                 positiveClick = {
-                                    if (this.at != "") {
+                                    if (newAt != "") {
                                         val dialog = OptionDialog(context,
                                             R.mipmap.ic_launcher,
                                             R.string.app_name,
-                                            this.at,
+                                            newAt,
                                             positiveBtnText = R.string.yes,
                                             negativeBtnText = R.string.cancel,
                                             positiveClick = {
@@ -606,11 +636,11 @@ class BookingShowsTimeAdapter(
                                 negativeClick = {})
                             dialog.show()
                         } else {
-                            if (this.at != "") {
+                            if (newAt != "") {
                                 val dialog = OptionDialog(context,
                                     R.mipmap.ic_launcher,
                                     R.string.app_name,
-                                    this.at,
+                                    newAt,
                                     positiveBtnText = R.string.yes,
                                     negativeBtnText = R.string.cancel,
                                     positiveClick = {
@@ -635,11 +665,11 @@ class BookingShowsTimeAdapter(
                         positiveBtnText = R.string.yes,
                         negativeBtnText = R.string.cancel,
                         positiveClick = {
-                            if (this.at != "") {
+                            if (newAt != "") {
                                 val dialog = OptionDialog(context,
                                     R.mipmap.ic_launcher,
                                     R.string.app_name,
-                                    this.at,
+                                    newAt,
                                     positiveBtnText = R.string.yes,
                                     negativeBtnText = R.string.cancel,
                                     positiveClick = {
@@ -654,11 +684,11 @@ class BookingShowsTimeAdapter(
                         negativeClick = {})
                     dialog.show()
                 } else {
-                    if (this.at != "") {
+                    if (newAt != "") {
                         val dialog = OptionDialog(context,
                             R.mipmap.ic_launcher,
                             R.string.app_name,
-                            this.at,
+                            newAt,
                             positiveBtnText = R.string.yes,
                             negativeBtnText = R.string.cancel,
                             positiveClick = {

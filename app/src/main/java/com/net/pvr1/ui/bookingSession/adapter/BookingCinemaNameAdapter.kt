@@ -45,6 +45,11 @@ class BookingCinemaNameAdapter(
 //                    binding.hcIcon.hide()
 //                }
 
+                if (position==0){
+                    binding.recyclerView11.show()
+                    binding.imageView56.setImageResource(R.drawable.arrow_up)
+                }
+
                 binding.constraintLayout111.setOnClickListener {
                     if (binding.recyclerView11.visibility == View.GONE) {
                         binding.recyclerView11.show()
