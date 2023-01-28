@@ -788,6 +788,10 @@ class BookingActivity : AppCompatActivity(),
                 }
             }
 
+            binding?.bannerLayout?.ivCross?.setOnClickListener {
+                binding?.rlBanner?.hide()
+            }
+
         } else {
             binding?.rlBanner?.hide()
         }

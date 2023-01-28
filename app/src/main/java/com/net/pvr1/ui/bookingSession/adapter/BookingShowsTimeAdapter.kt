@@ -122,7 +122,11 @@ class BookingShowsTimeAdapter(
                     rowIndex = position
                     if (this.ss != 0 && this.ss != 3) {
                         if (this.ba) {
-                            showOfferDialog(this.sid,this.cc,this.at)
+                            try {
+                                showOfferDialog(this.sid, this.cc, this.at)
+                            }catch (e:java.lang.Exception){
+
+                            }
                         } else {
                             sidText = this.sid.toString()
                             ccText = this.cc
@@ -436,7 +440,7 @@ class BookingShowsTimeAdapter(
         offerPrice.paintFlags = offerPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
 
         val offerPriceText =
-            (progressDialog[0].p.toDouble().roundToInt() + progressDialog[0].bv.toDouble()
+            ((progressDialog[0].p?:"0.0").toDouble().roundToInt() + (progressDialog[0].bv?:"0.0").toDouble()
                 .roundToInt())
         ticket.text = context.getString(R.string.currency) + progressDialog[0].p
         food.text = context.getString(R.string.currency) + progressDialog[0].bv

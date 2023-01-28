@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="@dimen/padding_10"
+        android:layout_marginBottom="@dimen/dimen_12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,9 +33,11 @@
             android:id="@+id/imageView66"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:padding="@dimen/dimen_15dp"
+            android:background="@drawable/border_circle_gray"
             android:src="@drawable/food_all"
-            app:civ_border_width="1dp"
-            app:civ_border_color="#FF000000"/>
+
+           />
 
 
         <TextView
@@ -42,8 +45,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:fontFamily="@font/sf_pro_text_bold"
+            android:fontFamily="@font/sf_pro_text_regular"
             android:textColor="@color/black"
+            android:includeFontPadding="false"
             android:textAlignment="center"
             android:textSize="@dimen/dimen_14sp"
             app:layout_constraintBottom_toBottomOf="parent"
