@@ -102,15 +102,35 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:ellipsize="end"
-        android:maxLines="1"
-        android:includeFontPadding="false"
-        android:textColor="@color/textColorGray"
         android:fontFamily="@font/sf_pro_text_regular"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:textColor="@color/textColorGray"
         android:textSize="@dimen/dimen_12sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/genrePlus"
         app:layout_constraintStart_toStartOf="@+id/textView43"
         app:layout_constraintTop_toBottomOf="@+id/textView43"
         tools:text="Hindi, English" />
+
+    <TextView
+        android:id="@+id/genrePlus"
+        tools:text="+2"
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/yellow_curve_two"
+        android:backgroundTint="#D9D9D9"
+        android:fontFamily="@font/sf_pro_text_semi_bold"
+        android:includeFontPadding="false"
+        android:paddingStart="@dimen/dimen_3dp"
+        android:paddingEnd="@dimen/dimen_3dp"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/textView45"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvGenre"
+        app:layout_constraintTop_toTopOf="@+id/textView45" />
+
 
     <TextView
         android:id="@+id/textView46"

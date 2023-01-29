@@ -39,7 +39,9 @@ class ComingSoonMovieAdapter(
             //title
             holder.title.text = comingSoonItem.name
             //Image
-            Glide.with(context).load(comingSoonItem.miv).error(R.drawable.placeholder_vertical)
+            Glide.with(context)
+                .load(comingSoonItem.miv)
+                .error(R.drawable.placeholder_vertical)
                 .into(holder.image)
 
             //Manage Video Play

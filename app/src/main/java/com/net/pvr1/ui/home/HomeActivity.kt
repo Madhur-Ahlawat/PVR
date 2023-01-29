@@ -212,7 +212,9 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         val icon = dialog.findViewById<ImageView>(R.id.logo)
         val turnOn = dialog.findViewById<TextView>(R.id.turnOn)
         //icon
-        Glide.with(this).load(PrivilegeHomeResponseConst?.pinfo?.get(0)?.plogo).into(icon!!)
+        Glide.with(this)
+            .load(PrivilegeHomeResponseConst?.pinfo?.get(0)?.plogo)
+            .into(icon!!)
 
         // add pager behavior
         val snapHelper = PagerSnapHelper()

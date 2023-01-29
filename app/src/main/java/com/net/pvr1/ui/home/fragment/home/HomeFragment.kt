@@ -11,7 +11,11 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.text.Spannable
+import android.text.SpannableString
 import android.text.TextUtils
+import android.text.method.LinkMovementMethod
+import android.text.style.ForegroundColorSpan
 import android.view.*
 import android.view.View.OnTouchListener
 import android.widget.ImageView
@@ -57,14 +61,11 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(),
-    HomeCinemaCategoryAdapter.RecycleViewItemClickListener,
+class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickListener,
     HomeSliderAdapter.RecycleViewItemClickListener,
     HomePromotionAdapter.RecycleViewItemClickListener,
-    HomeMoviesAdapter.RecycleViewItemClickListener,
-    HomeOfferAdapter.RecycleViewItemClickListener,
-    GenericFilterHome.onButtonSelected,
-    StoriesProgressView.StoriesListener {
+    HomeMoviesAdapter.RecycleViewItemClickListener, HomeOfferAdapter.RecycleViewItemClickListener,
+    GenericFilterHome.onButtonSelected, StoriesProgressView.StoriesListener {
 
     private var binding: FragmentHomeBinding? = null
 
@@ -350,8 +351,7 @@ class HomeFragment : Fragment(),
         ViewCompat.setNestedScrollingEnabled(binding?.recyclerMovies!!, false)
 
         //Offer
-        val layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         val snapHelper: SnapHelper = PagerSnapHelper()
         binding?.recyclerOffer?.layoutManager = layoutManager
         binding?.recyclerOffer?.onFlingListener = null
@@ -361,6 +361,7 @@ class HomeFragment : Fragment(),
         binding?.recyclerOffer?.adapter = adapterTrailer
 
         binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
+
         binding?.filterFab?.setOnClickListener {
             val gFilter = GenericFilterHome()
             val filterPoints = HashMap<String, ArrayList<String>>()
@@ -395,9 +396,7 @@ class HomeFragment : Fragment(),
             binding?.constraintLayout135?.show()
             //image
             binding?.homeRecommend?.ivRecomm?.let {
-                Glide.with(requireActivity())
-                    .load(rm.mih)
-                    .error(R.drawable.placeholder_horizental)
+                Glide.with(requireActivity()).load(rm.mih).error(R.drawable.placeholder_horizental)
                     .into(it)
             }
 
@@ -425,69 +424,99 @@ class HomeFragment : Fragment(),
             //title
             binding?.homeRecommend?.tvMovie?.text = rm.n
 
-            //trending
-            binding?.homeRecommend?.tvCensorLang?.text =
-                rm.ce + " • " + java.lang.String.join(",", rm.grs)
-
-            if (rm.rt !=""){
-                binding?.homeRecommend?.tvNewRe?.show()
-                binding?.homeRecommend?.tvNewRe?.text= rm.rt
-            }else{
-                binding?.homeRecommend?.tvNewRe?.hide()
-            }
-
-//            //    tvMovie.setSelected(true);
-//            if (datum.getOthergenres() != null && datum.getOthergenres() != "") {
-//                if (datum.getOthergenres().split(",").length > 2) {
-//                    genrePlus.setVisibility(View.VISIBLE)
-//                    genrePlus.setText("+" + (datum.getOthergenres().split(",").length - 2))
-//                    tvGenre.setText(
-//                        datum.getOthergenres().split(",").get(0) + " | " + datum.getOthergenres()
-//                            .split(",").get(1)
-//                    )
-//                } else {
-//                    genrePlus.setVisibility(View.GONE)
-//                    tvGenre.setText(datum.getOthergenres().replaceAll(",", " | "))
-//                }
-//            } else {
-//                var string = ""
-//                for (i in 0 until datum.getGrs().size()) {
-//                    string = if (i == datum.getGrs().size() - 1) string + datum.getGrs()
-//                        .get(i) else string + datum.getGrs().get(i) + " • "
-//                }
-//                tvGenre.setText(string)
-//            }
-
-            //    tvMovie.setSelected(true);
-            if (rm.otherlanguages.contains(" ", ignoreCase = true)) {
-
-                if (rm.otherlanguages.split(",").size > 2) {
-
-                    binding?.homeRecommend?.genrePlus?.visibility = View.VISIBLE
+//            other genre
+            if (rm.othergenres.contains("")) {
+                if (rm.othergenres.split(",").size > 2) {
+                    binding?.homeRecommend?.genrePlus?.show()
                     binding?.homeRecommend?.genrePlus?.text =
                         "+" + (rm.othergenres.split(",").size - 2)
                     binding?.homeRecommend?.tvGenre?.text =
                         rm.othergenres.split(",")[0] + " | " + rm.othergenres.split(",")[1]
                 } else {
-                    binding?.homeRecommend?.genrePlus?.visibility = View.GONE
+                    binding?.homeRecommend?.genrePlus?.hide()
                     binding?.homeRecommend?.tvGenre?.text = rm.othergenres.replace(",", " | ")
                 }
             } else {
                 var string = ""
                 for (i in 0 until rm.grs.size) {
-                    string = if (i == rm.grs.size - 1)
-                        string + rm.grs[i] else string + rm.grs[i] + " • "
+                    string =
+                        if (i == rm.grs.size - 1) string + rm.grs[i] else string + rm.grs[i] + " • "
                 }
-                printLog("genre----${string}")
                 binding?.homeRecommend?.tvGenre?.text = string
             }
 
 
-            if (!TextUtils.isEmpty(rm.rtt)) binding?.homeRecommend?.tvRecomm?.text =
+
+            if (rm.rt != "") {
+                binding?.homeRecommend?.tvNewRe?.show()
+                binding?.homeRecommend?.tvNewRe?.text = rm.rt
+            } else {
+                binding?.homeRecommend?.tvNewRe?.hide()
+            }
+
+            addCensor(rm,binding?.homeRecommend?.tvCensorLang)
+
+
+            if (!TextUtils.isEmpty(rm.rtt))
+                binding?.homeRecommend?.tvRecomm?.text =
                 rm.rtt else binding?.homeRecommend?.tvRecomm?.text = "TRENDING"
         } else {
             binding?.constraintLayout135?.hide()
         }
+    }
+
+    private fun addCensor(rm: HomeResponse.Rm, tvCensorLang: TextView?) {
+        val stringBuilder = StringBuilder()
+        var ssChange = false
+        if (rm.ce.replace("\\(", "").replace("\\)", "")
+                .equals("A",ignoreCase = true)) ssChange = true
+        stringBuilder.append(rm.ce.replace("\\(", "").replace("\\)", "") + " • ")
+        for (i in 0 until rm.mfs.size) {
+            val uiList: MutableList<List<String>> = listOf(rm.mfs[i].split(",")) as MutableList<List<String>>
+            if (uiList.isNotEmpty()) {
+                if (rm.mfs.size - 1 == i){
+                    printLog("stringBuilder--qd->${uiList[0]}---->${rm.mfs[i]}")
+
+                    stringBuilder.append(uiList[0])
+                } else stringBuilder.append(
+                    uiList[0] + ", "
+                )
+            }
+
+        }
+        if (!ssChange){
+            printLog("stringBuilder--->${stringBuilder}")
+            tvCensorLang?.text = stringBuilder.toString().replace("[", "").replace("]", "").replace("(", "").replace(")", "")
+
+        }
+        else {
+            printLog("stringBuilder---2>${stringBuilder}")
+            spannableTextBeing(
+               stringBuilder,
+                tvCensorLang!!
+            )
+
+        }
+    }
+    private fun spannableTextBeing(
+        stringBuilder: java.lang.StringBuilder?,
+        tvCensorLang: TextView
+    ) {
+        val ss = SpannableString(stringBuilder)
+        ss.setSpan(
+            ForegroundColorSpan(requireActivity().resources.getColor(R.color.yellow)),
+            0,
+            1,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        ss.setSpan(
+            ForegroundColorSpan(requireActivity().resources.getColor(R.color.gray_)),
+            2,
+            ss.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        tvCensorLang.text = ss
+        tvCensorLang.movementMethod = LinkMovementMethod.getInstance()
     }
 
     override fun onCategoryClick(comingSoonItem: HomeResponse.Mfi) {
@@ -527,11 +556,7 @@ class HomeFragment : Fragment(),
     }
 
     override fun onOfferClick(comingSoonItem: HomeResponse.Cp) {
-        if (comingSoonItem.t != null && comingSoonItem.t.equals(
-                "campaign-VIDEO",
-                ignoreCase = true
-            )
-        ) {
+        if (comingSoonItem.t != null && comingSoonItem.t.equals("campaign-VIDEO", ignoreCase = true)) {
             val intent = Intent(requireActivity(), PlayerActivity::class.java)
             intent.putExtra("trailerUrl", comingSoonItem.mtrailerurl)
             startActivity(intent)

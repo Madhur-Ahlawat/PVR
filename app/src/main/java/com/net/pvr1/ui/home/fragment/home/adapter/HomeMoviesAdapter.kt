@@ -57,12 +57,6 @@ class HomeMoviesAdapter(
                 //title
                 binding.textView42.text = this.n
 
-                //rating
-//                binding.textView43.text = this.ce + " " + context.getString(R.string.dots) + " " + this.otherlanguages
-
-                //language
-                binding.textView45.text=this.tag
-
                 //Movie Click
                 binding.imageView16.setOnClickListener {
                     listener.onMoviesClick(this)
@@ -100,6 +94,25 @@ class HomeMoviesAdapter(
                     context,
                     binding.textView43)
 
+
+ //Manage Genre
+                if (this.othergenres != "") {
+                    if (this.othergenres.split(",").size > 2) {
+                        binding.genrePlus.show()
+                        binding.genrePlus.text = "+" + (this.othergenres.split(",").size - 2)
+                        binding.textView45.text =
+                            this.othergenres.split(",")[0] + " | " + this.othergenres.split(
+                                ","
+                            )[1]
+                    } else {
+                        binding.genrePlus.hide()
+                        binding.textView45.text = this.othergenres.replace(",", " | ")
+                    }
+                } else {
+                    binding.textView45.text = this.tag
+                }
+
+
             }
         }
     }
@@ -123,8 +136,6 @@ class HomeMoviesAdapter(
         )
         if (otherLang != null && otherLang != "") {
             if (otherLang.split(",").toTypedArray().size > 2) {
-//                otherLanguage.visibility = View.VISIBLE
-//                otherLanguage.text = "+" + (otherLang.split(",").toTypedArray().size - 2)
                 stringBuilder.append(
                     otherLang.split(",").toTypedArray()[0] + " | " + otherLang.split(",")
                         .toTypedArray()[1]

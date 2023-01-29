@@ -142,7 +142,7 @@ data class HomeResponse(
     data class Rm(
         val c: String,
         val ce: String,
-        val fmts: List<String>,
+        val fmts: ArrayList<String>,
         val grs: List<String>,
         val i: String,
         val id: String,
@@ -152,7 +152,7 @@ data class HomeResponse(
         val lng: String,
         val mcc: String,
         val mf: Boolean,
-        val mfs: List<String>,
+        val mfs: ArrayList<String>,
         val mih: String,
         val miv: String,
         val mlength: String,
