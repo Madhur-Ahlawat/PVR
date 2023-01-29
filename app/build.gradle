@@ -21,9 +21,9 @@ android {
     buildTypes {
         debug {
 //            buildConfigField "String", "API_URL", "\"https://devapi.pvrcinemas.com/PVRCinemasCMS/\""//dev
-            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/\""//Prod
+//            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/\""//Prod
 //            buildConfigField "String", "API_URL", "\"https://preprodapi.pvrcinemas.com/PVRCinemasCMS/\""//PreProd
-//            buildConfigField "String", "API_URL", "\"https://demoapi.pvrcinemas.com/PVRCinemasCMS/\""//stage
+            buildConfigField "String", "API_URL", "\"https://demoapi.pvrcinemas.com/PVRCinemasCMS/\""//stage
 
             minifyEnabled false
             debuggable true
@@ -68,6 +68,7 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.5.0'
     implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.9.2'
     implementation 'com.google.android.gms:play-services-safetynet:18.0.1'
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.1.1'
 
     //noinspection GradleDynamicVersion
     testImplementation 'junit:junit:4.+'
@@ -80,7 +81,7 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
     //LifeCycle
-    def lifecycle_version = "2.6.0-alpha03"
+    def lifecycle_version = "2.6.0-alpha04"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
 
@@ -92,7 +93,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
 
     //room
-    def room_version = "2.4.3"
+    def room_version = "2.5.0"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
@@ -119,11 +120,11 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     // Sms Read
-    implementation 'com.google.android.gms:play-services-auth:20.4.0'
+    implementation 'com.google.android.gms:play-services-auth:20.4.1'
     implementation 'com.google.android.gms:play-services-auth-api-phone:18.0.1'
 
     // lib for SMS verification (Phone Auth)
-    implementation 'com.google.android.gms:play-services-auth:20.4.0'
+    implementation 'com.google.android.gms:play-services-auth:20.4.1'
     implementation 'com.google.android.gms:play-services-auth-api-phone:18.0.1'
     implementation 'com.google.android.gms:play-services-identity:18.0.1'
     implementation 'com.google.android.gms:play-services-base:18.1.0'
@@ -171,6 +172,9 @@ dependencies {
 
     //shimmer
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    // SFMC
+    implementation ("com.salesforce.marketingcloud:marketingcloudsdk:8.0.8")
 
 
 }

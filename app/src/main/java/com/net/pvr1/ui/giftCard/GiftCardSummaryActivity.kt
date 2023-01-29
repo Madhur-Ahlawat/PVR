@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.giftCard
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -8,10 +9,7 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.Gravity
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
+import android.view.*
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -38,10 +36,10 @@ class GiftCardSummaryActivity : AppCompatActivity() {
     private var loader: LoaderDialog? = null
     private var imageValue = ""
     private var paidAmount = "0.0"
+    private var dis = "0.0"
     private var imageValueUri: Uri? = null
     private val authViewModel: ActivateGiftCardViewModel by viewModels()
-    var df = DecimalFormat("#,###.00")
-    var df_data = DecimalFormat("###.00")
+    private var df = DecimalFormat("#,###.00")
 
     @Inject
     lateinit var preferences: PreferenceManager
@@ -65,7 +63,49 @@ class GiftCardSummaryActivity : AppCompatActivity() {
         Constant.BOOK_TYPE = "GIFTCARD"
 
         getGiftCardDetails()
+        binding?.llClickExpand?.setOnClickListener {
+            if (binding?.llTotal?.visibility == View.VISIBLE){
+                binding?.llTotal?.hide()
+                binding?.tvDetail?.show()
+                binding?.IVDown?.rotation = 360f
+                binding?.rlDelivery?.hide()
+                binding?.rlDiscount?.hide()
+            }else{
+                binding?.llTotal?.show()
+                binding?.tvDetail?.hide()
+                binding?.IVDown?.rotation = 180f
+                if (!TextUtils.isEmpty(binding?.tvTextVal?.text.toString()))
+                    binding?.rlDelivery?.show()
+                if (!TextUtils.isEmpty(dis))
+                    binding?.rlDiscount?.show()
 
+            }
+
+        }
+
+    }
+
+   @SuppressLint("SetTextI18n")
+   private fun addData(f: List<GiftCardDetailResponse.Fn>, dc: String) {
+        binding?.llTotal?.removeAllViews()
+        for (i in f.indices) {
+            val view: View =
+                LayoutInflater.from(this).inflate(R.layout.layout_gift_total_row, binding?.llTotal, false)
+            val tvText: TextView = view.findViewById<View>(R.id.tvText) as TextView
+            val tvTextVal: TextView = view.findViewById<View>(R.id.tvTextVal) as TextView
+            tvText.text = resources.getString(R.string.currency) + f[i].n
+            val amount: Double = java.lang.Double.valueOf(f[i].v)
+            tvTextVal.text = resources.getString(R.string.currency) + df.format(amount)
+            binding?.llTotal?.addView(view)
+        }
+        if (!TextUtils.isEmpty(dc)) {
+            binding?.tvText?.text = getString(R.string.Delivery_data)
+            binding?.tvTextVal?.text = resources.getString(R.string.currency) + dc.replace("Rs. ".toRegex(), "")
+            //  rlDelivery.setVisibility(View.VISIBLE);
+        } else {
+            binding?.rlDelivery?.visibility = View.GONE
+            binding?.rlDiscount?.visibility = View.GONE
+        }
     }
 
     private fun initData() {
@@ -77,7 +117,7 @@ class GiftCardSummaryActivity : AppCompatActivity() {
             }
         }
 
-        binding?.checkboxTnc?.setOnClickListener(View.OnClickListener { v ->
+        binding?.checkboxTnc?.setOnClickListener{ v ->
             val checked = (v as CheckBox).isChecked
             // Check which checkbox was clicked
             if (checked) {
@@ -88,9 +128,9 @@ class GiftCardSummaryActivity : AppCompatActivity() {
                 binding?.llPayGift?.hide()
                 binding?.llProceedGiftUnselect?.show()
             }
-        })
+        }
 
-        binding?.tvTermsGift?.setOnClickListener(View.OnClickListener {
+        binding?.tvTermsGift?.setOnClickListener{
 
             val termsDialog = Dialog(this)
             termsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -102,9 +142,9 @@ class GiftCardSummaryActivity : AppCompatActivity() {
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
             )
             termsDialog.window!!.setGravity(Gravity.BOTTOM)
-            val tv_t_n_c = termsDialog.findViewById<TextView>(R.id.tv_t_n_c)
-            val tv_accept_terms = termsDialog.findViewById<TextView>(R.id.tv_accept_terms)
-            tv_accept_terms.setOnClickListener {
+            termsDialog.findViewById<TextView>(R.id.tv_t_n_c)
+            val tvAcceptTerms = termsDialog.findViewById<TextView>(R.id.tv_accept_terms)
+            tvAcceptTerms.setOnClickListener {
                 termsDialog.dismiss()
                 binding?.llPayGift?.show()
                 binding?.llProceedGiftUnselect?.hide()
@@ -113,20 +153,20 @@ class GiftCardSummaryActivity : AppCompatActivity() {
             termsDialog.window!!.setWindowAnimations(R.style.AppTheme_Slide)
             termsDialog.show()
 
-        })
+        }
 
 
-        binding?.llCancelGift?.setOnClickListener(View.OnClickListener {
+        binding?.llCancelGift?.setOnClickListener{
             onBackPressed()
-        })
+        }
 
-        binding?.otherPg?.rlMainLayout?.setOnClickListener(View.OnClickListener {
+        binding?.otherPg?.rlMainLayout?.setOnClickListener{
             val intent = Intent(this, PaymentActivity::class.java)
             intent.putExtra("paidAmount",paidAmount)
             startActivity(intent)
-        })
+        }
 
-        binding?.llPayGift?.setOnClickListener(View.OnClickListener {
+        binding?.llPayGift?.setOnClickListener{
             //NEW GOOGLE IMPLEMENTED
             if (binding?.checkboxTnc?.isChecked == true) {
 //PP Work to do
@@ -147,9 +187,9 @@ class GiftCardSummaryActivity : AppCompatActivity() {
                     negativeClick = {})
                 dialog.show()
             }
-        })
+        }
 
-        binding?.llProceedGiftUnselect?.setOnClickListener(View.OnClickListener {
+        binding?.llProceedGiftUnselect?.setOnClickListener{
             val dialog = OptionDialog(this,
                 R.mipmap.ic_launcher,
                 R.string.app_name,
@@ -159,9 +199,9 @@ class GiftCardSummaryActivity : AppCompatActivity() {
                 positiveClick = {},
                 negativeClick = {})
             dialog.show()
-        })
+        }
 
-        binding?.btnPay?.setOnClickListener(View.OnClickListener {
+        binding?.btnPay?.setOnClickListener{
 
             //PP Work to do
             val intent = Intent(this, PaymentActivity::class.java)
@@ -169,7 +209,7 @@ class GiftCardSummaryActivity : AppCompatActivity() {
 
             startActivity(intent)
 
-        })
+        }
     }
 
     private fun getGiftCardDetails() {
@@ -178,6 +218,7 @@ class GiftCardSummaryActivity : AppCompatActivity() {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        dis = it.data.output.dis
                         retrieveData(it.data.output)
                     } else {
                         val dialog = OptionDialog(this,
@@ -215,15 +256,11 @@ class GiftCardSummaryActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun retrieveData(output: GiftCardDetailResponse.Output) {
-
+        addData(output.fn,output.dc)
         paidAmount = output.a
-        if (output.pp!=null) {
-            binding?.otherPg?.rlMainLayout?.show()
-
-        } else {
-            binding?.otherPg?.rlMainLayout?.hide()
-        }
+        binding?.otherPg?.rlMainLayout?.show()
 
         if (output.ch == ("PCARD") || output.ch == ("SCARD")) {
             binding?.tvdeliveryaddress?.text = output.da + "," + output.p
@@ -253,12 +290,12 @@ class GiftCardSummaryActivity : AppCompatActivity() {
                 binding?.tvTOtalAmountCUt?.hide()
                 val amount1: Double =
                     java.lang.Double.valueOf(output.dis)
-                val a_data = amount1 + amount
-                binding?.tvTOtalAmountCUt?.text = "₹" + df.format(a_data)
+                val aData = amount1 + amount
+                binding?.tvTOtalAmountCUt?.text = "₹" + df.format(aData)
                 binding?.tvTOtalAmountCUt?.paintFlags = (binding?.tvTOtalAmountCUt?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG)
                 val discount = amount1.toInt()
-                val Amount = amount.toInt()
-                val percentage = (discount * 100) / (discount + Amount)
+                val amount = amount.toInt()
+                (discount * 100) / (discount + amount)
 
                 // tvText_Discount.setText("Flat "+percentage+"% off on Gift Card");
                 if (!TextUtils.isEmpty(output.dm))
@@ -267,11 +304,10 @@ class GiftCardSummaryActivity : AppCompatActivity() {
                 binding?.tvTextDiscount?.setTextColor(resources.getColor(R.color.orange_))
                 binding?.tvTextValDiscount?.setTextColor(resources.getColor(R.color.orange_))
                 if ((!TextUtils.isEmpty(output.kd) && !output.pv)) {
-                    var percentage1 = ((discount * 100) / (discount + Amount)).toDouble()
+                    var percentage1 = ((discount * 100) / (discount + amount)).toDouble()
                     percentage1 += output.kd.toDouble()
-                    val data = (percentage1 * a_data) / 100
-                    val data1 = a_data - data
-//                    paymentIntentData.setFullamount(df_data.format(data1) + "")
+                    val data = (percentage1 * aData) / 100
+                    aData - data
                 }
             }
         } catch (e: Exception) {
@@ -297,14 +333,12 @@ class GiftCardSummaryActivity : AppCompatActivity() {
                 .placeholder(R.drawable.gift_card_default)
                 .into(binding?.imageLandingScreen!!)
         }
-//        adddata(
-//            giftCardPurchaseResponse.getData().getF(),
-//            giftCardPurchaseResponse.getData().getDc()
-//        )
+
 
 
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         val dialog = OptionDialog(this,
             R.mipmap.ic_launcher,

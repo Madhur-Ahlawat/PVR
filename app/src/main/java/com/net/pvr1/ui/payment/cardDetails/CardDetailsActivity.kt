@@ -125,7 +125,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
         //Proceed Bt
         binding?.include28?.textView5?.setOnClickListener {
 
-            val cardNumber = binding?.cardNumber?.text.toString()
+            val cardNumber = binding?.cardNumber?.text.toString().trim()
             val monthYear = binding?.monthYear?.text.toString()
             val cvv = binding?.cvv?.text.toString()
             val nameOnCard = binding?.nameOnCard?.text.toString()
@@ -177,7 +177,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                     Constant.TRANSACTION_ID,
                     false,
                     cardNumber,
-                    "BOOKING",
+                    BOOK_TYPE,
                     paymentType,
                     "no",
                     "NO"
@@ -234,7 +234,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
             if (!hasFocus) {
 //                lCvv = ""
                 saveCardId = ""
-                binding?.cvv?.setText("")
+               // binding?.cvv?.setText("")
                 isSavedCard = false
             }
         }
@@ -397,7 +397,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                 }
 
                 intent.putExtra("cvv", binding?.cvv?.text.toString())
-                intent.putExtra("ccnumber", binding?.cardNumber?.text.toString())
+                intent.putExtra("ccnumber", binding?.cardNumber?.text.toString().trim())
                 intent.putExtra("expmonth", expiryMonth)
                 intent.putExtra("expyear", expiryYear)
             }
@@ -431,7 +431,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                 intent.putExtra("saveCard", "0")
             }
             intent.putExtra("cvv", binding?.cvv?.text.toString())
-            intent.putExtra("ccnumber", binding?.cardNumber?.text.toString())
+            intent.putExtra("ccnumber", binding?.cardNumber?.text.toString().trim())
             intent.putExtra("expmonth", expiryMonth)
             intent.putExtra("expyear", expiryYear)
         }
