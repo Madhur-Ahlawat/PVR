@@ -41,6 +41,7 @@ import com.net.pvr1.ui.filter.GenericFilterHome
 import com.net.pvr1.ui.home.formats.FormatsActivity
 import com.net.pvr1.ui.home.fragment.home.adapter.*
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
+import com.net.pvr1.ui.home.fragment.home.response.NextBookingResponse
 import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
 import com.net.pvr1.ui.home.fragment.more.profile.userDetails.ProfileActivity
 import com.net.pvr1.ui.home.interfaces.PlayPopup
@@ -153,15 +154,18 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             binding?.includeAppBar?.profileBtn?.show()
             binding?.constraintLayout135?.show()
 
+//            nextBooking
+            authViewModel.nextBooking(preferences.getUserId(),Constant().getDeviceId(requireActivity()))
+
         } else {
             binding?.includeAppBar?.profileBtn?.hide()
             binding?.constraintLayout135?.hide()
         }
 
-
         getShimmerData()
         movedNext()
         homeApi()
+        nextBooking()
         createQr()
         getMovieFormatFromApi()
 
@@ -387,11 +391,14 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             initBanner(output.pu)
         }
 
-        if (preferences.getIsLogin()) recommend(output.rm)
+        if (preferences.getIsLogin())
+            recommend(output.rm)
     }
 
     @SuppressLint("SetTextI18n")
     private fun recommend(rm: HomeResponse.Rm) {
+        binding?.homeRecommend?.CLLayout1?.show()
+        binding?.homeRecommend?.CLLayout2?.hide()
         if (rm != null) {
             binding?.constraintLayout135?.show()
             //image
@@ -444,8 +451,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 }
                 binding?.homeRecommend?.tvGenre?.text = string
             }
-
-
 
             if (rm.rt != "") {
                 binding?.homeRecommend?.tvNewRe?.show()
@@ -563,6 +568,50 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         }
     }
 
+    private fun nextBooking() {
+        authViewModel.nextBookingResponseLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        loader?.dismiss()
+                        retrieveNextBooking(it.data.output)
+                    }
+                }
+                is NetworkResult.Error -> {
+
+                }
+                is NetworkResult.Loading -> {
+
+                }
+            }
+        }
+
+    }
+
+    private fun retrieveNextBooking(output: List<NextBookingResponse.Output>) {
+        commonBooking(output[0])
+    }
+
+    private fun commonBooking(output: NextBookingResponse.Output) {
+        
+        binding?.homeRecommend?.CLLayout1?.hide()
+        binding?.homeRecommend?.CLLayout2?.show()
+        binding?.homeRecommend?.tvRecommNew?.text = "Your Booking"
+
+        //title
+        binding?.homeRecommend?.tvMovieNew?.text = output.mn
+
+        //time
+        binding?.homeRecommend?.tvTime?.text = output.sd +" "+ getString(R.string.dots)+" "+output.st
+
+        //cinema name
+        binding?.homeRecommend?.tvPlace?.text = output.cn
+
+
+    }
+
+
+    //filter
     override fun onApply(
         type: ArrayList<String>?,
         filterItemSelected: HashMap<String, String>?,

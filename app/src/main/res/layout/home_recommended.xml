@@ -294,7 +294,6 @@
                         android:background="@drawable/rectangle_corner_white_border"
                         android:elevation="3dp"
                         android:gravity="center"
-                        android:letterSpacing="1.2"
                         android:text="@string/book_ola"
                         android:textColor="@color/pvr_dark_black"
                         android:visibility="visible" />
@@ -310,7 +309,6 @@
                         android:background="@drawable/round_yellow_corners"
                         android:elevation="3dp"
                         android:gravity="center"
-                        android:letterSpacing="1.2"
                         android:text="@string/open_m_ticket"
                         android:textColor="@color/pvr_dark_black" />
 

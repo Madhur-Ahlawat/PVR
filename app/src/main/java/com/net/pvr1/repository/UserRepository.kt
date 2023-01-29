@@ -11,15 +11,16 @@ import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.food.old.reponse.OldFoodResponse
 import com.net.pvr1.ui.food.response.CancelTransResponse
 import com.net.pvr1.ui.food.response.FoodResponse
-import com.net.pvr1.ui.home.formats.response.FormatResponse
 import com.net.pvr1.ui.giftCard.response.ActiveGCResponse
 import com.net.pvr1.ui.giftCard.response.GiftCardDetailResponse
 import com.net.pvr1.ui.giftCard.response.GiftCardListResponse
 import com.net.pvr1.ui.giftCard.response.UploadImageGC
+import com.net.pvr1.ui.home.formats.response.FormatResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaPreferenceResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.comingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
+import com.net.pvr1.ui.home.fragment.home.response.NextBookingResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
 import com.net.pvr1.ui.home.fragment.more.contactUs.response.ContactUsResponse
 import com.net.pvr1.ui.home.fragment.more.experience.response.ExperienceDetailsResponse
@@ -60,7 +61,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
 import retrofit2.Response
-import retrofit2.http.Query
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(private val userAPI: UserAPI) {
@@ -888,8 +888,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
     // NextBooking
-    private val nextBookingLiveData = MutableLiveData<NetworkResult<PrivilegeHomeResponse>>()
-    val nextBookingResponseLiveData: LiveData<NetworkResult<PrivilegeHomeResponse>>
+    private val nextBookingLiveData = MutableLiveData<NetworkResult<NextBookingResponse>>()
+    val nextBookingResponseLiveData: LiveData<NetworkResult<NextBookingResponse>>
         get() = nextBookingLiveData
 
     suspend fun nextBookingData(userid: String, did: String) {
@@ -900,7 +900,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         nextBookingResponse(response)
     }
 
-    private fun nextBookingResponse(response: Response<PrivilegeHomeResponse>) {
+    private fun nextBookingResponse(response: Response<NextBookingResponse>) {
         if (response.isSuccessful && response.body() != null) {
             nextBookingLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {

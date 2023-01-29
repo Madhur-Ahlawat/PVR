@@ -17,6 +17,7 @@ import com.net.pvr1.ui.home.fragment.cinema.response.CinemaPreferenceResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.comingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
+import com.net.pvr1.ui.home.fragment.home.response.NextBookingResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
 import com.net.pvr1.ui.home.fragment.more.contactUs.response.ContactUsResponse
 import com.net.pvr1.ui.home.fragment.more.experience.response.ExperienceDetailsResponse
@@ -433,7 +434,7 @@ interface UserAPI {
         @Query("did") did: String,
         @Query("av") av: String,
         @Query("pt") pt: String
-    ): Response<PrivilegeHomeResponse>
+    ): Response<NextBookingResponse>
 
     @POST("api/content/search")
     suspend fun homeSearch(
