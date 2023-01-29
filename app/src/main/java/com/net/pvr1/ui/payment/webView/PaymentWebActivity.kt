@@ -130,10 +130,10 @@ class PaymentWebActivity : AppCompatActivity() {
             urlParams = "$urlParams&channelCode=$bankname"
         } else if (pType.equals("CC", ignoreCase = true)) {
             pType = "CREDIT_CARD"
-            urlParams = "$urlParams&cardInfo=$saveCardId|$ccnumber|$cvv|$expmonth$expyear"
+            urlParams = "$urlParams&cardInfo=$saveCardId|${ccnumber?.replace(" ".toRegex(),"")}|$cvv|$expmonth$expyear"
         } else if (pType.equals("DC", ignoreCase = true)) {
             pType = "DEBIT_CARD"
-            urlParams = "$urlParams&cardInfo=$saveCardId|$ccnumber|$cvv|$expmonth$expyear"
+            urlParams = "$urlParams&cardInfo=$saveCardId|${ccnumber?.replace(" ".toRegex(),"")}|$cvv|$expmonth$expyear"
         } else if (pType.equals("UPI", ignoreCase = true)) {
             pType = "UPI"
             urlParams = "$urlParams&payerAccount=$payerAccount&channelCode=$bankname"
@@ -155,14 +155,14 @@ class PaymentWebActivity : AppCompatActivity() {
         if (subscriptionId != "") {
             var recurringparams = ""
             recurringparams =
-                "$recurringparams&cardInfo=$saveCardId|$ccnumber|$cvv|$expmonth$expyear"
+                "$recurringparams&cardInfo=$saveCardId|${ccnumber?.replace(" ".toRegex(),"")}|$cvv|$expmonth$expyear"
             recurringparams = "$recurringparams&paymentMode=$pType"
             recurringparams = "$recurringparams&authMode=otp"
             recurringparams = "$recurringparams&SUBSCRIPTION_ID=$subscriptionId"
             recurringparams = "$recurringparams&txnToken=$token"
             printLog("--->mix${recurringparams}")
 
-            val cardInfo = "$saveCardId|$ccnumber|$cvv|$expmonth$expyear"
+            val cardInfo = "$saveCardId|${ccnumber?.replace(" ".toRegex(),"")}|$cvv|$expmonth$expyear"
             val postData = ("&cardInfo=" + URLEncoder.encode(
                 cardInfo, "UTF-8"
             ) + "&paymentMode=" + URLEncoder.encode(
