@@ -374,11 +374,12 @@
                             app:layout_constraintLeft_toRightOf="@id/tvTOtalText"
                             app:layout_constraintTop_toTopOf="parent">
 
-                            <TextView
+                            <ImageView
                                 android:id="@+id/IVDown"
-                                android:layout_width="@dimen/dimen_15dp"
-                                android:layout_height="@dimen/padding_10"
-                                android:background="@drawable/down_arrow" />
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/arrow_down_home"
+                                app:tint="@color/gray_" />
 
 
                             <TextView
@@ -387,6 +388,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="2dp"
+                                android:includeFontPadding="false"
                                 android:layout_toLeftOf="@+id/ic_Clock"
                                 android:text="@string/details"
                                 android:textColor="@color/gray_"

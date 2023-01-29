@@ -118,7 +118,7 @@ class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.Re
     }
 
     override fun activateGiftCard(comingSoonItem: ActiveGCResponse.Gca) {
-        showDialog(comingSoonItem.id)
+        showDialog(comingSoonItem.gcn)
     }
 
     private fun showDialog(giftId: String) {

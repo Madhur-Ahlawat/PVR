@@ -116,7 +116,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                 R.id.cinemaFragment -> {
                     setCurrentFragment(secondFragment)
                 }
-                R.id.privilegeFragment -> managePrivilege()
+                R.id.privilegeFragment -> managePrivilege("")
                 R.id.comingSoonFragment -> setCurrentFragment(fourthFragment)
                 R.id.moreFragment -> setCurrentFragment(fifthFragment)
             }
@@ -227,7 +227,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         recyclerView?.layoutManager = gridLayout
         recyclerView?.adapter = adapter
         val mSnapHelper = PagerSnapHelper()
-        if (PrivilegeHomeResponseConst?.pinfo?.size!! > 1) {
+        if ((PrivilegeHomeResponseConst?.pinfo?.size ?: 0) > 1) {
             reviewPosition = 0
             recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -259,7 +259,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 
         turnOn?.setOnClickListener {
             dialog.dismiss()
-            managePrivilege()
+            managePrivilege("")
         }
     }
 
@@ -357,18 +357,28 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
             preferences.saveString(Constant.SharedPreference.SUBS_OPEN, output.passport.toString())
             preferences.saveString(Constant.SharedPreference.LOYALITY_STATUS, output.ls)
             preferences.saveString(Constant.SharedPreference.SUBSCRIPTION_STATUS, output.ulm)
+            if (intent.hasExtra("from")){
+                managePrivilege("from")
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-    private fun managePrivilege() {
+    private fun managePrivilege(s: String) {
         if (preferences.getIsLogin()) {
             val ls = preferences.getString(Constant.SharedPreference.LOYALITY_STATUS)
             val isHl: String = preferences.getString(Constant.SharedPreference.IS_HL)
             val isLy: String = preferences.getString(Constant.SharedPreference.IS_LY)
             val data = Bundle()
-            data.putString("type", "P")
+            if (s== "from"){
+                data.putString("type", "PP")
+                data.putString("from", "payment")
+                data.putString("id", intent.getStringExtra("id"))
+                data.putString("amt", intent.getStringExtra("amt"))
+            }else {
+                data.putString("type", "P")
+            }
             memberFragment.arguments = data
             println("ls--$ls---$isHl---$isLy")
             if (isLy.equals("true", ignoreCase = true)) {

@@ -8,6 +8,9 @@ dependencyResolutionManagement {
         maven {
             url  "https://phonepe.mycloudrepo.io/public/repositories/phonepe-intentsdk-android"
         }
+        maven {
+            url "https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/repository"
+        }
     }
 }
 rootProject.name = "PVR"

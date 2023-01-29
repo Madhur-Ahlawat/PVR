@@ -16,6 +16,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,11 +24,14 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityPrivilegeLogInBinding
 import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.giftCard.activateGiftCard.ActivateGiftCardActivity
 import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.home.HomeActivity.Companion.getCurrentItem
 import com.net.pvr1.ui.home.HomeActivity.Companion.reviewPosition
@@ -101,6 +105,14 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
     }
 
     private fun manageClicks() {
+
+        if (arguments?.containsKey("from") == true){
+            showDialogLoyalty(
+                requireContext(),
+                arguments?.getString("amt").toString(),
+                arguments?.getString("id").toString()
+            )
+        }
         binding?.bookBtn?.setOnClickListener {
             val intent = Intent(context, HomeActivity::class.java)
             startActivity(intent)
@@ -833,6 +845,43 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
     override fun openRedirection() {
 
     }
+
+
+    private fun showDialogLoyalty(mContext: Context?, price1: String, id: String) {
+        val dialog = BottomSheetDialog(mContext!!, R.style.NoBackgroundDialogTheme)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.payment_success_gc_pp)
+        dialog.setCancelable(true)
+        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window!!.setLayout(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.window!!.setGravity(Gravity.CENTER)
+        val referenceNo = dialog.findViewById<View>(R.id.refrenceNo) as TextView?
+        val price = dialog.findViewById<View>(R.id.price) as TextView?
+        val paidDT = dialog.findViewById<View>(R.id.paidDT) as TextView?
+        val titleText = dialog.findViewById<View>(R.id.titleText) as TextView?
+        val dic = dialog.findViewById<View>(R.id.dic) as TextView?
+        val btn = dialog.findViewById<View>(R.id.btn) as CardView?
+        val logo = dialog.findViewById<View>(R.id.logo) as ImageView?
+        val c = Calendar.getInstance().time
+        println("Current time => $c")
+        titleText?.text = "Thanks for purchasing your PVR Gift Card!"
+        dic?.text = "Redirecting you to your active gift card page now! We shall be reviewing the uploaded image & will update you in the next 24 hours!"
+        val df = SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault())
+        val formattedDate = df.format(c)
+        price!!.text = "₹$price1"
+        paidDT!!.text = "Paid on: $formattedDate"
+        referenceNo!!.text = Html.fromHtml("Order ID:<br></br>$id")
+        btn?.show()
+        btn?.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
 
 
 }
