@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +14,6 @@ import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
-
 
 class HomeMoviesAdapter(
     private var context: Context,
@@ -47,12 +45,12 @@ class HomeMoviesAdapter(
                 if (singleCheck && position == lastIndex) {
                     Glide.with(context)
                         .load(this.mih)
-                        .error(R.drawable.app_icon)
+                        .error(R.drawable.placeholder_horizental)
                         .into(binding.imageView16)
                 } else {
                     Glide.with(context)
                         .load(this.miv)
-                        .error(R.drawable.app_icon)
+                        .error(R.drawable.placeholder_vertical)
                         .into(binding.imageView16)
                 }
 
@@ -73,6 +71,14 @@ class HomeMoviesAdapter(
                 //Book Click
                 binding.textView46.setOnClickListener {
                     listener.onBookClick(this)
+                }
+
+//New Release
+                if (this.rt !=""){
+                    binding.tvNewRe.show()
+                    binding.tvNewRe.text= this.rt
+                }else{
+                    binding.tvNewRe.hide()
                 }
 
                 //trailer

@@ -10,7 +10,7 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ItemDetailsMusicBinding
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.utils.Constant
-import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.show
 
 
 class TrailerTrsAdapter(
@@ -41,7 +41,7 @@ class TrailerTrsAdapter(
                 //title
                 binding.textView82.text = this.t
                 //subTitle
-                binding.textView83.hide()
+                binding.textView83.show()
                 binding.textView83.text = this.d
                 //moreDetails
                 holder.itemView.setOnClickListener {

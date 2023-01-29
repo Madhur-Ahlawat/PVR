@@ -70,9 +70,10 @@
                     android:paddingTop="3dp"
                     android:paddingEnd="6dp"
                     android:paddingBottom="3dp"
+                    android:fontFamily="@font/helvetica_neu_medium"
                     android:textColor="@color/pvr_dark_black"
                     android:textSize="11sp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tool:text="New Release" />
@@ -130,17 +131,17 @@
 
                 <TextView
                     android:id="@+id/tvGenre"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="12dp"
-                    android:text=""
-                    android:includeFontPadding="false"
                     android:fontFamily="@font/sf_pro_text_regular"
+                    android:includeFontPadding="false"
                     android:textColor="@color/gray"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="@id/tvCensorLang"
+                    app:layout_constraintStart_toStartOf="@+id/tvCensorLang"
                     app:layout_constraintTop_toBottomOf="@id/tvCensorLang"
                     tool:text="Drama" />
 

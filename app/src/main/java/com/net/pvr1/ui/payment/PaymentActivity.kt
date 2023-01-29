@@ -79,7 +79,8 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClickListenerCity,
+class PaymentActivity : AppCompatActivity(),
+    PaymentAdapter.RecycleViewItemClickListenerCity,
     PaymentExclusiveAdapter.RecycleViewItemClickListenerCity,
     CouponAdapter.RecycleViewItemClickListenerCity,
     PaymentPromoCatAdapter.RecycleViewItemClickListenerCity,
@@ -116,7 +117,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         var subsId = ""
         var subsToken = ""
         var createdAt = ""
-        var isPromocodeApplied = false
+        var isPromoCodeApplied = false
         var offerList: ArrayList<PaymentResponse.Output.Binoffer> = ArrayList()
 
         @SuppressLint("SetTextI18n")
@@ -142,7 +143,6 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
             done?.setOnClickListener { dialog.dismiss() }
             dialog.show()
         }
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -1490,7 +1490,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                             } else preferences.saveBoolean(
                                 Constant.SharedPreference.Has_Bin_Series, false
                             )
-                            isPromocodeApplied = it.data.output.creditCardOnly
+                            isPromoCodeApplied = it.data.output.creditCardOnly
                             if (it.data.output.p) {
                                 Constant().printTicket(this)
                             } else {

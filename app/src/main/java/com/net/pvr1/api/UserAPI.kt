@@ -8,7 +8,7 @@ import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.food.old.reponse.OldFoodResponse
 import com.net.pvr1.ui.food.response.CancelTransResponse
 import com.net.pvr1.ui.food.response.FoodResponse
-import com.net.pvr1.ui.formats.response.FormatResponse
+import com.net.pvr1.ui.home.formats.response.FormatResponse
 import com.net.pvr1.ui.giftCard.response.ActiveGCResponse
 import com.net.pvr1.ui.giftCard.response.GiftCardDetailResponse
 import com.net.pvr1.ui.giftCard.response.GiftCardListResponse

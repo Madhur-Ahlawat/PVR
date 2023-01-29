@@ -1,10 +1,10 @@
-package com.net.pvr1.ui.formats.viewModel
+package com.net.pvr1.ui.home.formats.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
-import com.net.pvr1.ui.formats.response.FormatResponse
+import com.net.pvr1.ui.home.formats.response.FormatResponse
 import com.net.pvr1.ui.summery.response.AddFoodResponse
 import com.net.pvr1.ui.summery.response.SummeryResponse
 import com.net.pvr1.utils.NetworkResult

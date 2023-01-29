@@ -42,6 +42,9 @@ class NowShowingActivity : AppCompatActivity(), MusicVideoAdapter.RecycleViewIte
 
     @Inject
     lateinit var preferences: PreferenceManager
+
+    private var stringBuilder: StringBuilder? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNowShowingBinding.inflate(layoutInflater, null, false)
@@ -116,12 +119,14 @@ class NowShowingActivity : AppCompatActivity(), MusicVideoAdapter.RecycleViewIte
 
         //Image
         Glide.with(this).load(output.wit).error(R.drawable.app_icon).into(binding?.imageView26!!)
+
         //Trailer
         if (output.t.isEmpty()) {
             binding?.imageView29?.hide()
         } else {
             binding?.imageView29?.show()
         }
+
         binding?.imageView29?.setOnClickListener {
             val intent = Intent(this@NowShowingActivity, PlayerActivity::class.java)
             intent.putExtra("trailerUrl", output.t)
@@ -135,12 +140,86 @@ class NowShowingActivity : AppCompatActivity(), MusicVideoAdapter.RecycleViewIte
         binding?.imageView27?.setOnClickListener {
             finish()
         }
+
         //Title
         binding?.textView55?.text = output.n
+
+//        category
+        stringBuilder = java.lang.StringBuilder()
+        var data = ""
+        for (k in 0 until output.icons.size) {
+            data = if (output.icons[k].contains("D3", ignoreCase = true)) {
+                "3D"
+            } else if (output.icons[k].equals("DATMOS", ignoreCase = true)) {
+                "ATMOS"
+            } else if (output.icons[k].contains("IMAX", ignoreCase = true)) {
+                "IMAX"
+            } else if (output.icons[k].equals("D4", ignoreCase = true)) {
+                "4Dx"
+            } else if (output.icons[k].equals("D2", ignoreCase = true)) {
+                "2D"
+            } else {
+                output.icons[k]
+            }
+            if (k == 0) {
+                stringBuilder?.append(data)
+            } else {
+                stringBuilder?.append("  •  $data")
+            }
+            println("data--->" + data + "----" + stringBuilder.toString())
+        }
+
+
+//if (output.equals("")) {
+//            if (output.othergenres != null && !output.othergenres.equals("",ignoreCase = true)) {
+//                if (!movie_format.getText().toString().equalsIgnoreCase("")) {
+////                    tagDataTv.setText(
+////                        movieDetailResponse1.getData().getOthergenres()
+////                            .replaceAll(",", " | ") + " • " + movie_format.getText().toString()
+////                    )
+//                    binding?.textView56?.text=output.othergenres.replace(",", " | ") + " • " + movie_format.getText().toString(
+//
+//                }
+//                else {
+//                    binding?.textView56?.text=output.othergenres.replace(",", " | ")
+//
+//                }
+//            }
+//
+////                Util.applyLetterSpacing(tvMovieGenre, data.getOthergenres().replaceAll(","," | "), PCConstants.LETTER_SPACING);
+//        } else {
+//            stringBuilder = java.lang.StringBuilder()
+//            if (output.tag != null) {
+//                //tags
+//                val stringArray: Array<String> = output.tag.split(",").toTypedArray()
+//                for (k in stringArray.indices) {
+//                    if (k == 0) {
+//                        stringBuilder!!.append(stringArray[k])
+//                    } else {
+//                        stringBuilder!!.append(" " + " • " + " " + stringArray[k])
+//                    }
+//                }
+//                if (!movie_format.getText().toString().equalsIgnoreCase("")) {
+//
+////                    binding?.textView56?.text= stringBuilder.toString() + " • " + movie_format.getText().toString()
+//
+//                } else {
+//                    binding?.textView56?.text=stringBuilder
+//                }
+//            }
+//        }
+
+        //language
+
+        //language
+        stringBuilder = java.lang.StringBuilder()
+
         //Genre
-        binding?.textView56?.text = output.genre
+        binding?.textView56?.text =
+            output.genre + " " + getString(R.string.dots) + " " + stringBuilder
         //Censor
-        binding?.textView58?.text = output.c
+        binding?.textView58?.text =
+            output.c.replace("[", "").replace("]", "").replace("(", "").replace(")", "")
 
         //Duration
 //        binding?.textView59?.text = output.l

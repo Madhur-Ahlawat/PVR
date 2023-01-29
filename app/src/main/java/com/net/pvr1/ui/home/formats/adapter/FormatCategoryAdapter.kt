@@ -1,23 +1,24 @@
-package com.net.pvr1.ui.formats.adapter
+package com.net.pvr1.ui.home.formats.adapter
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.net.pvr1.R
 import com.net.pvr1.databinding.FormatsItemBinding
-import com.net.pvr1.ui.formats.response.FormatResponse
+import com.net.pvr1.ui.home.formats.response.FormatResponse
+import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.show
 
 //category
-
 class FormatCategoryAdapter(
     private var nowShowingList: ArrayList<FormatResponse.Output.Ph>,
     private var context: Activity,
-    private var listener: RecycleViewItemClickListener,
-) :
+    private var listener: RecycleViewItemClickListener, ) :
+
     RecyclerView.Adapter<FormatCategoryAdapter.ViewHolder>() {
     private val displayMetrics = DisplayMetrics()
     private var screenWidth = 0
@@ -48,7 +49,14 @@ class FormatCategoryAdapter(
                 //title
                 Glide.with(context)
                     .load(this.i)
+                    .error(R.drawable.placeholder_horizental)
                     .into(binding.imageView141)
+
+                if (this.redirect_url!=""){
+                    binding.imageView142.show()
+                }else{
+                    binding.imageView142.hide()
+                }
 
                 itemView.setOnClickListener {
                     listener.categoryClick(this)

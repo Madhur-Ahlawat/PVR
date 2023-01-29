@@ -179,7 +179,7 @@ class GiftCardRedeemActivity : AppCompatActivity() {
                                     Constant.SharedPreference.Has_Bin_Series,
                                     false
                                 )
-                            PaymentActivity.isPromocodeApplied = it.data.output.creditCardOnly
+                            PaymentActivity.isPromoCodeApplied = it.data.output.creditCardOnly
                             if (it.data.output.p) {
                                 Constant().printTicket(this)
                             } else {
@@ -267,7 +267,7 @@ class GiftCardRedeemActivity : AppCompatActivity() {
                                     Constant.SharedPreference.Has_Bin_Series,
                                     false
                                 )
-                            PaymentActivity.isPromocodeApplied = it.data.output.creditCardOnly
+                            PaymentActivity.isPromoCodeApplied = it.data.output.creditCardOnly
                             if (it.data.output.p) {
                                 Constant().printTicket(this)
                             } else {

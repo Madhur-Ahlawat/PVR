@@ -147,7 +147,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.formats.FormatsActivity"
+            android:name=".ui.home.formats.FormatsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

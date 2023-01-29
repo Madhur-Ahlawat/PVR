@@ -34,7 +34,7 @@ import com.net.pvr1.ui.bookingSession.BookingActivity
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.filter.GenericFilterHome
-import com.net.pvr1.ui.formats.FormatsActivity
+import com.net.pvr1.ui.home.formats.FormatsActivity
 import com.net.pvr1.ui.home.fragment.home.adapter.*
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
@@ -288,6 +288,7 @@ class HomeFragment : Fragment(),
         binding?.constraintLayout145?.hide()
 
         PlaceHolder = output
+
         if (isAdded) {
             //Category
             val gridLayout =
@@ -428,9 +429,40 @@ class HomeFragment : Fragment(),
             binding?.homeRecommend?.tvCensorLang?.text =
                 rm.ce + " • " + java.lang.String.join(",", rm.grs)
 
+            if (rm.rt !=""){
+                binding?.homeRecommend?.tvNewRe?.show()
+                binding?.homeRecommend?.tvNewRe?.text= rm.rt
+            }else{
+                binding?.homeRecommend?.tvNewRe?.hide()
+            }
+
+//            //    tvMovie.setSelected(true);
+//            if (datum.getOthergenres() != null && datum.getOthergenres() != "") {
+//                if (datum.getOthergenres().split(",").length > 2) {
+//                    genrePlus.setVisibility(View.VISIBLE)
+//                    genrePlus.setText("+" + (datum.getOthergenres().split(",").length - 2))
+//                    tvGenre.setText(
+//                        datum.getOthergenres().split(",").get(0) + " | " + datum.getOthergenres()
+//                            .split(",").get(1)
+//                    )
+//                } else {
+//                    genrePlus.setVisibility(View.GONE)
+//                    tvGenre.setText(datum.getOthergenres().replaceAll(",", " | "))
+//                }
+//            } else {
+//                var string = ""
+//                for (i in 0 until datum.getGrs().size()) {
+//                    string = if (i == datum.getGrs().size() - 1) string + datum.getGrs()
+//                        .get(i) else string + datum.getGrs().get(i) + " • "
+//                }
+//                tvGenre.setText(string)
+//            }
+
             //    tvMovie.setSelected(true);
-            if (rm.otherlanguages.equals("", ignoreCase = true)) {
+            if (rm.otherlanguages.contains(" ", ignoreCase = true)) {
+
                 if (rm.otherlanguages.split(",").size > 2) {
+
                     binding?.homeRecommend?.genrePlus?.visibility = View.VISIBLE
                     binding?.homeRecommend?.genrePlus?.text =
                         "+" + (rm.othergenres.split(",").size - 2)
@@ -443,9 +475,10 @@ class HomeFragment : Fragment(),
             } else {
                 var string = ""
                 for (i in 0 until rm.grs.size) {
-                    string =
-                        if (i == rm.grs.size - 1) string + rm.grs[i] else string + rm.grs[i] + " • "
+                    string = if (i == rm.grs.size - 1)
+                        string + rm.grs[i] else string + rm.grs[i] + " • "
                 }
+                printLog("genre----${string}")
                 binding?.homeRecommend?.tvGenre?.text = string
             }
 

@@ -1,6 +1,9 @@
-package com.net.pvr1.ui.formats
+package com.net.pvr1.ui.home.formats
 
+import android.content.BroadcastReceiver
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -9,28 +12,34 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityFormatsBinding
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.bookingSession.BookingActivity
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.formats.adapter.FormatCategoryAdapter
-import com.net.pvr1.ui.formats.adapter.FormatMoviesAdapter
-import com.net.pvr1.ui.formats.response.FormatResponse
-import com.net.pvr1.ui.formats.viewModel.FormatsViewModel
+import com.net.pvr1.ui.home.formats.adapter.FormatCategoryAdapter
+import com.net.pvr1.ui.home.formats.response.FormatResponse
+import com.net.pvr1.ui.home.formats.viewModel.FormatsViewModel
+import com.net.pvr1.ui.home.fragment.home.adapter.HomeMoviesAdapter
+import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingActivity
+import com.net.pvr1.ui.player.PlayerActivity
 import com.net.pvr1.ui.webView.WebViewActivity
-import com.net.pvr1.utils.Constant
-import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.di.preference.PreferenceManager
+import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class FormatsActivity : AppCompatActivity() ,FormatCategoryAdapter.RecycleViewItemClickListener,FormatMoviesAdapter.RecycleViewItemClickListener{
+class FormatsActivity : AppCompatActivity() , FormatCategoryAdapter.RecycleViewItemClickListener,
+    HomeMoviesAdapter.RecycleViewItemClickListener{
     private var binding: ActivityFormatsBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: FormatsViewModel by viewModels()
     @Inject
     lateinit var preferences: PreferenceManager
+
+    //internet Check
+    private var broadcastReceiver: BroadcastReceiver? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFormatsBinding.inflate(layoutInflater, null, false)
@@ -48,6 +57,18 @@ class FormatsActivity : AppCompatActivity() ,FormatCategoryAdapter.RecycleViewIt
         }
         authViewModel.formats(intent.getStringExtra("format").toString(), preferences.getCityName(), "no")
         formats()
+        getShimmerData()
+
+        //internet Check
+        broadcastReceiver = NetworkReceiver()
+        broadcastIntent()
+    }
+
+
+
+    private fun getShimmerData() {
+        Constant().getData(binding?.include38?.tvFirstText, binding?.include38?.tvSecondText)
+        Constant().getData(binding?.include38?.tvSecondText, null)
     }
 
     private fun formats() {
@@ -95,8 +116,12 @@ class FormatsActivity : AppCompatActivity() ,FormatCategoryAdapter.RecycleViewIt
     }
 
     private fun retrieveData(output: FormatResponse.Output) {
-        //category
+        //layout
+        binding?.constraintLayout169?.show()
+        //shimmer
+        binding?.constraintLayout145?.hide()
 
+        //category
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(binding?.recyclerView39)
         val gridLayout =
@@ -107,25 +132,35 @@ class FormatsActivity : AppCompatActivity() ,FormatCategoryAdapter.RecycleViewIt
         binding?.recyclerView39?.adapter = adapter
 
         //movie
-        val gridLayout2 =
-            GridLayoutManager(this@FormatsActivity, 2, GridLayoutManager.VERTICAL, false)
+        var size = 0
+        var single = false
+        size = if ((output.cinemas.m.size % 2) == 0) {
+            //Is even
+            single = false
+            output.cinemas.m.size
+        } else {
+            //Is odd
+            single = true
+            output.cinemas.m.size - 1
+        }
+
+        val gridLayoutMovies = GridLayoutManager(this, 2)
+        binding?.recyclerView40?.layoutManager = LinearLayoutManager(this)
+        gridLayoutMovies.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return if (position == size) {
+                    2
+                } else {
+
+                    1
+                }
+                return 1
+            }
+        }
         binding?.recyclerView40?.layoutManager = LinearLayoutManager(this@FormatsActivity)
-        val adapter2 = FormatMoviesAdapter(this, output.cinemas.m, this)
-        binding?.recyclerView40?.layoutManager = gridLayout2
+        val adapter2 = HomeMoviesAdapter(this, output.cinemas.m, this,single)
+        binding?.recyclerView40?.layoutManager = gridLayoutMovies
         binding?.recyclerView40?.adapter = adapter2
-    }
-
-
-    override fun onMoviesClick(comingSoonItem: FormatResponse.Output.Cinemas.M) {
-        val intent = Intent(this, NowShowingActivity::class.java)
-        intent.putExtra("mid", comingSoonItem.id)
-        startActivity(intent)
-    }
-
-    override fun onBookClick(comingSoonItem: FormatResponse.Output.Cinemas.M) {
-        val intent = Intent(this, BookingActivity::class.java)
-        intent.putExtra("mid", comingSoonItem.id)
-        startActivity(intent)
     }
 
     override fun categoryClick(comingSoonItem: FormatResponse.Output.Ph) {
@@ -138,4 +173,29 @@ class FormatsActivity : AppCompatActivity() ,FormatCategoryAdapter.RecycleViewIt
         }
     }
 
+    override fun onTrailerClick(string: String) {
+        val intent = Intent(this@FormatsActivity, PlayerActivity::class.java)
+        intent.putExtra("trailerUrl", string)
+        startActivity(intent)
+    }
+
+    override fun onMoviesClick(comingSoonItem: HomeResponse.Mv) {
+        val intent = Intent(this@FormatsActivity, NowShowingActivity::class.java)
+        intent.putExtra("mid", comingSoonItem.id)
+        startActivity(intent)
+    }
+
+    override fun onBookClick(comingSoonItem: HomeResponse.Mv) {
+        val intent = Intent(this@FormatsActivity, BookingActivity::class.java)
+        intent.putExtra("mid", comingSoonItem.id)
+        startActivity(intent)
+    }
+
+
+    //Internet Check
+    private fun broadcastIntent() {
+        registerReceiver(
+            broadcastReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        )
+    }
 }

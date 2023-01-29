@@ -484,6 +484,7 @@
                     android:layout_marginTop="14dp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="@+id/view52"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/view52"
                     app:layout_constraintTop_toBottomOf="@+id/textView70"
@@ -495,16 +496,17 @@
                     android:layout_height="@dimen/dimen_1dp"
                     android:layout_marginTop="@dimen/dimen_30dp"
                     android:background="#EDE8E9"
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/recyclerMusic" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="@dimen/dimen_30dp"
                 android:layout_marginEnd="24dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/musicTrailer">

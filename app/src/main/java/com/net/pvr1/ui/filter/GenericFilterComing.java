@@ -61,7 +61,7 @@ public class GenericFilterComing implements GenericFilterAdapter.onFilterItemSel
 
         if (layout_filter_tabs.getVisibility() == View.VISIBLE) {
             layout_filter_tabs.setVisibility(View.GONE);
-            dropImage.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_arrow_drop));
+            dropImage.setBackground(ContextCompat.getDrawable(context, R.drawable.arrow_down));
         } else {
             layout_filter_tabs.setVisibility(View.VISIBLE);
             dropImage.setBackground(ContextCompat.getDrawable(context, R.drawable.arrow_up));
