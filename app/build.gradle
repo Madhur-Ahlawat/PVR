@@ -176,5 +176,8 @@ dependencies {
     // SFMC
     implementation ("com.salesforce.marketingcloud:marketingcloudsdk:8.0.8")
 
+    // IS EVENT
+    implementation('com.evergage.android:evergage-android-sdk:1.3.0@aar') { transitive = true }
+
 
 }

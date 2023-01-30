@@ -84,6 +84,8 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         val view = binding?.root
         setContentView(view)
         manageFunction()
+        Constant.setEvergageUserIdSFCM(preferences)
+        Constant.setUPSFMCSDK(preferences)
     }
 
     private fun manageFunction() {

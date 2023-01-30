@@ -226,6 +226,9 @@ class OtpVerifyActivity : AppCompatActivity() {
     }
 
     private fun retrieveResisterData(output: ResisterResponse.Output) {
+        Constant.setEvergageUserIdSFCM(preferences)
+        Constant.setUPSFMCSDK(preferences)
+
         preferences.saveIsLogin(true)
         output.id.let { preferences.saveUserId(it) }
         output.un.let { preferences.saveUserName(it) }
@@ -240,6 +243,9 @@ class OtpVerifyActivity : AppCompatActivity() {
 
 
     private fun retrieveData(output: ResisterResponse.Output?) {
+        Constant.setEvergageUserIdSFCM(preferences)
+        Constant.setUPSFMCSDK(preferences)
+
         preferences.saveIsLogin(true)
         output?.id?.let { preferences.saveUserId(it) }
         output?.un?.let { preferences.saveUserName(it) }

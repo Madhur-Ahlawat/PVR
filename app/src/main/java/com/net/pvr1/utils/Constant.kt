@@ -27,12 +27,16 @@ import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.evergage.android.Evergage
 import com.net.pvr1.R
+import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.more.response.ProfileResponse
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.ticketConfirmation.TicketConfirmationActivity
+import com.salesforce.marketingcloud.registration.RegistrationManager
+import com.salesforce.marketingcloud.sfmcsdk.SFMCSdk
 import okhttp3.internal.and
 import java.net.MalformedURLException
 import java.net.URL
@@ -231,6 +235,40 @@ class Constant {
                 val vRight = view.right
                 val sWidth: Int = session_scrool.width
                 session_scrool.smoothScrollBy((vLeft + vRight - sWidth) / 2, 0)
+            }
+        }
+
+        fun setEvergageUserIdSFCM(preference: PreferenceManager) {
+            val phoneNo = preference.getString(SharedPreference.USER_NUMBER)
+            val evergage  = Evergage.getInstance()
+            try {
+                if (phoneNo == null || phoneNo.isEmpty()) {
+                    evergage.userId = "VM0000000000"
+                } else {
+                    evergage.userId = "VM$phoneNo"
+                    evergage.setUserAttribute("user_name", preference.getString(SharedPreference.USER_NAME))
+                    evergage.setUserAttribute("email_address", preference.getString(SharedPreference.USER_EMAIL))
+                }
+                println("evergageId---" + evergage.userId)
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        fun setUPSFMCSDK(preference: PreferenceManager){
+            val phoneNo = preference.getString(SharedPreference.USER_NUMBER)
+            SFMCSdk.requestSdk { sdk ->
+                sdk.mp {
+                    it.pushMessageManager.enablePush()
+                    val registrationManager: RegistrationManager = it.registrationManager
+                    val check = registrationManager.edit().setContactKey("VM$phoneNo").commit()
+                    val splited = preference.getString(SharedPreference.USER_NAME).split(" ")
+                    if (splited.size == 2) {
+                        registrationManager.edit().setAttribute("FirstName", splited[0]).commit()
+                        registrationManager.edit().setAttribute("LastName", splited[1]).commit()
+                    }
+                }
+
             }
         }
 
