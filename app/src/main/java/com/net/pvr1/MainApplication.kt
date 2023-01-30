@@ -10,6 +10,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.FirebaseApp
 import com.net.pvr1.ui.splash.SplashActivity
+import com.net.pvr1.utils.Constant.Companion.setEvergageUserIdSFCM
 import com.net.pvr1.utils.sfmc.SFMCActionReceiver
 import com.phonepe.intent.sdk.api.PhonePe
 import com.salesforce.marketingcloud.MCLogListener

@@ -434,6 +434,10 @@
             </intent-filter>
         </service>
 
+<!--        //IS ACTIVITY -->
+        <activity android:name="com.evergage.android.EvergageActivity" android:exported="true"/>
+
+
     </application>
 
 </manifest>

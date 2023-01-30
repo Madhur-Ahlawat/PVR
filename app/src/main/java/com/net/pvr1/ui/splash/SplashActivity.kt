@@ -77,6 +77,8 @@ class SplashActivity : AppCompatActivity() {
             networkDialog()
         }
         summeryDetails()
+        Constant.setEvergageUserIdSFCM(preferences)
+        Constant.setUPSFMCSDK(preferences)
 
     }
 
