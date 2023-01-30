@@ -35,6 +35,7 @@ import com.net.pvr1.ui.food.CartModel
 import com.net.pvr1.ui.payment.PaymentActivity
 import com.net.pvr1.ui.seatLayout.adapter.AddFoodCartAdapter
 import com.net.pvr1.ui.summery.adapter.SeatListAdapter
+import com.net.pvr1.ui.summery.response.ExtendTimeResponse
 import com.net.pvr1.ui.summery.response.SummeryResponse
 import com.net.pvr1.ui.summery.viewModel.SummeryViewModel
 import com.net.pvr1.ui.webView.WebViewActivity
@@ -59,7 +60,6 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     private var showTaxes = false
     private var paidAmount = ""
 
-
     //Bottom Dialog
     private var dialog: BottomSheetDialog? = null
 
@@ -68,11 +68,12 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         binding = ActivitySummeryBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-
         manageFunction()
     }
 
     private fun manageFunction() {
+        Constant.viewModel = authViewModel
+
         try {
             cartModel = intent.getSerializableExtra("food") as ArrayList<CartModel>
             printLog("exception--->${cartModel}")
@@ -91,6 +92,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         setDonation()
         getShimmerData()
         timerManage()
+        extendTime()
     }
 
 
@@ -585,18 +587,49 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             val minutes = millisUntilFinished / (1000 * 60) % 60
             val display = java.lang.String.format("%02d:%02d", minutes, second)
 
-
-
-            if (display== Constant.AVAILABETIME.toString()){
-                binding?.constrainLayout169?.show()
-            }
-
             binding?.include48?.textView394?.text=display + " " +getString(R.string.minRemaining)
 
+            if (millisUntilFinished.toInt() <= Constant.AVAILABETIME){
+                binding?.constrainLayout169?.show()
+            }else{
+                binding?.constrainLayout169?.hide()
+            }
+
             binding?.include48?.textView395?.setOnClickListener {
-//                Constant.TimerTime= (minutes * 60 + second).toInt()
+                binding?.constrainLayout169?.hide()
+                unregisterReceiver(br)
+                authViewModel.extendTime(TRANSACTION_ID, BOOKING_ID, CINEMA_ID)
             }
 
         }
     }
+
+    private fun extendTime() {
+        authViewModel.extendTimeLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        retrieveExtendData(it.data.output)
+                    }
+                }
+                is NetworkResult.Error -> {
+
+                }
+                is NetworkResult.Loading -> {
+                }
+            }
+        }
+    }
+
+    private fun retrieveExtendData(output: ExtendTimeResponse.Output) {
+        //extandTime
+        Constant.EXTANDTIME = Constant().convertTime(output.et)
+
+        //AVAIL TIME
+        Constant.AVAILABETIME = Constant().convertTime(output.at)
+
+        timerManage()
+    }
+
 }

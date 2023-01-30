@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.home.fragment.home.response
 
+import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import java.io.Serializable
 
 data class HomeResponse(
@@ -59,7 +60,7 @@ data class HomeResponse(
         val surl: String,
         val t: String,
         val tag: String,
-        val trs: List<Any>,
+        val trs: ArrayList<MovieDetailsResponse.Trs>,
         val ul: Boolean,
         val vka: Boolean,
         val wib: String,
@@ -101,7 +102,7 @@ data class HomeResponse(
         val surl: String,
         val t: String,
         val tag: String,
-        val trs: List<Tr>,
+        val trs: ArrayList<MovieDetailsResponse.Trs>,
         val ul: Boolean,
         val vka: Boolean,
         val wib: String,
@@ -170,7 +171,7 @@ data class HomeResponse(
         val surl: String,
         val t: String,
         val tag: String,
-        val trs: List<Tr>,
+        val trs: ArrayList<MovieDetailsResponse.Trs>,
         val ul: Boolean,
         val vka: Boolean,
         val wib: String,

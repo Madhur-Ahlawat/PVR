@@ -7,13 +7,26 @@
     android:background="@color/white"
     tools:context=".ui.login.otpVerify.OtpVerifyActivity">
 
-    <include
-        layout="@layout/extend_timer"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout168"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout27" />
+        app:layout_constraintTop_toTopOf="parent">
+        <include
+            android:id="@+id/include47"
+            layout="@layout/extend_timer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

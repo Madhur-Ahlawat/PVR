@@ -810,19 +810,16 @@ class BookingActivity : AppCompatActivity(),
         }
     }
 
-
     private fun showButton(bannerModel: BookingResponse.Output.Pu) {
-        if (bannerModel.type.contains("video", ignoreCase = true)) {
+        if (bannerModel.type.uppercase(Locale.getDefault()) == "VIDEO" && bannerModel.trailerUrl!=""){
             binding?.bannerLayout?.ivPlay?.show()
             binding?.bannerLayout?.tvButton?.hide()
-        } else if (bannerModel.type.contains(
-                "image", ignoreCase = true
-            ) && bannerModel.redirect_url.equals("", ignoreCase = true)
-        ) {
+        } else if (bannerModel.type.uppercase(Locale.getDefault()) == "IMAGE" && bannerModel.redirect_url != "") {
             binding?.bannerLayout?.ivPlay?.hide()
             binding?.bannerLayout?.tvButton?.text = bannerModel.buttonText
             binding?.bannerLayout?.tvButton?.show()
         } else {
+
             binding?.bannerLayout?.ivPlay?.hide()
             binding?.bannerLayout?.tvButton?.hide()
         }

@@ -8,10 +8,11 @@
 
     <!--Design-->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:visibility="gone"
         android:id="@+id/constrainLayout166"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent">
 
         <View
             android:id="@+id/view112"
@@ -67,13 +68,13 @@
                     android:id="@+id/discountVocher"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dimen_40dp"
+                    android:background="#26007D23"
                     android:fontFamily="@font/sf_pro_text_semi_bold"
+                    android:gravity="center"
                     android:text="@string/to_be_paid"
                     android:textColor="#007D23"
-                    android:background="#26007D23"
-                    android:visibility="gone"
-                    android:gravity="center"
                     android:textSize="@dimen/dimen_14sp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -88,11 +89,12 @@
                     app:layout_constraintTop_toBottomOf="@+id/discountVocher">
 
 
-                    <include layout="@layout/horizontal_line"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                    <include
+                        android:id="@+id/topLine"
+                        layout="@layout/horizontal_line"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:id="@+id/topLine"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <View
                         android:id="@+id/view114"
@@ -143,8 +145,9 @@
                         app:layout_constraintTop_toTopOf="@+id/view114"
                         tools:text="₹8888" />
 
-                    <include layout="@layout/horizontal_line"
-                        app:layout_constraintTop_toBottomOf="@+id/view114"/>
+                    <include
+                        layout="@layout/horizontal_line"
+                        app:layout_constraintTop_toBottomOf="@+id/view114" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -161,11 +164,10 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/constraintLayout110"
                         android:layout_width="match_parent"
-                        android:visibility="visible"
                         android:layout_height="wrap_content"
+                        android:visibility="visible"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        >
+                        app:layout_constraintStart_toStartOf="parent">
 
                         <View
                             android:id="@+id/llView"
@@ -200,12 +202,12 @@
                             android:id="@+id/recyclerView46"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_24dp"
                             android:layout_marginTop="10dp"
+                            android:layout_marginEnd="@dimen/dimen_24dp"
                             android:layout_marginBottom="20dp"
                             android:orientation="horizontal"
                             android:visibility="visible"
-                            android:layout_marginEnd="@dimen/dimen_24dp"
-                            android:layout_marginStart="@dimen/dimen_24dp"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -221,13 +223,12 @@
                         android:background="@drawable/line_separator" />
 
                     <LinearLayout
+                        android:id="@+id/promoView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/promoView"
                         android:layout_marginBottom="@dimen/dimen_15dp"
                         android:background="@color/white"
                         android:orientation="vertical">
-
 
 
                         <!--                    <TextView-->
@@ -243,52 +244,53 @@
 
 
                         <LinearLayout
+                            android:id="@+id/applyCou"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingTop="@dimen/padding_10"
-                            android:paddingBottom="@dimen/padding_10"
-                            android:paddingStart="@dimen/dimen_24dp"
-                            android:paddingEnd="@dimen/dimen_24dp"
-                            android:id="@+id/applyCou"
                             android:background="#FFFDF5"
-                            android:visibility="gone"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:paddingStart="@dimen/dimen_24dp"
+                            android:paddingTop="@dimen/padding_10"
+                            android:paddingEnd="@dimen/dimen_24dp"
+                            android:paddingBottom="@dimen/padding_10"
+                            android:visibility="gone">
+
                             <TextView
                                 android:id="@+id/promoCodetxt"
-                                android:fontFamily="@font/sf_pro_text_regular"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/promoCode"
-                                android:visibility="visible"
-                                tools:text="'PV000664288DD605068' Applied!"
+                                android:fontFamily="@font/sf_pro_text_regular"
                                 android:textColor="#2f2f2f"
-                                tools:ignore="ObsoleteLayoutParam" />
+                                android:visibility="visible"
+                                tools:ignore="ObsoleteLayoutParam"
+                                tools:text="'PV000664288DD605068' Applied!" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:layout_marginTop="@dimen/dimen_3dp">
+                                android:layout_marginTop="@dimen/dimen_3dp"
+                                android:orientation="horizontal">
 
                                 <TextView
                                     android:id="@+id/applyco"
-                                    android:fontFamily="@font/sf_pro_text_medium"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="13sp"
                                     android:layout_alignParentStart="true"
+                                    android:fontFamily="@font/sf_pro_text_medium"
                                     android:textColor="#1A8C2D"
+                                    android:textSize="13sp"
                                     tools:text="₹8888 Saved" />
 
                                 <TextView
                                     android:id="@+id/removeoff"
-                                    android:fontFamily="@font/sf_pro_text_medium"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="14sp"
                                     android:layout_alignParentEnd="true"
-                                    android:textColor="#DD0000"
+                                    android:fontFamily="@font/sf_pro_text_medium"
                                     android:text="@string/change"
+                                    android:textColor="#DD0000"
+                                    android:textSize="14sp"
                                     tools:ignore="RelativeOverlap" />
                             </RelativeLayout>
 
@@ -296,38 +298,37 @@
                         </LinearLayout>
 
                         <RelativeLayout
+                            android:id="@+id/couponView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:visibility="visible"
-                            android:layout_marginEnd="@dimen/dimen_24dp"
                             android:layout_marginStart="@dimen/dimen_24dp"
-                            android:id="@+id/couponView"
-                            >
+                            android:layout_marginEnd="@dimen/dimen_24dp"
+                            android:visibility="visible">
 
                             <RelativeLayout
                                 android:id="@+id/rl"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/dimen_60dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="10dp"
                                 android:background="@drawable/offeraply"
                                 android:focusableInTouchMode="true"
-                                android:layout_marginRight="10dp"
                                 android:paddingLeft="10dp"
-                                android:layout_centerVertical="true"
                                 tools:ignore="RtlHardcoded,RtlSymmetry">
 
                                 <EditText
                                     android:id="@+id/promoCode"
-                                    android:fontFamily="@font/sfprodisplay_regular"
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/edit_text_height"
                                     android:layout_centerVertical="true"
                                     android:background="@color/transparent1"
+                                    android:fontFamily="@font/sfprodisplay_regular"
                                     android:hint="@string/enter_promo_code"
-                                    android:textColorHint="#908E8E"
                                     android:inputType="textCapCharacters"
-                                    android:textColor="#000000"
                                     android:maxLength="16"
                                     android:singleLine="true"
+                                    android:textColor="#000000"
+                                    android:textColorHint="#908E8E"
                                     android:textSize="15sp"
                                     android:visibility="visible"
                                     tools:ignore="Autofill" />
@@ -338,14 +339,13 @@
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerVertical="true"
-                                    android:visibility="gone"
                                     android:paddingEnd="10dp"
                                     android:src="@drawable/cross_search"
+                                    android:visibility="gone"
                                     tools:ignore="ContentDescription,RtlSymmetry" />
 
                                 <TextView
                                     android:id="@+id/apply"
-                                    android:fontFamily="@font/sf_pro_text_bold"
                                     android:layout_width="75dp"
                                     android:layout_height="30dp"
                                     android:layout_alignParentEnd="true"
@@ -355,23 +355,24 @@
                                     android:layout_marginEnd="5dp"
                                     android:background="@drawable/gradient_yellow_button"
                                     android:clickable="true"
+                                    android:focusable="true"
+                                    android:fontFamily="@font/sf_pro_text_bold"
                                     android:gravity="center"
                                     android:text=" APPLY "
                                     android:textColor="#2f2f2f"
                                     android:textSize="16sp"
-                                    tools:ignore="HardcodedText,RtlHardcoded"
-                                    android:focusable="true" />
+                                    tools:ignore="HardcodedText,RtlHardcoded" />
 
                             </RelativeLayout>
 
 
                             <TextView
                                 android:id="@+id/promoCodeValidationMessage"
-                                android:fontFamily="@font/sf_pro_text_regular"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/rl"
                                 android:layout_marginTop="20dp"
+                                android:fontFamily="@font/sf_pro_text_regular"
                                 android:text=""
                                 android:textColor="@color/red" />
                         </RelativeLayout>
@@ -380,25 +381,25 @@
                             android:id="@+id/view_apply_coupon"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:visibility="gone"
                             android:layout_marginTop="@dimen/dimen_5dp"
                             android:background="#f5f5f5"
-                            />
+                            android:visibility="gone" />
+
                         <RelativeLayout
+                            android:id="@+id/availOffers"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dimen_40dp"
-                            android:id="@+id/availOffers"
-                            android:layout_marginEnd="@dimen/dimen_24dp"
                             android:layout_marginStart="@dimen/dimen_24dp"
+                            android:layout_marginEnd="@dimen/dimen_24dp"
                             android:orientation="horizontal">
 
                             <ImageView
+                                android:id="@+id/icon1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_shape_copy"
-                                android:id="@+id/icon1"
-                                android:layout_centerVertical="true"
                                 android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/ic_shape_copy"
                                 tools:ignore="ContentDescription" />
 
                             <TextView
@@ -422,10 +423,10 @@
                                 android:paddingTop="2dp"
                                 android:paddingRight="5dp"
                                 android:paddingBottom="2dp"
-                                tools:text="3 Promos"
                                 android:textColor="@color/white"
                                 android:textSize="17sp"
-                                android:visibility="gone" />
+                                android:visibility="gone"
+                                tools:text="3 Promos" />
 
                             <ImageView
                                 android:id="@+id/arrow_icon1"
@@ -438,22 +439,21 @@
                                 tools:ignore="ContentDescription,RtlHardcoded" />
 
 
-
                         </RelativeLayout>
 
                     </LinearLayout>
 
 
-
                     <LinearLayout
+                        android:id="@+id/bnkOfferView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/bnkOfferView"
                         android:orientation="vertical">
+
                         <View
+                            android:id="@+id/bnView"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dim_h10"
-                            android:id="@+id/bnView"
                             android:background="@drawable/line_separator" />
 
                         <TextView
@@ -461,16 +461,16 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dimen_50dp"
                             android:layout_marginStart="24dp"
-                            android:gravity="center_vertical"
-                            android:fontFamily="@font/sf_pro_text_regular"
                             android:drawablePadding="@dimen/dimen_5dp"
-                            android:paddingEnd="@dimen/dimen_25dp"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:gravity="center_vertical"
                             android:paddingStart="1dp"
+                            android:paddingEnd="@dimen/dimen_25dp"
                             android:text="@string/bank_offer"
                             android:textSize="@dimen/dimen_12sp"
+                            app:drawableEndCompat="@drawable/ic_skip_arrow"
                             app:layout_constraintStart_toStartOf="@+id/view115"
-                            app:layout_constraintTop_toTopOf="@+id/view115"
-                            app:drawableEndCompat="@drawable/ic_skip_arrow" />
+                            app:layout_constraintTop_toTopOf="@+id/view115" />
 
                     </LinearLayout>
 
@@ -495,17 +495,17 @@
                         android:id="@+id/recyclerView42"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/dimen_24dp"
                         android:layout_marginStart="@dimen/dimen_24dp"
+                        android:layout_marginEnd="@dimen/dimen_24dp"
                         android:orientation="vertical"
                         tools:itemCount="2"
                         tools:listitem="@layout/item_payment_list" />
 
                     <LinearLayout
+                        android:id="@+id/walletView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:id="@+id/walletView">
+                        android:orientation="vertical">
 
                         <View
                             android:layout_width="match_parent"
@@ -528,25 +528,25 @@
                             android:id="@+id/recyclerView43"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginEnd="@dimen/dimen_24dp"
                             android:layout_marginStart="@dimen/dimen_24dp"
+                            android:layout_marginEnd="@dimen/dimen_24dp"
+                            android:orientation="vertical"
                             tools:itemCount="2"
                             tools:listitem="@layout/item_payment_list" />
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/otherPayView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/otherPayView"
-                        android:visibility="gone"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <View
-                            android:background="@drawable/line_separator"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/dimen_10dp" />
+                            android:layout_height="@dimen/dimen_10dp"
+                            android:background="@drawable/line_separator" />
 
                         <TextView
                             android:id="@+id/textView327"
@@ -564,9 +564,9 @@
                             android:id="@+id/recyclerView44"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginEnd="@dimen/dimen_24dp"
                             android:layout_marginStart="@dimen/dimen_24dp"
+                            android:layout_marginEnd="@dimen/dimen_24dp"
+                            android:orientation="vertical"
                             tools:itemCount="2"
                             tools:listitem="@layout/item_payment_list" />
 
@@ -574,16 +574,16 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/offerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:visibility="gone"
-                        android:id="@+id/offerView">
+                        android:visibility="gone">
 
                         <View
-                            android:background="@drawable/line_separator"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/dimen_10dp" />
+                            android:layout_height="@dimen/dimen_10dp"
+                            android:background="@drawable/line_separator" />
 
                         <TextView
                             android:id="@+id/textView328"
@@ -601,8 +601,8 @@
                             android:id="@+id/recyclerView45"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/dimen_24dp"
                             android:layout_marginStart="@dimen/dimen_24dp"
+                            android:layout_marginEnd="@dimen/dimen_24dp"
                             android:orientation="vertical"
                             tools:itemCount="2"
                             tools:listitem="@layout/item_payment_list" />
@@ -619,17 +619,18 @@
                         android:paddingTop="10dp"
                         android:paddingBottom="5dp"
                         android:visibility="visible">
+
                         <View
-                            android:background="@drawable/line_separator"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/dimen_10dp" />
+                            android:layout_height="@dimen/dimen_10dp"
+                            android:background="@drawable/line_separator" />
 
                         <TextView
-                            android:fontFamily="@font/sf_pro_text_medium"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:layout_marginTop="@dimen/dimen_25dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/sf_pro_text_medium"
                             android:gravity="center"
                             android:text="@string/your_transactions_are_secure_and_certified"
                             android:textColor="#828282"
@@ -639,9 +640,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
-                            android:layout_weight="1"
                             android:layout_marginTop="@dimen/dimen_20dp"
                             android:layout_marginBottom="@dimen/dimen_30dp"
+                            android:layout_weight="1"
                             android:gravity="center"
                             android:visibility="visible">
 
@@ -670,13 +671,25 @@
 
         </androidx.core.widget.NestedScrollView>
 
-        <include
-            layout="@layout/extend_timer"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout168"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout44" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout44">
+
+            <include
+                android:id="@+id/include47"
+                layout="@layout/extend_timer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

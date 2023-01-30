@@ -11,13 +11,13 @@ import com.google.android.flexbox.*
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ItemBookingSessionCinemaLanguageBinding
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
-import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
 
 class BookingCinemaNameAdapter(
     private var nowShowingList: List<BookingResponse.Output.Cinema.Child>,
     private var context: Context,
     private val adlt: Boolean,
+    private val cid: Int,
 ) :
     RecyclerView.Adapter<BookingCinemaNameAdapter.ViewHolder>() {
 
@@ -61,6 +61,7 @@ class BookingCinemaNameAdapter(
                         binding.hcIcon.show()
                     }
                 }
+
                 //Recycler
                 val layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

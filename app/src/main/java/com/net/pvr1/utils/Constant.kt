@@ -26,6 +26,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.evergage.android.Evergage
 import com.net.pvr1.R
@@ -60,13 +61,14 @@ class Constant {
         const val donation = "https://www.pvrcinemas.com/pvrstatic/donation/tnc.html"
         const val pvrCare = " https://www.pvrcinemas.com/pvrstatic/pvr-care/index.html"
         const val merchandise = "https://pvr.macmerise.com/?user_agent=pvr"
-        const val macmerise = "https://pvr.macmerise.com/?user_agent=pvr"
+        const val macmerise =   "https://pvr.macmerise.com/?user_agent=pvr"
         const val termsCondition = "https://www.pvrcinemas.com/pvrstatic/tnc.html"
         const val termsUse = "https://www.pvrcinemas.com/pvrstatic/pvr-terms.html"
         const val privacy = "https://www.pvrcinemas.com/pvrstatic/pvr-privacy.html"
 
         var EXTANDTIME = 0
         var AVAILABETIME = 0
+        var viewModel:ViewModel?= null
 
         const val IS_LOGIN = "is_login"
         var DISPLAY = 1
@@ -94,6 +96,7 @@ class Constant {
         var DISCOUNT = 0.0
         var BOOKING_ID = "0"
         var CINEMA_ID = "0"
+        var CINEMA_CODE = "0"
         var OfferDialogImage = "0"
         var SELECTED_SEAT = 0
         var SESSION_ID = "0"
@@ -172,6 +175,7 @@ class Constant {
         var HYATT = "O107"
         var GYFTR = "O108"
 
+
         fun isPackageInstalled(packageManager: PackageManager): Boolean {
             return try {
                 packageManager.getPackageInfo("com.dreamplug.androidapp.dev", 0)
@@ -238,7 +242,7 @@ class Constant {
             }
         }
 
-        fun setEvergageUserIdSFCM(preference: PreferenceManager) {
+        fun setAverageUserIdSCM(preference: PreferenceManager) {
             val phoneNo = preference.getString(SharedPreference.USER_NUMBER)
             val evergage  = Evergage.getInstance()
             try {

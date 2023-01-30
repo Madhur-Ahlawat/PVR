@@ -50,6 +50,7 @@ import com.net.pvr1.ui.seatLayout.response.ReserveSeatResponse
 import com.net.pvr1.ui.seatLayout.response.SeatResponse
 import com.net.pvr1.ui.splash.response.SplashResponse
 import com.net.pvr1.ui.summery.response.AddFoodResponse
+import com.net.pvr1.ui.summery.response.ExtendTimeResponse
 import com.net.pvr1.ui.summery.response.SetDonationResponse
 import com.net.pvr1.ui.summery.response.SummeryResponse
 import com.net.pvr1.ui.ticketConfirmation.response.TicketBookedResponse
@@ -2970,6 +2971,28 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             singleTicketLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             singleTicketLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    private val extendTimeLiveData = MutableLiveData<NetworkResult<ExtendTimeResponse>>()
+    val extendTimeResponseLiveData: LiveData<NetworkResult<ExtendTimeResponse>>
+        get() = extendTimeLiveData
+
+    suspend fun extendTime(transid: String, bookingid: String, cinemacode: String) {
+        _userResponseLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.extendTime(transid, bookingid, cinemacode, Constant.version, Constant.platform)
+        extendTimeResponse(response)
+    }
+
+    private fun extendTimeResponse(response: Response<ExtendTimeResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            extendTimeLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            extendTimeLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            extendTimeLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 

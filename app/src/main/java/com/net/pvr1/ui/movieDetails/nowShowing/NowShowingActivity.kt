@@ -164,50 +164,7 @@ class NowShowingActivity : AppCompatActivity(), MusicVideoAdapter.RecycleViewIte
             } else {
                 stringBuilder?.append("  •  $data")
             }
-            println("data--->" + data + "----" + stringBuilder.toString())
         }
-
-
-//if (output.equals("")) {
-//            if (output.othergenres != null && !output.othergenres.equals("",ignoreCase = true)) {
-//                if (!movie_format.getText().toString().equalsIgnoreCase("")) {
-////                    tagDataTv.setText(
-////                        movieDetailResponse1.getData().getOthergenres()
-////                            .replaceAll(",", " | ") + " • " + movie_format.getText().toString()
-////                    )
-//                    binding?.textView56?.text=output.othergenres.replace(",", " | ") + " • " + movie_format.getText().toString(
-//
-//                }
-//                else {
-//                    binding?.textView56?.text=output.othergenres.replace(",", " | ")
-//
-//                }
-//            }
-//
-////                Util.applyLetterSpacing(tvMovieGenre, data.getOthergenres().replaceAll(","," | "), PCConstants.LETTER_SPACING);
-//        } else {
-//            stringBuilder = java.lang.StringBuilder()
-//            if (output.tag != null) {
-//                //tags
-//                val stringArray: Array<String> = output.tag.split(",").toTypedArray()
-//                for (k in stringArray.indices) {
-//                    if (k == 0) {
-//                        stringBuilder!!.append(stringArray[k])
-//                    } else {
-//                        stringBuilder!!.append(" " + " • " + " " + stringArray[k])
-//                    }
-//                }
-//                if (!movie_format.getText().toString().equalsIgnoreCase("")) {
-//
-////                    binding?.textView56?.text= stringBuilder.toString() + " • " + movie_format.getText().toString()
-//
-//                } else {
-//                    binding?.textView56?.text=stringBuilder
-//                }
-//            }
-//        }
-
-        //language
 
         //language
         stringBuilder = java.lang.StringBuilder()
@@ -413,13 +370,13 @@ class NowShowingActivity : AppCompatActivity(), MusicVideoAdapter.RecycleViewIte
 
     override fun trailerTrsClick(comingSoonItem: MovieDetailsResponse.Trs) {
         val intent = Intent(this@NowShowingActivity, PlayerActivity::class.java)
-        intent.putExtra("trailerUrl", comingSoonItem.t)
+        intent.putExtra("trailerUrl", comingSoonItem.u)
         startActivity(intent)
     }
 
     override fun musicVideoTrsClick(comingSoonItem: MovieDetailsResponse.Trs) {
         val intent = Intent(this@NowShowingActivity, PlayerActivity::class.java)
-        intent.putExtra("trailerUrl", comingSoonItem.t)
+        intent.putExtra("trailerUrl", comingSoonItem.u)
         startActivity(intent)
     }
 

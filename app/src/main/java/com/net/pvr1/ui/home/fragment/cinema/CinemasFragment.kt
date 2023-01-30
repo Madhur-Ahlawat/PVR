@@ -67,7 +67,6 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
     private val permissionId = 2
     private var lat = ""
     private var lng = ""
-    private var cityName = "Delhi-NCR"
 
     // story board
     private var bannerShow = 0
@@ -155,6 +154,12 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
         ivCross?.setOnClickListener {
             rlBanner?.hide()
         }
+
+        //pull Down
+        binding?.swipeCinema?.setOnRefreshListener{
+            binding?.swipeCinema?.isRefreshing = false
+            authViewModel.cinema(preferences.getCityName(), lat, lng, preferences.getUserId(), "")
+        }
     }
 
     private fun getShimmerData() {
@@ -222,7 +227,7 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                             preferences.cityNameCinema(currentAddress)
                             lat = location.latitude.toString()
                             lng = location.longitude.toString()
-                            authViewModel.cinema(cityName, lat, lng, preferences.getUserId(), "")
+                            authViewModel.cinema(preferences.getCityName(), lat, lng, preferences.getUserId(), "")
                         }
 
                     } catch (e: IOException) {

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
 import com.net.pvr1.ui.food.response.CancelTransResponse
+import com.net.pvr1.ui.summery.response.ExtendTimeResponse
 import com.net.pvr1.ui.summery.response.SetDonationResponse
 import com.net.pvr1.ui.summery.response.SummeryResponse
 import com.net.pvr1.utils.NetworkResult
@@ -84,4 +85,17 @@ class SummeryViewModel @Inject constructor(private val userRepository: UserRepos
             userRepository.cancelTrans(cinemacode, transid, bookingid)
         }
     }
+
+//extendTime
+    val extendTimeLiveData: LiveData<NetworkResult<ExtendTimeResponse>>
+        get() = userRepository.extendTimeResponseLiveData
+
+    fun extendTime(transid: String, bookingid: String, cinemacode: String) {
+        viewModelScope.launch {
+            userRepository.extendTime(transid,bookingid,cinemacode)
+        }
+    }
+
+
+
 }

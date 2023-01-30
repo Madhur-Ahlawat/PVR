@@ -47,6 +47,7 @@ import com.net.pvr1.ui.payment.promoCode.PromoCodeActivity
 import com.net.pvr1.ui.payment.response.*
 import com.net.pvr1.ui.payment.viewModel.PaymentViewModel
 import com.net.pvr1.ui.payment.webView.PaytmWebActivity
+import com.net.pvr1.ui.summery.response.ExtendTimeResponse
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.ACCENTIVE
 import com.net.pvr1.utils.Constant.Companion.AIRTEL
@@ -157,6 +158,10 @@ class PaymentActivity : AppCompatActivity(),
 
     @SuppressLint("SetTextI18n")
     private fun manageFunction() {
+        Constant.viewModel = authViewModel
+
+        extendTime()
+
 //        title
         binding?.include26?.textView108?.text = getString(R.string.payment)
 
@@ -252,6 +257,8 @@ class PaymentActivity : AppCompatActivity(),
     @SuppressLint("SetTextI18n")
     override fun onResume() {
         super.onResume()
+        registerReceiver(br, IntentFilter(BroadcastService.COUNTDOWN_BR))
+
         if (discount_val != "0.0") {
             binding?.cutPrice?.show()
             actualAmt = (intent.getStringExtra("paidAmount")
@@ -1560,4 +1567,92 @@ class PaymentActivity : AppCompatActivity(),
             broadcastReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         )
     }
+
+
+
+    //timerManage
+
+    private fun timerManage() {
+        startService(Intent(this, BroadcastService::class.java))
+    }
+
+    private val br: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+            updateGUI(intent) // or whatever method used to update your GUI fields
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unregisterReceiver(br)
+    }
+
+    override fun onStop() {
+        try {
+            unregisterReceiver(br)
+        } catch (e: java.lang.Exception) {
+            // Receiver was probably already stopped in onPause()
+        }
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        stopService(Intent(this, BroadcastService::class.java))
+        super.onDestroy()
+    }
+
+    @SuppressLint("DefaultLocale", "SetTextI18n")
+    private fun updateGUI(intent: Intent) {
+        if (intent.extras != null) {
+            val millisUntilFinished = intent.getLongExtra("countdown", 0)
+            val second = millisUntilFinished / 1000 % 60
+            val minutes = millisUntilFinished / (1000 * 60) % 60
+            val display = java.lang.String.format("%02d:%02d", minutes, second)
+
+            binding?.include47?.textView394?.text=display + " " +getString(R.string.minRemaining)
+
+            if (millisUntilFinished.toInt() <= Constant.AVAILABETIME){
+                binding?.constraintLayout168?.show()
+            }else{
+                binding?.constraintLayout168?.hide()
+            }
+
+            binding?.include47?.textView395?.setOnClickListener {
+                binding?.constraintLayout168?.hide()
+                unregisterReceiver(br)
+                authViewModel.extendTime(TRANSACTION_ID, BOOKING_ID, CINEMA_ID)
+            }
+
+        }
+    }
+
+    private fun extendTime() {
+        authViewModel.extendTimeLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        retrieveExtendData(it.data.output)
+                    }
+                }
+                is NetworkResult.Error -> {
+
+                }
+                is NetworkResult.Loading -> {
+                }
+            }
+        }
+    }
+
+    private fun retrieveExtendData(output: ExtendTimeResponse.Output) {
+        //extandTime
+        Constant.EXTANDTIME = Constant().convertTime(output.et)
+
+        //AVAIL TIME
+        Constant.AVAILABETIME = Constant().convertTime(output.at)
+
+        timerManage()
+    }
+
+
 }

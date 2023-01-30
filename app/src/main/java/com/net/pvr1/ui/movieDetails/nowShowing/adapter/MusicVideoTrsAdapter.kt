@@ -21,6 +21,7 @@ class MusicVideoTrsAdapter(
     private var listener: RecycleViewItemClickListener,
 ) :
     RecyclerView.Adapter<MusicVideoTrsAdapter.MyViewHolderNowShowing>() {
+    private var rowIndex = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderNowShowing {
         val view = LayoutInflater.from(parent.context)
@@ -30,6 +31,9 @@ class MusicVideoTrsAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolderNowShowing, position: Int) {
         val cinemaItem = nowShowingList[position]
+        if (rowIndex == position && position == 0) {
+            Constant().setMargins(holder.itemView, 60, 0, 0, 0)
+        }
         //title
         holder.title.text =cinemaItem.t
         //subTitle

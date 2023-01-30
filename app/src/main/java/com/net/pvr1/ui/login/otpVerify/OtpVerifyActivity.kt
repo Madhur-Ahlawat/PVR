@@ -1,6 +1,9 @@
 package com.net.pvr1.ui.login.otpVerify
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
@@ -18,6 +21,7 @@ import com.net.pvr1.ui.location.enableLocation.EnableLocationActivity
 import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
 import com.net.pvr1.ui.login.otpVerify.viewModel.OtpVerifyViewModel
+import com.net.pvr1.ui.summery.response.ExtendTimeResponse
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.SmsBroadcastReceiver.SmsBroadcastReceiverListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,8 +45,9 @@ class OtpVerifyActivity : AppCompatActivity() {
     private var signUpClick = 0
 
     //Otp Read
-    private val otpRead = 200
     private var smsBroadcastReceiver: SmsBroadcastReceiver? = null
+
+    private  var from = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOtpVerifyBinding.inflate(layoutInflater, null, false)
@@ -52,8 +57,15 @@ class OtpVerifyActivity : AppCompatActivity() {
     }
 
     private fun manageFunction() {
+        Constant.viewModel = authViewModel
+
         mobile = intent.getStringExtra("mobile").toString()
         newUser = intent.getStringExtra("newUser").toString()
+        from = intent.getStringExtra("from").toString()
+
+        if (from == "seat") {
+            timerManage()
+        }
 
         if (newUser == "false") {
             binding?.textView15?.text = getString(R.string.continue_txt)
@@ -63,12 +75,16 @@ class OtpVerifyActivity : AppCompatActivity() {
 
 //        Read otp
         startSmsUserConsent()
+
         //moved another Page
         movedNext()
+
         //verify Otp
         otpVerify()
+
         //newUser
         registerUser()
+        extendTime()
     }
 
     //For Auto Read otp
@@ -226,7 +242,7 @@ class OtpVerifyActivity : AppCompatActivity() {
     }
 
     private fun retrieveResisterData(output: ResisterResponse.Output) {
-        Constant.setEvergageUserIdSFCM(preferences)
+        Constant.setAverageUserIdSCM(preferences)
         Constant.setUPSFMCSDK(preferences)
 
         preferences.saveIsLogin(true)
@@ -243,7 +259,7 @@ class OtpVerifyActivity : AppCompatActivity() {
 
 
     private fun retrieveData(output: ResisterResponse.Output?) {
-        Constant.setEvergageUserIdSFCM(preferences)
+        Constant.setAverageUserIdSCM(preferences)
         Constant.setUPSFMCSDK(preferences)
 
         preferences.saveIsLogin(true)
@@ -321,11 +337,11 @@ class OtpVerifyActivity : AppCompatActivity() {
         smsBroadcastReceiver?.smsBroadcastReceiverListener = object : SmsBroadcastReceiverListener {
             override fun onSuccess(intent: Intent?) {
                 resultLauncher.launch(intent)
-
-//                startActivityForResult(intent, otpRead)
             }
 
-            override fun onFailure() {}
+            override fun onFailure() {
+
+            }
         }
         val intentFilter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
         registerReceiver(smsBroadcastReceiver, intentFilter)
@@ -337,9 +353,101 @@ class OtpVerifyActivity : AppCompatActivity() {
         registerBroadcastReceiver()
     }
 
+
+    private fun timerManage() {
+        startService(Intent(this, BroadcastService::class.java))
+
+    }
+
+    private val br: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+            updateGUI(intent) // or whatever method used to update your GUI fields
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        registerReceiver(br, IntentFilter(BroadcastService.COUNTDOWN_BR))
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unregisterReceiver(br)
+    }
+
     @Override
     override fun onStop() {
         super.onStop()
         unregisterReceiver(smsBroadcastReceiver)
+
+        try {
+            unregisterReceiver(br)
+        } catch (e: java.lang.Exception) {
+            // Receiver was probably already stopped in onPause()
+        }
     }
+
+    override fun onDestroy() {
+        stopService(Intent(this, BroadcastService::class.java))
+        super.onDestroy()
+    }
+
+    @SuppressLint("DefaultLocale", "SetTextI18n")
+    private fun updateGUI(intent: Intent) {
+        if (intent.extras != null) {
+            val millisUntilFinished = intent.getLongExtra("countdown", 0)
+            val second = millisUntilFinished / 1000 % 60
+            val minutes = millisUntilFinished / (1000 * 60) % 60
+            val display = java.lang.String.format("%02d:%02d", minutes, second)
+
+            binding?.include47?.textView394?.text = display + " " + getString(R.string.minRemaining)
+
+            if (millisUntilFinished.toInt() <= Constant.AVAILABETIME) {
+                binding?.constraintLayout168?.show()
+            } else {
+                binding?.constraintLayout168?.hide()
+            }
+
+            binding?.include47?.textView395?.setOnClickListener {
+                binding?.constraintLayout168?.hide()
+                unregisterReceiver(br)
+                authViewModel.extendTime(
+                    Constant.TRANSACTION_ID,
+                    Constant.BOOKING_ID,
+                    Constant.CINEMA_ID
+                )
+
+            }
+
+        }
+    }
+
+    private fun extendTime() {
+        authViewModel.extendTimeLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        retrieveExtendData(it.data.output)
+                    }
+                }
+                is NetworkResult.Error -> {
+
+                }
+                is NetworkResult.Loading -> {
+                }
+            }
+        }
+    }
+
+    private fun retrieveExtendData(output: ExtendTimeResponse.Output) {
+        //extandTime
+        Constant.EXTANDTIME = Constant().convertTime(output.et)
+
+        //AVAIL TIME
+        Constant.AVAILABETIME = Constant().convertTime(output.at)
+
+        timerManage()
+    }
+
 }

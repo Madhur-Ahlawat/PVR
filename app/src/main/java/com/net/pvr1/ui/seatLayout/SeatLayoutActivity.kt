@@ -420,11 +420,19 @@ class SeatLayoutActivity : AppCompatActivity(),
 
     //InitResponse
     private fun retrieverInitData(output: InitResponse.Output) {
-        TRANSACTION_ID = output.transid
-        //extand time
-        EXTANDTIME = Constant().convertTime(output.et.toInt())
+//        //extandTime
+//        EXTANDTIME = Constant().convertTime(output.et.toInt())
+//
+//        //AVAIL TIME
+//        AVAILABETIME = Constant().convertTime(output.at.toInt())
+
+        //extandTime
+        EXTANDTIME = Constant().convertTime(1)
+
         //AVAIL TIME
-        AVAILABETIME = Constant().convertTime(output.at.toInt())
+        AVAILABETIME = Constant().convertTime(1)
+
+        TRANSACTION_ID = output.transid
 
         for (item in selectedSeats) {
             val price = item.priceCode
@@ -1884,8 +1892,8 @@ class SeatLayoutActivity : AppCompatActivity(),
 
             removeSelectedSeats(seat)
 
-            println("selectedSeats1--->"+selectedSeats1?.size+selectedSeats1)
-            for (data in selectedSeats1!!) {
+            println("selectedSeats1--->"+ selectedSeats1.size +selectedSeats1)
+            for (data in selectedSeats1) {
                 flagHc = true
                 if (data.st == 1 || data.st == 2) {
                     val seat = data.seatView.tag as SeatTagData

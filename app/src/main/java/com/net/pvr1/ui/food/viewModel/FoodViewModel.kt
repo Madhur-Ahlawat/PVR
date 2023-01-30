@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
-import com.net.pvr1.ui.food.response.CancelTransResponse
 import com.net.pvr1.ui.food.response.FoodResponse
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,9 +34,6 @@ class FoodViewModel @Inject constructor(private val userRepository: UserReposito
             userRepository.foodLayout(userid,ccode,bookingid,cbookid,transid,type,audi,seat,city,qr,iserv,isSpi)
         }
     }
-
-    val cancelTransResponseLiveData: LiveData<NetworkResult<CancelTransResponse>>
-        get() = userRepository.cancelTransResponseLiveData
 
     fun cancelTrans(
         cinemacode: String,

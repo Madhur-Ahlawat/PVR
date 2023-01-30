@@ -45,7 +45,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.shts.android.storiesprogressview.StoriesProgressView
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 
 @AndroidEntryPoint
@@ -105,6 +104,8 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     }
 
     private fun manageFunction() {
+        Constant.viewModel = authViewModel
+
         authViewModel.food(
             preferences.getUserId(),
             CINEMA_ID,

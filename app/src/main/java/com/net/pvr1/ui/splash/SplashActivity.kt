@@ -55,13 +55,6 @@ class SplashActivity : AppCompatActivity() {
         val view = binding?.root
         setContentView(view)
 
-        //extandTime
-        Constant.EXTANDTIME = Constant().convertTime(2)
-
-        //AVAIL TIME
-        Constant.AVAILABETIME = Constant().convertTime(1)
-
-
         //OnBoarding Click Check
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE)
         clickOnBoarding = sharedpreferences?.getBoolean(OnBoardingClick, false)!!
@@ -77,7 +70,7 @@ class SplashActivity : AppCompatActivity() {
             networkDialog()
         }
         summeryDetails()
-        Constant.setEvergageUserIdSFCM(preferences)
+        Constant.setAverageUserIdSCM(preferences)
         Constant.setUPSFMCSDK(preferences)
 
     }
@@ -85,7 +78,6 @@ class SplashActivity : AppCompatActivity() {
     private fun movedNext() {
         val runnable = Runnable {
             if (preferences.getIsLogin()) {
-                printLog("location--->${Constant().locationServicesEnabled(this@SplashActivity)}---->${preferences.getCityName()}")
                 if (!Constant().locationServicesEnabled(this@SplashActivity) ) {
                     val intent = Intent(this@SplashActivity, EnableLocationActivity::class.java)
                     startActivity(intent)

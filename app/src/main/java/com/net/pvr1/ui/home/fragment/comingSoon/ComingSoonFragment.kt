@@ -1,17 +1,17 @@
 package com.net.pvr1.ui.home.fragment.comingSoon
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.BroadcastReceiver
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityComingSoonBinding
+import com.net.pvr1.databinding.TrailersDialogBinding
 import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
@@ -33,6 +34,9 @@ import com.net.pvr1.ui.home.fragment.comingSoon.search.CinemaSearchActivity
 import com.net.pvr1.ui.home.fragment.comingSoon.viewModel.ComingSoonViewModel
 import com.net.pvr1.ui.movieDetails.comingSoonDetails.ComingSoonDetailsActivity
 import com.net.pvr1.ui.movieDetails.comingSoonDetails.adapter.ComDetailsHomePhAdapter
+import com.net.pvr1.ui.movieDetails.nowShowing.adapter.MusicVideoTrsAdapter
+import com.net.pvr1.ui.movieDetails.nowShowing.adapter.TrailerTrsAdapter
+import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.ui.player.PlayerActivity
 import com.net.pvr1.utils.*
 import com.squareup.picasso.Callback
@@ -44,8 +48,12 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ComingSoonFragment : Fragment(),
-    ComingSoonMovieAdapter.VideoPlay, GenericFilterComing.onButtonSelected ,
-    StoriesProgressView.StoriesListener{
+    ComingSoonMovieAdapter.VideoPlay,
+    GenericFilterComing.onButtonSelected ,
+    StoriesProgressView.StoriesListener,
+    TrailerTrsAdapter.RecycleViewItemClickListener,
+    MusicVideoTrsAdapter.RecycleViewItemClickListener
+{
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityComingSoonBinding? = null
@@ -79,6 +87,11 @@ class ComingSoonFragment : Fragment(),
     //internet Check
     private var broadcastReceiver: BroadcastReceiver? = null
 
+
+    private var musicData: ArrayList<MovieDetailsResponse.Trs> =
+        ArrayList<MovieDetailsResponse.Trs>()
+    private var videoData: ArrayList<MovieDetailsResponse.Trs> =
+        ArrayList<MovieDetailsResponse.Trs>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -153,9 +166,21 @@ class ComingSoonFragment : Fragment(),
     }
 
     private fun movedNext() {
+//        Search
         binding?.imageView167?.setOnClickListener {
             val intent = Intent(requireActivity(), CinemaSearchActivity::class.java)
             startActivity(intent)
+        }
+
+        //pull Down
+        binding?.swipeComingSoon?.setOnRefreshListener{
+            binding?.swipeComingSoon?.isRefreshing = false
+            authViewModel.comingSoon(preferences.getCityName(), genre, language, preferences.getUserId())
+        }
+
+        //banner
+        ivCross?.setOnClickListener {
+            RlBanner?.hide()
         }
     }
 
@@ -272,9 +297,13 @@ class ComingSoonFragment : Fragment(),
     }
 
     override fun onTrailerClick(comingSoonItem: CommingSoonResponse.Output.Movy) {
-        val intent = Intent(requireActivity(), PlayerActivity::class.java)
-        intent.putExtra("trailerUrl", comingSoonItem.videoUrl)
-        startActivity(intent)
+        if (comingSoonItem.trs.isNotEmpty() && comingSoonItem.trs.size > 1) {
+            trailerList(comingSoonItem)
+        } else {
+            val intent = Intent(requireActivity(), PlayerActivity::class.java)
+            intent.putExtra("trailerUrl", comingSoonItem.videoUrl)
+            startActivity(intent)
+        }
     }
 
     override fun onApply(
@@ -491,11 +520,10 @@ class ComingSoonFragment : Fragment(),
     }
 
     private fun showButton(bannerModel: CommingSoonResponse.Output.Pu) {
-        if (bannerModel.type.equals("video",ignoreCase = true)) {
+        if (bannerModel.type.uppercase(Locale.getDefault()) == "VIDEO" && bannerModel.trailerUrl!=""){
             ivPlay?.show()
             tvButton?.hide()
-        } else if (bannerModel.type.equals("image",ignoreCase = true) && bannerModel.redirect_url.equals("",ignoreCase = true)
-        ) {
+        } else if (bannerModel.type.uppercase(Locale.getDefault()) == "IMAGE" && bannerModel.redirect_url != "") {
             ivPlay?.hide()
             tvButton?.text = bannerModel.buttonText
             tvButton?.show()
@@ -513,5 +541,97 @@ class ComingSoonFragment : Fragment(),
             IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         )
     }
+
+
+
+    @SuppressLint("SetTextI18n")
+    private fun trailerList(comingSoonItem: CommingSoonResponse.Output.Movy) {
+        musicData.clear()
+        videoData.clear()
+        for (i in 0 until comingSoonItem.trs.size) {
+            if (comingSoonItem.trs[i].ty.equals("MUSIC", ignoreCase = true)) {
+                musicData.add(comingSoonItem.trs[i])
+            } else {
+                videoData.add(comingSoonItem.trs[i])
+            }
+        }
+
+        val dialogTrailer = Dialog(requireActivity())
+        dialogTrailer.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogTrailer.setCancelable(false)
+        val inflater = LayoutInflater.from(requireContext())
+        val bindingTrailer = TrailersDialogBinding.inflate(inflater)
+        dialogTrailer.setContentView(bindingTrailer.root)
+        dialogTrailer.window?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+        dialogTrailer.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+        )
+        dialogTrailer.window?.setGravity(Gravity.CENTER)
+        dialogTrailer.show()
+
+        //title
+        bindingTrailer.titleLandingScreen.text = comingSoonItem.name
+
+        val censor =
+            comingSoonItem.censor + " " + getString(R.string.dots) + " " + java.lang.String.join(",", comingSoonItem.language)
+
+        bindingTrailer.tvCensorLang.text =
+            censor.replace("[", "").replace("]", "").replace("(", "").replace(")", "")
+
+
+        bindingTrailer.subTitleLandingScreen.text =
+            comingSoonItem.otherlanguages + " " + getString(R.string.dots) + " " + java.lang.String.join(
+                ",",
+                comingSoonItem.othergenres
+            )
+
+        //image
+        Glide.with(requireActivity())
+            .load(comingSoonItem.miv)
+            .error(R.drawable.placeholder_vertical)
+            .into(bindingTrailer.imageLandingScreen)
+
+        //dialog Dismiss
+        bindingTrailer.include49.imageView58.setOnClickListener {
+            dialogTrailer.dismiss()
+        }
+
+        //title
+        bindingTrailer.include49.textView108.text = getString(R.string.trailer_amp_music)
+
+        //button
+        bindingTrailer.include50.textView5.text = getString(R.string.book_now)
+
+        bindingTrailer.include50.textView5.setOnClickListener {
+
+        }
+
+//trailer
+        val gridLayoutManager1 =
+            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+        val trailerAdapter = TrailerTrsAdapter(videoData, requireContext(), this)
+        bindingTrailer.recyclerView5.layoutManager = gridLayoutManager1
+        bindingTrailer.recyclerView5.adapter = trailerAdapter
+
+//music
+        val gridLayoutManager =
+            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+        val musicVideoTrsAdapter = MusicVideoTrsAdapter(musicData, requireContext(), this)
+        bindingTrailer.recyclerMusic.layoutManager = gridLayoutManager
+        bindingTrailer.recyclerMusic.adapter = musicVideoTrsAdapter
+    }
+
+    override fun musicVideoTrsClick(comingSoonItem: MovieDetailsResponse.Trs) {
+        val intent = Intent(requireActivity(), PlayerActivity::class.java)
+        intent.putExtra("trailerUrl", comingSoonItem.u)
+        startActivity(intent)
+    }
+
+    override fun trailerTrsClick(comingSoonItem: MovieDetailsResponse.Trs) {
+        val intent = Intent(requireActivity(), PlayerActivity::class.java)
+        intent.putExtra("trailerUrl", comingSoonItem.u)
+        startActivity(intent)
+    }
+
 
 }

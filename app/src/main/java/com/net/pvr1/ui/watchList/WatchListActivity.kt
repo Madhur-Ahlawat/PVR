@@ -17,6 +17,7 @@ import com.net.pvr1.ui.watchList.response.WatchListResponse
 import com.net.pvr1.ui.watchList.viewModel.WatchListViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -106,7 +107,7 @@ class WatchListActivity : AppCompatActivity(),WatchListAdapter.RecycleViewItemCl
 
     private fun retrieveData(output: ArrayList<WatchListResponse.Output>) {
         //shimmer
-        binding?.constraintLayout164?.show()
+        binding?.constraintLayout164?.hide()
         //details
         binding?.constrainLayout165?.show()
 

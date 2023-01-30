@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.home.fragment.comingSoon.response
 
+import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import java.io.Serializable
 
 data class CommingSoonResponse(
@@ -13,7 +14,7 @@ data class CommingSoonResponse(
     data class Output(
         val genre: ArrayList<String>,
         val language: ArrayList<String>,
-        val movies: List<Movy>,
+        val movies: ArrayList<Movy>,
         val ph: ArrayList<Ph>,
         val pu: ArrayList<Pu>
     ):Serializable{
@@ -38,7 +39,7 @@ data class CommingSoonResponse(
             val prebook: Boolean,
             val prebookId: String,
             val release: Boolean,
-            val trs: List<Any>,
+            val trs: ArrayList<MovieDetailsResponse.Trs>,
             val ul: Boolean,
             val videoUrl: String,
             val webimage: String,

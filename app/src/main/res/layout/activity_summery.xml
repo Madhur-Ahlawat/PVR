@@ -1193,7 +1193,6 @@
             android:layout_height="wrap_content">
 
             <include
-                android:visibility="gone"
                 android:id="@+id/include48"
                 layout="@layout/extend_timer"
                 android:layout_width="match_parent"

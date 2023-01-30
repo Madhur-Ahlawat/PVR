@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
 import com.net.pvr1.ui.payment.response.*
+import com.net.pvr1.ui.summery.response.ExtendTimeResponse
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -209,6 +210,27 @@ class PaymentViewModel @Inject constructor(private val userRepository: UserRepos
     ) {
         viewModelScope.launch {
             userRepository.recurringInit(userid, bookingid)
+        }
+    }
+
+    fun cancelTrans(
+        cinemacode: String,
+        transid: String,
+        bookingid: String
+    ) {
+        viewModelScope.launch {
+            userRepository.cancelTrans(cinemacode,transid,bookingid)
+        }
+    }
+
+
+    //extendTime
+    val extendTimeLiveData: LiveData<NetworkResult<ExtendTimeResponse>>
+        get() = userRepository.extendTimeResponseLiveData
+
+    fun extendTime(transid: String, bookingid: String, cinemacode: String) {
+        viewModelScope.launch {
+            userRepository.extendTime(transid,bookingid,cinemacode)
         }
     }
 

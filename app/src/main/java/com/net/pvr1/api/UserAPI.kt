@@ -8,11 +8,11 @@ import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.food.old.reponse.OldFoodResponse
 import com.net.pvr1.ui.food.response.CancelTransResponse
 import com.net.pvr1.ui.food.response.FoodResponse
-import com.net.pvr1.ui.home.formats.response.FormatResponse
 import com.net.pvr1.ui.giftCard.response.ActiveGCResponse
 import com.net.pvr1.ui.giftCard.response.GiftCardDetailResponse
 import com.net.pvr1.ui.giftCard.response.GiftCardListResponse
 import com.net.pvr1.ui.giftCard.response.UploadImageGC
+import com.net.pvr1.ui.home.formats.response.FormatResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaPreferenceResponse
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr1.ui.home.fragment.comingSoon.response.CommingSoonResponse
@@ -47,6 +47,7 @@ import com.net.pvr1.ui.seatLayout.response.ReserveSeatResponse
 import com.net.pvr1.ui.seatLayout.response.SeatResponse
 import com.net.pvr1.ui.splash.response.SplashResponse
 import com.net.pvr1.ui.summery.response.AddFoodResponse
+import com.net.pvr1.ui.summery.response.ExtendTimeResponse
 import com.net.pvr1.ui.summery.response.SetDonationResponse
 import com.net.pvr1.ui.summery.response.SummeryResponse
 import com.net.pvr1.ui.ticketConfirmation.response.TicketBookedResponse
@@ -1227,6 +1228,16 @@ interface UserAPI {
         @Query("pt") platform: String,
         @Query("did") did: String
     ): Response<GiftCardDetailResponse>
+
+
+    @POST("api/trans/extendtrans")
+    suspend fun extendTime(
+        @Query("transid") transid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("cinemacode") cinemacode: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<ExtendTimeResponse>
 
 
 }

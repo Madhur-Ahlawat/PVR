@@ -38,6 +38,7 @@ class ComingSoonMovieAdapter(
             val comingSoonItem = nowShowingList[position]
             //title
             holder.title.text = comingSoonItem.name
+
             //Image
             Glide.with(context)
                 .load(comingSoonItem.miv)
@@ -140,7 +141,6 @@ class ComingSoonMovieAdapter(
         fun onTrailerClick(comingSoonItem: CommingSoonResponse.Output.Movy)
     }
 
-    @SuppressLint("SetTextI18n")
     private fun censorLanguage(
         otherLang: String?,
         lang: String?,
@@ -149,36 +149,30 @@ class ComingSoonMovieAdapter(
         activityContext: Context,
         otherLanguage: TextView
     ) {
-        try {
-            val stringBuilder = StringBuilder()
-            var isChange = false
-            if (censor.replace("\\(".toRegex(), "").replace("\\)".toRegex(), "")
-                    .equals("A", ignoreCase = true)
-            ) isChange = true
-            stringBuilder.append(
-                censor.replace("\\(".toRegex(), "").replace("\\)".toRegex(), "") + " • "
-            )
-            if (otherLang != null && otherLang != "") {
-                if (otherLang.split(",").toTypedArray().size > 2) {
-                    otherLanguage.visibility = View.VISIBLE
-                    otherLanguage.text = "+" + (otherLang.split(",").toTypedArray().size - 2)
-                    stringBuilder.append(
-                        otherLang.split(",").toTypedArray()[0] + " | " + otherLang.split(",")
-                            .toTypedArray()[1]
-                    )
-                } else {
-                    otherLanguage.hide()
-                    stringBuilder.append(otherLang.replace(",".toRegex(), " | "))
-                }
+        val stringBuilder = StringBuilder()
+        var isChange = false
+        if (censor.replace("\\(".toRegex(), "").replace("\\)".toRegex(), "")
+                .equals("A", ignoreCase = true)
+        ) isChange = true
+        stringBuilder.append(
+            censor.replace("\\(".toRegex(), "").replace("\\)".toRegex(), "") + " • "
+        )
+        if (otherLang != null && otherLang != "") {
+            if (otherLang.split(",").toTypedArray().size > 2) {
+                stringBuilder.append(
+                    otherLang.split(",").toTypedArray()[0] + " | " + otherLang.split(",")
+                        .toTypedArray()[1]
+                )
             } else {
-                stringBuilder.append(lang)
+//                otherLanguage.hide()
+                stringBuilder.append(otherLang.replace(",".toRegex(), " | "))
             }
-            if (!isChange) tvCensorLang.text = stringBuilder else Constant().spannableText(
-                activityContext as Activity, stringBuilder, tvCensorLang
-            )
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } else {
+            stringBuilder.append(lang)
         }
+        if (!isChange) tvCensorLang.text = stringBuilder else Constant().spannableText(
+            activityContext as Activity, stringBuilder, tvCensorLang
+        )
     }
 
 

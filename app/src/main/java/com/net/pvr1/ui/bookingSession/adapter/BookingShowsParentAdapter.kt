@@ -51,7 +51,7 @@ class BookingShowsParentAdapter(
                         val gridLayout3 =
                             GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
                         val bookingShowsParentAdapter =
-                            BookingCinemaNameAdapter(this.childs, context,adlt)
+                            BookingCinemaNameAdapter(this.childs, context, adlt, cid)
                         binding.recyclerView7.layoutManager = gridLayout3
                         binding.recyclerView7.adapter = bookingShowsParentAdapter
                     } else {
@@ -86,7 +86,7 @@ class BookingShowsParentAdapter(
                         val gridLayout3 =
                             GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
                         val bookingShowsParentAdapter =
-                            BookingCinemaNameAdapter(this.childs, context,adlt)
+                            BookingCinemaNameAdapter(this.childs, context,adlt,this.cid)
                         binding.recyclerView7.layoutManager = gridLayout3
                         binding.recyclerView7.adapter = bookingShowsParentAdapter
                     } else {

@@ -83,7 +83,7 @@ class HomeMoviesAdapter(
                 }
 
                 binding.imageView35.setOnClickListener {
-                    listener.onTrailerClick(this.mtrailerurl)
+                    listener.onTrailerClick(this.mtrailerurl,this)
                 }
 
                 censorLanguage(
@@ -158,7 +158,7 @@ class HomeMoviesAdapter(
     }
 
     interface RecycleViewItemClickListener {
-        fun onTrailerClick(comingSoonItem: String)
+        fun onTrailerClick(comingSoonItem: String, trs: HomeResponse.Mv)
         fun onMoviesClick(comingSoonItem: HomeResponse.Mv)
         fun onBookClick(comingSoonItem: HomeResponse.Mv)
     }

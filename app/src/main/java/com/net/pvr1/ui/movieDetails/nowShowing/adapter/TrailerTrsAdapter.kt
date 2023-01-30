@@ -50,6 +50,7 @@ class TrailerTrsAdapter(
                     notifyDataSetChanged()
                 }
                 val videoId = Constant().extractYoutubeId(this.u)
+
                 val imageUrl =
                     "https://img.youtube.com/vi/" + videoId.toString() + "/mqdefault.jpg" //
 

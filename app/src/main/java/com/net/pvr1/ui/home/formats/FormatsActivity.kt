@@ -173,7 +173,7 @@ class FormatsActivity : AppCompatActivity() , FormatCategoryAdapter.RecycleViewI
         }
     }
 
-    override fun onTrailerClick(string: String) {
+    override fun onTrailerClick(string: String, trs: HomeResponse.Mv) {
         val intent = Intent(this@FormatsActivity, PlayerActivity::class.java)
         intent.putExtra("trailerUrl", string)
         startActivity(intent)

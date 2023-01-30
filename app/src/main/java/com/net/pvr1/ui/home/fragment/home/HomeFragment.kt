@@ -35,6 +35,7 @@ import com.google.gson.Gson
 import com.google.gson.internal.LinkedTreeMap
 import com.net.pvr1.R
 import com.net.pvr1.databinding.FragmentHomeBinding
+import com.net.pvr1.databinding.TrailersDialogBinding
 import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.bookingSession.BookingActivity
 import com.net.pvr1.ui.dailogs.LoaderDialog
@@ -49,6 +50,9 @@ import com.net.pvr1.ui.home.fragment.more.profile.userDetails.ProfileActivity
 import com.net.pvr1.ui.home.interfaces.PlayPopup
 import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingActivity
+import com.net.pvr1.ui.movieDetails.nowShowing.adapter.MusicVideoTrsAdapter
+import com.net.pvr1.ui.movieDetails.nowShowing.adapter.TrailerTrsAdapter
+import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.ui.myBookings.MyBookingsActivity
 import com.net.pvr1.ui.player.PlayerActivity
 import com.net.pvr1.ui.scanner.ScannerActivity
@@ -71,7 +75,9 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     HomeSliderAdapter.RecycleViewItemClickListener,
     HomePromotionAdapter.RecycleViewItemClickListener,
     HomeMoviesAdapter.RecycleViewItemClickListener, HomeOfferAdapter.RecycleViewItemClickListener,
-    GenericFilterHome.onButtonSelected, StoriesProgressView.StoriesListener {
+    GenericFilterHome.onButtonSelected, StoriesProgressView.StoriesListener,
+    MusicVideoTrsAdapter.RecycleViewItemClickListener,
+    TrailerTrsAdapter.RecycleViewItemClickListener {
 
     private var binding: FragmentHomeBinding? = null
 
@@ -111,6 +117,12 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     //internet Check
     private var broadcastReceiver: BroadcastReceiver? = null
+
+
+    private var musicData: ArrayList<MovieDetailsResponse.Trs> =
+        ArrayList<MovieDetailsResponse.Trs>()
+    private var videoData: ArrayList<MovieDetailsResponse.Trs> =
+        ArrayList<MovieDetailsResponse.Trs>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -160,7 +172,9 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             binding?.constraintLayout135?.show()
 
 //            nextBooking
-            authViewModel.nextBooking(preferences.getUserId(),Constant().getDeviceId(requireActivity()))
+            authViewModel.nextBooking(
+                preferences.getUserId(), Constant().getDeviceId(requireActivity())
+            )
 
         } else {
             binding?.includeAppBar?.profileBtn?.hide()
@@ -226,6 +240,11 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             listener?.onShowPrivilege()
         }
 
+        //pull Down
+        binding?.swipeHome?.setOnRefreshListener {
+            binding?.swipeHome?.isRefreshing = false
+            getMovieFormatFromApi()
+        }
     }
 
     private fun createQr() {
@@ -360,7 +379,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         ViewCompat.setNestedScrollingEnabled(binding?.recyclerMovies!!, false)
 
         //Offer
-        val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        val layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         val snapHelper: SnapHelper = PagerSnapHelper()
         binding?.recyclerOffer?.layoutManager = layoutManager
         binding?.recyclerOffer?.onFlingListener = null
@@ -396,17 +416,16 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             initBanner(output.pu)
         }
 
-        if (preferences.getIsLogin())
-            recommend(output.rm)
+        if (preferences.getIsLogin()) recommend(output.rm)
     }
 
     @SuppressLint("SetTextI18n")
     private fun recommend(rm: HomeResponse.Rm) {
-        if (upcomingBooking==true){
+        if (upcomingBooking == true) {
 
             binding?.homeRecommend?.CLLayout1?.hide()
             binding?.homeRecommend?.CLLayout2?.show()
-        }else{
+        } else {
             binding?.homeRecommend?.CLLayout1?.show()
 
             binding?.homeRecommend?.CLLayout2?.hide()
@@ -422,9 +441,13 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
             //trailer
             binding?.homeRecommend?.playBtn?.setOnClickListener {
-                val intent = Intent(requireActivity(), PlayerActivity::class.java)
-                intent.putExtra("trailerUrl", rm.mtrailerurl)
-                startActivity(intent)
+                if (rm.trs.isNotEmpty() && rm.trs.size > 1) {
+//                    trailerList(rm.trs)
+                } else {
+                    val intent = Intent(requireActivity(), PlayerActivity::class.java)
+                    intent.putExtra("trailerUrl", rm.mtrailerurl)
+                    startActivity(intent)
+                }
             }
 
             //details
@@ -472,11 +495,10 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 binding?.homeRecommend?.tvNewRe?.hide()
             }
 
-            addCensor(rm,binding?.homeRecommend?.tvCensorLang)
+            addCensor(rm, binding?.homeRecommend?.tvCensorLang)
 
 
-            if (!TextUtils.isEmpty(rm.rtt))
-                binding?.homeRecommend?.tvRecomm?.text =
+            if (!TextUtils.isEmpty(rm.rtt)) binding?.homeRecommend?.tvRecomm?.text =
                 rm.rtt else binding?.homeRecommend?.tvRecomm?.text = "TRENDING"
         } else {
             binding?.constraintLayout135?.hide()
@@ -486,13 +508,14 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     private fun addCensor(rm: HomeResponse.Rm, tvCensorLang: TextView?) {
         val stringBuilder = StringBuilder()
         var ssChange = false
-        if (rm.ce.replace("\\(", "").replace("\\)", "")
-                .equals("A",ignoreCase = true)) ssChange = true
+        if (rm.ce.replace("\\(", "").replace("\\)", "").equals("A", ignoreCase = true)) ssChange =
+            true
         stringBuilder.append(rm.ce.replace("\\(", "").replace("\\)", "") + " • ")
         for (i in 0 until rm.mfs.size) {
-            val uiList: MutableList<List<String>> = listOf(rm.mfs[i].split(",")) as MutableList<List<String>>
+            val uiList: MutableList<List<String>> =
+                listOf(rm.mfs[i].split(",")) as MutableList<List<String>>
             if (uiList.isNotEmpty()) {
-                if (rm.mfs.size - 1 == i){
+                if (rm.mfs.size - 1 == i) {
                     printLog("stringBuilder--qd->${uiList[0]}---->${rm.mfs[i]}")
 
                     stringBuilder.append(uiList[0])
@@ -502,23 +525,23 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             }
 
         }
-        if (!ssChange){
+        if (!ssChange) {
             printLog("stringBuilder--->${stringBuilder}")
-            tvCensorLang?.text = stringBuilder.toString().replace("[", "").replace("]", "").replace("(", "").replace(")", "")
+            tvCensorLang?.text =
+                stringBuilder.toString().replace("[", "").replace("]", "").replace("(", "")
+                    .replace(")", "")
 
-        }
-        else {
+        } else {
             printLog("stringBuilder---2>${stringBuilder}")
             spannableTextBeing(
-               stringBuilder,
-                tvCensorLang!!
+                stringBuilder, tvCensorLang!!
             )
 
         }
     }
+
     private fun spannableTextBeing(
-        stringBuilder: java.lang.StringBuilder?,
-        tvCensorLang: TextView
+        stringBuilder: java.lang.StringBuilder?, tvCensorLang: TextView
     ) {
         val ss = SpannableString(stringBuilder)
         ss.setSpan(
@@ -555,10 +578,15 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         startActivity(intent)
     }
 
-    override fun onTrailerClick(string: String) {
-        val intent = Intent(requireActivity(), PlayerActivity::class.java)
-        intent.putExtra("trailerUrl", string)
-        startActivity(intent)
+    override fun onTrailerClick(string: String, mv: HomeResponse.Mv) {
+        if (mv.trs.isNotEmpty() && mv.trs.size > 1) {
+            trailerList(mv)
+        } else {
+            val intent = Intent(requireActivity(), PlayerActivity::class.java)
+            intent.putExtra("trailerUrl", string)
+            startActivity(intent)
+        }
+
     }
 
     override fun onMoviesClick(comingSoonItem: HomeResponse.Mv) {
@@ -574,11 +602,90 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     override fun onOfferClick(comingSoonItem: HomeResponse.Cp) {
-        if (comingSoonItem.t != null && comingSoonItem.t.equals("campaign-VIDEO", ignoreCase = true)) {
+        if (comingSoonItem.t != null && comingSoonItem.t.equals(
+                "campaign-VIDEO", ignoreCase = true
+            )
+        ) {
             val intent = Intent(requireActivity(), PlayerActivity::class.java)
             intent.putExtra("trailerUrl", comingSoonItem.mtrailerurl)
             startActivity(intent)
         }
+    }
+
+
+    @SuppressLint("SetTextI18n")
+    private fun trailerList(mv: HomeResponse.Mv) {
+        musicData.clear()
+        videoData.clear()
+        for (i in 0 until mv.trs.size) {
+            if (mv.trs[i].ty.equals("MUSIC", ignoreCase = true)) {
+                musicData.add(mv.trs[i])
+            } else {
+                videoData.add(mv.trs[i])
+            }
+        }
+
+        val dialogTrailer = Dialog(requireActivity())
+        dialogTrailer.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogTrailer.setCancelable(false)
+        val inflater = LayoutInflater.from(requireContext())
+        val bindingTrailer = TrailersDialogBinding.inflate(inflater)
+        dialogTrailer.setContentView(bindingTrailer.root)
+        dialogTrailer.window?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+        dialogTrailer.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+        )
+        dialogTrailer.window?.setGravity(Gravity.CENTER)
+        dialogTrailer.show()
+
+        //title
+        bindingTrailer.titleLandingScreen.text = mv.n
+
+        val censor =
+            mv.ce + " " + getString(R.string.dots) + " " + java.lang.String.join(",", mv.grs)
+
+        bindingTrailer.tvCensorLang.text =
+            censor.replace("[", "").replace("]", "").replace("(", "").replace(")", "")
+
+
+        bindingTrailer.subTitleLandingScreen.text =
+            mv.otherlanguages + " " + getString(R.string.dots) + " " + java.lang.String.join(
+                ",",
+                mv.mfs
+            )
+
+        //image
+        Glide.with(requireActivity()).load(mv.miv).error(R.drawable.placeholder_vertical)
+            .into(bindingTrailer.imageLandingScreen)
+
+        //dialog Dismiss
+        bindingTrailer.include49.imageView58.setOnClickListener {
+            dialogTrailer.dismiss()
+        }
+
+        //title
+        bindingTrailer.include49.textView108.text = getString(R.string.trailer_amp_music)
+
+        //button
+        bindingTrailer.include50.textView5.text = getString(R.string.book_now)
+
+        bindingTrailer.include50.textView5.setOnClickListener {
+
+        }
+
+//trailer
+        val gridLayoutManager1 =
+            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+        val trailerAdapter = TrailerTrsAdapter(videoData, requireContext(), this)
+        bindingTrailer.recyclerView5.layoutManager = gridLayoutManager1
+        bindingTrailer.recyclerView5.adapter = trailerAdapter
+
+//music
+        val gridLayoutManager =
+            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+        val musicVideoTrsAdapter = MusicVideoTrsAdapter(musicData, requireContext(), this)
+        bindingTrailer.recyclerMusic.layoutManager = gridLayoutManager
+        bindingTrailer.recyclerMusic.adapter = musicVideoTrsAdapter
     }
 
     private fun nextBooking() {
@@ -587,11 +694,11 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 is NetworkResult.Success -> {
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         loader?.dismiss()
-                        if (it.data.output is LinkedTreeMap<*, *>){
-                            val obj = it.data.output as LinkedTreeMap<*, *>
+                        if (it.data.output is LinkedTreeMap<*, *>) {
+                            val obj = it.data.output
                             upcomingBooking = obj["a"] as Boolean
-                        }else {
-                            upcomingBooking= true
+                        } else {
+                            upcomingBooking = true
                             retrieveNextBooking(it.data.output as List<LinkedTreeMap<*, *>>)
                         }
                     }
@@ -613,14 +720,14 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             val jsonObj = JSONObject(output[0])
             val data = gson.fromJson(jsonObj.toString(), NextBookingResponse.Output::class.java)
             commonBooking(data)
-        }catch (e:JSONException){
+        } catch (e: JSONException) {
             e.printStackTrace()
         }
     }
 
     @SuppressLint("SetTextI18n")
     private fun commonBooking(output: NextBookingResponse.Output) {
-        if (upcomingBooking==true){
+        if (upcomingBooking == true) {
             binding?.homeRecommend?.CLLayout2?.show()
 
             binding?.homeRecommend?.CLLayout1?.hide()
@@ -631,7 +738,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             binding?.homeRecommend?.tvMovieNew?.text = output.mn
 
             //time
-            binding?.homeRecommend?.tvTime?.text = output.sd +" "+ getString(R.string.dots)+" "+output.st
+            binding?.homeRecommend?.tvTime?.text =
+                output.sd + " " + getString(R.string.dots) + " " + output.st
 
             //cinema name
             binding?.homeRecommend?.tvPlace?.text = output.cn
@@ -643,11 +751,9 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             }
 
             //bookOla
-            binding?.homeRecommend?.tvOLA?.setOnClickListener {
+            binding?.homeRecommend?.tvOLA?.setOnClickListener {}
 
-            }
-
-        }else{
+        } else {
             binding?.homeRecommend?.CLLayout2?.hide()
 
             binding?.homeRecommend?.CLLayout1?.show()
@@ -916,7 +1022,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     private fun showButton(bannerModel: HomeResponse.Pu) {
-        if (bannerModel.type.uppercase(Locale.getDefault()).equals("VIDEO")&& bannerModel.trailerUrl!=""){
+        if (bannerModel.type.uppercase(Locale.getDefault()) == "VIDEO" && bannerModel.trailerUrl != "") {
             ivPlay?.show()
             tvButton?.hide()
         } else if (bannerModel.type.uppercase(Locale.getDefault()) == "IMAGE" && bannerModel.redirect_url != "") {
@@ -1040,6 +1146,18 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         requireActivity().registerReceiver(
             broadcastReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         )
+    }
+
+    override fun musicVideoTrsClick(comingSoonItem: MovieDetailsResponse.Trs) {
+        val intent = Intent(requireActivity(), PlayerActivity::class.java)
+        intent.putExtra("trailerUrl", comingSoonItem.u)
+        startActivity(intent)
+    }
+
+    override fun trailerTrsClick(comingSoonItem: MovieDetailsResponse.Trs) {
+        val intent = Intent(requireActivity(), PlayerActivity::class.java)
+        intent.putExtra("trailerUrl", comingSoonItem.u)
+        startActivity(intent)
     }
 
 }
