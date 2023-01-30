@@ -38,6 +38,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
+
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityLoginBinding? = null
@@ -70,8 +71,8 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-
     private fun movedNext() {
+
         binding?.mobileNumber?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {}
             override fun beforeTextChanged(
@@ -90,6 +91,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         })
+
         binding?.mobileNumber?.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val mobile = binding?.mobileNumber?.text.toString()
@@ -147,7 +149,6 @@ class LoginActivity : AppCompatActivity() {
 
         //Login
         loginApi()
-
     }
 
     private fun loginApi() {
@@ -206,9 +207,6 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-
-//    @SuppressLint("SetTextI18n")
-//    @Override
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == mobileRequest && resultCode == RESULT_OK) {
@@ -301,19 +299,16 @@ class LoginActivity : AppCompatActivity() {
             val display = java.lang.String.format("%02d:%02d", minutes, second)
 
             binding?.include47?.textView394?.text=display + " " +getString(R.string.minRemaining)
-            println("timesssssss----->$millisUntilFinished------>$AVAILABETIME")
 
-            if (millisUntilFinished.toString() > AVAILABETIME.toString()){
+            if (millisUntilFinished.toInt() <= AVAILABETIME){
                 binding?.constraintLayout168?.show()
             }else{
                 binding?.constraintLayout168?.hide()
-
             }
 
             binding?.include47?.textView395?.setOnClickListener {
-//                Constant.TimerTime= (minutes * 60 + second).toInt()
+                binding?.constraintLayout168?.hide()
                 unregisterReceiver(br)
-
             }
 
         }

@@ -2,16 +2,13 @@ package com.net.pvr1
 
 import android.annotation.SuppressLint
 import android.app.Application
-import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
-import android.text.TextUtils
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.google.gson.Gson
+import com.google.firebase.FirebaseApp
 import com.net.pvr1.ui.splash.SplashActivity
 import com.net.pvr1.utils.sfmc.SFMCActionReceiver
 import com.phonepe.intent.sdk.api.PhonePe
@@ -33,6 +30,8 @@ class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         PhonePe.init(this)
+
+        FirebaseApp.initializeApp(this)
 
         // Loging SFMC
         if (BuildConfig.DEBUG) {

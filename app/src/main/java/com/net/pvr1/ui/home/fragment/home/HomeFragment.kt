@@ -31,6 +31,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.SnapHelper
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
+import com.google.gson.internal.LinkedTreeMap
 import com.net.pvr1.R
 import com.net.pvr1.databinding.FragmentHomeBinding
 import com.net.pvr1.di.preference.PreferenceManager
@@ -47,6 +49,7 @@ import com.net.pvr1.ui.home.fragment.more.profile.userDetails.ProfileActivity
 import com.net.pvr1.ui.home.interfaces.PlayPopup
 import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingActivity
+import com.net.pvr1.ui.myBookings.MyBookingsActivity
 import com.net.pvr1.ui.player.PlayerActivity
 import com.net.pvr1.ui.scanner.ScannerActivity
 import com.net.pvr1.ui.search.searchHome.SearchHomeActivity
@@ -58,6 +61,8 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import jp.shts.android.storiesprogressview.StoriesProgressView
+import org.json.JSONException
+import org.json.JSONObject
 import java.util.*
 import javax.inject.Inject
 
@@ -397,8 +402,16 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     @SuppressLint("SetTextI18n")
     private fun recommend(rm: HomeResponse.Rm) {
-        binding?.homeRecommend?.CLLayout1?.show()
-        binding?.homeRecommend?.CLLayout2?.hide()
+        if (upcomingBooking==true){
+
+            binding?.homeRecommend?.CLLayout1?.hide()
+            binding?.homeRecommend?.CLLayout2?.show()
+        }else{
+            binding?.homeRecommend?.CLLayout1?.show()
+
+            binding?.homeRecommend?.CLLayout2?.hide()
+        }
+
         if (rm != null) {
             binding?.constraintLayout135?.show()
             //image
@@ -574,7 +587,13 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 is NetworkResult.Success -> {
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         loader?.dismiss()
-                        retrieveNextBooking(it.data.output)
+                        if (it.data.output is LinkedTreeMap<*, *>){
+                            val obj = it.data.output as LinkedTreeMap<*, *>
+                            upcomingBooking = obj["a"] as Boolean
+                        }else {
+                            upcomingBooking= true
+                            retrieveNextBooking(it.data.output as List<LinkedTreeMap<*, *>>)
+                        }
                     }
                 }
                 is NetworkResult.Error -> {
@@ -588,24 +607,51 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     }
 
-    private fun retrieveNextBooking(output: List<NextBookingResponse.Output>) {
-        commonBooking(output[0])
+    private fun retrieveNextBooking(output: List<LinkedTreeMap<*, *>>) {
+        try {
+            val gson = Gson()
+            val jsonObj = JSONObject(output[0])
+            val data = gson.fromJson(jsonObj.toString(), NextBookingResponse.Output::class.java)
+            commonBooking(data)
+        }catch (e:JSONException){
+            e.printStackTrace()
+        }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun commonBooking(output: NextBookingResponse.Output) {
-        
-        binding?.homeRecommend?.CLLayout1?.hide()
-        binding?.homeRecommend?.CLLayout2?.show()
-        binding?.homeRecommend?.tvRecommNew?.text = "Your Booking"
+        if (upcomingBooking==true){
+            binding?.homeRecommend?.CLLayout2?.show()
 
-        //title
-        binding?.homeRecommend?.tvMovieNew?.text = output.mn
+            binding?.homeRecommend?.CLLayout1?.hide()
 
-        //time
-        binding?.homeRecommend?.tvTime?.text = output.sd +" "+ getString(R.string.dots)+" "+output.st
+            binding?.homeRecommend?.tvRecommNew?.text = getString(R.string.your_booking)
 
-        //cinema name
-        binding?.homeRecommend?.tvPlace?.text = output.cn
+            //title
+            binding?.homeRecommend?.tvMovieNew?.text = output.mn
+
+            //time
+            binding?.homeRecommend?.tvTime?.text = output.sd +" "+ getString(R.string.dots)+" "+output.st
+
+            //cinema name
+            binding?.homeRecommend?.tvPlace?.text = output.cn
+
+            //movie Page
+            binding?.homeRecommend?.tvOpenM?.setOnClickListener {
+                val intent = Intent(requireActivity(), MyBookingsActivity::class.java)
+                startActivity(intent)
+            }
+
+            //bookOla
+            binding?.homeRecommend?.tvOLA?.setOnClickListener {
+
+            }
+
+        }else{
+            binding?.homeRecommend?.CLLayout2?.hide()
+
+            binding?.homeRecommend?.CLLayout1?.show()
+        }
 
 
     }
@@ -870,13 +916,10 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     private fun showButton(bannerModel: HomeResponse.Pu) {
-        if (bannerModel.type.equals("video", ignoreCase = true)) {
+        if (bannerModel.type.uppercase(Locale.getDefault()).equals("VIDEO")&& bannerModel.trailerUrl!=""){
             ivPlay?.show()
             tvButton?.hide()
-        } else if (bannerModel.type.equals(
-                "image", ignoreCase = true
-            ) && bannerModel.redirect_url.equals("", ignoreCase = true)
-        ) {
+        } else if (bannerModel.type.uppercase(Locale.getDefault()) == "IMAGE" && bannerModel.redirect_url != "") {
             ivPlay?.hide()
             tvButton?.text = bannerModel.buttonText
             tvButton?.show()

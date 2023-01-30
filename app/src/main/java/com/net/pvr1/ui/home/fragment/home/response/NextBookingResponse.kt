@@ -4,7 +4,7 @@ data class NextBookingResponse(
     val code: Int,
     val minversion: Any,
     val msg: String,
-    val output: List<Output>,
+    val output: Any,
     val result: String,
     val version: Any
 ):java.io.Serializable{
