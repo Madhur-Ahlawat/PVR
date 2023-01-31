@@ -93,10 +93,6 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     }
 
     private fun manageFunction() {
-        switchFragment()
-        privilegeDataLoad()
-        offerDataLoad()
-        movedNext()
 //        experienceDialog()
         // Call Loyalty Home Api
         authViewModel.privilegeHome(preferences.geMobileNumber(), preferences.getCityName())
@@ -109,10 +105,16 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         if (intent.hasExtra("from"))
         from= intent.getStringExtra("from").toString()
         printLog("from---->${from}")
+        switchFragment()
+        privilegeDataLoad()
+        offerDataLoad()
+        movedNext()
     }
 
     private fun switchFragment() {
-        if (from=="cinema"){
+        if (from == "cinema"){
+            printLog("from---2->${from}")
+
             setCurrentFragment(secondFragment)
             binding?.bottomNavigationView?.selectedItemId = R.id.cinemaFragment
 

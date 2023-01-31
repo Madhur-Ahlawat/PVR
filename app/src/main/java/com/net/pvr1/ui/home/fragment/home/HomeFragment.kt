@@ -353,7 +353,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         if (output.ph.isNotEmpty()) updatePH(output.ph)
 
         //Movies
-
         var size = 0
         var single = false
         size = if ((output.mv.size % 2) == 0) {

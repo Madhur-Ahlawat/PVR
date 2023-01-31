@@ -80,7 +80,7 @@
                 tools:ignore="UselessParent">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/positive_btn"
+                    android:id="@+id/negative_btn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="start"
@@ -96,7 +96,7 @@
                     tools:text="No" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/negative_btn"
+                    android:id="@+id/positive_btn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="end"

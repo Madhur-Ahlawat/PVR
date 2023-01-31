@@ -32,6 +32,7 @@ import com.evergage.android.Evergage
 import com.net.pvr1.R
 import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.food.CartModel
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.more.response.ProfileResponse
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
@@ -123,6 +124,9 @@ class Constant {
         var ProfileResponseConst: ProfileResponse.Output? = null
         var PlaceHolder: HomeResponse.Output? = null
         var DECIFORMAT = DecimalFormat("0.00")
+
+//      food
+        var foodCartModel: ArrayList<CartModel> = arrayListOf()
 
         // DisCount for payment
 

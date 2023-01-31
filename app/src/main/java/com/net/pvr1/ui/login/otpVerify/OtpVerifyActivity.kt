@@ -21,6 +21,7 @@ import com.net.pvr1.ui.location.enableLocation.EnableLocationActivity
 import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
 import com.net.pvr1.ui.login.otpVerify.viewModel.OtpVerifyViewModel
+import com.net.pvr1.ui.summery.SummeryActivity
 import com.net.pvr1.ui.summery.response.ExtendTimeResponse
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.SmsBroadcastReceiver.SmsBroadcastReceiverListener
@@ -62,8 +63,7 @@ class OtpVerifyActivity : AppCompatActivity() {
         mobile = intent.getStringExtra("mobile").toString()
         newUser = intent.getStringExtra("newUser").toString()
         from = intent.getStringExtra("from").toString()
-
-        if (from == "seat") {
+        if (from == "summery") {
             timerManage()
         }
 
@@ -286,10 +286,18 @@ class OtpVerifyActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         } else {
-            val intent = Intent(this@OtpVerifyActivity, HomeActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-            finish()
+            if (from=="summery"){
+                val intent = Intent(this@OtpVerifyActivity, SummeryActivity::class.java)
+                intent.putExtra("from",from)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                finish()
+            }else{
+                val intent = Intent(this@OtpVerifyActivity, HomeActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                finish()
+            }
         }
     }
 

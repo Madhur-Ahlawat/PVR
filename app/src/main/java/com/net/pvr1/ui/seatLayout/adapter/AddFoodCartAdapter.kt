@@ -42,12 +42,14 @@ class AddFoodCartAdapter(
                 } else {
                     Glide.with(context).load(R.drawable.nonveg_ic).into(binding.imageView80)
                 }
+
                 binding.uiPlusMinus.minus.setOnClickListener {
-                    listener.increaseFoodClick(this)
+                    listener.decreaseFoodClick(this)
                     notifyDataSetChanged()
                 }
+
                 binding.uiPlusMinus.plus.setOnClickListener {
-                    listener.decreaseFoodClick(this)
+                      listener.increaseFoodClick(this)
                     notifyDataSetChanged()
                 }
             }

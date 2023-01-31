@@ -1229,7 +1229,6 @@ interface UserAPI {
         @Query("did") did: String
     ): Response<GiftCardDetailResponse>
 
-
     @POST("api/trans/extendtrans")
     suspend fun extendTime(
         @Query("transid") transid: String,

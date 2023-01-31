@@ -32,6 +32,7 @@ import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.CartModel
+import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.ui.payment.PaymentActivity
 import com.net.pvr1.ui.seatLayout.adapter.AddFoodCartAdapter
 import com.net.pvr1.ui.summery.adapter.SeatListAdapter
@@ -44,6 +45,7 @@ import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr1.utils.Constant.Companion.FOODENABLE
 import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
+import com.net.pvr1.utils.Constant.Companion.foodCartModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -68,18 +70,36 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         binding = ActivitySummeryBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        manageFunction()
+
+        manageLogin()
+    }
+
+    //manage Login
+    private fun manageLogin() {
+        if (preferences.getIsLogin()){
+            if (intent.getStringExtra("from")=="summery"){
+                cartModel=foodCartModel
+                manageFunction()
+            }else{
+                try {
+                    cartModel = intent.getSerializableExtra("food") as ArrayList<CartModel>
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                manageFunction()
+            }
+        }else{
+            foodCartModel= intent.getSerializableExtra("food") as ArrayList<CartModel>
+            val intent = Intent(this@SummeryActivity, LoginActivity::class.java)
+            intent.putExtra("from", "summery")
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun manageFunction() {
         Constant.viewModel = authViewModel
-
-        try {
-            cartModel = intent.getSerializableExtra("food") as ArrayList<CartModel>
-            printLog("exception--->${cartModel}")
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
 
         authViewModel.summery(
             TRANSACTION_ID, CINEMA_ID, preferences.getUserId(), BOOKING_ID
@@ -129,7 +149,6 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-
                         authViewModel.setDonation(
                             BOOKING_ID, TRANSACTION_ID, isDonate = true, istDonate = false, isSpi = "NO"
                         )
@@ -538,13 +557,9 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                 CINEMA_ID, TRANSACTION_ID, BOOKING_ID
             )
         }
-        onBackPressedDispatcher.onBackPressed()
     }
 
-
-
     //timerManage
-
     private fun timerManage() {
         startService(Intent(this, BroadcastService::class.java))
     }
@@ -631,5 +646,6 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
         timerManage()
     }
+
 
 }

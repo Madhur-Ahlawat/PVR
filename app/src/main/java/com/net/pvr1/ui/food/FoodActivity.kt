@@ -105,7 +105,6 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
 
     private fun manageFunction() {
         Constant.viewModel = authViewModel
-
         authViewModel.food(
             preferences.getUserId(),
             CINEMA_ID,
@@ -151,6 +150,8 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
                         loader?.dismiss()
 
                     } else {
+                        //ui Data Load
+                        binding?.constraintLayout154?.show()
                         //shimmer
                         binding?.constraintLayout145?.hide()
                         val dialog = OptionDialog(this,
@@ -189,6 +190,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     private fun retrieveData(output: FoodResponse.Output) {
         //shimmer
         binding?.constraintLayout145?.hide()
+
         //ui Data Load
         binding?.constraintLayout154?.show()
 

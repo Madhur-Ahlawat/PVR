@@ -63,8 +63,7 @@ class LoginActivity : AppCompatActivity() {
     private fun manageFunction() {
         Constant.viewModel = authViewModel
         from = intent.getStringExtra("from").toString()
-
-        if (from == "seat") {
+        if (from == "summery") {
             timerManage()
         }
 
