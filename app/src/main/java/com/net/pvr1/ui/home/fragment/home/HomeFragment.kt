@@ -198,6 +198,13 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         //internet Check
         broadcastReceiver = NetworkReceiver()
         broadcastIntent()
+        binding?.privilege?.setOnClickListener {
+            val navigationView = requireActivity().findViewById(R.id.bottomNavigationView) as BottomNavigationView
+            val bottomMenuView = navigationView.getChildAt(0) as BottomNavigationMenuView
+            val newView = bottomMenuView.getChildAt(2)
+            val itemView = newView as BottomNavigationItemView
+            itemView.performClick()
+        }
     }
 
     private fun getShimmerData() {
@@ -647,7 +654,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             startActivity(intent)
         }else if (comingSoonItem.t == "campaign-in"){
             if (comingSoonItem.surl.lowercase(Locale.ROOT).contains("/loyalty/home")) {
-                val navigationView = HomeActivity().findViewById(R.id.bottomNavigationView) as BottomNavigationView
+                val navigationView = requireActivity().findViewById(R.id.bottomNavigationView) as BottomNavigationView
                 val bottomMenuView = navigationView.getChildAt(0) as BottomNavigationMenuView
                 val newView = bottomMenuView.getChildAt(2)
                 val itemView = newView as BottomNavigationItemView

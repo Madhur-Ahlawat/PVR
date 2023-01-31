@@ -84,6 +84,13 @@ class NonMemberActivity : AppCompatActivity() {
         )
         getPlans()
 
+        binding?.textView378?.setOnClickListener {
+            val newUrl = "https://www.pvrcinemas.com/loyalty/home"
+            Constant.onShareClick(
+                this, newUrl, "The secret to my movie binge-watching: PVR Passport voucher!\nCheck it out:"
+            )
+        }
+
     }
 
     private fun makePageDataToShow() {

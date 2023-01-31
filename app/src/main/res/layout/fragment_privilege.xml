@@ -29,21 +29,25 @@
             android:id="@+id/textView378"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="15dp"
             android:fontFamily="@font/sf_pro_text_bold"
+            android:drawableTint="@color/white"
             android:text="@string/privilege"
             android:textColor="@color/white"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="@dimen/dimen_15dp"
+            app:drawableEndCompat="@drawable/share" />
 
         <View
             android:id="@+id/view206"
             android:layout_width="wrap_content"
             android:layout_height="1dp"
             android:background="@color/grayEd"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/view91"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -128,11 +132,11 @@
             android:layout_marginBottom="@dimen/dimen_20dp"
             android:background="@drawable/round_corner_radius_rect"
             android:backgroundTint="@color/pvr_yellow"
-            android:fontFamily="@font/sfprodisplay_bold"
+            android:fontFamily="@font/sf_pro_text_bold"
             android:gravity="center"
             android:text="@string/pvr_privilege_join"
-            android:textColor="@color/pvr_dark_black"
-            android:textSize="22sp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
             android:visibility="visible" />
 
 

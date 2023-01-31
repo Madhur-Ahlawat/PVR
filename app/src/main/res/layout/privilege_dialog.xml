@@ -46,11 +46,12 @@
             android:layout_height="@dimen/dimen_40dp"
             android:layout_weight="1"
             android:textColor="@color/black"
+            android:includeFontPadding="false"
             android:backgroundTint="@color/pvr_yellow"
             android:background="@drawable/yellow_book_curve"
             android:gravity="center"
             android:textAllCaps="true"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:text="Know more"
             />
 

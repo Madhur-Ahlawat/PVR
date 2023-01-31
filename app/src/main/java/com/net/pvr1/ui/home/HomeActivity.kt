@@ -92,8 +92,8 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         Constant.setUPSFMCSDK(preferences)
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun manageFunction() {
-        switchFragment()
         privilegeDataLoad()
         offerDataLoad()
         movedNext()
@@ -162,6 +162,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         binding?.textView185?.setOnClickListener {
             showOfferDialog()
         }
+
     }
 
 //    experience Dialog
@@ -219,66 +220,89 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 
     //    privilegeDialogs
     private fun privilegeDialog() {
-        val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.privilege_dialog)
-        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window!!.setLayout(
-            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        dialog.show()
+        if (PrivilegeHomeResponseConst?.pdays?.toInt()?.let { hasDaysPassed(it) } == true) {
+            preferences.saveLong("SHOW_LOYALTY", System.currentTimeMillis())
+            val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setContentView(R.layout.privilege_dialog)
+            dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.window!!.setLayout(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            dialog.show()
 
-        val recyclerView = dialog.findViewById<RecyclerView>(R.id.loyaltyList)
-        val icon = dialog.findViewById<ImageView>(R.id.logo)
-        val turnOn = dialog.findViewById<TextView>(R.id.turnOn)
-        //icon
-        Glide.with(this).load(PrivilegeHomeResponseConst?.pinfo?.get(0)?.plogo).into(icon!!)
+            val recyclerView = dialog.findViewById<RecyclerView>(R.id.loyaltyList)
+            val icon = dialog.findViewById<ImageView>(R.id.logo)
+            val turnOn = dialog.findViewById<TextView>(R.id.turnOn)
+            //icon
+            Glide.with(this).load(PrivilegeHomeResponseConst?.pinfo?.get(0)?.plogo).into(icon!!)
 
-        // add pager behavior
-        val snapHelper = PagerSnapHelper()
-        snapHelper.attachToRecyclerView(recyclerView)
-        val gridLayout =
-            GridLayoutManager(this@HomeActivity, 1, GridLayoutManager.HORIZONTAL, false)
-        recyclerView?.layoutManager = LinearLayoutManager(this@HomeActivity)
-        val adapter =
-            PrivilegeHomeResponseConst?.pinfo?.let { PrivilegeHomeDialogAdapter(it, this, 0, this) }
-        recyclerView?.layoutManager = gridLayout
-        recyclerView?.adapter = adapter
-        val mSnapHelper = PagerSnapHelper()
-        if ((PrivilegeHomeResponseConst?.pinfo?.size ?: 0) > 1) {
-            reviewPosition = 0
-            recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                    super.onScrollStateChanged(recyclerView, newState)
-                    println("reviewPositionNewState--->$newState")
-                    if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
-                        //Dragging
-                    } else if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        reviewPosition = getCurrentItem(recyclerView)
+            // add pager behavior
+            val snapHelper = PagerSnapHelper()
+            snapHelper.attachToRecyclerView(recyclerView)
+            val gridLayout =
+                GridLayoutManager(this@HomeActivity, 1, GridLayoutManager.HORIZONTAL, false)
+            recyclerView?.layoutManager = LinearLayoutManager(this@HomeActivity)
+            val adapter =
+                PrivilegeHomeResponseConst?.pinfo?.let {
+                    PrivilegeHomeDialogAdapter(
+                        it,
+                        this,
+                        0,
+                        this
+                    )
+                }
+            recyclerView?.layoutManager = gridLayout
+            recyclerView?.adapter = adapter
+            val mSnapHelper = PagerSnapHelper()
+            if ((PrivilegeHomeResponseConst?.pinfo?.size ?: 0) > 1) {
+                reviewPosition = 0
+                recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                        super.onScrollStateChanged(recyclerView, newState)
+                        println("reviewPositionNewState--->$newState")
+                        if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                            //Dragging
+                        } else if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                            reviewPosition = getCurrentItem(recyclerView)
 
 
-                        /*
+                            /*
                     Here load the Image to image view with Glide
                  */
+                        }
                     }
-                }
 
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-                    val firstVisibleItem: Int = getCurrentItem(recyclerView)
-                    println("review_position123--->$firstVisibleItem")
-                    /* Log.e ("VisibleItem", String.valueOf(firstVisibleItem));*/
-                }
-            })
-            recyclerView?.onFlingListener = null
-            mSnapHelper.attachToRecyclerView(recyclerView)
-            recyclerView?.addItemDecoration(LinePagerIndicatorDecoration())
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        super.onScrolled(recyclerView, dx, dy)
+                        val firstVisibleItem: Int = getCurrentItem(recyclerView)
+                        println("review_position123--->$firstVisibleItem")
+                        /* Log.e ("VisibleItem", String.valueOf(firstVisibleItem));*/
+                    }
+                })
+                recyclerView?.onFlingListener = null
+                mSnapHelper.attachToRecyclerView(recyclerView)
+                recyclerView?.addItemDecoration(LinePagerIndicatorDecoration())
+            }
+
+            turnOn?.setOnClickListener {
+                dialog.dismiss()
+                managePrivilege("")
+            }
         }
+    }
 
-        turnOn?.setOnClickListener {
-            dialog.dismiss()
-            managePrivilege("")
+    private fun hasDaysPassed(days: Int): Boolean {
+        println("wert-------" + preferences.getLong("SHOW_LOYALTY"))
+        return if (preferences.getLong("SHOW_LOYALTY")>0) {
+            val lastTimestamp: Long = preferences.getLong("SHOW_LOYALTY")
+            val currentTimestamp = System.currentTimeMillis()
+            val result = currentTimestamp - lastTimestamp >= TimeUnit.DAYS.toMillis(days.toLong())
+            println(result)
+            result
+        } else {
+            true
         }
     }
 
@@ -328,12 +352,14 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                         Constant.PRIVILEGEPOINT = it.data.output.pt
                         PRIVILEGEVOUCHER = it.data.output.vou
                         privilegeRetrieveData(it.data.output)
+                        switchFragment()
                     } else {
                         if (it.data?.output != null) it.data.output.let { it1 ->
                             privilegeRetrieveData(
                                 it1
                             )
                         }
+                        switchFragment()
                     }
                 }
                 is NetworkResult.Error -> {
@@ -419,6 +445,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     }
 
     override fun onShowPrivilege() {
+        if (PrivilegeHomeResponseConst?.pcheck == "true")
         privilegeDialog()
     }
 
