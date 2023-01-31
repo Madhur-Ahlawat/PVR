@@ -31,7 +31,6 @@ import com.net.pvr1.databinding.ActivityPrivilegeLogInBinding
 import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.giftCard.activateGiftCard.ActivateGiftCardActivity
 import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.home.HomeActivity.Companion.getCurrentItem
 import com.net.pvr1.ui.home.HomeActivity.Companion.reviewPosition
@@ -166,6 +165,13 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
                 }
             }
         }
+
+        binding?.textView378?.setOnClickListener {
+            val newUrl = "https://www.pvrcinemas.com/loyalty/home"
+            Constant.onShareClick(
+                requireActivity(), newUrl, "The secret to my movie binge-watching: PVR Passport voucher!\nCheck it out:"
+            )
+        }
     }
 
     private fun manageTabs(output: LoyaltyDataResponse.Output) {
@@ -193,6 +199,8 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
 //            binding?.historyCard?.show()
 //            binding?.hisInactiveLayout?.show()
         }
+        binding?.totalVocBox?.text = getCounOfActivVo(voucherList)
+
         binding?.vocIncLayout?.setOnClickListener {
             binding?.hisInactiveLayout?.show()
             binding?.vocCard?.show()
@@ -203,7 +211,8 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
             val cardAdapter =
                 PrivilegeVochersAdapter(voucherList, requireActivity(), preferences, this)
             binding?.privilegeList?.adapter = cardAdapter
-            binding?.totalVocBox?.text = output.vou.size.toString()
+            binding?.totalVocBox?.text = getCounOfActivVo(voucherList)
+            binding?.totalVocBoxIn?.text = getCounOfActivVo(voucherList)
         }
         binding?.hisInactiveLayout?.setOnClickListener {
             binding?.hisInactiveLayout?.hide()
@@ -215,8 +224,20 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
             val cardAdapter =
                 PrivilegeHistoreyAdapter(output.his, requireActivity(), preferences)
             binding?.privilegeList?.adapter = cardAdapter
-            binding?.totalVocBox?.text = output.vou.size.toString()
+            binding?.totalVocBox?.text = getCounOfActivVo(voucherList)
+            binding?.totalVocBoxIn?.text = getCounOfActivVo(voucherList)
         }
+    }
+
+    private fun getCounOfActivVo(voucherList: ArrayList<LoyaltyDataResponse.Voucher>): String? {
+        var count = 0
+
+        for (data in voucherList){
+            if (data.st == "V"){
+                count+=1
+            }
+        }
+        return count.toString()
     }
 
     private fun getProfileData() {
@@ -306,6 +327,16 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
                 binding?.tvPoints?.text = Html.fromHtml("<b>$pointsValue Points Needed</b>")
                 binding?.tvPointsMsg?.text = Html.fromHtml("To Unlock Next Voucher")
             }
+
+
+            //  "yyyy-mm-dd HH:mm:ss"
+            //, hh:mm a
+            if (output.sync_time.isNotEmpty()){
+            val date: String = Constant.getDate("yyyy-MM-dd HH:mm:ss", "dd MMM yyyy", output.sync_time).toString()
+            val time: String = Constant.getDate("yyyy-mm-dd HH:mm:ss", "hh:mm a", output.sync_time).toString()
+
+                binding?.tvLastHistory?.text = "Updated on: $date at $time"
+        }
         }
     }
 
@@ -314,11 +345,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
         val points_data = Constant.PRIVILEGEPOINT
         val cardDataList: ArrayList<PrivilegeCardData> = ArrayList()
         var count = 3
-        count =
-            if (preferences.getString(SUBS_OPEN) != "true" && preferences.getString(
-                    SUBSCRIPTION_STATUS
-                ) != ACTIVE
-            ) {
+        count = if (preferences.getString(SUBS_OPEN) != "true" && preferences.getString(SUBSCRIPTION_STATUS) != ACTIVE) {
                 2
             } else {
                 3
@@ -329,8 +356,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
             } else if (i == 1) {
                 if (preferences.getString(SUBSCRIPTION_STATUS) == ACTIVE) {
                     cardDataList.add(
-                        PrivilegeCardData(
-                            java.lang.String.valueOf(output.subscription.can_redeem - output.subscription.redeemed),
+                        PrivilegeCardData(java.lang.String.valueOf(output.subscription.can_redeem - output.subscription.redeemed),
                             "PP",
                             false,
                             "",
@@ -341,13 +367,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
                     )
                 } else {
                     if (preferences.getString(SUBS_OPEN) == "true") {
-                        cardDataList.add(
-                            PrivilegeCardData(
-                                Constant.PrivilegeHomeResponseConst?.pinfo?.get(
-                                    0
-                                )?.pi.toString(), "PP", true, "", "", points_data, output
-                            )
-                        )
+                        cardDataList.add(PrivilegeCardData(Constant.PrivilegeHomeResponseConst?.pinfo?.get(0)?.pi.toString(), "PP", true, "", "", points_data, output))
                     } else {
                         if (preferences.getString(LOYALITY_STATUS) == "PPP") {
                             cardDataList.add(PrivilegeCardData(
@@ -378,7 +398,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
                         cardDataList.add(PrivilegeCardData("", "PPP", false, "", "", points_data.toString(), output))
                     } else {
                         cardDataList.add(PrivilegeCardData(
-                            Constant.PrivilegeHomeResponseConst?.pinfo?.get(0)?.pi.toString(),
+                            Constant.PrivilegeHomeResponseConst?.pinfo?.get(1)?.pi.toString(),
                             "PPP",
                             true,
                             "",

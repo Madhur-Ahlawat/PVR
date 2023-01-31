@@ -20,12 +20,10 @@ import com.net.pvr1.ui.home.HomeActivity.Companion.reviewPosition
 import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeTypeAdapter
 import com.net.pvr1.ui.home.fragment.privilege.response.PassportPlanResponse
 import com.net.pvr1.ui.home.fragment.privilege.viewModel.PrivilegeLoginViewModel
+import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.ui.webView.WebViewActivity
-import com.net.pvr1.utils.Constant
+import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.onShareClick
-import com.net.pvr1.utils.NetworkResult
-import com.net.pvr1.utils.hide
-import com.net.pvr1.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -99,6 +97,50 @@ class NonMemberFragment : Fragment() {
         getPlans()
 
         makePageDataToShow()
+
+        binding?.textView378?.setOnClickListener {
+            val newUrl = "https://www.pvrcinemas.com/loyalty/home"
+            Constant.onShareClick(
+                requireActivity(), newUrl, "The secret to my movie binge-watching: PVR Passport voucher!\nCheck it out:"
+            )
+        }
+
+        binding?.tvEnroll?.setOnClickListener {
+            if (binding?.tvTerms1?.isChecked == false) {
+                requireContext().toast("Please agree to the terms & conditions.")
+            } else {
+                val intent4: Intent
+                if (!preferences.getIsLogin()) {
+                    intent4 = Intent(requireContext(), LoginActivity::class.java)
+                    intent4.putExtra(Constant.PCBackStackActivity.OPEN_ACTIVITY_NAME, Constant.PCBackStackActivity.LOYALITY_NONMEMBER_ACTIVITY)
+                    startActivity(intent4)
+                } else {
+                    if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(reviewPosition)?.ptype == ("P")) {
+//
+//                            intent4 = Intent(this, EnrollmentActivity::class.java)
+//                            intent4.putExtra(
+//                                Constant.PCBackStackActivity.OPEN_ACTIVITY_NAME,
+//                                Constant.PCBackStackActivity.LOYALITY_NONMEMBER_ACTIVITY
+//                            )
+//
+//                        startActivity(intent4)
+                    } else if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(reviewPosition)?.ptype == ("PP")) {
+                        val intent = Intent(requireContext(), EnrollInPassportActivity::class.java)
+                        intent.putExtra("scheme_id", NonMemberActivity.scheme_id)
+                        intent.putExtra("scheme_price", NonMemberActivity.scheme_price)
+                        startActivity(intent)
+                    } else {
+
+                        val intent = Intent(requireContext(), WebViewActivity::class.java)
+                        intent.putExtra("from", "passFaq")
+                        intent.putExtra("title", "Privilege+")
+                        intent.putExtra("getUrl", "https://www.kotak.com/en/personal-banking/cards/debit-cards/pvr-debit-card-redirection-pvr-website.html")
+                        startActivity(intent)
+                    }
+                }
+            }
+        }
+
     }
 
     private fun makePageDataToShow() {

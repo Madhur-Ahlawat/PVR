@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         android:orientation="vertical"
+        android:padding="@dimen/dimen_5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -24,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="25dp"
                 android:padding="@dimen/dimen_12dp"
                 android:background="@drawable/passport_corner_new"
@@ -317,7 +318,7 @@
                                             android:layout_height="wrap_content"
                                             android:gravity="center"
                                             android:text="Visits"
-                                            android:layout_marginTop="-5dp"
+                                            android:layout_marginTop="-2dp"
                                             android:textAllCaps="true"
                                             android:textColor="@color/white"
                                             android:textSize="@dimen/dimen_12sp" />
@@ -746,7 +747,7 @@
                 android:layout_marginBottom="@dimen/dimen_30dp"
                 android:drawablePadding="@dimen/dimen_5dp"
                 android:gravity="center"
-                tools:text="FAQs"
+                android:text="FAQs"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
                 app:drawableEndCompat="@drawable/ic_arrow_right_white" />

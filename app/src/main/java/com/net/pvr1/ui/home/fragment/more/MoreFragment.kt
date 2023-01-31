@@ -17,6 +17,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.base.Splitter
@@ -26,6 +29,7 @@ import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.giftCard.GiftCardActivity
+import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.home.fragment.more.adapter.ProfileCompleteAdapter
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.BookingRetrievalActivity
 import com.net.pvr1.ui.home.fragment.more.contactUs.ContactUsActivity
@@ -141,6 +145,14 @@ class MoreFragment : Fragment() {
             binding?.loginUi?.hide()
             binding?.privilegeLoginUi?.hide()
             binding?.privilegeLogOutUi?.show()
+        }
+
+        binding?.privilege?.setOnClickListener {
+            val navigationView = requireActivity().findViewById(R.id.bottomNavigationView) as BottomNavigationView
+            val bottomMenuView = navigationView.getChildAt(0) as BottomNavigationMenuView
+            val newView = bottomMenuView.getChildAt(2)
+            val itemView = newView as BottomNavigationItemView
+            itemView.performClick()
         }
     }
 
