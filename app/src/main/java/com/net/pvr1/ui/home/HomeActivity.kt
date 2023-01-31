@@ -58,15 +58,19 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     private var binding: ActivityHomeBinding? = null
     private val authViewModel: HomeViewModel by viewModels()
     private var loader: LoaderDialog? = null
-    private var offerShow=0
+    private var offerShow = 0
 
     private var offerResponse: ArrayList<OfferResponse.Output>? = null
+
     private val firstFragment = HomeFragment()
     private val secondFragment = CinemasFragment()
     private val thirdFragment = NonMemberFragment()
     private val memberFragment = MemberFragment()
     private val fourthFragment = ComingSoonFragment()
     private val fifthFragment = MoreFragment()
+
+    //redirect
+    private var from: String = ""
 
     companion object {
         var reviewPosition = 0
@@ -98,18 +102,30 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         authViewModel.privilegeHome(preferences.geMobileNumber(), preferences.getCityName())
 
         //offer
-        if (preferences.getIsLogin()){
+        if (preferences.getIsLogin()) {
 //            authViewModel.offer(preferences.getCityName(),preferences.getUserId(),Constant().getDeviceId(this),"no")
         }
+
+        if (intent.hasExtra("from"))
+        from= intent.getStringExtra("from").toString()
+        printLog("from---->${from}")
     }
 
     private fun switchFragment() {
-        setCurrentFragment(firstFragment)
+        if (from=="cinema"){
+            setCurrentFragment(secondFragment)
+            binding?.bottomNavigationView?.selectedItemId = R.id.cinemaFragment
+
+        }else{
+            binding?.bottomNavigationView?.selectedItemId = R.id.homeFragment
+            setCurrentFragment(firstFragment)
+        }
+
         binding?.bottomNavigationView?.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.homeFragment -> {
                     setCurrentFragment(firstFragment)
-                    if (offerShow==1) {
+                    if (offerShow == 1) {
                         binding?.constraintLayout55?.show()
                     } else {
                         binding?.constraintLayout55?.hide()
@@ -118,9 +134,12 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                 R.id.cinemaFragment -> {
                     setCurrentFragment(secondFragment)
                 }
-                R.id.privilegeFragment -> managePrivilege("")
-                R.id.comingSoonFragment -> setCurrentFragment(fourthFragment)
-                R.id.moreFragment -> setCurrentFragment(fifthFragment)
+                R.id.privilegeFragment ->
+                    managePrivilege("")
+                R.id.comingSoonFragment ->
+                    setCurrentFragment(fourthFragment)
+                R.id.moreFragment ->
+                    setCurrentFragment(fifthFragment)
             }
             true
         }
@@ -185,12 +204,12 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerView26)
         val ignore = dialog.findViewById<TextView>(R.id.textView194)
 
-            val gridLayout =
-                GridLayoutManager(this@HomeActivity, 1, GridLayoutManager.HORIZONTAL, false)
-            recyclerView?.layoutManager = LinearLayoutManager(this@HomeActivity)
-            val adapter = offerResponse?.let { HomeOfferAdapter(it, this, this) }
-            recyclerView?.layoutManager = gridLayout
-            recyclerView?.adapter = adapter
+        val gridLayout =
+            GridLayoutManager(this@HomeActivity, 1, GridLayoutManager.HORIZONTAL, false)
+        recyclerView?.layoutManager = LinearLayoutManager(this@HomeActivity)
+        val adapter = offerResponse?.let { HomeOfferAdapter(it, this, this) }
+        recyclerView?.layoutManager = gridLayout
+        recyclerView?.adapter = adapter
 
 
         ignore?.setOnClickListener {
@@ -198,7 +217,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         }
     }
 
-//    privilegeDialogs
+    //    privilegeDialogs
     private fun privilegeDialog() {
         val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -214,9 +233,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         val icon = dialog.findViewById<ImageView>(R.id.logo)
         val turnOn = dialog.findViewById<TextView>(R.id.turnOn)
         //icon
-        Glide.with(this)
-            .load(PrivilegeHomeResponseConst?.pinfo?.get(0)?.plogo)
-            .into(icon!!)
+        Glide.with(this).load(PrivilegeHomeResponseConst?.pinfo?.get(0)?.plogo).into(icon!!)
 
         // add pager behavior
         val snapHelper = PagerSnapHelper()
@@ -265,7 +282,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         }
     }
 
-//  notification Dialogs
+    //  notification Dialogs
     @SuppressLint("InlinedApi")
     private fun notificationDialog(banner: String?) {
         if (hasMonthPassed()) {
@@ -283,10 +300,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
             val turnOn = dialog.findViewById<View>(R.id.turnOn) as TextView?
             val bannerImg = dialog.findViewById<View>(R.id.bannerImg) as ImageView?
 
-            Glide.with(this)
-                .load(banner)
-                .error(R.drawable.placeholder_horizental)
-                .into(bannerImg!!)
+            Glide.with(this).load(banner).error(R.drawable.placeholder_horizental).into(bannerImg!!)
 
             turnOn?.setOnClickListener {
                 val settingsIntent =
@@ -304,7 +318,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         }
     }
 
-//    privilege Api
+    //    privilege Api
     private fun privilegeDataLoad() {
         authViewModel.privilegeHomeResponseLiveData.observe(this) {
             when (it) {
@@ -353,13 +367,12 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
             jsonObject1.put("voucher", output.vou)
             preferences.saveString(Constant.SharedPreference.LOYALITY_POINT, jsonObject1.toString())
             preferences.saveString(
-                Constant.SharedPreference.LOYALITY_CARD,
-                output.passportbuy.toString()
+                Constant.SharedPreference.LOYALITY_CARD, output.passportbuy.toString()
             )
             preferences.saveString(Constant.SharedPreference.SUBS_OPEN, output.passport.toString())
             preferences.saveString(Constant.SharedPreference.LOYALITY_STATUS, output.ls)
             preferences.saveString(Constant.SharedPreference.SUBSCRIPTION_STATUS, output.ulm)
-            if (intent.hasExtra("from")){
+            if (intent.hasExtra("from") && intent.getStringExtra("from") == "PP") {
                 managePrivilege("from")
             }
         } catch (e: Exception) {
@@ -373,12 +386,12 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
             val isHl: String = preferences.getString(Constant.SharedPreference.IS_HL)
             val isLy: String = preferences.getString(Constant.SharedPreference.IS_LY)
             val data = Bundle()
-            if (s== "from"){
+            if (s == "from") {
                 data.putString("type", "PP")
                 data.putString("from", "payment")
                 data.putString("id", intent.getStringExtra("id"))
                 data.putString("amt", intent.getStringExtra("amt"))
-            }else {
+            } else {
                 data.putString("type", "P")
             }
             memberFragment.arguments = data
@@ -415,9 +428,9 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
             when (it) {
                 is NetworkResult.Success -> {
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        if (it.data.output != null && it.data.output.size !=0) {
-                                retrieveOffer(it.data.output)
-                            }
+                        if (it.data.output != null && it.data.output.size != 0) {
+                            retrieveOffer(it.data.output)
+                        }
                     }
                 }
                 is NetworkResult.Error -> {
@@ -431,12 +444,12 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 
     private fun retrieveOffer(output: ArrayList<OfferResponse.Output>) {
 //        Set Data
-        offerResponse= output
+        offerResponse = output
 
         //Manage Show Hide
-        offerShow = if (output.isNotEmpty()){
+        offerShow = if (output.isNotEmpty()) {
             1
-        }else{
+        } else {
             0
         }
 
@@ -449,7 +462,8 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     override fun onShowNotification() {
         if (!areNotificationsEnabled()) {
             if (preferences.getString(Constant.SharedPreference.NT) == "true") {
-                notificationDialog(preferences.getString(Constant.SharedPreference.NTBT)
+                notificationDialog(
+                    preferences.getString(Constant.SharedPreference.NTBT)
                 )
             }
         }
