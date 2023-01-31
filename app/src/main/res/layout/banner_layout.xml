@@ -46,11 +46,14 @@
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_marginBottom="@dimen/dimen_50dp"
+        android:textColor="@color/black"
+        android:includeFontPadding="false"
+        android:fontFamily="@font/sf_pro_text_medium"
         android:background="@drawable/yellow_book_curve"
         android:elevation="5dp"
         android:gravity="center"
         android:minWidth="90dp"
-        android:text="@string/book_now"
+        tools:text="@string/book_now"
         android:textSize="18sp"
         android:visibility="gone" />
 

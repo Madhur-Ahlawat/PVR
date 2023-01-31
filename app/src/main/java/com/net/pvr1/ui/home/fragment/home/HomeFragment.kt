@@ -31,6 +31,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.SnapHelper
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import com.google.gson.internal.LinkedTreeMap
 import com.net.pvr1.R
@@ -41,11 +44,14 @@ import com.net.pvr1.ui.bookingSession.BookingActivity
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.filter.GenericFilterHome
+import com.net.pvr1.ui.giftCard.GiftCardActivity
+import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.home.formats.FormatsActivity
 import com.net.pvr1.ui.home.fragment.home.adapter.*
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.home.response.NextBookingResponse
 import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
+import com.net.pvr1.ui.home.fragment.more.offer.offerDetails.OfferDetailsActivity
 import com.net.pvr1.ui.home.fragment.more.profile.userDetails.ProfileActivity
 import com.net.pvr1.ui.home.interfaces.PlayPopup
 import com.net.pvr1.ui.location.selectCity.SelectCityActivity
@@ -57,6 +63,7 @@ import com.net.pvr1.ui.myBookings.MyBookingsActivity
 import com.net.pvr1.ui.player.PlayerActivity
 import com.net.pvr1.ui.scanner.ScannerActivity
 import com.net.pvr1.ui.search.searchHome.SearchHomeActivity
+import com.net.pvr1.ui.webView.WebViewActivity
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.PRIVILEGEPOINT
 import com.net.pvr1.utils.Constant.Companion.PRIVILEGEVOUCHER
@@ -602,12 +609,70 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     override fun onOfferClick(comingSoonItem: HomeResponse.Cp) {
-        if (comingSoonItem.t != null && comingSoonItem.t.equals(
-                "campaign-VIDEO", ignoreCase = true
-            )
-        ) {
+        if (comingSoonItem.t != null && comingSoonItem.t.equals("campaign-VIDEO", ignoreCase = true)) {
             val intent = Intent(requireActivity(), PlayerActivity::class.java)
             intent.putExtra("trailerUrl", comingSoonItem.mtrailerurl)
+            startActivity(intent)
+        }else if (comingSoonItem.t == "campaign-EXPATS"){
+            if (comingSoonItem.mf){
+                val intent = Intent(requireActivity(), BookingActivity::class.java)
+                intent.putExtra("mid", comingSoonItem.id)
+                startActivity(intent)
+            }else{
+                val intent = Intent(requireActivity(), NowShowingActivity::class.java)
+                intent.putExtra("mid", comingSoonItem.id)
+                startActivity(intent)
+            }
+
+        }else if (comingSoonItem.t == "campaign-VKAAO"){
+
+        }else if (comingSoonItem.t == "campaign-PPP"){
+            val intent = Intent(context, WebViewActivity::class.java)
+            intent.putExtra("from", "more")
+            intent.putExtra(
+                "title", comingSoonItem.n
+            )
+            intent.putExtra("getUrl", comingSoonItem.surl)
+            startActivity(intent)
+        }else if (comingSoonItem.t == "campaign-ACTIVITY"){
+            val intent = Intent(context, OfferDetailsActivity::class.java)
+            intent.putExtra("title", comingSoonItem.c)
+            intent.putExtra("disc", comingSoonItem.t)
+            intent.putExtra("id", comingSoonItem.id)
+            startActivity(intent)
+        }else if (comingSoonItem.t == "campaign-NOURL"){
+
+        }else if (comingSoonItem.t == "campaign-GIFTCARD"){
+            val intent = Intent(requireContext(), GiftCardActivity::class.java)
+            startActivity(intent)
+        }else if (comingSoonItem.t == "campaign-in"){
+            if (comingSoonItem.surl.lowercase(Locale.ROOT).contains("/loyalty/home")) {
+                val navigationView = HomeActivity().findViewById(R.id.bottomNavigationView) as BottomNavigationView
+                val bottomMenuView = navigationView.getChildAt(0) as BottomNavigationMenuView
+                val newView = bottomMenuView.getChildAt(2)
+                val itemView = newView as BottomNavigationItemView
+                itemView.performClick()
+            } else {
+                val intent = Intent(
+                    Intent.ACTION_VIEW, Uri.parse(
+                        comingSoonItem.surl.replace(
+                            "https", "app"
+                        )
+                    )
+                )
+                startActivity(intent)
+            }
+        }else if (comingSoonItem.t == "campaign-within"){
+            val intent = Intent(context, WebViewActivity::class.java)
+            intent.putExtra("from", "more")
+            intent.putExtra(
+                "title", comingSoonItem.n
+            )
+            intent.putExtra("getUrl", comingSoonItem.surl)
+            startActivity(intent)
+        }else if (comingSoonItem.t == "campaign-out"){
+            val intent = Intent(
+                Intent.ACTION_VIEW, Uri.parse(comingSoonItem.surl))
             startActivity(intent)
         }
     }
@@ -943,24 +1008,16 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 rlBanner?.hide()
                 listener?.onShowNotification()
                 listener?.onShowPrivilege()
-                if (bannerModels.size > 0 && bannerModels[counterStory].type.equals(
-                        "image", ignoreCase = true
-                    )
-//                        .equalsIgnoreCase("image")
-                ) {
-                    if (bannerModels[counterStory].redirectView.equals(
-                            "DEEPLINK", ignoreCase = true
-                        )
-                    ) {
+                if (bannerModels.size > 0 && bannerModels[counterStory].type.equals("image", ignoreCase = true)) {
+                    if (bannerModels[counterStory].redirectView.equals("DEEPLINK", ignoreCase = true)) {
                         if (bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)) {
-                            if (bannerModels[counterStory].redirect_url.lowercase(Locale.ROOT)
-                                    .contains("/loyalty/home")
-                            ) {
-//                                if (context is PCLandingActivity) (context as PCLandingActivity).PriviegeFragment(
-//                                    "C"
-//                                )
+                            if (bannerModels[counterStory].redirect_url.lowercase(Locale.ROOT).contains("/loyalty/home")) {
+                                val navigationView = requireActivity().findViewById(R.id.bottomNavigationView) as BottomNavigationView
+                                val bottomMenuView = navigationView.getChildAt(0) as BottomNavigationMenuView
+                                val newView = bottomMenuView.getChildAt(2)
+                                val itemView = newView as BottomNavigationItemView
+                                itemView.performClick()
                             } else {
-//                                .replaceAll("https", "app").replaceAll("http", "app")
                                 val intent = Intent(
                                     Intent.ACTION_VIEW, Uri.parse(
                                         bannerModels[counterStory].redirect_url.replace(
@@ -971,31 +1028,18 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                                 startActivity(intent)
                             }
                         }
-                    } else if (bannerModels[counterStory].redirect_url.equals(
-                            "INAPP", ignoreCase = true
-                        )
-                    ) {
-                        if (bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)
-
-                        ) {
-//                            val intent = Intent(context, PrivacyActivity::class.java)
-//                            intent.putExtra("url", bannerModels[counterStory].getRedirect_url())
-//                            intent.putExtra(PCConstants.IS_FROM, 2000)
-//                            intent.putExtra("title", bannerModels[counterStory].getName())
-//                            startActivity(intent)
+                    } else if (bannerModels[counterStory].redirect_url.equals("INAPP", ignoreCase = true)) {
+                        if (bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)) {
+                            val intent = Intent(context, WebViewActivity::class.java)
+                            intent.putExtra("title", bannerModels[counterStory].name)
+                            intent.putExtra("from", "web")
+                            intent.putExtra("getUrl", bannerModels[counterStory].redirect_url)
+                            startActivity(intent)
                         }
-                    } else if (bannerModels[counterStory].redirect_url.equals(
-                            "WEB", ignoreCase = true
-                        )
-//                            .equalsIgnoreCase("WEB")
-                    ) {
-                        if (bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)
-//                                .equalsIgnoreCase("")
-                        ) {
-//                            val intent = Intent(
-//                                Intent.ACTION_VIEW,
-//                                Uri.parse(bannerModels[counterStory].redirect_url)
-//                                        activity.startActivity(intent)
+                    } else if (bannerModels[counterStory].redirect_url.equals("WEB", ignoreCase = true)) {
+                        if (bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)) {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(bannerModels[counterStory].redirect_url))
+                            startActivity(intent)
                         }
                     }
                 }
@@ -1007,10 +1051,10 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 rlBanner?.hide()
                 listener?.onShowNotification()
                 listener?.onShowPrivilege()
-                if (bannerModels.size > 0 && bannerModels[counterStory].type.equals(
-                        "video", ignoreCase = true
-                    )
-                ) {
+                if (bannerModels.size > 0 && bannerModels[counterStory].type.equals("video", ignoreCase = true)) {
+                    val intent = Intent(requireActivity(), PlayerActivity::class.java)
+                    intent.putExtra("trailerUrl", bannerModels[counterStory].trailerUrl)
+                    startActivity(intent)
                 }
             }
 
@@ -1028,6 +1072,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         } else if (bannerModel.type.uppercase(Locale.getDefault()) == "IMAGE" && bannerModel.redirect_url != "") {
             ivPlay?.hide()
             tvButton?.text = bannerModel.buttonText
+            if (bannerModel.buttonText.isNotEmpty())
             tvButton?.show()
         } else {
             ivPlay?.hide()

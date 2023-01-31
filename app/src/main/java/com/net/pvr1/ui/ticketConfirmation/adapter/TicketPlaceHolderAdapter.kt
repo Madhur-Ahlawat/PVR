@@ -2,6 +2,7 @@ package com.net.pvr1.ui.ticketConfirmation.adapter
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
@@ -12,7 +13,11 @@ import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.net.pvr1.R
+import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.player.PlayerActivity
 import com.net.pvr1.ui.ticketConfirmation.response.TicketBookedResponse
@@ -20,6 +25,8 @@ import com.net.pvr1.ui.webView.WebViewActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
+import java.util.*
+import kotlin.collections.ArrayList
 
 @Suppress("DEPRECATION")
 class TicketPlaceHolderAdapter(
@@ -113,7 +120,24 @@ class TicketPlaceHolderAdapter(
         //Manage Functions
         holder.itemView.setOnClickListener {
             if (obj.type == "IMAGE" && obj.redirectView == "DEEPLINK") {
-                // Constant().shareData(context, "", this.redirectView)
+                if (obj.redirect_url.equals("", ignoreCase = true)) {
+                    if (obj.redirect_url.lowercase(Locale.ROOT).contains("/loyalty/home")) {
+                        val navigationView = HomeActivity().findViewById(R.id.bottomNavigationView) as BottomNavigationView
+                        val bottomMenuView = navigationView.getChildAt(0) as BottomNavigationMenuView
+                        val newView = bottomMenuView.getChildAt(2)
+                        val itemView = newView as BottomNavigationItemView
+                        itemView.performClick()
+                    } else {
+                        val intent = Intent(
+                            Intent.ACTION_VIEW, Uri.parse(
+                                obj.redirect_url.replace(
+                                    "https", "app"
+                                )
+                            )
+                        )
+                        context.startActivity(intent)
+                    }
+                }
 
             } else if (obj.type == "IMAGE" && obj.redirectView == "INAPP") {
                 //click
@@ -132,9 +156,11 @@ class TicketPlaceHolderAdapter(
                 intent.putExtra("trailerUrl", obj.trailerUrl)
                 context.startActivity(intent)
 
-            } else {
+            } else if (obj.type == "IMAGE" && obj.redirectView == "WEB") {
 
-
+                val intent = Intent(
+                    Intent.ACTION_VIEW, Uri.parse(obj.redirect_url))
+                context.startActivity(intent)
             }
         }
 

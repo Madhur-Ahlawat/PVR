@@ -2,20 +2,26 @@ package com.net.pvr1.ui.home.fragment.home.adapter
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ItemHomePromotionBinding
+import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.player.PlayerActivity
 import com.net.pvr1.ui.webView.WebViewActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
+import java.util.*
 
 @Suppress("DEPRECATION")
 class PromotionAdapter(
@@ -102,8 +108,24 @@ class PromotionAdapter(
                 holder.itemView.setOnClickListener {
                     if (this.type == "IMAGE" && this.redirectView == "DEEPLINK") {
                         binding.tvPlay.hide()
-                       // Constant().shareData(context, "", this.redirectView)
-
+                        if (this.redirect_url.equals("", ignoreCase = true)) {
+                            if (this.redirect_url.lowercase(Locale.ROOT).contains("/loyalty/home")) {
+                                val navigationView = HomeActivity().findViewById(R.id.bottomNavigationView) as BottomNavigationView
+                                val bottomMenuView = navigationView.getChildAt(0) as BottomNavigationMenuView
+                                val newView = bottomMenuView.getChildAt(2)
+                                val itemView = newView as BottomNavigationItemView
+                                itemView.performClick()
+                            } else {
+                                val intent = Intent(
+                                    Intent.ACTION_VIEW, Uri.parse(
+                                        this.redirect_url.replace(
+                                            "https", "app"
+                                        )
+                                    )
+                                )
+                                context.startActivity(intent)
+                            }
+                        }
                     } else if (this.type == "IMAGE" && this.redirectView == "INAPP") {
                         binding.tvPlay.hide()
                         //click
@@ -122,6 +144,11 @@ class PromotionAdapter(
                         intent.putExtra("trailerUrl", this.trailerUrl)
                         context.startActivity(intent)
 
+                    } else if (this.type == "IMAGE" && this.redirectView == "WEB") {
+
+                        val intent = Intent(
+                            Intent.ACTION_VIEW, Uri.parse(this.redirect_url))
+                        context.startActivity(intent)
                     } else {
 
 
