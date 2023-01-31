@@ -233,6 +233,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
                 startActivity(intent)
             } else {
                 val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
+                intent.putExtra("from",from)
                 startActivity(intent)
                 finish()
             }
@@ -248,6 +249,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
 
         if (enableLocation == 1) {
             val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
+            intent.putExtra("from",from)
             startActivity(intent)
             finish()
         } else {
@@ -290,6 +292,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
                 startActivity(intent)
             } else {
                 val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
+                intent.putExtra("from",from)
                 startActivity(intent)
                 finish()
             }
@@ -315,6 +318,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
                 startActivity(intent)
             } else {
                 val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
+                intent.putExtra("from",from)
                 startActivity(intent)
                 finish()
             }
@@ -393,6 +397,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             startActivity(intent)
         } else {
             val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
+            intent.putExtra("from",from)
             startActivity(intent)
             finish()
         }

@@ -147,6 +147,7 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
         //Select City
         binding?.txtCity?.setOnClickListener {
             val intent = Intent(requireActivity(), SelectCityActivity::class.java)
+            intent.putExtra("from","cinema")
             startActivity(intent)
         }
 
