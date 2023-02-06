@@ -1275,5 +1275,13 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<ExtendTimeResponse>
 
-
+    /****************** JUS PAY ****************/
+    @POST("api/trans/extendtrans")
+    suspend fun initJusPay(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<JusPayInitResponse>
 }
