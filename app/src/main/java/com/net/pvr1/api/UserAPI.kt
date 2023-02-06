@@ -132,6 +132,30 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<PaytmHmacResponse>
 
+
+    @POST("api/payment/paytmex/nbbanks")
+    suspend fun bankList(
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<BankListResponse>
+
+    // Recurring HMAC
+    @POST("api/payment/recurring/passport/hmac")
+    suspend fun recurringPaytmHMAC(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("transid") transid: String,
+        @Query("unpaid") unpaid: Boolean,
+        @Query("cardNo") cardNo: String,
+        @Query("booktype") booktype: String,
+        @Query("ptype") ptype: String,
+        @Query("isSpi") isSpi: String,
+        @Query("binOffer") binOffer: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
+
     @POST("api/trans/getpaymode")
     suspend fun payMode(
         @Query("cinemacode") cinemacode: String,
@@ -410,7 +434,7 @@ interface UserAPI {
 
 
     // Passport Save
-    @POST("api/offervoucher/loyalty-subscription/save")
+    @POST("api/offervoucher/loyalty-subscription/v2/save")
     suspend fun savePassport(
         @Query("userid") userid: String,
         @Query("city") city: String,
@@ -423,6 +447,19 @@ interface UserAPI {
         @Query("price") price: String,
         @Query("mobile") mobile: String,
         @Query("email") email: String,
+        @Query("av") av: String,
+        @Query("pt") pt: String,
+        @Query("did") did: String
+    ): Response<PassportPlanResponse>
+
+    @POST("api/offervoucher/loyalty-subscription/genrate-new-order")
+    suspend fun genrateNewOrder(
+        @Query("userid") userid: String,
+        @Query("city") city: String,
+        @Query("scheme") scheme: String,
+        @Query("bookingid") bookingid: String,
+        @Query("retrycount") retrycount: String,
+        @Query("reason") reason: String,
         @Query("av") av: String,
         @Query("pt") pt: String,
         @Query("did") did: String

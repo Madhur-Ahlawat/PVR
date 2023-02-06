@@ -8,7 +8,9 @@ import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.text.Html
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -34,6 +36,14 @@ import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.CartModel
 import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.ui.payment.PaymentActivity
+import com.net.pvr1.ui.payment.cardDetails.CardDetailsActivity
+import com.net.pvr1.ui.payment.cred.CredActivity
+import com.net.pvr1.ui.payment.giftcardredeem.GiftCardRedeemActivity
+import com.net.pvr1.ui.payment.paytmpostpaid.PaytmPostPaidActivity
+import com.net.pvr1.ui.payment.promoCode.PromoCodeActivity
+import com.net.pvr1.ui.payment.response.PaytmHmacResponse
+import com.net.pvr1.ui.payment.response.UPIStatusResponse
+import com.net.pvr1.ui.payment.webView.PaytmWebActivity
 import com.net.pvr1.ui.seatLayout.adapter.AddFoodCartAdapter
 import com.net.pvr1.ui.summery.adapter.SeatListAdapter
 import com.net.pvr1.ui.summery.response.ExtendTimeResponse
@@ -46,8 +56,12 @@ import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr1.utils.Constant.Companion.FOODENABLE
 import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
 import com.net.pvr1.utils.Constant.Companion.foodCartModel
+import com.phonepe.intent.sdk.api.PhonePe
+import com.phonepe.intent.sdk.api.TransactionRequestBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
@@ -59,8 +73,12 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     private val authViewModel: SummeryViewModel by viewModels()
     private var cartModel: ArrayList<CartModel> = arrayListOf()
     private var itemDescription: String = ""
+    private var pp:SummeryResponse.Output.PP? = null
     private var showTaxes = false
     private var paidAmount = ""
+    private var upiLoader = false
+    private var upiCount = 0
+
 
     //Bottom Dialog
     private var dialog: BottomSheetDialog? = null
@@ -75,6 +93,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     }
 
     //manage Login
+    @SuppressLint("SuspiciousIndentation")
     private fun manageLogin() {
         if (preferences.getIsLogin()){
             if (intent.getStringExtra("from")=="summery"){
@@ -89,10 +108,10 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                 manageFunction()
             }
         }else{
-            foodCartModel= intent.getSerializableExtra("food") as ArrayList<CartModel>
+            if (intent.hasExtra("food"))
+            foodCartModel= intent.getSerializableExtra("food") as java.util.ArrayList<CartModel>
             val intent = Intent(this@SummeryActivity, LoginActivity::class.java)
             intent.putExtra("from", "summery")
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             finish()
         }
@@ -113,6 +132,11 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         getShimmerData()
         timerManage()
         extendTime()
+        paytmHMAC()
+        credCheck()
+        upiStatus()
+        phonePeHmac()
+        phonePeStatus()
     }
 
 
@@ -136,6 +160,139 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     }
 
     private fun movedNext() {
+        binding?.quickPayBtn?.setOnClickListener {
+            when (pp?.id?.uppercase(Locale.getDefault())) {
+                Constant.UPI -> {
+                    authViewModel.paytmHMAC(
+                        preferences.getUserId(),
+                        BOOKING_ID,
+                        TRANSACTION_ID,
+                        false,
+                        "",
+                        Constant.BOOK_TYPE,
+                        pp?.name.toString(),
+                        "no",
+                        "NO"
+                    )
+                }
+                Constant.CREDIT_CARD -> {
+                    val intent = Intent(this@SummeryActivity, CardDetailsActivity::class.java)
+                    intent.putExtra("pTypeId", pp?.id)
+                    intent.putExtra("paidAmount", paidAmount)
+                    intent.putExtra("title", pp?.name)
+                    intent.putExtra("tc", pp?.tc)
+                    startActivity(intent)
+                }
+                Constant.CRED -> {
+                    authViewModel.credCheck(
+                        preferences.getUserId(),
+                        BOOKING_ID,
+                        Constant.BOOK_TYPE,
+                        TRANSACTION_ID,
+                        "false",
+                        Constant.isPackageInstalled(packageManager).toString(),
+                        "false"
+                    )
+
+                }
+                Constant.AIRTEL -> {
+                    val intent = Intent(this@SummeryActivity, PaytmWebActivity::class.java)
+                    intent.putExtra("pTypeId", pp?.id)
+                    intent.putExtra("paidAmount", paidAmount)
+                    intent.putExtra("title", pp?.name)
+                    intent.putExtra("tc", pp?.tc)
+                    startActivity(intent)
+                }
+                Constant.DEBIT_CARD -> {
+                    val intent = Intent(this@SummeryActivity, CardDetailsActivity::class.java)
+                    intent.putExtra("pTypeId", pp?.id)
+                    intent.putExtra("paidAmount", paidAmount)
+                    intent.putExtra("title", pp?.name)
+                    intent.putExtra("tc", pp?.tc)
+                    startActivity(intent)
+                }
+                Constant.NET_BANKING -> {
+                    val intent = Intent(this@SummeryActivity, CardDetailsActivity::class.java)
+                    intent.putExtra("pTypeId", pp?.id)
+                    intent.putExtra("tc", pp?.tc)
+                    intent.putExtra("title", pp?.name)
+                    intent.putExtra("paidAmount", paidAmount)
+                    startActivity(intent)
+                }
+                Constant.PHONE_PE -> {
+                    authViewModel.phonepeHMAC(
+                        preferences.getUserId(), BOOKING_ID, Constant.BOOK_TYPE, TRANSACTION_ID
+                    )
+                }
+                Constant.PAYTMPOSTPAID -> {
+                    val intent = Intent(this, PaytmPostPaidActivity::class.java)
+                    intent.putExtra("type", "PP")
+                    intent.putExtra("ca_a", "")
+                    intent.putExtra("tc", pp?.tc)
+                    intent.putExtra("ca_t", "")
+                    intent.putExtra("title", pp?.name)
+                    intent.putExtra("paidAmount", paidAmount)
+                    startActivity(intent)
+                }
+                Constant.PAYTM_WALLET -> {
+                    val intent = Intent(this, PaytmPostPaidActivity::class.java)
+                    intent.putExtra("type", "P")
+                    intent.putExtra("ca_a", "")
+                    intent.putExtra("tc", pp?.tc)
+                    intent.putExtra("ca_t", "")
+                    intent.putExtra("title", pp?.name)
+                    intent.putExtra("paidAmount", paidAmount)
+                    startActivity(intent)
+                }
+                Constant.GYFTR -> {
+                    val intent = Intent(this, PromoCodeActivity::class.java)
+                    intent.putExtra("type", "GYFTR")
+                    intent.putExtra("pid", pp?.id)
+                    intent.putExtra("tc", pp?.tc)
+                    intent.putExtra("ca_a", "")
+                    intent.putExtra("ca_t", "")
+                    intent.putExtra("title", pp?.name)
+                    intent.putExtra("paidAmount", paidAmount)
+                    startActivity(intent)
+                }
+                Constant.GEIFT_CARD -> {
+                    val intent = Intent(this, GiftCardRedeemActivity::class.java)
+                    intent.putExtra("type", "GEIFT_CARD")
+                    intent.putExtra("pid", pp?.id)
+                    intent.putExtra("tc", pp?.tc)
+                    intent.putExtra("c", pp?.c)
+                    intent.putExtra("ca_a", "")
+                    intent.putExtra("ca_t", "")
+                    intent.putExtra("title", pp?.name)
+                    intent.putExtra("paidAmount", paidAmount)
+                    startActivity(intent)
+                }
+                Constant.ZAGGLE -> {
+                    val intent = Intent(this, GiftCardRedeemActivity::class.java)
+                    intent.putExtra("type", "ZAGGLE")
+                    intent.putExtra("pid", pp?.id)
+                    intent.putExtra("tc", pp?.tc)
+                    intent.putExtra("c", pp?.c)
+                    intent.putExtra("ca_a", "")
+                    intent.putExtra("ca_t", "")
+                    intent.putExtra("title", pp?.name)
+                    intent.putExtra("paidAmount", paidAmount)
+                    startActivity(intent)
+                }
+                Constant.ACCENTIVE -> {
+                    val intent = Intent(this, PromoCodeActivity::class.java)
+                    intent.putExtra("type", "ACCENTIVE")
+                    intent.putExtra("pid", pp?.id)
+                    intent.putExtra("tc", pp?.tc)
+                    intent.putExtra("ca_a", "")
+                    intent.putExtra("ca_t", "")
+                    intent.putExtra("title", pp?.name)
+                    intent.putExtra("paidAmount", paidAmount)
+                    startActivity(intent)
+                }
+            }
+
+        }
         binding?.include7?.textView108?.text = getString(R.string.checkout)
         binding?.include7?.imageView58?.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
@@ -281,6 +438,10 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
     @SuppressLint("SetTextI18n")
     private fun retrieveData(output: SummeryResponse.Output) {
+        if (output.pp != null){
+            pp = output.pp
+            binding?.quickPayBtn?.show()
+        }
         //shimmer
         binding?.constraintLayout145?.hide()
         //design
@@ -646,6 +807,339 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
         timerManage()
     }
+
+    private fun paytmHMAC() {
+        authViewModel.livePDataScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        retrieveDataUpi(it.data.output)
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(this.supportFragmentManager, null)
+                }
+            }
+        }
+
+    }
+    private fun upiStatus() {
+        authViewModel.upiStatusResponseLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        retrieveStatusUpi(it.data.output)
+                    } else {
+                        loader?.dismiss()
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    if (!upiLoader) {
+                        loader = LoaderDialog(R.string.pleaseWait)
+                        loader?.show(this.supportFragmentManager, null)
+                    }
+                }
+            }
+        }
+
+    }
+
+    private fun retrieveStatusUpi(output: UPIStatusResponse.Output) {
+        upiLoader = true
+        if (output.p.equals("PAID", ignoreCase = true)) {
+            loader?.dismiss()
+            Constant().printTicket(this@SummeryActivity)
+        } else if (output.p.equals("PENDING", ignoreCase = true)) {
+            if (upiCount <= 6) {
+                val handler = Handler()
+                upiCount += 1
+                handler.postDelayed({ // close your dialog
+                    authViewModel.upiStatus(
+                        BOOKING_ID, Constant.BOOK_TYPE
+                    )
+                }, 10000)
+            } else {
+                loader?.dismiss()
+                val dialog = OptionDialog(this,
+                    R.mipmap.ic_launcher,
+                    R.string.app_name,
+                    "If you want to try again then press retry otherwise press cancel.",
+                    positiveBtnText = R.string.ok,
+                    negativeBtnText = R.string.no,
+                    positiveClick = {},
+                    negativeClick = {})
+                dialog.show()
+            }
+        } else {
+            loader?.dismiss()
+            val dialog = OptionDialog(this,
+                R.mipmap.ic_launcher,
+                R.string.app_name,
+                "Transaction Failed!",
+                positiveBtnText = R.string.ok,
+                negativeBtnText = R.string.no,
+                positiveClick = {},
+                negativeClick = {})
+            dialog.show()
+        }
+    }
+
+    private fun retrieveDataUpi(output: PaytmHmacResponse.Output) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(output.deepLink)
+        startActivityForResult(intent, 120)
+//        resultLauncher.launch(intent,120)
+    }
+
+    private fun credCheck() {
+        authViewModel.credCheckLiveDataScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        if (it.data.output.state == "true") {
+                            val intent = Intent(this@SummeryActivity, CredActivity::class.java)
+                            intent.putExtra("bannertext", it.data.output.banner_txt)
+                            intent.putExtra("icon", it.data.output.icon)
+                            intent.putExtra("paidAmount", paidAmount)
+                            intent.putExtra("msg", it.data.output.msg)
+                            intent.putExtra("mode", it.data.output.mode)
+                            intent.putExtra("pid", pp?.id)
+                            intent.putExtra("tc", pp?.tc)
+                            intent.putExtra("ca_a", "")
+                            intent.putExtra("ca_t", "")
+                            intent.putExtra("title", pp?.name)
+                            startActivity(intent)
+                        } else {
+                            toast(it.data.msg)
+                        }
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(this.supportFragmentManager, null)
+                }
+            }
+        }
+
+    }
+
+    private fun phonePeHmac() {
+        authViewModel.phonepeLiveDataScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        val transactionRequest2 =
+                            TransactionRequestBuilder().setData(it.data.output.bs)
+                                .setChecksum(it.data.output.bs).setUrl(it.data.output.bs).build()
+
+                        startActivityForResult(
+                            PhonePe.getTransactionIntent(
+                                transactionRequest2
+                            )!!, 300
+                        )
+
+                    } else {
+                        loader?.dismiss()
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    if (!upiLoader) {
+                        loader = LoaderDialog(R.string.pleaseWait)
+                        loader?.show(this.supportFragmentManager, null)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun phonePeStatus() {
+        authViewModel.phonepeStatusLiveDataScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+
+                        if (it.data.output.p != "false") {
+                            Constant().printTicket(this@SummeryActivity)
+                        } else {
+                            val dialog = OptionDialog(this,
+                                R.mipmap.ic_launcher,
+                                R.string.app_name,
+                                it.data.msg.toString(),
+                                positiveBtnText = R.string.ok,
+                                negativeBtnText = R.string.no,
+                                positiveClick = {},
+                                negativeClick = {})
+                            dialog.show()
+                        }
+
+                    } else {
+                        loader?.dismiss()
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    if (!upiLoader) {
+                        loader = LoaderDialog(R.string.pleaseWait)
+                        loader?.show(this.supportFragmentManager, null)
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 120) {
+            if (data != null && data.extras != null) {
+                if (Constant.BOOK_TYPE == "LOYALTYUNLIMITED") {
+                    toast("LOYALTYUNLIMITED")
+                } else {
+                    authViewModel.upiStatus(
+                        BOOKING_ID, Constant.BOOK_TYPE
+                    )
+                }
+            } else {
+                val dialog = OptionDialog(this,
+                    R.mipmap.ic_launcher,
+                    R.string.app_name,
+                    "Transaction Failed!",
+                    positiveBtnText = R.string.ok,
+                    negativeBtnText = R.string.no,
+                    positiveClick = {},
+                    negativeClick = {})
+                dialog.show()
+            }
+        } else if (resultCode == 300) {
+            var bundle: Bundle
+            val txnResult: String? = null
+            if (data != null) {
+                if (resultCode == RESULT_OK) {
+                    authViewModel.phonepeStatus(
+                        preferences.getUserId(), BOOKING_ID, Constant.BOOK_TYPE, TRANSACTION_ID
+                    )
+                } else if (resultCode == RESULT_CANCELED) {
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        "Transaction Failed!",
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {
+
+                        },
+                        negativeClick = {})
+                    dialog.show()
+                }
+            }
+        }
+    }
+
 
 
 }

@@ -68,6 +68,7 @@ import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.PRIVILEGEPOINT
 import com.net.pvr1.utils.Constant.Companion.PRIVILEGEVOUCHER
 import com.net.pvr1.utils.Constant.Companion.PlaceHolder
+import com.net.pvr1.utils.Constant.SharedPreference.Companion.ACTIVE
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -199,7 +200,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         broadcastReceiver = NetworkReceiver()
         broadcastIntent()
         binding?.privilege?.setOnClickListener {
-            val navigationView = requireActivity().findViewById(R.id.bottomNavigationView) as BottomNavigationView
+            val navigationView =
+                requireActivity().findViewById(R.id.bottomNavigationView) as BottomNavigationView
             val bottomMenuView = navigationView.getChildAt(0) as BottomNavigationMenuView
             val newView = bottomMenuView.getChildAt(2)
             val itemView = newView as BottomNavigationItemView
@@ -615,24 +617,28 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     override fun onOfferClick(comingSoonItem: HomeResponse.Cp) {
-        if (comingSoonItem.t != null && comingSoonItem.t.equals("campaign-VIDEO", ignoreCase = true)) {
+        if (comingSoonItem.t != null && comingSoonItem.t.equals(
+                "campaign-VIDEO",
+                ignoreCase = true
+            )
+        ) {
             val intent = Intent(requireActivity(), PlayerActivity::class.java)
             intent.putExtra("trailerUrl", comingSoonItem.mtrailerurl)
             startActivity(intent)
-        }else if (comingSoonItem.t == "campaign-EXPATS"){
-            if (comingSoonItem.mf){
+        } else if (comingSoonItem.t == "campaign-EXPATS") {
+            if (comingSoonItem.mf) {
                 val intent = Intent(requireActivity(), BookingActivity::class.java)
                 intent.putExtra("mid", comingSoonItem.id)
                 startActivity(intent)
-            }else{
+            } else {
                 val intent = Intent(requireActivity(), NowShowingActivity::class.java)
                 intent.putExtra("mid", comingSoonItem.id)
                 startActivity(intent)
             }
 
-        }else if (comingSoonItem.t == "campaign-VKAAO"){
+        } else if (comingSoonItem.t == "campaign-VKAAO") {
 
-        }else if (comingSoonItem.t == "campaign-PPP"){
+        } else if (comingSoonItem.t == "campaign-PPP") {
             val intent = Intent(context, WebViewActivity::class.java)
             intent.putExtra("from", "more")
             intent.putExtra(
@@ -640,20 +646,21 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             )
             intent.putExtra("getUrl", comingSoonItem.surl)
             startActivity(intent)
-        }else if (comingSoonItem.t == "campaign-ACTIVITY"){
+        } else if (comingSoonItem.t == "campaign-ACTIVITY") {
             val intent = Intent(context, OfferDetailsActivity::class.java)
             intent.putExtra("title", comingSoonItem.c)
             intent.putExtra("disc", comingSoonItem.t)
             intent.putExtra("id", comingSoonItem.id)
             startActivity(intent)
-        }else if (comingSoonItem.t == "campaign-NOURL"){
+        } else if (comingSoonItem.t == "campaign-NOURL") {
 
-        }else if (comingSoonItem.t == "campaign-GIFTCARD"){
+        } else if (comingSoonItem.t == "campaign-GIFTCARD") {
             val intent = Intent(requireContext(), GiftCardActivity::class.java)
             startActivity(intent)
-        }else if (comingSoonItem.t == "campaign-in"){
+        } else if (comingSoonItem.t == "campaign-in") {
             if (comingSoonItem.surl.lowercase(Locale.ROOT).contains("/loyalty/home")) {
-                val navigationView = requireActivity().findViewById(R.id.bottomNavigationView) as BottomNavigationView
+                val navigationView =
+                    requireActivity().findViewById(R.id.bottomNavigationView) as BottomNavigationView
                 val bottomMenuView = navigationView.getChildAt(0) as BottomNavigationMenuView
                 val newView = bottomMenuView.getChildAt(2)
                 val itemView = newView as BottomNavigationItemView
@@ -668,7 +675,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 )
                 startActivity(intent)
             }
-        }else if (comingSoonItem.t == "campaign-within"){
+        } else if (comingSoonItem.t == "campaign-within") {
             val intent = Intent(context, WebViewActivity::class.java)
             intent.putExtra("from", "more")
             intent.putExtra(
@@ -676,9 +683,10 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             )
             intent.putExtra("getUrl", comingSoonItem.surl)
             startActivity(intent)
-        }else if (comingSoonItem.t == "campaign-out"){
+        } else if (comingSoonItem.t == "campaign-out") {
             val intent = Intent(
-                Intent.ACTION_VIEW, Uri.parse(comingSoonItem.surl))
+                Intent.ACTION_VIEW, Uri.parse(comingSoonItem.surl)
+            )
             startActivity(intent)
         }
     }
@@ -962,8 +970,32 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         }
 
         if (preferences.getIsLogin()) {
-            binding?.privilegeLoginUi?.show()
-            binding?.privilegeLogOutUi?.hide()
+            val ls = preferences.getString(Constant.SharedPreference.LOYALITY_STATUS)
+            val isHl: String = preferences.getString(Constant.SharedPreference.IS_HL)
+            val isLy: String = preferences.getString(Constant.SharedPreference.IS_LY)
+            if (isLy.equals("true", ignoreCase = true)) {
+                if (ls != null && !ls.equals("", ignoreCase = true)) {
+                    if (isHl.equals("true", ignoreCase = true)) {
+                        binding?.privilegeLoginUi?.show()
+                        binding?.privilegeLogOutUi?.hide()
+                        if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == ACTIVE){
+                            binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.subs_back_b)
+                        }else{
+                            binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.privilege_home_back)
+                        }
+                    } else {
+                        binding?.privilegeLogOutUi?.show()
+                        binding?.privilegeLoginUi?.hide()
+                    }
+                } else {
+                    binding?.privilegeLogOutUi?.show()
+                    binding?.privilegeLoginUi?.hide()
+                }
+            } else {
+                binding?.privilegeLogOutUi?.show()
+                binding?.privilegeLoginUi?.hide()
+            }
+
             printLog("pt---->${PRIVILEGEPOINT}")
             binding?.privilegeLogin?.pt?.text = PRIVILEGEPOINT
             binding?.privilegeLogin?.numVou?.text = PRIVILEGEVOUCHER
@@ -1014,12 +1046,24 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 rlBanner?.hide()
                 listener?.onShowNotification()
                 listener?.onShowPrivilege()
-                if (bannerModels.size > 0 && bannerModels[counterStory].type.equals("image", ignoreCase = true)) {
-                    if (bannerModels[counterStory].redirectView.equals("DEEPLINK", ignoreCase = true)) {
+                if (bannerModels.size > 0 && bannerModels[counterStory].type.equals(
+                        "image",
+                        ignoreCase = true
+                    )
+                ) {
+                    if (bannerModels[counterStory].redirectView.equals(
+                            "DEEPLINK",
+                            ignoreCase = true
+                        )
+                    ) {
                         if (bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)) {
-                            if (bannerModels[counterStory].redirect_url.lowercase(Locale.ROOT).contains("/loyalty/home")) {
-                                val navigationView = requireActivity().findViewById(R.id.bottomNavigationView) as BottomNavigationView
-                                val bottomMenuView = navigationView.getChildAt(0) as BottomNavigationMenuView
+                            if (bannerModels[counterStory].redirect_url.lowercase(Locale.ROOT)
+                                    .contains("/loyalty/home")
+                            ) {
+                                val navigationView =
+                                    requireActivity().findViewById(R.id.bottomNavigationView) as BottomNavigationView
+                                val bottomMenuView =
+                                    navigationView.getChildAt(0) as BottomNavigationMenuView
                                 val newView = bottomMenuView.getChildAt(2)
                                 val itemView = newView as BottomNavigationItemView
                                 itemView.performClick()
@@ -1034,7 +1078,11 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                                 startActivity(intent)
                             }
                         }
-                    } else if (bannerModels[counterStory].redirect_url.equals("INAPP", ignoreCase = true)) {
+                    } else if (bannerModels[counterStory].redirect_url.equals(
+                            "INAPP",
+                            ignoreCase = true
+                        )
+                    ) {
                         if (bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)) {
                             val intent = Intent(context, WebViewActivity::class.java)
                             intent.putExtra("title", bannerModels[counterStory].name)
@@ -1042,9 +1090,16 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                             intent.putExtra("getUrl", bannerModels[counterStory].redirect_url)
                             startActivity(intent)
                         }
-                    } else if (bannerModels[counterStory].redirect_url.equals("WEB", ignoreCase = true)) {
+                    } else if (bannerModels[counterStory].redirect_url.equals(
+                            "WEB",
+                            ignoreCase = true
+                        )
+                    ) {
                         if (bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)) {
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(bannerModels[counterStory].redirect_url))
+                            val intent = Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(bannerModels[counterStory].redirect_url)
+                            )
                             startActivity(intent)
                         }
                     }
@@ -1057,7 +1112,11 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 rlBanner?.hide()
                 listener?.onShowNotification()
                 listener?.onShowPrivilege()
-                if (bannerModels.size > 0 && bannerModels[counterStory].type.equals("video", ignoreCase = true)) {
+                if (bannerModels.size > 0 && bannerModels[counterStory].type.equals(
+                        "video",
+                        ignoreCase = true
+                    )
+                ) {
                     val intent = Intent(requireActivity(), PlayerActivity::class.java)
                     intent.putExtra("trailerUrl", bannerModels[counterStory].trailerUrl)
                     startActivity(intent)
@@ -1079,7 +1138,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             ivPlay?.hide()
             tvButton?.text = bannerModel.buttonText
             if (bannerModel.buttonText.isNotEmpty())
-            tvButton?.show()
+                tvButton?.show()
         } else {
             ivPlay?.hide()
             tvButton?.hide()

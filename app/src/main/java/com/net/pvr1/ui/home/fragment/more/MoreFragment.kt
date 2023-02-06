@@ -92,6 +92,8 @@ class MoreFragment : Fragment() {
         //SetName
         binding?.profileDetails?.textView205?.text = preferences.getUserName()
         manageFunctions()
+
+
     }
 
     private fun manageFunctions() {
@@ -121,8 +123,31 @@ class MoreFragment : Fragment() {
                 )
             )
 
-            binding?.privilegeLoginUi?.show()
-            binding?.privilegeLogOutUi?.hide()
+            val ls = preferences.getString(Constant.SharedPreference.LOYALITY_STATUS)
+            val isHl: String = preferences.getString(Constant.SharedPreference.IS_HL)
+            val isLy: String = preferences.getString(Constant.SharedPreference.IS_LY)
+            if (isLy.equals("true", ignoreCase = true)) {
+                if (ls != null && !ls.equals("", ignoreCase = true)) {
+                    if (isHl.equals("true", ignoreCase = true)) {
+                        binding?.privilegeLoginUi?.show()
+                        binding?.privilegeLogOutUi?.hide()
+                        if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == Constant.SharedPreference.ACTIVE){
+                            binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.subs_back_b)
+                        }else{
+                            binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.privilege_home_back)
+                        }
+                    } else {
+                        binding?.privilegeLogOutUi?.show()
+                        binding?.privilegeLoginUi?.hide()
+                    }
+                } else {
+                    binding?.privilegeLogOutUi?.show()
+                    binding?.privilegeLoginUi?.hide()
+                }
+            } else {
+                binding?.privilegeLogOutUi?.show()
+                binding?.privilegeLoginUi?.hide()
+            }
             binding?.llBookingSection?.show()
             binding?.profileLinear?.show()
             binding?.tvSignOut?.show()

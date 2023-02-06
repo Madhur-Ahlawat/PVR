@@ -233,8 +233,9 @@ class NonMemberActivity : AppCompatActivity() {
                 val intent4: Intent
                 if (!preferences.getIsLogin()) {
                     intent4 = Intent(this, LoginActivity::class.java)
-                    intent4.putExtra(Constant.PCBackStackActivity.OPEN_ACTIVITY_NAME, Constant.PCBackStackActivity.LOYALITY_NONMEMBER_ACTIVITY)
+                    intent4.putExtra("from", Constant.PrivilegeHomeResponseConst?.pinfo?.get(reviewPosition)?.ptype)
                     startActivity(intent4)
+                   finish()
                 } else {
                     if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(reviewPosition)?.ptype == ("P")) {
 //
@@ -297,6 +298,7 @@ class NonMemberActivity : AppCompatActivity() {
         NonMemberFragment.subPlans = output.scheme[0].subsplan
         NonMemberFragment.retrymsg1 = output.scheme[0].retrymsgone
         NonMemberFragment.retrymsg2 = output.scheme[0].retrymsgtwo
+        NonMemberFragment.maxtrycount = output.scheme[0].maxtrycount.toInt()
         NonMemberFragment.visits = Constant.PrivilegeHomeResponseConst?.pinfo!![reviewPosition].visits
         binding?.passportView?.priceNewText?.text = ""
 

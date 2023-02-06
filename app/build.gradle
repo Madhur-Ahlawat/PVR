@@ -21,9 +21,9 @@ android {
     buildTypes {
         debug {
 //            buildConfigField "String", "API_URL", "\"https://devapi.pvrcinemas.com/PVRCinemasCMS/\""//dev
-//            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/\""//Prod
+            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/\""//Prod
 //            buildConfigField "String", "API_URL", "\"https://preprodapi.pvrcinemas.com/PVRCinemasCMS/\""//PreProd
-            buildConfigField "String", "API_URL", "\"https://demoapi.pvrcinemas.com/PVRCinemasCMS/\""//stage
+//            buildConfigField "String", "API_URL", "\"https://demoapi.pvrcinemas.com/PVRCinemasCMS/\""//stage
 
             minifyEnabled false
             debuggable true
@@ -179,6 +179,9 @@ dependencies {
 
     // IS EVENT
     implementation('com.evergage.android:evergage-android-sdk:1.3.0@aar') { transitive = true }
+
+    // Circular Progress
+    implementation 'com.github.antonKozyriatskyi:CircularProgressIndicator:1.3.0'
 
 
 }

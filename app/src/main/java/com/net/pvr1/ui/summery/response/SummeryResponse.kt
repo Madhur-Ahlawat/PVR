@@ -61,7 +61,7 @@ data class SummeryResponse(
         val ms: String,
         val pe: String,
         val pmsg: String,
-        val pp: Any,
+        val pp: PP,
         val preDetails: List<Any>,
         val pttr: Any,
         val rd: String,
@@ -104,6 +104,13 @@ data class SummeryResponse(
             val it: List<Any>,
             val n: String,
             val v: String
+        ):java.io.Serializable
+
+        data class PP(
+            val id: String,
+            val name: String,
+            val c: String,
+            val tc: String
         ):java.io.Serializable
     }
 }

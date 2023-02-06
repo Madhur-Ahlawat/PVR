@@ -286,6 +286,11 @@
             android:name=".ui.payment.PaymentActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.payment.PaymentStatusActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.summery.SummeryActivity"
             android:exported="false"
@@ -363,6 +368,7 @@
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="false"
+            android:noHistory="true"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.splash.onBoarding.LandingActivity"

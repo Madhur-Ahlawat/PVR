@@ -16,7 +16,11 @@ import com.net.pvr1.databinding.ActivityOtpVerifyBinding
 import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.giftCard.GiftCardSummaryActivity
 import com.net.pvr1.ui.home.HomeActivity
+import com.net.pvr1.ui.home.fragment.privilege.EnrollInPassportActivity
+import com.net.pvr1.ui.home.fragment.privilege.EnrollInPrivilegeActivity
+import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.location.enableLocation.EnableLocationActivity
 import com.net.pvr1.ui.location.selectCity.SelectCityActivity
 import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
@@ -27,6 +31,7 @@ import com.net.pvr1.utils.*
 import com.net.pvr1.utils.SmsBroadcastReceiver.SmsBroadcastReceiverListener
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.internal.and
+import org.json.JSONObject
 import java.security.MessageDigest
 import java.util.*
 import java.util.regex.Matcher
@@ -62,6 +67,7 @@ class OtpVerifyActivity : AppCompatActivity() {
 
         mobile = intent.getStringExtra("mobile").toString()
         newUser = intent.getStringExtra("newUser").toString()
+        if (intent.hasExtra("from"))
         from = intent.getStringExtra("from").toString()
         if (from == "summery") {
             timerManage()
@@ -254,7 +260,8 @@ class OtpVerifyActivity : AppCompatActivity() {
         if (output.dob!=null){
             output.dob.let { preferences.saveDob(it) }
         }
-        checkMoved()
+        authViewModel.privilegeHome(preferences.geMobileNumber(), preferences.getCityName())
+        privilegeDataLoad()
     }
 
 
@@ -271,8 +278,70 @@ class OtpVerifyActivity : AppCompatActivity() {
         output?.ph?.let { preferences.saveString(Constant.SharedPreference.USER_NUMBER,it) }
         output?.em?.let { preferences.saveString(Constant.SharedPreference.USER_EMAIL,it)  }
         output?.gd?.let { preferences.saveString(Constant.SharedPreference.USER_GENDER,it)  }
-        checkMoved()
+
+        authViewModel.privilegeHome(preferences.geMobileNumber(), preferences.getCityName())
+        privilegeDataLoad()
     }
+
+    private fun privilegeDataLoad() {
+        authViewModel.privilegeHomeResponseLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        Constant.PRIVILEGEPOINT = it.data.output.pt
+                        Constant.PRIVILEGEVOUCHER = it.data.output.vou
+                        privilegeRetrieveData(it.data.output)
+
+                    } else {
+                        if (it.data?.output != null) it.data.output.let { it1 ->
+                            privilegeRetrieveData(
+                                it1
+                            )
+                        }
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                }
+            }
+        }
+    }
+
+    private fun privilegeRetrieveData(output: PrivilegeHomeResponse.Output) {
+        try {
+            Constant.PrivilegeHomeResponseConst = output
+            preferences.saveString("FAQ", output.faq)
+            preferences.saveString(Constant.SharedPreference.pcities, output.pcities)
+            preferences.saveString("KOTAK_URL", output.pkotakurl)
+            val jsonObject1 = JSONObject()
+            jsonObject1.put("points", output.pt)
+            jsonObject1.put("voucher", output.vou)
+            preferences.saveString(Constant.SharedPreference.LOYALITY_POINT, jsonObject1.toString())
+            preferences.saveString(
+                Constant.SharedPreference.LOYALITY_CARD, output.passportbuy.toString()
+            )
+            preferences.saveString(Constant.SharedPreference.SUBS_OPEN, output.passport.toString())
+            preferences.saveString(Constant.SharedPreference.LOYALITY_STATUS, output.ls)
+            preferences.saveString(Constant.SharedPreference.SUBSCRIPTION_STATUS, output.ulm)
+            checkMoved()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+
 
     private fun checkMoved() {
         if (!Constant().locationServicesEnabled(this@OtpVerifyActivity)) {
@@ -289,9 +358,50 @@ class OtpVerifyActivity : AppCompatActivity() {
             if (from=="summery"){
                 val intent = Intent(this@OtpVerifyActivity, SummeryActivity::class.java)
                 intent.putExtra("from",from)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
                 finish()
+            }else if (from == "GC"){
+                val intent = Intent(this@OtpVerifyActivity, GiftCardSummaryActivity::class.java)
+                startActivity(intent)
+                finish()
+            }else if (from == "PP"){
+                if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == Constant.SharedPreference.ACTIVE){
+                    val intent = Intent(this@OtpVerifyActivity, HomeActivity::class.java)
+                    intent.putExtra("from","P")
+                    startActivity(intent)
+                    finish()
+                }else {
+                    val intent = Intent(this@OtpVerifyActivity, EnrollInPassportActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }else if (from == "P"){
+                val ls = preferences.getString(Constant.SharedPreference.LOYALITY_STATUS)
+                val isHl: String = preferences.getString(Constant.SharedPreference.IS_HL)
+                val isLy: String = preferences.getString(Constant.SharedPreference.IS_LY)
+                if (isLy.equals("true", ignoreCase = true)) {
+                    if (ls != null && !ls.equals("", ignoreCase = true)) {
+                        if (isHl.equals("true", ignoreCase = true)) {
+                            val intent = Intent(this@OtpVerifyActivity, HomeActivity::class.java)
+                            intent.putExtra("from","P")
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            val intent = Intent(this@OtpVerifyActivity, EnrollInPrivilegeActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                    } else {
+                        val intent = Intent(this@OtpVerifyActivity, EnrollInPrivilegeActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                }else{
+                    val intent = Intent(this@OtpVerifyActivity, EnrollInPrivilegeActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+
             }else{
                 val intent = Intent(this@OtpVerifyActivity, HomeActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)

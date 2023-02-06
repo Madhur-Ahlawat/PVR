@@ -14,7 +14,7 @@ import com.net.pvr1.utils.Constant
 
 class PaymentWalletAdapter(
     private var context: Context,
-    private var nowShowingList: ArrayList<PreferenceResponse.Output.Wallet>,
+    private var nowShowingList: ArrayList<PreferenceResponse.Output.Genre.Other>,
     private var listener: RecycleViewItemClickListenerCity,
 ) :
     RecyclerView.Adapter<PaymentWalletAdapter.ViewHolder>() {
@@ -94,7 +94,7 @@ class PaymentWalletAdapter(
 
 
     interface RecycleViewItemClickListenerCity {
-        fun paymentWalletClick(comingSoonItem: PreferenceResponse.Output.Wallet)
+        fun paymentWalletClick(comingSoonItem: PreferenceResponse.Output.Genre.Other)
 
     }
 

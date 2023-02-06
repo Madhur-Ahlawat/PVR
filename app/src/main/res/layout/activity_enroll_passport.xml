@@ -455,7 +455,7 @@
 
     <TextView
         android:id="@+id/tvSend_request"
-        android:fontFamily="@font/sfprodisplay_bold"
+        android:fontFamily="@font/sf_pro_text_bold"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentBottom="true"
@@ -468,8 +468,8 @@
         android:gravity="center"
         android:text="@string/submit_details"
         android:textAllCaps="true"
-        android:textColor="@color/pvr_dark_black"
-        android:textSize="22sp" />
+        android:textColor="@color/black"
+        android:textSize="18sp" />
 
 
 </RelativeLayout>

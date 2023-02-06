@@ -314,6 +314,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout167"
             android:layout_width="0dp"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="@+id/view155"
             app:layout_constraintStart_toStartOf="@+id/view155"

@@ -353,14 +353,16 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                         PRIVILEGEVOUCHER = it.data.output.vou
                         privilegeRetrieveData(it.data.output)
                         switchFragment()
+
                     } else {
                         if (it.data?.output != null) it.data.output.let { it1 ->
                             privilegeRetrieveData(
                                 it1
                             )
                         }
-                        switchFragment()
                     }
+                    switchFragment()
+
                 }
                 is NetworkResult.Error -> {
                     loader?.dismiss()
@@ -398,8 +400,8 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
             preferences.saveString(Constant.SharedPreference.SUBS_OPEN, output.passport.toString())
             preferences.saveString(Constant.SharedPreference.LOYALITY_STATUS, output.ls)
             preferences.saveString(Constant.SharedPreference.SUBSCRIPTION_STATUS, output.ulm)
-            if (intent.hasExtra("from") && intent.getStringExtra("from") == "PP") {
-                managePrivilege("from")
+            if (intent.hasExtra("from") && (intent.getStringExtra("from") == "PP" || intent.getStringExtra("from") == "PP")) {
+                managePrivilege(intent.getStringExtra("from").toString())
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -412,7 +414,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
             val isHl: String = preferences.getString(Constant.SharedPreference.IS_HL)
             val isLy: String = preferences.getString(Constant.SharedPreference.IS_LY)
             val data = Bundle()
-            if (s == "from") {
+            if (s == "PP") {
                 data.putString("type", "PP")
                 data.putString("from", "payment")
                 data.putString("id", intent.getStringExtra("id"))
@@ -444,6 +446,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onShowPrivilege() {
         if (PrivilegeHomeResponseConst?.pcheck == "true")
         privilegeDialog()
