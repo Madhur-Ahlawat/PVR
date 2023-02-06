@@ -14,12 +14,16 @@ import com.net.pvr1.databinding.ActivityPaymentWebBinding
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.giftCard.GiftCardActivity
 import com.net.pvr1.ui.home.HomeActivity
+import com.net.pvr1.ui.payment.PaymentActivity.Companion.createdAt
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr1.utils.Constant.Companion.BOOK_TYPE
+import com.net.pvr1.utils.launchActivity
 import com.net.pvr1.utils.launchPrivilegeActivity
 import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
+import org.json.JSONException
+import org.json.JSONObject
 import java.net.URLEncoder
 
 @Suppress("DEPRECATION")
@@ -115,6 +119,10 @@ class PaymentWebActivity : AppCompatActivity() {
 
         getToken()
 
+        binding?.include3?.imageView58?.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -153,10 +161,18 @@ class PaymentWebActivity : AppCompatActivity() {
 
         val url = checksum
         if (subscriptionId != "") {
+            val jsonObject = JSONObject()
+            try {
+                jsonObject.put("userConsent", 1)
+                jsonObject.put("createdAt", createdAt)
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
             var recurringparams = ""
             recurringparams =
                 "$recurringparams&cardInfo=$saveCardId|${ccnumber?.replace(" ".toRegex(),"")}|$cvv|$expmonth$expyear"
             recurringparams = "$recurringparams&paymentMode=$pType"
+            recurringparams = "$recurringparams&coftConsent=$jsonObject"
             recurringparams = "$recurringparams&authMode=otp"
             recurringparams = "$recurringparams&SUBSCRIPTION_ID=$subscriptionId"
             recurringparams = "$recurringparams&txnToken=$token"
@@ -263,6 +279,26 @@ class PaymentWebActivity : AppCompatActivity() {
                                         positiveBtnText = R.string.ok,
                                         negativeBtnText = R.string.no,
                                         positiveClick = {
+                                            when (BOOK_TYPE) {
+                                                "GIFTCARD" -> {
+                                                    launchActivity(
+                                                        GiftCardActivity::class.java,
+                                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                                    )
+                                                }
+                                                "BOOKING", "FOOD" -> {
+                                                    launchActivity(
+                                                        HomeActivity::class.java,
+                                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                                    )
+                                                }
+                                                else -> {
+                                                    launchPrivilegeActivity(
+                                                        HomeActivity::class.java,
+                                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,"","",
+                                                        "","P")
+                                                }
+                                            }
                                             finish()
                                         },
                                         negativeClick = {
@@ -279,7 +315,26 @@ class PaymentWebActivity : AppCompatActivity() {
                                         positiveBtnText = R.string.ok,
                                         negativeBtnText = R.string.no,
                                         positiveClick = {
-
+                                            when (BOOK_TYPE) {
+                                                "GIFTCARD" -> {
+                                                    launchActivity(
+                                                        GiftCardActivity::class.java,
+                                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                                    )
+                                                }
+                                                "BOOKING", "FOOD" -> {
+                                                    launchActivity(
+                                                        HomeActivity::class.java,
+                                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                                    )
+                                                }
+                                                else -> {
+                                                    launchPrivilegeActivity(
+                                                        HomeActivity::class.java,
+                                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,"","",
+                                                        "","P")
+                                                }
+                                            }
                                         },
                                         negativeClick = {
 
@@ -324,6 +379,39 @@ class PaymentWebActivity : AppCompatActivity() {
                 it, data.toByteArray()
             )
         } else url?.let { binding?.webView?.postUrl(it, EncodingUtils.getBytes(data, "BASE64")) }
+    }
+
+    override fun onBackPressed() {
+        val dialog = OptionDialog(this,
+            R.mipmap.ic_launcher,
+            R.string.app_name,
+            "Do you want to end the session?",
+            positiveBtnText = R.string.ok,
+            negativeBtnText = R.string.no,
+            positiveClick = {
+                when (BOOK_TYPE) {
+                    "GIFTCARD" -> {
+                        launchActivity(
+                            GiftCardActivity::class.java,
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        )
+                    }
+                    "BOOKING", "FOOD" -> {
+                        launchActivity(
+                            HomeActivity::class.java,
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        )
+                    }
+                    else -> {
+                        launchPrivilegeActivity(
+                            HomeActivity::class.java,
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,"","",
+                            "","P")
+                    }
+                }
+            },
+            negativeClick = {})
+        dialog.show()
     }
 
 }

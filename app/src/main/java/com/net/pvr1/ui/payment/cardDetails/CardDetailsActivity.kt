@@ -26,12 +26,15 @@ import com.net.pvr1.ui.home.fragment.privilege.EnrollInPassportActivity
 import com.net.pvr1.ui.home.fragment.privilege.NonMemberFragment
 import com.net.pvr1.ui.home.fragment.privilege.NonMemberFragment.Companion.maxtrycount
 import com.net.pvr1.ui.payment.PaymentActivity
+import com.net.pvr1.ui.payment.PaymentActivity.Companion.subsId
 import com.net.pvr1.ui.payment.cardDetails.adapter.NetBankingAdapter
 import com.net.pvr1.ui.payment.cardDetails.viewModel.CardDetailsViewModel
 import com.net.pvr1.ui.payment.response.PaytmHmacResponse
 import com.net.pvr1.ui.payment.webView.PaymentWebActivity
 import com.net.pvr1.utils.*
+import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr1.utils.Constant.Companion.BOOK_TYPE
+import com.net.pvr1.utils.Constant.Companion.CALL_PAYMODE
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -50,7 +53,6 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
     private val authViewModel: CardDetailsViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var saveCardId = ""
-    private var subscriptionId = ""
     private var paymentType = ""
     private var isSavedCard = false
     private var isFromNet = false
@@ -81,6 +83,8 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
             getString(R.string.pay) + " " + getString(R.string.currency) + intent.getStringExtra("paidAmount")
         movedNext()
         paytmHMAC()
+        bankList()
+        paytmRHMAC()
         if (BOOK_TYPE == "RECURRING")
             checkBinForRecurring()
         if (paymentType.equals("116", ignoreCase = true)) {
@@ -96,20 +100,12 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
             binding?.constraintLayout130?.hide()
             binding?.recyclerView52?.show()
             isNetBaking = true
-            authViewModel.paytmHMAC(
-                preferences.getUserId(),
-                Constant.BOOKING_ID,
-                Constant.TRANSACTION_ID,
-                false,
-                "",
-                BOOK_TYPE,
-                paymentType,
-                "no",
-                "NO"
-            )
+            authViewModel.bankList()
         }
 
         binding?.cardNumber?.addTextChangedListener(FourDigitCardFormatWatcher())
+
+
 
     }
 
@@ -171,17 +167,31 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                     negativeClick = {})
                 dialog.show()
             } else {
-                authViewModel.paytmHMAC(
-                    preferences.getUserId(),
-                    Constant.BOOKING_ID,
-                    Constant.TRANSACTION_ID,
-                    false,
-                    cardNumber,
-                    BOOK_TYPE,
-                    paymentType,
-                    "no",
-                    "NO"
-                )
+                if (BOOK_TYPE == "RECURRING") {
+                    authViewModel.paytmRHMAC(
+                        preferences.getUserId(),
+                        Constant.BOOKING_ID,
+                        Constant.TRANSACTION_ID,
+                        false,
+                        cardNumber,
+                        BOOK_TYPE,
+                        paymentType,
+                        "no",
+                        "NO"
+                    )
+                }else{
+                    authViewModel.paytmHMAC(
+                        preferences.getUserId(),
+                        Constant.BOOKING_ID,
+                        Constant.TRANSACTION_ID,
+                        false,
+                        cardNumber,
+                        BOOK_TYPE,
+                        paymentType,
+                        "no",
+                        "NO"
+                    )
+                }
             }
 
         }
@@ -245,7 +255,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
             override fun afterTextChanged(s: Editable) {
                 if (s.isNotEmpty() && s.length == 6) {
                     if (BOOK_TYPE == "RECURRING") {
-                        if (maxtrycount>0) {
+                        if (maxtrycount>=callCount) {
                             if (maxtrycount != (callCount)) {
                                 authViewModel.recurringBinCheck(
                                     preferences.getUserId(),
@@ -274,6 +284,94 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
 
     private fun paytmHMAC() {
         authViewModel.liveDataScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        retrieveData(it.data.output)
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(this.supportFragmentManager, null)
+                }
+            }
+        }
+
+    }
+    private fun bankList() {
+        authViewModel.liveBankDataScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        val bankList: ArrayList<Map.Entry<String, String>> = ArrayList()
+                        if (it.data.output != null) {
+                            it.data.output.forEach { it1 ->
+                                bankList.add(it1)
+                            }
+                            val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+                            val foodBestSellerAdapter = NetBankingAdapter(bankList, this, this)
+                            binding?.recyclerView52?.layoutManager = layoutManagerCrew
+                            binding?.recyclerView52?.adapter = foodBestSellerAdapter
+                            binding?.recyclerView52?.setHasFixedSize(true)
+                        }
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(this.supportFragmentManager, null)
+                }
+            }
+        }
+
+    }
+    private fun paytmRHMAC() {
+        authViewModel.liveDataRScope.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
@@ -354,34 +452,67 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
         }
 
     }
-
-    private fun retrieveData(output: PaytmHmacResponse.Output) {
-        val bankList: ArrayList<Map.Entry<String, String>> = ArrayList()
-        if (output.nblist != null) {
-            output.nblist.forEach {
-                bankList.add(it)
+    private fun generateNewOrder() {
+        authViewModel.recurringNewLiveDataScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        subsId = ""
+                        BOOK_TYPE = it.data.output.booktype
+                        BOOKING_ID = it.data.output.id
+                        CALL_PAYMODE = 1
+                        onBackPressed()
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(this.supportFragmentManager, null)
+                }
             }
         }
 
-        printLog("nbList--->${bankList}")
-        if (bankList.isNotEmpty()) {
+    }
+
+    private fun retrieveData(output: PaytmHmacResponse.Output) {
+
+
             hmackeyNet = output.hmackey
             amountNet = output.amount
             midNet = output.mid
             currencyNet = output.currency
             callingUrlNet = output.callingurl
 
-            val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-            val foodBestSellerAdapter = NetBankingAdapter(bankList, this, this)
-            binding?.recyclerView52?.layoutManager = layoutManagerCrew
-            binding?.recyclerView52?.adapter = foodBestSellerAdapter
-            binding?.recyclerView52?.setHasFixedSize(true)
-        } else {
+        if (binding?.monthYear?.text.toString()!="") {
             expiryMonth = binding?.monthYear?.text.toString().split("/")[0]
             expiryYear = binding?.monthYear?.text.toString().split("/")[1]
+        }
 
             val intent = Intent(this@CardDetailsActivity, PaymentWebActivity::class.java)
-            if (subscriptionId != "") intent.putExtra("subscriptionId", subscriptionId)
+            if (subsId != "")
+                intent.putExtra("subscriptionId", subsId)
             intent.putExtra("token", output.hmackey)
             intent.putExtra("amount", output.amount)
             intent.putExtra("mid", output.mid)
@@ -409,39 +540,37 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
             intent.putExtra("TICKET_BOOKING_DETAILS", "paymentIntentData")
             startActivity(intent)
 
-        }
-
     }
 
 
     override fun netBankingClick(comingSoonItem: Map.Entry<String, String>) {
-        val intent = Intent(this@CardDetailsActivity, PaymentWebActivity::class.java)
-        if (subscriptionId != "") intent.putExtra("subscriptionId", subscriptionId)
-        intent.putExtra("token", hmackeyNet)
-        intent.putExtra("amount", amountNet)
-        intent.putExtra("mid", midNet)
-        intent.putExtra("currency", currencyNet)
-        intent.putExtra("saveCardId", saveCardId)
-        intent.putExtra("paymentType", paymentType)
 
-        if (!isFromNet) {
-            if (binding?.checkBox?.isChecked == true && !isKotak) {
-                intent.putExtra("saveCard", "1")
-            } else {
-                intent.putExtra("saveCard", "0")
-            }
-            intent.putExtra("cvv", binding?.cvv?.text.toString())
-            intent.putExtra("ccnumber", binding?.cardNumber?.text.toString().trim())
-            intent.putExtra("expmonth", expiryMonth)
-            intent.putExtra("expyear", expiryYear)
+        selectedBankCode = comingSoonItem.key
+        if (BOOK_TYPE == "RECURRING") {
+            authViewModel.paytmRHMAC(
+                preferences.getUserId(),
+                Constant.BOOKING_ID,
+                Constant.TRANSACTION_ID,
+                false,
+                "",
+                BOOK_TYPE,
+                paymentType,
+                "no",
+                "NO"
+            )
+        }else{
+            authViewModel.paytmHMAC(
+                preferences.getUserId(),
+                Constant.BOOKING_ID,
+                Constant.TRANSACTION_ID,
+                false,
+                "",
+                BOOK_TYPE,
+                paymentType,
+                "no",
+                "NO"
+            )
         }
-
-        intent.putExtra("channelCode", comingSoonItem.key)
-        intent.putExtra("paymenttype", paymentType)
-        intent.putExtra("checksum", callingUrlNet)
-        intent.putExtra("BookType", BOOK_TYPE)
-        intent.putExtra("TICKET_BOOKING_DETAILS", "paymentIntentData")
-        startActivity(intent)
 
     }
 
@@ -464,7 +593,14 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
         cross_text?.text = NonMemberFragment.retrymsg2
         dialog.show()
         ok_btn!!.setOnClickListener {
-           // genrateNeworder()
+            authViewModel.passportGenerate(
+                preferences.getUserId(),
+                preferences.getCityName(),
+                NonMemberFragment.scheme_id,
+                BOOKING_ID,
+                maxtrycount.toString(),""
+            )
+            generateNewOrder()
             dialog.dismiss()
         }
         cancel!!.setOnClickListener {

@@ -230,6 +230,77 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
     }
 
+
+    //paytm HMAC
+    private val paytmBankListLiveData = MutableLiveData<NetworkResult<BankListResponse>>()
+    val paytmBankListResponseLiveData: LiveData<NetworkResult<BankListResponse>>
+        get() = paytmBankListLiveData
+
+    suspend fun bankList() {
+        paytmBankListLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.bankList(
+            Constant.version,
+            Constant.platform,
+            Constant.getDid()
+        )
+        paytmBankListResponse(response)
+    }
+
+    private fun paytmBankListResponse(response: Response<BankListResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            paytmBankListLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            paytmBankListLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            paytmBankListLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+ //paytm Recurring HMAC
+    private val paytmRHmacLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val paytmRHmacResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = paytmRHmacLiveData
+
+    suspend fun paytmRHMAC(
+        userid: String,
+        bookingid: String,
+        transid: String,
+        unpaid: Boolean,
+        cardNo: String,
+        booktype: String,
+        ptype: String,
+        isSpi: String,
+        binOffer: String
+    ) {
+        paytmRHmacLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.recurringPaytmHMAC(
+            userid,
+            bookingid,
+            transid,
+            unpaid,
+            cardNo,
+            booktype,
+            ptype,
+            isSpi,
+            binOffer,
+            Constant.version,
+            Constant.platform
+        )
+        paytmRHmacResponse(response)
+    }
+
+    private fun paytmRHmacResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            paytmRHmacLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            paytmRHmacLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            paytmRHmacLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
     //payMode
     private val payModeLiveData = MutableLiveData<NetworkResult<PaymentResponse>>()
     val payModeResponseLiveData: LiveData<NetworkResult<PaymentResponse>>
@@ -885,6 +956,34 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             }
         } else {
             passportSaveLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    // Generate Order
+    private val passportGenerateLiveData = MutableLiveData<NetworkResult<PassportPlanResponse>>()
+    val passportGenerateResponseLiveData: LiveData<NetworkResult<PassportPlanResponse>>
+        get() = passportGenerateLiveData
+
+    suspend fun passportGenerate(userId: String, city: String, scheme: String, bookingid: String, retrycount: String, reason: String) {
+        passportGenerateLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.genrateNewOrder(
+            userId, city,scheme, bookingid,retrycount, reason , Constant.version, Constant.platform, Constant.getDid())
+        passportGenerateResponse(response)
+    }
+
+    private fun passportGenerateResponse(response: Response<PassportPlanResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            passportGenerateLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            try {
+                val errorObj = JSONObject(response.errorBody()?.charStream()?.readText())
+                passportGenerateLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            }catch (e:Exception){
+                passportGenerateLiveData.postValue(NetworkResult.Error(response.errorBody()?.charStream()?.readText().toString()))
+            }
+        } else {
+            passportGenerateLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 

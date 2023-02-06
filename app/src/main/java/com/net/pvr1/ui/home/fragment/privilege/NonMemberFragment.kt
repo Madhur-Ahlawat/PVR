@@ -112,7 +112,7 @@ class NonMemberFragment : Fragment() {
                 val intent4: Intent
                 if (!preferences.getIsLogin()) {
                     intent4 = Intent(requireContext(), LoginActivity::class.java)
-                    intent4.putExtra(Constant.PCBackStackActivity.OPEN_ACTIVITY_NAME, Constant.PCBackStackActivity.LOYALITY_NONMEMBER_ACTIVITY)
+                    intent4.putExtra("from", Constant.PrivilegeHomeResponseConst?.pinfo?.get(reviewPosition)?.ptype)
                     startActivity(intent4)
                 } else {
                     if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(reviewPosition)?.ptype == ("P")) {
@@ -303,6 +303,7 @@ class NonMemberFragment : Fragment() {
         scheme_id = output.scheme[0].schemeid
         scheme_price = output.scheme[0].price
         subPlans = output.scheme[0].subsplan
+        maxtrycount = output.scheme[0].maxtrycount.toInt()
         retrymsg1 = output.scheme[0].retrymsgone
         retrymsg2 = output.scheme[0].retrymsgtwo
         binding?.passportView?.priceNewText?.text = ""

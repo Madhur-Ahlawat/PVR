@@ -4,11 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
+import com.net.pvr1.ui.home.fragment.privilege.response.PassportPlanResponse
 import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
-import com.net.pvr1.ui.payment.response.CouponResponse
-import com.net.pvr1.ui.payment.response.PaymentResponse
-import com.net.pvr1.ui.payment.response.PaytmHmacResponse
-import com.net.pvr1.ui.payment.response.RecurringInitResponse
+import com.net.pvr1.ui.payment.response.*
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -37,6 +35,24 @@ class CardDetailsViewModel @Inject constructor(private val userRepository: UserR
         }
     }
 
+    val liveDataRScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.paytmRHmacResponseLiveData
+
+    fun paytmRHMAC(
+        userid: String,
+        bookingid: String,
+        transid: String,
+        unpaid: Boolean,
+        cardNo: String,
+        booktype: String,
+        ptype: String,
+        isSpi: String,
+        binOffer: String
+    ) {
+        viewModelScope.launch {
+            userRepository.paytmRHMAC(userid, bookingid, transid, unpaid, cardNo,booktype,ptype,isSpi,binOffer)
+        }
+    }
+
 
     //Recurring BIN Check
     val recurringBinLiveDataScope: LiveData<NetworkResult<RecurringInitResponse>> get() = userRepository.recurringBinResponseLiveData
@@ -50,6 +66,26 @@ class CardDetailsViewModel @Inject constructor(private val userRepository: UserR
     ) {
         viewModelScope.launch {
             userRepository.recurringBinCheck(userid, bookingid, token, bin, vpa)
+        }
+    }
+
+    //Recurring Generate New Order
+    val recurringNewLiveDataScope: LiveData<NetworkResult<PassportPlanResponse>> get() = userRepository.passportGenerateResponseLiveData
+
+    fun passportGenerate(
+        userId: String, city: String, scheme: String, bookingid: String, retrycount: String, reason: String
+    ) {
+        viewModelScope.launch {
+            userRepository.passportGenerate(userId, city, scheme, bookingid, retrycount,reason)
+        }
+    }
+
+    //paytm
+    val liveBankDataScope: LiveData<NetworkResult<BankListResponse>> get() = userRepository.paytmBankListResponseLiveData
+
+    fun bankList() {
+        viewModelScope.launch {
+            userRepository.bankList()
         }
     }
 

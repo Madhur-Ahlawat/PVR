@@ -125,6 +125,16 @@ class PaymentViewModel @Inject constructor(private val userRepository: UserRepos
     }
 
 
+    //paytm
+    val liveBankDataScope: LiveData<NetworkResult<BankListResponse>> get() = userRepository.paytmBankListResponseLiveData
+
+    fun bankList() {
+        viewModelScope.launch {
+            userRepository.bankList()
+        }
+    }
+
+
     //Phonepe Hmac
     val phonepeLiveDataScope: LiveData<NetworkResult<PhonepeHmacResponse>> get() = userRepository.phonepeHmacResponseLiveData
 

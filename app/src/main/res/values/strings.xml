@@ -207,6 +207,7 @@
     <string name="grand_total">Grand Total</string>
     <string name="remove">Remove</string>
     <string name="proceed_to_pay">Proceed to Pay</string>
+    <string name="quick_pay">Quick Pay</string>
 
     //Seat Layout
     <string name="max_seat_msz">You Can\'t Select More Than two Seat.</string>

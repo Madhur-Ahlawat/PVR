@@ -78,6 +78,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:text="@string/preferred_genres"
+            android:includeFontPadding="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -91,6 +92,7 @@
             android:fontFamily="@font/sf_pro_text_medium"
             android:textColor="#959595"
             android:textSize="@dimen/dimen_14sp"
+            android:includeFontPadding="false"
             android:text="@string/preferred_genres"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

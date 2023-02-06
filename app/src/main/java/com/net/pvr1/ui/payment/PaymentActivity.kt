@@ -293,6 +293,20 @@ class PaymentActivity : AppCompatActivity(),
                 showTncDialog(this, discount_val, "")
             }
         }
+
+        if (Constant.CALL_PAYMODE == 1){
+            authViewModel.payMode(
+                CINEMA_ID,
+                BOOK_TYPE,
+                preferences.getUserId(),
+                preferences.geMobileNumber(),
+                "",
+                "no",
+                "",
+                false
+            )
+            //payModeDataLoad()
+        }
     }
 
     private fun validateInputFields(): Boolean {
@@ -881,47 +895,37 @@ class PaymentActivity : AppCompatActivity(),
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 120) {
-            if (data != null && data.extras != null) {
-                if (BOOK_TYPE == "LOYALTYUNLIMITED") {
-                    toast("LOYALTYUNLIMITED")
-                } else {
-                    authViewModel.upiStatus(
-                        BOOKING_ID, BOOK_TYPE
-                    )
-                }
-            } else {
-                val dialog = OptionDialog(this,
-                    R.mipmap.ic_launcher,
-                    R.string.app_name,
-                    "Transaction Failed!",
-                    positiveBtnText = R.string.ok,
-                    negativeBtnText = R.string.no,
-                    positiveClick = {},
-                    negativeClick = {})
-                dialog.show()
-            }
-        } else if (resultCode == 300) {
-            var bundle: Bundle
-            val txnResult: String? = null
-            if (data != null) {
-                if (resultCode == RESULT_OK) {
-                    authViewModel.phonepeStatus(
-                        preferences.getUserId(), BOOKING_ID, BOOK_TYPE, TRANSACTION_ID
-                    )
-                } else if (resultCode == RESULT_CANCELED) {
-                    val dialog = OptionDialog(this,
-                        R.mipmap.ic_launcher,
-                        R.string.app_name,
-                        "Transaction Failed!",
-                        positiveBtnText = R.string.ok,
-                        negativeBtnText = R.string.no,
-                        positiveClick = {
+            val intent = Intent(this, PaymentStatusActivity::class.java)
+            intent.putExtra("title", "UPI")
+            intent.putExtra("paidAmount", actualAmt)
+            startActivity(intent)
 
-                        },
-                        negativeClick = {})
-                    dialog.show()
-                }
-            }
+        } else if (resultCode == 300) {
+            val intent = Intent(this, PaymentStatusActivity::class.java)
+            intent.putExtra("title", "PhonePe")
+            intent.putExtra("paidAmount", actualAmt)
+            startActivity(intent)
+//            var bundle: Bundle
+//            val txnResult: String? = null
+//            if (data != null) {
+//                if (resultCode == RESULT_OK) {
+//                    authViewModel.phonepeStatus(
+//                        preferences.getUserId(), BOOKING_ID, BOOK_TYPE, TRANSACTION_ID
+//                    )
+//                } else if (resultCode == RESULT_CANCELED) {
+//                    val dialog = OptionDialog(this,
+//                        R.mipmap.ic_launcher,
+//                        R.string.app_name,
+//                        "Transaction Failed!",
+//                        positiveBtnText = R.string.ok,
+//                        negativeBtnText = R.string.no,
+//                        positiveClick = {
+//
+//                        },
+//                        negativeClick = {})
+//                    dialog.show()
+//                }
+//            }
         }
     }
 
@@ -1176,19 +1180,28 @@ class PaymentActivity : AppCompatActivity(),
             R.mipmap.ic_launcher,
             R.string.app_name,
             "Do you want to end the session?",
-            positiveBtnText = R.string.ok,
-            negativeBtnText = R.string.no,
+            positiveBtnText = R.string.yes,
+            negativeBtnText = R.string.cancel,
             positiveClick = {
-                if (BOOK_TYPE == "GIFTCARD") {
-                    launchActivity(
-                        GiftCardActivity::class.java,
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                    )
-                } else {
-                    launchActivity(
-                        HomeActivity::class.java,
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                    )
+                when (BOOK_TYPE) {
+                    "GIFTCARD" -> {
+                        launchActivity(
+                            GiftCardActivity::class.java,
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        )
+                    }
+                    "BOOKING", "FOOD" -> {
+                        launchActivity(
+                            HomeActivity::class.java,
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        )
+                    }
+                    else -> {
+                        launchPrivilegeActivity(
+                            HomeActivity::class.java,
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,"","",
+                            "","P")
+                    }
                 }
             },
             negativeClick = {})

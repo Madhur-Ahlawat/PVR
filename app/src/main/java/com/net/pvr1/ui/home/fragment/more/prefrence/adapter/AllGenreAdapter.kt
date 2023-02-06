@@ -12,7 +12,7 @@ import com.net.pvr1.ui.home.fragment.more.prefrence.response.PreferenceResponse
 
 class AllGenreAdapter(
     private var context: Context,
-    private var nowShowingList: List<PreferenceResponse.Output.Genre.Other>,
+    private var nowShowingList: ArrayList<PreferenceResponse.Output.Genre.Other>,
     private var listener: RecycleViewItemClickListener
 ) :
     RecyclerView.Adapter<AllGenreAdapter.ViewHolder>() {

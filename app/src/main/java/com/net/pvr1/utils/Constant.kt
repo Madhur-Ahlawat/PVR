@@ -109,6 +109,7 @@ class Constant {
         const val LATITUDE = "lat"
         const val LONGITUDE = "lang"
         var BOOK_TYPE = "BOOKING"
+        var CALL_PAYMODE = 0
         const val ON_BOARDING_CLICK = false
         const val SEAT_BOOKED = 2
         const val SEAT_SELECTED = 3

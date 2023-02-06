@@ -30,7 +30,6 @@ class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         PhonePe.init(this)
-
         FirebaseApp.initializeApp(this)
 
         // Loging SFMC
