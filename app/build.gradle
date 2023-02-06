@@ -183,5 +183,7 @@ dependencies {
     // Circular Progress
     implementation 'com.github.antonKozyriatskyi:CircularProgressIndicator:1.3.0'
 
+    // HyperSDK
+    implementation 'in.juspay:hypersdk:2.0.4-rc.78'
 
 }

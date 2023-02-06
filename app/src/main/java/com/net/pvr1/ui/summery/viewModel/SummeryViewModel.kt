@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
 import com.net.pvr1.ui.food.response.CancelTransResponse
+import com.net.pvr1.ui.payment.response.JusPayInitResponse
 import com.net.pvr1.ui.payment.response.PaytmHmacResponse
 import com.net.pvr1.ui.payment.response.PhonepeHmacResponse
 import com.net.pvr1.ui.payment.response.UPIStatusResponse
@@ -214,5 +215,14 @@ class SummeryViewModel @Inject constructor(private val userRepository: UserRepos
     }
 
 
+    //JsuPay Init
+    val initJusPayLiveData: LiveData<NetworkResult<JusPayInitResponse>>
+        get() = userRepository.initJusPayResponseLiveData
+
+    fun initJusPay(userId: String, bookingid: String) {
+        viewModelScope.launch {
+            userRepository.initJusPay(userId,bookingid)
+        }
+    }
 
 }

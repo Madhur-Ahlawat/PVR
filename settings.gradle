@@ -11,6 +11,10 @@ dependencyResolutionManagement {
         maven {
             url "https://salesforce-marketingcloud.github.io/MarketingCloudSDK-Android/repository"
         }
+        maven {
+            url "https://maven.juspay.in/jp-build-packages/hyper-sdk/"
+
+        }
     }
 }
 rootProject.name = "PVR"

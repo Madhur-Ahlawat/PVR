@@ -124,6 +124,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         authViewModel.summery(
             TRANSACTION_ID, CINEMA_ID, preferences.getUserId(), BOOKING_ID, DONATION
         )
+        authViewModel.initJusPay(preferences.getUserId(), BOOKING_ID)
 
         movedNext()
         foodCart()

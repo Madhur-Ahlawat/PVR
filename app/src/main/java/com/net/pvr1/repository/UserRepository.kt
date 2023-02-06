@@ -3096,4 +3096,29 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
 
+    /***************** JUS PAY ***************************/
+
+
+    private val initJusPayLiveData = MutableLiveData<NetworkResult<JusPayInitResponse>>()
+    val initJusPayResponseLiveData: LiveData<NetworkResult<JusPayInitResponse>>
+        get() = initJusPayLiveData
+
+    suspend fun initJusPay(userId: String, bookingid: String) {
+        _userResponseLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.initJusPay(userId, bookingid, Constant.version, Constant.platform)
+        initJusPayResponse(response)
+    }
+
+    private fun initJusPayResponse(response: Response<JusPayInitResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            initJusPayLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            initJusPayLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            initJusPayLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
 }
