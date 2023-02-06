@@ -57,7 +57,6 @@ class LoginActivity : AppCompatActivity() {
         val view = binding?.root
         setContentView(view)
         manageFunction()
-        printLog("et--->$EXTANDTIME----at---->$AVAILABETIME")
     }
 
     private fun manageFunction() {

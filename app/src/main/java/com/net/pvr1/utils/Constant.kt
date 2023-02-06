@@ -97,6 +97,7 @@ class Constant {
         var DISCOUNT = 0.0
         var BOOKING_ID = "0"
         var CINEMA_ID = "0"
+        var DONATION = "donation"
         var CINEMA_CODE = "0"
         var OfferDialogImage = "0"
         var SELECTED_SEAT = 0
@@ -539,7 +540,6 @@ class Constant {
             const val CINEMA_FEEDBACK = "cinema_feedback"
             const val LS = "ls"
             const val RM = "rm"
-            const val DONATION = "donation"
             const val SVM = "svm"
             const val Pvr_tc = "Pvr_tc"
             const val Pvr_New_Tag = "Pvr_New_Tag"

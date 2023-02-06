@@ -29,7 +29,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class ProfileActivity : AppCompatActivity() {
     @Inject
@@ -213,19 +212,19 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         //anniversaryClick
-        if (selectedMarital=="Married"){
-            bindingProfile.anniversaryClick.setOnClickListener {
-                dobClick = false
-                val mDatePickerDialog = DatePickerDialog(    this,
-                    dateD,
-                    myCalendar.get(Calendar.YEAR),
-                    myCalendar.get(Calendar.MONTH),
-                    myCalendar.get(Calendar.DAY_OF_MONTH))
-                mDatePickerDialog.datePicker.maxDate = System.currentTimeMillis() + 0 * 24 * 60 * 60 * 1000
-                mDatePickerDialog.show()
-
+        bindingProfile.anniversary.setOnClickListener {
+            if (selectedMarital=="Married"){
+                    dobClick = false
+                    val mDatePickerDialog = DatePickerDialog(    this,
+                        dateD,
+                        myCalendar.get(Calendar.YEAR),
+                        myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH))
+                    mDatePickerDialog.datePicker.maxDate = System.currentTimeMillis() + 0 * 24 * 60 * 60 * 1000
+                    mDatePickerDialog.show()
             }
         }
+
 
         //dismiss Dialog
         bindingProfile.textView247.setOnClickListener {

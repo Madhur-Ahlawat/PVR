@@ -29,6 +29,7 @@ import com.net.pvr1.ui.splash.onBoarding.LandingActivity
 import com.net.pvr1.ui.splash.response.SplashResponse
 import com.net.pvr1.ui.splash.viewModel.SplashViewModel
 import com.net.pvr1.utils.*
+import com.net.pvr1.utils.Constant.Companion.DONATION
 import com.net.pvr1.utils.Constant.Companion.newTag
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -187,11 +188,12 @@ class SplashActivity : AppCompatActivity() {
 
     private fun retrieveData(output: SplashResponse.Output) {
         newTag= output.ntb
-
+        DONATION = output.donation
         preferences.saveString(Constant.SharedPreference.NT, output.nt)
         preferences.saveString(Constant.SharedPreference.NTBT, output.ntbn)
         preferences.saveString(Constant.SharedPreference.IS_HL, output.hl)
         preferences.saveString(Constant.SharedPreference.IS_LY, output.ly)
+
         movedNext()
     }
 

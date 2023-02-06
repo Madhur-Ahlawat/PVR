@@ -679,7 +679,7 @@ interface UserAPI {
         @Query("srilanka") srilanka: String,
         @Query("infosys") infosys: String,
         @Query("isSpi") isSpi: String,
-        @Query("doreq") doreq: Boolean,
+        @Query("doreq") doreq: String,
         @Query("change") change: String,
         @Query("av") version: String,
         @Query("pt") platform: String

@@ -1529,7 +1529,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         get() = summerLiveData
 
     suspend fun summerLayout(
-        transid: String, cinemacode: String, userid: String, bookingid: String
+        transid: String, cinemacode: String, userid: String, bookingid: String, donation: String
     ) {
         formatsLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.summery(
@@ -1541,7 +1541,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             "no",
             "",
             "NO",
-            false,
+            donation,
             "",
             Constant.version,
             Constant.platform

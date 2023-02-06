@@ -23,9 +23,15 @@ class SummeryViewModel @Inject constructor(private val userRepository: UserRepos
     val liveDataScope: LiveData<NetworkResult<SummeryResponse>>
         get() = userRepository.summerResponseLiveData
 
-    fun summery(transid: String, cinemacode: String, userid: String, bookingid: String) {
+    fun summery(
+        transid: String,
+        cinemacode: String,
+        userid: String,
+        bookingid: String,
+        donation: String
+    ) {
         viewModelScope.launch {
-            userRepository.summerLayout(transid, cinemacode, userid, bookingid)
+            userRepository.summerLayout(transid, cinemacode, userid, bookingid,donation)
         }
     }
 
