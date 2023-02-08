@@ -151,10 +151,10 @@ data class BookingResponse(
                         data class Pr(
                             val ar: String,
                             val `as`: Int,
-                            val bp: String,
-                            val bv: String,
+                            val bp: String="0.0",
+                            val bv: String="0.0",
                             val n: String,
-                            val p: String,
+                            val p: String="0.0",
                             val st: Int,
                             val ts: Int,
                             val tt: String

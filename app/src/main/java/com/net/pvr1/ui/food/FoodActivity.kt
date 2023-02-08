@@ -197,12 +197,15 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         // Past Food
 
         if (output.pastfoods.isNotEmpty()){
+            binding?.previousFoodView?.show()
             val list = getPastFoodList(output)
             val layoutManagerCrew2 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
             previousFoodAdapter = PreviousFoodAdapter(list, this, this,"past")
             binding?.previousFoodList?.adapter = previousFoodAdapter
             binding?.previousFoodList?.setHasFixedSize(true)
             binding?.previousFoodList?.layoutManager = layoutManagerCrew2
+        }else{
+            binding?.previousFoodView?.hide()
         }
 
         //Food
@@ -950,7 +953,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
             newLayoutParams.topMargin = 0
             newLayoutParams.leftMargin = 0
             newLayoutParams.rightMargin = 0
-            newLayoutParams.bottomMargin = Constant().convertDpToPixel(160f,this)
+            newLayoutParams.bottomMargin = Constant().convertDpToPixel(0f,this)
             binding?.constraintLayout154?.layoutParams = newLayoutParams
             binding?.constraintLayout30?.show()
             binding?.textView149?.setOnClickListener {

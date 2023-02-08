@@ -34,7 +34,7 @@ class OptionDialog(
          binding = DialogOptionBinding.inflate(layoutInflater, null, false)
         setContentView(binding?.root!!)
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val width = (context.resources.displayMetrics.widthPixels * 0.70)
+        val width = (context.resources.displayMetrics.widthPixels * 0.80)
 
         window?.setLayout(width.roundToInt(), WindowManager.LayoutParams.WRAP_CONTENT);
 

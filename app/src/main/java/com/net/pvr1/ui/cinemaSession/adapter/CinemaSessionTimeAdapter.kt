@@ -83,9 +83,9 @@ class CinemaSessionTimeAdapter(
 
                 //handicap
                 if (this.hc){
-                    binding.constraintLayout133.show()
+                    binding.imageView48.show()
                 }else{
-                    binding.constraintLayout133.hide()
+                    binding.imageView48.hide()
                 }
 
                 if (!TextUtils.isEmpty(this.comm)) {

@@ -652,12 +652,12 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             val foodPrice = calculateTotalPrice()
             val foodTotPrice = Constant.DECIFORMAT.format(foodPrice / 100.0)
 
-            paidAmount = (payableAmount + donationAmount.toDouble() + foodTotPrice.toInt()).roundToInt()
+            paidAmount = (payableAmount + ticketCount.toDouble() + foodTotPrice.toDouble()).roundToInt()
             binding?.textView174?.text =
                 getString(R.string.pay) + " " + getString(R.string.currency) + paidAmount + " |"
 
         } else {
-            paidAmount = (payableAmount + donationAmount).roundToInt()
+            paidAmount = (payableAmount + ticketCount).roundToInt()
             binding?.textView174?.text =
                 getString(R.string.pay) + " " + getString(R.string.currency) + paidAmount + " |"
 
@@ -684,7 +684,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             val foodPrice = calculateTotalPrice()
             val foodTotPrice = Constant.DECIFORMAT.format(foodPrice / 100.0)
 
-            paidAmount = (payableAmount + donationAmount.toDouble() + foodTotPrice.toInt()).roundToInt()
+            paidAmount = (payableAmount + donationAmount.toDouble() + foodTotPrice.toDouble()).roundToInt()
             binding?.textView174?.text =
                 getString(R.string.pay) + " " + getString(R.string.currency) + paidAmount + " |"
 

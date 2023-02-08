@@ -349,9 +349,12 @@ class BookingActivity : AppCompatActivity(),
                 daySessionResponse?.gnr + " " + getString(R.string.dots) + " " + language
 
             //recycler Days
-            val snapHelper = PagerSnapHelper()
-            snapHelper.attachToRecyclerView(binding?.recyclerView9)
             val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+            binding?.recyclerView9?.layoutManager = gridLayout2
+            binding?.recyclerView9?.onFlingListener = null
+            val snapHelper = PagerSnapHelper()
+
+            snapHelper.attachToRecyclerView(binding?.recyclerView9)
             val bookingShowsDaysAdapter =
                 BookingShowsDaysAdapter(daySessionResponse?.dys!!, this, this)
             binding?.recyclerView9?.layoutManager = gridLayout2

@@ -190,9 +190,9 @@ data class MovieDetailsResponse(
             val number: String,
             val name: String,
             val display: String,
-            val duration: Boolean,
+            val duration: Int,
             val roles: List<Crew.Role>,
-            val purchaseLinks: String,
+            val purchaseLinks: List<Any>,
             val video: String,) : Serializable
 
         data class Trailers(

@@ -97,7 +97,7 @@ class Constant {
         var DISCOUNT = 0.0
         var BOOKING_ID = "0"
         var CINEMA_ID = "0"
-        var DONATION = "donation"
+        var DONATION = "false"
         var CINEMA_CODE = "0"
         var OfferDialogImage = "0"
         var SELECTED_SEAT = 0

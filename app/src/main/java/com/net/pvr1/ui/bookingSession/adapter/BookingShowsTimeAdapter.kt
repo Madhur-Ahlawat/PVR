@@ -85,9 +85,9 @@ class BookingShowsTimeAdapter(
 
                 //Handicap
                 if (this.hc) {
-                    binding.constraintLayout133.show()
+                    binding.imageView48.show()
                 } else {
-                    binding.constraintLayout133.invisible()
+                    binding.imageView48.hide()
                 }
 
                 if (!TextUtils.isEmpty(this.comm)) {
@@ -103,18 +103,18 @@ class BookingShowsTimeAdapter(
                             binding.imageView49.setImageResource(R.drawable.ic_audio_icon_gray)
                         }
                         else -> {
-                            binding.imageView49.invisible()
+                            binding.imageView49.hide()
                         }
                     }
                 }else{
-                    binding.imageView49.invisible()
+                    binding.imageView49.hide()
                 }
 
                 if (!TextUtils.isEmpty(this.txt) && this.txt == ("sens")) {
                     binding.imageView50.show()
                     binding.imageView50.setImageResource(R.drawable.ic_sens_icon_gray)
                 }else{
-                    binding.imageView50.invisible()
+                    binding.imageView50.hide()
                 }
 
                 binding.imageView48.setColorFilter(Color.parseColor(colorCode))
@@ -128,7 +128,7 @@ class BookingShowsTimeAdapter(
                             try {
                                 showOfferDialog(this.sid, this.cc, this.at)
                             }catch (e:java.lang.Exception){
-
+                                e.printStackTrace()
                             }
                         } else {
                             sidText = this.sid.toString()
@@ -468,15 +468,19 @@ class BookingShowsTimeAdapter(
         }
 
         offerPrice.paintFlags = offerPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+        var discountPrice = 0
+        for (data in progressDialog) {
 
-        val offerPriceText =
-            ((progressDialog[0].p?:"0.0").toDouble().roundToInt() + (progressDialog[0].bv?:"0.0").toDouble()
-                .roundToInt())
-        ticket.text = context.getString(R.string.currency) + progressDialog[0].p
-        food.text = context.getString(R.string.currency) + progressDialog[0].bv
-        offerPrice.text = context.getString(R.string.currency) + offerPriceText
-        totalPrice.text = context.getString(R.string.currency) + progressDialog[0].bp
-        val discountPrice = offerPriceText - progressDialog[0].bp.toInt()
+            val offerPriceText =
+                ((data.p ?: "0.0").toDouble().roundToInt() + (data.bv
+                    ?: "0.0").toDouble()
+                    .roundToInt())
+            ticket.text = context.getString(R.string.currency) + data.p
+            food.text = context.getString(R.string.currency) + data.bv
+            offerPrice.text = context.getString(R.string.currency) + offerPriceText
+            totalPrice.text = context.getString(R.string.currency) + data.bp
+            discountPrice = offerPriceText - data.bp.toInt()
+        }
 
 
         skip.setOnClickListener {

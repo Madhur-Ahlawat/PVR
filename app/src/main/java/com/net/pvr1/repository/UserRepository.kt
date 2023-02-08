@@ -3105,7 +3105,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
 
     suspend fun initJusPay(userId: String, bookingid: String) {
         _userResponseLiveData.postValue(NetworkResult.Loading())
-        val response = userAPI.initJusPay(userId, bookingid, Constant.version, Constant.platform)
+        val response = userAPI.initJusPay(userId, bookingid, Constant.version, Constant.platform,Constant.getDid())
         initJusPayResponse(response)
     }
 
