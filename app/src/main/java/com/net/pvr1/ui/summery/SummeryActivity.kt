@@ -1,6 +1,7 @@
 package com.net.pvr1.ui.summery
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -12,11 +13,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.text.Html
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import android.view.Window
+import android.view.*
 import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -34,6 +34,7 @@ import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.CartModel
+import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.ui.payment.PaymentActivity
 import com.net.pvr1.ui.payment.cardDetails.CardDetailsActivity
@@ -506,13 +507,8 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         //payedAmount
         payableAmount = output.a.toDouble()
 
-        //grand total
-        binding?.textView173?.text = getString(R.string.currency) + output.a
-
         //Image
-        Glide.with(this)
-            .load(output.imh)
-            .error(R.drawable.placeholder_vertical)
+        Glide.with(this).load(output.imh).error(R.drawable.placeholder_vertical)
             .into(binding?.imageView59!!)
 
         //title
@@ -652,15 +648,20 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             val foodPrice = calculateTotalPrice()
             val foodTotPrice = Constant.DECIFORMAT.format(foodPrice / 100.0)
 
-            paidAmount = (payableAmount + ticketCount.toDouble() + foodTotPrice.toDouble()).roundToInt()
+            paidAmount =
+                (payableAmount + ticketCount.toDouble() + foodTotPrice.toDouble()).roundToInt()
             binding?.textView174?.text =
                 getString(R.string.pay) + " " + getString(R.string.currency) + paidAmount + " |"
 
+            //grand total
+            binding?.textView173?.text = getString(R.string.currency) + paidAmount
         } else {
             paidAmount = (payableAmount + ticketCount).roundToInt()
             binding?.textView174?.text =
                 getString(R.string.pay) + " " + getString(R.string.currency) + paidAmount + " |"
 
+//grand total
+            binding?.textView173?.text = getString(R.string.currency) + paidAmount
         }
     }
 
@@ -674,7 +675,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
         //total seat
         val donationAmount = 0
-        val ticketCount =  output.seat.size
+        val ticketCount = output.seat.size
 
         binding?.textView171?.text = getString(R.string.currency) + " 0"
         binding?.textView166?.text = ticketCount.toString() + "/" + getString(R.string.ticket)
@@ -684,15 +685,21 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             val foodPrice = calculateTotalPrice()
             val foodTotPrice = Constant.DECIFORMAT.format(foodPrice / 100.0)
 
-            paidAmount = (payableAmount + donationAmount.toDouble() + foodTotPrice.toDouble()).roundToInt()
+            paidAmount =
+                (payableAmount + donationAmount.toDouble() + foodTotPrice.toDouble()).roundToInt()
             binding?.textView174?.text =
                 getString(R.string.pay) + " " + getString(R.string.currency) + paidAmount + " |"
+
+            //grand total
+            binding?.textView173?.text = getString(R.string.currency) + paidAmount
 
         } else {
             paidAmount = (payableAmount + donationAmount).roundToInt()
             binding?.textView174?.text =
                 getString(R.string.pay) + " " + getString(R.string.currency) + paidAmount + " |"
 
+            //grand total
+            binding?.textView173?.text = getString(R.string.currency) + paidAmount
         }
     }
 
@@ -810,7 +817,8 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
     override fun onBackPressed() {
         if (FOODENABLE == 0) {
-            finish()
+//            finish()
+            showDialog()
         } else {
             authViewModel.cancelTrans(
                 CINEMA_ID, TRANSACTION_ID, BOOKING_ID
@@ -1239,5 +1247,42 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         }
     }
 
+
+    private fun showDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.cancel_summery_dialog)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val crossBtn = dialog.findViewById<View>(R.id.crossBtn) as ImageView
+        val endSession = dialog.findViewById<View>(R.id.delete) as TextView
+        val exploreMenu = dialog.findViewById<View>(R.id.cancel) as TextView
+
+        //close button
+        crossBtn.setOnClickListener {
+            dialog.dismiss()
+        }
+
+
+        exploreMenu.setOnClickListener {
+            dialog.dismiss()
+            finish()
+        }
+
+        endSession.setOnClickListener {
+            authViewModel.cancelTrans(
+                CINEMA_ID, TRANSACTION_ID, BOOKING_ID
+            )
+
+            dialog.dismiss()
+            val intent = Intent(this@SummeryActivity, HomeActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+            finish()
+
+        }
+        dialog.show()
+
+    }
 
 }

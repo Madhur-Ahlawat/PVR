@@ -51,8 +51,8 @@ class OtpVerifyActivity : AppCompatActivity() {
 
     //Otp Read
     private var smsBroadcastReceiver: SmsBroadcastReceiver? = null
-
     private  var from = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOtpVerifyBinding.inflate(layoutInflater, null, false)
@@ -113,6 +113,23 @@ class OtpVerifyActivity : AppCompatActivity() {
             authViewModel.loginMobileUser(mobile, preferences.getCityName(), "INDIA")
         }
 
+        binding?.otpEditText?.setOnCharacterUpdatedListener {
+            val text = binding?.otpEditText?.getStringFromFields()
+            if(text?.length==6  && text !="null"){
+                binding?.textView15?.isClickable = true
+                binding?.textView15?.isFocusable = true
+                binding?.textView15?.isEnabled = true
+                binding?.textView15?.setBackgroundResource(R.drawable.yellow_book_curve)
+
+            }else{
+                binding?.textView15?.isClickable = false
+                binding?.textView15?.isFocusable = false
+                binding?.textView15?.isEnabled = false
+                binding?.textView15?.setBackgroundResource(R.drawable.grey_seat_curve)
+            }
+
+            //otp_view.isFilled()
+        }
         //Submit
         binding?.textView15?.setOnClickListener {
             val otp = binding?.otpEditText?.getStringFromFields()

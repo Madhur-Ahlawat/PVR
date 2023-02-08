@@ -36,6 +36,7 @@ class SeatLayoutViewModel @Inject constructor(private val userRepository: UserRe
     //reserve Seat
     val reserveSeatResponseLiveData: LiveData<NetworkResult<ReserveSeatResponse>>
         get() = userRepository.reserveSeatResponseLiveData
+
     fun reserveSeat(
         reserve: String
     ) {

@@ -676,5 +676,9 @@ IMAX Corporation is one of the world\'s leading entertainment technology compani
 
     <string name="evergage_scheme">evgfqvf1</string>
     <string name="want_to_repeat">Want to repeat?</string>
+    <string name="do_you_want_to">Do you want to</string>
+    <string name="end_the_session">End the Session</string>
+    <string name="or">OR</string>
+    <string name="explore_menu">Explore Menu</string>
 
 </resources>

@@ -311,6 +311,7 @@
                 android:lineSpacingExtra="0.1dp"
                 android:clickable="false"
                 android:focusable="false"
+                android:enabled="false"
                 android:background="@drawable/grey_seat_curve"
                 android:fontFamily="@font/sf_pro_text_bold"
                 android:gravity="center"
