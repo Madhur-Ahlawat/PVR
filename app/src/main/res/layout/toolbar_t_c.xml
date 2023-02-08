@@ -33,7 +33,7 @@
         android:layout_width="@dimen/dimen_30dp"
         android:layout_height="@dimen/dimen_4dp"
         android:layout_marginTop="@dimen/dimen_8dp"
-        android:background="@drawable/yellow_seat_curve"
+        android:background="@drawable/grey_seat_curve"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

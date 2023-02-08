@@ -11,7 +11,7 @@
         android:id="@+id/constraintLayout153"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -525,7 +525,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="21dp"
-                android:background="@drawable/yellow_seat_curve"
+                android:background="@drawable/grey_seat_curve"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/view132"
                 app:layout_constraintStart_toStartOf="@+id/view132">

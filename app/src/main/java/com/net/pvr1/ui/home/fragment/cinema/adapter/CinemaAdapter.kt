@@ -100,8 +100,8 @@ class CinemaAdapter(
                             R.mipmap.ic_launcher_foreground,
                             R.string.blank_space,
                             context.getString(R.string.loginCinema),
-                            positiveBtnText = R.string.yes,
-                            negativeBtnText = R.string.no,
+                            positiveBtnText = R.string.login,
+                            negativeBtnText = R.string.cancel,
                             positiveClick = {
                                 val intent = Intent(context, LoginActivity::class.java)
                                 context.startActivity(intent)

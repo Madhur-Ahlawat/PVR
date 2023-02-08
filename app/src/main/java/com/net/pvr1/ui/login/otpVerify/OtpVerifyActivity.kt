@@ -38,7 +38,6 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class OtpVerifyActivity : AppCompatActivity() {
     @Inject
@@ -118,6 +117,12 @@ class OtpVerifyActivity : AppCompatActivity() {
         binding?.textView15?.setOnClickListener {
             val otp = binding?.otpEditText?.getStringFromFields()
             if (binding?.otpEditText?.getStringFromFields()?.contains("null") == true) {
+
+                binding?.textView15?.isClickable = true
+                binding?.textView15?.isFocusable = true
+                binding?.textView15?.setBackgroundResource(R.drawable.yellow_book_curve)
+
+
                 binding?.textView383?.show()
                 binding?.textView383?.text=getString(R.string.enterOtp)
 

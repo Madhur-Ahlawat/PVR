@@ -423,8 +423,10 @@
 
                     <ImageView
                         android:id="@+id/imageView166"
-                        android:layout_width="16dp"
-                        android:layout_height="20dp"
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:layout_gravity="center"
                         android:src="@drawable/location_down"
                         tools:ignore="ContentDescription" />
 

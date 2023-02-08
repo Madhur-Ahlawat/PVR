@@ -156,7 +156,7 @@
 
     //Search
     <string name="search_hint_text">Search for a movie or cinema</string>
-    <string name="cinemas">CINEMAS</string>
+    <string name="cinemas">Cinemas</string>
     <string name="cancel">Cancel</string>
 
     //MovieDetails

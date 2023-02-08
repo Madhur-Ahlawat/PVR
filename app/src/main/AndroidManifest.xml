@@ -340,7 +340,7 @@
         <activity
             android:name=".ui.player.PlayerActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ui.privateScreenings.PrivateScreeningsActivity"
             android:exported="false"

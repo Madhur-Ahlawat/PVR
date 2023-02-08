@@ -15,6 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <include
             android:id="@+id/include47"
             layout="@layout/extend_timer"
@@ -308,7 +309,9 @@
                 android:layout_marginTop="@dimen/dimen_30dp"
                 android:layout_marginBottom="@dimen/dimen_30dp"
                 android:lineSpacingExtra="0.1dp"
-                android:background="@drawable/btn_yellow_curve"
+                android:clickable="false"
+                android:focusable="false"
+                android:background="@drawable/grey_seat_curve"
                 android:fontFamily="@font/sf_pro_text_bold"
                 android:gravity="center"
                 android:text="@string/continue_txt"

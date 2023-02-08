@@ -1457,7 +1457,7 @@ private fun removeSelectedSeats(seat: SeatTagData) {
         binding?.textView196?.isClickable = false
         binding?.constraintLayout56?.isClickable = false
 
-        binding?.constraintLayout56?.setBackgroundResource(R.drawable.yellow_seat_curve)
+        binding?.constraintLayout56?.setBackgroundResource(R.drawable.grey_seat_curve)
 //            binding?.constraintLayout56?.setBackgroundColor(
 //                ContextCompat.getColor(
 //                    this,
@@ -1534,7 +1534,7 @@ private fun calculatePrice() {
         binding?.textView195?.isClickable = false
         binding?.textView196?.isClickable = false
         binding?.constraintLayout56?.isClickable = false
-        binding?.constraintLayout56?.setBackgroundResource(R.drawable.yellow_seat_curve)
+        binding?.constraintLayout56?.setBackgroundResource(R.drawable.grey_seat_curve)
 
 //            binding?.constraintLayout56?.setBackgroundColor(
 //                ContextCompat.getColor(
