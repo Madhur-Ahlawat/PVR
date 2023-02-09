@@ -14,9 +14,13 @@ import com.net.pvr1.utils.Constant
 
 class AddFoodCartAdapter(
     private var nowShowingList: ArrayList<CartModel>,
-    private var context: Context, private var listener: RecycleViewItemClickListenerCity
-) :
-    RecyclerView.Adapter<AddFoodCartAdapter.ViewHolder>() {
+    private var context: Context,
+    private var listener: RecycleViewItemClickListenerCity
+) : RecyclerView.Adapter<AddFoodCartAdapter.ViewHolder>() {
+
+    private var calculateQt = 0
+    private var totalPrice = 0
+
     inner class ViewHolder(val binding: SummeryItemFoodBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -33,9 +37,13 @@ class AddFoodCartAdapter(
                 //Language
                 binding.textView122.text = this.title
                 //quantity
-                binding.uiPlusMinus.foodCount.text= this.quantity.toString()
+                binding.uiPlusMinus.foodCount.text = this.quantity.toString()
+
+                calculateQt = this.quantity
+                totalPrice = calculateQt * this.price
                 //price
-                binding.textView123.text=  context.getString(R.string.currency) + Constant.DECIFORMAT.format(this.price / 100.0)
+                binding.textView123.text = context.getString(R.string.currency) + Constant.DECIFORMAT.format(totalPrice / 100.0)
+//                    context.getString(R.string.currency) + Constant.DECIFORMAT.format(this.price / 100.0)
 
                 if (this.veg) {
                     Glide.with(context).load(R.drawable.veg_ic).into(binding.imageView80)
@@ -49,7 +57,7 @@ class AddFoodCartAdapter(
                 }
 
                 binding.uiPlusMinus.plus.setOnClickListener {
-                      listener.increaseFoodClick(this)
+                    listener.increaseFoodClick(this)
                     notifyDataSetChanged()
                 }
             }

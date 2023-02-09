@@ -34,9 +34,9 @@ class BookingTheatreAdapter(
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
-//                if (position == 0) {
-//                    Constant().setMargins(holder.itemView,60,0,0,0)
-//                }
+                if (position == 0) {
+                    Constant().setMargins(holder.itemView,60,0,0,0)
+                }
 
                 //Image
                 Glide.with(context)

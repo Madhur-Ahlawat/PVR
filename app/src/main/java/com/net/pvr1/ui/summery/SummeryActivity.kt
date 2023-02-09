@@ -86,6 +86,10 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     //Bottom Dialog
     private var dialog: BottomSheetDialog? = null
 
+    private var addFoodCartAdapter: AddFoodCartAdapter? = null
+
+    private var summeryResponse: SummeryResponse.Output? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySummeryBinding.inflate(layoutInflater, null, false)
@@ -118,6 +122,8 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             startActivity(intent)
             finish()
         }
+
+        printLog("food--->${cartModel}")
     }
 
     private fun manageFunction() {
@@ -151,14 +157,14 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     //CartFood
     private fun foodCart() {
         if (cartModel.isNotEmpty()) {
-            binding?.recyclerView32?.show()
+            binding?.constraintLayout171?.show()
             val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-            val foodBestSellerAdapter = AddFoodCartAdapter(cartModel, this, this)
+            addFoodCartAdapter = AddFoodCartAdapter(cartModel, this, this)
             binding?.recyclerView32?.layoutManager = layoutManagerCrew
-            binding?.recyclerView32?.adapter = foodBestSellerAdapter
+            binding?.recyclerView32?.adapter = addFoodCartAdapter
             binding?.recyclerView32?.setHasFixedSize(true)
         } else {
-            binding?.recyclerView32?.hide()
+            binding?.constraintLayout171?.hide()
         }
     }
 
@@ -298,7 +304,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         }
         binding?.include7?.textView108?.text = getString(R.string.checkout)
         binding?.include7?.imageView58?.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
+            onBackPressed()
         }
     }
 
@@ -445,12 +451,14 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
     @SuppressLint("SetTextI18n")
     private fun retrieveData(output: SummeryResponse.Output) {
+        summeryResponse=output
 
 // quickPay
         if (output.pp != null) {
             pp = output.pp
             binding?.quickPayBtn?.show()
         }
+
         //shimmer
         binding?.constraintLayout145?.hide()
         //design
@@ -621,6 +629,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             }
 
         } else {
+            setPrice(output)
             binding?.constraintLayout170?.hide()
         }
     }
@@ -704,6 +713,34 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     }
 
 
+    private  fun setPrice(output: SummeryResponse.Output) {
+        //total seat
+//        val donationAmount = output.don / 100
+
+        val donationAmount = 0 / 100
+        val ticketCount = donationAmount * output.seat.size
+
+        //    payableAmount
+        if (cartModel.isNotEmpty()) {
+            val foodPrice = calculateTotalPrice()
+            val foodTotPrice = Constant.DECIFORMAT.format(foodPrice / 100.0)
+
+            paidAmount =
+                (payableAmount + ticketCount.toDouble() + foodTotPrice.toDouble()).roundToInt()
+            binding?.textView174?.text =
+                getString(R.string.pay) + " " + getString(R.string.currency) + paidAmount + " |"
+
+            //grand total
+            binding?.textView173?.text = getString(R.string.currency) + paidAmount
+        } else {
+            paidAmount = (payableAmount + ticketCount).roundToInt()
+            binding?.textView174?.text =
+                getString(R.string.pay) + " " + getString(R.string.currency) + paidAmount + " |"
+
+//grand total
+            binding?.textView173?.text = getString(R.string.currency) + paidAmount
+        }
+    }
     private fun calculateTotalPrice(): Int {
         var totalPrice = 0
         for (data in cartModel) {
@@ -764,7 +801,6 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         } else {
             num += 1
             comingSoonItem.quantity = num
-
             updateCartFoodCartList(comingSoonItem)
         }
     }
@@ -789,7 +825,16 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun updateCartFoodCartList(recyclerData: CartModel) {
+        addFoodCartAdapter?.notifyDataSetChanged()
+        if (summeryResponse?.donation == "True") {
+            binding?.constraintLayout170?.show()
+            setDonationData(summeryResponse!!)
+        }else{
+            summeryResponse?.let { setPrice(it) }
+        }
+
         try {
             for (item in cartModel) {
                 if (item.id == recyclerData.id) {
@@ -1223,8 +1268,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                 dialog.show()
             }
         } else if (resultCode == 300) {
-            var bundle: Bundle
-            val txnResult: String? = null
+
             if (data != null) {
                 if (resultCode == RESULT_OK) {
                     authViewModel.phonepeStatus(

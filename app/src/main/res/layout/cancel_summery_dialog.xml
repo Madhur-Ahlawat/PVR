@@ -13,7 +13,6 @@
         android:layout_height="@dimen/dimen_20dp"
         android:layout_gravity="end"
         android:layout_margin="@dimen/padding_10"
-        android:padding="@dimen/dimen_5dp"
         android:src="@drawable/close"
         android:visibility="visible"
         app:tint="@color/pvr_dark_black"

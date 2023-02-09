@@ -91,8 +91,8 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     private var limit = 500L
     private var counterStory = 0
     private var currentPage = 1
-    private var bannerModelsMain: java.util.ArrayList<BookingResponse.Output.Pu> =
-        java.util.ArrayList<BookingResponse.Output.Pu>()
+    private var bannerModelsMain: ArrayList<BookingResponse.Output.Pu> =
+        ArrayList<BookingResponse.Output.Pu>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -195,7 +195,6 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         binding?.constraintLayout154?.show()
 
         // Past Food
-
         if (output.pastfoods.isNotEmpty()){
             binding?.previousFoodView?.show()
             val list = getPastFoodList(output)
@@ -1357,7 +1356,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
 
 
     //Popup Banners
-    private fun initBanner(bannerModels: java.util.ArrayList<BookingResponse.Output.Pu>) {
+    private fun initBanner(bannerModels: ArrayList<BookingResponse.Output.Pu>) {
         bannerShow += 1
         bannerModelsMain = bannerModels
         if (bannerModels.isNotEmpty()) {
@@ -1534,7 +1533,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     }
 
     // Place Holder
-    private fun updatePH(phd: java.util.ArrayList<HomeResponse.Ph>) {
+    private fun updatePH(phd: ArrayList<HomeResponse.Ph>) {
         if (phd != null && phd.size > 0) {
             binding?.include41?.placeHolderView?.show()
             val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -1573,5 +1572,10 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         }
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        cartData()
+    }
 
 }
