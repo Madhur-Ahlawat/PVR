@@ -125,6 +125,7 @@ class Constant {
         var ProfileResponseConst: ProfileResponse.Output? = null
         var PlaceHolder: HomeResponse.Output? = null
         var DECIFORMAT = DecimalFormat("0.00")
+        var SUMMERYBACK=0
 
 //      food
         var foodCartModel: ArrayList<CartModel> = arrayListOf()

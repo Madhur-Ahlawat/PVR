@@ -605,7 +605,9 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
         //Add More Food
         binding?.textView312?.setOnClickListener {
-            onBackPressed()
+            Constant.SUMMERYBACK =1
+            intent.putExtra("food", cartModel)
+            finish()
         }
 
         //Donation manage
@@ -1310,6 +1312,8 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
         exploreMenu.setOnClickListener {
             dialog.dismiss()
+            Constant.SUMMERYBACK =1
+            intent.putExtra("food", cartModel)
             finish()
         }
 

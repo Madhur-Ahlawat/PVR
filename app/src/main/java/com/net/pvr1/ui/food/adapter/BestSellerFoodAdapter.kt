@@ -98,6 +98,7 @@ class BestSellerFoodAdapter(
                     binding.consAddUi.hide()
                     binding.textView135.show()
                 }
+
             }
         }
 

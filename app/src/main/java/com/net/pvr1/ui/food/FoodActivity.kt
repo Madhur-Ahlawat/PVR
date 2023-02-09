@@ -38,6 +38,7 @@ import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr1.utils.Constant.Companion.BOOK_TYPE
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
+import com.net.pvr1.utils.Constant.Companion.SUMMERYBACK
 import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -52,8 +53,8 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     CategoryAdapter.RecycleViewItemClickListenerCity,
     AllFoodAdapter.RecycleViewItemClickListenerCity,
     BottomFoodAdapter.RecycleViewItemClickListenerCity,
-    CartAdapter.RecycleViewItemClickListenerCity,PreviousFoodAdapter.RecycleViewItemClickListenerCity,
-    StoriesProgressView.StoriesListener {
+    CartAdapter.RecycleViewItemClickListenerCity,
+    PreviousFoodAdapter.RecycleViewItemClickListenerCity, StoriesProgressView.StoriesListener {
 
     @Inject
     lateinit var preferences: PreferenceManager
@@ -61,7 +62,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     private val authViewModel: FoodViewModel by viewModels()
     private var loader: LoaderDialog? = null
 
-    private val cartModel: ArrayList<CartModel> = arrayListOf()
+    private var cartModel: ArrayList<CartModel> = arrayListOf()
     private var filterResponse: ArrayList<FoodResponse.Output.Mfl>? = null
     private var catFilter = ArrayList<FoodResponse.Output.Mfl>()
     private var catFilterBestSeller = ArrayList<FoodResponse.Output.Bestseller>()
@@ -91,8 +92,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     private var limit = 500L
     private var counterStory = 0
     private var currentPage = 1
-    private var bannerModelsMain: ArrayList<BookingResponse.Output.Pu> =
-        ArrayList<BookingResponse.Output.Pu>()
+    private var bannerModelsMain: ArrayList<BookingResponse.Output.Pu> = ArrayList<BookingResponse.Output.Pu>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,18 +106,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     private fun manageFunction() {
         Constant.viewModel = authViewModel
         authViewModel.food(
-            preferences.getUserId(),
-            CINEMA_ID,
-            BOOKING_ID,
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "no",
-            "no",
-            "no"
+            preferences.getUserId(), CINEMA_ID, BOOKING_ID, "", "", "", "", "", "", "no", "no", "no"
         )
 
         //internet Check
@@ -195,15 +184,15 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         binding?.constraintLayout154?.show()
 
         // Past Food
-        if (output.pastfoods.isNotEmpty()){
+        if (output.pastfoods.isNotEmpty()) {
             binding?.previousFoodView?.show()
             val list = getPastFoodList(output)
             val layoutManagerCrew2 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-            previousFoodAdapter = PreviousFoodAdapter(list, this, this,"past")
+            previousFoodAdapter = PreviousFoodAdapter(list, this, this, "past")
             binding?.previousFoodList?.adapter = previousFoodAdapter
             binding?.previousFoodList?.setHasFixedSize(true)
             binding?.previousFoodList?.layoutManager = layoutManagerCrew2
-        }else{
+        } else {
             binding?.previousFoodView?.hide()
         }
 
@@ -216,7 +205,8 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
 
         //Category
         val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-        val categoryAdapter = CategoryAdapter(foodResponseCategory, this, this, binding?.recyclerView20!!)
+        val categoryAdapter =
+            CategoryAdapter(foodResponseCategory, this, this, binding?.recyclerView20!!)
         binding?.recyclerView20?.layoutManager = layoutManager
         binding?.recyclerView20?.adapter = categoryAdapter
         binding?.recyclerView20?.setHasFixedSize(true)
@@ -229,35 +219,35 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         binding?.recyclerView21?.layoutManager = layoutManagerCrew2
 
         // Food Banners
-        if (output.banners.isNotEmpty()){
+        if (output.banners.isNotEmpty()) {
             binding?.ppBanners?.show()
             val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
             binding?.pramotionBanner?.layoutManager = layoutManager
             val adapter = FoodBannersAdapter(this, output.banners)
             binding?.pramotionBanner?.adapter = adapter
-        }else{
+        } else {
             binding?.ppBanners?.hide()
         }
         // Food PlaceHolders
-        if (output.ph.isNotEmpty()){
+        if (output.ph.isNotEmpty()) {
             binding?.constraintLayout123?.show()
             updatePH(output.ph)
-        }else{
+        } else {
             binding?.constraintLayout123?.hide()
         }
         // Food Popups
-        if (output.pu.isNotEmpty()){
+        if (output.pu.isNotEmpty()) {
             binding?.rlBanner?.show()
             initBanner(output.pu)
-        }else{
+        } else {
             binding?.rlBanner?.hide()
         }
     }
 
     private fun getPastFoodList(output: FoodResponse.Output): ArrayList<FoodResponse.Output.Mfl> {
         var list = ArrayList<FoodResponse.Output.Mfl>()
-        for (data in output.mfl){
-            if (output.pastfoods.contains(data.mid.toString())){
+        for (data in output.mfl) {
+            if (output.pastfoods.contains(data.mid.toString())) {
                 list.add(data)
             }
         }
@@ -296,13 +286,9 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
                 bestSellerType = "Veg"
                 val layoutManagerCrew2 =
                     GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
-                allFoodAdapter =
-                    AllFoodAdapter(
-                        getFilterAllMfl(true, menuType, categoryName),
-                        this,
-                        this,
-                        ""
-                    )
+                allFoodAdapter = AllFoodAdapter(
+                    getFilterAllMfl(true, menuType, categoryName), this, this, ""
+                )
                 binding?.recyclerView21?.adapter = allFoodAdapter
                 binding?.recyclerView21?.setHasFixedSize(true)
                 binding?.recyclerView21?.layoutManager = layoutManagerCrew2
@@ -323,13 +309,9 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
                     menuType = 0
                     val layoutManagerCrew2 =
                         GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
-                    allFoodAdapter =
-                        AllFoodAdapter(
-                            getFilterAllMfl(true, menuType, categoryName),
-                            this,
-                            this,
-                            ""
-                        )
+                    allFoodAdapter = AllFoodAdapter(
+                        getFilterAllMfl(true, menuType, categoryName), this, this, ""
+                    )
                     binding?.recyclerView21?.adapter = allFoodAdapter
                     binding?.recyclerView21?.setHasFixedSize(true)
                     binding?.recyclerView21?.layoutManager = layoutManagerCrew2
@@ -358,13 +340,9 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
 
                 val layoutManagerCrew2 =
                     GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
-                allFoodAdapter =
-                    AllFoodAdapter(
-                        getFilterAllMfl(true, menuType, categoryName),
-                        this,
-                        this,
-                        ""
-                    )
+                allFoodAdapter = AllFoodAdapter(
+                    getFilterAllMfl(true, menuType, categoryName), this, this, ""
+                )
                 binding?.recyclerView21?.adapter = allFoodAdapter
                 binding?.recyclerView21?.setHasFixedSize(true)
                 binding?.recyclerView21?.layoutManager = layoutManagerCrew2
@@ -387,13 +365,9 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
                     menuType = 0
                     val layoutManagerCrew2 =
                         GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
-                    allFoodAdapter =
-                        AllFoodAdapter(
-                            getFilterAllMfl(true, menuType, categoryName),
-                            this,
-                            this,
-                            ""
-                        )
+                    allFoodAdapter = AllFoodAdapter(
+                        getFilterAllMfl(true, menuType, categoryName), this, this, ""
+                    )
                     binding?.recyclerView21?.adapter = allFoodAdapter
                     binding?.recyclerView21?.setHasFixedSize(true)
                     binding?.recyclerView21?.layoutManager = layoutManagerCrew2
@@ -420,25 +394,17 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         categoryName = comingSoonItem.name
         if (comingSoonItem.name == "ALL") {
             val layoutManagerCrew = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
-            allFoodAdapter =
-                AllFoodAdapter(
-                    getFilterAllMfl(true, menuType, comingSoonItem.name),
-                    this,
-                    this,
-                    ""
-                )
+            allFoodAdapter = AllFoodAdapter(
+                getFilterAllMfl(true, menuType, comingSoonItem.name), this, this, ""
+            )
             binding?.recyclerView21?.adapter = allFoodAdapter
             binding?.recyclerView21?.setHasFixedSize(true)
             binding?.recyclerView21?.layoutManager = layoutManagerCrew
         } else {
             val layoutManagerCrew = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
-            allFoodAdapter =
-                AllFoodAdapter(
-                    getFilterAllMfl(true, menuType, comingSoonItem.name),
-                    this,
-                    this,
-                    ""
-                )
+            allFoodAdapter = AllFoodAdapter(
+                getFilterAllMfl(true, menuType, comingSoonItem.name), this, this, ""
+            )
             binding?.recyclerView21?.adapter = allFoodAdapter
             binding?.recyclerView21?.setHasFixedSize(true)
             binding?.recyclerView21?.layoutManager = layoutManagerCrew
@@ -658,7 +624,11 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         }
     }
 
-    private fun getFilterBestSellerList(category: Boolean, menuType: Int, bestSellerType: String): List<FoodResponse.Output.Bestseller> {
+    private fun getFilterBestSellerList(
+        category: Boolean,
+        menuType: Int,
+        bestSellerType: String
+    ): List<FoodResponse.Output.Bestseller> {
         val categoryFilterNew = ArrayList<FoodResponse.Output.Bestseller>()
         when (menuType) {
             0 -> {
@@ -936,7 +906,8 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         bottomFoodAdapter?.notifyDataSetChanged()
         allFoodAdapter?.notifyDataSetChanged()
         previousFoodAdapter?.notifyDataSetChanged()
-        val newLayoutParams:ConstraintLayout.LayoutParams = binding?.constraintLayout154?.layoutParams as ConstraintLayout.LayoutParams
+        val newLayoutParams: ConstraintLayout.LayoutParams =
+            binding?.constraintLayout154?.layoutParams as ConstraintLayout.LayoutParams
         newLayoutParams.topMargin = 0
         newLayoutParams.leftMargin = 0
         newLayoutParams.rightMargin = 0
@@ -952,17 +923,27 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
             newLayoutParams.topMargin = 0
             newLayoutParams.leftMargin = 0
             newLayoutParams.rightMargin = 0
-            newLayoutParams.bottomMargin = Constant().convertDpToPixel(0f,this)
+            newLayoutParams.bottomMargin = Constant().convertDpToPixel(0f, this)
             binding?.constraintLayout154?.layoutParams = newLayoutParams
             binding?.constraintLayout30?.show()
             binding?.textView149?.setOnClickListener {
                 cartShow = if (!cartShow) {
-                    binding?.textView149?.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.food_arrow_down,0)
+                    binding?.textView149?.setCompoundDrawablesWithIntrinsicBounds(
+                        0,
+                        0,
+                        R.drawable.food_arrow_down,
+                        0
+                    )
                     binding?.constraintLayout112?.show()
                     binding?.constraintLayout30?.setBackgroundColor(getColor(R.color.transparent2))
                     true
                 } else {
-                    binding?.textView149?.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.food_arrow_up,0)
+                    binding?.textView149?.setCompoundDrawablesWithIntrinsicBounds(
+                        0,
+                        0,
+                        R.drawable.food_arrow_up,
+                        0
+                    )
                     binding?.constraintLayout112?.hide()
                     binding?.constraintLayout30?.setBackgroundColor(getColor(R.color.transparent1))
 
@@ -1310,8 +1291,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.food_bottom_dialog)
         dialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
 
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -1464,7 +1444,6 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         }
     }
 
-
     private fun showButton(bannerModel: BookingResponse.Output.Pu) {
         if (bannerModel.type.contains("video", ignoreCase = true)) {
             binding?.bannerLayout?.ivPlay?.show()
@@ -1575,6 +1554,29 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
 
     override fun onResume() {
         super.onResume()
+        updateList()
+    }
+
+    private fun updateList() {
+        if (SUMMERYBACK==1){
+//            cartModel = intent.getSerializableExtra("food") as ArrayList<CartModel>
+        }
+
+        //best seller
+        for (item in catFilterBestSeller){
+            updateHomeCartList(item)
+        }
+
+        //bottom category{
+        for (item in catFilter ){
+            updateCategoryFoodCartList(item)
+        }
+
+        //cart
+        for ( item in cartModel){
+            updateCartFoodCartList(item)
+        }
+
         cartData()
     }
 
