@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
 import com.net.pvr1.databinding.SeatShowTimeItemBinding
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
+import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.invisible
 import com.net.pvr1.utils.show
 
@@ -23,6 +24,7 @@ class CinemaShowsAdapter(
 ) :
     RecyclerView.Adapter<CinemaShowsAdapter.ViewHolder>() {
     private var itemCount =position.toInt()
+    private var rowIndex =0
 
     inner class ViewHolder(val binding: SeatShowTimeItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -37,12 +39,18 @@ class CinemaShowsAdapter(
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
+
+                if (rowIndex == position && position == 0) {
+                    Constant().setMargins(holder.itemView, 60, 0, 0, 0)
+                }
+
                 //Language
                 binding.textView199.text = this.st
                 //click
                 holder.itemView.setOnClickListener {
+                    rowIndex = position
                     itemCount = position
-                    listener.cinemaShowsClick(this.sid,holder.itemView)
+                    listener.cinemaShowsClick(this.sid,holder.itemView,position)
                     notifyDataSetChanged()
                 }
 
@@ -85,7 +93,7 @@ class CinemaShowsAdapter(
 
 
     interface RecycleViewItemClickListener {
-        fun cinemaShowsClick(comingSoonItem: Int, itemView: View)
+        fun cinemaShowsClick(comingSoonItem: Int, itemView: View, position: Int)
     }
 
 }

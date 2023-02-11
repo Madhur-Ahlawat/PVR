@@ -79,12 +79,13 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
             <!--Privilege-->
 
             <LinearLayout
+                android:id="@+id/privilege"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/privilege"
                 android:layout_marginStart="@dimen/dimen_24dp"
                 android:layout_marginEnd="@dimen/dimen_24dp"
                 android:orientation="vertical">
@@ -118,8 +119,15 @@
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_10dp"
+                android:layout_marginTop="@dimen/dimen_24dp"
+                android:background="@drawable/line_separator"
+                android:backgroundTint="@color/background_color" />
 
             <LinearLayout
                 android:id="@+id/llBookingSection"
@@ -129,6 +137,7 @@
                 android:orientation="vertical"
                 android:visibility="visible">
 
+                <!--Account Complete-->
                 <LinearLayout
                     android:id="@+id/profileLinear"
                     android:layout_width="match_parent"
@@ -142,6 +151,7 @@
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
+                <!--  login Uis   -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/loginUi"
                     android:layout_width="match_parent"
@@ -157,6 +167,7 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <!--                without Login Uis-->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -193,6 +204,7 @@
                         android:layout_height="@dimen/dimen_10dp"
                         android:layout_marginTop="@dimen/dimen_5dp"
                         android:background="@drawable/line_separator"
+                        android:backgroundTint="@color/background_color"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -262,6 +274,7 @@
                     android:layout_height="@dimen/dimen_10dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/line_separator"
+                    android:backgroundTint="@color/background_color"
                     app:layout_constraintTop_toBottomOf="@+id/rlWhatsapp" />
 
 
@@ -354,6 +367,7 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <!--    Login Button-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/loginBt"
         android:layout_width="match_parent"

@@ -32,7 +32,9 @@ class SearchHomeMovieAdapter(
         holder.title.text = selectCityItemList.n
 
 //        CAt
-        holder.timeCategory.text = selectCityItemList.c +" "+
+         val category = selectCityItemList.c.replace("[", "").replace("]", "").replace("(", "").replace(")", "")
+        holder.timeCategory.text =
+            category +" "+
                 context.getString(R.string.dots)+" "+
                 selectCityItemList.length+" "+
                 context.getString(R.string.dots)+" "+

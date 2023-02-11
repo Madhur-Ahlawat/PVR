@@ -27,6 +27,7 @@ class ShowsAdapter(
 ) :
     RecyclerView.Adapter<ShowsAdapter.ViewHolder>() {
     private var itemCount = position
+    private var rowIndex = 0
 
     inner class ViewHolder(val binding: SeatShowTimeItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -41,13 +42,19 @@ class ShowsAdapter(
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
+
+                if (rowIndex == position && position == 0) {
+                    Constant().setMargins(holder.itemView, 60, 0, 0, 0)
+                }
+
                 //Language
                 binding.textView199.text = this.st
                 //click
                 holder.itemView.setOnClickListener {
+                    rowIndex = position
                     itemCount = position
                     notifyDataSetChanged()
-                    listener.showsClick(this.sid,holder.itemView)
+                    listener.showsClick(this.sid,holder.itemView,position)
                 }
                 itemCount?.let { recyclerView27.scrollToPosition(it) }
                 if (position == itemCount) {
@@ -93,7 +100,7 @@ class ShowsAdapter(
 
 
     interface RecycleViewItemClickListenerCity {
-        fun showsClick(comingSoonItem: Int, itemView: View)
+        fun showsClick(comingSoonItem: Int, itemView: View, position: Int)
     }
 
 }

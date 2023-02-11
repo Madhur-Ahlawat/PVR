@@ -75,7 +75,7 @@
     <string name="login_register">Login / Register</string>
     <string name="my_bookings">My Bookings</string>
     <string name="newTxt">New</string>
-    <string name="sign_out">Sign Out</string>
+    <string name="sign_out">Log Out</string>
     <string name="contact_us">Contact Us</string>
     <string name="terms_privacy"><![CDATA[T&C | Privacy]]></string>
     <string name="whatsapp_notifications">Whatsapp Notifications</string>

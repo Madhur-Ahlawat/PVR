@@ -161,6 +161,16 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             CINEMA_ID, sessionId, "", "", "", offerEnable, ""
         )
 
+
+
+        //Show  end time
+        if (intent.getStringExtra("from") == "cinema") {
+            binding?.textView393?.text = cinemaSessionShows[position.toInt()].et
+        } else {
+            binding?.textView393?.text = showsArray[position.toInt()].et
+        }
+
+
         seatLayout()
         reserveSeat()
         initTrans()
@@ -455,12 +465,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         //location
         binding?.textView198?.text = data.cn
 
-        //Show  end time
-        if (intent.getStringExtra("from") == "cinema") {
-            binding?.textView393?.text = cinemaSessionShows[position.toInt()].et
-        } else {
-            binding?.textView393?.text = showsArray[position.toInt()].et
-        }
 
 
         if (tncValue == 1) {
@@ -1920,7 +1924,14 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         dialog.show()
     }
 
-    override fun showsClick(comingSoonItem: Int, itemView: View) {
+    override fun showsClick(comingSoonItem: Int, itemView: View, position: Int) {
+        //Show  end time
+        if (intent.getStringExtra("from") == "cinema") {
+            binding?.textView393?.text = cinemaSessionShows[position].et
+        } else {
+            binding?.textView393?.text = showsArray[position].et
+        }
+
         sessionId = comingSoonItem.toString()
         binding?.llRowName?.removeAllViews()
         authViewModel.seatLayout(
@@ -1929,7 +1940,14 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
     }
 
-    override fun cinemaShowsClick(comingSoonItem: Int, itemView: View) {
+    override fun cinemaShowsClick(comingSoonItem: Int, itemView: View, position: Int) {
+        //Show  end time
+        if (intent.getStringExtra("from") == "cinema") {
+            binding?.textView393?.text = cinemaSessionShows[position].et
+        } else {
+            binding?.textView393?.text = showsArray[position].et
+        }
+
         sessionId = comingSoonItem.toString()
         binding?.llRowName?.removeAllViews()
         authViewModel.seatLayout(

@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Html
 import android.view.*
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -29,7 +30,6 @@ import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.giftCard.GiftCardActivity
-import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.home.fragment.more.adapter.ProfileCompleteAdapter
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.BookingRetrievalActivity
 import com.net.pvr1.ui.home.fragment.more.contactUs.ContactUsActivity
@@ -280,6 +280,9 @@ class MoreFragment : Fragment() {
             intent1.putExtra("getUrl", Constant.pvrCare)
             startActivity(intent1)
         }
+
+        val text = "<font color=#000000>${"T&C "}</font>" + "<font color=#EDE8E9>  |  </font>" + "<font color=#000000>${"Privacy"}</font>"
+        binding?.tvTerm?.text = Html.fromHtml(text)
 
         // Terms Condition
         binding?.tvTerm?.setOnClickListener {

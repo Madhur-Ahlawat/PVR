@@ -58,6 +58,7 @@ import com.net.pvr1.utils.Constant.Companion.DONATION
 import com.net.pvr1.utils.Constant.Companion.FOODENABLE
 import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
 import com.net.pvr1.utils.Constant.Companion.foodCartModel
+import com.net.pvr1.utils.Constant.Companion.foodLimit
 import com.phonepe.intent.sdk.api.PhonePe
 import com.phonepe.intent.sdk.api.TransactionRequestBuilder
 import dagger.hilt.android.AndroidEntryPoint
@@ -451,7 +452,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
     @SuppressLint("SetTextI18n")
     private fun retrieveData(output: SummeryResponse.Output) {
-        summeryResponse=output
+        summeryResponse = output
 
 // quickPay
         if (output.pp != null) {
@@ -605,8 +606,8 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
         //Add More Food
         binding?.textView312?.setOnClickListener {
-            Constant.SUMMERYBACK =1
-            intent.putExtra("food", cartModel)
+            Constant.SUMMERYBACK = 1
+            foodCartModel = cartModel
             finish()
         }
 
@@ -715,7 +716,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     }
 
 
-    private  fun setPrice(output: SummeryResponse.Output) {
+    private fun setPrice(output: SummeryResponse.Output) {
         //total seat
 //        val donationAmount = output.don / 100
 
@@ -743,6 +744,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             binding?.textView173?.text = getString(R.string.currency) + paidAmount
         }
     }
+
     private fun calculateTotalPrice(): Int {
         var totalPrice = 0
         for (data in cartModel) {
@@ -782,7 +784,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             intent.putExtra("getUrl", Constant.donation)
             startActivity(intent)
         }
-//        dismiss dialog
+
         bindingCarvery.include10.textView5.setOnClickListener {
             dialog?.dismiss()
         }
@@ -790,11 +792,11 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
     override fun increaseFoodClick(comingSoonItem: CartModel) {
         var num = comingSoonItem.quantity
-        if (num > 10 || num == 10) {
+        if (num > foodLimit || num == foodLimit) {
             val dialog = OptionDialog(this,
                 R.mipmap.ic_launcher,
                 R.string.app_name,
-                getString(R.string.max_item_msz),
+                getString(R.string.max_item_msz) + " " + foodLimit + " " + getString(R.string.items_a_time),
                 positiveBtnText = R.string.ok,
                 negativeBtnText = R.string.no,
                 positiveClick = {},
@@ -809,22 +811,9 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
     override fun decreaseFoodClick(comingSoonItem: CartModel) {
         var num = comingSoonItem.quantity
-        if (num < 0 || num == 0) {
-            val dialog = OptionDialog(this,
-                R.mipmap.ic_launcher,
-                R.string.app_name,
-                getString(R.string.min_item_msz),
-                positiveBtnText = R.string.ok,
-                negativeBtnText = R.string.no,
-                positiveClick = {},
-                negativeClick = {})
-            dialog.show()
-        } else {
-            num -= 1
-            comingSoonItem.quantity = num
-            updateCartFoodCartList(comingSoonItem)
-        }
-
+        num -= 1
+        comingSoonItem.quantity = num
+        updateCartFoodCartList(comingSoonItem)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -833,7 +822,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         if (summeryResponse?.donation == "True") {
             binding?.constraintLayout170?.show()
             setDonationData(summeryResponse!!)
-        }else{
+        } else {
             summeryResponse?.let { setPrice(it) }
         }
 
@@ -851,7 +840,6 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     private fun removeCartItem(item: CartModel) {
@@ -864,9 +852,9 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
     override fun onBackPressed() {
         if (FOODENABLE == 0) {
-//            finish()
             showDialog()
         } else {
+            finish()
             authViewModel.cancelTrans(
                 CINEMA_ID, TRANSACTION_ID, BOOKING_ID
             )
@@ -898,6 +886,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         try {
             unregisterReceiver(br)
         } catch (e: java.lang.Exception) {
+            e.printStackTrace()
             // Receiver was probably already stopped in onPause()
         }
         super.onStop()
@@ -946,6 +935,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
                 }
                 is NetworkResult.Loading -> {
+
                 }
             }
         }
@@ -1086,7 +1076,6 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(output.deepLink)
         startActivityForResult(intent, 120)
-//        resultLauncher.launch(intent,120)
     }
 
     private fun credCheck() {
@@ -1270,7 +1259,6 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                 dialog.show()
             }
         } else if (resultCode == 300) {
-
             if (data != null) {
                 if (resultCode == RESULT_OK) {
                     authViewModel.phonepeStatus(
@@ -1293,7 +1281,6 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         }
     }
 
-
     private fun showDialog() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -1309,11 +1296,10 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             dialog.dismiss()
         }
 
-
         exploreMenu.setOnClickListener {
             dialog.dismiss()
-            Constant.SUMMERYBACK =1
-            intent.putExtra("food", cartModel)
+            Constant.SUMMERYBACK = 1
+            foodCartModel = cartModel
             finish()
         }
 
@@ -1327,10 +1313,8 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
             finish()
-
         }
         dialog.show()
-
     }
 
 }

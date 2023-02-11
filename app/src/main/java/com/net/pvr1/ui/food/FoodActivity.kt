@@ -40,6 +40,8 @@ import com.net.pvr1.utils.Constant.Companion.BOOK_TYPE
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr1.utils.Constant.Companion.SUMMERYBACK
 import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
+import com.net.pvr1.utils.Constant.Companion.foodCartModel
+import com.net.pvr1.utils.Constant.Companion.foodLimit
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -81,7 +83,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     private var bestSellerType: String = "ALL"
 
     //foodLimit
-    private var foodLimit: Int = 0
+//    private var foodLimit: Int = 0
 
     //internet Check
     private var broadcastReceiver: BroadcastReceiver? = null
@@ -484,7 +486,8 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
             val dialog = OptionDialog(this,
                 R.mipmap.ic_launcher,
                 R.string.app_name,
-                getString(R.string.max_item_msz) + " " + foodLimit + " " + getString(R.string.items_a_time),
+                getString(R.string.max_item_msz) + " "
+                        + foodLimit + " " + getString(R.string.items_a_time),
                 positiveBtnText = R.string.ok,
                 negativeBtnText = R.string.no,
                 positiveClick = {},
@@ -1559,25 +1562,33 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
 
     private fun updateList() {
         if (SUMMERYBACK==1){
-//            cartModel = intent.getSerializableExtra("food") as ArrayList<CartModel>
+            cartModel = foodCartModel
+            //cart
+            for (item in cartModel){
+                updateCartFoodCartList(item)
+                updateMainList(catFilterBestSeller)
+
+            }
         }
 
-        //best seller
-        for (item in catFilterBestSeller){
-            updateHomeCartList(item)
-        }
+    }
 
-        //bottom category{
-        for (item in catFilter ){
-            updateCategoryFoodCartList(item)
+    private fun updateMainList(catFilterBestSeller2: ArrayList<FoodResponse.Output.Bestseller>) {
+        try {
+            for (item in catFilterBestSeller2){
+                for ( item2 in cartModel){
+                    if (item2.id == item.r[0].id) {
+                        item.qt = item2.quantity
+                        printLog("match1---->${item2.id}--->${item.r[0].id}--->${item.qt}---->${item2.quantity}")
+                    }else{
+                        printLog("match2---->${item2.id}--->${item.r[0].id}--->${item.qt}---->${item2.quantity}")
+                    }
+                    cartData()
+                }
+            }
+        }catch (e:java.lang.Exception){
+            e.printStackTrace()
         }
-
-        //cart
-        for ( item in cartModel){
-            updateCartFoodCartList(item)
-        }
-
-        cartData()
     }
 
 }
