@@ -46,6 +46,7 @@ class CinemaShowsAdapter(
 
                 //Language
                 binding.textView199.text = this.st
+
                 //click
                 holder.itemView.setOnClickListener {
                     rowIndex = position

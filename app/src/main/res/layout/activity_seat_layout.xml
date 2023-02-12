@@ -372,6 +372,15 @@
             app:layout_constraintEnd_toEndOf="@+id/view131"
             app:layout_constraintStart_toStartOf="@+id/view131">
 
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="#1A000000"/>
+
             <View
                 android:id="@+id/view132"
                 android:layout_width="0dp"

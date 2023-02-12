@@ -12,11 +12,12 @@ import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.more.prefrence.adapter.*
 import com.net.pvr1.ui.home.fragment.more.prefrence.response.PreferenceResponse
 import com.net.pvr1.ui.home.fragment.more.profile.userDetails.viewModel.PreferenceViewModel
-import com.net.pvr1.utils.*
+import com.net.pvr1.utils.Constant
+import com.net.pvr1.utils.NetworkResult
+import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.show
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class PreferenceActivity : AppCompatActivity(), PreferenceListAdapter.RecycleViewItemClickListener,
@@ -35,16 +36,33 @@ class PreferenceActivity : AppCompatActivity(), PreferenceListAdapter.RecycleVie
     private var apiResponse: PreferenceResponse.Output? = null
     private var itemClick = 0
     private var selectedPos = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPrefrenceBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        binding?.include11?.textView108?.text = getString(R.string.my_preferences)
+
+        manageData()
+    }
+
+    private fun manageData() {
         authViewModel.preference(preferences.getCityName(), preferences.getUserId())
         loadData()
         setPreference()
         preferenceDataLoad()
+        appBar()
+    }
+
+
+    private fun appBar() {
+        //       TitleBar
+        binding?.include11?.textView108?.text = getString(R.string.my_preferences)
+
+        //      finish
+        binding?.include11?.imageView58?.setOnClickListener {
+            finish()
+        }
     }
 
     private fun loadData() {
@@ -205,7 +223,10 @@ class PreferenceActivity : AppCompatActivity(), PreferenceListAdapter.RecycleVie
         return list
     }
 
-    private fun removePP(list: ArrayList<PreferenceResponse.Output.Genre.Other>, id: String): ArrayList<PreferenceResponse.Output.Genre.Other> {
+    private fun removePP(
+        list: ArrayList<PreferenceResponse.Output.Genre.Other>,
+        id: String
+    ): ArrayList<PreferenceResponse.Output.Genre.Other> {
         for (data in list) {
             if (data.id == id) {
                 list.remove(data)
@@ -215,8 +236,11 @@ class PreferenceActivity : AppCompatActivity(), PreferenceListAdapter.RecycleVie
         return list
     }
 
-    private fun getPP(list: ArrayList<PreferenceResponse.Output.Genre.Other>, id: String): ArrayList<PreferenceResponse.Output.Genre.Other> {
-         val listPP = java.util.ArrayList<PreferenceResponse.Output.Genre.Other>()
+    private fun getPP(
+        list: ArrayList<PreferenceResponse.Output.Genre.Other>,
+        id: String
+    ): ArrayList<PreferenceResponse.Output.Genre.Other> {
+        val listPP = java.util.ArrayList<PreferenceResponse.Output.Genre.Other>()
         for (data in list) {
             if (data.id == id) {
                 listPP.add(data)
@@ -251,22 +275,14 @@ class PreferenceActivity : AppCompatActivity(), PreferenceListAdapter.RecycleVie
 
     override fun allGenreClick(comingSoonItem: PreferenceResponse.Output.Genre.Other) {
         authViewModel.setPreference(
-            preferences.getUserId(),
-            comingSoonItem.id,
-            true,
-            "g",
-            Constant().getDeviceId(this)
+            preferences.getUserId(), comingSoonItem.id, true, "g", Constant().getDeviceId(this)
         )
     }
 
 
     override fun genreLikeClick(comingSoonItem: PreferenceResponse.Output.Genre.Liked) {
         authViewModel.setPreference(
-            preferences.getUserId(),
-            comingSoonItem.id,
-            false,
-            "g",
-            Constant().getDeviceId(this)
+            preferences.getUserId(), comingSoonItem.id, false, "g", Constant().getDeviceId(this)
         )
     }
 
@@ -290,31 +306,26 @@ class PreferenceActivity : AppCompatActivity(), PreferenceListAdapter.RecycleVie
         //All genre
         val layoutManagerAll = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding?.recyclerView56?.layoutManager = layoutManagerAll
-        val allGenreAdapter = apiResponse?.genre?.other?.let { AllGenreAdapter(this, removeAllSubList(
-            it,
-            apiResponse?.genre?.liked!!
-        ) as ArrayList<PreferenceResponse.Output.Genre.Other>, this) }
+        val allGenreAdapter = apiResponse?.genre?.other?.let {
+            AllGenreAdapter(
+                this, removeAllSubList(
+                    it, apiResponse?.genre?.liked!!
+                ) as ArrayList<PreferenceResponse.Output.Genre.Other>, this
+            )
+        }
         binding?.recyclerView56?.adapter = allGenreAdapter
     }
 
 
     override fun allLanguageClick(comingSoonItem: PreferenceResponse.Output.Genre.Other) {
         authViewModel.setPreference(
-            preferences.getUserId(),
-            comingSoonItem.id,
-            true,
-            "l",
-            Constant().getDeviceId(this)
+            preferences.getUserId(), comingSoonItem.id, true, "l", Constant().getDeviceId(this)
         )
     }
 
     override fun languageLikeClick(comingSoonItem: PreferenceResponse.Output.Genre.Liked) {
         authViewModel.setPreference(
-            preferences.getUserId(),
-            comingSoonItem.id,
-            false,
-            "l",
-            Constant().getDeviceId(this)
+            preferences.getUserId(), comingSoonItem.id, false, "l", Constant().getDeviceId(this)
         )
     }
 
@@ -338,30 +349,25 @@ class PreferenceActivity : AppCompatActivity(), PreferenceListAdapter.RecycleVie
         //All language
         val layoutManagerAll = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding?.recyclerView56?.layoutManager = layoutManagerAll
-        val allGenreAdapter = apiResponse?.lang?.other?.let { AllLanguageAdapter(this, removeAllSubList(
-            it,
-            apiResponse?.lang?.liked!!
-        ) as ArrayList<PreferenceResponse.Output.Genre.Other>, this) }
+        val allGenreAdapter = apiResponse?.lang?.other?.let {
+            AllLanguageAdapter(
+                this, removeAllSubList(
+                    it, apiResponse?.lang?.liked!!
+                ) as ArrayList<PreferenceResponse.Output.Genre.Other>, this
+            )
+        }
         binding?.recyclerView56?.adapter = allGenreAdapter
     }
 
     override fun allTheaterClick(comingSoonItem: PreferenceResponse.Output.Genre.Other) {
         authViewModel.setPreference(
-            preferences.getUserId(),
-            comingSoonItem.id,
-            true,
-            "t",
-            Constant().getDeviceId(this)
+            preferences.getUserId(), comingSoonItem.id, true, "t", Constant().getDeviceId(this)
         )
     }
 
     override fun favouriteTheaterClick(comingSoonItem: PreferenceResponse.Output.Genre.Liked) {
         authViewModel.setPreference(
-            preferences.getUserId(),
-            comingSoonItem.id,
-            false,
-            "t",
-            Constant().getDeviceId(this)
+            preferences.getUserId(), comingSoonItem.id, false, "t", Constant().getDeviceId(this)
         )
     }
 
@@ -385,10 +391,13 @@ class PreferenceActivity : AppCompatActivity(), PreferenceListAdapter.RecycleVie
         //All language
         val layoutManagerAll = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding?.recyclerView56?.layoutManager = layoutManagerAll
-        val allGenreAdapter = apiResponse?.theater?.other?.let { AllTheaterAdapter(this, removeAllSubList(
-            it,
-            apiResponse?.theater?.liked!!
-        ) as ArrayList<PreferenceResponse.Output.Genre.Other>, this) }
+        val allGenreAdapter = apiResponse?.theater?.other?.let {
+            AllTheaterAdapter(
+                this, removeAllSubList(
+                    it, apiResponse?.theater?.liked!!
+                ) as ArrayList<PreferenceResponse.Output.Genre.Other>, this
+            )
+        }
         binding?.recyclerView56?.adapter = allGenreAdapter
 
     }
@@ -406,35 +415,38 @@ class PreferenceActivity : AppCompatActivity(), PreferenceListAdapter.RecycleVie
             binding?.constraintLayout80?.hide()
             val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
             binding?.recyclerView55?.layoutManager = layoutManager
-            val termsAdapter =
-                apiResponse?.pon?.let { PaymentWalletAdapter(this, getPP(it.Other,apiResponse?.pp?:"0"), this) }
+            val termsAdapter = apiResponse?.pon?.let {
+                PaymentWalletAdapter(
+                    this,
+                    getPP(it.Other, apiResponse?.pp ?: "0"),
+                    this
+                )
+            }
             binding?.recyclerView55?.adapter = termsAdapter
         }
 
         //All language
         val layoutManagerAll = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding?.recyclerView56?.layoutManager = layoutManagerAll
-        val allGenreAdapter = apiResponse?.pon?.Other?.let { PaymentAllAdapter(this, removePP(it,apiResponse?.pp?:""), this) }
+        val allGenreAdapter = apiResponse?.pon?.Other?.let {
+            PaymentAllAdapter(
+                this,
+                removePP(it, apiResponse?.pp ?: ""),
+                this
+            )
+        }
         binding?.recyclerView56?.adapter = allGenreAdapter
     }
 
     override fun paymentAllClick(comingSoonItem: PreferenceResponse.Output.Genre.Other) {
         authViewModel.setPreference(
-            preferences.getUserId(),
-            comingSoonItem.id,
-            true,
-            "p",
-            Constant().getDeviceId(this)
+            preferences.getUserId(), comingSoonItem.id, true, "p", Constant().getDeviceId(this)
         )
     }
 
     override fun paymentWalletClick(comingSoonItem: PreferenceResponse.Output.Genre.Other) {
         authViewModel.setPreference(
-            preferences.getUserId(),
-            comingSoonItem.id,
-            true,
-            "p",
-            Constant().getDeviceId(this)
+            preferences.getUserId(), comingSoonItem.id, true, "p", Constant().getDeviceId(this)
         )
     }
 

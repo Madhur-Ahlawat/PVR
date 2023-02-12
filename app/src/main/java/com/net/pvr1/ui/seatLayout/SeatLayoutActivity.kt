@@ -124,10 +124,13 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             cinemaSessionShows =
                 intent.getSerializableExtra("shows") as ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>
             position = intent.getStringExtra("clickPosition").toString()
+            printLog("shows---->${cinemaSessionShows}")
             cinemaShows(position)
         } else {
             position = intent.getStringExtra("clickPosition").toString()
             showsArray = intent.getSerializableExtra("shows") as ArrayList<Child.Sw.S>
+            printLog("shows---->${showsArray}")
+
             shows()
         }
 
@@ -566,6 +569,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             dialog.dismiss()
         }
 
+
     }
 
     private fun drawRow(
@@ -624,6 +628,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                             seatView.setBackgroundResource(R.drawable.buddy)
                         }
                         else -> {
+                            val typeface = resources.getFont(R.font.sf_pro_text_medium)
+                            seatView.setTypeface(typeface)
                             seatView.setBackgroundResource(R.drawable.ic_vacant)
                             seatView.text = seat.sn.replace("[^\\d.]".toRegex(), "")
                         }
@@ -951,6 +957,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                                 seatView.setBackgroundResource(R.drawable.buddy)
                             }
                             else -> {
+                                val typeface = resources.getFont(R.font.sf_pro_text_medium)
+                                seatView.setTypeface(typeface)
                                 seatView.setBackgroundResource(R.drawable.ic_vacant)
                                 seatView.setTextColor(
                                     ContextCompat.getColor(
