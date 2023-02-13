@@ -47,7 +47,42 @@ class BestSellerFoodAdapter(
                     binding.textView135.setOnClickListener {
                         listener.bestSellerDialogAddFood(this.r, this.nm)
                     }
+                    val qt = getFoodQTCount(this.r)
+                    if (qt>0){
+                        binding.uiPlusMinus.foodCount.text = qt.toString()
+                    }
+
+                    //SubTract
+                    binding.uiPlusMinus.plus.setOnClickListener {
+                        listener.bestSellerDialogAddFood(nowShowingList[position].r, this.nm)
+                        notifyDataSetChanged()
+                    }
+
+                    //Add
+                    binding.uiPlusMinus.minus.setOnClickListener {
+                        listener.bestSellerDialogAddFood(this.r, this.nm)
+                        notifyDataSetChanged()
+                    }
+
+                    //UiShowHide
+                    if (qt > 0) {
+                        binding.consAddUi.show()
+                        binding.textView135.hide()
+                    } else {
+                        binding.consAddUi.hide()
+                        binding.textView135.show()
+                    }
+
+                } else {
                     binding.uiPlusMinus.foodCount.text = this.qt.toString()
+                    binding.textView134.invisible()
+                    binding.textView135.setOnClickListener {
+                        listener.addFood(this, position)
+                        binding.consAddUi.show()
+                        binding.textView135.hide()
+                        notifyDataSetChanged()
+                    }
+
                     //SubTract
                     binding.uiPlusMinus.plus.setOnClickListener {
                         listener.addFoodPlus(this, position)
@@ -59,40 +94,23 @@ class BestSellerFoodAdapter(
                         listener.addFoodMinus(this, position)
                         notifyDataSetChanged()
                     }
-                } else {
 
-                    var qt = getFoodQTCount(this.r)
-                    if (qt>0){
-                        binding.textView134.show()
-                        binding.textView135.hide()
-                        binding.uiPlusMinus.foodCount.text = qt.toString()
-                        //SubTract
-                        binding.uiPlusMinus.plus.setOnClickListener {
-                            listener.addFood(this, position)
-                            notifyDataSetChanged()
-                        }
-
-                        //Add
-                        binding.uiPlusMinus.minus.setOnClickListener {
-                            listener.addFood(this, position)
-                            notifyDataSetChanged()
-                        }
-                    }
-                    binding.textView134.invisible()
-                    binding.textView135.setOnClickListener {
-                        listener.addFood(this, position)
+                    //UiShowHide
+                    if (this.qt > 0) {
                         binding.consAddUi.show()
                         binding.textView135.hide()
-                        notifyDataSetChanged()
+                    } else {
+                        binding.consAddUi.hide()
+                        binding.textView135.show()
                     }
 
                 }
 
                 //fssai
                 if (this.veg) {
-                    binding.imageView69.setImageDrawable(context.getDrawable(R.drawable.veg_ic))
+                    binding.imageView69.setImageResource(R.drawable.veg_ic)
                 } else {
-                    binding.imageView69.setImageDrawable(context.getDrawable(R.drawable.nonveg_ic))
+                    binding.imageView69.setImageResource(R.drawable.nonveg_ic)
                 }
 
                 //Image
@@ -105,17 +123,6 @@ class BestSellerFoodAdapter(
 
                 binding.imageView65.setOnClickListener {
                     listener.foodBestImageClick(this)
-                }
-
-
-
-                //UiShowHide
-                if (this.qt > 0) {
-                    binding.consAddUi.show()
-                    binding.textView135.hide()
-                } else {
-                    binding.consAddUi.hide()
-                    binding.textView135.show()
                 }
 
             }

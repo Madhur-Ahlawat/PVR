@@ -328,7 +328,19 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {},
+                            positiveClick = {
+                                            if (it.data?.code == 12008){
+                                                binding?.llRowName?.removeAllViews()
+                                                //clear List
+                                                selectedSeats.clear()
+                                                selectSeatPriceCode.clear()
+                                                authViewModel.seatLayout(
+                                                    CINEMA_ID, sessionId, "", "", "", offerEnable, ""
+                                                )
+                                            }else{
+                                                dialog?.dismiss()
+                                            }
+                            },
                             negativeClick = {})
                         dialog.show()
                     }

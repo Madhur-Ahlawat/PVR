@@ -866,6 +866,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
             comingSoonItem.quantity = num
             updateCartFoodCartList(comingSoonItem)
             cartData()
+            bestSellerFoodAdapter?.notifyDataSetChanged()
         }
     }
 
@@ -887,14 +888,17 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
             updateCartFoodCartList(comingSoonItem)
             cartData()
         }
+        bestSellerFoodAdapter?.notifyDataSetChanged()
     }
 
     private fun removeCartItem(item: CartModel) {
         for (data in cartModel) {
             if (data.id == item.id) {
                 cartModel.remove(data)
+                break
             }
         }
+        bestSellerFoodAdapter?.notifyDataSetChanged()
     }
 
     @SuppressLint("NotifyDataSetChanged", "UseCompatLoadingForDrawables", "SetTextI18n")
@@ -992,6 +996,8 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
             }
         }
         cartData()
+        updateMainList(catFilterBestSeller)
+        bestSellerFoodAdapter?.notifyDataSetChanged()
     }
 
 
@@ -1042,8 +1048,6 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     }
 
     private fun updateCategoryItemExist(foodItem: FoodResponse.Output.Mfl): Boolean {
-        println("categoryFoodMinus123--->$foodItem------$cartModel")
-
         for (item in cartModel) {
             if (item.id == foodItem.r[0].id) {
                 return true
@@ -1565,7 +1569,6 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
             for (item in cartModel){
                 updateCartFoodCartList(item)
                 updateMainList(catFilterBestSeller)
-
             }
         }
 
@@ -1574,12 +1577,9 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     private fun updateMainList(catFilterBestSeller2: ArrayList<FoodResponse.Output.Bestseller>) {
         try {
             for (item in catFilterBestSeller2){
-                for ( item2 in cartModel){
+                for (item2 in cartModel){
                     if (item2.id == item.r[0].id) {
                         item.qt = item2.quantity
-                        printLog("match1---->${item2.id}--->${item.r[0].id}--->${item.qt}---->${item2.quantity}")
-                    }else{
-                        printLog("match2---->${item2.id}--->${item.r[0].id}--->${item.qt}---->${item2.quantity}")
                     }
                     cartData()
                 }
@@ -1607,6 +1607,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         for (data in comingSoonItem){
             if (checkInCart(data)){
             }else{
+                if (data.qt>0)
                 cartModel.add(CartModel(data.id,data.h,data.i,data.qt,data.dp,data.veg,data.ho,data.masterItemId.toString()))
             }
         }
@@ -1615,11 +1616,12 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     private fun checkInCart(food:FoodResponse.Output.Bestseller.R): Boolean {
         var exist = false
         for (data in cartModel){
+            println("checkData....>${data.id}----${food.id}----${food.qt}")
             if (data.id == food.id){
                 data.quantity = food.qt
                 exist = true
+                break
             }
-            break
         }
         return exist
     }
