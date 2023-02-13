@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ItemCinemaDetailsShowTimeBinding
-import com.net.pvr1.ui.bookingSession.BookingActivity.Companion.btnc
+import com.net.pvr1.ui.bookingSession.MovieSessionActivity.Companion.btnc
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.seatLayout.SeatLayoutActivity
@@ -28,7 +28,6 @@ import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr1.utils.Constant.Companion.OfferDialogImage
 import com.net.pvr1.utils.Constant.Companion.SESSION_ID
 import com.net.pvr1.utils.hide
-import com.net.pvr1.utils.invisible
 import com.net.pvr1.utils.show
 import java.util.*
 import kotlin.math.roundToInt

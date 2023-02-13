@@ -93,7 +93,7 @@ public class GenericFilterMsession implements GenericFilterAdapter.onFilterItemS
         LinearLayout mainView = (LinearLayout) dialog.findViewById(R.id.mainView);
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams((int) (displayRectangle.width() * 1f),(int) (displayRectangle.height() * 0.8f));
-        mainView.setLayoutParams(params);
+//        mainView.setLayoutParams(params);
         GenericFilterAdapter adapterGeners, adapterLanguage, adapterFormat, adapterShowTime, adapterAccessability, adapterPriceRange;
         RecyclerView recyclerGeners, recyclerLanguage, recyclerFormat, recyclerShowTIme, recyclerAccessibility, recyclerPriceRange, cinemaRecyclerFormat, specialRecyclerFormat;
 

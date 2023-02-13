@@ -30,7 +30,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/showLayout"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="@dimen/dimen_60dp"
             app:layout_constraintEnd_toEndOf="@+id/view131"
             app:layout_constraintStart_toStartOf="@+id/view131"
             app:layout_constraintTop_toTopOf="parent">
@@ -45,6 +45,58 @@
                 app:layout_constraintTop_toTopOf="parent"
 
                 />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout20"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageView97"
+                app:layout_constraintStart_toEndOf="@+id/imageView95"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/padding_10"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:id="@+id/textView197"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_alternates_bold"
+                        android:textColor="@color/black"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:freezesText="true"
+                        android:textSize="20sp"
+                        app:layout_constraintEnd_toEndOf="@+id/view70"
+                        app:layout_constraintStart_toStartOf="@+id/view70"
+                        app:layout_constraintTop_toTopOf="@+id/view70"
+                        tools:text="The Batman wjjhshjsw ddhshdh djjdj " />
+
+                    <TextView
+                        android:id="@+id/textView198"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sf_pro_text_medium"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/view70"
+                        app:layout_constraintStart_toStartOf="@+id/view70"
+                        app:layout_constraintTop_toBottomOf="@+id/textView103"
+                        tools:text="DRAMA" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <ImageView
                 android:id="@+id/imageView95"
@@ -86,60 +138,14 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!--Title-->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout57"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@+id/view131"
-            app:layout_constraintStart_toStartOf="@+id/view131"
-            app:layout_constraintTop_toBottomOf="@+id/showLayout">
-
-            <View
-                android:id="@+id/view134"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textView197"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:fontFamily="@font/montserrat_bold"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="@+id/view134"
-                app:layout_constraintStart_toStartOf="@+id/view134"
-                app:layout_constraintTop_toTopOf="@+id/view134"
-                tools:text="The Batman" />
-
-            <TextView
-                android:id="@+id/textView198"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="20dp"
-                android:fontFamily="@font/montserrat_regular"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimen_12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textView197"
-                app:layout_constraintTop_toBottomOf="@+id/textView197"
-                tools:text="PVR Ambiance Gurgaon" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
         <!--Shows-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout59"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/constraintLayout57"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout57">
+            app:layout_constraintStart_toStartOf="@+id/showLayout"
+            app:layout_constraintTop_toBottomOf="@+id/showLayout">
 
             <View
                 android:id="@+id/view136"

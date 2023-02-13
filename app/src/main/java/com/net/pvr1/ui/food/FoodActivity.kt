@@ -747,8 +747,6 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         var num = comingSoonItem.qt
         num += 1
         comingSoonItem.qt = num
-        updateBottomFoodCartList(comingSoonItem)
-        cartData()
     }
 
     override fun filterBtFoodPlus(comingSoonItem: FoodResponse.Output.Bestseller.R) {
@@ -766,8 +764,6 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         } else {
             num += 1
             comingSoonItem.qt = num
-            updateBottomFoodCartList(comingSoonItem)
-            cartData()
         }
     }
 
@@ -787,8 +783,6 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         } else {
             num -= 1
             comingSoonItem.qt = num
-            updateBottomFoodCartList(comingSoonItem)
-            cartData()
         }
     }
 
@@ -1308,7 +1302,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         val title = dialog.findViewById<TextView>(R.id.textView143)
 
         val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        bottomFoodAdapter = BottomFoodAdapter(comingSoonItem, this, this)
+        bottomFoodAdapter = BottomFoodAdapter(getCustomFoodList(comingSoonItem), this, this)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = bottomFoodAdapter
 
@@ -1320,10 +1314,14 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         }
 
         proceed.setOnClickListener {
+            updateCardFromProceed(comingSoonItem)
             cartData()
             dialog.dismiss()
+            bestSellerFoodAdapter?.notifyDataSetChanged()
         }
     }
+
+
 
     override fun onBackPressed() {
         onBackPressedDispatcher.onBackPressed()
@@ -1590,5 +1588,41 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
             e.printStackTrace()
         }
     }
+
+
+    // Get Updated List From Cart to popup
+    private fun getCustomFoodList(list:List<FoodResponse.Output.Bestseller.R>):List<FoodResponse.Output.Bestseller.R>{
+        for (data in list){
+            for (cartData in cartModel){
+                if (data.id == cartData.id){
+                    data.qt = cartData.quantity
+                }
+            }
+        }
+        return list
+    }
+
+    // Update Cart from proceed btn
+    private fun updateCardFromProceed(comingSoonItem: List<FoodResponse.Output.Bestseller.R>) {
+        for (data in comingSoonItem){
+            if (checkInCart(data)){
+            }else{
+                cartModel.add(CartModel(data.id,data.h,data.i,data.qt,data.dp,data.veg,data.ho,data.masterItemId.toString()))
+            }
+        }
+    }
+
+    private fun checkInCart(food:FoodResponse.Output.Bestseller.R): Boolean {
+        var exist = false
+        for (data in cartModel){
+            if (data.id == food.id){
+                data.quantity = food.qt
+                exist = true
+            }
+            break
+        }
+        return exist
+    }
+
 
 }

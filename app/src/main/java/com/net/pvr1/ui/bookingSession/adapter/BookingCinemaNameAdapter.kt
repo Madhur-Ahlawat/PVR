@@ -11,6 +11,7 @@ import com.google.android.flexbox.*
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ItemBookingSessionCinemaLanguageBinding
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
+import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.show
 
 class BookingCinemaNameAdapter(
@@ -53,12 +54,12 @@ class BookingCinemaNameAdapter(
                 binding.constraintLayout111.setOnClickListener {
                     if (binding.recyclerView11.visibility == View.GONE) {
                         binding.recyclerView11.show()
-                       // binding.hcIcon.hide()
+                        binding.hcIcon.hide()
                         binding.imageView56.setImageResource(R.drawable.arrow_up)
                     } else {
                         binding.imageView56.setImageResource(R.drawable.arrow_down)
-                       // binding.recyclerView11.hide()
-                        binding.hcIcon.show()
+                        binding.recyclerView11.hide()
+                        binding.hcIcon.hide()
                     }
                 }
 

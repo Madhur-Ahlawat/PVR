@@ -43,11 +43,15 @@ class HomeMoviesAdapter(
                 //Image
                 val lastIndex = nowShowingList.size - 1
                 if (singleCheck && position == lastIndex) {
+                    binding.imageHori.show()
+                    binding.imageView16.hide()
                     Glide.with(context)
                         .load(this.mih)
                         .error(R.drawable.placeholder_horizental)
-                        .into(binding.imageView16)
+                        .into(binding.imageHori)
                 } else {
+                    binding.imageHori.hide()
+                    binding.imageView16.show()
                     Glide.with(context)
                         .load(this.miv)
                         .error(R.drawable.placeholder_vertical)

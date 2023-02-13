@@ -552,7 +552,14 @@ interface UserAPI {
         @Query("pt") platform: String,
         @Query("isSpi") isSpi: String,
         @Query("srilanka") srilanka: String,
-        @Query("userid") userid: String
+        @Query("userid") userid: String,
+        @Query("lang") lang: String,
+        @Query("format") format: String,
+        @Query("price") price: String,
+        @Query("hc") hc: String,
+        @Query("time") time: String,
+        @Query("cinetype") cinetype: String,
+        @Query("special") special: String
     ): Response<BookingResponse>
 
     @POST("api/content/movietheater")

@@ -26,7 +26,7 @@ data class HomeResponse(
         val mv: List<Mv>,
         val ph: ArrayList<Ph>,
         val pu: ArrayList<Pu>,
-        val rm: Rm,
+        val rm: Mv,
         val vban: Any
     ):Serializable
     data class Cp(

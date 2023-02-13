@@ -40,12 +40,11 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.FragmentHomeBinding
 import com.net.pvr1.databinding.TrailersDialogBinding
 import com.net.pvr1.di.preference.PreferenceManager
-import com.net.pvr1.ui.bookingSession.BookingActivity
+import com.net.pvr1.ui.bookingSession.MovieSessionActivity
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.filter.GenericFilterHome
 import com.net.pvr1.ui.giftCard.GiftCardActivity
-import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.home.formats.FormatsActivity
 import com.net.pvr1.ui.home.fragment.home.adapter.*
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
@@ -77,6 +76,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickListener,
@@ -122,6 +122,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     private var rlBanner: RelativeLayout? = null
     private var stories: StoriesProgressView? = null
     private var listener: PlayPopup? = null
+    var gFilter:GenericFilterHome? = null
 
     //internet Check
     private var broadcastReceiver: BroadcastReceiver? = null
@@ -144,7 +145,16 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     @SuppressLint("CutPasteId")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        buttonPressed = ArrayList()
+        generaSelected = ArrayList()
+        gFilter = GenericFilterHome()
+        appliedFilterType = ""
+        appliedFilterItem = HashMap<String, String>()
 
+        lang = "ALL"
+         format = "ALL"
+         special = "ALL"
+         cinemaType = "ALL"
         //Poster
         listener = activity as PlayPopup?
         tvButton = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
@@ -404,10 +414,33 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         binding?.recyclerOffer?.layoutManager = layoutManager
         binding?.recyclerOffer?.adapter = adapterTrailer
 
-        binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
+        if (output.cp.size > 1) {
+            val speedScroll = 5000
+            val handler = Handler()
+            val runnable: Runnable = object : Runnable {
+                var count = 0
+                var flag = true
+                override fun run() {
+                    if (count < adapterTrailer.itemCount) {
+                        if (count == adapterTrailer.itemCount - 1) {
+                            flag = false
+                        } else if (count == 0) {
+                            flag = true
+                        }
+                        if (flag) count++ else count--
+                        binding?.recyclerOffer?.smoothScrollToPosition(
+                            count
+                        )
+                        handler.postDelayed(this, speedScroll.toLong())
+                    }
+                }
+            }
+            handler.postDelayed(runnable, speedScroll.toLong())
+        }
+
+//        binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
 
         binding?.filterFab?.setOnClickListener {
-            val gFilter = GenericFilterHome()
             val filterPoints = HashMap<String, ArrayList<String>>()
             filterPoints[Constant.FilterType.LANG_FILTER] = output.mlng
             filterPoints[Constant.FilterType.GENERE_FILTER] = output.mgener
@@ -417,7 +450,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             filterPoints[Constant.FilterType.SHOWTIME_FILTER] = ArrayList()
             filterPoints[Constant.FilterType.CINEMA_FORMAT] = ArrayList()
             filterPoints[Constant.FilterType.SPECIAL_SHOW] = ArrayList()
-            gFilter.openFilters(
+            gFilter?.openFilters(
                 context,
                 "Home",
                 onButtonSelected,
@@ -435,8 +468,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     @SuppressLint("SetTextI18n")
-    private fun recommend(rm: HomeResponse.Rm) {
-        if (upcomingBooking == true) {
+    private fun recommend(rm: HomeResponse.Mv) {
+        if (upcomingBooking) {
 
             binding?.homeRecommend?.CLLayout1?.hide()
             binding?.homeRecommend?.CLLayout2?.show()
@@ -457,7 +490,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             //trailer
             binding?.homeRecommend?.playBtn?.setOnClickListener {
                 if (rm.trs.isNotEmpty() && rm.trs.size > 1) {
-//                    trailerList(rm.trs)
+                    trailerList(rm)
                 } else {
                     val intent = Intent(requireActivity(), PlayerActivity::class.java)
                     intent.putExtra("trailerUrl", rm.mtrailerurl)
@@ -474,7 +507,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
             //book
             binding?.homeRecommend?.tvBook?.setOnClickListener {
-                val intent = Intent(requireActivity(), BookingActivity::class.java)
+                val intent = Intent(requireActivity(), MovieSessionActivity::class.java)
                 intent.putExtra("mid", rm.id)
                 startActivity(intent)
             }
@@ -520,7 +553,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         }
     }
 
-    private fun addCensor(rm: HomeResponse.Rm, tvCensorLang: TextView?) {
+    private fun addCensor(rm: HomeResponse.Mv, tvCensorLang: TextView?) {
         val stringBuilder = StringBuilder()
         var ssChange = false
         if (rm.ce.replace("\\(", "").replace("\\)", "").equals("A", ignoreCase = true)) ssChange =
@@ -611,7 +644,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     override fun onBookClick(comingSoonItem: HomeResponse.Mv) {
-        val intent = Intent(requireActivity(), BookingActivity::class.java)
+        val intent = Intent(requireActivity(), MovieSessionActivity::class.java)
         intent.putExtra("mid", comingSoonItem.id)
         startActivity(intent)
     }
@@ -627,7 +660,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             startActivity(intent)
         } else if (comingSoonItem.t == "campaign-EXPATS") {
             if (comingSoonItem.mf) {
-                val intent = Intent(requireActivity(), BookingActivity::class.java)
+                val intent = Intent(requireActivity(), MovieSessionActivity::class.java)
                 intent.putExtra("mid", comingSoonItem.id)
                 startActivity(intent)
             } else {
@@ -806,7 +839,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     @SuppressLint("SetTextI18n")
     private fun commonBooking(output: NextBookingResponse.Output) {
-        if (upcomingBooking == true) {
+        if (upcomingBooking) {
             binding?.homeRecommend?.CLLayout2?.show()
 
             binding?.homeRecommend?.CLLayout1?.hide()
@@ -850,33 +883,40 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         name: String
     ) {
         if (type!!.size > 1) {
+            println("type--->$type---->$filterItemSelected---->")
+
             binding?.filterFab?.setImageResource(R.drawable.filter_selected)
             appliedFilterItem = filterItemSelected!!
-            val containLanguage = type.contains("language")
+            val containLanguage = filterItemSelected.contains("language")
             if (containLanguage) {
                 val index = type.indexOf("language")
-                var value: String = filterItemSelected[type[index]]!!
+                var value: String = filterItemSelected[type[index]].toString()
                 if (!value.equals("", ignoreCase = true)) {
-                    buttonPressed.clear()
+                    buttonPressed = ArrayList()
                     appliedFilterType = "language"
                     value = value.uppercase(Locale.getDefault())
                     val valuesString = value.split(",").toTypedArray()
                     for (s in valuesString) {
-                        if (!buttonPressed.contains(s)) buttonPressed.add("$s-language")
+                        if (!buttonPressed.contains(s))
+                            buttonPressed.add("$s-language")
                     }
                     binding?.filterFab?.setImageResource(R.drawable.filter_selected)
                 } else {
                     binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
-                    buttonPressed.clear()
+                    buttonPressed = ArrayList()
+                    println("value---->$value----$buttonPressed")
+
                 }
+            }else{
+                buttonPressed = ArrayList()
             }
-            val containGenres = type.contains("geners")
+            val containGenres = filterItemSelected.contains("geners")
             if (containGenres) {
                 val index = type.indexOf("geners")
                 var value: String = filterItemSelected[type[index]]!!
                 if (!value.equals("", ignoreCase = true)) {
                     appliedFilterType = "geners"
-                    generaSelected?.clear()
+                    generaSelected = ArrayList()
                     value = value.uppercase(Locale.getDefault())
                     val valuesString = value.split(",").toTypedArray()
                     for (s in valuesString) {
@@ -885,13 +925,21 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                     binding?.filterFab?.setImageResource(R.drawable.filter_selected)
                 } else {
                     binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
-                    generaSelected?.clear()
+                    generaSelected = ArrayList()
                 }
+            }else{
+                generaSelected = ArrayList()
             }
-            val containAccessibility = type.contains("accessability")
+            val containAccessibility = filterItemSelected.contains("accessability")
             if (containAccessibility) {
                 val index = type.indexOf("accessability")
                 val value: String = filterItemSelected[type[index]]!!
+                if (value!=""){
+                    special = "English Subtitle"
+                    binding?.filterFab?.setImageResource(R.drawable.filter_selected)
+                }
+            }else{
+                special = "ALL"
             }
             getMovieFormatFromApi()
         } else {
@@ -926,17 +974,24 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     @SuppressLint("SuspiciousIndentation")
     private fun getMoviesForUNowShowingHit() {
         upcomingBooking = preferences.getIsLogin() == false
-        if (!special.equals("All", ignoreCase = true))
+        var specialText = "ALL"
+        if (!special.equals("ALL", ignoreCase = true)){
+            specialText = special
+        }
 
-            if (buttonPressed.isNotEmpty()) {
+        if (buttonPressed.isNotEmpty()) {
                 lang = buttonPressed[0].split("-").toTypedArray()[0].trim { it <= ' ' }
                 for (i in 1 until buttonPressed.size) lang =
                     lang + "," + buttonPressed[i].split("-").toTypedArray()[0].trim { it <= ' ' }
-            }
+            }else{
+              lang = "ALL"
+        }
         if (generaSelected!!.isNotEmpty()) {
             format = generaSelected!![0]!!.split("-").toTypedArray()[0].trim { it <= ' ' }
             for (i in 1 until generaSelected!!.size) format =
                 format + "," + generaSelected!![i]!!.split("-").toTypedArray()[0].trim { it <= ' ' }
+        }else{
+            format = "ALL"
         }
 
         if (!cinemaType.equals("All", ignoreCase = true)) {
@@ -950,7 +1005,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 cinemaType,
                 lang,
                 format,
-                special,
+                specialText,
                 "no"
             )
         } else {

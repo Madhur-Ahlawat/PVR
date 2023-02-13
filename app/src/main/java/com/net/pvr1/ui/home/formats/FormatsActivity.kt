@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityFormatsBinding
 import com.net.pvr1.di.preference.PreferenceManager
-import com.net.pvr1.ui.bookingSession.BookingActivity
+import com.net.pvr1.ui.bookingSession.MovieSessionActivity
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.formats.adapter.FormatCategoryAdapter
@@ -186,7 +186,7 @@ class FormatsActivity : AppCompatActivity() , FormatCategoryAdapter.RecycleViewI
     }
 
     override fun onBookClick(comingSoonItem: HomeResponse.Mv) {
-        val intent = Intent(this@FormatsActivity, BookingActivity::class.java)
+        val intent = Intent(this@FormatsActivity, MovieSessionActivity::class.java)
         intent.putExtra("mid", comingSoonItem.id)
         startActivity(intent)
     }

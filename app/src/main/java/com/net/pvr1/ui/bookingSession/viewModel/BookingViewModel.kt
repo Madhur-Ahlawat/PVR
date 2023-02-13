@@ -17,9 +17,15 @@ class BookingViewModel @Inject constructor(private val userRepository: UserRepos
     val userResponseLiveData: LiveData<NetworkResult<BookingResponse>>
     get() = userRepository.bookingSessionResponseLiveData
 
-    fun bookingTicket(city:String,mid:String,lat:String,lng:String,date:String,isSpi:String,srilanka:String,userid:String,) {
+    fun bookingTicket(city:String,mid:String,lat:String,lng:String,date:String,isSpi:String,srilanka:String,userid:String,lang: String,
+                      format: String,
+                      price: String,
+                      hc: String,
+                      time: String,
+                      cinetype: String,
+                      special: String) {
         viewModelScope.launch {
-            userRepository.bookingTicket(city,mid,lat,lng,date,isSpi,srilanka,userid)
+            userRepository.bookingTicket(city,mid,lat,lng,date,isSpi,srilanka,userid,lang,format,price,hc,time,cinetype,special)
         }
     }
 

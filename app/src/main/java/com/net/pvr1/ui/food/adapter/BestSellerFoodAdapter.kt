@@ -47,7 +47,37 @@ class BestSellerFoodAdapter(
                     binding.textView135.setOnClickListener {
                         listener.bestSellerDialogAddFood(this.r, this.nm)
                     }
+                    binding.uiPlusMinus.foodCount.text = this.qt.toString()
+                    //SubTract
+                    binding.uiPlusMinus.plus.setOnClickListener {
+                        listener.addFoodPlus(this, position)
+                        notifyDataSetChanged()
+                    }
+
+                    //Add
+                    binding.uiPlusMinus.minus.setOnClickListener {
+                        listener.addFoodMinus(this, position)
+                        notifyDataSetChanged()
+                    }
                 } else {
+
+                    var qt = getFoodQTCount(this.r)
+                    if (qt>0){
+                        binding.textView134.show()
+                        binding.textView135.hide()
+                        binding.uiPlusMinus.foodCount.text = qt.toString()
+                        //SubTract
+                        binding.uiPlusMinus.plus.setOnClickListener {
+                            listener.addFood(this, position)
+                            notifyDataSetChanged()
+                        }
+
+                        //Add
+                        binding.uiPlusMinus.minus.setOnClickListener {
+                            listener.addFood(this, position)
+                            notifyDataSetChanged()
+                        }
+                    }
                     binding.textView134.invisible()
                     binding.textView135.setOnClickListener {
                         listener.addFood(this, position)
@@ -72,23 +102,12 @@ class BestSellerFoodAdapter(
                     .into(binding.imageView65)
 
                 //quantity
-                binding.uiPlusMinus.foodCount.text = this.qt.toString()
 
                 binding.imageView65.setOnClickListener {
                     listener.foodBestImageClick(this)
                 }
 
-                //SubTract
-                binding.uiPlusMinus.plus.setOnClickListener {
-                    listener.addFoodPlus(this, position)
-                    notifyDataSetChanged()
-                }
 
-                //Add
-                binding.uiPlusMinus.minus.setOnClickListener {
-                    listener.addFoodMinus(this, position)
-                    notifyDataSetChanged()
-                }
 
                 //UiShowHide
                 if (this.qt > 0) {
@@ -102,6 +121,17 @@ class BestSellerFoodAdapter(
             }
         }
 
+    }
+
+    private fun getFoodQTCount(r: List<FoodResponse.Output.Bestseller.R>): Int {
+        var qt = 0
+        for (data in r){
+            if (data.qt>0){
+                qt += data.qt
+            }
+        }
+
+        return qt
     }
 
     override fun getItemCount(): Int {

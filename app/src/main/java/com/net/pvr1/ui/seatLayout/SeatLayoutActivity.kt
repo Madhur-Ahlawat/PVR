@@ -11,6 +11,7 @@ import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.text.Html
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -29,6 +30,7 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySeatLayoutBinding
 import com.net.pvr1.databinding.SeatLayoutDilogBinding
 import com.net.pvr1.di.preference.PreferenceManager
+import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.ui.bookingSession.response.BookingResponse.Output.Cinema.*
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.dailogs.LoaderDialog
@@ -99,7 +101,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     private var cinemaSessionShows = ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>()
     private var textTermsAndCondition: TextView? = null
     private var tncValue = 1
-    private var position = "0"
     private var offerEnable = false
 
     //Bottom Dialog
@@ -107,6 +108,11 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
     //internet Check
     private var broadcastReceiver: BroadcastReceiver? = null
+
+    companion object{
+        var position = "0"
+
+    }
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -125,7 +131,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 intent.getSerializableExtra("shows") as ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>
             position = intent.getStringExtra("clickPosition").toString()
             printLog("shows---->${cinemaSessionShows}")
-            cinemaShows(position)
+            cinemaShows()
         } else {
             position = intent.getStringExtra("clickPosition").toString()
             showsArray = intent.getSerializableExtra("shows") as ArrayList<Child.Sw.S>
@@ -250,7 +256,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
         binding?.recyclerView27?.layoutManager = LinearLayoutManager(this)
         val adapter =
-            ShowsAdapter(showsArray, this, this, position.toInt(), binding?.recyclerView27!!)
+            ShowsAdapter(getMovieShows(showsArray), this, this, position.toInt(), binding?.recyclerView27!!)
         binding?.recyclerView27?.layoutManager = gridLayout
         binding?.recyclerView27?.adapter = adapter
         println("itemCount--->$position")
@@ -258,14 +264,52 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
     }
 
+    private fun getMovieShows(showsArray: ArrayList<BookingResponse.Output.Cinema.Child.Sw.S>): ArrayList<BookingResponse.Output.Cinema.Child.Sw.S> {
+        var list = ArrayList<BookingResponse.Output.Cinema.Child.Sw.S>()
+        var st = showsArray[position.toInt()].st
+        for (data in showsArray.indices){
+            if (showsArray[data].ss != 0){
+                if (st == showsArray[data].st){
+                    position = data.toString()
+                }
+                list.add(showsArray[data])
+            }
+        }
+        for (data in list.indices){
+            if (list[data].st == st){
+                position = data.toString()
+            }
+        }
+        return list
+    }
+
     //From Cinema
-    private fun cinemaShows(position: String) {
+    private fun cinemaShows() {
         val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
         binding?.recyclerView27?.layoutManager = LinearLayoutManager(this)
-        val adapter = CinemaShowsAdapter(cinemaSessionShows, this, this, position)
+        val adapter = CinemaShowsAdapter(getCinemaShows(cinemaSessionShows), this, this, position)
         binding?.recyclerView27?.layoutManager = gridLayout
         binding?.recyclerView27?.adapter = adapter
 
+    }
+
+    private fun getCinemaShows(cinemaSessionShows: ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>): ArrayList<CinemaSessionResponse.Child.Mv.Ml.S> {
+        var list = ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>()
+        var st = cinemaSessionShows[position.toInt()].st
+        for (data in cinemaSessionShows.indices){
+            if (cinemaSessionShows[data].ss != 0){
+                if (st == showsArray[data].st){
+                    position = data.toString()
+                }
+                list.add(cinemaSessionShows[data])
+            }
+        }
+        for (data in list.indices){
+            if (list[data].st == st){
+                position = data.toString()
+            }
+        }
+        return list
     }
 
 
@@ -464,6 +508,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
         //title
         binding?.textView197?.text = data.mn
+        binding?.textView197?.isSelected = true
 
         //location
         binding?.textView198?.text = data.cn
@@ -475,7 +520,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 tncValue = 1
             } else {
                 seatTermsDialog()
-                textTermsAndCondition?.text = data.tnc
+                textTermsAndCondition?.text = Html.fromHtml(data.tnc.replace("\\|".toRegex(),"<br></br><br></br>"))
                 tncValue = 2
             }
         }
@@ -549,9 +594,13 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     }
 
     private fun seatTermsDialog() {
-        val dialog = Dialog(this)
+        val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.seat_t_c_dialog_layout)
+        val behavior: BottomSheetBehavior<FrameLayout> = dialog.behavior
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+        dialog.window?.setGravity(Gravity.BOTTOM)
         dialog.window!!.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
@@ -563,9 +612,9 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
         val btnName = dialog.findViewById<TextView>(R.id.textView5)
         textTermsAndCondition = dialog.findViewById(R.id.textTermsAndCondition)
-        btnName.text = getString(R.string.accept)
+        btnName?.text = getString(R.string.accept)
 
-        btnName.setOnClickListener {
+        btnName?.setOnClickListener {
             dialog.dismiss()
         }
 

@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ItemCinemaDetailsShowTimeBinding
-import com.net.pvr1.ui.bookingSession.BookingActivity
+import com.net.pvr1.ui.bookingSession.MovieSessionActivity
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.seatLayout.SeatLayoutActivity
@@ -454,8 +454,8 @@ class CinemaSessionTimeAdapter(
             }
         }
 
-        if (!TextUtils.isEmpty(BookingActivity.btnc)) {
-            val st = StringTokenizer(BookingActivity.btnc, "|")
+        if (!TextUtils.isEmpty(MovieSessionActivity.btnc)) {
+            val st = StringTokenizer(MovieSessionActivity.btnc, "|")
 
             while (st.hasMoreElements()) {
                 val view: View =

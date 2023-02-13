@@ -50,7 +50,7 @@ import javax.inject.Inject
 
 @Suppress("UNCHECKED_CAST")
 @AndroidEntryPoint
-class BookingActivity : AppCompatActivity(),
+class MovieSessionActivity : AppCompatActivity(),
     BookingShowsDaysAdapter.RecycleViewItemClickListenerCity,
     BookingShowsLanguageAdapter.RecycleViewItemClickListenerCity,
     BookingTheatreAdapter.RecycleViewItemClickListener,
@@ -119,8 +119,10 @@ class BookingActivity : AppCompatActivity(),
             "NA",
             "no",
             "no",
-            preferences.getUserId()
+            preferences.getUserId(),lang,format,price1,hc,show1,cinemaType,special
         )
+
+        binding?.textView103?.isSelected = true
 
         //internet Check
         broadcastReceiver = NetworkReceiver()
@@ -485,10 +487,10 @@ class BookingActivity : AppCompatActivity(),
             intent.getStringExtra("mid").toString(),
             preferences.getLatitudeData(),
             preferences.getLongitudeData(),
-            comingSoonItem.dt,
+            "NA",
             "no",
             "no",
-            preferences.getUserId()
+            preferences.getUserId(),lang,format,price1,hc,show1,cinemaType,special
         )
         Constant.focusOnView(itemView,binding?.recyclerView9!!)
     }
@@ -498,7 +500,7 @@ class BookingActivity : AppCompatActivity(),
     }
 
     override fun theatreClick(comingSoonItem: BookingTheatreResponse.Output.M) {
-        val intent = Intent(this, BookingActivity::class.java)
+        val intent = Intent(this, MovieSessionActivity::class.java)
         intent.putExtra("mid", comingSoonItem.m)
         startActivity(intent)
         finish()
@@ -510,7 +512,7 @@ class BookingActivity : AppCompatActivity(),
     }
 
     override fun alertClick(comingSoonItem: BookingResponse.Output.Cinema) {
-        val intent = Intent(this@BookingActivity, CinemaDetailsActivity::class.java)
+        val intent = Intent(this@MovieSessionActivity, CinemaDetailsActivity::class.java)
         intent.putExtra("cid",comingSoonItem.cid.toString())
         startActivity(intent)
     }
@@ -628,18 +630,24 @@ class BookingActivity : AppCompatActivity(),
                     special = "ALL"
                 }
             }
-//            ShowSelectionLayout.getMovieShowDetailMSession(
-//                movieId,
-//                cityId,
-//                PCConstants.IntentKey.DEFAULT_PAGE_NUMBER,
-//                date_time,
-//                mRecyclerView,
-//                context,
-//                false,
-//                "",
-//                latitude,
-//                longitude
-//            )
+            var show = "ALL"
+            var price = "ALL"
+            if (price1 != "ALL"){
+                price = "$price1-$price2"
+            }
+            if (show1 != "ALL"){
+                show = "$show1-$show2"
+            }
+            authViewModel.bookingTicket(
+                preferences.getCityName(),
+                intent.getStringExtra("mid").toString(),
+                preferences.getLatitudeData(),
+                preferences.getLongitudeData(),
+                "NA",
+                "no",
+                "no",
+                preferences.getUserId(),lang,format, price,hc,show,cinemaType,special
+            )
             if (!selectedFilter(filterItemSelected)) {
                 binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
             }
@@ -651,14 +659,14 @@ class BookingActivity : AppCompatActivity(),
 
     private fun selectedFilter(filterItemSelected: HashMap<String?, String?>): Boolean {
         var selected = false
-//        for ((key): HashMap.Entry<String, String> in filterItemSelected) {
-//            println("selectedFilters---->" + filterItemSelected[key] + "----")
-//            if (!filterItemSelected[key].equals("", ignoreCase = true) && !filterItemSelected[key]!!
-//                    .contains("ALL")
-//            ) {
-//                selected = true
-//            }
-//        }
+        for (key: Map.Entry<String?, String?> in filterItemSelected) {
+            println("selectedFilters---->" + key.value + "----")
+            if (!key.value.equals("", ignoreCase = true) && !key.value!!
+                    .contains("ALL")
+            ) {
+                selected = true
+            }
+        }
         return selected
     }
 
@@ -675,7 +683,7 @@ class BookingActivity : AppCompatActivity(),
             "NA",
             "no",
             "no",
-            preferences.getUserId()
+            preferences.getUserId(),lang,format,price1,hc,show1,cinemaType,special
         )
     }
 

@@ -3,6 +3,7 @@ package com.net.pvr1.ui.bookingSession.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,6 +14,7 @@ import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.utils.hide
 import com.net.pvr1.utils.printLog
 import com.net.pvr1.utils.show
+import com.net.pvr1.utils.view.RightDrawableOnTouchListener
 
 
 class BookingShowsParentAdapter(
@@ -107,7 +109,16 @@ class BookingShowsParentAdapter(
                 }
 
                 //click
-                binding.imageView70.setOnClickListener { listener.alertClick(this) }
+//                binding.textView105.setOnClickListener { listener.alertClick(this) }
+
+
+                binding.textView105.setOnTouchListener(object : RightDrawableOnTouchListener(binding.textView105) {
+                    @SuppressLint("ClickableViewAccessibility")
+                    override fun onDrawableTouch(event: MotionEvent?): Boolean {
+                        listener.alertClick(nowShowingList[position])
+                        return true
+                    }
+                })
             }
         }
 

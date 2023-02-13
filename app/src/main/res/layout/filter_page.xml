@@ -54,9 +54,10 @@
         <LinearLayout
             android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_above="@+id/bottomView"
             android:orientation="vertical"
+            android:maxHeight="450dp"
             app:layout_constraintBottom_toTopOf="@+id/bottomView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -66,14 +67,14 @@
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/dimen_80dp"
-                android:paddingTop="@dimen/dimen_80dp"
+                android:layout_height="match_parent"
                 android:fillViewport="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_24dp"
+                    android:layout_marginBottom="@dimen/dimen_24dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -404,7 +405,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:background="@drawable/ic_arrow_drop"
+                                android:background="@drawable/arrow_up"
                                 tools:ignore="ContentDescription" />
                         </RelativeLayout>
 
@@ -560,7 +561,7 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="16dp"
                         android:orientation="vertical"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
                         <RelativeLayout
                             android:id="@+id/accessibilityFilterHeader"
@@ -615,14 +616,16 @@
                 </LinearLayout>
 
             </androidx.core.widget.NestedScrollView>
+
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/bottomView"
             android:layout_width="match_parent"
-            android:layout_height="130dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@color/white"
+            android:gravity="center_vertical"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -638,8 +641,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginTop="@dimen/dimen_15dp"
+                android:layout_marginBottom="@dimen/dimen_15dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:padding="@dimen/padding_10">
@@ -674,6 +677,7 @@
                 android:layout_height="5dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="24dp"
+                android:visibility="gone"
                 android:background="#000000"
                 tools:ignore="ContentDescription" />
         </LinearLayout>

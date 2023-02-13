@@ -6,6 +6,8 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,18 +25,23 @@ import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.cinemaSession.viewModel.CinemaSessionViewModel
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.filter.GenericFilter
 import com.net.pvr1.ui.home.fragment.home.adapter.PromotionAdapter
 import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.DateFormat
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 @Suppress("DEPRECATION", "NAME_SHADOWING")
 @AndroidEntryPoint
 class CinemaSessionActivity : AppCompatActivity(),
     CinemaSessionDaysAdapter.RecycleViewItemClickListenerCity,
-    CinemaSessionLanguageAdapter.RecycleViewItemClickListenerCity,
-    CinemaSessionNearTheaterAdapter.RecycleViewItemClickListenerCity {
+    CinemaSessionLanguageAdapter.RecycleViewItemClickListenerCity,CinemaSessionNearTheaterAdapter.RecycleViewItemClickListenerCity,
+    GenericFilter.onButtonSelected {
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityCinemaSessionBinding? = null
@@ -44,6 +51,26 @@ class CinemaSessionActivity : AppCompatActivity(),
     private var cinemaId = "0"
     private var openTime = 0
     private var rowIndex = false
+
+    private var appliedFilterItem = HashMap<String, String>()
+    private var appliedFilterType = ""
+    private var sessionDate = "NA"
+    private var lang = "ALL"
+
+    private var format = "ALL"
+
+    private var price1 = "ALL"
+
+    private var price2 = "ALL"
+
+    private var show1 = "ALL"
+    private var hc = "ALL"
+    private var ad = "ALL"
+    private var cc = "ALL"
+    private var show2 = "ALL"
+
+    private var special = "ALL"
+    private var cinema_type = "ALL"
 
 
     //internet Check
@@ -62,21 +89,21 @@ class CinemaSessionActivity : AppCompatActivity(),
         if (intent.getStringExtra("addressCinema") == "yes") {
             authViewModel.cinemaSession(
                 preferences.getCityName(),
-                cinemaId,
+                intent.getStringExtra("cid").toString(),
                 intent.getStringExtra("lat").toString(),
                 intent.getStringExtra("lang").toString(),
                 preferences.getUserId(),
-                "NA",
-                "ALL",
-                "ALL",
-                "ALL",
-                "ALL",
-                "ALL",
-                "ALL",
-                "ALL",
+                sessionDate,
+                lang,
+                format,
+                price1,
+                price1,
+                hc,
+                cc,
+                ad,
                 "no",
-                "ALL",
-                "ALL"
+                cinema_type,
+                ""
             )
         } else {
             authViewModel.cinemaSession(
@@ -85,17 +112,17 @@ class CinemaSessionActivity : AppCompatActivity(),
                 intent.getStringExtra("lat").toString(),
                 intent.getStringExtra("lang").toString(),
                 preferences.getUserId(),
-                "NA",
-                "ALL",
-                "ALL",
-                "ALL",
-                "ALL",
-                "ALL",
-                "ALL",
-                "ALL",
+                sessionDate,
+                lang,
+                format,
+                price1,
+                price1,
+                hc,
+                cc,
+                ad,
                 "no",
-                "ALL",
-                "ALL"
+                cinema_type,
+                ""
             )
         }
 
@@ -120,6 +147,7 @@ class CinemaSessionActivity : AppCompatActivity(),
         broadcastReceiver = NetworkReceiver()
         broadcastIntent()
         getShimmerData()
+
     }
     private fun getShimmerData() {
         Constant().getData(binding?.include38?.tvFirstText,binding?.include38?.tvSecondText)
@@ -301,10 +329,35 @@ class CinemaSessionActivity : AppCompatActivity(),
             binding?.recyclerView15?.adapter = cinemaSessionCinParentAdapter
             binding?.textView99?.text = output.cn
         }
+
+        binding?.filterFab?.setOnClickListener {
+            val gFilter = GenericFilter()
+            val filterPoints = HashMap<String, ArrayList<String>>()
+            if (output.lngs != null && output.lngs.size > 1) filterPoints[Constant.FilterType.LANG_FILTER] =
+                output.lngs
+            else filterPoints[Constant.FilterType.LANG_FILTER] = ArrayList()
+            filterPoints[Constant.FilterType.GENERE_FILTER] = ArrayList()
+            if (output.fmts != null && output.fmts.size > 1) filterPoints[Constant.FilterType.FORMAT_FILTER] =
+                output.fmts else filterPoints[Constant.FilterType.FORMAT_FILTER] = ArrayList()
+            filterPoints[Constant.FilterType.ACCESSABILITY_FILTER] =
+                ArrayList(listOf("Wheelchair Friendly"))
+            filterPoints[Constant.FilterType.PRICE_FILTER] = ArrayList(
+                listOf("Below ₹300", "₹301 - 500", "₹501 - 1000", "₹1001 - 1500")
+            )
+            filterPoints[Constant.FilterType.SHOWTIME_FILTER] = ArrayList()
+            filterPoints[Constant.FilterType.CINEMA_FORMAT] = ArrayList()
+            filterPoints[Constant.FilterType.SPECIAL_SHOW] =
+                ArrayList()
+            gFilter.openFilters(
+                this, "ShowTimeT", this, appliedFilterType, appliedFilterItem, filterPoints
+            )
+        }
+
     }
 
     override fun dateClick(comingSoonItem: CinemaSessionResponse.Output.Bd) {
         openTime = 1
+        sessionDate = comingSoonItem.dt
         if (intent.getStringExtra("addressCinema") == "yes") {
             authViewModel.cinemaSession(
                 preferences.getCityName(),
@@ -312,17 +365,17 @@ class CinemaSessionActivity : AppCompatActivity(),
                 intent.getStringExtra("lat").toString(),
                 intent.getStringExtra("lang").toString(),
                 preferences.getUserId(),
-                comingSoonItem.dt,
-                "ALL",
-                "ALL",
-                "ALL",
-                "ALL",
-                "ALL",
-                "ALL",
-                "ALL",
+                sessionDate,
+                lang,
+                format,
+                price1,
+                price1,
+                hc,
+                cc,
+                ad,
                 "no",
-                "ALL",
-                "ALL"
+                cinema_type,
+                ""
             )
         } else {
             authViewModel.cinemaSession(
@@ -331,17 +384,17 @@ class CinemaSessionActivity : AppCompatActivity(),
                 intent.getStringExtra("lat").toString(),
                 intent.getStringExtra("lang").toString(),
                 preferences.getUserId(),
-                comingSoonItem.dt,
-                "ALL",
-                "ALL",
-                "ALL",
-                "ALL",
-                "ALL",
-                "ALL",
-                "ALL",
+                sessionDate,
+                lang,
+                format,
+                price1,
+                price1,
+                hc,
+                cc,
+                ad,
                 "no",
-                "ALL",
-                "ALL"
+                cinema_type,
+                ""
             )
         }
     }
@@ -353,24 +406,24 @@ class CinemaSessionActivity : AppCompatActivity(),
 //    Theater Shows
     override fun showsClick(comingSoonItem: CinemaNearTheaterResponse.Output.C) {
         cinemaId= comingSoonItem.cId.toString()
-        authViewModel.cinemaSession(
-            preferences.getCityName(),
-            comingSoonItem.cId.toString(),
-            comingSoonItem.lat,
-            comingSoonItem.lang,
-            preferences.getUserId(),
-            "NA",
-            "ALL",
-            "ALL",
-            "ALL",
-            "ALL",
-            "ALL",
-            "ALL",
-            "ALL",
-            "no",
-            "ALL",
-            "ALL"
-        )
+    authViewModel.cinemaSession(
+        preferences.getCityName(),
+        intent.getStringExtra("cid").toString(),
+        intent.getStringExtra("lat").toString(),
+        intent.getStringExtra("lang").toString(),
+        preferences.getUserId(),
+        sessionDate,
+        lang,
+        format,
+        price1,
+        price1,
+        hc,
+        cc,
+        ad,
+        "no",
+        cinema_type,
+        ""
+    )
     }
 
 //Map theater
@@ -383,6 +436,180 @@ class CinemaSessionActivity : AppCompatActivity(),
         registerReceiver(
             broadcastReceiver,
             IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        )
+    }
+
+    override fun onApply(
+        type: ArrayList<String>?,
+        name: HashMap<String, String>?,
+        isSelected: Boolean,
+        filterItemSelected: String?
+    ) {
+        if (type!!.size > 0) {
+            println("type--->$type---->$name---->")
+
+            binding?.filterFab?.setImageResource(R.drawable.filter_selected)
+            appliedFilterItem = name!!
+            val containLanguage = type.contains("language")
+            if (containLanguage) {
+                val index = type.indexOf("language")
+                val value: String = name[type[index]].toString()
+                if (value != null && !value.equals("", ignoreCase = true))
+                    lang = value.uppercase(Locale.getDefault()
+                ) else lang = "ALL"
+            }
+
+            val containTime = type.contains("time")
+            if (containTime) {
+                val index = type.indexOf("time")
+                var value: String? = name[type[index]]
+                if (value != null && !value.equals("", ignoreCase = true)) {
+                    val pos = value.indexOf("(") + 1
+                    value = value.substring(pos)
+                    val splitSymbol = value.split("-".toRegex()).dropLastWhile { it.isEmpty() }
+                        .toTypedArray()
+                   show1 = splitSymbol[0]
+                   show2 = splitSymbol[1]
+                    val inputFormat: DateFormat = SimpleDateFormat("h:mma")
+                    val outputFormatter: DateFormat = SimpleDateFormat("H:mm")
+                    try {
+                       show1 =
+                            outputFormatter.format(inputFormat.parse(show1))
+                       show2 =
+                            outputFormatter.format(inputFormat.parse(show2))
+                    } catch (e: ParseException) {
+                        e.printStackTrace()
+                    }
+                } else {
+                   show1 = "ALL"
+                   show2 = "ALL"
+                }
+            }
+            val containFormat = type.contains("format")
+            if (containFormat) {
+                val index = type.indexOf("format")
+                val value: String = name[type[index]].toString()
+                if (value != null && !value.equals("", ignoreCase = true))
+                    format = value.uppercase(Locale.getDefault()
+                ) else format = "ALL"
+            }
+            val containPrice = type.contains("price")
+            if (containPrice) {
+                val index = type.indexOf("price")
+                var value = name[type[index]]
+
+                if (value != null && !value.equals("", ignoreCase = true)) {
+                    val splitSymbol = value.split("₹").toTypedArray()
+                    value = splitSymbol[1]
+                    if (value.contains("-")) {
+                        val split = value.split(" - ").toTypedArray()
+                        price1 = split[0]
+                        price2 = split[1]
+                    } else if (splitSymbol[0].equals("Below ", ignoreCase = true)) {
+                        price1 = "0"
+                        price2 = value
+                    } else {
+                        price1 = value
+                        price2 = "2500"
+                    }
+
+                } else {
+                    price1 = "ALL"
+                    price2 = "ALL"
+                }
+            }
+            val containAccessability = type.contains("accessability")
+            if (containAccessability) {
+                val index = type.indexOf("accessability")
+                val value: String? = name[type[index]]
+                if (value != null && !value.equals("", ignoreCase = true)) {
+                    if (value.contains("Wheelchair"))
+                        hc = "hc"
+                    if (value.contains("Subtitles"))
+                        special = "RST"
+                } else {
+                   special = "ALL"
+                   hc = "ALL"
+                }
+                Log.d("ShowSelection", "onAply filter accessability: $value")
+            }
+
+            var show = "ALL"
+            var price = "ALL"
+            if (price1 != "ALL"){
+                price = "$price1-$price2"
+            }
+            if (show1 != "ALL"){
+                show = "$show1-$show2"
+            }
+
+            authViewModel.cinemaSession(
+                preferences.getCityName(),
+                intent.getStringExtra("cid").toString(),
+                intent.getStringExtra("lat").toString(),
+                intent.getStringExtra("lang").toString(),
+                preferences.getUserId(),
+                sessionDate,
+                lang,
+                format,
+                price,
+                show,
+                hc,
+                cc,
+                ad,
+                "no",
+                cinema_type,
+                ""
+            )
+            if (!selectedFilter(name)) {
+                binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
+            }
+//            ShowSelectionLayout.getMovieShowDetailMSession(movieId, cityId, PCConstants.IntentKey.DEFAULT_PAGE_NUMBER, date_time, mRecyclerView, context, false, "", latitude, longitude);
+        } else binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
+
+    }
+
+    private fun selectedFilter(filterItemSelected: HashMap<String, String>): Boolean {
+        var selected = false
+        for (key: Map.Entry<String, String> in filterItemSelected) {
+            println("selectedFilters---->" + key.key + "----")
+            if (!key.value.equals("", ignoreCase = true) && !key.value!!.contains("ALL")) {
+                selected = true
+            }
+        }
+        return selected
+    }
+
+
+    override fun onReset() {
+        binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
+        lang = "ALL"
+        format = "ALL"
+        price1 = "ALL"
+        show1 = "ALL"
+        hc = "ALL"
+        cc = "ALL"
+        ad = "ALL"
+        cinema_type = "ALL"
+
+        appliedFilterItem = HashMap()
+        authViewModel.cinemaSession(
+            preferences.getCityName(),
+            intent.getStringExtra("cid").toString(),
+            intent.getStringExtra("lat").toString(),
+            intent.getStringExtra("lang").toString(),
+            preferences.getUserId(),
+            sessionDate,
+            lang,
+            format,
+            price1,
+            show1,
+            hc,
+            cc,
+            ad,
+            "no",
+            cinema_type,
+            ""
         )
     }
 }

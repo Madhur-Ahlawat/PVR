@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
 import com.net.pvr1.databinding.SeatShowTimeItemBinding
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
+import com.net.pvr1.ui.seatLayout.SeatLayoutActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.invisible
 import com.net.pvr1.utils.show
@@ -24,7 +25,7 @@ class CinemaShowsAdapter(
 ) :
     RecyclerView.Adapter<CinemaShowsAdapter.ViewHolder>() {
     private var itemCount =position.toInt()
-    private var rowIndex =0
+    private var rowIndex =SeatLayoutActivity.position.toInt()
 
     inner class ViewHolder(val binding: SeatShowTimeItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -55,7 +56,7 @@ class CinemaShowsAdapter(
                     notifyDataSetChanged()
                 }
 
-                if (position == itemCount) {
+                if (position == rowIndex) {
                     binding.textView199.setTextColor(ContextCompat.getColor(context, R.color.black))
                     binding.linearLayout.setBackgroundColor(
                         ContextCompat.getColor(

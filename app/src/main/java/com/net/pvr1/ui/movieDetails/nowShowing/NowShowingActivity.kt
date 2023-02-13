@@ -15,7 +15,7 @@ import com.devs.readmoreoption.ReadMoreOption
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityNowShowingBinding
 import com.net.pvr1.di.preference.PreferenceManager
-import com.net.pvr1.ui.bookingSession.BookingActivity
+import com.net.pvr1.ui.bookingSession.MovieSessionActivity
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.fragment.home.adapter.PromotionAdapter
@@ -209,7 +209,7 @@ class NowShowingActivity : AppCompatActivity(), MusicVideoAdapter.RecycleViewIte
         binding?.textView79?.text = output.p
         //MovedNext
         binding?.include?.textView5?.setOnClickListener {
-            val intent = Intent(this@NowShowingActivity, BookingActivity::class.java)
+            val intent = Intent(this@NowShowingActivity, MovieSessionActivity::class.java)
             intent.putExtra("mid", output.id)
             intent.putExtra("cid", output.c)
             startActivity(intent)

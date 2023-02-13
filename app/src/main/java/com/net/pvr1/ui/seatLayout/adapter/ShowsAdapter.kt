@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
 import com.net.pvr1.databinding.SeatShowTimeItemBinding
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
+import com.net.pvr1.ui.seatLayout.SeatLayoutActivity
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.invisible
 import com.net.pvr1.utils.show
@@ -27,7 +28,7 @@ class ShowsAdapter(
 ) :
     RecyclerView.Adapter<ShowsAdapter.ViewHolder>() {
     private var itemCount = position
-    private var rowIndex = 0
+    private var rowIndex = SeatLayoutActivity.position.toInt()
 
     inner class ViewHolder(val binding: SeatShowTimeItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -57,7 +58,9 @@ class ShowsAdapter(
                     listener.showsClick(this.sid,holder.itemView,position)
                 }
                 itemCount?.let { recyclerView27.scrollToPosition(it) }
-                if (position == itemCount) {
+
+                println("rowIndex---->$rowIndex")
+                if (position == rowIndex) {
                     binding.textView199.setTextColor(ContextCompat.getColor(context, R.color.black))
                     binding.linearLayout.setBackgroundColor(
                         ContextCompat.getColor(

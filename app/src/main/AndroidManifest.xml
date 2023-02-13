@@ -304,7 +304,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.bookingSession.BookingActivity"
+            android:name=".ui.bookingSession.MovieSessionActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

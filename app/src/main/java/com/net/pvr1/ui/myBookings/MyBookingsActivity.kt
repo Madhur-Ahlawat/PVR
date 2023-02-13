@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityMyBookingBinding
 import com.net.pvr1.di.preference.PreferenceManager
-import com.net.pvr1.ui.bookingSession.BookingActivity
+import com.net.pvr1.ui.bookingSession.MovieSessionActivity
 import com.net.pvr1.ui.bookingSession.adapter.BookingTheatreAdapter
 import com.net.pvr1.ui.bookingSession.response.BookingTheatreResponse
 import com.net.pvr1.ui.dailogs.LoaderDialog
@@ -522,7 +522,7 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
     }
 
     override fun theatreClick(comingSoonItem: BookingTheatreResponse.Output.M) {
-        val intent = Intent(this, BookingActivity::class.java)
+        val intent = Intent(this, MovieSessionActivity::class.java)
         intent.putExtra("mid", comingSoonItem.m)
         startActivity(intent)
     }
