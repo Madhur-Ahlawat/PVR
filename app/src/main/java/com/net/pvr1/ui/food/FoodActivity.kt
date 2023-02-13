@@ -12,6 +12,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
+import android.util.DisplayMetrics
 import android.view.*
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -908,24 +909,19 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         allFoodAdapter?.notifyDataSetChanged()
         previousFoodAdapter?.notifyDataSetChanged()
         val newLayoutParams: ConstraintLayout.LayoutParams =
-            binding?.constraintLayout154?.layoutParams as ConstraintLayout.LayoutParams
-        newLayoutParams.topMargin = 0
-        newLayoutParams.leftMargin = 0
-        newLayoutParams.rightMargin = 0
-        binding?.constraintLayout154?.layoutParams = newLayoutParams
+            binding?.constraintLayout30?.layoutParams as ConstraintLayout.LayoutParams
+        val displayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        val height = displayMetrics.heightPixels
+        val width = displayMetrics.widthPixels
+
         if (cartModel.isEmpty()) {
             binding?.constraintLayout30?.hide()
-            newLayoutParams.topMargin = 0
-            newLayoutParams.leftMargin = 0
-            newLayoutParams.rightMargin = 0
-            newLayoutParams.bottomMargin = 0
-            binding?.constraintLayout154?.layoutParams = newLayoutParams
+
         } else {
-            newLayoutParams.topMargin = 0
-            newLayoutParams.leftMargin = 0
-            newLayoutParams.rightMargin = 0
-            newLayoutParams.bottomMargin = Constant().convertDpToPixel(0f, this)
-            binding?.constraintLayout154?.layoutParams = newLayoutParams
+            newLayoutParams.height = height/5
+
+            binding?.constraintLayout30?.layoutParams = newLayoutParams
             binding?.constraintLayout30?.show()
             binding?.textView149?.setOnClickListener {
                 cartShow = if (!cartShow) {
@@ -936,6 +932,9 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
                         0
                     )
                     binding?.constraintLayout112?.show()
+                    newLayoutParams.height = height
+
+                    binding?.constraintLayout30?.layoutParams = newLayoutParams
                     binding?.constraintLayout30?.setBackgroundColor(getColor(R.color.transparent2))
                     true
                 } else {
@@ -946,6 +945,9 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
                         0
                     )
                     binding?.constraintLayout112?.hide()
+                    newLayoutParams.height = height/5
+
+                    binding?.constraintLayout30?.layoutParams = newLayoutParams
                     binding?.constraintLayout30?.setBackgroundColor(getColor(R.color.transparent1))
 
                     false
@@ -962,6 +964,20 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
             val cartAdapter = CartAdapter(cartModel, this, this)
             binding?.recyclerView41?.layoutManager = layoutManager
             binding?.recyclerView41?.adapter = cartAdapter
+
+            binding?.constraintLayout30?.setOnClickListener {
+                newLayoutParams.height = height/5
+                binding?.constraintLayout30?.setBackgroundColor(getColor(R.color.transparent1))
+                binding?.constraintLayout30?.layoutParams = newLayoutParams
+                binding?.constraintLayout112?.hide()
+                cartShow = false
+                binding?.textView149?.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0,
+                    R.drawable.food_arrow_up,
+                    0
+                )
+            }
 
         }
     }
@@ -1626,5 +1642,29 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         return exist
     }
 
-
+//    private fun foodCartDialog(
+//        comingSoonItem: ArrayList<CartModel>
+//    ) {
+//        footCartDialog = Dialog(this)
+//        footCartDialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//        footCartDialog?.setContentView(R.layout.food_cart_dialog)
+//        footCartDialog?.window?.setLayout(
+//            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+//        )
+//
+//        footCartDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//        footCartDialog?.window?.attributes?.windowAnimations = R.style.DialogAnimation
+//        footCartDialog?.window?.setGravity(Gravity.BOTTOM)
+//        footCartDialog?.show()
+//
+//        val recyclerView = footCartDialog?.findViewById<RecyclerView>(R.id.recyclerView41)
+//
+//
+//        val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+//        val cartAdapter = CartAdapter(comingSoonItem, this, this)
+//        recyclerView?.layoutManager = layoutManager
+//        recyclerView?.adapter = cartAdapter
+//
+//
+//    }
 }

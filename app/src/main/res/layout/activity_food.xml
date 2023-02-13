@@ -17,101 +17,38 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout27">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <View
-            android:id="@+id/view83"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <!--App Bar-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout27"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dimen_60dp"
-            android:background="@color/white"
+            android:id="@+id/mainUI"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout30"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <View
-                android:id="@+id/view74"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:id="@+id/view83"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/imageView58"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="@dimen/dimen_24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/back"
-                app:tint="@color/black"
-                tools:ignore="ContentDescription,RtlSymmetry" />
-
-            <TextView
-                android:id="@+id/textView108"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_20dp"
-                android:fontFamily="@font/sf_pro_text_semi_bold"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimen_18sp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView58"
-                app:layout_constraintStart_toEndOf="@+id/imageView58"
-                app:layout_constraintTop_toTopOf="@+id/imageView58"
-                tools:text="TextView" />
-
-            <TextView
-                android:id="@+id/textView374"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dimen_24dp"
-                android:background="@drawable/yellow_book_curve"
-                android:fontFamily="@font/sf_pro_text_bold"
-                android:text="@string/continue_txt"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimen_14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#EDE8E9"
-                app:layout_constraintBottom_toBottomOf="@+id/view74"
-                app:layout_constraintStart_toStartOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:fillViewport="true"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout27"
-            tools:ignore="SpeakableTextPresentCheck">
-
+            <!--App Bar-->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:id="@+id/constraintLayout27"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dimen_60dp"
+                android:background="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <View
-                    android:id="@+id/view87"
+                    android:id="@+id/view74"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -119,104 +56,72 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/previousFoodView"
-                    android:layout_width="0dp"
+                <ImageView
+                    android:id="@+id/imageView58"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#F9F9F9"
                     android:paddingStart="@dimen/dimen_24dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/view87"
-                    app:layout_constraintTop_toTopOf="@+id/view87"
-                    tools:ignore="RtlSymmetry">
-
-                    <TextView
-                        android:id="@+id/textView398"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_24dp"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:text="@string/want_to_repeat"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/dimen_18sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/previousFoodList"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_24dp"
-                        android:layout_marginBottom="@dimen/dimen_24dp"
-                        android:orientation="horizontal"
-                        android:visibility="visible"
-                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView398"
-                        app:spanCount="1"
-                        tools:itemCount="2"
-                        tools:listitem="@layout/item_food_previous" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout123"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/previousFoodView">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/back"
+                    app:tint="@color/black"
+                    tools:ignore="ContentDescription,RtlSymmetry" />
 
-                    <View
-                        android:id="@+id/view68"
-                        android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:layout_marginTop="@dimen/dimen_15dp"
-                        android:background="@drawable/line_separator"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/textView108"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_20dp"
+                    android:fontFamily="@font/sf_pro_text_semi_bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView58"
+                    app:layout_constraintStart_toEndOf="@+id/imageView58"
+                    app:layout_constraintTop_toTopOf="@+id/imageView58"
+                    tools:text="TextView" />
 
-                    <include
-                        android:id="@+id/include41"
-                        layout="@layout/placeholder_layout"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_15dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view68"
-                        tools:itemCount="2"
-                        tools:listitem="@layout/item_home_promotion" />
+                <TextView
+                    android:id="@+id/textView374"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_24dp"
+                    android:background="@drawable/yellow_book_curve"
+                    android:fontFamily="@font/sf_pro_text_bold"
+                    android:text="@string/continue_txt"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:layout_marginTop="@dimen/dimen_15dp"
-                        android:layout_marginBottom="@dimen/dimen_15dp"
-                        android:background="@drawable/line_separator"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/include41" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#EDE8E9"
+                    app:layout_constraintBottom_toBottomOf="@+id/view74"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nestedScrollView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:fillViewport="true"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout27"
+                tools:ignore="SpeakableTextPresentCheck">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout28"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/dimen_24dp"
-                    android:paddingEnd="@dimen/dimen_24dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/view87"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout123">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
                     <View
-                        android:id="@+id/view88"
+                        android:id="@+id/view87"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -224,192 +129,301 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerView19"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="visible"
-                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                        app:layout_constraintBottom_toBottomOf="@+id/view88"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout108"
-                        app:spanCount="2"
-                        tools:itemCount="2"
-                        tools:listitem="@layout/item_food" />
-
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout108"
+                        android:id="@+id/previousFoodView"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:background="#F9F9F9"
+                        android:paddingStart="@dimen/dimen_24dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/recyclerView19"
-                        app:layout_constraintTop_toTopOf="@+id/view88">
+                        app:layout_constraintStart_toStartOf="@+id/view87"
+                        app:layout_constraintTop_toTopOf="@+id/view87"
+                        tools:ignore="RtlSymmetry">
 
                         <TextView
-                            android:id="@+id/textView130"
+                            android:id="@+id/textView398"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dimen_15dp"
-                            android:layout_marginBottom="@dimen/dimen_15dp"
+                            android:layout_marginTop="@dimen/dimen_24dp"
                             android:fontFamily="@font/montserrat_bold"
-                            android:text="@string/bestsellers"
+                            android:text="@string/want_to_repeat"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen_18sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <androidx.appcompat.widget.SwitchCompat
-                            android:id="@+id/switch2"
-                            android:layout_width="wrap_content"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/previousFoodList"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:fontFamily="@font/sf_pro_text_regular"
-                            android:includeFontPadding="false"
-                            android:text="@string/veg"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/dimen_14sp"
-                            android:thumb="@drawable/thumb_selector"
-                            android:thumbTint="@color/white"
-                            app:layout_constraintBottom_toBottomOf="@+id/textView130"
-                            app:layout_constraintEnd_toStartOf="@+id/switch3"
-                            app:layout_constraintTop_toTopOf="@+id/textView130"
-                            app:switchPadding="6dp"
-                            app:track="@drawable/track_selector"
-                            tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
-
-                        <androidx.appcompat.widget.SwitchCompat
-                            android:id="@+id/switch3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/sf_pro_text_regular"
-                            android:includeFontPadding="false"
-                            android:text="@string/non_veg"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/dimen_14sp"
-                            android:thumb="@drawable/thumb_selector"
-                            android:thumbTint="@color/white"
-                            app:layout_constraintBottom_toBottomOf="@+id/switch2"
+                            android:layout_marginTop="@dimen/dimen_24dp"
+                            android:layout_marginBottom="@dimen/dimen_24dp"
+                            android:orientation="horizontal"
+                            android:visibility="visible"
+                            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/switch2"
-                            app:switchPadding="6dp"
-                            app:track="@drawable/track_selector"
-                            tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView398"
+                            app:spanCount="1"
+                            tools:itemCount="2"
+                            tools:listitem="@layout/item_food_previous" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout123"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/previousFoodView">
+
+                        <View
+                            android:id="@+id/view68"
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:layout_marginTop="@dimen/dimen_15dp"
+                            android:background="@drawable/line_separator"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <include
+                            android:id="@+id/include41"
+                            layout="@layout/placeholder_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_15dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/view68"
+                            tools:itemCount="2"
+                            tools:listitem="@layout/item_home_promotion" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:layout_marginTop="@dimen/dimen_15dp"
+                            android:layout_marginBottom="@dimen/dimen_15dp"
+                            android:background="@drawable/line_separator"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/include41" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout28"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/dimen_24dp"
+                        android:paddingEnd="@dimen/dimen_24dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/view87"
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout123">
+
+                        <View
+                            android:id="@+id/view88"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerView19"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="visible"
+                            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                            app:layout_constraintBottom_toBottomOf="@+id/view88"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/constraintLayout108"
+                            app:spanCount="2"
+                            tools:itemCount="2"
+                            tools:listitem="@layout/item_food" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayout108"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/recyclerView19"
+                            app:layout_constraintTop_toTopOf="@+id/view88">
+
+                            <TextView
+                                android:id="@+id/textView130"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_15dp"
+                                android:layout_marginBottom="@dimen/dimen_15dp"
+                                android:fontFamily="@font/montserrat_bold"
+                                android:text="@string/bestsellers"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen_18sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/switch2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="16dp"
+                                android:fontFamily="@font/sf_pro_text_regular"
+                                android:includeFontPadding="false"
+                                android:text="@string/veg"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen_14sp"
+                                android:thumb="@drawable/thumb_selector"
+                                android:thumbTint="@color/white"
+                                app:layout_constraintBottom_toBottomOf="@+id/textView130"
+                                app:layout_constraintEnd_toStartOf="@+id/switch3"
+                                app:layout_constraintTop_toTopOf="@+id/textView130"
+                                app:switchPadding="6dp"
+                                app:track="@drawable/track_selector"
+                                tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/switch3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/sf_pro_text_regular"
+                                android:includeFontPadding="false"
+                                android:text="@string/non_veg"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen_14sp"
+                                android:thumb="@drawable/thumb_selector"
+                                android:thumbTint="@color/white"
+                                app:layout_constraintBottom_toBottomOf="@+id/switch2"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/switch2"
+                                app:switchPadding="6dp"
+                                app:track="@drawable/track_selector"
+                                tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout29"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/dimen_24dp"
+                        android:paddingEnd="@dimen/dimen_24dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/constraintLayout28"
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout28">
+
+                        <View
+                            android:id="@+id/view89"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textView138"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sf_pro_text_bold"
+                            android:text="@string/your_happy_place"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_18sp"
+                            app:layout_constraintStart_toStartOf="@+id/view89"
+                            app:layout_constraintTop_toTopOf="@+id/view89" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerView20"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:orientation="horizontal"
+                            android:visibility="visible"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintEnd_toEndOf="@+id/view89"
+                            app:layout_constraintStart_toStartOf="@+id/view89"
+                            app:layout_constraintTop_toBottomOf="@+id/textView138"
+                            tools:itemCount="3"
+                            tools:listitem="@layout/item_food_place" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerView21"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="visible"
+                            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                            app:layout_constraintBottom_toBottomOf="@+id/view89"
+                            app:layout_constraintEnd_toEndOf="@+id/view89"
+                            app:layout_constraintStart_toStartOf="@+id/view89"
+                            app:layout_constraintTop_toBottomOf="@+id/recyclerView20"
+                            app:spanCount="2"
+                            tools:itemCount="2"
+                            tools:listitem="@layout/item_food" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/ppBanners"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="24dp"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="@+id/view87"
+                        app:layout_constraintEnd_toEndOf="@+id/view87"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout29">
+
+                        <View
+                            android:id="@+id/view92"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/pramotionBanner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:visibility="visible"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintBottom_toBottomOf="@+id/view92"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/view92"
+                            app:layout_constraintTop_toTopOf="@+id/view92"
+                            tools:itemCount="1"
+                            tools:listitem="@layout/placeholder_big_item" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout29"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/dimen_24dp"
-                    android:paddingEnd="@dimen/dimen_24dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/constraintLayout28"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout28">
+            </androidx.core.widget.NestedScrollView>
 
-                    <View
-                        android:id="@+id/view89"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <TextView
-                        android:id="@+id/textView138"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sf_pro_text_bold"
-                        android:text="@string/your_happy_place"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/dimen_18sp"
-                        app:layout_constraintStart_toStartOf="@+id/view89"
-                        app:layout_constraintTop_toTopOf="@+id/view89" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerView20"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:orientation="horizontal"
-                        android:visibility="visible"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintEnd_toEndOf="@+id/view89"
-                        app:layout_constraintStart_toStartOf="@+id/view89"
-                        app:layout_constraintTop_toBottomOf="@+id/textView138"
-                        tools:itemCount="3"
-                        tools:listitem="@layout/item_food_place" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerView21"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="visible"
-                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                        app:layout_constraintBottom_toBottomOf="@+id/view89"
-                        app:layout_constraintEnd_toEndOf="@+id/view89"
-                        app:layout_constraintStart_toStartOf="@+id/view89"
-                        app:layout_constraintTop_toBottomOf="@+id/recyclerView20"
-                        app:spanCount="2"
-                        tools:itemCount="2"
-                        tools:listitem="@layout/item_food" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/ppBanners"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@+id/view87"
-                    app:layout_constraintEnd_toEndOf="@+id/view87"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout29">
-
-                    <View
-                        android:id="@+id/view92"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/pramotionBanner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:visibility="visible"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintBottom_toBottomOf="@+id/view92"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/view92"
-                        app:layout_constraintTop_toTopOf="@+id/view92"
-                        tools:itemCount="1"
-                        tools:listitem="@layout/placeholder_big_item" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.core.widget.NestedScrollView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout30"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:background="@color/transparent1"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout112"
@@ -427,7 +441,7 @@
                     android:layout_height="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHeight_max="450dp"
+                    app:layout_constraintHeight_max="400dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
