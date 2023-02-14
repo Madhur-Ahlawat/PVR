@@ -28,11 +28,20 @@
         app:layout_constraintTop_toBottomOf="@+id/vis"
         android:text="@string/terms_amp_conditions" />
 
+    <include
+        layout="@layout/horizontal_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view74"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView108" />
+
     <View
         android:id="@+id/vis"
         android:layout_width="@dimen/dimen_30dp"
         android:layout_height="@dimen/dimen_4dp"
-        android:layout_marginTop="@dimen/dimen_8dp"
+        android:layout_marginTop="@dimen/dimen_15dp"
         android:background="@drawable/grey_seat_curve"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
