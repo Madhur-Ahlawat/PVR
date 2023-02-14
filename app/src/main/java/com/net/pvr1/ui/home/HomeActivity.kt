@@ -121,6 +121,8 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
             setCurrentFragment(firstFragment)
         }
 
+        binding?.bottomNavigationView?.menu?.findItem(R.id.homeFragment)?.title = "TITTLE"
+
         binding?.bottomNavigationView?.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.homeFragment -> {

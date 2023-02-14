@@ -50,6 +50,7 @@ import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr1.utils.Constant.Companion.EXTANDTIME
 import com.net.pvr1.utils.Constant.Companion.FOODENABLE
 import com.net.pvr1.utils.Constant.Companion.SELECTED_SEAT
+import com.net.pvr1.utils.Constant.Companion.SeatBack
 import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
 import dagger.hilt.android.AndroidEntryPoint
 import java.math.BigDecimal
@@ -2023,12 +2024,15 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     //refresh seat
     override fun onResume() {
         super.onResume()
-        binding?.llRowName?.removeAllViews()
-        //clear List
-        selectedSeats.clear()
-        selectSeatPriceCode.clear()
-        authViewModel.seatLayout(
-            CINEMA_ID, sessionId, "", "", "", offerEnable, ""
-        )
+        if (SeatBack == 1){
+            binding?.llRowName?.removeAllViews()
+            //clear List
+            selectedSeats.clear()
+            selectSeatPriceCode.clear()
+            authViewModel.seatLayout(
+                CINEMA_ID, sessionId, "", "", "", offerEnable, ""
+            )
+        }
+
     }
 }

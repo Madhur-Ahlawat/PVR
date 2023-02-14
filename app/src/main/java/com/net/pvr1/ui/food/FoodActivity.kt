@@ -1324,6 +1324,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
 
 
     override fun onBackPressed() {
+        Constant.SeatBack = 1
         onBackPressedDispatcher.onBackPressed()
         authViewModel.cancelTrans(CINEMA_ID, TRANSACTION_ID, BOOKING_ID)
     }

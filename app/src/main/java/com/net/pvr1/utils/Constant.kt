@@ -126,6 +126,7 @@ class Constant {
         var PlaceHolder: HomeResponse.Output? = null
         var DECIFORMAT = DecimalFormat("0.00")
         var SUMMERYBACK=0
+        var SeatBack=0
         var foodLimit=0
 
 //      food

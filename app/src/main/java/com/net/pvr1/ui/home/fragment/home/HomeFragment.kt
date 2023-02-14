@@ -22,7 +22,9 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -76,7 +78,6 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickListener,
@@ -123,6 +124,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     private var stories: StoriesProgressView? = null
     private var listener: PlayPopup? = null
     var gFilter:GenericFilterHome? = null
+    private  var backToTop:ConstraintLayout?=null
 
     //internet Check
     private var broadcastReceiver: BroadcastReceiver? = null
@@ -155,6 +157,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
          format = "ALL"
          special = "ALL"
          cinemaType = "ALL"
+
+        backToTop=requireActivity().findViewById(R.id.backToTop)
         //Poster
         listener = activity as PlayPopup?
         tvButton = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
@@ -205,6 +209,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         nextBooking()
         createQr()
         getMovieFormatFromApi()
+        makeToTop()
+
 
         //internet Check
         broadcastReceiver = NetworkReceiver()
@@ -218,6 +224,24 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             itemView.performClick()
         }
     }
+
+    private fun makeToTop() {
+//
+        binding?.nestedScrollView4?.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+
+            if (scrollY > 1000) {
+                backToTop?.show()
+            } else {
+                backToTop?.hide()
+
+            }
+            backToTop?.setOnClickListener {
+                binding?.nestedScrollView4?.postDelayed({ binding?.nestedScrollView4?.fullScroll(View.FOCUS_UP) }, 0
+                )
+            }
+        })
+    }
+
 
     private fun getShimmerData() {
         Constant().getData(binding?.include38?.tvFirstText, binding?.include38?.tvSecondText)

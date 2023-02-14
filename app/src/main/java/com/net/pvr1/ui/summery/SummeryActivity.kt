@@ -56,6 +56,7 @@ import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr1.utils.Constant.Companion.DONATION
 import com.net.pvr1.utils.Constant.Companion.FOODENABLE
+import com.net.pvr1.utils.Constant.Companion.SeatBack
 import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
 import com.net.pvr1.utils.Constant.Companion.foodCartModel
 import com.net.pvr1.utils.Constant.Companion.foodLimit
@@ -851,6 +852,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     }
 
     override fun onBackPressed() {
+        SeatBack= 1
         if (FOODENABLE == 0) {
             showDialog()
         } else {
