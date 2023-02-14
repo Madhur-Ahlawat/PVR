@@ -55,7 +55,7 @@ class PreviousFoodAdapter(
                 if (this.r.size > 1) {
                     binding.textView134.show()
                     binding.textView135.setOnClickListener {
-                        listener.categoryFoodDialog(this.r, this.nm)
+                        listener.categoryFoodDialog(this.r, this.nm,this.cid.toString())
                     }
                 } else {
                     binding.textView134.invisible()
@@ -113,7 +113,7 @@ class PreviousFoodAdapter(
         fun categoryFoodMinus(comingSoonItem: FoodResponse.Output.Mfl, position: Int)
         fun categoryFoodDialog(
             comingSoonItem: List<FoodResponse.Output.Bestseller.R>,
-            title: String
+            title: String,cid:String
         )
     }
 

@@ -35,7 +35,7 @@ class AllFoodAdapter(
         return ViewHolder(binding)
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
@@ -54,8 +54,33 @@ class AllFoodAdapter(
                 if (this.r.size > 1) {
                     binding.textView134.show()
                     binding.textView135.setOnClickListener {
-                        listener.categoryFoodDialog(this.r, this.nm)
+                        listener.categoryFoodDialog(this.r, this.nm,this.cid.toString())
                     }
+                    if (this.qt>0){
+                        binding.uiPlusMinus.foodCount.text = qt.toString()
+                    }
+
+                    //SubTract
+                    binding.uiPlusMinus.plus.setOnClickListener {
+                        listener.categoryFoodDialog(nowShowingList[position].r, this.nm,this.cid.toString())
+                        notifyDataSetChanged()
+                    }
+
+                    //Add
+                    binding.uiPlusMinus.minus.setOnClickListener {
+                        listener.categoryFoodDialog(this.r, this.nm,this.cid.toString())
+                        notifyDataSetChanged()
+                    }
+
+                    //UiShowHide
+                    if (this.qt > 0) {
+                        binding.consAddUi.show()
+                        binding.textView135.hide()
+                    } else {
+                        binding.consAddUi.hide()
+                        binding.textView135.show()
+                    }
+
                 } else {
                     binding.textView134.invisible()
                     binding.textView135.setOnClickListener {
@@ -65,25 +90,27 @@ class AllFoodAdapter(
                         notifyDataSetChanged()
                     }
 
+                    //SubTract
+                    binding.uiPlusMinus.plus.setOnClickListener {
+                        listener.categoryFoodPlus(this, position)
+                        notifyDataSetChanged()
+                    }
+                    //Add
+                    binding.uiPlusMinus.minus.setOnClickListener {
+                        listener.categoryFoodMinus(this, position)
+                        notifyDataSetChanged()
+                    }
+
                 }
-                //SubTract
-                binding.uiPlusMinus.plus.setOnClickListener {
-                    listener.categoryFoodPlus(this, position)
-                    notifyDataSetChanged()
-                }
-                //Add
-                binding.uiPlusMinus.minus.setOnClickListener {
-                    listener.categoryFoodMinus(this, position)
-                    notifyDataSetChanged()
-                }
+
 
                 binding.imageView65.setOnClickListener {
                     listener.categoryFoodImageClick(this)
                 }
                 if (this.veg) {
-                    binding.imageView69.setImageDrawable(context.getDrawable(R.drawable.veg_ic))
+                    binding.imageView69.setImageResource(R.drawable.veg_ic)
                 } else {
-                    binding.imageView69.setImageDrawable(context.getDrawable(R.drawable.nonveg_ic))
+                    binding.imageView69.setImageResource(R.drawable.nonveg_ic)
                 }
                 //UiShowHide
                 if (this.qt > 0) {
@@ -112,8 +139,9 @@ class AllFoodAdapter(
         fun categoryFoodMinus(comingSoonItem: FoodResponse.Output.Mfl, position: Int)
         fun categoryFoodDialog(
             comingSoonItem: List<FoodResponse.Output.Bestseller.R>,
-            title: String
+            title: String,cid:String
         )
     }
+
 
 }

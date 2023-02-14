@@ -49,6 +49,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.shts.android.storiesprogressview.StoriesProgressView
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 
 @AndroidEntryPoint
@@ -83,6 +84,10 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     private var cartShow = false
     private var bestSellerType: String = "ALL"
 
+    // Food Popup Custom
+    private var amtViewFood:RelativeLayout? = null
+    private var amtFood:TextView? = null
+
     //foodLimit
 //    private var foodLimit: Int = 0
 
@@ -96,6 +101,19 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     private var counterStory = 0
     private var currentPage = 1
     private var bannerModelsMain: ArrayList<BookingResponse.Output.Pu> = ArrayList<BookingResponse.Output.Pu>()
+
+
+    companion object{
+        fun getFoodQTCount(r: List<FoodResponse.Output.Bestseller.R>): Int {
+            var qt = 0
+            for (data in r){
+                if (data.qt>0){
+                    qt += data.qt
+                }
+            }
+            return qt
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -544,7 +562,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         bindingBottom.textView309.setOnClickListener {
             if (comingSoonItem.r.size > 1) {
                 dialog.dismiss()
-                bottomDialogCart(comingSoonItem.r, comingSoonItem.nm)
+                bottomDialogCart(comingSoonItem.r, comingSoonItem.nm,comingSoonItem.cid.toString())
             } else {
                 masterId = comingSoonItem.mid.toString()
                 var num = comingSoonItem.qt
@@ -689,9 +707,9 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
 
 
     override fun bestSellerDialogAddFood(
-        comingSoonItem: List<FoodResponse.Output.Bestseller.R>, position: String
+        comingSoonItem: List<FoodResponse.Output.Bestseller.R>, position: String,cid:String
     ) {
-        bottomDialogCart(comingSoonItem, position)
+        bottomDialogCart(comingSoonItem, position,cid)
     }
 
     private fun updateHomeCartList(comingSoonItem: FoodResponse.Output.Bestseller) {
@@ -739,18 +757,19 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     }
 
     override fun categoryFoodDialog(
-        comingSoonItem: List<FoodResponse.Output.Bestseller.R>, title: String
+        comingSoonItem: List<FoodResponse.Output.Bestseller.R>, title: String,cid:String
     ) {
-        bottomDialogCart(comingSoonItem, title)
+        bottomDialogCart(comingSoonItem, title,cid)
     }
 
-    override fun filterBtFoodClick(comingSoonItem: FoodResponse.Output.Bestseller.R) {
+    override fun filterBtFoodClick(comingSoonItem: FoodResponse.Output.Bestseller.R,list:List<FoodResponse.Output.Bestseller.R>) {
         var num = comingSoonItem.qt
         num += 1
         comingSoonItem.qt = num
+        updateFoodItemAmt(list as ArrayList<FoodResponse.Output.Bestseller.R>)
     }
 
-    override fun filterBtFoodPlus(comingSoonItem: FoodResponse.Output.Bestseller.R) {
+    override fun filterBtFoodPlus(comingSoonItem: FoodResponse.Output.Bestseller.R,list:List<FoodResponse.Output.Bestseller.R>) {
         var num = comingSoonItem.qt
         if (num > foodLimit || num == foodLimit) {
             val dialog = OptionDialog(this,
@@ -766,9 +785,10 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
             num += 1
             comingSoonItem.qt = num
         }
+        updateFoodItemAmt(list as ArrayList<FoodResponse.Output.Bestseller.R>)
     }
 
-    override fun filterBtFoodMinus(comingSoonItem: FoodResponse.Output.Bestseller.R) {
+    override fun filterBtFoodMinus(comingSoonItem: FoodResponse.Output.Bestseller.R,list:List<FoodResponse.Output.Bestseller.R>) {
         toast("1")
         var num = comingSoonItem.qt
         if (num < 0 || num == 0) {
@@ -785,6 +805,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
             num -= 1
             comingSoonItem.qt = num
         }
+        updateFoodItemAmt(list as ArrayList<FoodResponse.Output.Bestseller.R>)
     }
 
     private fun updateBottomFoodCartList(comingSoonItem: FoodResponse.Output.Bestseller.R) {
@@ -867,7 +888,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
             comingSoonItem.quantity = num
             updateCartFoodCartList(comingSoonItem)
             cartData()
-            bestSellerFoodAdapter?.notifyDataSetChanged()
+           // bestSellerFoodAdapter?.notifyDataSetChanged()
         }
     }
 
@@ -889,7 +910,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
             updateCartFoodCartList(comingSoonItem)
             cartData()
         }
-        bestSellerFoodAdapter?.notifyDataSetChanged()
+        //bestSellerFoodAdapter?.notifyDataSetChanged()
     }
 
     private fun removeCartItem(item: CartModel) {
@@ -917,12 +938,14 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
 
         if (cartModel.isEmpty()) {
             binding?.constraintLayout30?.hide()
+            binding?.textView374?.show()
 
         } else {
             newLayoutParams.height = height/5
 
             binding?.constraintLayout30?.layoutParams = newLayoutParams
             binding?.constraintLayout30?.show()
+            binding?.textView374?.hide()
             binding?.textView149?.setOnClickListener {
                 cartShow = if (!cartShow) {
                     binding?.textView149?.setCompoundDrawablesWithIntrinsicBounds(
@@ -960,6 +983,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
                 getString(R.string.currency) + Constant.DECIFORMAT.format(itemCheckPriceCart / 100.0)
             binding?.textView149?.text = cartModel.size.toString() + " " + getString(R.string.items)
             binding?.constraintLayout30?.show()
+            binding?.textView374?.hide()
             val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
             val cartAdapter = CartAdapter(cartModel, this, this)
             binding?.recyclerView41?.layoutManager = layoutManager
@@ -1005,9 +1029,10 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     @SuppressLint("NotifyDataSetChanged")
     private fun updateCartMainList(recyclerData: CartModel) {
         for (item in foodResponse!!.bestsellers) {
-            if (item.cid == recyclerData.id) {
-                if (recyclerData.id == item.r[0].id) {
-                    item.qt = recyclerData.quantity
+            for (data in item.r){
+                if (recyclerData.id == data.id){
+                    data.qt = recyclerData.quantity
+                    break
                 }
             }
         }
@@ -1236,7 +1261,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         bindingBottom.textView309.setOnClickListener {
             if (comingSoonItem.r.size > 1) {
                 dialog.dismiss()
-                bottomDialogCart(comingSoonItem.r, comingSoonItem.nm)
+                bottomDialogCart(comingSoonItem.r, comingSoonItem.nm,comingSoonItem.cid.toString())
             } else {
                 var num = comingSoonItem.qt
                 num += 1
@@ -1302,7 +1327,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     }
 
     private fun bottomDialogCart(
-        comingSoonItem: List<FoodResponse.Output.Bestseller.R>, titleTxt: String
+        comingSoonItem: List<FoodResponse.Output.Bestseller.R>, titleTxt: String,cid:String
     ) {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -1320,6 +1345,8 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         val cancel = dialog.findViewById<ImageView>(R.id.imageView71)
         val proceed = dialog.findViewById<TextView>(R.id.textView5)
         val title = dialog.findViewById<TextView>(R.id.textView143)
+         amtViewFood = dialog.findViewById<RelativeLayout>(R.id.amtViewFood)
+         amtFood = dialog.findViewById<TextView>(R.id.amtFood)
 
         val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
         bottomFoodAdapter = BottomFoodAdapter(getCustomFoodList(comingSoonItem), this, this)
@@ -1330,15 +1357,19 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
 
         proceed.text = getString(R.string.proceed)
         cancel.setOnClickListener {
+            updateCardFromProceed(comingSoonItem,0,cid)
             dialog.dismiss()
         }
 
         proceed.setOnClickListener {
-            updateCardFromProceed(comingSoonItem)
+            updateCardFromProceed(comingSoonItem,1,cid)
             cartData()
             dialog.dismiss()
             bestSellerFoodAdapter?.notifyDataSetChanged()
+            allFoodAdapter?.notifyDataSetChanged()
         }
+
+        updateFoodItemAmt(comingSoonItem as ArrayList<FoodResponse.Output.Bestseller.R>)
     }
 
 
@@ -1595,12 +1626,28 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         try {
             for (item in catFilterBestSeller2){
                 for (item2 in cartModel){
-                    if (item2.id == item.r[0].id) {
-                        item.qt = item2.quantity
+                    for (data in item.r){
+                        if (item2.id == data.id){
+                            data.qt = item2.quantity
+                            item.qt = getFoodQTCount(item.r)
+                            break
+                        }
                     }
-                    cartData()
                 }
             }
+            for (item in foodResponse!!.mfl){
+                for (item2 in cartModel){
+                    for (data in item.r){
+                        if (item2.id == data.id){
+                            data.qt = item2.quantity
+                            item.qt = getFoodQTCount(item.r)
+                            break
+                        }
+                    }
+                }
+            }
+            cartData()
+
         }catch (e:java.lang.Exception){
             e.printStackTrace()
         }
@@ -1620,12 +1667,47 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     }
 
     // Update Cart from proceed btn
-    private fun updateCardFromProceed(comingSoonItem: List<FoodResponse.Output.Bestseller.R>) {
-        for (data in comingSoonItem){
-            if (checkInCart(data)){
-            }else{
-                if (data.qt>0)
-                cartModel.add(CartModel(data.id,data.h,data.i,data.qt,data.dp,data.veg,data.ho,data.masterItemId.toString()))
+    private fun updateCardFromProceed(comingSoonItem: List<FoodResponse.Output.Bestseller.R>, type: Int, cid: String) {
+        if (type==1) {
+            for (data in comingSoonItem) {
+                if (checkInCart(data)) {
+                } else {
+                    if (data.qt > 0)
+                        cartModel.add(
+                            CartModel(
+                                data.id,
+                                data.h,
+                                data.i,
+                                data.qt,
+                                data.dp,
+                                data.veg,
+                                data.ho,
+                                data.masterItemId.toString()
+                            )
+                        )
+                }
+            }
+            updateMainListQt(cid,comingSoonItem)
+        }else{
+            for (data in comingSoonItem){
+                data.qt = 0
+            }
+
+        }
+    }
+
+    private fun updateMainListQt(cid: String, comingSoonItem: List<FoodResponse.Output.Bestseller.R>) {
+        for (data in foodResponse!!.mfl){
+            if (data.cid == cid.toInt()){
+                data.qt = getFoodQTCount(comingSoonItem)
+                break
+            }
+        }
+
+        for (data in foodResponse!!.bestsellers){
+            if (data.cid == cid.toInt()){
+                data.qt = getFoodQTCount(comingSoonItem)
+                break
             }
         }
     }
@@ -1643,29 +1725,22 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         return exist
     }
 
-//    private fun foodCartDialog(
-//        comingSoonItem: ArrayList<CartModel>
-//    ) {
-//        footCartDialog = Dialog(this)
-//        footCartDialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//        footCartDialog?.setContentView(R.layout.food_cart_dialog)
-//        footCartDialog?.window?.setLayout(
-//            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
-//        )
-//
-//        footCartDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//        footCartDialog?.window?.attributes?.windowAnimations = R.style.DialogAnimation
-//        footCartDialog?.window?.setGravity(Gravity.BOTTOM)
-//        footCartDialog?.show()
-//
-//        val recyclerView = footCartDialog?.findViewById<RecyclerView>(R.id.recyclerView41)
-//
-//
-//        val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-//        val cartAdapter = CartAdapter(comingSoonItem, this, this)
-//        recyclerView?.layoutManager = layoutManager
-//        recyclerView?.adapter = cartAdapter
-//
-//
-//    }
+    // Update Food Amt in Custom food popup
+
+    private fun updateFoodItemAmt(food:ArrayList<FoodResponse.Output.Bestseller.R>){
+        var price = 0.0
+        for (data in food){
+            if (data.qt>0){
+                price += (data.qt.toDouble() * data.dp.toDouble())
+            }
+        }
+        if (price>0 && amtViewFood!=null){
+            amtViewFood?.show()
+            amtFood?.text = (price/100.0).toString()
+        }else{
+            amtViewFood?.hide()
+        }
+
+    }
+
 }
