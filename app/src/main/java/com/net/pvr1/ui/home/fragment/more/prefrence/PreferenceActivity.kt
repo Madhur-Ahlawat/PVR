@@ -168,19 +168,19 @@ class PreferenceActivity : AppCompatActivity(), PreferenceListAdapter.RecycleVie
         //liked genre
         when (selectedPos) {
             0 -> {
-                genre()
                 selectedPos = 0
                 binding?.textView242?.text = "All Genres"
+                genre()
             }
             1 -> {
                 binding?.textView242?.text = "All Theaters"
-                theater()
                 selectedPos = 1
+                theater()
             }
             2 -> {
                 binding?.textView242?.text = "All Payments"
-                payment()
                 selectedPos = 2
+                payment()
             }
             3 -> {
                 binding?.textView242?.text = "All Languages"
@@ -224,8 +224,7 @@ class PreferenceActivity : AppCompatActivity(), PreferenceListAdapter.RecycleVie
     }
 
     private fun removePP(
-        list: ArrayList<PreferenceResponse.Output.Genre.Other>,
-        id: String
+        list: ArrayList<PreferenceResponse.Output.Genre.Other>, id: String
     ): ArrayList<PreferenceResponse.Output.Genre.Other> {
         for (data in list) {
             if (data.id == id) {
@@ -237,8 +236,7 @@ class PreferenceActivity : AppCompatActivity(), PreferenceListAdapter.RecycleVie
     }
 
     private fun getPP(
-        list: ArrayList<PreferenceResponse.Output.Genre.Other>,
-        id: String
+        list: ArrayList<PreferenceResponse.Output.Genre.Other>, id: String
     ): ArrayList<PreferenceResponse.Output.Genre.Other> {
         val listPP = java.util.ArrayList<PreferenceResponse.Output.Genre.Other>()
         for (data in list) {
@@ -254,20 +252,20 @@ class PreferenceActivity : AppCompatActivity(), PreferenceListAdapter.RecycleVie
     override fun prefrenceTypeClick(comingSoonItem: String, position: Int) {
         when (position) {
             0 -> {
-                genre()
                 selectedPos = 0
+                genre()
             }
             1 -> {
-                theater()
                 selectedPos = 1
+                theater()
             }
             2 -> {
-                payment()
                 selectedPos = 2
+                payment()
             }
             3 -> {
-                selectedPos = 3
                 language()
+                selectedPos = 3
             }
         }
     }
@@ -417,9 +415,7 @@ class PreferenceActivity : AppCompatActivity(), PreferenceListAdapter.RecycleVie
             binding?.recyclerView55?.layoutManager = layoutManager
             val termsAdapter = apiResponse?.pon?.let {
                 PaymentWalletAdapter(
-                    this,
-                    getPP(it.Other, apiResponse?.pp ?: "0"),
-                    this
+                    this, getPP(it.Other, apiResponse?.pp ?: "0"), this
                 )
             }
             binding?.recyclerView55?.adapter = termsAdapter
@@ -430,9 +426,7 @@ class PreferenceActivity : AppCompatActivity(), PreferenceListAdapter.RecycleVie
         binding?.recyclerView56?.layoutManager = layoutManagerAll
         val allGenreAdapter = apiResponse?.pon?.Other?.let {
             PaymentAllAdapter(
-                this,
-                removePP(it, apiResponse?.pp ?: ""),
-                this
+                this, removePP(it, apiResponse?.pp ?: ""), this
             )
         }
         binding?.recyclerView56?.adapter = allGenreAdapter
