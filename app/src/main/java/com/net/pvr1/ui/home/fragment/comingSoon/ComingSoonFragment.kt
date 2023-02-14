@@ -28,6 +28,7 @@ import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.filter.GenericFilterComing
+import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.home.fragment.comingSoon.adapter.ComingSoonMovieAdapter
 import com.net.pvr1.ui.home.fragment.comingSoon.response.CommingSoonResponse
 import com.net.pvr1.ui.home.fragment.comingSoon.search.CinemaSearchActivity
@@ -103,6 +104,7 @@ class ComingSoonFragment : Fragment(),
     @SuppressLint("CutPasteId")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        HomeActivity.backToTop?.hide()
         tvButton = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
             .findViewById(R.id.tv_button))
         ivBanner = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)

@@ -377,7 +377,144 @@
         <activity
             android:name=".ui.home.HomeActivity"
             android:exported="true"
-            android:screenOrientation="portrait" /> <!-- <queries> -->
+            android:screenOrientation="portrait" >
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/comingsoon"
+                    android:scheme="https" />
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/comingsoon"
+                    android:scheme="app" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/cinemasd"
+                    android:scheme="https" />
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/cinemasd"
+                    android:scheme="app" />
+            </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="pvrcinemas.net"
+                    android:pathPrefix="/PSPT"
+                    android:scheme="http" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/PSPT"
+                    android:scheme="app" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/PSPT"
+                    android:scheme="https" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/comingsoontrailer"
+                    android:scheme="https" />
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/comingsoontrailer"
+                    android:scheme="app" />
+            </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/home"
+                    android:scheme="app" />
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/home"
+                    android:scheme="app" />
+            </intent-filter>
+
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/loyalty/home"
+                    android:scheme="https" />
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/loyalty/home"
+                    android:scheme="app" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:path="/pvrcinemas.com"
+                    android:scheme="https" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/pvrcinemas.com"
+                    android:scheme="app" />
+            </intent-filter>
+
+        </activity>
         <activity
             android:name=".ui.payment.paytmpostpaid.PaytmPostPaidActivity"
             android:exported="false"

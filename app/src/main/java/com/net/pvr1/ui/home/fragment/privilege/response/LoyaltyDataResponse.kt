@@ -1,5 +1,9 @@
 package com.net.pvr1.ui.home.fragment.privilege.response
 
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.reflect.jvm.internal.impl.load.java.Constant
+
 data class LoyaltyDataResponse(
     val code: Int,
     val msg: String,
@@ -66,6 +70,7 @@ data class LoyaltyDataResponse(
         val ex: String,
         val exf: String,
         val expiryDate: String,
+        val expDate: Date = com.net.pvr1.utils.Constant.getPrivilegeDate("MMM dd, yyyyy",exf)!!,
         val image_path: String,
         val info: String,
         val itd: String,

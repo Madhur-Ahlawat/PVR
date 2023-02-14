@@ -47,6 +47,7 @@ import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.filter.GenericFilterHome
 import com.net.pvr1.ui.giftCard.GiftCardActivity
+import com.net.pvr1.ui.home.HomeActivity.Companion.backToTop
 import com.net.pvr1.ui.home.formats.FormatsActivity
 import com.net.pvr1.ui.home.fragment.home.adapter.*
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
@@ -124,7 +125,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     private var stories: StoriesProgressView? = null
     private var listener: PlayPopup? = null
     var gFilter:GenericFilterHome? = null
-    private  var backToTop:ConstraintLayout?=null
 
     //internet Check
     private var broadcastReceiver: BroadcastReceiver? = null
@@ -488,7 +488,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             initBanner(output.pu)
         }
 
-        if (preferences.getIsLogin()) recommend(output.rm)
+        recommend(output.rm)
     }
 
     @SuppressLint("SetTextI18n")
@@ -997,7 +997,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     @SuppressLint("SuspiciousIndentation")
     private fun getMoviesForUNowShowingHit() {
-        upcomingBooking = preferences.getIsLogin() == false
+        upcomingBooking  = false
         var specialText = "ALL"
         if (!special.equals("ALL", ignoreCase = true)){
             specialText = special

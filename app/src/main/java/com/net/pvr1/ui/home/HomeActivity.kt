@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.gms.analytics.Tracker
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.net.pvr1.R
@@ -37,10 +39,13 @@ import com.net.pvr1.ui.home.fragment.home.viewModel.HomeViewModel
 import com.net.pvr1.ui.home.fragment.more.MoreFragment
 import com.net.pvr1.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr1.ui.home.fragment.privilege.MemberFragment
+import com.net.pvr1.ui.home.fragment.privilege.NonMemberActivity
 import com.net.pvr1.ui.home.fragment.privilege.NonMemberFragment
 import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeHomeDialogAdapter
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.home.interfaces.PlayPopup
+import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingActivity
+import com.net.pvr1.ui.player.PlayerActivity
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.PRIVILEGEVOUCHER
 import com.net.pvr1.utils.Constant.Companion.PrivilegeHomeResponseConst
@@ -74,6 +79,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 
     companion object {
         var reviewPosition = 0
+        var backToTop:ConstraintLayout? = null
         var pCheck = "0"
         var pDays = "0"
         fun getCurrentItem(recyclerView: RecyclerView): Int {
@@ -109,6 +115,8 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         if (intent.hasExtra("from"))
         from= intent.getStringExtra("from").toString()
         printLog("from---->${from}")
+
+        manageDeepLinks()
     }
 
     private fun switchFragment() {
@@ -555,6 +563,97 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         } else {
             binding?.bottomNavigationView?.selectedItemId = R.id.homeFragment
         }
+    }
+
+
+    private fun manageDeepLinks(){
+        try {
+            val data = intent.data
+            if (data != null) {
+                var path = data.path
+                if (path?.contains("utm") == true)
+                    sendGACampaign(path, "Home")
+                if (path?.contains("loyaltys/home") == true || path?.contains("loyalty/home") == true) {
+                    val isLy: String = preferences.getString(Constant.SharedPreference.IS_LY)
+                    if (isLy.equals("true", ignoreCase = true)) {
+                        val ls: String = preferences.getString(Constant.SharedPreference.LOYALITY_STATUS)
+                        val isHl: String = preferences.getString(Constant.SharedPreference.IS_HL)
+                        if (!ls.equals("", ignoreCase = true) && ls != null) {
+                            if (isHl.equals("true", ignoreCase = true)) {
+                                managePrivilege("C")
+                            } else {
+                                val intent1 = Intent(
+                                    this@HomeActivity,
+                                    NonMemberActivity::class.java
+                                )
+                                intent1.putExtra("type","P")
+                                startActivity(intent1)
+                                finish()
+                            }
+                        } else {
+                            val intent1 = Intent(
+                                this@HomeActivity,
+                                NonMemberActivity::class.java
+                            )
+                            intent1.putExtra("type","P")
+                            startActivity(intent1)
+                            finish()
+                        }
+                    } else {
+                        val intent1 = Intent(
+                            this@HomeActivity,
+                            NonMemberActivity::class.java
+                        )
+                        intent1.putExtra("type","P")
+                        startActivity(intent1)
+                        finish()
+                    }
+                } else if (path?.contains("/cinemasd") == true) {
+                    setCurrentFragment(secondFragment)
+                } else if (path?.contains("/PSPT") == true) {
+                    managePrivilege("C")
+                } else if (path?.contains("/comingsoontrailer") == true) {
+                    val trailerPathUrl = path.split("/".toRegex()).dropLastWhile { it.isEmpty() }
+                        .toTypedArray()
+                    val intent = Intent(this, NowShowingActivity::class.java)
+                    intent.putExtra("mid", trailerPathUrl[2])
+                    startActivity(intent)
+                } else if (path?.contains("/comingsoon") == true) {
+                    if (path.contains("NHO")) {
+                        val pathUrl = path.split("/".toRegex()).dropLastWhile { it.isEmpty() }
+                            .toTypedArray()
+                        val intent = Intent(this, NowShowingActivity::class.java)
+                        intent.putExtra("mid", pathUrl[4])
+                        startActivity(intent)
+                    } else setCurrentFragment(fourthFragment)
+                } else if (path?.contains("/playtrailer") == true) {
+                    path = data.toString()
+                    if (path.contains("utm"))
+                        sendGACampaign(path, "Trailer")
+                    val pathNew = path.split("Url".toRegex()).dropLastWhile { it.isEmpty() }
+                        .toTypedArray()[1]
+                    val url = pathNew.substring(1, pathNew.length)
+                    if (url != null) {
+                        val intent = Intent(this@HomeActivity, PlayerActivity::class.java)
+                        intent.putExtra("trailerUrl", url)
+                        startActivity(intent)
+                    }
+                } else setCurrentFragment(firstFragment)
+            }
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+            setCurrentFragment(firstFragment)
+        }
+    }
+
+    private fun sendGACampaign(path: String?, screen: String?) {
+//        val mTracker: Tracker = PCApplication.getInstance().getDefaultTracker()
+//        mTracker.setScreenName(screen)
+//        mTracker.send(
+//            ScreenViewBuilder()
+//                .setCampaignParamsFromUrl(path)
+//                .build()
+//        )
     }
 
 }

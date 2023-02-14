@@ -25,6 +25,8 @@
             android:fontFamily="@font/sf_pro_text_bold"
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/proceed"
+            android:layout_marginStart="@dimen/dimen_25dp"
+            android:layout_marginEnd="@dimen/dimen_25dp"
             android:textColor="@color/black"
             android:textSize="@dimen/dimen_14sp"
             app:layout_constraintBottom_toBottomOf="parent"

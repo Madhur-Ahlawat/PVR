@@ -91,6 +91,7 @@ class NonMemberActivity : AppCompatActivity() {
             )
         }
 
+
     }
 
     private fun makePageDataToShow() {
@@ -106,6 +107,8 @@ class NonMemberActivity : AppCompatActivity() {
             val mSnapHelper = PagerSnapHelper()
             binding?.privilegeCardList?.onFlingListener = null
             mSnapHelper.attachToRecyclerView(binding?.privilegeCardList)
+            println("ptypedata-->"+intent.getStringExtra("type")+"----"+Constant.PrivilegeHomeResponseConst?.pinfo?.get(0)?.ptype)
+
             for (i in Constant.PrivilegeHomeResponseConst?.pinfo?.indices!!) {
                 if (intent?.getStringExtra("type").equals("P", ignoreCase = true)) {
                     if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(i)?.ptype.equals(
@@ -115,7 +118,7 @@ class NonMemberActivity : AppCompatActivity() {
                         )
                     ) {
                         HomeActivity.reviewPosition = i
-                        binding?.tvEnroll?.text = "Join Now"
+                        binding?.tvEnroll?.text = "Join for Free"
                         binding?.privilegeView?.salted?.text = "Salted"
                         binding?.privilegeView?.points?.text =
                             "all tickets, food and beverage purchases"
@@ -140,6 +143,7 @@ class NonMemberActivity : AppCompatActivity() {
                         e.printStackTrace()
                     }
                 } else {
+
                     if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(i)?.ptype.equals(intent?.getStringExtra("type"))) {
                         HomeActivity.reviewPosition = i
                         binding?.tvEnroll?.text = "Apply Now"
@@ -198,7 +202,7 @@ class NonMemberActivity : AppCompatActivity() {
                             binding?.privilegeView?.points?.text = "on Tickets & Food items"
                             binding?.parrentView?.setBackgroundResource(R.drawable.gradient_kotak)
                         } else {
-                            binding?.tvEnroll?.text = "Join Now"
+                            binding?.tvEnroll?.text = "Join for Free"
                             binding?.tvTerms1?.show()
                             binding?.privilegeView?.tvTerms?.hide()
                             binding?.privilegeView?.boxKotak?.hide()
@@ -271,16 +275,11 @@ class NonMemberActivity : AppCompatActivity() {
                 is NetworkResult.Success -> {
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         retrieveData(it.data.output)
+                        makePageDataToShow()
+
                     } else {
-                        val dialog = OptionDialog(this,
-                            R.mipmap.ic_launcher,
-                            R.string.app_name,
-                            it.data?.msg.toString(),
-                            positiveBtnText = R.string.ok,
-                            negativeBtnText = R.string.no,
-                            positiveClick = {},
-                            negativeClick = {})
-                        dialog.show()
+                        makePageDataToShow()
+
                     }
                 }
                 is NetworkResult.Error -> {
@@ -293,23 +292,27 @@ class NonMemberActivity : AppCompatActivity() {
     }
 
     private fun retrieveData(output: PassportPlanResponse.Output) {
-        NonMemberFragment.scheme_id = output.scheme[0].schemeid
-        NonMemberFragment.scheme_price = output.scheme[0].price
-        NonMemberFragment.subPlans = output.scheme[0].subsplan
-        NonMemberFragment.retrymsg1 = output.scheme[0].retrymsgone
-        NonMemberFragment.retrymsg2 = output.scheme[0].retrymsgtwo
-        NonMemberFragment.maxtrycount = output.scheme[0].maxtrycount.toInt()
-        NonMemberFragment.visits = Constant.PrivilegeHomeResponseConst?.pinfo!![reviewPosition].visits
-        binding?.passportView?.priceNewText?.text = ""
+        try {
+            NonMemberFragment.scheme_id = output.scheme[0].schemeid
+            NonMemberFragment.scheme_price = output.scheme[0].price
+            NonMemberFragment.subPlans = output.scheme[0].subsplan
+            NonMemberFragment.retrymsg1 = output.scheme[0].retrymsgone
+            NonMemberFragment.retrymsg2 = output.scheme[0].retrymsgtwo
+            NonMemberFragment.maxtrycount = output.scheme[0].maxtrycount.toInt()
+            NonMemberFragment.visits =
+                Constant.PrivilegeHomeResponseConst?.pinfo!![reviewPosition].visits
+            binding?.passportView?.priceNewText?.text = ""
 
-        val text =
-            "<font color=#ffffff><b>" + "₹" + NonMemberFragment.scheme_price.toFloat() / 100.0 + "</b> </font><font color=#ffffff>" + " / " + output.scheme[0].duration + "</font>"
+            val text =
+                "<font color=#ffffff><b>" + "₹" + NonMemberFragment.scheme_price.toFloat() / 100.0 + "</b> </font><font color=#ffffff>" + " / " + output.scheme[0].duration + "</font>"
 
-        binding?.passportView?.priceNewText?.text = Html.fromHtml(text)
+            binding?.passportView?.priceNewText?.text = Html.fromHtml(text)
 
-        binding?.passportView?.textBelow?.setText(output.scheme[0].text)
+            binding?.passportView?.textBelow?.text = output.scheme[0].text
 
-        makePageDataToShow()
+        }catch (e:java.lang.Exception){
+            e.printStackTrace()
+        }
 
     }
 

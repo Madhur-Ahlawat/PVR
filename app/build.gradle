@@ -70,6 +70,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.9.2'
     implementation 'com.google.android.gms:play-services-safetynet:18.0.1'
     implementation 'com.google.firebase:firebase-messaging-ktx:23.1.1'
+    implementation 'com.google.android.gms:play-services-analytics-impl:18.0.2'
 
     //noinspection GradleDynamicVersion
     testImplementation 'junit:junit:4.+'

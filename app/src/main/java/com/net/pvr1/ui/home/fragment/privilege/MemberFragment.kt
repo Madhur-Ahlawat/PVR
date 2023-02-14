@@ -89,7 +89,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val time = SystemClock.uptimeMillis()
-
+        HomeActivity.backToTop?.hide()
         authViewModel.loyaltyData(
             preferences.getUserId(),
             preferences.getCityName(),
@@ -179,7 +179,8 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
         for (data in output.vou){
             voucherList.addAll(data.vouchers)
         }
-        voucherList.sortBy { it.ex }
+        val sdf = SimpleDateFormat("MMM dd, yyyyy")
+        voucherList.sortByDescending { sdf.parse(it.exf) }
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding?.privilegeList?.layoutManager = layoutManager
         val cardAdapter =
@@ -637,7 +638,8 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
 
     override fun onItemClick(nowShowingList: ArrayList<LoyaltyDataResponse.Voucher>, position: Int) {
 
-        openDialog(nowShowingList,position)
+        if (nowShowingList[position].st == "V")
+            openDialog(nowShowingList,position)
     }
 
     override fun onItemTermsClick(info: String) {

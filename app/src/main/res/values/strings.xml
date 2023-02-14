@@ -329,7 +329,7 @@
     <string name="earn_more_rewards_n_10_points_on_every_100_with">Earn more rewards\n (10 points on every ₹100) with</string>
     <string name="pvr_privilege">PVR Privilege+</string>
     <string name="book_using_pvr_mobile_app_or_website">Book using PVR mobile\napp or website</string>
-    <string name="pvr_privilege_join">JOIN PVR PRIVILEGE</string>
+    <string name="pvr_privilege_join">Join PVR Privilege</string>
     <string name="unlock_card">Unlock Card</string>
     <string name="signIn">SIGN IN</string>
     <string name="pvr_passport">PVR Passport</string>
@@ -571,7 +571,7 @@
     <string name="you_will_be_auto_enrolled_into_pvr_privilege_program_and_get_its_benefits">You will be auto-enrolled into PVR Privilege Program and get its benefits.</string>
     <string name="first_name">First Name</string>
     <string name="full_name">Full Name</string>
-    <string name="submit_details">Submit Details</string>
+    <string name="submit_details">Submit &amp; Proceed</string>
     <string name="email_address">Email Address</string>
     <string name="cancel_ticket_small">Cancel Ticket</string>
     <string name="Partially_Cancel">Cancel / Partially Cancel Booking</string>

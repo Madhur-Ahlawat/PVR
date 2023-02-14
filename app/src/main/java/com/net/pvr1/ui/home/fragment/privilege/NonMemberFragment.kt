@@ -15,6 +15,7 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.FragmentPrivilegeBinding
 import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.home.HomeActivity.Companion.getCurrentItem
 import com.net.pvr1.ui.home.HomeActivity.Companion.reviewPosition
 import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeTypeAdapter
@@ -57,7 +58,7 @@ class NonMemberFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        HomeActivity.backToTop?.hide()
         binding?.shareBtn?.setOnClickListener(View.OnClickListener {
             val newUrl = "https://www.pvrcinemas.com/loyalty/home"
             onShareClick(
@@ -95,8 +96,6 @@ class NonMemberFragment : Fragment() {
             preferences.getCityName()
         )
         getPlans()
-
-        makePageDataToShow()
 
         binding?.textView378?.setOnClickListener {
             val newUrl = "https://www.pvrcinemas.com/loyalty/home"
@@ -278,16 +277,10 @@ class NonMemberFragment : Fragment() {
                 is NetworkResult.Success -> {
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         retrieveData(it.data.output)
+                        makePageDataToShow()
                     } else {
-                        val dialog = OptionDialog(requireActivity(),
-                            R.mipmap.ic_launcher,
-                            R.string.app_name,
-                            it.data?.msg.toString(),
-                            positiveBtnText = R.string.ok,
-                            negativeBtnText = R.string.no,
-                            positiveClick = {},
-                            negativeClick = {})
-                        dialog.show()
+                        makePageDataToShow()
+
                     }
                 }
                 is NetworkResult.Error -> {
@@ -313,7 +306,7 @@ class NonMemberFragment : Fragment() {
 
         binding?.passportView?.priceNewText?.text = Html.fromHtml(text)
 
-        binding?.passportView?.textBelow?.setText(output.scheme[0].text)
+        binding?.passportView?.textBelow?.text = output.scheme[0].text
     }
 
 

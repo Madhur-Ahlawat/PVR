@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary">#707070</color>
+
+    <!-- colorPrimaryDark is used for the status bar -->
+    <color name="colorPrimaryDark">#707070</color>
+
+    <color name="colorAccent">@color/pvr_yellow</color>
     <color name="light_gray">#a2a2a2</color>
     <color name="highlight_text_color">#FFCB07</color>
     <color name="txtColorDark">#FFCB07</color>
@@ -118,7 +124,6 @@
     <color name="black_shadow">#E6000000</color>
 
 
-    <color name="colorAccent">#75000000</color>
 
 
     <color name="black_75">#75000000</color>

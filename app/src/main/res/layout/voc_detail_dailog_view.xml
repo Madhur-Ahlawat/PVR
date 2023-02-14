@@ -7,13 +7,17 @@
     android:orientation="vertical">
 
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_56dp"
+        android:id="@+id/header">
     <ImageView
         android:id="@+id/tvCross"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_gravity="end"
+        android:layout_centerVertical="true"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
         android:padding="5dp"
         android:src="@drawable/cross_small"
         app:layout_constraintRight_toRightOf="parent"
@@ -24,14 +28,15 @@
     <TextView
         android:fontFamily="@font/sfprodisplay_bold"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dimen_56dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
         android:layout_toEndOf="@id/tvCross"
-        android:textAllCaps="true"
         android:text="@string/pvr_privilege_vouchers"
         android:textColor="@color/white"
         android:textSize="20sp" />
+
+    </RelativeLayout>
 
 
     <com.net.pvr1.utils.view.CustomViewPager
@@ -39,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_10"
-        android:layout_below="@+id/tvCross"
+        android:layout_below="@+id/header"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
 

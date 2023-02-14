@@ -310,6 +310,15 @@
             android:textSize="12sp"
             tools:text="Free Snacks" />
 
+        <ImageView
+            android:id="@+id/ivRedeemed_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="140dp"
+            android:src="@drawable/redeemed"
+            android:visibility="gone" />
+
 
         <TextView
             android:id="@+id/voc_details_gray"

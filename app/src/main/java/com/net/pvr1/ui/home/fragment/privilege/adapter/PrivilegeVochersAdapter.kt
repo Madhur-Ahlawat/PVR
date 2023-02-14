@@ -51,9 +51,10 @@ class PrivilegeVochersAdapter(
         val cardData = nowShowingList[position]
         holder.binding.qrValue.text =  cardData.cd
         holder.binding.qrValueGray.text =  cardData.cd
-        holder.binding.redeemDate.text =  "Valid till " +cardData.ex
-        holder.binding.redeemDateGray.text =  "Valid till " +cardData.ex
+        holder.binding.redeemDate.text =  "Valid till " +cardData.exf
+        holder.binding.redeemDateGray.text =  "Valid till " +cardData.exf
         holder.binding.qrCodeImgGray.hide()
+
         when (cardData.st) {
             "V" -> {
                 holder.binding.rlsubsMain.hide()
@@ -64,7 +65,7 @@ class PrivilegeVochersAdapter(
                 holder.binding.vocData.setTextColor(context.resources.getColor(R.color.white))
                 holder.binding.qrValue.setTextColor(context.resources.getColor(R.color.white))
                 holder.binding.redeemDate.setTextColor(context.resources.getColor(R.color.white))
-                holder.binding.textLabel.setBackground(context.resources.getDrawable(R.drawable.gradient_free_snacks))
+                holder.binding.textLabel.background = context.resources.getDrawable(R.drawable.gradient_free_snacks)
                 if (cardData.voucher_type.isNotEmpty() && cardData.voucher_type!=""){
                     var infotext = false
                     val new_voucher_type = cardData.new_voucher_type
@@ -193,28 +194,25 @@ class PrivilegeVochersAdapter(
                 holder.binding.qrCodeImg.show()
                 generateQrcode(holder.binding.qrCodeImg)
                     .execute(cardData.cd)
-            }
-            "SUBSCRIPTION" -> {
-                holder.binding.rlsubsMain.show()
-                holder.binding.relativeLayoutGray.hide()
-                holder.binding.relativeLayout.hide()
 
-                var rlsubs_main: RelativeLayout
-                var ivRedeemed_subs: ImageView
-                var tvVoucherCode: TextView
-                var tvDate: TextView
+                if (cardData.type == "SUBSCRIPTION"){
+                    holder.binding.rlsubsMain.show()
+                    holder.binding.relativeLayoutGray.hide()
+                    holder.binding.relativeLayout.hide()
 
-                holder.binding.ivRedeemedSubs.show()
-                if (cardData.st == "E")
-                    holder.binding.ivRedeemedSubs.setImageDrawable(context.resources.getDrawable(R.drawable.expired))
-                holder.binding.tvVoucherCode.text = "" + cardData.cd
+                    if (cardData.st == "E") {
+                        holder.binding.ivRedeemedSubs.show()
+                        holder.binding.ivRedeemedSubs.setImageResource(R.drawable.expired)
+                    }
+                    holder.binding.tvVoucherCode.text = "" + cardData.cd
+                    println("cardData.st--->"+cardData.expDate)
 
-                if (cardData != null && !TextUtils.isEmpty(cardData.ex)) {
-                    holder.binding.tvDate.text = "Valid till " + cardData.ex
-                    holder.binding.tvDate.show()
-                } else holder.binding.tvDate.hide()
-            }
-            else -> {
+                    if (cardData != null && !TextUtils.isEmpty(cardData.exf)) {
+                        holder.binding.tvDate.text = "Valid till " + cardData.exf
+                        holder.binding.tvDate.show()
+                    } else holder.binding.tvDate.hide()
+                }
+            }else -> {
                 holder.binding.rlsubsMain.hide()
                 holder.binding.relativeLayoutGray.show()
                 holder.binding.relativeLayout.hide()
@@ -261,9 +259,12 @@ class PrivilegeVochersAdapter(
                     }
                 }
 
-                holder.binding.ivRedeemed.show()
-                if (cardData.st == "E")
-                    holder.binding.ivRedeemed.setImageDrawable(context.resources.getDrawable(R.drawable.expired))
+                holder.binding.ivRedeemedGray.show()
+
+                if (cardData.st == "E") {
+                    holder.binding.ivRedeemedGray.show()
+                    holder.binding.ivRedeemedGray.setImageResource(R.drawable.expired)
+                }
 
                 holder.binding.qrCodeImgGray.hide()
                 holder.binding.textLabelGray.setTextColor(context.resources.getColor(R.color.white))
@@ -272,6 +273,24 @@ class PrivilegeVochersAdapter(
                 holder.binding.qrValueGray.setTextColor(context.resources.getColor(R.color.gray))
                 holder.binding.redeemDateGray.setTextColor(context.resources.getColor(R.color.gray))
                 holder.binding.textLabelGray.background = context.resources.getDrawable(R.drawable.gradient_free_snacks_gray)
+
+            if (cardData.type == "SUBSCRIPTION"){
+                holder.binding.rlsubsMain.show()
+                holder.binding.relativeLayoutGray.hide()
+                holder.binding.relativeLayout.hide()
+
+                if (cardData.st == "E") {
+                    holder.binding.ivRedeemedSubs.show()
+                    holder.binding.ivRedeemedSubs.setImageResource(R.drawable.expired)
+                }
+                holder.binding.tvVoucherCode.text = "" + cardData.cd
+                println("cardData.st--->"+cardData.expDate)
+
+                if (cardData != null && !TextUtils.isEmpty(cardData.exf)) {
+                    holder.binding.tvDate.text = "Valid till " + cardData.exf
+                    holder.binding.tvDate.show()
+                } else holder.binding.tvDate.hide()
+            }
             }
         }
 

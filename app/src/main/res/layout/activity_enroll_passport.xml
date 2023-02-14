@@ -95,7 +95,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/tvSend_request"
+        android:layout_above="@+id/proceedView"
         android:layout_below="@id/view"
         android:scrollbars="none">
 
@@ -452,13 +452,24 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/proceedView"
+        android:elevation="@dimen/dimen_8dp"
+        app:cardElevation="@dimen/dimen_8dp"
+        app:cardUseCompatPadding="false"
+        android:layout_alignParentBottom="true"
+        >
+
+
 
     <TextView
         android:id="@+id/tvSend_request"
         android:fontFamily="@font/sf_pro_text_bold"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/dimen_30dp"
         android:layout_marginTop="@dimen/dimen_30dp"
         android:layout_marginEnd="@dimen/dimen_30dp"
@@ -467,9 +478,10 @@
         android:backgroundTint="@color/pvr_yellow"
         android:gravity="center"
         android:text="@string/submit_details"
-        android:textAllCaps="true"
         android:textColor="@color/black"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
+
+    </androidx.cardview.widget.CardView>
 
 
 </RelativeLayout>

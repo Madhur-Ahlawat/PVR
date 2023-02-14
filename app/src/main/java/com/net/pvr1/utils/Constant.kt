@@ -241,6 +241,12 @@ class Constant {
             }
         }
 
+
+        fun getPrivilegeDate(oldformat: String, strDate: String): Date? {
+                val sdf = SimpleDateFormat(oldformat)
+                return sdf.parse(strDate)
+        }
+
         fun focusOnView(view: View, session_scrool: RecyclerView) {
             Handler().post {
                 val vLeft = view.left

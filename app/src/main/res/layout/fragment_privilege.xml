@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    android:background="#000000">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout134"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_60dp"
+        android:background="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -19,6 +20,7 @@
             android:id="@+id/view91"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="#000000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +31,7 @@
             android:id="@+id/textView378"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="20dp"
             android:fontFamily="@font/sf_pro_text_bold"
             android:drawableTint="@color/white"
             android:text="@string/privilege"
@@ -134,7 +136,7 @@
             android:backgroundTint="@color/pvr_yellow"
             android:fontFamily="@font/sf_pro_text_bold"
             android:gravity="center"
-            android:text="@string/pvr_privilege_join"
+            android:text="Join for Free"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:visibility="visible" />
