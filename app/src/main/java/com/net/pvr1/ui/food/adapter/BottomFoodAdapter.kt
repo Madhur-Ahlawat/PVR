@@ -51,16 +51,16 @@ class BottomFoodAdapter(
 
                 //Add
                 binding.include25.plus.setOnClickListener {
-                    listener.filterBtFoodPlus(this)
+                    listener.filterBtFoodPlus(this,nowShowingList)
                     notifyDataSetChanged()
                 }
                 //SubTract
                 binding.include25.minus.setOnClickListener {
-                    listener.filterBtFoodMinus(this)
+                    listener.filterBtFoodMinus(this,nowShowingList)
                     notifyDataSetChanged()
                 }
                 binding.textView146.setOnClickListener {
-                    listener.filterBtFoodClick(this)
+                    listener.filterBtFoodClick(this,nowShowingList)
                     binding.constraintLayout33.show()
                     binding.textView146.hide()
                     notifyDataSetChanged()
@@ -88,9 +88,9 @@ class BottomFoodAdapter(
 
 
     interface RecycleViewItemClickListenerCity {
-        fun filterBtFoodClick(comingSoonItem: FoodResponse.Output.Bestseller.R)
-        fun filterBtFoodPlus(comingSoonItem: FoodResponse.Output.Bestseller.R)
-        fun filterBtFoodMinus(comingSoonItem: FoodResponse.Output.Bestseller.R)
+        fun filterBtFoodClick(comingSoonItem: FoodResponse.Output.Bestseller.R,list:List<FoodResponse.Output.Bestseller.R>)
+        fun filterBtFoodPlus(comingSoonItem: FoodResponse.Output.Bestseller.R,list:List<FoodResponse.Output.Bestseller.R>)
+        fun filterBtFoodMinus(comingSoonItem: FoodResponse.Output.Bestseller.R,list:List<FoodResponse.Output.Bestseller.R>)
     }
 
 }

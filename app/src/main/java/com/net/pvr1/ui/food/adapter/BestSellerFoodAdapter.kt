@@ -45,27 +45,26 @@ class BestSellerFoodAdapter(
                     binding.textView134.show()
                     binding.textView135.hide()
                     binding.textView135.setOnClickListener {
-                        listener.bestSellerDialogAddFood(this.r, this.nm)
+                        listener.bestSellerDialogAddFood(this.r, this.nm,this.cid.toString())
                     }
-                    val qt = getFoodQTCount(this.r)
-                    if (qt>0){
+                    if (this.qt>0){
                         binding.uiPlusMinus.foodCount.text = qt.toString()
                     }
 
                     //SubTract
                     binding.uiPlusMinus.plus.setOnClickListener {
-                        listener.bestSellerDialogAddFood(nowShowingList[position].r, this.nm)
+                        listener.bestSellerDialogAddFood(nowShowingList[position].r, this.nm,this.cid.toString())
                         notifyDataSetChanged()
                     }
 
                     //Add
                     binding.uiPlusMinus.minus.setOnClickListener {
-                        listener.bestSellerDialogAddFood(this.r, this.nm)
+                        listener.bestSellerDialogAddFood(this.r, this.nm,this.cid.toString())
                         notifyDataSetChanged()
                     }
 
                     //UiShowHide
-                    if (qt > 0) {
+                    if (this.qt > 0) {
                         binding.consAddUi.show()
                         binding.textView135.hide()
                     } else {
@@ -130,16 +129,6 @@ class BestSellerFoodAdapter(
 
     }
 
-    private fun getFoodQTCount(r: List<FoodResponse.Output.Bestseller.R>): Int {
-        var qt = 0
-        for (data in r){
-            if (data.qt>0){
-                qt += data.qt
-            }
-        }
-
-        return qt
-    }
 
     override fun getItemCount(): Int {
         return if (nowShowingList.isNotEmpty()) nowShowingList.size else 0
@@ -151,7 +140,7 @@ class BestSellerFoodAdapter(
         fun addFood(comingSoonItem: FoodResponse.Output.Bestseller, position: Int)
         fun addFoodPlus(comingSoonItem: FoodResponse.Output.Bestseller, position: Int)
         fun addFoodMinus(comingSoonItem: FoodResponse.Output.Bestseller, position: Int)
-        fun bestSellerDialogAddFood(comingSoonItem: List<FoodResponse.Output.Bestseller.R>, position: String )
+        fun bestSellerDialogAddFood(comingSoonItem: List<FoodResponse.Output.Bestseller.R>, position: String ,cid:String)
     }
 
 }

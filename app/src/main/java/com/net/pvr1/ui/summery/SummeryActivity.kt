@@ -79,7 +79,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     private var itemDescription: String = ""
     private var pp: SummeryResponse.Output.PP? = null
     private var showTaxes = false
-    private var paidAmount = 0
+    private var paidAmount = 0.0
     private var upiLoader = false
     private var upiCount = 0
     private var payableAmount = 0.0
@@ -517,7 +517,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         payableAmount = output.a.toDouble()
 
         //Image
-        Glide.with(this).load(output.imh).error(R.drawable.placeholder_vertical)
+        Glide.with(this).load(output.im).error(R.drawable.placeholder_vertical)
             .into(binding?.imageView59!!)
 
         //title
@@ -661,14 +661,14 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             val foodTotPrice = Constant.DECIFORMAT.format(foodPrice / 100.0)
 
             paidAmount =
-                (payableAmount + ticketCount.toDouble() + foodTotPrice.toDouble()).roundToInt()
+                (payableAmount + ticketCount.toDouble() + foodTotPrice.toDouble())
             binding?.textView174?.text =
                 getString(R.string.pay) + " " + getString(R.string.currency) + paidAmount + " |"
 
             //grand total
             binding?.textView173?.text = getString(R.string.currency) + paidAmount
         } else {
-            paidAmount = (payableAmount + ticketCount).roundToInt()
+            paidAmount = (payableAmount + ticketCount)
             binding?.textView174?.text =
                 getString(R.string.pay) + " " + getString(R.string.currency) + paidAmount + " |"
 
@@ -698,7 +698,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             val foodTotPrice = Constant.DECIFORMAT.format(foodPrice / 100.0)
 
             paidAmount =
-                (payableAmount + donationAmount.toDouble() + foodTotPrice.toDouble()).roundToInt()
+                (payableAmount + donationAmount.toDouble() + foodTotPrice.toDouble())
             binding?.textView174?.text =
                 getString(R.string.pay) + " " + getString(R.string.currency) + paidAmount + " |"
 
@@ -706,7 +706,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             binding?.textView173?.text = getString(R.string.currency) + paidAmount
 
         } else {
-            paidAmount = (payableAmount + donationAmount).roundToInt()
+            paidAmount = (payableAmount + donationAmount)
             binding?.textView174?.text =
                 getString(R.string.pay) + " " + getString(R.string.currency) + paidAmount + " |"
 
@@ -729,14 +729,14 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             val foodTotPrice = Constant.DECIFORMAT.format(foodPrice / 100.0)
 
             paidAmount =
-                (payableAmount + ticketCount.toDouble() + foodTotPrice.toDouble()).roundToInt()
+                (payableAmount + ticketCount.toDouble() + foodTotPrice.toDouble())
             binding?.textView174?.text =
                 getString(R.string.pay) + " " + getString(R.string.currency) + paidAmount + " |"
 
             //grand total
             binding?.textView173?.text = getString(R.string.currency) + paidAmount
         } else {
-            paidAmount = (payableAmount + ticketCount).roundToInt()
+            paidAmount = (payableAmount + ticketCount).toDouble()
             binding?.textView174?.text =
                 getString(R.string.pay) + " " + getString(R.string.currency) + paidAmount + " |"
 
