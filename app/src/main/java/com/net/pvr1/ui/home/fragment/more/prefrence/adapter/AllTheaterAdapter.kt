@@ -39,7 +39,7 @@ class AllTheaterAdapter(
                     binding.constraintLayout142.setBackgroundResource(R.drawable.ui_item_select)
                 }else{
                     binding.constraintLayout142.setBackgroundResource(R.drawable.ui_item_unselect)
-                    binding.imageView68.setImageResource(R.drawable.white_round_shape)
+                    binding.imageView68.setImageResource(R.drawable.unlike)
                 }
 
                 //click

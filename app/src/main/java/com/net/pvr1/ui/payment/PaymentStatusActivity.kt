@@ -11,7 +11,6 @@ import android.view.animation.LinearInterpolator
 import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator.ProgressTextAdapter
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityPaymentStatusBinding
@@ -33,7 +32,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class PaymentStatusActivity : AppCompatActivity(){
+class PaymentStatusActivity : AppCompatActivity() {
 
     @Inject
     lateinit var preferences: PreferenceManager
@@ -69,28 +68,28 @@ class PaymentStatusActivity : AppCompatActivity(){
         binding?.circularProgress?.interpolator = LinearInterpolator()
         binding?.circularProgress?.maxProgress = 60.0
         binding?.circularProgress?.setProgressTextAdapter(progressTextAdapter)
-        if (title == "UPI"){
-                if (BOOK_TYPE == "LOYALTYUNLIMITED") {
-                    toast("LOYALTYUNLIMITED")
-                } else {
-                    authViewModel.upiStatus(
-                        BOOKING_ID, BOOK_TYPE
-                    )
-                }
+        if (title == "UPI") {
+            if (BOOK_TYPE == "LOYALTYUNLIMITED") {
+                toast("LOYALTYUNLIMITED")
+            } else {
+                authViewModel.upiStatus(
+                    BOOKING_ID, BOOK_TYPE
+                )
+            }
 
-        }else if (title == "PhonePe"){
+        } else if (title == "PhonePe") {
             authViewModel.phonepeStatus(
-                        preferences.getUserId(), BOOKING_ID, BOOK_TYPE, TRANSACTION_ID
-                    )
+                preferences.getUserId(), BOOKING_ID, BOOK_TYPE, TRANSACTION_ID
+            )
         }
         movedNext()
         phonePeStatus()
         upiStatus()
 
-        val timer = object: CountDownTimer(60000, 1000) {
+        val timer = object : CountDownTimer(60000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                println("onTick-->${millisUntilFinished/1000}")
-                binding?.circularProgress?.setCurrentProgress(millisUntilFinished.toDouble()/1000.0)
+                println("onTick-->${millisUntilFinished / 1000}")
+                binding?.circularProgress?.setCurrentProgress(millisUntilFinished.toDouble() / 1000.0)
             }
 
             override fun onFinish() {
@@ -130,7 +129,6 @@ class PaymentStatusActivity : AppCompatActivity(){
     }
 
 
-
     override fun onBackPressed() {
         val dialog = OptionDialog(this,
             R.mipmap.ic_launcher,
@@ -139,7 +137,7 @@ class PaymentStatusActivity : AppCompatActivity(){
             positiveBtnText = R.string.yes,
             negativeBtnText = R.string.cancel,
             positiveClick = {
-                when (Constant.BOOK_TYPE) {
+                when (BOOK_TYPE) {
                     "GIFTCARD" -> {
                         launchActivity(
                             GiftCardActivity::class.java,
@@ -155,8 +153,12 @@ class PaymentStatusActivity : AppCompatActivity(){
                     else -> {
                         launchPrivilegeActivity(
                             HomeActivity::class.java,
-                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,"","",
-                            "","P")
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,
+                            "",
+                            "",
+                            "",
+                            "P"
+                        )
                     }
                 }
             },
@@ -310,7 +312,6 @@ class PaymentStatusActivity : AppCompatActivity(){
             dialog.show()
         }
     }
-
 
 
 }

@@ -265,8 +265,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
     }
 
-    private fun getMovieShows(showsArray: ArrayList<BookingResponse.Output.Cinema.Child.Sw.S>): ArrayList<BookingResponse.Output.Cinema.Child.Sw.S> {
-        var list = ArrayList<BookingResponse.Output.Cinema.Child.Sw.S>()
+    private fun getMovieShows(showsArray: ArrayList<Child.Sw.S>): ArrayList<Child.Sw.S> {
+        var list = ArrayList<Child.Sw.S>()
         var st = showsArray[position.toInt()].st
         for (data in showsArray.indices){
             if (showsArray[data].ss != 0){
@@ -691,7 +691,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                         }
                         else -> {
                             val typeface = resources.getFont(R.font.sf_pro_text_medium)
-                            seatView.setTypeface(typeface)
+                            seatView.typeface = typeface
                             seatView.setBackgroundResource(R.drawable.ic_vacant)
                             seatView.text = seat.sn.replace("[^\\d.]".toRegex(), "")
                         }
@@ -1020,7 +1020,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                             }
                             else -> {
                                 val typeface = resources.getFont(R.font.sf_pro_text_medium)
-                                seatView.setTypeface(typeface)
+                                seatView.typeface = typeface
                                 seatView.setBackgroundResource(R.drawable.ic_vacant)
                                 seatView.setTextColor(
                                     ContextCompat.getColor(

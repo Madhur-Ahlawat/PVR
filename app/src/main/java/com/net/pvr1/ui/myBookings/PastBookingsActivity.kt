@@ -18,7 +18,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PastBookingsActivity : AppCompatActivity(),FoodTicketChildAdapter.RecycleViewItemClickListener {
+class PastBookingsActivity : AppCompatActivity(),
+    FoodTicketChildAdapter.RecycleViewItemClickListener {
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityPastBookingBinding? = null
@@ -78,10 +79,8 @@ class PastBookingsActivity : AppCompatActivity(),FoodTicketChildAdapter.RecycleV
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -93,10 +92,8 @@ class PastBookingsActivity : AppCompatActivity(),FoodTicketChildAdapter.RecycleV
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
@@ -112,7 +109,7 @@ class PastBookingsActivity : AppCompatActivity(),FoodTicketChildAdapter.RecycleV
     private fun retrieveFoodTicketData(output: FoodTicketResponse.Output) {
         //title
         val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        val foodTicketAdapter = FoodTicketChildAdapter(output.p, this,true,this)
+        val foodTicketAdapter = FoodTicketChildAdapter(output.p, this, true, this)
         binding?.recyclerMyBooking?.layoutManager = gridLayout2
         binding?.recyclerMyBooking?.adapter = foodTicketAdapter
     }

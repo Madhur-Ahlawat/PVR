@@ -97,7 +97,6 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         binding = ActivitySummeryBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-
         manageLogin()
     }
 

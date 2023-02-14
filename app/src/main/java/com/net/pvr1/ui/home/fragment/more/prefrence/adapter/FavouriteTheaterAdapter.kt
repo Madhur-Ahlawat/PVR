@@ -34,15 +34,15 @@ class FavouriteTheaterAdapter(
                 binding.textView53.hide()
                 binding.textView51.hide()
                 binding.imageView68.setImageResource(R.drawable.like)
-//                if (rowIndex==position){
-//                    binding.imageView68.setImageResource(R.drawable.ic_favourite_theatre)
-//                }else{
-//                    binding.imageView68.setColorFilter(ContextCompat.getColor(context, R.color.textColor), android.graphics.PorterDuff.Mode.MULTIPLY);
-//                    binding.imageView68.setImageResource(R.drawable.ic_un_favourite_theatre)
-//                }
+
                 //click
                 holder.itemView.setOnClickListener {
                     rowIndex=position
+//                    if (rowIndex==position){
+//                        binding.imageView68.setImageResource(R.drawable.like)
+//                    }else{
+//                        binding.imageView68.setImageResource(R.drawable.unlike)
+//                    }
                     listener.favouriteTheaterClick(this)
                     notifyDataSetChanged()
                 }

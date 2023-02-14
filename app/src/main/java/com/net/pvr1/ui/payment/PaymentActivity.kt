@@ -80,8 +80,7 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PaymentActivity : AppCompatActivity(),
-    PaymentAdapter.RecycleViewItemClickListenerCity,
+class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClickListenerCity,
     PaymentExclusiveAdapter.RecycleViewItemClickListenerCity,
     CouponAdapter.RecycleViewItemClickListenerCity,
     PaymentPromoCatAdapter.RecycleViewItemClickListenerCity,
@@ -294,7 +293,7 @@ class PaymentActivity : AppCompatActivity(),
             }
         }
 
-        if (Constant.CALL_PAYMODE == 1){
+        if (Constant.CALL_PAYMODE == 1) {
             authViewModel.payMode(
                 CINEMA_ID,
                 BOOK_TYPE,
@@ -1199,8 +1198,12 @@ class PaymentActivity : AppCompatActivity(),
                     else -> {
                         launchPrivilegeActivity(
                             HomeActivity::class.java,
-                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,"","",
-                            "","P")
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,
+                            "",
+                            "",
+                            "",
+                            "P"
+                        )
                     }
                 }
             },
@@ -1582,7 +1585,6 @@ class PaymentActivity : AppCompatActivity(),
     }
 
 
-
     //timerManage
 
     private fun timerManage() {
@@ -1622,11 +1624,11 @@ class PaymentActivity : AppCompatActivity(),
             val minutes = millisUntilFinished / (1000 * 60) % 60
             val display = java.lang.String.format("%02d:%02d", minutes, second)
 
-            binding?.include47?.textView394?.text=display + " " +getString(R.string.minRemaining)
+            binding?.include47?.textView394?.text = display + " " + getString(R.string.minRemaining)
 
-            if (millisUntilFinished.toInt() <= Constant.AVAILABETIME){
+            if (millisUntilFinished.toInt() <= Constant.AVAILABETIME) {
                 binding?.constraintLayout168?.show()
-            }else{
+            } else {
                 binding?.constraintLayout168?.hide()
             }
 

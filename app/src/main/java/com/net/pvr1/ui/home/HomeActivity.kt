@@ -460,6 +460,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                 is NetworkResult.Success -> {
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         if (it.data.output != null && it.data.output.size != 0) {
+                            binding?.constraintLayout55?.show()
                             retrieveOffer(it.data.output)
                         }
                     }

@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
 import com.net.pvr1.ui.myBookings.response.ParkingResponse
-import com.net.pvr1.ui.summery.response.SummeryResponse
 import com.net.pvr1.ui.ticketConfirmation.response.TicketBookedResponse
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel

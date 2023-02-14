@@ -36,7 +36,9 @@ import kotlin.getValue
 import kotlin.toString
 
 @AndroidEntryPoint
-class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemClickListener,FoodTicketChildAdapter.RecycleViewItemClickListener,BookingTheatreAdapter.RecycleViewItemClickListener {
+class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemClickListener,
+    FoodTicketChildAdapter.RecycleViewItemClickListener,
+    BookingTheatreAdapter.RecycleViewItemClickListener {
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityMyBookingBinding? = null
@@ -137,7 +139,7 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
 
         //Ticket & Food Action
         binding?.textView4?.setOnClickListener {
-        //quantity
+            //quantity
             binding?.textView3?.show()
 
             //Ticket & Food Api Call
@@ -145,7 +147,9 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
                 preferences.getUserId(),
                 Constant().getDeviceId(this),
                 "",
-                preferences.getCityName(), "", "NO"
+                preferences.getCityName(),
+                "",
+                "NO"
             )
 
 
@@ -186,10 +190,8 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -201,10 +203,8 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
@@ -230,10 +230,8 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -245,10 +243,8 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
@@ -273,10 +269,8 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -288,10 +282,8 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
@@ -301,13 +293,15 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
             }
         }
     }
+
     private fun bookParking() {
         authViewModel.bookParkResponseLiveData.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        val data =it.data.output.url + "?partner_name=" + it.data.output.partner_name + "&booking_id=" + it.data.output.booking_id + "&location_id=" + it.data.output.location_id + "&date=" + it.data.output.date + "&time=" + it.data.output.time + "&duration=" + it.data.output.duration + "&hmac=" + it.data.output.hmac
+                        val data =
+                            it.data.output.url + "?partner_name=" + it.data.output.partner_name + "&booking_id=" + it.data.output.booking_id + "&location_id=" + it.data.output.location_id + "&date=" + it.data.output.date + "&time=" + it.data.output.time + "&duration=" + it.data.output.duration + "&hmac=" + it.data.output.hmac
 
                         val intent = Intent(this, WebViewActivity::class.java)
                         intent.putExtra("title", "View Parking")
@@ -321,10 +315,8 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -336,10 +328,8 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
@@ -349,6 +339,7 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
             }
         }
     }
+
     private fun showParking() {
         authViewModel.showParkingResponseLiveData.observe(this) {
             when (it) {
@@ -367,10 +358,8 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -382,10 +371,8 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
@@ -422,10 +409,8 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -437,10 +422,8 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
@@ -455,21 +438,28 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
     private fun retrieveFoodTicketData(output: FoodTicketResponse.Output) {
         //title
         binding?.textView3?.text = getString(R.string.upcomingBooking) + output.c.size
-        if (output.c.size>0){
+        if (output.c.size > 0) {
             binding?.llAlsoPlaying?.show()
-            authViewModel.bookingTheatre(preferences.getCityName(),"",preferences.getUserId(),output.c[0].mc,output.c[0].lg,"NO")
-        }else{
+            authViewModel.bookingTheatre(
+                preferences.getCityName(),
+                "",
+                preferences.getUserId(),
+                output.c[0].mc,
+                output.c[0].lg,
+                "NO"
+            )
+        } else {
             binding?.llAlsoPlaying?.hide()
         }
 
         ticketpastList = output.p
         val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        val foodTicketAdapter = FoodTicketChildAdapter(output.c, this,false,this)
+        val foodTicketAdapter = FoodTicketChildAdapter(output.c, this, false, this)
         binding?.recyclerMyBooking?.layoutManager = gridLayout2
         binding?.recyclerMyBooking?.adapter = foodTicketAdapter
 
         val gridLayoutPast = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        val pastTicketAdapter = FoodTicketChildAdapter(output.p, this,true,this)
+        val pastTicketAdapter = FoodTicketChildAdapter(output.p, this, true, this)
         binding?.pastTicketListView?.layoutManager = gridLayoutPast
         binding?.pastTicketListView?.adapter = pastTicketAdapter
     }
@@ -484,9 +474,7 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
 
     override fun resend(comingSoonItem: GiftCardResponse.Output.Gc) {
         authViewModel.resendMail(
-            preferences.getUserId(),
-            comingSoonItem.id,
-            "GIFTCARD"
+            preferences.getUserId(), comingSoonItem.id, "GIFTCARD"
         )
     }
 
@@ -512,10 +500,8 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
     override fun onDirectionClick(data: FoodTicketResponse.Output.C) {
         var lat = "0.0"
         var lng = "0.0"
-        if (data.ltd!="")
-            lat = data.ltd
-        if (data.lngt!="")
-            lng = data.lngt
+        if (data.ltd != "") lat = data.ltd
+        if (data.lngt != "") lng = data.lngt
         val uri: kotlin.String = String.format(Locale.ENGLISH, "geo:%f,%f", lat, lng)
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
         startActivity(intent)
