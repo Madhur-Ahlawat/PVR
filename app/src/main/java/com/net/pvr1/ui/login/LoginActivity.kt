@@ -244,6 +244,8 @@ class LoginActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (from == "seat") {
             seatRedirectDialog()
+        }else{
+            super.onBackPressed()
         }
     }
 

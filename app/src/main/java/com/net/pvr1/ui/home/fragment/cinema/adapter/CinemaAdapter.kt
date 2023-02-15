@@ -29,6 +29,7 @@ class CinemaAdapter(
     inner class ViewHolder(val binding: CinemaItemBinding) : RecyclerView.ViewHolder(binding.root)
     private var rowIndex: Boolean = false
     private var showList: Boolean = false
+    private var selectIndex = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = CinemaItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -74,10 +75,10 @@ class CinemaAdapter(
                     if (this.m.isNotEmpty() && showList){
                         showList=false
                         binding.llMovieList.show()
-                        binding.imageView164.setImageResource(R.drawable.arrow_up)
+                        binding.imageView164.rotation = 180F
                     }else{
                         binding.llMovieList.hide()
-                        binding.imageView164.setImageResource(R.drawable.arrow_down)
+                        binding.imageView164.rotation = 360F
                         showList=true
                     }
                 }

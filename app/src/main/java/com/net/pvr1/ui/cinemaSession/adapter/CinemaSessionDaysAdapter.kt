@@ -1,6 +1,7 @@
 package com.net.pvr1.ui.cinemaSession.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -25,13 +26,21 @@ class CinemaSessionDaysAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (position == rowIndex){
-            holder.itemView.setBackgroundResource(R.drawable.bottom_bar_yellow)
-        }else{
-            holder.itemView.setBackgroundResource(0)
-        }
+
         with(holder){
             with(nowShowingList[position]){
+
+
+                if (position == rowIndex){
+                    holder.itemView.setBackgroundResource(R.drawable.bottom_bar_yellow)
+                    binding.textView88.setTextColor(Color.parseColor("#000000"))
+                    binding.textView89.setTextColor(Color.parseColor("#000000"))
+                }else{
+                    binding.textView88.setTextColor(Color.parseColor("#7A7A7A"))
+                    binding.textView89.setTextColor(Color.parseColor("#7A7A7A"))
+                    holder.itemView.setBackgroundResource(0)
+                }
+
                 //Date
                 binding.textView88.text=this.d
                 //Name

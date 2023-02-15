@@ -39,21 +39,25 @@ class CinemaSessionCinParentAdapter(
                 binding.recyclerView16.layoutManager = gridLayout
                 binding.recyclerView16.adapter = cinemaSessionCinemasChildAdapter
 
+                if (nowShowingList.size == 1){
+                    binding.constraintLayout18.hide()
+                    binding.imageView51.hide()
+                    binding.constraintLayout26.show()
+                }
+
+                if (rowIndex == position){
+                    binding.textView377.hide()
+                    binding.imageView51.rotation = 180F
+                    binding.constraintLayout26.show()
+                }else{
+                    binding.textView377.show()
+                    binding.imageView51.rotation = 360F
+                    binding.constraintLayout26.hide()
+                }
+
                 binding.constraintLayout18.setOnClickListener {
                     rowIndex = position
-                    if (check == 1){
-                        binding.textView377.hide()
-                        binding.imageView51.setImageResource(R.drawable.arrow_up)
-                        binding.constraintLayout26.show()
-                        check = 2
-                        notifyDataSetChanged()
-                    }else{
-                        binding.textView377.show()
-                        binding.imageView51.setImageResource(R.drawable.arrow_down)
-                        binding.constraintLayout26.hide()
-                        check = 1
-                        notifyDataSetChanged()
-                    }
+                    notifyDataSetChanged()
                 }
 
             }

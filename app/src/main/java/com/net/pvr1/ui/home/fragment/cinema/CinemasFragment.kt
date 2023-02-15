@@ -66,8 +66,8 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
     lateinit var preferences: PreferenceManager
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
     private val permissionId = 2
-    private var lat = ""
-    private var lng = ""
+    private var lat = "0.0"
+    private var lng = "0.0"
 
     // story board
     private var bannerShow = 0
@@ -226,8 +226,8 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                             }
                         }
                         if (addresses?.isNotEmpty() == true) {
-                            val currentAddress: String = addresses[0].locality
-                            preferences.cityNameCinema(currentAddress)
+//                            val currentAddress: String = addresses[0].locality
+//                            preferences.cityNameCinema(currentAddress)
                             lat = location.latitude.toString()
                             lng = location.longitude.toString()
                             authViewModel.cinema(preferences.getCityName(), lat, lng, preferences.getUserId(), "")

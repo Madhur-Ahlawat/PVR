@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000">
+    android:id="@+id/mainView"
+    android:background="@drawable/gradient_loyalty">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout134"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_60dp"
-        android:background="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -20,7 +20,6 @@
             android:id="@+id/view91"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#000000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +59,6 @@
         android:id="@+id/parrentView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/gradient_loyalty"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,18 +1,28 @@
 package com.net.pvr1.ui.cinemaSession
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.bumptech.glide.Glide
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityCinemaSessionBinding
 import com.net.pvr1.di.preference.PreferenceManager
@@ -30,6 +40,7 @@ import com.net.pvr1.ui.home.fragment.home.adapter.PromotionAdapter
 import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.IOException
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -72,6 +83,15 @@ class CinemaSessionActivity : AppCompatActivity(),
     private var special = "ALL"
     private var cinema_type = "ALL"
 
+    private var lat = "0.0"
+    private var lng = "0.0"
+
+    private var cinemaLat = "0.0"
+    private var cinemaLng = "0.0"
+
+    private lateinit var mFusedLocationClient: FusedLocationProviderClient
+
+
 
     //internet Check
     private var broadcastReceiver: BroadcastReceiver? = null
@@ -79,60 +99,134 @@ class CinemaSessionActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCinemaSessionBinding.inflate(layoutInflater, null, false)
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         val view = binding?.root
         setContentView(view)
         manageFunctions()
     }
 
+    @SuppressLint("MissingPermission")
+    private fun getLocation() {
+            if (isLocationEnabled() && checkPermissions()) {
+                mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
+                    val location: Location? = task.result
+                    val geocoder = Geocoder(this, Locale.getDefault())
+                    try {
+                        val addresses = location?.longitude?.let {
+                            location.latitude.let { it1 ->
+                                geocoder.getFromLocation(
+                                    it1, it, 1
+                                )
+                            }
+                        }
+                        if (addresses?.isNotEmpty() == true) {
+//                            val currentAddress: String = addresses[0].locality
+//                            preferences.cityNameCinema(currentAddress)
+                            lat = location.latitude.toString()
+                            lng = location.longitude.toString()
+
+                            if (intent.getStringExtra("addressCinema") == "yes") {
+                                authViewModel.cinemaSession(
+                                    preferences.getCityName(),
+                                    cinemaId,
+                                    lat,
+                                    lng,
+                                    preferences.getUserId(),
+                                    sessionDate,
+                                    lang,
+                                    format,
+                                    price1,
+                                    price1,
+                                    hc,
+                                    cc,
+                                    ad,
+                                    "no",
+                                    cinema_type,
+                                    ""
+                                )
+                            } else {
+                                authViewModel.cinemaSession(
+                                    preferences.getCityName(),
+                                    cinemaId,
+                                    lat,
+                                    lng,
+                                    preferences.getUserId(),
+                                    sessionDate,
+                                    lang,
+                                    format,
+                                    price1,
+                                    price1,
+                                    hc,
+                                    cc,
+                                    ad,
+                                    "no",
+                                    cinema_type,
+                                    ""
+                                )
+                            }
+
+                        }
+
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+
+                }
+            } else {
+                if (intent.getStringExtra("addressCinema") == "yes") {
+                    authViewModel.cinemaSession(
+                        preferences.getCityName(),
+                        cinemaId,
+                        lat,
+                        lng,
+                        preferences.getUserId(),
+                        sessionDate,
+                        lang,
+                        format,
+                        price1,
+                        price1,
+                        hc,
+                        cc,
+                        ad,
+                        "no",
+                        cinema_type,
+                        ""
+                    )
+                } else {
+                    authViewModel.cinemaSession(
+                        preferences.getCityName(),
+                        cinemaId,
+                        lat,
+                        lng,
+                        preferences.getUserId(),
+                        sessionDate,
+                        lang,
+                        format,
+                        price1,
+                        price1,
+                        hc,
+                        cc,
+                        ad,
+                        "no",
+                        cinema_type,
+                        ""
+                    )
+                }
+            }
+
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        val locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+    }
+
     private fun manageFunctions() {
         cinemaId = intent.getStringExtra("cid").toString()
-        if (intent.getStringExtra("addressCinema") == "yes") {
-            authViewModel.cinemaSession(
-                preferences.getCityName(),
-                intent.getStringExtra("cid").toString(),
-                intent.getStringExtra("lat").toString(),
-                intent.getStringExtra("lang").toString(),
-                preferences.getUserId(),
-                sessionDate,
-                lang,
-                format,
-                price1,
-                price1,
-                hc,
-                cc,
-                ad,
-                "no",
-                cinema_type,
-                ""
-            )
-        } else {
-            authViewModel.cinemaSession(
-                preferences.getCityName(),
-                intent.getStringExtra("cid").toString(),
-                intent.getStringExtra("lat").toString(),
-                intent.getStringExtra("lang").toString(),
-                preferences.getUserId(),
-                sessionDate,
-                lang,
-                format,
-                price1,
-                price1,
-                hc,
-                cc,
-                ad,
-                "no",
-                cinema_type,
-                ""
-            )
-        }
+        getLocation()
 
-        //Theater
-        authViewModel.cinemaNearTheater(
-            preferences.getCityName(),
-            preferences.getLatitudeData(),
-            preferences.getLongitudeData(),
-            intent.getStringExtra("cid").toString()
-        )
         cinemaSessionDataLoad()
         cinemaNearTheaterLoad()
 
@@ -148,6 +242,19 @@ class CinemaSessionActivity : AppCompatActivity(),
         broadcastIntent()
         getShimmerData()
 
+    }
+
+
+    private fun checkPermissions(): Boolean {
+        if (ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            return true
+        }
+        return false
     }
     private fun getShimmerData() {
         Constant().getData(binding?.include38?.tvFirstText,binding?.include38?.tvSecondText)
@@ -215,6 +322,7 @@ class CinemaSessionActivity : AppCompatActivity(),
     private fun retrieveTheaterData(output: CinemaNearTheaterResponse.Output) {
         //recycler Cinemas
         val snapHelper = PagerSnapHelper()
+        binding?.recyclerView18?.onFlingListener = null
         snapHelper.attachToRecyclerView(binding?.recyclerView18)
         val gridLayout4 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
         val cinemaSessionNearTheaterAdapter = CinemaSessionNearTheaterAdapter(output.c, this, this)
@@ -229,6 +337,9 @@ class CinemaSessionActivity : AppCompatActivity(),
         //shimmer
         binding?.constraintLayout145?.hide()
 
+        cinemaLat = output.lat
+        cinemaLng = output.lang
+
         if (openTime == 0) {
             //title
             binding?.textView84?.text = output.cn
@@ -239,7 +350,7 @@ class CinemaSessionActivity : AppCompatActivity(),
                 .into(binding?.imageView40!!)
             //Direction
             binding?.view64?.setOnClickListener {
-                Constant().shareData(this, output.lat, output.lang)
+                Constant().openMap(this, output.lat, output.lang)
             }
             //Share
             binding?.imageView42?.setOnClickListener {
@@ -273,7 +384,7 @@ class CinemaSessionActivity : AppCompatActivity(),
                         binding?.imageView43?.setImageResource(R.drawable.unlike)
                         authViewModel.cinemaPreference(
                             preferences.getUserId(),
-                            intent.getStringExtra("cid").toString(),
+                            cinemaId,
                             rowIndex,
                             "t",
                             Constant().getDeviceId(this)
@@ -283,7 +394,7 @@ class CinemaSessionActivity : AppCompatActivity(),
                         binding?.imageView43?.setImageResource(R.drawable.like)
                         authViewModel.cinemaPreference(
                             preferences.getUserId(),
-                            intent.getStringExtra("cid").toString(),
+                            cinemaId,
                             rowIndex,
                             "t",
                             Constant().getDeviceId(this)
@@ -315,10 +426,15 @@ class CinemaSessionActivity : AppCompatActivity(),
             binding?.recyclerView13?.adapter = cinemaSessionDaysAdapter
 
             //Promotion
-            val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-            val cinemaSessionLanguageAdapter = PromotionAdapter(this, output.phd)
-            binding?.recyclerView14?.layoutManager = gridLayout
-            binding?.recyclerView14?.adapter = cinemaSessionLanguageAdapter
+            if (output.phd!=null && output.phd.isNotEmpty()) {
+                binding?.constraintLayout16?.show()
+                val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+                val cinemaSessionLanguageAdapter = PromotionAdapter(this, output.phd)
+                binding?.recyclerView14?.layoutManager = gridLayout
+                binding?.recyclerView14?.adapter = cinemaSessionLanguageAdapter
+            }else{
+                binding?.constraintLayout16?.hide()
+            }
 
         } else {
             //recycler Cinemas
@@ -352,7 +468,13 @@ class CinemaSessionActivity : AppCompatActivity(),
                 this, "ShowTimeT", this, appliedFilterType, appliedFilterItem, filterPoints
             )
         }
-
+//Theater
+        authViewModel.cinemaNearTheater(
+            preferences.getCityName(),
+            cinemaLat,
+            cinemaLng,
+            cinemaId
+        )
     }
 
     override fun dateClick(comingSoonItem: CinemaSessionResponse.Output.Bd) {
@@ -361,9 +483,9 @@ class CinemaSessionActivity : AppCompatActivity(),
         if (intent.getStringExtra("addressCinema") == "yes") {
             authViewModel.cinemaSession(
                 preferences.getCityName(),
-                intent.getStringExtra("cid").toString(),
-                intent.getStringExtra("lat").toString(),
-                intent.getStringExtra("lang").toString(),
+                cinemaId,
+                lat,
+                lng,
                 preferences.getUserId(),
                 sessionDate,
                 lang,
@@ -380,9 +502,9 @@ class CinemaSessionActivity : AppCompatActivity(),
         } else {
             authViewModel.cinemaSession(
                 preferences.getCityName(),
-                intent.getStringExtra("cid").toString(),
-                intent.getStringExtra("lat").toString(),
-                intent.getStringExtra("lang").toString(),
+                cinemaId,
+                lat,
+                lng,
                 preferences.getUserId(),
                 sessionDate,
                 lang,
@@ -408,9 +530,9 @@ class CinemaSessionActivity : AppCompatActivity(),
         cinemaId= comingSoonItem.cId.toString()
     authViewModel.cinemaSession(
         preferences.getCityName(),
-        intent.getStringExtra("cid").toString(),
-        intent.getStringExtra("lat").toString(),
-        intent.getStringExtra("lang").toString(),
+        cinemaId,
+        lat,
+        lng,
         preferences.getUserId(),
         sessionDate,
         lang,
@@ -545,9 +667,9 @@ class CinemaSessionActivity : AppCompatActivity(),
 
             authViewModel.cinemaSession(
                 preferences.getCityName(),
-                intent.getStringExtra("cid").toString(),
-                intent.getStringExtra("lat").toString(),
-                intent.getStringExtra("lang").toString(),
+                cinemaId,
+                lat,
+                lng,
                 preferences.getUserId(),
                 sessionDate,
                 lang,
@@ -595,9 +717,9 @@ class CinemaSessionActivity : AppCompatActivity(),
         appliedFilterItem = HashMap()
         authViewModel.cinemaSession(
             preferences.getCityName(),
-            intent.getStringExtra("cid").toString(),
-            intent.getStringExtra("lat").toString(),
-            intent.getStringExtra("lang").toString(),
+            cinemaId,
+            lat,
+            lng,
             preferences.getUserId(),
             sessionDate,
             lang,

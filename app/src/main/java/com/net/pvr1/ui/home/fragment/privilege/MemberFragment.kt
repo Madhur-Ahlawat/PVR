@@ -444,11 +444,13 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
                     } else if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                         reviewPosition = getCurrentItem(binding?.privilegeCardList!!)
                         if (reviewPosition == 0) {
+                            binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_loyalty)
                             if (cardDataList[reviewPosition].lock == true) {
                                 binding?.unLockView?.show()
                                 binding?.cardBelowView?.hide()
                                 binding?.passportView?.hide()
                                 binding?.titleUnlock?.text = "PVR Privilege"
+                                binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_loyalty)
                             } else {
                                 binding?.unLockView?.hide()
                                 binding?.passportView?.hide()
@@ -461,11 +463,14 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
                                 binding?.passportView?.hide()
                                 if (preferences.getString(SUBS_OPEN) == "true") {
                                     binding?.titleUnlock?.text = "PVR Passport"
+                                    binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_passport)
                                 } else {
                                     binding?.titleUnlock?.text = "Kotak Card"
+                                    binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_kotak)
                                 }
                             } else {
                                 binding?.cardBelowView?.hide()
+                                binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_kotak)
                                 if (cardDataList[reviewPosition].type.equals("PPP")) {
                                     binding?.passportView?.hide()
                                     binding?.unLockView?.hide()
@@ -487,6 +492,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
                                 }
                             }
                         } else if (reviewPosition == 2) {
+                            binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_kotak)
                             if (cardDataList[reviewPosition].lock == true) {
                                 binding?.unLockView?.show()
                                 binding?.cardBelowView?.hide()

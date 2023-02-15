@@ -11,7 +11,7 @@
     >
     <padding android:right="@dimen/padding_10" android:left="@dimen/padding_10"/>
 
-    <solid android:color="#4DFFCB07"/>
+    <solid android:color="#1AFFCB07"/>
     <stroke  android:width="3dp" android:color="@color/pvr_yellow"/>
     <corners
        android:radius="0dp"/>

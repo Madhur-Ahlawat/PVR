@@ -73,8 +73,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:checked="false"
-                        android:layout_marginTop="@dimen/dimen_5dp"
-                        android:layout_marginEnd="@dimen/dimen_5dp"
+                        android:layout_margin="@dimen/dimen_15dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:ignore="ContentDescription" />

@@ -1,8 +1,16 @@
 package com.net.pvr1.ui.home.fragment.privilege
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Html
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
+import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
 import com.net.pvr1.databinding.FragmentPrivilegeBinding
 import com.net.pvr1.di.preference.PreferenceManager
-import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.home.HomeActivity.Companion.getCurrentItem
 import com.net.pvr1.ui.home.HomeActivity.Companion.reviewPosition
@@ -140,6 +147,8 @@ class NonMemberFragment : Fragment() {
             }
         }
 
+        spannable()
+
     }
 
     private fun makePageDataToShow() {
@@ -164,18 +173,18 @@ class NonMemberFragment : Fragment() {
                         )
                     ) {
                         reviewPosition = i
-                        binding?.tvEnroll?.text = "Join Now"
+                        binding?.tvEnroll?.text = "Join for Free"
                         binding?.privilegeView?.salted?.text = "Salted"
                         binding?.privilegeView?.points?.text =
                             "all tickets, food and beverage purchases"
-                        binding?.parrentView?.setBackgroundResource(R.drawable.gradient_loyalty)
+                        binding?.mainView?.setBackgroundResource(R.drawable.gradient_loyalty)
                         break
                     }
                 } else if (arguments?.getString("type").equals("PP", ignoreCase = true)) {
                     try {
                         if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(i)?.ptype.equals(arguments?.getString("type"))) {
                             reviewPosition = i
-                            binding?.parrentView?.setBackgroundResource(R.drawable.gradient_passport)
+                            binding?.mainView?.setBackgroundResource(R.drawable.gradient_passport)
                             binding?.passportView?.visitCount?.text = visits
                             binding?.passportView?.topText?.text =
                                 binding?.passportView?.topText?.text.toString().replace("30".toRegex(), visits)
@@ -192,7 +201,7 @@ class NonMemberFragment : Fragment() {
                         binding?.tvEnroll?.text = "Apply Now"
                         binding?.privilegeView?.salted?.text = "Salted on your first visit after joining"
                         binding?.privilegeView?.points?.text = "on Tickets & Food items"
-                        binding?.parrentView?.setBackgroundResource(R.drawable.gradient_kotak)
+                        binding?.mainView?.setBackgroundResource(R.drawable.gradient_kotak)
                         break
                     }
                 }
@@ -231,7 +240,7 @@ class NonMemberFragment : Fragment() {
                             binding?.passportView?.topText?.text =
                                 binding?.passportView?.topText?.text.toString().replace("30".toRegex(), visits)
                             binding?.privilegeView?.boxKotak?.hide()
-                            binding?.parrentView?.setBackgroundResource(R.drawable.gradient_passport)
+                            binding?.mainView?.setBackgroundResource(R.drawable.gradient_passport)
                         } else if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(reviewPosition)?.ptype.equals("PPP")) {
                             binding?.passportView?.root?.hide()
                             binding?.tvTerms1?.show()
@@ -240,9 +249,9 @@ class NonMemberFragment : Fragment() {
                             binding?.tvEnroll?.text = "Apply Now"
                             binding?.privilegeView?.salted?.text = "Salted on your first visit after joining"
                             binding?.privilegeView?.points?.text = "on Tickets & Food items"
-                            binding?.parrentView?.setBackgroundResource(R.drawable.gradient_kotak)
+                            binding?.mainView?.setBackgroundResource(R.drawable.gradient_kotak)
                         } else {
-                            binding?.tvEnroll?.text = "Join Now"
+                            binding?.tvEnroll?.text = "Join for Free"
                             binding?.tvTerms1?.show()
                             binding?.privilegeView?.tvTerms?.hide()
                             binding?.privilegeView?.boxKotak?.hide()
@@ -250,7 +259,7 @@ class NonMemberFragment : Fragment() {
                             binding?.privilegeView?.root?.show()
                             binding?.privilegeView?.salted?.text = "Salted"
                             binding?.privilegeView?.points?.text = "all tickets, food and beverage purchases"
-                            binding?.parrentView?.setBackgroundResource(R.drawable.gradient_loyalty)
+                            binding?.mainView?.setBackgroundResource(R.drawable.gradient_loyalty)
                         }
                         /*
                     Here load the Image to image view with picaso
@@ -309,5 +318,40 @@ class NonMemberFragment : Fragment() {
         binding?.passportView?.textBelow?.text = output.scheme[0].text
     }
 
+    private fun spannable() {
+        val ss = SpannableString("   I agree to the Terms & Conditions")
+        val span2: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(textView: View) {
+                val intent = Intent(requireActivity(), WebViewActivity::class.java)
+                intent.putExtra("from", "passFaq")
+                intent.putExtra("title", getString(R.string.terms_amp_condition))
+                var termsurl = "https://www.pvrcinemas.com/termsandconditions?typeId=3"
+                termsurl = when (Constant.PrivilegeHomeResponseConst?.pinfo?.get(reviewPosition)?.ptype) {
+                    ("P") -> {
+                        "https://www.pvrcinemas.com/termsandconditions?typeId=3"
+                    }
+                    ("PP") -> {
+                        "https://www.pvrcinemas.com/termsandconditions?typeId=5"
+                    }
+                    else -> {
+                        "https://www.pvrcinemas.com/termsandconditions?typeId=4"
+                    }
+                }
+                intent.putExtra("getUrl", termsurl)
+                startActivity(intent)
+            }
+
+        }
+        ss.setSpan(span2, 18, ss.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        ss.setSpan(
+            ForegroundColorSpan(resources.getColor(R.color.white)),
+            18,
+            ss.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        ss.setSpan(UnderlineSpan(), 18, ss.length, 0)
+        binding?.tvTerms1?.text = ss
+        binding?.tvTerms1?.movementMethod = LinkMovementMethod.getInstance()
+    }
 
 }

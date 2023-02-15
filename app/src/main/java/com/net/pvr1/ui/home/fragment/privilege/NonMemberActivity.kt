@@ -3,6 +3,13 @@ package com.net.pvr1.ui.home.fragment.privilege
 import android.content.Intent
 import android.os.Bundle
 import android.text.Html
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
+import android.text.style.UnderlineSpan
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -91,8 +98,47 @@ class NonMemberActivity : AppCompatActivity() {
             )
         }
 
+        spannable()
+
 
     }
+
+    private fun spannable() {
+        val ss = SpannableString("   I agree to the Terms & Conditions")
+        val span2: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(textView: View) {
+                val intent = Intent(this@NonMemberActivity, WebViewActivity::class.java)
+                intent.putExtra("from", "passFaq")
+                intent.putExtra("title", getString(R.string.terms_amp_condition))
+                var termsurl = "https://www.pvrcinemas.com/termsandconditions?typeId=3"
+                termsurl = when (Constant.PrivilegeHomeResponseConst?.pinfo?.get(reviewPosition)?.ptype) {
+                    ("P") -> {
+                        "https://www.pvrcinemas.com/termsandconditions?typeId=3"
+                    }
+                    ("PP") -> {
+                        "https://www.pvrcinemas.com/termsandconditions?typeId=5"
+                    }
+                    else -> {
+                        "https://www.pvrcinemas.com/termsandconditions?typeId=4"
+                    }
+                }
+                intent.putExtra("getUrl", termsurl)
+                startActivity(intent)
+            }
+
+        }
+        ss.setSpan(span2, 18, ss.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        ss.setSpan(
+            ForegroundColorSpan(resources.getColor(R.color.white)),
+            18,
+            ss.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        ss.setSpan(UnderlineSpan(), 18, ss.length, 0)
+        binding?.tvTerms1?.text = ss
+        binding?.tvTerms1?.movementMethod = LinkMovementMethod.getInstance()
+    }
+
 
     private fun makePageDataToShow() {
         try {
@@ -122,14 +168,14 @@ class NonMemberActivity : AppCompatActivity() {
                         binding?.privilegeView?.salted?.text = "Salted"
                         binding?.privilegeView?.points?.text =
                             "all tickets, food and beverage purchases"
-                        binding?.parrentView?.setBackgroundResource(R.drawable.gradient_loyalty)
+                        binding?.mainView?.setBackgroundResource(R.drawable.gradient_loyalty)
                         break
                     }
                 } else if (intent?.getStringExtra("type").equals("PP", ignoreCase = true)) {
                     try {
                         if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(i)?.ptype.equals(intent?.getStringExtra("type"))) {
                             HomeActivity.reviewPosition = i
-                            binding?.parrentView?.setBackgroundResource(R.drawable.gradient_passport)
+                            binding?.mainView?.setBackgroundResource(R.drawable.gradient_passport)
                             binding?.passportView?.visitCount?.text = NonMemberFragment.visits
                             binding?.passportView?.topText?.text =
                                 binding?.passportView?.topText?.text.toString().replace("30".toRegex(),
@@ -149,7 +195,7 @@ class NonMemberActivity : AppCompatActivity() {
                         binding?.tvEnroll?.text = "Apply Now"
                         binding?.privilegeView?.salted?.text = "Salted on your first visit after joining"
                         binding?.privilegeView?.points?.text = "on Tickets & Food items"
-                        binding?.parrentView?.setBackgroundResource(R.drawable.gradient_kotak)
+                        binding?.mainView?.setBackgroundResource(R.drawable.gradient_kotak)
                         break
                     }
                 }
@@ -191,7 +237,7 @@ class NonMemberActivity : AppCompatActivity() {
                                     NonMemberFragment.visits
                                 )
                             binding?.privilegeView?.boxKotak?.hide()
-                            binding?.parrentView?.setBackgroundResource(R.drawable.gradient_passport)
+                            binding?.mainView?.setBackgroundResource(R.drawable.gradient_passport)
                         } else if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(HomeActivity.reviewPosition)?.ptype.equals("PPP")) {
                             binding?.passportView?.root?.hide()
                             binding?.tvTerms1?.show()
@@ -200,7 +246,7 @@ class NonMemberActivity : AppCompatActivity() {
                             binding?.tvEnroll?.text = "Apply Now"
                             binding?.privilegeView?.salted?.text = "Salted on your first visit after joining"
                             binding?.privilegeView?.points?.text = "on Tickets & Food items"
-                            binding?.parrentView?.setBackgroundResource(R.drawable.gradient_kotak)
+                            binding?.mainView?.setBackgroundResource(R.drawable.gradient_kotak)
                         } else {
                             binding?.tvEnroll?.text = "Join for Free"
                             binding?.tvTerms1?.show()
@@ -210,7 +256,7 @@ class NonMemberActivity : AppCompatActivity() {
                             binding?.privilegeView?.root?.show()
                             binding?.privilegeView?.salted?.text = "Salted"
                             binding?.privilegeView?.points?.text = "all tickets, food and beverage purchases"
-                            binding?.parrentView?.setBackgroundResource(R.drawable.gradient_loyalty)
+                            binding?.mainView?.setBackgroundResource(R.drawable.gradient_loyalty)
                         }
                         /*
                     Here load the Image to image view with picaso

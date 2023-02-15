@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="@dimen/dimen_6dp"
             app:cardUseCompatPadding="true"
+            android:id="@+id/cardView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -221,16 +222,20 @@
 
                 <TextView
                     android:id="@+id/textView100"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="14dp"
                     android:layout_marginTop="14dp"
+                    android:maxLines="2"
+                    android:layout_marginEnd="@dimen/dimen_15dp"
                     android:fontFamily="@font/montserrat_alternates_bold"
-                    android:textSize="@dimen/dimen_16sp"
+                    android:includeFontPadding="false"
                     android:textColor="@color/white"
-                    tools:text="PVR ECX"
+                    android:textSize="@dimen/dimen_14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/imageView52"
-                    app:layout_constraintTop_toTopOf="@+id/view65" />
+                    app:layout_constraintTop_toTopOf="@+id/view65"
+                    tools:text="PVR ECX" />
 
                 <TextView
                     android:id="@+id/textView101"
@@ -239,6 +244,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="24dp"
                     android:textColor="@color/white"
+                    android:includeFontPadding="false"
                     android:textSize="@dimen/dimen_12sp"
                     android:fontFamily="@font/sf_pro_text_regular"
                     tools:text="Dlf Mall Of India, 4th floor, Sector 18, Noida, Uttar Pradesh 201301"

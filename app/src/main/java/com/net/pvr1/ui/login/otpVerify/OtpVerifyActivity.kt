@@ -110,6 +110,10 @@ class OtpVerifyActivity : AppCompatActivity() {
         //Resend Otp
         binding?.textView14?.setOnClickListener {
             binding?.otpEditText?.clearText(true)
+            binding?.textView15?.isClickable = false
+            binding?.textView15?.isFocusable = false
+            binding?.textView15?.isEnabled = false
+            binding?.textView15?.setBackgroundResource(R.drawable.grey_seat_curve)
             authViewModel.loginMobileUser(mobile, preferences.getCityName(), "INDIA")
         }
 

@@ -75,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="20dp"
                     android:padding="@dimen/dimen_8dp"
                     app:layout_constraintStart_toStartOf="@+id/imageView40"
                     app:layout_constraintTop_toTopOf="@+id/imageView40"
@@ -128,7 +128,7 @@
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/montserrat_alternates_bold"
                     android:textColor="@color/white"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     app:layout_constraintBottom_toTopOf="@+id/textView81"
                     app:layout_constraintEnd_toEndOf="@+id/textView81"
                     app:layout_constraintStart_toStartOf="@+id/textView81"
@@ -312,12 +312,21 @@
                     android:layout_marginStart="@dimen/dimen_20dp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/view91"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view90"
                     tools:itemCount="10"
                     tools:listitem="@layout/item_cinema_details_shows" />
+
+                <View
+                    android:id="@+id/view91"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_1dp"
+                    android:background="@color/grayEd"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -384,7 +393,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/view59"
                     app:layout_constraintTop_toTopOf="@+id/view59"
-                    tools:itemCount="4"
+                    tools:itemCount="1"
                     tools:listitem="@layout/item_cinema_details_movies" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -447,13 +456,16 @@
 
                 <TextView
                     android:id="@+id/textView99"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
+                    android:ellipsize="end"
                     android:fontFamily="@font/sf_pro_text_medium"
+                    android:lines="1"
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimen_12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/textView97"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView97"
                     app:layout_constraintTop_toTopOf="@+id/textView97"
                     tools:text=" PVR, Golf Course" />

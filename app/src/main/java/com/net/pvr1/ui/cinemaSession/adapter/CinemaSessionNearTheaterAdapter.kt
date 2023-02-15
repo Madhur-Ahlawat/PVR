@@ -33,9 +33,19 @@ class CinemaSessionNearTheaterAdapter(
         with(holder){
             with(nowShowingList[position]){
                 val lp = holder.itemView.layoutParams
-                lp.height = lp.height
-                lp.width = ((screenWidth-40)/1.17f).toInt()
-                holder.itemView.layoutParams = lp
+
+
+
+                if (position == nowShowingList.size-1){
+                    lp.height = lp.height
+                    lp.width = ((screenWidth-40)/1.17f).toInt()
+                    holder.itemView.setPadding(0,0,20,0)
+                    holder.itemView.layoutParams = lp
+                }else{
+                    lp.height = lp.height
+                    lp.width = ((screenWidth-40)/1.17f).toInt()
+                    holder.itemView.layoutParams = lp
+                }
 
                 //title
                 binding.textView100.text=this.n
@@ -47,15 +57,15 @@ class CinemaSessionNearTheaterAdapter(
                 binding.textView85.text = "${this.sc} Shows"
                 //Image
                 Glide.with(context)
-                    .load(this.iwt)
+                    .load(this.imob)
                     .error(R.drawable.app_icon)
                     .into(binding.imageView52)
                 //Direction
                 binding.view64.setOnClickListener {
-                    holder.itemView.setOnClickListener {listener.nearTheaterDirectionClick(this)  }
+                    listener.nearTheaterDirectionClick(this)
                 }
                 //Shows
-                binding.view62.setOnClickListener {
+                binding.cardView.setOnClickListener {
                     listener.showsClick(this)
                 }
 
