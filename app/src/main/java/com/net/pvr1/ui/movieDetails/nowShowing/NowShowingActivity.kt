@@ -132,7 +132,7 @@ class NowShowingActivity : AppCompatActivity(), MusicVideoAdapter.RecycleViewIte
         }
         //Share
         binding?.imageView28?.setOnClickListener {
-            Constant().shareData(this, "", "")
+            Constant().shareData(this, "Check out this movie at PVR!",output.su)
         }
         //Back
         binding?.imageView27?.setOnClickListener {
@@ -166,8 +166,8 @@ class NowShowingActivity : AppCompatActivity(), MusicVideoAdapter.RecycleViewIte
             }
         }
 
-        //language
-        stringBuilder = java.lang.StringBuilder()
+//        //language
+//        stringBuilder = java.lang.StringBuilder()
 
         //Genre
         binding?.textView56?.text =
@@ -242,7 +242,7 @@ class NowShowingActivity : AppCompatActivity(), MusicVideoAdapter.RecycleViewIte
                 binding?.textView68?.show()
                 val layoutManagerCrew =
                     GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-                val crewAdapter = CrewAdapter(output.mb.crew, this)
+                val crewAdapter = CrewAdapter(getUpdatedList(output.mb.crew), this)
                 binding?.recyclerCrew?.layoutManager = layoutManagerCrew
                 binding?.recyclerCrew?.adapter = crewAdapter
             } else {
@@ -314,6 +314,31 @@ class NowShowingActivity : AppCompatActivity(), MusicVideoAdapter.RecycleViewIte
 
         //Promotion
         if (output.ph.isNotEmpty()) updatePH(output.ph)
+    }
+
+    private fun getUpdatedList(crew: ArrayList<MovieDetailsResponse.Mb.Crew>): List<MovieDetailsResponse.Mb.Crew.Role> {
+        val list = ArrayList<MovieDetailsResponse.Mb.Crew.Role>()
+        val listRole = ArrayList<MovieDetailsResponse.Mb.Crew.Role>()
+        val listSupport = ArrayList<MovieDetailsResponse.Mb.Crew.Role>()
+        val newList = ArrayList<MovieDetailsResponse.Mb.Crew.Role>()
+
+        for (data in crew){
+            list.addAll(data.roles)
+        }
+        for (data in list){
+            if (data.role == "Director") {
+                listRole.add(data)
+            }else{
+                listSupport.add(data)
+            }
+        }
+
+        newList.addAll(listRole)
+        newList.addAll(listSupport)
+
+        println("listSupport--->${newList.size}")
+
+        return newList
     }
 
     private fun updatePH(phd: ArrayList<MovieDetailsResponse.Ph>) {

@@ -227,7 +227,7 @@
 
     //Food
     <string name="add">ADD</string>
-    <string name="customize">Customize</string>
+    <string name="customize">Customizable</string>
     <string name="max_item_msz">You can only order </string>
     <string name="items_a_time">items at a time.</string>
     <string name="min_item_msz">You can only order 0 items at a time.</string>

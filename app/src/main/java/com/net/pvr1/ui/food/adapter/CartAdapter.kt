@@ -34,7 +34,7 @@ class CartAdapter(
         return ViewHolder(binding)
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
+    @SuppressLint("UseCompatLoadingForDrawables", "NotifyDataSetChanged", "SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(nowShowingList[position]) {

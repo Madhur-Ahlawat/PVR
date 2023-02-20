@@ -1,10 +1,16 @@
 package com.net.pvr1.ui.bookingSession
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
@@ -18,11 +24,14 @@ import android.widget.RelativeLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.SnapHelper
 import com.bumptech.glide.Glide
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityBookingBinding
 import com.net.pvr1.di.preference.PreferenceManager
@@ -41,6 +50,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import jp.shts.android.storiesprogressview.StoriesProgressView
+import java.io.IOException
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -96,7 +106,9 @@ class MovieSessionActivity : AppCompatActivity(),
     private var currentPage = 1
     private var bannerModelsMain: ArrayList<BookingResponse.Output.Pu> =
         ArrayList<BookingResponse.Output.Pu>()
-
+    private lateinit var mFusedLocationClient: FusedLocationProviderClient
+    private var lat = "0.0"
+    private var lng = "0.0"
     companion object{
         var btnc = ""
     }
@@ -106,21 +118,16 @@ class MovieSessionActivity : AppCompatActivity(),
         binding = ActivityBookingBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
         manageFunctions()
     }
 
     private fun manageFunctions() {
         //Poster
-        authViewModel.bookingTicket(
-            preferences.getCityName(),
-            intent.getStringExtra("mid").toString(),
-            preferences.getLatitudeData(),
-            preferences.getLongitudeData(),
-            "NA",
-            "no",
-            "no",
-            preferences.getUserId(),lang,format,price1,hc,show1,cinemaType,special
-        )
+        binding?.include43?.editTextTextPersonName?.hint = "Search cinema"
+        getLocation()
+
 
         binding?.textView103?.isSelected = true
 
@@ -137,6 +144,79 @@ class MovieSessionActivity : AppCompatActivity(),
         bookingTicketDataLoad()
         bookingTheatreDataLoad()
     }
+
+    private fun isLocationEnabled(): Boolean {
+        val locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+    }
+
+    private fun checkPermissions(): Boolean {
+        if (ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            return true
+        }
+        return false
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getLocation() {
+        if (isLocationEnabled() && checkPermissions()) {
+            mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
+                val location: Location? = task.result
+                val geocoder = Geocoder(this, Locale.getDefault())
+                try {
+                    val addresses = location?.longitude?.let {
+                        location.latitude.let { it1 ->
+                            geocoder.getFromLocation(
+                                it1, it, 1
+                            )
+                        }
+                    }
+                    if (addresses?.isNotEmpty() == true) {
+//                            val currentAddress: String = addresses[0].locality
+//                            preferences.cityNameCinema(currentAddress)
+                        lat = location.latitude.toString()
+                        lng = location.longitude.toString()
+
+                        authViewModel.bookingTicket(
+                            preferences.getCityName(),
+                            intent.getStringExtra("mid").toString(),
+                            lat,
+                            lng,
+                            "NA",
+                            "no",
+                            "no",
+                            preferences.getUserId(),lang,format,price1,hc,show1,cinemaType,special
+                        )
+
+                    }
+
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+
+            }
+        } else {
+            authViewModel.bookingTicket(
+                preferences.getCityName(),
+                intent.getStringExtra("mid").toString(),
+                lat,
+                lng,
+                "NA",
+                "no",
+                "no",
+                preferences.getUserId(),lang,format,price1,hc,show1,cinemaType,special
+            )
+        }
+
+    }
+
 
     private fun movedNext() {
         //back Click
@@ -485,8 +565,8 @@ class MovieSessionActivity : AppCompatActivity(),
         authViewModel.bookingTicket(
             preferences.getCityName(),
             intent.getStringExtra("mid").toString(),
-            preferences.getLatitudeData(),
-            preferences.getLongitudeData(),
+            lat,
+            lng,
             "NA",
             "no",
             "no",
@@ -554,9 +634,11 @@ class MovieSessionActivity : AppCompatActivity(),
                     val inputFormat: DateFormat = SimpleDateFormat("h:mma")
                     val outputFormatter: DateFormat = SimpleDateFormat("H:mm")
                     try {
-                        show1 =
-                            inputFormat.parse(show1)?.let { outputFormatter.format(it) }.toString()
+                        if (show1 != "ALL"){
+                            show1 = inputFormat.parse(show1)?.let { outputFormatter.format(it) }
+                                .toString()
                         show2 = outputFormatter.format(show2)
+                    }
 
                     } catch (e: ParseException) {
                         e.printStackTrace()
@@ -634,6 +716,8 @@ class MovieSessionActivity : AppCompatActivity(),
             var price = "ALL"
             if (price1 != "ALL"){
                 price = "$price1-$price2"
+            }else{
+                price = "ALL"
             }
             if (show1 != "ALL"){
                 show = "$show1-$show2"
@@ -641,8 +725,8 @@ class MovieSessionActivity : AppCompatActivity(),
             authViewModel.bookingTicket(
                 preferences.getCityName(),
                 intent.getStringExtra("mid").toString(),
-                preferences.getLatitudeData(),
-                preferences.getLongitudeData(),
+                lat,
+                lng,
                 "NA",
                 "no",
                 "no",
@@ -674,12 +758,20 @@ class MovieSessionActivity : AppCompatActivity(),
     override fun onReset() {
         binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
         appliedFilterItem = HashMap()
-
+         lang = "ALL"
+         format = "ALL"
+         price1 = "ALL"
+         price2 = "ALL"
+         show1 = "ALL"
+         hc = "ALL"
+         show2 = "ALL"
+         special = "ALL"
+         cinemaType = "ALL"
         authViewModel.bookingTicket(
             preferences.getCityName(),
             intent.getStringExtra("mid").toString(),
-            preferences.getLatitudeData(),
-            preferences.getLongitudeData(),
+            lat,
+            lng,
             "NA",
             "no",
             "no",

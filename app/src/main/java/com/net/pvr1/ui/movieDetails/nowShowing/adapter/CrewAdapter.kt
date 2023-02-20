@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.movieDetails.nowShowing.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,7 +13,7 @@ import com.net.pvr1.utils.Constant
 
 
 class CrewAdapter(
-    private var nowShowingList: List<MovieDetailsResponse.Mb.Crew>,
+    private var nowShowingList: List<MovieDetailsResponse.Mb.Crew.Role>,
     private var context: Context,
 ) :
     RecyclerView.Adapter<CrewAdapter.ViewHolder>() {
@@ -27,6 +28,7 @@ class CrewAdapter(
         return ViewHolder(binding)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
@@ -34,13 +36,13 @@ class CrewAdapter(
                     Constant().setMargins(holder.itemView,60,0,0,0)
                 }
                 //title
-                binding.textView54.text =this.roles[0].name
+                binding.textView54.text =this.name
                 //subTitle
-                binding.textView80.text =this.roles[0].department
+                binding.textView80.text =this.role
 
                 //Image
                 Glide.with(context)
-                    .load("https://"+this.roles[0].poster)
+                    .load("https://"+this.poster)
                     .error(R.drawable.placeholder_vertical)
                     .into(binding.imageView30)
 

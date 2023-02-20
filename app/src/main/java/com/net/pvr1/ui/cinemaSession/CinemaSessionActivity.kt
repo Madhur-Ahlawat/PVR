@@ -26,6 +26,7 @@ import com.google.android.gms.location.LocationServices
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityCinemaSessionBinding
 import com.net.pvr1.di.preference.PreferenceManager
+import com.net.pvr1.ui.bookingSession.MovieSessionActivity.Companion.btnc
 import com.net.pvr1.ui.cinemaSession.adapter.CinemaSessionCinParentAdapter
 import com.net.pvr1.ui.cinemaSession.adapter.CinemaSessionDaysAdapter
 import com.net.pvr1.ui.cinemaSession.adapter.CinemaSessionLanguageAdapter
@@ -268,6 +269,7 @@ class CinemaSessionActivity : AppCompatActivity(),
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         retrieveData(it.data.output)
+                        btnc = it.data.output.btnc
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,

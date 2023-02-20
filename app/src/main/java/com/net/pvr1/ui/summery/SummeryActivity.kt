@@ -34,6 +34,7 @@ import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.food.CartModel
+import com.net.pvr1.ui.food.FoodActivity
 import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.login.LoginActivity
 import com.net.pvr1.ui.payment.PaymentActivity
@@ -59,7 +60,6 @@ import com.net.pvr1.utils.Constant.Companion.FOODENABLE
 import com.net.pvr1.utils.Constant.Companion.SeatBack
 import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
 import com.net.pvr1.utils.Constant.Companion.foodCartModel
-import com.net.pvr1.utils.Constant.Companion.foodLimit
 import com.phonepe.intent.sdk.api.PhonePe
 import com.phonepe.intent.sdk.api.TransactionRequestBuilder
 import dagger.hilt.android.AndroidEntryPoint
@@ -83,6 +83,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     private var upiLoader = false
     private var upiCount = 0
     private var payableAmount = 0.0
+    private var ticketPrice = 0.0
 
 
     //Bottom Dialog
@@ -466,10 +467,14 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         binding?.constraintLayout155?.show()
 
         //privilege point
-        binding?.textView313?.text = "You will earn  " + output.pe + " Privilege Points."
+        if (output.pe!=null && output.pe != "") {
+            binding?.textView313?.text = "You will earn  " + output.pe + " Privilege Points."
+        }else{
+            binding?.textView313?.text = "You will earn  " + 0 + " Privilege Points."
+        }
 
         //subtotal
-        binding?.textView168?.text = output.ft
+        binding?.textView168?.text =  getString(R.string.currency)+output.a
 
         //movie Details
         binding?.textView111?.text =
@@ -483,6 +488,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
         //price
         binding?.textView120?.text = getString(R.string.currency) + output.f[0].it[0].v
+        ticketPrice = output.f[0].it[0].v.toDouble()
 
         //coupon
         binding?.textView169?.text = ""
@@ -663,17 +669,17 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             paidAmount =
                 (payableAmount + ticketCount.toDouble() + foodTotPrice.toDouble())
             binding?.textView174?.text =
-                getString(R.string.pay) + " " + getString(R.string.currency) + paidAmount + " |"
+                getString(R.string.pay) + " " + getString(R.string.currency) + Constant.DECIFORMAT.format(paidAmount) + " |"
 
             //grand total
-            binding?.textView173?.text = getString(R.string.currency) + paidAmount
+            binding?.textView173?.text = getString(R.string.currency) + Constant.DECIFORMAT.format(paidAmount)
         } else {
             paidAmount = (payableAmount + ticketCount)
             binding?.textView174?.text =
-                getString(R.string.pay) + " " + getString(R.string.currency) + paidAmount + " |"
+                getString(R.string.pay) + " " + getString(R.string.currency) + Constant.DECIFORMAT.format(paidAmount) + " |"
 
 //grand total
-            binding?.textView173?.text = getString(R.string.currency) + paidAmount
+            binding?.textView173?.text = getString(R.string.currency) + Constant.DECIFORMAT.format(paidAmount)
         }
     }
 
@@ -792,11 +798,11 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
     override fun increaseFoodClick(comingSoonItem: CartModel) {
         var num = comingSoonItem.quantity
-        if (num > foodLimit || num == foodLimit) {
+        if (FoodActivity.itemCount >= FoodActivity.limitCount) {
             val dialog = OptionDialog(this,
                 R.mipmap.ic_launcher,
                 R.string.app_name,
-                getString(R.string.max_item_msz) + " " + foodLimit + " " + getString(R.string.items_a_time),
+               FoodActivity.seatMessage,
                 positiveBtnText = R.string.ok,
                 negativeBtnText = R.string.no,
                 positiveClick = {},
@@ -840,6 +846,8 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         } catch (e: Exception) {
             e.printStackTrace()
         }
+
+        FoodActivity.itemCount = FoodActivity.getItemCount(cartModel)
     }
 
     private fun removeCartItem(item: CartModel) {

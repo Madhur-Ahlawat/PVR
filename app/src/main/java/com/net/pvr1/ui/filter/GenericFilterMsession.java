@@ -220,31 +220,31 @@ public class GenericFilterMsession implements GenericFilterAdapter.onFilterItemS
         if (selectedFilters.size() > 0) {
             if (type.contains("language")) {
                 language_filter_tabs.setVisibility(View.VISIBLE);
-                langDropImage.setBackground(ContextCompat.getDrawable(context, R.drawable.arrow_up));
+                langDropImage.setRotation(180f);
             }
             if (type.contains("geners")) {
                 genre_filter_tabs.setVisibility(View.VISIBLE);
-                genereDropImage.setBackground(ContextCompat.getDrawable(context, R.drawable.arrow_up));
+                genereDropImage.setRotation(180f);
             }
             if (type.contains("format")) {
                 format_filter_tabs.setVisibility(View.VISIBLE);
-                formatDropImage.setBackground(ContextCompat.getDrawable(context, R.drawable.arrow_up));
+                formatDropImage.setRotation(180f);
             }
             if (type.contains("time")) {
                 time_filter_tabs.setVisibility(View.VISIBLE);
-                timeDropImage.setBackground(ContextCompat.getDrawable(context, R.drawable.arrow_up));
+                timeDropImage.setRotation(180f);
             }
             if (type.contains("accessability")) {
                 accessability_filter_tabs.setVisibility(View.VISIBLE);
-                accessabilityDropImage.setBackground(ContextCompat.getDrawable(context, R.drawable.arrow_up));
+                accessabilityDropImage.setRotation(180f);
             }
             if (type.contains("cinemaformat")) {
                 cinemaFormat_filter_tabs.setVisibility(View.VISIBLE);
-                cinemaFormatDropImage.setBackground(ContextCompat.getDrawable(context, R.drawable.arrow_up));
+                cinemaFormatDropImage.setRotation(180f);
             }
             if (type.contains("specialshow")) {
                 specialFormat_filter_tabs.setVisibility(View.VISIBLE);
-                specialFormatDropImage.setBackground(ContextCompat.getDrawable(context, R.drawable.arrow_up));
+                specialFormatDropImage.setRotation(180f);
             }
         }
         if (from.equalsIgnoreCase("Home") || from.equalsIgnoreCase("ComingSoon")){
@@ -487,10 +487,10 @@ public class GenericFilterMsession implements GenericFilterAdapter.onFilterItemS
 
         if (layout_filter_tabs.getVisibility() == View.VISIBLE) {
             layout_filter_tabs.setVisibility(View.GONE);
-            dropImage.setBackground(ContextCompat.getDrawable(context, R.drawable.arrow_down));
+            dropImage.setRotation(360f);
         } else {
             layout_filter_tabs.setVisibility(View.VISIBLE);
-            dropImage.setBackground(ContextCompat.getDrawable(context, R.drawable.arrow_up));
+            dropImage.setRotation(180f);
         }
     }
 

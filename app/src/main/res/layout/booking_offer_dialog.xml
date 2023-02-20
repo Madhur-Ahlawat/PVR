@@ -35,6 +35,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <View
+            android:id="@+id/viewLine"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/dimen_24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@color/grayEd"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView256" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearLayout4"
             android:layout_width="0dp"
@@ -65,22 +75,41 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/view169">
 
-                <TextView
-                    android:id="@+id/viewTnc"
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="@dimen/dimen_15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:background="@color/grayEd"
+                    android:layout_marginTop="@dimen/dimen_15dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView256" />
+
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:id="@+id/viewTnc"
+                    android:layout_marginBottom="@dimen/dimen_20dp"
+                    android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:textSize="@dimen/dimen_14sp"
-                    android:drawablePadding="4dp"
+                    android:layout_gravity="center_vertical"
                     android:includeFontPadding="false"
-                    android:drawableEnd="@drawable/arrow_down_home"
                     android:fontFamily="@font/sf_pro_text_medium"
-                    android:layout_marginBottom="@dimen/padding_10"
                     android:textColor="@color/black"
-                    android:text="View T&amp;C"
-                    app:layout_constraintStart_toStartOf="@+id/view168"
-                    app:layout_constraintTop_toBottomOf="@+id/textView257" />
-
+                    android:text="View T&amp;C" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/arrow_down_home"
+                        android:id="@+id/arrow"
+                        android:layout_marginStart="@dimen/dimen_4dp"/>
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -127,7 +156,7 @@
             android:id="@+id/textView256"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:fontFamily="@font/montserrat_bold"
             android:textSize="@dimen/dimen_18sp"
             android:textColor="@color/black"
@@ -159,7 +188,7 @@
             app:layout_constraintDimensionRatio="H,1:0.4625"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView256"
+            app:layout_constraintTop_toBottomOf="@+id/viewLine"
             tools:srcCompat="@tools:sample/backgrounds/scenic"
             tools:ignore="ContentDescription" />
 

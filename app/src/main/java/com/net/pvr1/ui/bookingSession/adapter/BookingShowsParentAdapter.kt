@@ -47,7 +47,7 @@ class BookingShowsParentAdapter(
                 if (position==0){
                     binding.recyclerView7.show()
                     binding.hcIcon.hide()
-                    binding.imageView56.setImageResource(R.drawable.arrow_up)
+                    binding.imageView56.rotation = 180f
                     val cellSize = this.childs.size
                     if (cellSize > 1) {
                         val gridLayout3 =
@@ -77,9 +77,9 @@ class BookingShowsParentAdapter(
                     if (binding.recyclerView7.visibility == View.GONE) {
                         binding.recyclerView7.show()
                         binding.hcIcon.hide()
-                        binding.imageView56.setImageResource(R.drawable.arrow_up)
+                        binding.imageView56.rotation = 180f
                     } else {
-                        binding.imageView56.setImageResource(R.drawable.arrow_down)
+                        binding.imageView56.rotation = 360f
                         binding.recyclerView7.hide()
                         binding.hcIcon.show()
                     }

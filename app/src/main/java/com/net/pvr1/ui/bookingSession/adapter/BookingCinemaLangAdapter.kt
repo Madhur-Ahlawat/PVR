@@ -86,7 +86,7 @@ class BookingCinemaLangAdapter(
         val close: TextView = dialog.findViewById<View>(R.id.close) as TextView
         val dboxmessage: TextView = dialog.findViewById<View>(R.id.dboxmessage) as TextView
         val logot = dialog.findViewById<View>(R.id.logot) as ImageView
-        close.text = "CLOSE"
+        close.text = "Close"
         val dboxview = dialog.findViewById<View>(R.id.dboxview)
         logot.hide()
         dboxview?.hide()

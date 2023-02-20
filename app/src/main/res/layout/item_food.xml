@@ -112,18 +112,33 @@
             app:layout_constraintTop_toBottomOf="@+id/textView132"
             tools:text="450" />
 
-        <TextView
-            android:id="@+id/textView134"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginStart="4dp"
+            android:id="@+id/textView134"
+            app:layout_constraintBottom_toBottomOf="@+id/textView133"
+            app:layout_constraintStart_toEndOf="@+id/textView133"
+            app:layout_constraintTop_toTopOf="@+id/textView133">
+            <View
+                android:layout_width="@dimen/dimen_4dp"
+                android:layout_height="@dimen/dimen_4dp"
+                android:backgroundTint="@color/otherCityColor"
+                android:background="@drawable/circle_black"
+                />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:fontFamily="@font/sf_pro_text_light"
             android:text="@string/customize"
             android:textColor="@color/black"
             android:textSize="@dimen/dimen_14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView133"
-            app:layout_constraintStart_toEndOf="@+id/textView133"
-            app:layout_constraintTop_toTopOf="@+id/textView133" />
+            />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textView135"

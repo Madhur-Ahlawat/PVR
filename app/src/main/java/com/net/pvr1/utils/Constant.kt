@@ -127,7 +127,6 @@ class Constant {
         var DECIFORMAT = DecimalFormat("0.00")
         var SUMMERYBACK=0
         var SeatBack=0
-        var foodLimit=0
 
 //      food
         var foodCartModel: ArrayList<CartModel> = arrayListOf()

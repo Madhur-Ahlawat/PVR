@@ -66,6 +66,13 @@ class BottomFoodAdapter(
                     notifyDataSetChanged()
                 }
 
+                //fssai
+                if (this.veg) {
+                    binding.imageView75.setImageResource(R.drawable.veg_ic)
+                } else {
+                    binding.imageView75.setImageResource(R.drawable.nonveg_ic)
+                }
+
 //                UiShowHide
                 if (this.qt > 0) {
                     binding.constraintLayout33.show()

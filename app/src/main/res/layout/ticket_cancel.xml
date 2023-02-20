@@ -9,31 +9,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:gravity="top"
         android:layout_marginTop="30dp"
-        android:layout_marginLeft="@dimen/alert_dialog_margin_left_right"
-        android:layout_marginRight="@dimen/alert_dialog_margin_left_right">
+        android:layout_marginStart="@dimen/dimen_24dp"
+        android:layout_marginEnd="@dimen/dimen_24dp">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/icon"
-            android:layout_gravity="top"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
-            android:visibility="gone"
+            android:visibility="visible"
             android:src="@drawable/ic_alert"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/titleText"
             android:layout_marginLeft="10dp"
-            android:gravity="top|left"
-            android:fontFamily="@font/sf_pro_text_regular"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/sf_pro_text_semi_bold"
             android:layout_gravity="top"
             android:drawablePadding="10dp"
-            android:drawableLeft="@drawable/ic_alert"
             style="@style/H1Size"
             android:textSize="@dimen/dimen_15sp"
             android:text="Are you sure you want to cancel this ticket?"
@@ -44,14 +43,13 @@
 
     <TextView
         android:id="@+id/message"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="@dimen/dimen_20dp"
         android:layout_marginBottom="20dp"
-        android:layout_marginLeft="54.5dp"
-        android:layout_marginRight="@dimen/alert_dialog_margin_left_right"
+        android:layout_marginStart="@dimen/dimen_24dp"
+        android:layout_marginEnd="@dimen/dimen_24dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:gravity="left"
+        android:gravity="center"
         android:lineSpacingExtra="2.5dp"
         style="@style/H2SizeDark"
         android:textSize="10sp"
@@ -60,7 +58,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
+        android:layout_marginStart="@dimen/dimen_24dp"
+        android:layout_marginEnd="@dimen/dimen_24dp"
 
         >
 
@@ -69,14 +69,15 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:gravity="center"
-            android:text="NO"
+            android:text="No"
+            android:fontFamily="@font/sf_pro_text_bold"
             android:layout_marginTop="@dimen/dimen_40dp"
             android:background="@drawable/yellow_book_curve"
-            android:textAllCaps="true"
             android:layout_weight="1"
+            android:layout_marginEnd="@dimen/dimen_8dp"
             android:layout_gravity="center_horizontal"
             android:textColor="@color/black"
-            android:backgroundTint="@color/black_with_fifteen_opacity"
+            android:backgroundTint="@color/grayEd"
             style="@style/H2SizeDark"
             />
 
@@ -86,9 +87,9 @@
             android:layout_height="40dp"
             android:gravity="center"
             android:layout_weight="1"
+            android:fontFamily="@font/sf_pro_text_bold"
+            android:layout_marginStart="@dimen/dimen_8dp"
             android:background="@drawable/yellow_book_curve"
-            android:textAllCaps="true"
-            android:layout_marginBottom="@dimen/dimen_40dp"
             android:layout_marginTop="@dimen/dimen_40dp"
             android:layout_gravity="center_horizontal"
             android:text="Yes, cancel ticket"

@@ -241,7 +241,7 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
                 binding?.textView68?.show()
                 val layoutManagerCrew =
                     GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-                val crewAdapter = CrewAdapter(output.mb.crew, this)
+                val crewAdapter = CrewAdapter(getUpdatedList(output.mb.crew), this)
                 binding?.recyclerCrew?.layoutManager = layoutManagerCrew
                 binding?.recyclerCrew?.adapter = crewAdapter
             } else {
@@ -398,4 +398,30 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
             IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         )
     }
+
+    private fun getUpdatedList(crew: ArrayList<MovieDetailsResponse.Mb.Crew>): List<MovieDetailsResponse.Mb.Crew.Role> {
+        val list = ArrayList<MovieDetailsResponse.Mb.Crew.Role>()
+        val listRole = ArrayList<MovieDetailsResponse.Mb.Crew.Role>()
+        val listSupport = ArrayList<MovieDetailsResponse.Mb.Crew.Role>()
+        val newList = ArrayList<MovieDetailsResponse.Mb.Crew.Role>()
+
+        for (data in crew){
+            list.addAll(data.roles)
+        }
+        for (data in listRole){
+            if (data.role == "Director") {
+                listRole.add(data)
+            }else{
+                listSupport.add(data)
+            }
+        }
+
+        newList.addAll(listRole)
+        newList.addAll(listSupport)
+
+
+
+        return newList
+    }
+
 }

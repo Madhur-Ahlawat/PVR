@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ItemCinemaDetailsShowTimeBinding
 import com.net.pvr1.ui.bookingSession.MovieSessionActivity
+import com.net.pvr1.ui.bookingSession.MovieSessionActivity.Companion.btnc
 import com.net.pvr1.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.seatLayout.SeatLayoutActivity
@@ -128,7 +129,11 @@ class CinemaSessionTimeAdapter(
 //                    context.startActivity(intent)
                     if (this.ss != 0 && this.ss != 3) {
                         if (this.ba) {
-                            showOfferDialog(this.sid,this.cc,this.at,position)
+                            try {
+                                showOfferDialog(this.sid, this.cc, this.at, position)
+                            }catch (e:Exception){
+                                e.printStackTrace()
+                            }
                         } else {
                             sidText = this.sid.toString()
                             ccText = this.cc
@@ -143,7 +148,7 @@ class CinemaSessionTimeAdapter(
                                     R.mipmap.ic_launcher,
                                     R.string.app_name,
                                     context.getString(R.string.adult_msz),
-                                    positiveBtnText = R.string.yes,
+                                    positiveBtnText = R.string.accept,
                                     negativeBtnText = R.string.cancel,
                                     positiveClick = {
                                         if (at != "") {
@@ -151,7 +156,7 @@ class CinemaSessionTimeAdapter(
                                                 R.mipmap.ic_launcher,
                                                 R.string.app_name,
                                                 at,
-                                                positiveBtnText = R.string.yes,
+                                                positiveBtnText = R.string.accept,
                                                 negativeBtnText = R.string.cancel,
                                                 positiveClick = {
                                                     if (this.at != "") {
@@ -159,7 +164,7 @@ class CinemaSessionTimeAdapter(
                                                             R.mipmap.ic_launcher,
                                                             R.string.app_name,
                                                             this.at,
-                                                            positiveBtnText = R.string.yes,
+                                                            positiveBtnText = R.string.accept,
                                                             negativeBtnText = R.string.cancel,
                                                             positiveClick = {
                                                                 context.startActivity(intent)
@@ -178,7 +183,7 @@ class CinemaSessionTimeAdapter(
                                                     R.mipmap.ic_launcher,
                                                     R.string.app_name,
                                                     this.at,
-                                                    positiveBtnText = R.string.yes,
+                                                    positiveBtnText = R.string.accept,
                                                     negativeBtnText = R.string.cancel,
                                                     positiveClick = {
                                                         context.startActivity(intent)
@@ -199,7 +204,7 @@ class CinemaSessionTimeAdapter(
                                         R.mipmap.ic_launcher,
                                         R.string.app_name,
                                         at,
-                                        positiveBtnText = R.string.yes,
+                                        positiveBtnText = R.string.accept,
                                         negativeBtnText = R.string.cancel,
                                         positiveClick = {
                                             if (this.at != "") {
@@ -207,7 +212,7 @@ class CinemaSessionTimeAdapter(
                                                     R.mipmap.ic_launcher,
                                                     R.string.app_name,
                                                     this.at,
-                                                    positiveBtnText = R.string.yes,
+                                                    positiveBtnText = R.string.accept,
                                                     negativeBtnText = R.string.cancel,
                                                     positiveClick = {
                                                         context.startActivity(intent)
@@ -226,7 +231,7 @@ class CinemaSessionTimeAdapter(
                                             R.mipmap.ic_launcher,
                                             R.string.app_name,
                                             this.at,
-                                            positiveBtnText = R.string.yes,
+                                            positiveBtnText = R.string.accept,
                                             negativeBtnText = R.string.cancel,
                                             positiveClick = {
                                                 context.startActivity(intent)
@@ -437,11 +442,14 @@ class CinemaSessionTimeAdapter(
         val skip = dialog.findViewById<TextView>(R.id.textView266)
         val image = dialog.findViewById<ImageView>(R.id.imageView108)
         val applyOffer = dialog.findViewById<TextView>(R.id.textView267)
-        val viewTnc = dialog.findViewById<TextView>(R.id.viewTnc)
+        val viewTnc = dialog.findViewById<LinearLayout>(R.id.viewTnc)
         val tncData = dialog.findViewById<LinearLayout>(R.id.tncData)
+        val arrow = dialog.findViewById<ImageView>(R.id.arrow)
+
+        println("btnc--->${btnc}----${mih}")
 
         Glide.with(context)
-            .load(Constant.OfferDialogImage)
+            .load(mih)
             .error(R.drawable.placeholder_horizental)
             .placeholder(R.drawable.placeholder_horizental)
             .into(image)
@@ -449,8 +457,10 @@ class CinemaSessionTimeAdapter(
         viewTnc.setOnClickListener {
             if (tncData.visibility == View.VISIBLE){
                 tncData.hide()
+                arrow.rotation = 360f
             }else{
                 tncData.show()
+                arrow.rotation = 180f
             }
         }
 
@@ -465,7 +475,7 @@ class CinemaSessionTimeAdapter(
                 tvDot.setTextColor(context.resources.getColor(R.color.gray_))
                 tvMessage.setTextColor(context.resources.getColor(R.color.gray_))
                 tvMessage.text = st.nextElement().toString()
-                tvDot.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+                tvDot.setTextSize(TypedValue.COMPLEX_UNIT_SP, 5f)
                 tvMessage.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
                 tncData.addView(view)
             }
@@ -497,7 +507,7 @@ class CinemaSessionTimeAdapter(
                     R.mipmap.ic_launcher,
                     R.string.app_name,
                     context.getString(R.string.adult_msz),
-                    positiveBtnText = R.string.yes,
+                    positiveBtnText = R.string.accept,
                     negativeBtnText = R.string.cancel,
                     positiveClick = {
                         if (at != "") {
@@ -505,7 +515,7 @@ class CinemaSessionTimeAdapter(
                                 R.mipmap.ic_launcher,
                                 R.string.app_name,
                                 at,
-                                positiveBtnText = R.string.yes,
+                                positiveBtnText = R.string.accept,
                                 negativeBtnText = R.string.cancel,
                                 positiveClick = {
                                     if (newAt != "") {
@@ -513,7 +523,7 @@ class CinemaSessionTimeAdapter(
                                             R.mipmap.ic_launcher,
                                             R.string.app_name,
                                             newAt,
-                                            positiveBtnText = R.string.yes,
+                                            positiveBtnText = R.string.accept,
                                             negativeBtnText = R.string.cancel,
                                             positiveClick = {
                                                 context.startActivity(intent)
@@ -532,7 +542,7 @@ class CinemaSessionTimeAdapter(
                                     R.mipmap.ic_launcher,
                                     R.string.app_name,
                                     newAt,
-                                    positiveBtnText = R.string.yes,
+                                    positiveBtnText = R.string.accept,
                                     negativeBtnText = R.string.cancel,
                                     positiveClick = {
                                         context.startActivity(intent)
@@ -553,7 +563,7 @@ class CinemaSessionTimeAdapter(
                         R.mipmap.ic_launcher,
                         R.string.app_name,
                         at,
-                        positiveBtnText = R.string.yes,
+                        positiveBtnText = R.string.accept,
                         negativeBtnText = R.string.cancel,
                         positiveClick = {
                             if (newAt != "") {
@@ -561,7 +571,7 @@ class CinemaSessionTimeAdapter(
                                     R.mipmap.ic_launcher,
                                     R.string.app_name,
                                     newAt,
-                                    positiveBtnText = R.string.yes,
+                                    positiveBtnText = R.string.accept,
                                     negativeBtnText = R.string.cancel,
                                     positiveClick = {
                                         context.startActivity(intent)
@@ -580,7 +590,7 @@ class CinemaSessionTimeAdapter(
                             R.mipmap.ic_launcher,
                             R.string.app_name,
                             newAt,
-                            positiveBtnText = R.string.yes,
+                            positiveBtnText = R.string.accept,
                             negativeBtnText = R.string.cancel,
                             positiveClick = {
                                 context.startActivity(intent)
@@ -611,7 +621,7 @@ class CinemaSessionTimeAdapter(
                     R.mipmap.ic_launcher,
                     R.string.app_name,
                     context.getString(R.string.adult_msz),
-                    positiveBtnText = R.string.yes,
+                    positiveBtnText = R.string.accept,
                     negativeBtnText = R.string.cancel,
                     positiveClick = {
                         if (at != "") {
@@ -619,7 +629,7 @@ class CinemaSessionTimeAdapter(
                                 R.mipmap.ic_launcher,
                                 R.string.app_name,
                                 at,
-                                positiveBtnText = R.string.yes,
+                                positiveBtnText = R.string.accept,
                                 negativeBtnText = R.string.cancel,
                                 positiveClick = {
                                     if (newAt != "") {
@@ -627,7 +637,7 @@ class CinemaSessionTimeAdapter(
                                             R.mipmap.ic_launcher,
                                             R.string.app_name,
                                             newAt,
-                                            positiveBtnText = R.string.yes,
+                                            positiveBtnText = R.string.accept,
                                             negativeBtnText = R.string.cancel,
                                             positiveClick = {
                                                 context.startActivity(intent)
@@ -646,7 +656,7 @@ class CinemaSessionTimeAdapter(
                                     R.mipmap.ic_launcher,
                                     R.string.app_name,
                                     newAt,
-                                    positiveBtnText = R.string.yes,
+                                    positiveBtnText = R.string.accept,
                                     negativeBtnText = R.string.cancel,
                                     positiveClick = {
                                         context.startActivity(intent)
@@ -667,7 +677,7 @@ class CinemaSessionTimeAdapter(
                         R.mipmap.ic_launcher,
                         R.string.app_name,
                         at,
-                        positiveBtnText = R.string.yes,
+                        positiveBtnText = R.string.accept,
                         negativeBtnText = R.string.cancel,
                         positiveClick = {
                             if (newAt != "") {
@@ -675,7 +685,7 @@ class CinemaSessionTimeAdapter(
                                     R.mipmap.ic_launcher,
                                     R.string.app_name,
                                     newAt,
-                                    positiveBtnText = R.string.yes,
+                                    positiveBtnText = R.string.accept,
                                     negativeBtnText = R.string.cancel,
                                     positiveClick = {
                                         context.startActivity(intent)
@@ -694,7 +704,7 @@ class CinemaSessionTimeAdapter(
                             R.mipmap.ic_launcher,
                             R.string.app_name,
                             newAt,
-                            positiveBtnText = R.string.yes,
+                            positiveBtnText = R.string.accept,
                             negativeBtnText = R.string.cancel,
                             positiveClick = {
                                 context.startActivity(intent)

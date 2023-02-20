@@ -157,7 +157,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         //Remove Offer
         binding?.textView203?.setOnClickListener {
             binding?.llRowName?.removeAllViews()
-            offerEnable = false
             binding?.constraintLayout60?.hide()
             authViewModel.seatLayout(
                 CINEMA_ID, Constant.SESSION_ID, "", "", "", offerEnable, ""
@@ -299,7 +298,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         var st = cinemaSessionShows[position.toInt()].st
         for (data in cinemaSessionShows.indices){
             if (cinemaSessionShows[data].ss != 0){
-                if (st == showsArray[data].st){
+                if (st == cinemaSessionShows[data].st){
                     position = data.toString()
                 }
                 list.add(cinemaSessionShows[data])
@@ -375,6 +374,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         retrieverReserveSeatData(it.data.output)
                     } else {
+                        selectSeatPriceCode.clear()
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
                             R.string.app_name,
@@ -491,6 +491,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 //        AVAILABETIME = Constant().convertTime(1)
 
         TRANSACTION_ID = output.transid
+        println("SeatTagData--->${selectSeatPriceCode.size}---->${selectedSeats.size}---->${selectedSeatsBox?.size}")
 
         for (item in selectedSeats) {
             val price = item.priceCode
@@ -1522,6 +1523,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 noOfSeatsSelected.removeAt(i)
                 selectedSeats.removeAt(i)
                 selectedSeatsBox?.removeAt(i)
+
                 break
             }
         }
@@ -1884,23 +1886,24 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     }
 
     @SuppressLint("SetTextI18n")
-    private fun removeHC(
-        context: Activity, seat: SeatTagData, seatView: TextView
-    ) {
+    private fun removeHC(context: Activity, seat: SeatTagData, seatView: TextView) {
         // custom dialog
         val messagePcTextView: TextView
         val titleText: TextView
         val cancel: TextView
         val delete: TextView
         val icon: ImageView
-        val dialog = Dialog(context)
+        val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.ticket_cancel)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val behavior: BottomSheetBehavior<FrameLayout> = dialog.behavior
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+        dialog.window?.setGravity(Gravity.BOTTOM)
         dialog.window!!.setLayout(
-            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        dialog.window!!.setGravity(Gravity.CENTER)
         dialog.setTitle("")
         messagePcTextView = dialog.findViewById<View>(R.id.message) as TextView
         titleText = dialog.findViewById<View>(R.id.titleText) as TextView
@@ -1912,7 +1915,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             "If you will remove wheelchair then corresponding Companion seat will be remove also."
         titleText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
         icon.setImageResource(R.drawable.hc_icon)
-        delete.text = "NO"
+        delete.text = "No"
         delete.setOnClickListener { dialog.dismiss() }
         cancel = dialog.findViewById<View>(R.id.yes) as TextView
         cancel.setOnClickListener {
@@ -2041,6 +2044,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             //clear List
             selectedSeats.clear()
             selectSeatPriceCode.clear()
+            noOfSeatsSelected.clear()
+            calculatePrice()
             authViewModel.seatLayout(
                 CINEMA_ID, sessionId, "", "", "", offerEnable, ""
             )

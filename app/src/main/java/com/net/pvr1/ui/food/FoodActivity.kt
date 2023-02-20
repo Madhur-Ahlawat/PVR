@@ -42,7 +42,6 @@ import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr1.utils.Constant.Companion.SUMMERYBACK
 import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
 import com.net.pvr1.utils.Constant.Companion.foodCartModel
-import com.net.pvr1.utils.Constant.Companion.foodLimit
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -69,6 +68,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     private var cartModel: ArrayList<CartModel> = arrayListOf()
     private var filterResponse: ArrayList<FoodResponse.Output.Mfl>? = null
     private var catFilter = ArrayList<FoodResponse.Output.Mfl>()
+    private var popupFood = ArrayList<FoodResponse.Output.Bestseller.R>()
     private var catFilterBestSeller = ArrayList<FoodResponse.Output.Bestseller>()
     private var foodResponse: FoodResponse.Output? = null
     private var foodResponseCategory: ArrayList<FoodResponse.Output.Cat> = arrayListOf()
@@ -88,9 +88,6 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     private var amtViewFood:RelativeLayout? = null
     private var amtFood:TextView? = null
 
-    //foodLimit
-//    private var foodLimit: Int = 0
-
     //internet Check
     private var broadcastReceiver: BroadcastReceiver? = null
 
@@ -104,6 +101,10 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
 
 
     companion object{
+
+        var itemCount = 0
+        var limitCount = 0
+        var seatMessage = "0"
         fun getFoodQTCount(r: List<FoodResponse.Output.Bestseller.R>): Int {
             var qt = 0
             for (data in r){
@@ -112,6 +113,15 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
                 }
             }
             return qt
+        }
+
+         fun getItemCount(cartModel: ArrayList<CartModel>): Int {
+            var count = 0
+
+            for (data in cartModel){
+                count += data.quantity
+            }
+            return count
         }
     }
 
@@ -149,12 +159,13 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
             when (it) {
                 is NetworkResult.Success -> {
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        foodLimit = it.data.output.aqt
                         foodResponse = it.data.output
                         foodResponseCategory.add(FoodResponse.Output.Cat("", "ALL", 0))
                         foodResponseCategory.addAll(it.data.output.cat)
                         filterResponse = it.data.output.mfl
                         catFilter = it.data.output.mfl
+                        limitCount = it.data.output.aqt
+                        seatMessage = it.data.output.nams
                         catFilterBestSeller = it.data.output.bestsellers
                         retrieveData(it.data.output)
                         loader?.dismiss()
@@ -438,12 +449,24 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     }
 
     override fun addFood(comingSoonItem: FoodResponse.Output.Bestseller, position: Int) {
-        masterId = comingSoonItem.r[0].id.toString()
-        var num = comingSoonItem.qt
-        num += 1
-        comingSoonItem.qt = num
-        updateBestSellerCartList(comingSoonItem)
-        cartData()
+        if (itemCount >= limitCount) {
+            val dialog = OptionDialog(this,
+                R.mipmap.ic_launcher,
+                R.string.app_name,
+                seatMessage,
+                positiveBtnText = R.string.ok,
+                negativeBtnText = R.string.no,
+                positiveClick = {},
+                negativeClick = {})
+            dialog.show()
+        } else {
+            masterId = comingSoonItem.r[0].id.toString()
+            var num = comingSoonItem.qt
+            num += 1
+            comingSoonItem.qt = num
+            updateBestSellerCartList(comingSoonItem)
+            cartData()
+        }
     }
 
     private fun updateBestSellerCartList(comingSoonItem: FoodResponse.Output.Bestseller) {
@@ -501,12 +524,11 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
 
     override fun addFoodPlus(comingSoonItem: FoodResponse.Output.Bestseller, position: Int) {
         var num = comingSoonItem.qt
-        if (num > foodLimit || num == foodLimit) {
+        if (itemCount >= limitCount) {
             val dialog = OptionDialog(this,
                 R.mipmap.ic_launcher,
                 R.string.app_name,
-                getString(R.string.max_item_msz) + " "
-                        + foodLimit + " " + getString(R.string.items_a_time),
+                seatMessage,
                 positiveBtnText = R.string.ok,
                 negativeBtnText = R.string.no,
                 positiveClick = {},
@@ -579,11 +601,11 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         //Add Food
         bindingBottom.uiPlusMinus.plus.setOnClickListener {
             var num = comingSoonItem.qt
-            if (num > foodLimit || num == foodLimit) {
+            if (itemCount >= limitCount) {
                 val dialog1 = OptionDialog(this,
                     R.mipmap.ic_launcher,
                     R.string.app_name,
-                    getString(R.string.max_item_msz) + " " + foodLimit + " " + getString(R.string.items_a_time),
+                    seatMessage,
                     positiveBtnText = R.string.ok,
                     negativeBtnText = R.string.no,
                     positiveClick = {},
@@ -763,19 +785,42 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     }
 
     override fun filterBtFoodClick(comingSoonItem: FoodResponse.Output.Bestseller.R,list:List<FoodResponse.Output.Bestseller.R>) {
-        var num = comingSoonItem.qt
-        num += 1
-        comingSoonItem.qt = num
-        updateFoodItemAmt(list as ArrayList<FoodResponse.Output.Bestseller.R>)
+        if ((itemCount+getPopCount(popupFood))>= limitCount) {
+            val dialog = OptionDialog(this,
+                R.mipmap.ic_launcher,
+                R.string.app_name,
+                seatMessage,
+                positiveBtnText = R.string.ok,
+                negativeBtnText = R.string.no,
+                positiveClick = {},
+                negativeClick = {})
+            dialog.show()
+        } else {
+            var num = comingSoonItem.qt
+            num += 1
+            comingSoonItem.qt = num
+            updateFoodItemAmt(list as ArrayList<FoodResponse.Output.Bestseller.R>)
+        }
+    }
+
+    private fun getPopCount(popupFood: ArrayList<FoodResponse.Output.Bestseller.R>): Int {
+        var count = 0
+        if (popupFood!=null) {
+            for (data in popupFood) {
+                count += data.qt
+            }
+        }
+
+        return count
     }
 
     override fun filterBtFoodPlus(comingSoonItem: FoodResponse.Output.Bestseller.R,list:List<FoodResponse.Output.Bestseller.R>) {
         var num = comingSoonItem.qt
-        if (num > foodLimit || num == foodLimit) {
+        if ((itemCount+getPopCount(popupFood)) >= limitCount) {
             val dialog = OptionDialog(this,
                 R.mipmap.ic_launcher,
                 R.string.app_name,
-                getString(R.string.max_item_msz) + " " + foodLimit + " " + getString(R.string.items_a_time),
+                seatMessage,
                 positiveBtnText = R.string.ok,
                 negativeBtnText = R.string.no,
                 positiveClick = {},
@@ -789,7 +834,6 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     }
 
     override fun filterBtFoodMinus(comingSoonItem: FoodResponse.Output.Bestseller.R,list:List<FoodResponse.Output.Bestseller.R>) {
-        toast("1")
         var num = comingSoonItem.qt
         if (num < 0 || num == 0) {
             val dialog = OptionDialog(this,
@@ -873,11 +917,11 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     //Cart Action Manage
     override fun cartFoodPlus(comingSoonItem: CartModel, position: Int) {
         var num = comingSoonItem.quantity
-        if (num > foodLimit || num == foodLimit) {
+        if (itemCount >= limitCount) {
             val dialog = OptionDialog(this,
                 R.mipmap.ic_launcher,
                 R.string.app_name,
-                getString(R.string.max_item_msz) + " " + foodLimit + " " + getString(R.string.items_a_time),
+               seatMessage,
                 positiveBtnText = R.string.ok,
                 negativeBtnText = R.string.no,
                 positiveClick = {},
@@ -929,6 +973,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         bottomFoodAdapter?.notifyDataSetChanged()
         allFoodAdapter?.notifyDataSetChanged()
         previousFoodAdapter?.notifyDataSetChanged()
+
         val newLayoutParams: ConstraintLayout.LayoutParams =
             binding?.constraintLayout30?.layoutParams as ConstraintLayout.LayoutParams
         val displayMetrics = DisplayMetrics()
@@ -936,16 +981,18 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         val height = displayMetrics.heightPixels
         val width = displayMetrics.widthPixels
 
+
         if (cartModel.isEmpty()) {
             binding?.constraintLayout30?.hide()
             binding?.textView374?.show()
 
         } else {
-            newLayoutParams.height = height/5
-
-            binding?.constraintLayout30?.layoutParams = newLayoutParams
-            binding?.constraintLayout30?.show()
-            binding?.textView374?.hide()
+            if (!cartShow) {
+                newLayoutParams.height = height / 5
+                binding?.constraintLayout30?.layoutParams = newLayoutParams
+                binding?.constraintLayout30?.show()
+                binding?.textView374?.hide()
+            }
             binding?.textView149?.setOnClickListener {
                 cartShow = if (!cartShow) {
                     binding?.textView149?.setCompoundDrawablesWithIntrinsicBounds(
@@ -982,29 +1029,37 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
             binding?.textView148?.text =
                 getString(R.string.currency) + Constant.DECIFORMAT.format(itemCheckPriceCart / 100.0)
             binding?.textView149?.text = cartModel.size.toString() + " " + getString(R.string.items)
-            binding?.constraintLayout30?.show()
-            binding?.textView374?.hide()
-            val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-            val cartAdapter = CartAdapter(cartModel, this, this)
-            binding?.recyclerView41?.layoutManager = layoutManager
-            binding?.recyclerView41?.adapter = cartAdapter
 
-            binding?.constraintLayout30?.setOnClickListener {
-                newLayoutParams.height = height/5
-                binding?.constraintLayout30?.setBackgroundColor(getColor(R.color.transparent1))
-                binding?.constraintLayout30?.layoutParams = newLayoutParams
-                binding?.constraintLayout112?.hide()
-                cartShow = false
-                binding?.textView149?.setCompoundDrawablesWithIntrinsicBounds(
-                    0,
-                    0,
-                    R.drawable.food_arrow_up,
-                    0
-                )
+
+            if (!cartShow) {
+                println("cartShow--->$cartShow")
+
+                val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+                val cartAdapter = CartAdapter(cartModel, this, this)
+                binding?.recyclerView41?.layoutManager = layoutManager
+                binding?.recyclerView41?.adapter = cartAdapter
             }
+
+            itemCount = getItemCount(cartModel)
+
+//            binding?.constraintLayout30?.setOnClickListener {
+//                newLayoutParams.height = height/5
+//                binding?.constraintLayout30?.setBackgroundColor(getColor(R.color.transparent1))
+//                binding?.constraintLayout30?.layoutParams = newLayoutParams
+//                binding?.constraintLayout112?.hide()
+//                cartShow = false
+//                binding?.textView149?.setCompoundDrawablesWithIntrinsicBounds(
+//                    0,
+//                    0,
+//                    R.drawable.food_arrow_up,
+//                    0
+//                )
+//            }
 
         }
     }
+
+
 
     private fun updateCartFoodCartList(recyclerData: CartModel) {
         try {
@@ -1162,16 +1217,32 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
             }
 
         }
+        if (categoryFilterNew.size==0){
+            toast("There are no non veg food in $name")
+        }
         return categoryFilterNew
     }
 
     //Mfl All Food
     override fun categoryFoodClick(comingSoonItem: FoodResponse.Output.Mfl) {
-        var num = comingSoonItem.qt
-        num += 1
-        comingSoonItem.qt = num
-        updateCategoryFoodCartList(comingSoonItem)
-        cartData()
+        if (itemCount >= limitCount) {
+            val dialog = OptionDialog(this,
+                R.mipmap.ic_launcher,
+                R.string.app_name,
+                seatMessage,
+                positiveBtnText = R.string.ok,
+                negativeBtnText = R.string.no,
+                positiveClick = {},
+                negativeClick = {})
+            dialog.show()
+
+        }else{
+            var num = comingSoonItem.qt
+            num += 1
+            comingSoonItem.qt = num
+            updateCategoryFoodCartList(comingSoonItem)
+            cartData()
+        }
     }
 
     override fun categoryFoodImageClick(comingSoonItem: FoodResponse.Output.Mfl) {
@@ -1179,20 +1250,18 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     }
 
     override fun categoryFoodPlus(comingSoonItem: FoodResponse.Output.Mfl, position: Int) {
-        var num = comingSoonItem.qt
-        if (num > foodLimit || num == foodLimit) {
+        if (itemCount >= limitCount) {
             val dialog = OptionDialog(this,
                 R.mipmap.ic_launcher,
                 R.string.app_name,
-                getString(R.string.max_item_msz) + " " + foodLimit + " " + getString(R.string.items_a_time),
+                seatMessage,
                 positiveBtnText = R.string.ok,
                 negativeBtnText = R.string.no,
                 positiveClick = {},
                 negativeClick = {})
             dialog.show()
         } else {
-            num += 1
-            comingSoonItem.qt = num
+            comingSoonItem.qt = comingSoonItem.qt+1
             updateCategoryFoodCartList(comingSoonItem)
             cartData()
         }
@@ -1278,11 +1347,11 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         //Add Food
         bindingBottom.uiPlusMinus.plus.setOnClickListener {
             var num = comingSoonItem.qt
-            if (num > foodLimit || num == foodLimit) {
+            if (itemCount >= limitCount) {
                 val dialog2 = OptionDialog(this,
                     R.mipmap.ic_launcher,
                     R.string.app_name,
-                    getString(R.string.max_item_msz) + " " + foodLimit + " " + getString(R.string.items_a_time),
+                    seatMessage,
                     positiveBtnText = R.string.ok,
                     negativeBtnText = R.string.no,
                     positiveClick = {},
@@ -1370,6 +1439,8 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         }
 
         updateFoodItemAmt(comingSoonItem as ArrayList<FoodResponse.Output.Bestseller.R>)
+
+        popupFood = comingSoonItem
     }
 
 

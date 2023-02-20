@@ -142,7 +142,7 @@ class BookingShowsTimeAdapter(
                                     R.mipmap.ic_launcher,
                                     R.string.app_name,
                                     context.getString(R.string.adult_msz),
-                                    positiveBtnText = R.string.yes,
+                                    positiveBtnText = R.string.accept,
                                     negativeBtnText = R.string.cancel,
                                     positiveClick = {
                                         if (at != "") {
@@ -150,7 +150,7 @@ class BookingShowsTimeAdapter(
                                                 R.mipmap.ic_launcher,
                                                 R.string.app_name,
                                                 at,
-                                                positiveBtnText = R.string.yes,
+                                                positiveBtnText = R.string.accept,
                                                 negativeBtnText = R.string.cancel,
                                                 positiveClick = {
                                                     if (this.at != "") {
@@ -158,7 +158,7 @@ class BookingShowsTimeAdapter(
                                                             R.mipmap.ic_launcher,
                                                             R.string.app_name,
                                                             this.at,
-                                                            positiveBtnText = R.string.yes,
+                                                            positiveBtnText = R.string.accept,
                                                             negativeBtnText = R.string.cancel,
                                                             positiveClick = {
                                                                 context.startActivity(intent)
@@ -177,7 +177,7 @@ class BookingShowsTimeAdapter(
                                                     R.mipmap.ic_launcher,
                                                     R.string.app_name,
                                                     this.at,
-                                                    positiveBtnText = R.string.yes,
+                                                    positiveBtnText = R.string.accept,
                                                     negativeBtnText = R.string.cancel,
                                                     positiveClick = {
                                                         context.startActivity(intent)
@@ -198,7 +198,7 @@ class BookingShowsTimeAdapter(
                                         R.mipmap.ic_launcher,
                                         R.string.app_name,
                                         at,
-                                        positiveBtnText = R.string.yes,
+                                        positiveBtnText = R.string.accept,
                                         negativeBtnText = R.string.cancel,
                                         positiveClick = {
                                             if (this.at != "") {
@@ -206,7 +206,7 @@ class BookingShowsTimeAdapter(
                                                     R.mipmap.ic_launcher,
                                                     R.string.app_name,
                                                     this.at,
-                                                    positiveBtnText = R.string.yes,
+                                                    positiveBtnText = R.string.accept,
                                                     negativeBtnText = R.string.cancel,
                                                     positiveClick = {
                                                         context.startActivity(intent)
@@ -225,7 +225,7 @@ class BookingShowsTimeAdapter(
                                             R.mipmap.ic_launcher,
                                             R.string.app_name,
                                             this.at,
-                                            positiveBtnText = R.string.yes,
+                                            positiveBtnText = R.string.accept,
                                             negativeBtnText = R.string.cancel,
                                             positiveClick = {
                                                 context.startActivity(intent)
@@ -432,8 +432,9 @@ class BookingShowsTimeAdapter(
         val skip = dialog.findViewById<TextView>(R.id.textView266)
         val image = dialog.findViewById<ImageView>(R.id.imageView108)
         val applyOffer = dialog.findViewById<TextView>(R.id.textView267)
-        val viewTnc = dialog.findViewById<TextView>(R.id.viewTnc)
+        val viewTnc = dialog.findViewById<LinearLayout>(R.id.viewTnc)
         val tncData = dialog.findViewById<LinearLayout>(R.id.tncData)
+        val arrow = dialog.findViewById<ImageView>(R.id.arrow)
 
         Glide.with(context)
             .load(OfferDialogImage)
@@ -444,7 +445,9 @@ class BookingShowsTimeAdapter(
         viewTnc.setOnClickListener {
             if (tncData.visibility == View.VISIBLE){
                 tncData.hide()
+                arrow.rotation = 360f
             }else{
+                arrow.rotation = 180f
                 tncData.show()
             }
         }
@@ -460,7 +463,7 @@ class BookingShowsTimeAdapter(
                 tvDot.setTextColor(context.resources.getColor(R.color.gray_))
                 tvMessage.setTextColor(context.resources.getColor(R.color.gray_))
                 tvMessage.text = st.nextElement().toString()
-                tvDot.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+                tvDot.setTextSize(TypedValue.COMPLEX_UNIT_SP, 5f)
                 tvMessage.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
                 tncData.addView(view)
             }
@@ -496,7 +499,7 @@ class BookingShowsTimeAdapter(
                     R.mipmap.ic_launcher,
                     R.string.app_name,
                     context.getString(R.string.adult_msz),
-                    positiveBtnText = R.string.yes,
+                    positiveBtnText = R.string.accept,
                     negativeBtnText = R.string.cancel,
                     positiveClick = {
                         if (at != "") {
@@ -504,7 +507,7 @@ class BookingShowsTimeAdapter(
                                 R.mipmap.ic_launcher,
                                 R.string.app_name,
                                 at,
-                                positiveBtnText = R.string.yes,
+                                positiveBtnText = R.string.accept,
                                 negativeBtnText = R.string.cancel,
                                 positiveClick = {
                                     if (newAt != "") {
@@ -512,7 +515,7 @@ class BookingShowsTimeAdapter(
                                             R.mipmap.ic_launcher,
                                             R.string.app_name,
                                             newAt,
-                                            positiveBtnText = R.string.yes,
+                                            positiveBtnText = R.string.accept,
                                             negativeBtnText = R.string.cancel,
                                             positiveClick = {
                                                 context.startActivity(intent)
@@ -531,7 +534,7 @@ class BookingShowsTimeAdapter(
                                     R.mipmap.ic_launcher,
                                     R.string.app_name,
                                     newAt,
-                                    positiveBtnText = R.string.yes,
+                                    positiveBtnText = R.string.accept,
                                     negativeBtnText = R.string.cancel,
                                     positiveClick = {
                                         context.startActivity(intent)
@@ -552,7 +555,7 @@ class BookingShowsTimeAdapter(
                         R.mipmap.ic_launcher,
                         R.string.app_name,
                         at,
-                        positiveBtnText = R.string.yes,
+                        positiveBtnText = R.string.accept,
                         negativeBtnText = R.string.cancel,
                         positiveClick = {
                             if (newAt != "") {
@@ -560,7 +563,7 @@ class BookingShowsTimeAdapter(
                                     R.mipmap.ic_launcher,
                                     R.string.app_name,
                                     newAt,
-                                    positiveBtnText = R.string.yes,
+                                    positiveBtnText = R.string.accept,
                                     negativeBtnText = R.string.cancel,
                                     positiveClick = {
                                         context.startActivity(intent)
@@ -579,7 +582,7 @@ class BookingShowsTimeAdapter(
                             R.mipmap.ic_launcher,
                             R.string.app_name,
                             newAt,
-                            positiveBtnText = R.string.yes,
+                            positiveBtnText = R.string.accept,
                             negativeBtnText = R.string.cancel,
                             positiveClick = {
                                 context.startActivity(intent)
@@ -609,7 +612,7 @@ class BookingShowsTimeAdapter(
                     R.mipmap.ic_launcher,
                     R.string.app_name,
                     context.getString(R.string.adult_msz),
-                    positiveBtnText = R.string.yes,
+                    positiveBtnText = R.string.accept,
                     negativeBtnText = R.string.cancel,
                     positiveClick = {
                         if (at != "") {
@@ -617,7 +620,7 @@ class BookingShowsTimeAdapter(
                                 R.mipmap.ic_launcher,
                                 R.string.app_name,
                                 at,
-                                positiveBtnText = R.string.yes,
+                                positiveBtnText = R.string.accept,
                                 negativeBtnText = R.string.cancel,
                                 positiveClick = {
                                     if (newAt != "") {
@@ -625,7 +628,7 @@ class BookingShowsTimeAdapter(
                                             R.mipmap.ic_launcher,
                                             R.string.app_name,
                                             newAt,
-                                            positiveBtnText = R.string.yes,
+                                            positiveBtnText = R.string.accept,
                                             negativeBtnText = R.string.cancel,
                                             positiveClick = {
                                                 context.startActivity(intent)
@@ -644,7 +647,7 @@ class BookingShowsTimeAdapter(
                                     R.mipmap.ic_launcher,
                                     R.string.app_name,
                                     newAt,
-                                    positiveBtnText = R.string.yes,
+                                    positiveBtnText = R.string.accept,
                                     negativeBtnText = R.string.cancel,
                                     positiveClick = {
                                         context.startActivity(intent)
@@ -665,7 +668,7 @@ class BookingShowsTimeAdapter(
                         R.mipmap.ic_launcher,
                         R.string.app_name,
                         at,
-                        positiveBtnText = R.string.yes,
+                        positiveBtnText = R.string.accept,
                         negativeBtnText = R.string.cancel,
                         positiveClick = {
                             if (newAt != "") {
@@ -673,7 +676,7 @@ class BookingShowsTimeAdapter(
                                     R.mipmap.ic_launcher,
                                     R.string.app_name,
                                     newAt,
-                                    positiveBtnText = R.string.yes,
+                                    positiveBtnText = R.string.accept,
                                     negativeBtnText = R.string.cancel,
                                     positiveClick = {
                                         context.startActivity(intent)
@@ -692,7 +695,7 @@ class BookingShowsTimeAdapter(
                             R.mipmap.ic_launcher,
                             R.string.app_name,
                             newAt,
-                            positiveBtnText = R.string.yes,
+                            positiveBtnText = R.string.accept,
                             negativeBtnText = R.string.cancel,
                             positiveClick = {
                                 context.startActivity(intent)

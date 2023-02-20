@@ -48,16 +48,28 @@ class BookingCinemaNameAdapter(
 
                 if (position==0){
                     binding.recyclerView11.show()
-                    binding.imageView56.setImageResource(R.drawable.arrow_up)
+                    binding.imageView56.rotation = 180f
                 }
 
                 binding.constraintLayout111.setOnClickListener {
                     if (binding.recyclerView11.visibility == View.GONE) {
                         binding.recyclerView11.show()
                         binding.hcIcon.hide()
-                        binding.imageView56.setImageResource(R.drawable.arrow_up)
+                        binding.imageView56.rotation = 180f
                     } else {
-                        binding.imageView56.setImageResource(R.drawable.arrow_down)
+                        binding.imageView56.rotation = 360f
+                        binding.recyclerView11.hide()
+                        binding.hcIcon.hide()
+                    }
+                }
+
+                binding.imageView56.setOnClickListener {
+                    if (binding.recyclerView11.visibility == View.GONE) {
+                        binding.recyclerView11.show()
+                        binding.hcIcon.hide()
+                        binding.imageView56.rotation = 180f
+                    } else {
+                        binding.imageView56.rotation = 360f
                         binding.recyclerView11.hide()
                         binding.hcIcon.hide()
                     }

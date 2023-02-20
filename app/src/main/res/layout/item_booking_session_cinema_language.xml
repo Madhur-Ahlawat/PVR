@@ -76,15 +76,15 @@
 
 
             <ImageView
-                android:visibility="visible"
                 android:id="@+id/imageView56"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/dimen_10dp"
                 android:layout_marginEnd="@dimen/dimen_24dp"
-                app:layout_constraintBottom_toBottomOf="@+id/constraintLayout111"
+                android:padding="@dimen/dimen_10dp"
+                android:visibility="visible"
+                android:layout_marginTop="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/constraintLayout111"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/arrow_down"
                 tools:ignore="ContentDescription" />
 

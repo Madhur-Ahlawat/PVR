@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/placeHolderView"
     android:layout_marginTop="@dimen/padding_10"
-    android:layout_marginBottom="@dimen/padding_10"
+    android:layout_marginBottom="@dimen/dimen_20dp"
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.recyclerview.widget.RecyclerView
