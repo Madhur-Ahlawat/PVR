@@ -27,8 +27,9 @@ class AllGenreAdapter(
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         with(holder){
             with(nowShowingList[position]){
+
                 binding.textView242.text=this.na
-                if (rowIndex==position){
+                if (this.liked){
                     binding.imageView169.setImageResource(R.drawable.curve_select)
                 }else{
                     binding.imageView169.setImageResource(R.drawable.curve_unselect)
@@ -37,6 +38,10 @@ class AllGenreAdapter(
                 //click
                 holder.itemView.setOnClickListener {
                     rowIndex=position
+                    this.liked = true
+
+
+
                     listener.allGenreClick(this)
                     notifyDataSetChanged()
                 }

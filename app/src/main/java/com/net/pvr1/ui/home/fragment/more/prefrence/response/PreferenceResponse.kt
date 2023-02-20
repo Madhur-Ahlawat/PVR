@@ -41,7 +41,8 @@ data class PreferenceResponse(
             data class Other(
                 val id: String,
                 val na: String,
-                val txt: String
+                val txt: String,
+                var liked: Boolean,
             ):java.io.Serializable
         }
         data class Lang(

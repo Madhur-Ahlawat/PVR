@@ -35,12 +35,18 @@ class NetworkReceiver : BroadcastReceiver() {
             )
         }
         status?.let { Log.d("network", it) }
-        if (status?.isEmpty() == true || status == "No internet is available" || status == "No Internet Connection") {
-            status = "No Internet Connection"
-            dialog?.show()
+
+        try {
+            if (status?.isEmpty() == true || status == "No internet is available" || status == "No Internet Connection") {
+                status = "No Internet Connection"
+                dialog?.show()
+            }
+            else{
+                dialog?.hide()
+            }
+        }catch (e:java.lang.Exception){
+            e.printStackTrace()
         }
-        else{
-            dialog?.hide()
-        }
+
     }
 }
