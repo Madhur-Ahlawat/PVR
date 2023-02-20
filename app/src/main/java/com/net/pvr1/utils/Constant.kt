@@ -176,7 +176,7 @@ class Constant {
 
         // OFFERS
         var PROMOCODE = "O104"
-        var ACCENTIVE = "o111"
+        var ACCENTIVE = "O111"
         var M_COUPON = "O102"
         var STAR_PASS = "O105"
         var HYATT = "O107"

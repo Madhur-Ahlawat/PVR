@@ -16,8 +16,9 @@
 
     <ImageView
         android:id="@+id/imageView81"
-        android:layout_width="25dp"
+        android:layout_width="@dimen/dimen_30dp"
         android:layout_height="25dp"
+        android:adjustViewBounds="true"
         app:layout_constraintBottom_toBottomOf="@+id/textView124"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView124"

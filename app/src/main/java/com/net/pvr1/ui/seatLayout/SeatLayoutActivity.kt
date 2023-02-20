@@ -269,14 +269,12 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         var st = showsArray[position.toInt()].st
         for (data in showsArray.indices){
             if (showsArray[data].ss != 0){
-                if (st == showsArray[data].st){
-                    position = data.toString()
-                }
                 list.add(showsArray[data])
             }
         }
         for (data in list.indices){
             if (list[data].st == st){
+                sessionId = list[data].sid.toString()
                 position = data.toString()
             }
         }
@@ -298,14 +296,12 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         var st = cinemaSessionShows[position.toInt()].st
         for (data in cinemaSessionShows.indices){
             if (cinemaSessionShows[data].ss != 0){
-                if (st == cinemaSessionShows[data].st){
-                    position = data.toString()
-                }
                 list.add(cinemaSessionShows[data])
             }
         }
         for (data in list.indices){
             if (list[data].st == st){
+                sessionId = list[data].sid.toString()
                 position = data.toString()
             }
         }
@@ -2007,6 +2003,11 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
         sessionId = comingSoonItem.toString()
         binding?.llRowName?.removeAllViews()
+        //clear List
+        selectedSeats.clear()
+        selectSeatPriceCode.clear()
+        noOfSeatsSelected.clear()
+        calculatePrice()
         authViewModel.seatLayout(
             CINEMA_ID, sessionId, "", "", "", false, ""
         )
@@ -2023,6 +2024,11 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
         sessionId = comingSoonItem.toString()
         binding?.llRowName?.removeAllViews()
+        //clear List
+        selectedSeats.clear()
+        selectSeatPriceCode.clear()
+        noOfSeatsSelected.clear()
+        calculatePrice()
         authViewModel.seatLayout(
             CINEMA_ID, sessionId, "", "", "", false, ""
         )

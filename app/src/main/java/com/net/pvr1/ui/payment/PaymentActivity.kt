@@ -334,7 +334,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         authViewModel.userResponseLiveData.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
-                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                    if (Constant.status == it.data?.result) {
                         retrieveDataCoupon(it.data.output)
                     }
                 }
@@ -348,7 +348,9 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
     }
 
     private fun retrieveDataCoupon(output: ArrayList<CouponResponse.Output>) {
+        println("constraintLayout110-->"+output.size)
         if (output.isNotEmpty()) {
+            binding?.constraintLayout110?.show()
             binding?.recyclerView46?.show()
             binding?.textView180?.show()
             val list = ArrayList<CouponResponse.Output.Voucher>()
@@ -362,6 +364,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
             binding?.recyclerView46?.setHasFixedSize(true)
         } else {
             binding?.textView180?.hide()
+            binding?.constraintLayout110?.hide()
             binding?.recyclerView46?.hide()
         }
     }
@@ -1463,6 +1466,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.promo_popup)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
         dialog.window!!.setLayout(
             ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
@@ -1471,7 +1475,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         val tncTxt = dialog.findViewById<View>(R.id.tncTxt) as TextView?
         val btnApplyCoupon = dialog.findViewById<View>(R.id.btnApplyCoupon) as TextView?
 
-        tncTxt?.text = Html.fromHtml(data.tnc)
+        tncTxt?.text = Html.fromHtml(data.tnc.replace("~","<br></br>"))
         titleText?.text = Html.fromHtml(data.title)
         if (data.promocode != null && data.promocode != "") {
             btnApplyCoupon?.show()
