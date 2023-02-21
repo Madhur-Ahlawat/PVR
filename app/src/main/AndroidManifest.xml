@@ -25,21 +25,32 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar"
-        android:usesCleartextTraffic="true"
-        android:requestLegacyExternalStorage="true">
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".ui.home.fragment.more.eVoucher.details.EVoucherDetailsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.home.fragment.more.eVoucher.EVoucherActivity"
+            android:exported="false" />
+
         <activity
             android:name=".ui.home.fragment.more.experience.ExperienceActivity"
             android:exported="false" />
+
         <activity
             android:name=".ui.cinemaSession.cinemaDetails.CinemaDetailsActivity"
             android:exported="false">
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".ui.home.fragment.more.offer.OfferActivity"
             android:exported="false">
@@ -47,6 +58,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".ui.food.old.OldFoodActivity"
             android:exported="false">
@@ -54,6 +66,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".ui.scanner.bookings.SelectBookingsActivity"
             android:exported="false">
@@ -61,6 +74,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".ui.home.fragment.more.offer.list.OfferListActivity"
             android:exported="false">
@@ -244,7 +258,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".ui.giftCard.activateGiftCard.GiftCardPlaceOrderActivity"
             android:exported="false"
@@ -253,7 +266,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".ui.giftCard.GiftCardSummaryActivity"
             android:exported="false"
@@ -286,7 +298,6 @@
             android:name=".ui.payment.PaymentActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.payment.PaymentStatusActivity"
             android:exported="false"
@@ -315,8 +326,8 @@
             android:name=".ui.scanner.ScannerActivity"
             android:exported="false"
             android:screenOrientation="fullSensor"
-            tools:replace="android:screenOrientation"
-            android:stateNotNeeded="true"/>
+            android:stateNotNeeded="true"
+            tools:replace="android:screenOrientation" />
         <activity
             android:name=".ui.location.selectCity.SelectCityActivity"
             android:exported="false"
@@ -377,8 +388,7 @@
         <activity
             android:name=".ui.home.HomeActivity"
             android:exported="true"
-            android:screenOrientation="portrait" >
-
+            android:screenOrientation="portrait">
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -409,7 +419,6 @@
                     android:pathPrefix="/cinemasd"
                     android:scheme="app" />
             </intent-filter>
-
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -458,7 +467,6 @@
                     android:pathPrefix="/comingsoontrailer"
                     android:scheme="app" />
             </intent-filter>
-
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -474,8 +482,6 @@
                     android:pathPrefix="/home"
                     android:scheme="app" />
             </intent-filter>
-
-
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -513,7 +519,6 @@
                     android:pathPrefix="/pvrcinemas.com"
                     android:scheme="app" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".ui.payment.paytmpostpaid.PaytmPostPaidActivity"
@@ -561,26 +566,20 @@
             android:value="@string/phone_pe_app_id" />
         <meta-data
             android:name="com.phonepe.android.sdk.Debuggable"
-            android:value="true" />
-
-<!--        // Push Action manager-->
+            android:value="true" /> <!-- // Push Action manager -->
         <receiver
             android:name=".utils.sfmc.SFMCActionReceiver"
-            android:exported="true" />
-
-<!--        // Message Service for SFMC-->
+            android:exported="true" /> <!-- // Message Service for SFMC -->
         <service
             android:name=".utils.sfmc.MyFcmMessageListenerService"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-        </service>
-
-<!--        //IS ACTIVITY -->
-        <activity android:name="com.evergage.android.EvergageActivity" android:exported="true"/>
-
-
+        </service> <!-- //IS ACTIVITY -->
+        <activity
+            android:name="com.evergage.android.EvergageActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

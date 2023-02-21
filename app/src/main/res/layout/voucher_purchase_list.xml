@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/view241"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView177"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/voucher_curve"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/textView410"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dimen_16sp"
+        android:fontFamily="@font/sf_pro_text_bold"
+        tools:text="₹450"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView177"
+        app:layout_constraintEnd_toEndOf="@+id/imageView177"
+        app:layout_constraintStart_toStartOf="@+id/imageView177"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView411"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@+id/imageView177"
+        app:layout_constraintTop_toTopOf="@+id/imageView177"
+        android:textColor="@color/textColorGray"
+        android:textSize="@dimen/dimen_14sp"
+        android:fontFamily="@font/sfprodisplay_bold"
+        tools:text="₹500" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        app:cardBackgroundColor="#1A8C2D"
+        app:cardCornerRadius="@dimen/dimen_50dp"
+        app:layout_constraintStart_toStartOf="@+id/textView411"
+        app:layout_constraintTop_toBottomOf="@+id/textView411">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dimen_8dp"
+            android:layout_marginTop="@dimen/dimen_2dp"
+            android:layout_marginEnd="@dimen/dimen_8dp"
+            android:layout_marginBottom="@dimen/dimen_2dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen_11sp"
+            tools:text="10% Off" />
+
+    </androidx.cardview.widget.CardView>
+
+    <include
+        layout="@layout/food_layout_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view241" />
+
+
+    <View
+        android:id="@+id/view242"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/grayEd"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:layout_marginBottom="@dimen/dimen_16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView177" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

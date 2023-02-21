@@ -8,11 +8,10 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
-import android.widget.Toast
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.NameValuePair
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URLEncodedUtils
-import com.google.zxing.integration.android.IntentIntegrator
 import com.journeyapps.barcodescanner.*
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityScannerBinding
@@ -28,32 +27,31 @@ import javax.inject.Inject
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
-class ScannerActivity : AppCompatActivity(),DecoratedBarcodeView.TorchListener {
+class ScannerActivity : AppCompatActivity(), DecoratedBarcodeView.TorchListener {
+
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityScannerBinding? = null
     private var fromScan: String? = ""
-    private var qrScanIntegrator: IntentIntegrator? = null
     private var capture: CaptureManager? = null
     private var barcodeScannerView: DecoratedBarcodeView? = null
+    private  var titleScanner:TextView?=null
     private var viewfinderView: ViewfinderView? = null
+    private var torchClick = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityScannerBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-//        qrScanIntegrator = IntentIntegrator(this)
 
         barcodeScannerView = findViewById(R.id.zxing_barcode_scanner)
         barcodeScannerView?.setTorchListener(this)
 
         viewfinderView = findViewById(R.id.zxing_viewfinder_view)
 
-        // if the device does not have flashlight in its camera,
-        // then remove the switch flashlight button...
+        titleScanner = findViewById(R.id.zxing_status_view)
 
-        // if the device does not have flashlight in its camera,
-        // then remove the switch flashlight button...
         if (!hasFlash()) {
             binding?.switchFlashlight?.visibility = View.GONE
         }
@@ -61,34 +59,43 @@ class ScannerActivity : AppCompatActivity(),DecoratedBarcodeView.TorchListener {
         capture = CaptureManager(this, barcodeScannerView)
         capture?.initializeFromIntent(intent, savedInstanceState)
         capture?.setShowMissingCameraPermissionDialog(true)
-//        capture?.decode()
+
+        manageFunction()
+    }
+
+    private fun manageFunction() {
         barcodeScannerView?.decodeContinuous {
             handelResult(it.text)
         }
+
         changeMaskColor(null)
         changeLaserVisibility(true)
         performAction()
         movedNext()
 
-        //Flash ON/OFF
-        binding?.switchFlashlight?.setOnClickListener {
-            if ("Turn off Flashlight" == binding?.switchFlashlight?.text) {
-                barcodeScannerView?.setTorchOn()
-            } else {
-                barcodeScannerView?.setTorchOff()
-            }
-        }
     }
 
 
-
     private fun movedNext() {
-    //title
-        binding?.includeHeader?.textView108?.text= getString(R.string.scan_qr_code)
+        //title
+        binding?.includeHeader?.textView108?.text = getString(R.string.scan_qr_code)
 
-    //back
+        //back
         binding?.includeHeader?.imageView58?.setOnClickListener {
             finish()
+        }
+
+        //Flash ON/OFF
+        binding?.switchFlashlight?.setOnClickListener {
+            if (torchClick == 0) {
+                torchClick = 1
+                binding?.switchFlashlight?.setImageResource(R.drawable.flash_off)
+                barcodeScannerView?.setTorchOn()
+            } else {
+                torchClick = 0
+                binding?.switchFlashlight?.setImageResource(R.drawable.flash_on)
+                barcodeScannerView?.setTorchOff()
+            }
         }
 
     }
@@ -102,16 +109,19 @@ class ScannerActivity : AppCompatActivity(),DecoratedBarcodeView.TorchListener {
 
     private fun handelResult(contents: String) {
         try {
+            titleScanner?.text=getString(R.string.scanQr)
+
             val uri = Uri.parse(contents)
             val server = uri.authority
             val path = uri.path
             val parts = path?.split("/")?.toTypedArray()
             if (path?.contains("newpromo") == true) {
                 getOfferCode()
-            } else if (path?.contains("food") == true || path?.contains("booking") == true) {
+            }
+            else if (path?.contains("food") == true || path?.contains("booking") == true) {
 //                handler.postDelayed({
-                    // close your dialog
-                    if (parts?.size == 5) {
+                // close your dialog
+                if (parts?.size == 5) {
 //                            successIMG.setVisibility(View.VISIBLE)
 //                            fromScan = "scan"
 //                            val intent = Intent(this@PCCouponScan, GrabABiteActivity::class.java)
@@ -129,25 +139,25 @@ class ScannerActivity : AppCompatActivity(),DecoratedBarcodeView.TorchListener {
 //                            intent.putExtra("SEAT", parts[4])
 //                            intent.putExtra("AUDI", parts[3])
 //                            startActivity(intent)
-                    } else if (parts?.size!! > 2) {
-                        fromScan = "scan"
-                        var type = ""
-                        if (contents.contains("type")) {
-                            var params: List<NameValuePair?>? = null
-                            try {
-                                params = URLEncodedUtils.parse(URI(contents), "UTF-8")
-                                for (param in params) {
-                                    printLog(param.name + " : " + param.value)
+                } else if (parts?.size!! > 2) {
+                    fromScan = "scan"
+                    var type = ""
+                    if (contents.contains("type")) {
+                        var params: List<NameValuePair?>? = null
+                        try {
+                            params = URLEncodedUtils.parse(URI(contents), "UTF-8")
+                            for (param in params) {
+                                printLog(param.name + " : " + param.value)
 
-                                    if (param.name != "type") type = param.value
-                                }
-                            } catch (e: URISyntaxException) {
-                                e.printStackTrace()
+                                if (param.name != "type") type = param.value
                             }
+                        } catch (e: URISyntaxException) {
+                            e.printStackTrace()
                         }
+                    }
 //                            successIMG.setVisibility(View.VISIBLE)
-                            val intent =Intent(this, SelectBookingsActivity::class.java)
-                              intent.putExtra("from", "pscan")
+                    val intent = Intent(this, SelectBookingsActivity::class.java)
+                    intent.putExtra("from", "pscan")
 //                            val paymentIntentData = PaymentIntentData()
 //                            paymentIntentData.setCinemaID(parts[2])
 //                            paymentIntentData.setPaymentType(PCConstants.PaymentType.INTHEATRE)
@@ -157,22 +167,23 @@ class ScannerActivity : AppCompatActivity(),DecoratedBarcodeView.TorchListener {
 //                            intent.putExtra(
 //                                PCConstants.IntentKey.TICKET_BOOKING_DETAILS, paymentIntentData
 //                            )
-                            intent.putExtra("SEAT", "")
-                            intent.putExtra("cid",parts[2])
-                            intent.putExtra("AUDI", "")
-                        if (!TextUtils.isEmpty(type))
-                            intent.putExtra("type", type)
-                        if (path.contains("newpromo"))
-                            intent.putExtra("promo", "NEWPROMO")
+                    intent.putExtra("SEAT", "")
+                    intent.putExtra("cid", parts[2])
+                    intent.putExtra("AUDI", "")
+                    if (!TextUtils.isEmpty(type))
+                        intent.putExtra("type", type)
+                    if (path.contains("newpromo"))
+                        intent.putExtra("promo", "NEWPROMO")
 
-                        startActivity(intent)
-                        finish()
+                    startActivity(intent)
+                    finish()
 
-                    }
+                }
 //                }, 300)
-            } else if (path?.contains("getqrcode") == true) {
+            }
+            else if (path?.contains("getqrcode") == true) {
 //                handler.postDelayed({ // close your dialog
-                    if (parts?.size == 5) {
+                if (parts?.size == 5) {
 //                            successIMG.setVisibility(View.VISIBLE)
 //                            fromScan = "scan"
 //                            val intent = Intent(this@PCCouponScan, GrabABiteActivity::class.java)
@@ -189,40 +200,40 @@ class ScannerActivity : AppCompatActivity(),DecoratedBarcodeView.TorchListener {
 //                            intent.putExtra("SEAT", parts[4])
 //                            intent.putExtra("AUDI", parts[3])
 //                            startActivity(intent)
-                    } else if (parts?.size!! > 2) {
-                        fromScan = "scan"
-                        var type = ""
-                        var option = ""
-                        var iserv = ""
-                        var seat = ""
-                        if (contents.contains("type")) {
-                            var params: List<NameValuePair?>? = null
-                            try {
-                                params = URLEncodedUtils.parse(URI(contents), "UTF-8")
-                                for (param2 in (params as MutableList<NameValuePair>?)!!) {
-                                    println(param2.name + " : " + param2.value)
-                                    if (param2.name.equals("type", ignoreCase = true)) type =
-                                        param2.value else if (param2.name.equals(
-                                                "option",
-                                                ignoreCase = true
-                                            )
-                                    ) option = param2.value else if (param2.name.equals(
-                                                "iserv",
-                                                ignoreCase = true
-                                            )
-                                    ) iserv = param2.value else if (param2.name.equals(
-                                                "seat",
-                                                ignoreCase = true
-                                            )
-                                    ) seat = param2.value
-                                }
-                            } catch (e: URISyntaxException) {
-                                e.printStackTrace()
+                } else if (parts?.size!! > 2) {
+                    fromScan = "scan"
+                    var type = ""
+                    var option = ""
+                    var iserv = ""
+                    var seat = ""
+                    if (contents.contains("type")) {
+                        var params: List<NameValuePair?>? = null
+                        try {
+                            params = URLEncodedUtils.parse(URI(contents), "UTF-8")
+                            for (param2 in (params as MutableList<NameValuePair>?)!!) {
+                                println(param2.name + " : " + param2.value)
+                                if (param2.name.equals("type", ignoreCase = true)) type =
+                                    param2.value else if (param2.name.equals(
+                                        "option",
+                                        ignoreCase = true
+                                    )
+                                ) option = param2.value else if (param2.name.equals(
+                                        "iserv",
+                                        ignoreCase = true
+                                    )
+                                ) iserv = param2.value else if (param2.name.equals(
+                                        "seat",
+                                        ignoreCase = true
+                                    )
+                                ) seat = param2.value
                             }
+                        } catch (e: URISyntaxException) {
+                            e.printStackTrace()
                         }
+                    }
 //                             successIMG.setVisibility( View.VISIBLE )
 
-                        if (option.equals("Food", ignoreCase = true)) {
+                    if (option.equals("Food", ignoreCase = true)) {
 //                                val intent =
 //                                    Intent(this@PCCouponScan, GrabABiteActivity::class.java)
 //                                val paymentIntentData = PaymentIntentData()
@@ -246,7 +257,7 @@ class ScannerActivity : AppCompatActivity(),DecoratedBarcodeView.TorchListener {
 //                                startActivity(
 //                                    intent
 //                                )
-                        } else {
+                    } else {
 //                                val intent =
 //                                    Intent(this@PCCouponScan, SelectBookingActivity::class.java)
 //                                val paymentIntentData = PaymentIntentData()
@@ -272,9 +283,9 @@ class ScannerActivity : AppCompatActivity(),DecoratedBarcodeView.TorchListener {
 //                                startActivity(
 //                                    intent
 //                                )
-                        }
-
                     }
+
+                }
 //                }, 300)
 //                } else {
 //                    println("successIMG============else")
@@ -286,6 +297,9 @@ class ScannerActivity : AppCompatActivity(),DecoratedBarcodeView.TorchListener {
 //                    """.trimIndent()
 //                    )
 //                    mScannerView.resumeCameraPreview(this@PCCouponScan)
+            }
+            else{
+                titleScanner?.text=getString(R.string.invalidQr)
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -309,7 +323,10 @@ class ScannerActivity : AppCompatActivity(),DecoratedBarcodeView.TorchListener {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        return barcodeScannerView?.onKeyDown(keyCode, event) == true || super.onKeyDown(keyCode, event)
+        return barcodeScannerView?.onKeyDown(keyCode, event) == true || super.onKeyDown(
+            keyCode,
+            event
+        )
     }
 
     /**
@@ -322,11 +339,11 @@ class ScannerActivity : AppCompatActivity(),DecoratedBarcodeView.TorchListener {
     }
 
 
-
     private fun changeMaskColor(view: View?) {
         val rnd = Random()
         val color: Int = Color.argb(100, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
-        viewfinderView?.setMaskColor(color)
+
+        viewfinderView?.setMaskColor(getColor(R.color.transparent))
     }
 
     private fun changeLaserVisibility(visible: Boolean) {
@@ -338,11 +355,16 @@ class ScannerActivity : AppCompatActivity(),DecoratedBarcodeView.TorchListener {
     }
 
     override fun onTorchOn() {
-        binding?.switchFlashlight?.text = "Turn on Flashlight";
+
+        binding?.switchFlashlight?.setImageResource(R.drawable.flash_off)
+
+//        binding?.switchFlashlight?.text = "Turn on Flashlight"
     }
 
     override fun onTorchOff() {
-        binding?.switchFlashlight?.text = "Turn off Flashlight"
+        binding?.switchFlashlight?.setImageResource(R.drawable.flash_on)
+
+//        binding?.switchFlashlight?.text = "Turn off Flashlight"
     }
 
     override fun onRequestPermissionsResult(

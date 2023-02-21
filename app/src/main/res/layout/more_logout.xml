@@ -452,6 +452,77 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout172"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/view155"
+            app:layout_constraintStart_toStartOf="@+id/view155"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout77">
+
+            <ImageView
+                android:id="@+id/imageView175"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/voucher"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
+
+
+            <TextView
+                android:id="@+id/textView401"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/sf_pro_text_medium"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
+                android:text="@string/e_voucher"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView175"
+                app:layout_constraintStart_toEndOf="@+id/imageView175"
+                app:layout_constraintTop_toTopOf="@+id/imageView175" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_bright"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription"
+                app:tint="@color/gray_payment" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/grayEd"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <include
+                android:id="@+id/includeEVoucher"
+                layout="@layout/new_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView401"
+                app:layout_constraintStart_toEndOf="@+id/textView401"
+                app:layout_constraintTop_toTopOf="@+id/textView401" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout78"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -459,7 +530,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/view155"
             app:layout_constraintEnd_toEndOf="@+id/view155"
             app:layout_constraintStart_toStartOf="@+id/view155"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout77">
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout172">
 
             <ImageView
                 android:id="@+id/imageView130"

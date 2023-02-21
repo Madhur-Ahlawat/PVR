@@ -192,6 +192,8 @@
     <string name="view_more">View more</string>
     <string name="view_less">View less</string>
     <string name="also_close_to">Also close to</string>
+    <string name="invalidQr">Invalid QR Code!\nTry a New one or try again</string>
+    <string name="scanQr">Scan Qr code to book ticket or food</string>
 
     //Summery
     <string name="also_playing">Also playing</string>
@@ -280,7 +282,7 @@
     //QrCode
     <string name="helper_activity">HelperActivity</string>
     <string name="showing_code_in_fragment">Showing Code in Fragment</string>
-    <string name="scan_qr_code">SCAN QR CODE</string>
+    <string name="scan_qr_code">Scan Qr Code</string>
     <string name="empty">---</string>
     <string name="site_name">Site Name</string>
     <string name="scan_a_code">Scan a QR Code</string>
@@ -681,5 +683,7 @@ IMAX Corporation is one of the world\'s leading entertainment technology compani
     <string name="or">OR</string>
     <string name="explore_menu">Explore Menu</string>
     <string name="go_to_top">Go to Top</string>
+    <string name="e_voucher">E Voucher</string>
+    <string name="active_e_vouchers">Active E-Vouchers</string>
 
 </resources>

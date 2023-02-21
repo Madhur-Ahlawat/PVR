@@ -39,9 +39,6 @@ class AllGenreAdapter(
                 holder.itemView.setOnClickListener {
                     rowIndex=position
                     this.liked = true
-
-
-
                     listener.allGenreClick(this)
                     notifyDataSetChanged()
                 }

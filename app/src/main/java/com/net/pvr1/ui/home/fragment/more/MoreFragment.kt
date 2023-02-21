@@ -34,6 +34,7 @@ import com.net.pvr1.ui.home.HomeActivity
 import com.net.pvr1.ui.home.fragment.more.adapter.ProfileCompleteAdapter
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.BookingRetrievalActivity
 import com.net.pvr1.ui.home.fragment.more.contactUs.ContactUsActivity
+import com.net.pvr1.ui.home.fragment.more.eVoucher.EVoucherActivity
 import com.net.pvr1.ui.home.fragment.more.experience.ExperienceActivity
 import com.net.pvr1.ui.home.fragment.more.model.ProfileModel
 import com.net.pvr1.ui.home.fragment.more.offer.OfferActivity
@@ -325,6 +326,12 @@ class MoreFragment : Fragment() {
         //Contact Us
         binding?.tvContact?.setOnClickListener {
             val intent = Intent(requireContext(), ContactUsActivity::class.java)
+            startActivity(intent)
+        }
+
+        //e Voucher
+        binding?.logout?.constraintLayout172?.setOnClickListener {
+            val intent = Intent(requireContext(), EVoucherActivity::class.java)
             startActivity(intent)
         }
 

@@ -35,9 +35,7 @@
             android:layout_height="60dp"
             android:padding="@dimen/dimen_15dp"
             android:background="@drawable/border_circle_gray"
-            android:src="@drawable/food_all"
-
-           />
+            android:src="@drawable/food_all" />
 
 
         <TextView
