@@ -55,6 +55,7 @@ class ProfileActivity : AppCompatActivity() {
         binding = ActivityProfileBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
         //name
         binding?.textView212?.text = preferences.getUserName()
         profileResponse = ProfileResponseConst
@@ -97,9 +98,11 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun movedNext() {
+
         binding?.imageView117?.setOnClickListener {
             editProfileDialog()
         }
+
         binding?.imageView116?.setOnClickListener {
             finish()
         }
@@ -107,7 +110,7 @@ class ProfileActivity : AppCompatActivity() {
 
 
     private fun editProfileDialog() {
-        dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
+        dialog = BottomSheetDialog(this, R.style.CustomAlertDialog)
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
         //profileDialog
@@ -200,7 +203,7 @@ class ProfileActivity : AppCompatActivity() {
             dobClick = true
             val year=myCalendar.get(Calendar.YEAR)
             val newYear= year-13
-            val mDatePickerDialog = DatePickerDialog(    this,
+            val mDatePickerDialog = DatePickerDialog(    this,R.style.dateDialog,
                 dateD,
                 newYear,
                 myCalendar.get(Calendar.MONTH),
@@ -215,7 +218,7 @@ class ProfileActivity : AppCompatActivity() {
         bindingProfile.anniversary.setOnClickListener {
             if (selectedMarital=="Married"){
                     dobClick = false
-                    val mDatePickerDialog = DatePickerDialog(    this,
+                val mDatePickerDialog = DatePickerDialog(    this,R.style.dateDialog,
                         dateD,
                         myCalendar.get(Calendar.YEAR),
                         myCalendar.get(Calendar.MONTH),
@@ -234,18 +237,107 @@ class ProfileActivity : AppCompatActivity() {
         //save
         bindingProfile.save.setOnClickListener {
             val dob = Constant().changeDateFormat(bindingProfile.dob.text.toString())
-            val anniversary =
-                Constant().changeDateFormat(bindingProfile.anniversary.text.toString())
-            authViewModel.editProfile(
-                preferences.getUserId(),
-                bindingProfile.email.text.toString(),
-                bindingProfile.phone.text.toString(),
-                bindingProfile.name.text.toString(),
-                dob.toString(),
-                selectedGender,
-                selectedMarital,
-                anniversary.toString()
-            )
+            val anniversary = Constant().changeDateFormat(bindingProfile.anniversary.text.toString())
+
+            if (selectedMarital=="Married"){
+
+                if (bindingProfile.email.text.toString()==""){
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        "Enter Email",
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }else if (bindingProfile.phone.text.toString()==""){
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        "Enter Phone Number",
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }else if (bindingProfile.name.text.toString()==""){
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        "Enter Name",
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }else if (dob.toString()==""){
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        "Enter Date Of Birth",
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }else if (selectedGender==""){
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        "Select Gender",
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }else if (selectedMarital==""){
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        "Select Martial Status",
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }else if (anniversary.toString()==""){
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        "Select Anniversary",
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }else{
+                    authViewModel.editProfile(
+                        preferences.getUserId(),
+                        bindingProfile.email.text.toString(),
+                        bindingProfile.phone.text.toString(),
+                        bindingProfile.name.text.toString(),
+                        dob.toString(),
+                        selectedGender,
+                        selectedMarital,
+                        anniversary.toString()
+                    )
+                }
+
+            }else{
+                authViewModel.editProfile(
+                    preferences.getUserId(),
+                    bindingProfile.email.text.toString(),
+                    bindingProfile.phone.text.toString(),
+                    bindingProfile.name.text.toString(),
+                    dob.toString(),
+                    selectedGender,
+                    selectedMarital,
+                    anniversary.toString()
+                )
+            }
+
+
         }
 
     }
@@ -346,6 +438,7 @@ class ProfileActivity : AppCompatActivity() {
                             positiveClick = {},
                             negativeClick = {})
                         dialog.show()
+
                         retrieveData(it.data.output)
                     } else {
                         val dialog = OptionDialog(this,

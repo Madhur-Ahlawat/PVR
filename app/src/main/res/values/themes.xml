@@ -207,7 +207,7 @@
 
 
     <style name="NoBackgroundDialogTheme" parent="Theme.AppCompat.Light.Dialog">
-        <item name="android:windowBackground">@null</item>
+        <item name="android:windowBackground">@color/transparent</item>
     </style>
 //progressBar
     <style name="CustomProgressBarHorizontalNew"
@@ -287,6 +287,18 @@
 
     <style name="StyledTilEditText">
         <item name="android:theme">@style/StyledTilEditTextTheme</item>
+
+    </style>
+
+
+    <style name="dateDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/yellow</item>
+        <item name="android:textColorLink">@color/primary</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:background">@color/transparent</item>
 
     </style>
 

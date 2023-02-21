@@ -58,6 +58,7 @@ class OtpVerifyActivity : AppCompatActivity() {
         binding = ActivityOtpVerifyBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
         manageFunction()
     }
 
@@ -292,21 +293,26 @@ class OtpVerifyActivity : AppCompatActivity() {
 
 
     private fun retrieveData(output: ResisterResponse.Output?) {
-        Constant.setAverageUserIdSCM(preferences)
-        Constant.setUPSFMCSDK(preferences)
+        try {
+            Constant.setAverageUserIdSCM(preferences)
+            Constant.setUPSFMCSDK(preferences)
 
-        preferences.saveIsLogin(true)
-        output?.id?.let { preferences.saveUserId(it) }
-        output?.un?.let { preferences.saveUserName(it) }
-        output?.ph?.let { preferences.saveMobileNumber(it) }
-        output?.token?.let { preferences.saveToken(it) }
-        output?.dob?.let { preferences.saveDob(it) }
-        output?.ph?.let { preferences.saveString(Constant.SharedPreference.USER_NUMBER,it) }
-        output?.em?.let { preferences.saveString(Constant.SharedPreference.USER_EMAIL,it)  }
-        output?.gd?.let { preferences.saveString(Constant.SharedPreference.USER_GENDER,it)  }
+            preferences.saveIsLogin(true)
+            output?.id?.let { preferences.saveUserId(it) }
+            output?.un?.let { preferences.saveUserName(it) }
+            output?.ph?.let { preferences.saveMobileNumber(it) }
+            output?.token?.let { preferences.saveToken(it) }
+            output?.dob?.let { preferences.saveDob(it) }
+            output?.ph?.let { preferences.saveString(Constant.SharedPreference.USER_NUMBER,it) }
+            output?.em?.let { preferences.saveString(Constant.SharedPreference.USER_EMAIL,it)  }
+            output?.gd?.let { preferences.saveString(Constant.SharedPreference.USER_GENDER,it)  }
 
-        authViewModel.privilegeHome(preferences.geMobileNumber(), preferences.getCityName())
-        privilegeDataLoad()
+            authViewModel.privilegeHome(preferences.geMobileNumber(), preferences.getCityName())
+            privilegeDataLoad()
+
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
     }
 
     private fun privilegeDataLoad() {
@@ -347,6 +353,7 @@ class OtpVerifyActivity : AppCompatActivity() {
 
     private fun privilegeRetrieveData(output: PrivilegeHomeResponse.Output) {
         try {
+            toast("hello1")
             Constant.PrivilegeHomeResponseConst = output
             preferences.saveString("FAQ", output.faq)
             preferences.saveString(Constant.SharedPreference.pcities, output.pcities)
@@ -355,13 +362,13 @@ class OtpVerifyActivity : AppCompatActivity() {
             jsonObject1.put("points", output.pt)
             jsonObject1.put("voucher", output.vou)
             preferences.saveString(Constant.SharedPreference.LOYALITY_POINT, jsonObject1.toString())
-            preferences.saveString(
-                Constant.SharedPreference.LOYALITY_CARD, output.passportbuy.toString()
-            )
+            preferences.saveString(Constant.SharedPreference.LOYALITY_CARD, output.passportbuy.toString())
             preferences.saveString(Constant.SharedPreference.SUBS_OPEN, output.passport.toString())
             preferences.saveString(Constant.SharedPreference.LOYALITY_STATUS, output.ls)
             preferences.saveString(Constant.SharedPreference.SUBSCRIPTION_STATUS, output.ulm)
+
             checkMoved()
+
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -370,6 +377,7 @@ class OtpVerifyActivity : AppCompatActivity() {
 
 
     private fun checkMoved() {
+        toast("hello2")
         if (!Constant().locationServicesEnabled(this@OtpVerifyActivity)) {
             val intent = Intent(this@OtpVerifyActivity, EnableLocationActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
