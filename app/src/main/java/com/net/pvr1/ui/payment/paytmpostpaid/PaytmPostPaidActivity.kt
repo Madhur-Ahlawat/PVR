@@ -716,8 +716,8 @@ class PaytmPostPaidActivity : AppCompatActivity() {
             R.mipmap.ic_launcher,
             R.string.app_name,
             "Do you want to end the session?",
-            positiveBtnText = R.string.ok,
-            negativeBtnText = R.string.no,
+            positiveBtnText = R.string.yes,
+            negativeBtnText = R.string.cancel,
             positiveClick = {
                launchActivity(HomeActivity::class.java,FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
             },

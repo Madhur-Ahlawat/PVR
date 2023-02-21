@@ -52,15 +52,42 @@
         app:layout_constraintStart_toStartOf="@+id/textView124"
         app:layout_constraintTop_toBottomOf="@+id/textView124" />
 
-    <ImageView
-        android:id="@+id/imageView82"
-        android:layout_width="8dp"
-        android:layout_height="@dimen/dimen_12dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="@+id/textView124"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView124"
-        app:srcCompat="@drawable/ic_skip_arrow"
-        tools:ignore="ContentDescription" />
+        app:layout_constraintTop_toTopOf="@+id/textView124">
+        <TextView
+            android:id="@+id/paymentModeSubTitle"
+            android:minWidth="64dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/payment_gradient_offer"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:paddingBottom="3dp"
+            android:layout_marginEnd="56dp"
+            android:paddingLeft="8dp"
+            android:paddingTop="3dp"
+            android:paddingRight="8dp"
+            android:layout_gravity="center"
+            android:singleLine="true"
+            android:text="2 offers"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+        <ImageView
+            android:id="@+id/imageView82"
+            android:layout_width="8dp"
+            android:layout_height="@dimen/dimen_12dp"
+            android:layout_marginEnd="@dimen/dimen_8dp"
+            app:srcCompat="@drawable/ic_skip_arrow"
+            tools:ignore="ContentDescription" />
+    </LinearLayout>
+
+
 
     <View
         android:id="@+id/view220"

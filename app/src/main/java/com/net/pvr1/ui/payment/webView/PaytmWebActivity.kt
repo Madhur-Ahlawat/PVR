@@ -42,14 +42,14 @@ class PaytmWebActivity : AppCompatActivity() {
             onBackPressed()
         }
         binding?.include3?.textView108?.text = intent.getStringExtra("title")
-        if (intent.getStringExtra("pTypeId") == "102") {
+        if (intent.getStringExtra("pTypeId") == "110") {
             authViewModel.airtelPay(
                 preferences.getUserId(),
                 Constant.BOOKING_ID,
                 Constant.TRANSACTION_ID,
                 Constant.BOOK_TYPE
             )
-        }else if (intent.getStringExtra("pTypeId") == "112"){
+        }else if (intent.getStringExtra("title") == "Paytm"){
             authViewModel.walletPay(
                 preferences.getUserId(),
                 Constant.BOOKING_ID,
@@ -379,8 +379,8 @@ class PaytmWebActivity : AppCompatActivity() {
             R.mipmap.ic_launcher,
             R.string.app_name,
             "Do you want to end the session?",
-            positiveBtnText = R.string.ok,
-            negativeBtnText = R.string.no,
+            positiveBtnText = R.string.yes,
+            negativeBtnText = R.string.cancel,
             positiveClick = {
                 launchActivity(
                     HomeActivity::class.java,

@@ -2,6 +2,7 @@ package com.net.pvr1.ui.payment.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +45,17 @@ class PaymentAdapter(
                 }else{
                     binding.view220.show()
                 }
+                if (this.c != null && !TextUtils.isEmpty(this.c)) {
+                    binding.paymentModeSubTitle.show()
+                    if (this.c.split("|").size == 1){
+                        binding.paymentModeSubTitle.text = "1 Offer"
+                    }else{
+                        binding.paymentModeSubTitle.text = "${this.c.split("|").size}  Offer"
+                    }
+                }else{
+                    binding.paymentModeSubTitle.hide()
+                }
+
                 if (this.id==Constant.PHONE_PE){
                     try {
                         if (isAppInstalled()) {

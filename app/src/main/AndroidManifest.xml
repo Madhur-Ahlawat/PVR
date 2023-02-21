@@ -525,6 +525,10 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.payment.mobikwik.MobikwikLoginActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.payment.webView.PaytmWebActivity"
             android:exported="false"
             android:screenOrientation="portrait" />

@@ -908,7 +908,7 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<PaytmHmacResponse>
 
-    @POST("api/payment/paytm/pay")
+    @POST("api/payment/paytm/hmac")
     suspend fun walletPaidPay(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
@@ -1331,6 +1331,41 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<ExtendTimeResponse>
 
+    /*********   MOBIKWIK API *****************/
+
+    // mobikwik otp
+    @POST("api/payment/mobikwik/otp")
+    suspend fun mobikwikOTP(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<UPIStatusResponse>
+
+    // mobikwik pay
+    @POST("api/payment/mobikwik/pay")
+    suspend fun mobikwikPAY(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<UPIStatusResponse>
+
+    // mobikwik checksum
+    @POST("api/payment/mobikwik/checksum")
+    suspend fun mobikwikChecksum(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<UPIStatusResponse>
+
     /****************** JUS PAY ****************/
     @POST("api/trans/extendtrans")
     suspend fun initJusPay(
@@ -1340,4 +1375,6 @@ interface UserAPI {
         @Query("pt") platform: String,
         @Query("did") did: String
     ): Response<JusPayInitResponse>
+
+
 }

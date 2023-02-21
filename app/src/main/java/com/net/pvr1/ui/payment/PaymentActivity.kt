@@ -42,6 +42,7 @@ import com.net.pvr1.ui.payment.cardDetails.CardDetailsActivity
 import com.net.pvr1.ui.payment.cred.CredActivity
 import com.net.pvr1.ui.payment.giftcardredeem.GiftCardRedeemActivity
 import com.net.pvr1.ui.payment.mCoupon.MCouponActivity
+import com.net.pvr1.ui.payment.mobikwik.MobikwikLoginActivity
 import com.net.pvr1.ui.payment.paytmpostpaid.PaytmPostPaidActivity
 import com.net.pvr1.ui.payment.promoCode.PromoCodeActivity
 import com.net.pvr1.ui.payment.response.*
@@ -61,6 +62,7 @@ import com.net.pvr1.utils.Constant.Companion.DISCOUNT
 import com.net.pvr1.utils.Constant.Companion.GEIFT_CARD
 import com.net.pvr1.utils.Constant.Companion.GYFTR
 import com.net.pvr1.utils.Constant.Companion.HYATT
+import com.net.pvr1.utils.Constant.Companion.MOBIKWIK
 import com.net.pvr1.utils.Constant.Companion.M_COUPON
 import com.net.pvr1.utils.Constant.Companion.NET_BANKING
 import com.net.pvr1.utils.Constant.Companion.PAYTMPOSTPAID
@@ -599,6 +601,16 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 intent.putExtra("tc", paymentItem.tc)
                 intent.putExtra("ca_t", paymentItem.ca_t)
                 intent.putExtra("title", paymentItem.name)
+                intent.putExtra("paidAmount", actualAmt)
+                startActivity(intent)
+            } MOBIKWIK -> {
+                val intent = Intent(this, MobikwikLoginActivity::class.java)
+                intent.putExtra("type", "MOBI")
+                intent.putExtra("ca_a", paymentItem.ca_a)
+                intent.putExtra("tc", paymentItem.tc)
+                intent.putExtra("ca_t", paymentItem.ca_t)
+                intent.putExtra("title", paymentItem.name)
+                intent.putExtra("pid", paymentItem.id)
                 intent.putExtra("paidAmount", actualAmt)
                 startActivity(intent)
             }

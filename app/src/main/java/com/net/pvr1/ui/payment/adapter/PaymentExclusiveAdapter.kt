@@ -2,6 +2,7 @@ package com.net.pvr1.ui.payment.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -39,6 +40,16 @@ class PaymentExclusiveAdapter(
                     binding.view220.hide()
                 }else{
                     binding.view220.show()
+                }
+                if (this.c != null && !TextUtils.isEmpty(this.c)) {
+                    binding.paymentModeSubTitle.show()
+                    if (this.c.split("|").size == 1){
+                        binding.paymentModeSubTitle.text = "1 Offer"
+                    }else{
+                        binding.paymentModeSubTitle.text = "${this.c.split("|").size}  Offer"
+                    }
+                }else{
+                    binding.paymentModeSubTitle.hide()
                 }
                 binding.imageView81.setImageResource(R.drawable.ic_star)
                 //title
