@@ -151,7 +151,7 @@ class PaymentWebActivity : AppCompatActivity() {
         }
 
         //title
-        binding?.include3?.textView108?.text= getString(R.string.payUsing)+" $pType"
+        binding?.include3?.textView108?.text=title
 
         urlParams = "$urlParams&txnToken=$token"
         urlParams = "$urlParams&paymentMode=$pType"

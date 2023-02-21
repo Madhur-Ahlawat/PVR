@@ -11,7 +11,7 @@
         android:id="@+id/constrainLayout166"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent">
 
         <View
@@ -195,6 +195,8 @@
                             android:fontFamily="@font/sf_pro_text_regular"
                             android:text="@string/privilege_coupons"
                             android:textSize="@dimen/dimen_12sp"
+                            android:textColor="@color/gray_payment"
+                            android:textAllCaps="true"
                             app:layout_constraintStart_toStartOf="@+id/view115"
                             app:layout_constraintTop_toTopOf="@+id/view115" />
 
@@ -310,10 +312,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/dimen_60dp"
                                 android:layout_centerVertical="true"
-                                android:layout_marginRight="10dp"
                                 android:background="@drawable/offeraply"
                                 android:focusableInTouchMode="true"
-                                android:paddingLeft="10dp"
+                                android:paddingLeft="20dp"
                                 tools:ignore="RtlHardcoded,RtlSymmetry">
 
                                 <EditText
@@ -352,15 +353,16 @@
                                     android:layout_alignParentBottom="false"
                                     android:layout_centerVertical="true"
                                     android:layout_gravity="right"
-                                    android:layout_marginEnd="5dp"
+                                    android:layout_marginEnd="14dp"
+                                    android:backgroundTint="@color/yellow"
                                     android:background="@drawable/gradient_yellow_button"
                                     android:clickable="true"
                                     android:focusable="true"
                                     android:fontFamily="@font/sf_pro_text_bold"
                                     android:gravity="center"
-                                    android:text=" APPLY "
-                                    android:textColor="#2f2f2f"
-                                    android:textSize="16sp"
+                                    android:text="@string/apply"
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp"
                                     tools:ignore="HardcodedText,RtlHardcoded" />
 
                             </RelativeLayout>
@@ -400,7 +402,7 @@
                                 android:layout_alignParentStart="true"
                                 android:layout_centerVertical="true"
                                 android:src="@drawable/ic_shape_copy"
-                                tools:ignore="ContentDescription" />
+                                 />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -462,13 +464,14 @@
                             android:layout_height="@dimen/dimen_50dp"
                             android:layout_marginStart="24dp"
                             android:drawablePadding="@dimen/dimen_5dp"
-                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:fontFamily="@font/sf_pro_text_medium"
                             android:gravity="center_vertical"
+                            android:textColor="@color/black"
                             android:paddingStart="1dp"
                             android:paddingEnd="@dimen/dimen_25dp"
                             android:text="@string/bank_offer"
-                            android:textSize="@dimen/dimen_12sp"
-                            app:drawableEndCompat="@drawable/ic_skip_arrow"
+                            android:textSize="@dimen/dimen_14sp"
+                            app:drawableEndCompat="@drawable/ic_right"
                             app:layout_constraintStart_toStartOf="@+id/view115"
                             app:layout_constraintTop_toTopOf="@+id/view115" />
 
@@ -487,6 +490,8 @@
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/sf_pro_text_regular"
                         android:text="@string/payment_method"
+                        android:textColor="@color/gray_payment"
+                        android:textAllCaps="true"
                         android:textSize="@dimen/dimen_12sp"
                         app:layout_constraintStart_toStartOf="@+id/view115"
                         app:layout_constraintTop_toTopOf="@+id/view115" />
@@ -520,6 +525,8 @@
                             android:layout_marginTop="20dp"
                             android:fontFamily="@font/sf_pro_text_regular"
                             android:text="@string/wallets"
+                            android:textColor="@color/gray_payment"
+                            android:textAllCaps="true"
                             android:textSize="@dimen/dimen_12sp"
                             app:layout_constraintStart_toStartOf="@+id/view115"
                             app:layout_constraintTop_toTopOf="@+id/view115" />
@@ -557,6 +564,8 @@
                             android:fontFamily="@font/sf_pro_text_regular"
                             android:text="@string/other_payment_method"
                             android:textSize="@dimen/dimen_12sp"
+                            android:textColor="@color/gray_payment"
+                            android:textAllCaps="true"
                             app:layout_constraintStart_toStartOf="@+id/view115"
                             app:layout_constraintTop_toTopOf="@+id/view115" />
 
@@ -593,6 +602,8 @@
                             android:layout_marginTop="20dp"
                             android:fontFamily="@font/sf_pro_text_regular"
                             android:text="@string/pvr_exclusives"
+                            android:textColor="@color/gray_payment"
+                            android:textAllCaps="true"
                             android:textSize="@dimen/dimen_12sp"
                             app:layout_constraintStart_toStartOf="@+id/view115"
                             app:layout_constraintTop_toTopOf="@+id/view115" />
@@ -608,6 +619,8 @@
                             tools:listitem="@layout/item_payment_list" />
                     </LinearLayout>
 
+                    
+
                     <LinearLayout
                         android:id="@+id/ll_sectoken"
                         android:layout_width="match_parent"
@@ -620,10 +633,7 @@
                         android:paddingBottom="5dp"
                         android:visibility="visible">
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dimen_10dp"
-                            android:background="@drawable/line_separator" />
+
 
                         <TextView
                             android:layout_width="match_parent"
@@ -698,7 +708,7 @@
         android:id="@+id/constraintLayout145"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

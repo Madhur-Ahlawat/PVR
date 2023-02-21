@@ -412,7 +412,7 @@ class BookingShowsTimeAdapter(
 
     @SuppressLint("SetTextI18n")
     private fun showOfferDialog(sid: Int, cc: String,newAt:String) {
-        val progressDialog = nowShowingList[0].prs
+        val progressDialog = nowShowingList[rowIndex].prs
         val dialog = Dialog(context)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.booking_offer_dialog)
@@ -482,6 +482,9 @@ class BookingShowsTimeAdapter(
             offerPrice.text = context.getString(R.string.currency) + offerPriceText
             totalPrice.text = context.getString(R.string.currency) + data.bp
             discountPrice = offerPriceText - data.bp.toInt()
+
+            break
+
         }
 
 

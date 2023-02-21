@@ -1,5 +1,6 @@
 package com.net.pvr1.ui.payment.mCoupon
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputFilter
@@ -20,8 +21,8 @@ import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
 import com.net.pvr1.ui.payment.PaymentActivity
-import com.net.pvr1.ui.payment.promoCode.viewModel.PromoCodeViewModel
 import com.net.pvr1.ui.payment.bankoffers.StarPasModel
+import com.net.pvr1.ui.payment.promoCode.viewModel.PromoCodeViewModel
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.M_COUPON
 import com.net.pvr1.utils.Constant.Companion.SELECTED_SEAT
@@ -38,8 +39,9 @@ lateinit var preferences: PreferenceManager
     private var maxSeatSelected = 0
     private var paymentOptionMode = ""
     private var loader: LoaderDialog? = null
+    private var isFristTimeCalled = true
 
-    private var couponContainer:LinearLayout? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMcouponBinding.inflate(layoutInflater, null, false)
@@ -51,7 +53,6 @@ lateinit var preferences: PreferenceManager
         binding?.include29?.textView108?.text = intent.getStringExtra("title")
         paymentOptionMode = intent.getStringExtra("pid").toString()
         maxSeatSelected = SELECTED_SEAT
-        couponContainer = binding?.mobileLayout
         if (intent.extras?.getBoolean("ca_a") === false)
             binding?.textView371?.text = intent.extras?.getString("ca_t")
 
@@ -69,7 +70,8 @@ lateinit var preferences: PreferenceManager
             binding?.mobileNoLayout?.hide()
         }
 
-        addCoupon()
+        callMCoupon()
+        callStarPass()
 
 
         binding?.minus?.setOnClickListener {
@@ -95,12 +97,10 @@ lateinit var preferences: PreferenceManager
 
         binding?.plus?.setOnClickListener {
             if (getCount() < maxSeatSelected) {
-                addCoupon()
-                binding?.foodCount?.text = "" + getCount()
+                addCoupon(binding!!)
             }
         }
 
-        binding?.foodCount?.text = "" + getCount()
 
     }
 
@@ -113,6 +113,8 @@ lateinit var preferences: PreferenceManager
                 )
             val gson = Gson()
             json = gson.toJson(mCoupon)
+            println("jsonm--->$json")
+
             promoCodeViewModel.mcoupon(preferences.getUserId(),Constant.BOOKING_ID,Constant.TRANSACTION_ID,Constant.BOOK_TYPE,Constant.CINEMA_ID,binding?.ccEditText?.text.toString()
             ,binding?.mobileEditText?.text.toString(),json)
             return
@@ -123,18 +125,22 @@ lateinit var preferences: PreferenceManager
             )
             val gson = Gson()
             json = gson.toJson(starPass)
-            promoCodeViewModel.starpass(preferences.getUserId(),Constant.BOOKING_ID,Constant.TRANSACTION_ID,Constant.BOOK_TYPE,Constant.CINEMA_ID,json)
+            println("json--->$json")
+            val string: String = java.lang.String.join(",", couponCodeList)
+
+            promoCodeViewModel.starpass(preferences.getUserId(),Constant.BOOKING_ID,Constant.TRANSACTION_ID,Constant.BOOK_TYPE,Constant.CINEMA_ID,string)
             return
         }
     }
 
 
-    private fun addCoupon() {
-        if (couponContainer?.childCount!! > 0) {
-            val ll = couponContainer?.getChildAt(couponContainer?.childCount!! - 1) as LinearLayout
+    @SuppressLint("SetTextI18n")
+    private fun addCoupon(binding: ActivityMcouponBinding) {
+        if (binding.mobileLayout?.childCount!! > 0) {
+            val ll = binding?.mobileLayout?.getChildAt(binding.mobileLayout.childCount - 1) as LinearLayout
             if (ll != null && ll.childCount == 1) {
                 val childView: CouponEditText = ll.getChildAt(0) as CouponEditText
-                couponContainer?.removeView(couponContainer?.getChildAt(couponContainer?.childCount!! - 1))
+                binding.mobileLayout.removeView(binding.mobileLayout.getChildAt(binding.mobileLayout.childCount - 1))
                 val layoutParams = LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT, 2.0f
@@ -143,17 +149,17 @@ lateinit var preferences: PreferenceManager
                 val linearLayout = LinearLayout(this)
                 linearLayout.orientation = LinearLayout.HORIZONTAL
                 linearLayout.layoutParams = layoutParams
-                for (i in 0..1) {
+
                     addChild(
                         linearLayout,
-                        getCount() + i + 1,
-                        if (i == 0) childView.text.toString() else ""
+                        getCount() + 1,
+                         childView.text.toString()
                     )
-                }
-                couponContainer?.addView(linearLayout)
+
+                binding.mobileLayout.addView(linearLayout)
             } else {
                 val layoutParams = LinearLayout.LayoutParams(
-                    couponContainer?.width?:0 / 2,
+                    binding.mobileLayout.width,
                     ViewGroup.LayoutParams.MATCH_PARENT
                 )
                 layoutParams.setMargins(0, 18, 0, 0)
@@ -161,26 +167,37 @@ lateinit var preferences: PreferenceManager
                 linearLayout.orientation = LinearLayout.HORIZONTAL
                 linearLayout.layoutParams = layoutParams
                 addChild(linearLayout, getCount() + 1, "")
-                couponContainer?.addView(linearLayout)
+                binding.mobileLayout.addView(linearLayout)
             }
         } else {
             val layoutParams = LinearLayout.LayoutParams(
-                couponContainer?.width!! / 2,
+                binding.mobileLayout.width,
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
             layoutParams.setMargins(0, 18, 0, 0)
             val linearLayout = LinearLayout(this)
             linearLayout.orientation = LinearLayout.HORIZONTAL
             linearLayout.layoutParams = layoutParams
-            addChild(linearLayout, getCount() + 1, "")
-            couponContainer?.addView(linearLayout)
+            addChild(linearLayout, getCount(), "")
+            binding.mobileLayout.addView(linearLayout)
+        }
+
+        binding.foodCount?.text = "" + getCount()
+
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (isFristTimeCalled) {
+            addCoupon(binding!!)
+            isFristTimeCalled = !isFristTimeCalled
         }
     }
 
     private fun addChild(linearLayout: LinearLayout, position: Int, text: String) {
         val params = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            70, 1.0f
+            Constant().convertDpToPixel(60f,this), 2.0f
         )
         params.setMargins(18, 0, 0, 0)
         val couponEditText = CouponEditText(this)
@@ -202,12 +219,12 @@ lateinit var preferences: PreferenceManager
         couponEditText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12F)
         couponEditText.setTextColor(resources.getColor(R.color.black))
         couponEditText.setPadding(
-           18,
+           28,
             0,
             18,
             0
         )
-        if (TextUtils.isEmpty(text)) couponEditText.hint = "Coupon $position" else {
+        if (TextUtils.isEmpty(text)) couponEditText.hint = "  Coupon $position" else {
             couponEditText.setText(text)
         }
         couponEditText.tag = couponEditText
@@ -279,39 +296,48 @@ lateinit var preferences: PreferenceManager
             .toString().length == 4)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun deleteCoupon() {
-        if (couponContainer?.childCount?:0 > 0) {
-            val ll = couponContainer?.getChildAt(couponContainer?.childCount?:0 - 1) as LinearLayout
+        if ((binding?.mobileLayout?.childCount ?: 0) > 0) {
+            val ll = binding?.mobileLayout?.getChildAt(binding?.mobileLayout?.childCount ?: (0 - 1)) as LinearLayout
             if (ll.childCount == 1) {
-                couponContainer?.removeView(ll)
+                binding?.mobileLayout?.removeView(ll)
             } else {
                 val childView: CouponEditText = ll.getChildAt(0) as CouponEditText
-                couponContainer?.removeView(ll)
+                binding?.mobileLayout?.removeView(ll)
                 val layoutParams = LinearLayout.LayoutParams(
-                    couponContainer?.width?:0 / 2,
+                    binding?.mobileLayout?.width ?: (0 / 2),
                     ViewGroup.LayoutParams.MATCH_PARENT
                 )
                 layoutParams.setMargins(0,18, 0, 0)
                 val linearLayout = LinearLayout(this)
                 linearLayout.orientation = LinearLayout.HORIZONTAL
                 linearLayout.layoutParams = layoutParams
-                addChild(linearLayout, getCount() + 1, childView.getText().toString())
-                couponContainer?.addView(linearLayout)
+                addChild(linearLayout, getCount() + 1, childView.text.toString())
+                binding?.mobileLayout?.addView(linearLayout)
             }
         }
-        couponContainer?.invalidate()
+        binding?.mobileLayout?.invalidate()
         binding?.foodCount?.text = "" + getCount()
     }
 
     private fun getCount(): Int {
-        var count = 0
-        if (couponContainer?.childCount == 1) {
-            val ll = couponContainer?.getChildAt(couponContainer?.childCount?:0 - 1) as LinearLayout
-            count = ll.childCount
-        } else if (couponContainer?.childCount?:0 > 1) {
-            val ll = couponContainer?.getChildAt(couponContainer?.childCount?:0 - 1) as LinearLayout
-            count = ll.childCount
-            count += 2 * (couponContainer?.childCount?:0 - 1)
+        var count = 1
+        try {
+            if (binding?.mobileLayout?.childCount == 1) {
+                val ll = binding?.mobileLayout?.getChildAt(
+                    binding?.mobileLayout?.childCount ?: (0 - 1)
+                ) as LinearLayout
+                count = ll.childCount
+            } else if ((binding?.mobileLayout?.childCount ?: 0) > 1) {
+                val ll = binding?.mobileLayout?.getChildAt(
+                    binding?.mobileLayout?.childCount ?: (0 - 1)
+                ) as LinearLayout
+                count = ll.childCount
+                count += 2 * (binding?.mobileLayout?.childCount ?: (0 - 1))
+            }
+        }catch (e:Exception){
+            e.printStackTrace()
         }
         return count
     }
@@ -319,9 +345,9 @@ lateinit var preferences: PreferenceManager
 
     private fun getCouponCode(): ArrayList<String>? {
         val couponCode = ArrayList<String>()
-        if (couponContainer?.childCount!! > 0) {
-            for (i in 0 until couponContainer?.childCount!!) {
-                val ll = couponContainer?.getChildAt(i) as LinearLayout
+        if (binding?.mobileLayout?.childCount!! > 0) {
+            for (i in 0 until binding?.mobileLayout?.childCount!!) {
+                val ll = binding?.mobileLayout?.getChildAt(i) as LinearLayout
                 if (ll != null) {
                     for (j in 0 until ll.childCount) {
                         val couponEditText: CouponEditText = ll.getChildAt(j) as CouponEditText
@@ -344,7 +370,7 @@ lateinit var preferences: PreferenceManager
             when (it) {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
-                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                    if (Constant.status == it.data?.result) {
                         if (it.data.output.p != null) {
                             if (it.data.output.bin != null) {
                                 val binSeries: String = it.data.output.bin
@@ -375,11 +401,10 @@ lateinit var preferences: PreferenceManager
                                 } else {
                                     Constant.discount_val = it.data.output.di
                                     Constant.discount_txt = it.data.output.txt
-                                    launchActivity(
-                                        PaymentActivity::class.java,
-                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                    launchPaymentActivity(PaymentActivity::class.java,
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK, intent.getStringExtra("paidAmount").toString()
                                     )
-                                    PaymentActivity.showTncDialog(this, it.data.output.di, "")
+                                    PaymentActivity.showTncDialog(this, it.data.output.di, "MCoupon")
 
                                 }
                             }
@@ -452,10 +477,10 @@ lateinit var preferences: PreferenceManager
                                 } else {
                                     Constant.discount_val = it.data.output.di
                                     Constant.discount_txt = it.data.output.txt
-                                    launchActivity(PaymentActivity::class.java,
-                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                    launchPaymentActivity(PaymentActivity::class.java,
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK, intent.getStringExtra("paidAmount").toString()
                                     )
-                                    PaymentActivity.showTncDialog(this, it.data.output.di, "")
+                                    PaymentActivity.showTncDialog(this, it.data.output.di, "Star Pass")
 
                                 }
                             }

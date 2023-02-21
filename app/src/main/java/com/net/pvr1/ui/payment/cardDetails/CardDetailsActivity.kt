@@ -66,6 +66,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
     private var callingUrlNet = ""
     private var currencyNet = ""
     private var midNet = ""
+    private var title = ""
     private var amountNet = ""
     private var hmackeyNet = ""
     var callCount = 0
@@ -116,9 +117,11 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
         }
 
         //Title
-        binding?.include27?.textView108?.text = getString(R.string.pay_via_card)
+        binding?.include27?.textView108?.text = getString(R.string.pay_via_card)+" "+intent.getStringExtra("title")
+        title = intent.getStringExtra("title").toString()
 
         //Proceed Bt
+        binding?.include28?.textView5?.text = "Verify & Pay"
         binding?.include28?.textView5?.setOnClickListener {
 
             val cardNumber = binding?.cardNumber?.text.toString().trim()
@@ -136,7 +139,17 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                     positiveClick = {},
                     negativeClick = {})
                 dialog.show()
-            } else if (monthYear == "") {
+            } else if (cardNumber.length<16) {
+                val dialog = OptionDialog(this,
+                    R.mipmap.ic_launcher,
+                    R.string.app_name,
+                    getString(R.string.cardNumberValid),
+                    positiveBtnText = R.string.ok,
+                    negativeBtnText = R.string.no,
+                    positiveClick = {},
+                    negativeClick = {})
+                dialog.show()
+            }else if (monthYear == "") {
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
                     R.string.app_name,
@@ -146,7 +159,17 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                     positiveClick = {},
                     negativeClick = {})
                 dialog.show()
-            } else if (cvv == "") {
+            }else if (monthYear.length<5 && !monthYear.contains("/")) {
+                val dialog = OptionDialog(this,
+                    R.mipmap.ic_launcher,
+                    R.string.app_name,
+                    getString(R.string.cardMonthValid),
+                    positiveBtnText = R.string.ok,
+                    negativeBtnText = R.string.no,
+                    positiveClick = {},
+                    negativeClick = {})
+                dialog.show()
+            } else if (cvv == "" ) {
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
                     R.string.app_name,
@@ -156,17 +179,17 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                     positiveClick = {},
                     negativeClick = {})
                 dialog.show()
-            } else if (nameOnCard == "") {
+            }else if ((cvv.length<3)) {
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
                     R.string.app_name,
-                    getString(R.string.cardNumber),
+                    getString(R.string.cardCvvValid),
                     positiveBtnText = R.string.ok,
                     negativeBtnText = R.string.no,
                     positiveClick = {},
                     negativeClick = {})
                 dialog.show()
-            } else {
+            }  else {
                 if (BOOK_TYPE == "RECURRING") {
                     authViewModel.paytmRHMAC(
                         preferences.getUserId(),
@@ -516,6 +539,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
             intent.putExtra("token", output.hmackey)
             intent.putExtra("amount", output.amount)
             intent.putExtra("mid", output.mid)
+            intent.putExtra("title", title)
             intent.putExtra("currency", output.currency)
             intent.putExtra("saveCardId", saveCardId)
             intent.putExtra("paymentType", paymentType)

@@ -25,12 +25,13 @@
 
         <TextView
             android:id="@+id/titleText"
-            android:fontFamily="@font/sf_pro_text_bold"
+            android:fontFamily="@font/montserrat_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="@dimen/dimen_15dp"
             android:ellipsize="end"
+            android:textSize="@dimen/dimen_20sp"
             android:gravity="center_horizontal"
             android:singleLine="true"
             android:text="Coupons"
@@ -76,6 +77,7 @@
         android:layout_marginBottom="@dimen/padding_10"
         android:layout_marginStart="@dimen/dimen_18dp"
         android:layout_marginEnd="@dimen/dimen_18dp"
+        android:visibility="gone"
         android:background="@drawable/round_corner_radius_rect"
         android:focusableInTouchMode="true"
         app:layout_constraintEnd_toEndOf="parent"

@@ -13,6 +13,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.text.Html
+import android.text.TextUtils
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -65,7 +66,6 @@ import com.phonepe.intent.sdk.api.TransactionRequestBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
-import kotlin.math.roundToInt
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
@@ -160,6 +160,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     private fun foodCart() {
         if (cartModel.isNotEmpty()) {
             binding?.constraintLayout171?.show()
+            binding?.recyclerView32?.show()
             val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
             addFoodCartAdapter = AddFoodCartAdapter(cartModel, this, this)
             binding?.recyclerView32?.layoutManager = layoutManagerCrew
@@ -167,6 +168,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             binding?.recyclerView32?.setHasFixedSize(true)
         } else {
             binding?.constraintLayout171?.hide()
+            binding?.recyclerView32?.hide()
         }
     }
 
@@ -189,7 +191,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                 Constant.CREDIT_CARD -> {
                     val intent = Intent(this@SummeryActivity, CardDetailsActivity::class.java)
                     intent.putExtra("pTypeId", pp?.id)
-                    intent.putExtra("paidAmount", paidAmount)
+                    intent.putExtra("paidAmount", paidAmount.toString())
                     intent.putExtra("title", pp?.name)
                     intent.putExtra("tc", pp?.tc)
                     startActivity(intent)
@@ -209,7 +211,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                 Constant.AIRTEL -> {
                     val intent = Intent(this@SummeryActivity, PaytmWebActivity::class.java)
                     intent.putExtra("pTypeId", pp?.id)
-                    intent.putExtra("paidAmount", paidAmount)
+                    intent.putExtra("paidAmount", paidAmount.toString())
                     intent.putExtra("title", pp?.name)
                     intent.putExtra("tc", pp?.tc)
                     startActivity(intent)
@@ -217,7 +219,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                 Constant.DEBIT_CARD -> {
                     val intent = Intent(this@SummeryActivity, CardDetailsActivity::class.java)
                     intent.putExtra("pTypeId", pp?.id)
-                    intent.putExtra("paidAmount", paidAmount)
+                    intent.putExtra("paidAmount", paidAmount.toString())
                     intent.putExtra("title", pp?.name)
                     intent.putExtra("tc", pp?.tc)
                     startActivity(intent)
@@ -227,7 +229,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                     intent.putExtra("pTypeId", pp?.id)
                     intent.putExtra("tc", pp?.tc)
                     intent.putExtra("title", pp?.name)
-                    intent.putExtra("paidAmount", paidAmount)
+                    intent.putExtra("paidAmount", paidAmount.toString())
                     startActivity(intent)
                 }
                 Constant.PHONE_PE -> {
@@ -242,7 +244,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                     intent.putExtra("tc", pp?.tc)
                     intent.putExtra("ca_t", "")
                     intent.putExtra("title", pp?.name)
-                    intent.putExtra("paidAmount", paidAmount)
+                    intent.putExtra("paidAmount", paidAmount.toString())
                     startActivity(intent)
                 }
                 Constant.PAYTM_WALLET -> {
@@ -252,7 +254,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                     intent.putExtra("tc", pp?.tc)
                     intent.putExtra("ca_t", "")
                     intent.putExtra("title", pp?.name)
-                    intent.putExtra("paidAmount", paidAmount)
+                    intent.putExtra("paidAmount", paidAmount.toString())
                     startActivity(intent)
                 }
                 Constant.GYFTR -> {
@@ -263,7 +265,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                     intent.putExtra("ca_a", "")
                     intent.putExtra("ca_t", "")
                     intent.putExtra("title", pp?.name)
-                    intent.putExtra("paidAmount", paidAmount)
+                    intent.putExtra("paidAmount", paidAmount.toString())
                     startActivity(intent)
                 }
                 Constant.GEIFT_CARD -> {
@@ -275,7 +277,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                     intent.putExtra("ca_a", "")
                     intent.putExtra("ca_t", "")
                     intent.putExtra("title", pp?.name)
-                    intent.putExtra("paidAmount", paidAmount)
+                    intent.putExtra("paidAmount", paidAmount.toString())
                     startActivity(intent)
                 }
                 Constant.ZAGGLE -> {
@@ -287,7 +289,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                     intent.putExtra("ca_a", "")
                     intent.putExtra("ca_t", "")
                     intent.putExtra("title", pp?.name)
-                    intent.putExtra("paidAmount", paidAmount)
+                    intent.putExtra("paidAmount", paidAmount.toString())
                     startActivity(intent)
                 }
                 Constant.ACCENTIVE -> {
@@ -298,7 +300,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                     intent.putExtra("ca_a", "")
                     intent.putExtra("ca_t", "")
                     intent.putExtra("title", pp?.name)
-                    intent.putExtra("paidAmount", paidAmount)
+                    intent.putExtra("paidAmount", paidAmount.toString())
                     startActivity(intent)
                 }
             }
@@ -369,8 +371,9 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+//                        println("paidAmount--->$paidAmount")
                         val intent = Intent(this@SummeryActivity, PaymentActivity::class.java)
-                        intent.putExtra("paidAmount", paidAmount)
+                        intent.putExtra("paidAmount", paidAmount.toString())
                         startActivity(intent)
 
                     } else {
@@ -455,6 +458,22 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     private fun retrieveData(output: SummeryResponse.Output) {
         summeryResponse = output
 
+        if (!TextUtils.isEmpty(output.bnd) && output.bnd.toDouble() > 0) {
+            if (output.cv){
+                binding?.fnbVocherView?.show()
+                binding?.cutPrice?.show()
+                binding?.cutPriceSub?.show()
+                binding?.cutPriceSub?.paintFlags = binding?.cutPriceSub?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
+                binding?.cutPrice?.paintFlags = binding?.cutPrice?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
+                binding?.cutFoodPrice?.paintFlags = binding?.cutFoodPrice?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
+
+            }else{
+                binding?.fnbVocherView?.hide()
+                binding?.cutPrice?.hide()
+                binding?.cutPriceSub?.hide()
+            }
+        }
+
 // quickPay
         if (output.pp != null) {
             pp = output.pp
@@ -474,7 +493,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         }
 
         //subtotal
-        binding?.textView168?.text =  getString(R.string.currency)+output.a
+//        binding?.textView168?.text =  getString(R.string.currency)+output.a
 
         //movie Details
         binding?.textView111?.text =
@@ -487,8 +506,9 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         binding?.textView119?.text = output.f[0].it[0].n
 
         //price
-        binding?.textView120?.text = getString(R.string.currency) + output.f[0].it[0].v
-        ticketPrice = output.f[0].it[0].v.toDouble()
+        binding?.textView120?.text = getString(R.string.currency) + output.f[0].v
+        binding?.cutPrice?.text = getString(R.string.currency) + output.f[0].cp
+        ticketPrice = output.f[0].v.toDouble()
 
         //coupon
         binding?.textView169?.text = ""
@@ -511,6 +531,22 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
                 //gst Heading
                 binding?.textView271?.text = data.it[1].n
+            }else if (data.n.contains("Food vouchers")){
+                println("data.n--->"+data.n)
+                binding?.constraintLayout171?.show()
+                binding?.fnbVocherView?.show()
+                binding?.recyclerView32?.hide()
+                binding?.cutFoodPrice?.text = getString(R.string.currency) + data.cp
+                binding?.foodPrice?.text = getString(R.string.currency) + data.v
+            }
+            else if (data.n.contains("Total (Tickets + Food voucher)")){
+                println("data.n--->"+data.n)
+                binding?.constraintLayout171?.show()
+                binding?.fnbVocherView?.show()
+                binding?.recyclerView32?.hide()
+                binding?.textView162?.text = data.n
+                binding?.textView168?.text = getString(R.string.currency) + data.v
+                binding?.cutPriceSub?.text = getString(R.string.currency) + data.cp
             }
 
         }
@@ -598,14 +634,20 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                 )
             } else {
                 val intent = Intent(this@SummeryActivity, PaymentActivity::class.java)
-                intent.putExtra("paidAmount", output.a)
+                intent.putExtra("paidAmount", output.a.toString())
                 startActivity(intent)
             }
         }
 
         //manageFood
         if (FOODENABLE == 1) {
-            binding?.constraintLayout157?.hide()
+            if (!output.cv) {
+                binding?.constraintLayout157?.hide()
+                binding?.constraintLayout156?.hide()
+            }else{
+                binding?.constraintLayout157?.show()
+                binding?.constraintLayout156?.hide()
+            }
         } else {
             binding?.constraintLayout157?.show()
         }
@@ -658,13 +700,14 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         val ticketCount = donationAmount * output.seat.size
 
         binding?.textView171?.text = getString(R.string.currency) + " " + ticketCount.toString()
-        binding?.textView166?.text = donationAmount.toString() + "/" + getString(R.string.ticket)
+//        binding?.textView166?.text = donationAmount.toString() + "/" + getString(R.string.ticket)
 
 
 //    payableAmount
         if (cartModel.isNotEmpty()) {
             val foodPrice = calculateTotalPrice()
             val foodTotPrice = Constant.DECIFORMAT.format(foodPrice / 100.0)
+            binding?.textView168?.text = getString(R.string.currency)+Constant.DECIFORMAT.format(ticketPrice+(foodPrice/100.0))
 
             paidAmount =
                 (payableAmount + ticketCount.toDouble() + foodTotPrice.toDouble())
@@ -674,6 +717,12 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             //grand total
             binding?.textView173?.text = getString(R.string.currency) + Constant.DECIFORMAT.format(paidAmount)
         } else {
+            if (!output.cv) {
+                binding?.textView168?.text =
+                    getString(R.string.currency) + Constant.DECIFORMAT.format(ticketPrice)
+                binding?.cutPriceSub?.text = getString(R.string.currency) + output.f[0].cp
+            }
+
             paidAmount = (payableAmount + ticketCount)
             binding?.textView174?.text =
                 getString(R.string.pay) + " " + getString(R.string.currency) + Constant.DECIFORMAT.format(paidAmount) + " |"
@@ -696,32 +745,41 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         val ticketCount = output.seat.size
 
         binding?.textView171?.text = getString(R.string.currency) + " 0"
-        binding?.textView166?.text = ticketCount.toString() + "/" + getString(R.string.ticket)
+//        binding?.textView166?.text = ticketCount.toString() + "/" + getString(R.string.ticket)
 
 //    payableAmount
         if (cartModel.isNotEmpty()) {
             val foodPrice = calculateTotalPrice()
             val foodTotPrice = Constant.DECIFORMAT.format(foodPrice / 100.0)
+            binding?.textView168?.text = getString(R.string.currency)+Constant.DECIFORMAT.format(ticketPrice+(foodPrice/100.0))
 
             paidAmount =
                 (payableAmount + donationAmount.toDouble() + foodTotPrice.toDouble())
             binding?.textView174?.text =
-                getString(R.string.pay) + " " + getString(R.string.currency) + paidAmount + " |"
+                getString(R.string.pay) + " " + getString(R.string.currency) + Constant.DECIFORMAT.format(paidAmount) + " |"
 
             //grand total
-            binding?.textView173?.text = getString(R.string.currency) + paidAmount
+            binding?.textView173?.text = getString(R.string.currency) + Constant.DECIFORMAT.format(paidAmount)
 
         } else {
+            if (!output.cv) {
+                binding?.textView168?.text =
+                    getString(R.string.currency) + Constant.DECIFORMAT.format(ticketPrice)
+                binding?.cutPriceSub?.text = getString(R.string.currency) + output.f[0].cp
+            }
+
+
             paidAmount = (payableAmount + donationAmount)
             binding?.textView174?.text =
-                getString(R.string.pay) + " " + getString(R.string.currency) + paidAmount + " |"
+                getString(R.string.pay) + " " + getString(R.string.currency) + Constant.DECIFORMAT.format(paidAmount) + " |"
 
             //grand total
-            binding?.textView173?.text = getString(R.string.currency) + paidAmount
+            binding?.textView173?.text = getString(R.string.currency) + Constant.DECIFORMAT.format(paidAmount)
         }
     }
 
 
+    @SuppressLint("SetTextI18n")
     private fun setPrice(output: SummeryResponse.Output) {
         //total seat
 //        val donationAmount = output.don / 100
@@ -734,20 +792,29 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             val foodPrice = calculateTotalPrice()
             val foodTotPrice = Constant.DECIFORMAT.format(foodPrice / 100.0)
 
+            binding?.textView168?.text = getString(R.string.currency)+Constant.DECIFORMAT.format(ticketPrice+(foodPrice/100.0))
+
             paidAmount =
                 (payableAmount + ticketCount.toDouble() + foodTotPrice.toDouble())
             binding?.textView174?.text =
-                getString(R.string.pay) + " " + getString(R.string.currency) + paidAmount + " |"
+                getString(R.string.pay) + " " + getString(R.string.currency) + Constant.DECIFORMAT.format(paidAmount) + " |"
 
             //grand total
-            binding?.textView173?.text = getString(R.string.currency) + paidAmount
+            binding?.textView173?.text = getString(R.string.currency) + Constant.DECIFORMAT.format(paidAmount)
         } else {
+            if (!output.cv) {
+                binding?.textView168?.text =
+                    getString(R.string.currency) + Constant.DECIFORMAT.format(ticketPrice)
+                binding?.cutPriceSub?.text = getString(R.string.currency) + output.f[0].cp
+            }
+
+
             paidAmount = (payableAmount + ticketCount).toDouble()
             binding?.textView174?.text =
-                getString(R.string.pay) + " " + getString(R.string.currency) + paidAmount + " |"
+                getString(R.string.pay) + " " + getString(R.string.currency) + Constant.DECIFORMAT.format(paidAmount) + " |"
 
 //grand total
-            binding?.textView173?.text = getString(R.string.currency) + paidAmount
+            binding?.textView173?.text = getString(R.string.currency) + Constant.DECIFORMAT.format(paidAmount)
         }
     }
 
@@ -861,12 +928,9 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     override fun onBackPressed() {
         SeatBack= 1
         if (FOODENABLE == 0) {
-            showDialog()
+            showDialog("1")
         } else {
-            finish()
-            authViewModel.cancelTrans(
-                CINEMA_ID, TRANSACTION_ID, BOOKING_ID
-            )
+            showDialog("0")
         }
     }
 
@@ -1097,7 +1161,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                             val intent = Intent(this@SummeryActivity, CredActivity::class.java)
                             intent.putExtra("bannertext", it.data.output.banner_txt)
                             intent.putExtra("icon", it.data.output.icon)
-                            intent.putExtra("paidAmount", paidAmount)
+                            intent.putExtra("paidAmount", paidAmount.toString())
                             intent.putExtra("msg", it.data.output.msg)
                             intent.putExtra("mode", it.data.output.mode)
                             intent.putExtra("pid", pp?.id)
@@ -1290,7 +1354,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         }
     }
 
-    private fun showDialog() {
+    private fun showDialog(type:String) {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
@@ -1299,6 +1363,15 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         val crossBtn = dialog.findViewById<View>(R.id.crossBtn) as ImageView
         val endSession = dialog.findViewById<View>(R.id.delete) as TextView
         val exploreMenu = dialog.findViewById<View>(R.id.cancel) as TextView
+        val or = dialog.findViewById<View>(R.id.or) as TextView
+
+        if (type == "0"){
+            exploreMenu.hide()
+            or.hide()
+        }else{
+            exploreMenu.show()
+            or.show()
+        }
 
         //close button
         crossBtn.setOnClickListener {

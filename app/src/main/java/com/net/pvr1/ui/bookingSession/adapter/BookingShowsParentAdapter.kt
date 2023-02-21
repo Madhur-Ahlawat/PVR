@@ -34,6 +34,8 @@ class BookingShowsParentAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
+        println("BookingResponse--->${nowShowingList[position].cn}")
+
         with(holder) {
             with(nowShowingList[position]) {
                 //Language
@@ -130,8 +132,15 @@ class BookingShowsParentAdapter(
 
 
     //and assigning it to the list with notifydatasetchanged method
+    @SuppressLint("NotifyDataSetChanged")
     fun filterList(filterdNames: ArrayList<BookingResponse.Output.Cinema>) {
         this.nowShowingList = filterdNames
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public fun clearList(){
+        nowShowingList.clear()
         notifyDataSetChanged()
     }
 

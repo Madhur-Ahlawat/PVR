@@ -50,6 +50,7 @@ class PaymentAdapter(
                             binding.textView124.text = this.name
                             holder.itemView.setOnClickListener { listener.paymentClick(this) }
                             holder.itemView.visibility = View.VISIBLE
+                            binding.imageView81.setImageResource(R.drawable.p_phonepe)
                         } else {
                             holder.itemView.visibility = View.GONE
                         }
@@ -62,52 +63,59 @@ class PaymentAdapter(
                     //title
                     binding.textView124.text = this.name
                     if (Constant.PRICE_DESK == this.id) {
-                        binding.imageView81.setBackgroundResource(R.drawable.payment_card)
+                        binding.imageView81.setImageResource(R.drawable.payment_card)
                     } else if (Constant.PAYTM == this.id) {
-                        binding.imageView81.setBackgroundResource(R.drawable.paytm_icon)
+                        binding.imageView81.setImageResource(R.drawable.p_paytm)
                     } else if (Constant.PAYTMPOSTPAID == this.id) {
-                        binding.imageView81.setBackgroundResource(R.drawable.paytm_postpaid_icon)
+                        binding.imageView81.setImageResource(R.drawable.p_postpiad)
                     } else if (Constant.MOBIKWIK == this.id) {
-                        binding.imageView81.setBackgroundResource(R.drawable.moviequick)
+                        binding.imageView81.setImageResource(R.drawable.p_mobi)
                     } else if (Constant.OXYGEN == this.id) {
-                        binding.imageView81.setBackgroundResource(R.drawable.oxigen)
+                        binding.imageView81.setImageResource(R.drawable.oxigen)
                     } else if (Constant.GEIFT_CARD == this.id) {
-                        binding.imageView81.setBackgroundResource(R.drawable.giftp)
+                        binding.imageView81.setImageResource(R.drawable.gift_card_default)
                     } else if (Constant.DC_CARD == this.id) {
-                        binding.imageView81.setBackgroundResource(R.drawable.payment_director)
+                        binding.imageView81.setImageResource(R.drawable.payment_director)
                     } else if (Constant.DEBIT_CARD == this.id) {
-                        binding.imageView81.setBackgroundResource(R.drawable.debit_card_new)
+                        binding.imageView81.setImageResource(R.drawable.p_card)
                     } else if (Constant.CREDIT_CARD == this.id) {
-                        binding.imageView81.setBackgroundResource(R.drawable.debit_card_new)
+                        binding.imageView81.setImageResource(R.drawable.p_card)
                     } else if (Constant.NETBANKING == this.id) {
-                        binding.imageView81.setBackgroundResource(R.drawable.netbanking_new)
+                        binding.imageView81.setImageResource(R.drawable.payment_net)
                     } else if (Constant.ZAGGLE == this.id) {
-                        binding.imageView81.setBackgroundResource(R.drawable.zaggle_icon)
+                        binding.imageView81.setImageResource(R.drawable.zaggle_icon)
                     } else if (Constant.OFFER_OPTION == this.id) {
-                        binding.imageView81.setBackgroundResource(R.drawable.ic_star)
+                        binding.imageView81.setImageResource(R.drawable.ic_star)
                     } else if (Constant.BIN_OPTION == this.id) {
-                        // holder.paymentImageView.setVisibility(View.GONE);
+                        binding.imageView81.setImageResource(0)
                     } else if (Constant.AIRTEL == this.id) {
-                        binding.imageView81.setBackgroundResource(R.drawable.airtel_icon)
+                        binding.imageView81.setImageResource(R.drawable.airtel_icon)
                     } else if (Constant.TEJ == this.id) {
-                        binding.imageView81.setBackgroundResource(R.drawable.tej)
+                        binding.imageView81.setImageResource(R.drawable.tej)
                     } else if (Constant.PHONE_PE == this.id) {
-                        binding.imageView81.setBackgroundResource(R.drawable.phonepe_icon)
+                        println("Phonepe--->${this.id}")
+                        binding.imageView81.setImageResource(R.drawable.p_phonepe)
                     } else if (Constant.EPAY_LATTER == this.id) {
-                        binding.imageView81.setBackgroundResource(R.drawable.epay)
+                        binding.imageView81.setImageResource(R.drawable.epay)
                     } else if (Constant.TEZUPI == this.id) {
-                        binding.imageView81.setBackgroundResource(R.drawable.upi_new)
+                        binding.imageView81.setImageResource(R.drawable.p_upi)
                     } else if (Constant.PAYTMUPI == this.id) {
-                        binding.imageView81.setBackgroundResource(R.drawable.upi_new)
+                        binding.imageView81.setImageResource(R.drawable.p_upi)
                     } else if (Constant.PAYPAL == this.id) {
-                        binding.imageView81.setBackgroundResource(R.drawable.paypal)
+                        binding.imageView81.setImageResource(R.drawable.paypal)
                     } else if (Constant.PAYTM_CREDIT_CARD == this.id) {
-                        binding.imageView81.setBackgroundResource(R.drawable.debit_card_new)
+                        binding.imageView81.setImageResource(R.drawable.p_card)
                     } else if (Constant.PAYTM_DEBIT_CARD == this.id) {
-                        binding.imageView81.setBackgroundResource(R.drawable.debit_card_new)
+                        binding.imageView81.setImageResource(R.drawable.p_card)
                     } else if (Constant.PAYTM_NETBANKING == this.id) {
-                        binding.imageView81.setBackgroundResource(R.drawable.netbanking_new)
+                        binding.imageView81.setImageResource(R.drawable.p_nb)
+                    }else if (Constant.GYFTR == this.id) {
+                        binding.imageView81.setImageResource(R.drawable.p_gyter)
+                    }else if (Constant.ACCENTIVE == this.id) {
+                        println("Phonepexpe--->${this.id}")
+                        binding.imageView81.setImageResource(R.drawable.ticket_xpres)
                     }
+
                     holder.itemView.setOnClickListener { listener.paymentClick(this) }
                 }
             }

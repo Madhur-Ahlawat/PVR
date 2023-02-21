@@ -121,6 +121,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         binding = ActivitySeatLayoutBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+        sessionId = Constant.SESSION_ID
+
         manageFunctions()
     }
 
@@ -136,7 +138,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         } else {
             position = intent.getStringExtra("clickPosition").toString()
             showsArray = intent.getSerializableExtra("shows") as ArrayList<Child.Sw.S>
-            printLog("shows---->${showsArray}")
+            printLog("shows---->${position}")
 
             shows()
         }
@@ -156,15 +158,10 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
         //Remove Offer
         binding?.textView203?.setOnClickListener {
-            binding?.llRowName?.removeAllViews()
-            binding?.constraintLayout60?.hide()
-            authViewModel.seatLayout(
-                CINEMA_ID, Constant.SESSION_ID, "", "", "", offerEnable, ""
-            )
+            removeBundle()
         }
 
         //from Shows
-        sessionId = Constant.SESSION_ID
 
         authViewModel.seatLayout(
             CINEMA_ID, sessionId, "", "", "", offerEnable, ""
@@ -259,27 +256,30 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             ShowsAdapter(getMovieShows(showsArray), this, this, position.toInt(), binding?.recyclerView27!!)
         binding?.recyclerView27?.layoutManager = gridLayout
         binding?.recyclerView27?.adapter = adapter
-        println("itemCount--->$position")
 
 
     }
 
     private fun getMovieShows(showsArray: ArrayList<Child.Sw.S>): ArrayList<Child.Sw.S> {
+
         var list = ArrayList<Child.Sw.S>()
-        var st = showsArray[position.toInt()].st
+        var st = showsArray[position.toInt()].sid
+
         for (data in showsArray.indices){
             if (showsArray[data].ss != 0){
-                if (st == showsArray[data].st){
-                    position = data.toString()
-                }
                 list.add(showsArray[data])
             }
         }
         for (data in list.indices){
-            if (list[data].st == st){
+            if (list[data].sid == st){
+                sessionId = list[data].sid.toString()
+                println("itemCount--->$sessionId")
+
                 position = data.toString()
             }
         }
+
+
         return list
     }
 
@@ -295,17 +295,15 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
     private fun getCinemaShows(cinemaSessionShows: ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>): ArrayList<CinemaSessionResponse.Child.Mv.Ml.S> {
         var list = ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>()
-        var st = cinemaSessionShows[position.toInt()].st
+        var st = cinemaSessionShows[position.toInt()].sid
         for (data in cinemaSessionShows.indices){
             if (cinemaSessionShows[data].ss != 0){
-                if (st == cinemaSessionShows[data].st){
-                    position = data.toString()
-                }
                 list.add(cinemaSessionShows[data])
             }
         }
         for (data in list.indices){
-            if (list[data].st == st){
+            if (list[data].sid == st){
+                sessionId = list[data].sid.toString()
                 position = data.toString()
             }
         }
@@ -1996,6 +1994,57 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         cancel.text = "YES"
         dialog.show()
     }
+@SuppressLint("SetTextI18n")
+    private fun removeBundle() {
+        // custom dialog
+        val messagePcTextView: TextView
+        val titleText: TextView
+        val cancel: TextView
+        val delete: TextView
+        val icon: ImageView
+        val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.ticket_cancel)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val behavior: BottomSheetBehavior<FrameLayout> = dialog.behavior
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+        dialog.window?.setGravity(Gravity.BOTTOM)
+        dialog.window!!.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.setTitle("")
+        messagePcTextView = dialog.findViewById<View>(R.id.message) as TextView
+        titleText = dialog.findViewById<View>(R.id.titleText) as TextView
+        icon = dialog.findViewById<View>(R.id.icon) as ImageView
+        icon.visibility = View.VISIBLE
+        delete = dialog.findViewById<View>(R.id.no) as TextView
+        titleText.text = "Are you sure you want to remove the offer?"
+        messagePcTextView.text =
+            "This is the first offer of its kind offered\nby a cinema, exclusively on PVR."
+        titleText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+        icon.setImageResource(R.drawable.ic_caution_shape)
+        delete.text = "Cancel"
+        delete.setOnClickListener { dialog.dismiss() }
+        cancel = dialog.findViewById<View>(R.id.yes) as TextView
+        cancel.text = "Remove Offer"
+        cancel.setOnClickListener {
+
+            binding?.llRowName?.removeAllViews()
+            selectedSeats.clear()
+            selectSeatPriceCode.clear()
+            noOfSeatsSelected.clear()
+            calculatePrice()
+            binding?.constraintLayout60?.hide()
+            offerEnable = false
+            authViewModel.seatLayout(
+                CINEMA_ID, Constant.SESSION_ID, "", "", "", offerEnable, ""
+            )
+
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
 
     override fun showsClick(comingSoonItem: Int, itemView: View, position: Int) {
         //Show  end time
@@ -2007,8 +2056,13 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
         sessionId = comingSoonItem.toString()
         binding?.llRowName?.removeAllViews()
+        //clear List
+        selectedSeats.clear()
+        selectSeatPriceCode.clear()
+        noOfSeatsSelected.clear()
+        calculatePrice()
         authViewModel.seatLayout(
-            CINEMA_ID, sessionId, "", "", "", false, ""
+            CINEMA_ID, sessionId, "", "", "", offerEnable, ""
         )
 
     }
@@ -2023,8 +2077,13 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
         sessionId = comingSoonItem.toString()
         binding?.llRowName?.removeAllViews()
+        //clear List
+        selectedSeats.clear()
+        selectSeatPriceCode.clear()
+        noOfSeatsSelected.clear()
+        calculatePrice()
         authViewModel.seatLayout(
-            CINEMA_ID, sessionId, "", "", "", false, ""
+            CINEMA_ID, sessionId, "", "", "", offerEnable, ""
         )
         Constant.focusOnView(itemView, binding?.recyclerView27!!)
     }

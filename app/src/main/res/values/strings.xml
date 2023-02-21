@@ -306,6 +306,7 @@
     <string name="booking_txt">We’ll notify as soon as the booking\n opens up in your preferred theaters</string>
     <string name="search_theater">Search theater</string>
     <string name="apply_offer">Apply Offer</string>
+    <string name="apply_coupon">Apply Coupon</string>
     <string name="ticket">Ticket</string>
     <string name="food">Food</string>
     <string name="offer_price">Offer Price</string>
@@ -415,12 +416,12 @@
     Redeem
     <string name="redeem">Reedem</string>
     <string name="card_number">Card Number</string>
-    <string name="valid_through_mm_yy">Valid Through (MM/YY)</string>
+    <string name="valid_through_mm_yy">MM/YY</string>
     <string name="cvv">CVV</string>
     <string name="name_on_card">Name on Card</string>
     <string name="card_nickname">Card Nickname</string>
     <string name="securely_save_this_card_for_future_use">Securely save this card for future use</string>
-    <string name="pay_via_card">Pay Via Card</string>
+    <string name="pay_via_card">Pay Via </string>
     <string name="time">Show time (Approx)</string>
     <string name="seats_info">Seats INFO</string>
     <string name="order_id">oRDER ID</string>
@@ -461,9 +462,12 @@
 
     <string name="you_will_earn_190_00_privilege_points">You will earn 190.00 Privilege Points</string>
     <string name="payUsing">Pay Using</string>
-    <string name="cardNumber">Enter Card Number</string>
-    <string name="cardMonth">Enter card Month</string>
-    <string name="cardCvv">Enter card Cvv</string>
+    <string name="cardNumber">Enter card number</string>
+    <string name="cardNumberValid">Enter valid card number</string>
+    <string name="cardMonth">Enter card month</string>
+    <string name="cardMonthValid">Enter valid card month</string>
+    <string name="cardCvv">Enter card CVV</string>
+    <string name="cardCvvValid">Enter valid card CVV</string>
     <string name="login">Login</string>
     <string name="already_subscribed">Already Subscribed</string>
     <string name="apply_filter">Apply Filter</string>

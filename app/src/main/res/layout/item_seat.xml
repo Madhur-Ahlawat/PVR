@@ -26,6 +26,8 @@
         android:fontFamily="@font/sf_pro_text_semi_bold"
         android:textColor="@color/black"
         tools:text="D14"
+        android:gravity="center"
+        android:includeFontPadding="false"
         app:layout_constraintBottom_toBottomOf="@+id/view80"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

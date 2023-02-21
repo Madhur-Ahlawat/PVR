@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.net.pvr1.R
 import com.net.pvr1.databinding.ItemPaymentListBinding
 import com.net.pvr1.ui.payment.response.PaymentResponse
 import com.net.pvr1.utils.hide
@@ -39,7 +40,7 @@ class PaymentExclusiveAdapter(
                 }else{
                     binding.view220.show()
                 }
-//                binding.imageView81.setImageResource(R.drawable.shows)
+                binding.imageView81.setImageResource(R.drawable.ic_star)
                 //title
                 binding.textView124.text = this.name
                 itemView.setOnClickListener{

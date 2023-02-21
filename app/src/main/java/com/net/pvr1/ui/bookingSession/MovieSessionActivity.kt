@@ -567,7 +567,7 @@ class MovieSessionActivity : AppCompatActivity(),
             intent.getStringExtra("mid").toString(),
             lat,
             lng,
-            "NA",
+            comingSoonItem.dt,
             "no",
             "no",
             preferences.getUserId(),lang,format,price1,hc,show1,cinemaType,special

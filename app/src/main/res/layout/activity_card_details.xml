@@ -239,7 +239,6 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginTop="-8dp"
-
                         android:hint="@string/valid_through_mm_yy"
                         app:boxBackgroundColor="@color/transparent"
                         app:boxStrokeColor="@color/transparent"
@@ -452,6 +451,7 @@
                 android:paddingEnd="2dp"
                 android:text="@string/securely_save_this_card_for_future_use"
                 android:textColor="@color/black"
+                android:buttonTint="@color/yellow"
                 android:textSize="@dimen/dimen_14sp"
                 app:layout_constraintEnd_toEndOf="@+id/view221"
                 app:layout_constraintStart_toStartOf="@+id/relativeLayout5"

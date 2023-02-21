@@ -40,7 +40,7 @@ class PaymentPromoCatAdapter(
                     binding.options.setTextColor(context.resources.getColor(R.color.black))
                 }else{
                     binding.options.isSelected = false
-                    binding.options.setTextColor(context.resources.getColor(R.color.h8Point1Color))
+                    binding.options.setTextColor(context.resources.getColor(R.color.otherCityColor))
                 }
                 binding.options.text = this
                 itemView.setOnClickListener{

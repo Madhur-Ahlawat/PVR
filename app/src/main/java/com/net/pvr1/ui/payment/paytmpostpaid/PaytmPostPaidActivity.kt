@@ -33,6 +33,7 @@ class PaytmPostPaidActivity : AppCompatActivity() {
     private var catFilterPayment = ArrayList<PaymentResponse.Output.Gateway>()
     private var paidAmount = ""
     private var title = ""
+    var state_text = ""
 
 
     @SuppressLint("SetTextI18n")
@@ -45,12 +46,19 @@ class PaytmPostPaidActivity : AppCompatActivity() {
         title = intent.getStringExtra("title").toString()
         paidAmount = intent.getStringExtra("paidAmount").toString()
         //paidAmount
-        binding?.msg?.text = getString(R.string.payable_amnt_rs) + paidAmount
+        binding?.msg?.text = getString(R.string.currency) + paidAmount
 
         if (intent.getStringExtra("title").equals("epaylater", ignoreCase = true)) {
             binding?.addPay?.text = "PAY NOW"
             getEpayOTP()
-        } else {
+        } else if (intent.getStringExtra("title") == "Paytm") {
+            paytmPostPaidViewModel.getWalletHmac(
+                preferences.getUserId(),
+                Constant.BOOKING_ID,
+                Constant.TRANSACTION_ID,
+                Constant.BOOK_TYPE
+            )
+        }else {
             paytmPostPaidViewModel.getBalance(
                 preferences.getUserId(),
                 Constant.BOOKING_ID,
@@ -60,30 +68,60 @@ class PaytmPostPaidActivity : AppCompatActivity() {
         }
 
         binding?.subBtn?.setOnClickListener(View.OnClickListener {
-            if (binding?.subBtn?.text.toString().equals("Make Payment", ignoreCase = true))
-                paytmPostPaidViewModel.postPaidPay(
-                    preferences.getUserId(),
-                    Constant.BOOKING_ID,
-                    Constant.TRANSACTION_ID,
-                    Constant.BOOK_TYPE
-                )
-            else if (!binding?.etOtp?.text.toString().isEmpty()) {
-                paytmPostPaidViewModel.postPaidVerifYOTP(
-                    preferences.getUserId(),
-                    Constant.BOOKING_ID,
-                    Constant.TRANSACTION_ID,
-                    Constant.BOOK_TYPE,
-                    binding?.etOtp?.text.toString()
-                )
-            } else {
-                toast("Please enter OTP!")
+            if (title == "epaylater"){
+
+            }else if (title == "Paytm"){
+                if (binding?.subBtn?.text.toString().equals("Make Payment", ignoreCase = true))
+                    paytmPostPaidViewModel.walletMakePayment(
+                        preferences.getUserId(),
+                        Constant.BOOKING_ID,
+                        Constant.TRANSACTION_ID,
+                        Constant.BOOK_TYPE
+                    )
+                else if (binding?.etOtp?.getStringFromFields().toString().length >= 6) {
+                    paytmPostPaidViewModel.walletVerifYOTP(
+                        preferences.getUserId(),
+                        Constant.BOOKING_ID,
+                        Constant.TRANSACTION_ID,
+                        Constant.BOOK_TYPE,
+                        binding?.etOtp?.getStringFromFields().toString(),state_text
+                    )
+                } else {
+                    toast("Please enter OTP!")
+                }
+            }else {
+                if (binding?.subBtn?.text.toString().equals("Make Payment", ignoreCase = true))
+                    paytmPostPaidViewModel.postPaidPay(
+                        preferences.getUserId(),
+                        Constant.BOOKING_ID,
+                        Constant.TRANSACTION_ID,
+                        Constant.BOOK_TYPE
+                    )
+                else if (binding?.etOtp?.getStringFromFields().toString().length >= 6) {
+                    paytmPostPaidViewModel.postPaidVerifYOTP(
+                        preferences.getUserId(),
+                        Constant.BOOKING_ID,
+                        Constant.TRANSACTION_ID,
+                        Constant.BOOK_TYPE,
+                        binding?.etOtp?.getStringFromFields().toString()
+                    )
+                } else {
+                    toast("Please enter OTP!")
+                }
             }
         })
 
         binding?.resendOTP?.setOnClickListener(View.OnClickListener {
             if (title.equals("epaylater", ignoreCase = true)) {
                 getEpayOTP()
-            } else {
+            } else if (title == "Paytm"){
+                paytmPostPaidViewModel.walletSendOTP(
+                    preferences.getUserId(),
+                    Constant.BOOKING_ID,
+                    Constant.TRANSACTION_ID,
+                    Constant.BOOK_TYPE
+                )
+            }else{
                 paytmPostPaidViewModel.postPaidSendOTP(
                     preferences.getUserId(),
                     Constant.BOOKING_ID,
@@ -95,7 +133,22 @@ class PaytmPostPaidActivity : AppCompatActivity() {
 
         binding?.addPay?.setOnClickListener(View.OnClickListener {
             if (title.equals("epaylater", ignoreCase = true)) {
-            } else {
+            } else if (title == "Paytm") {
+                if (binding?.addPay?.text.toString().equals("PAY NOW", ignoreCase = true)) {
+                    paytmPostPaidViewModel.postPaidMakePayment(
+                        preferences.getUserId(),
+                        Constant.BOOKING_ID,
+                        Constant.TRANSACTION_ID,
+                        Constant.BOOK_TYPE
+                    )
+                } else {
+                    val intent = Intent(this@PaytmPostPaidActivity, PaytmWebActivity::class.java)
+                    intent.putExtra("pTypeId", intent.getStringExtra("pid"))
+                    intent.putExtra("paidAmount", paidAmount)
+                    intent.putExtra("title", title)
+                    startActivity(intent)
+                }
+            }else{
                 if (binding?.addPay?.text.toString().equals("PAY NOW", ignoreCase = true)) {
                     paytmPostPaidViewModel.postPaidMakePayment(
                         preferences.getUserId(),
@@ -122,6 +175,11 @@ class PaytmPostPaidActivity : AppCompatActivity() {
         postPaidSendOTP()
         postPaidVerifyOTP()
         postPaidMakePayment()
+
+        getHmac()
+        walletSendOTP()
+        walletVerifyOTP()
+        walletMakePayment()
 
     }
 
@@ -379,6 +437,227 @@ class PaytmPostPaidActivity : AppCompatActivity() {
     }
     private fun postPaidMakePayment() {
         paytmPostPaidViewModel.liveDataMakePaymentScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        if (it.data?.output?.p == true) {
+                            Constant().printTicket(this)
+                            finish()
+                        } else {
+                            val dialog = OptionDialog(this,
+                                R.mipmap.ic_launcher,
+                                R.string.app_name,
+                                it.data.msg.toString(),
+                                positiveBtnText = R.string.ok,
+                                negativeBtnText = R.string.no,
+                                positiveClick = {
+                                    onBackPressed()
+                                },
+                                negativeClick = {})
+                            dialog.show()
+                        }
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+
+
+   private fun getHmac() {
+        paytmPostPaidViewModel.liveDataWalletScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result) {
+                        if (it.data.output.state!=null){
+                            state_text = it.data.output.state
+                        }else {
+                            try {
+                                if (it.data.output.b.toDouble() > paidAmount.toDouble()
+                                    || it.data.output.b.toDouble() == paidAmount.toDouble()
+                                ) {
+                                    binding?.otpView?.hide()
+                                    binding?.balanceView?.show()
+                                    binding?.balance?.text = "Rs " + it.data.output.b
+                                    binding?.subBtn?.text = "Make Payment"
+                                } else {
+                                    binding?.balance?.text = "Rs " + it.data.output.b
+                                    binding?.balance?.setCompoundDrawablesWithIntrinsicBounds(
+                                        0,
+                                        0,
+                                        R.drawable.close_notif,
+                                        0
+                                    )
+                                    binding?.otpView?.hide()
+                                    binding?.balanceView?.show()
+                                    binding?.insuficient?.show()
+                                    binding?.subBtn?.isEnabled = false
+                                    binding?.subBtn?.setTextColor(resources.getColor(R.color.disabled_text))
+                                }
+                            } catch (e: Exception) {
+                                binding?.balance?.text = "Rs " + it.data.output.b
+                                binding?.balance?.setCompoundDrawablesWithIntrinsicBounds(
+                                    0,
+                                    0,
+                                    R.drawable.close_notif,
+                                    0
+                                )
+                                binding?.otpView?.hide()
+                                binding?.balanceView?.show()
+                                binding?.insuficient?.show()
+                                binding?.subBtn?.isEnabled = false
+                                binding?.subBtn?.setTextColor(resources.getColor(R.color.disabled_text))
+                                e.printStackTrace()
+                            }
+                        }
+                    } else {
+                        binding?.otpView?.hide()
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    binding?.otpView?.hide()
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+    private fun walletSendOTP() {
+        paytmPostPaidViewModel.liveWalletsendOTPScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        binding?.otpView?.show()
+                        toast(it.data.msg)
+                    } else {
+                        binding?.otpView?.hide()
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    binding?.otpView?.hide()
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+    private fun walletVerifyOTP() {
+        paytmPostPaidViewModel.liveWalletverifyOTPScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                        if (it.data?.result == ("success")) {
+                            paytmPostPaidViewModel.getWalletHmac(
+                                preferences.getUserId(),
+                                Constant.BOOKING_ID,
+                                Constant.TRANSACTION_ID,
+                                Constant.BOOK_TYPE
+                            )
+                    } else {
+                        binding?.otpView?.hide()
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    binding?.otpView?.hide()
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+    private fun walletMakePayment() {
+        paytmPostPaidViewModel.liveWalletMakePaymentScope.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
                     loader?.dismiss()

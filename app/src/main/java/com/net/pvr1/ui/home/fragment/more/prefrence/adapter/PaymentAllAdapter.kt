@@ -64,7 +64,7 @@ class PaymentAllAdapter(
                 } else if (Constant.TEJ == this.id) {
                     binding.imageView81.setBackgroundResource(R.drawable.tej)
                 } else if (Constant.PHONE_PE == this.id) {
-                    binding.imageView81.setBackgroundResource(R.drawable.phonepe_icon)
+                    binding.imageView81.setBackgroundResource(R.drawable.p_phonepe)
                 } else if (Constant.EPAY_LATTER == this.id) {
                     binding.imageView81.setBackgroundResource(R.drawable.epay)
                 } else if (Constant.TEZUPI == this.id) {

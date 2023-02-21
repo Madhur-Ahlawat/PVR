@@ -860,18 +860,78 @@ interface UserAPI {
     ): Response<UPIStatusResponse>
 
 
-    /**    Paytm PostPaid Api        **/
+    /**    Paytm Wallet Api        **/
 
-    @POST("api/payment/paytmpp/hmac")
-    suspend fun postPaidHmac(
+    @POST("api/payment/paytm/balance")
+    suspend fun paytmWalletHmac(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
+
+
+    @POST("api/payment/paytm/resend")
+    suspend fun paytmWalletSendOTP(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("spi") spi: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
+
+    @POST("api/payment/paytm/otpvalidate")
+    suspend fun paytmWalletVerifYOTP(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("otp") otp: String,
+        @Query("state") state_text: String,
+        @Query("spi") spi: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
+
+
+    @POST("api/payment/paytm/withdraw")
+    suspend fun paytmWalletMakePayment(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
+
+    @POST("api/payment/paytm/pay")
+    suspend fun walletPaidPay(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
         @Query("booktype") booktype: String,
         @Query("transid") transid: String,
         @Query("unpaid") unpaid: String,
-        @Query("spi") spi: String,
+        @Query("isSpi") spi: String,
         @Query("av") version: String,
         @Query("pt") platform: String
+    ): Response<PaytmHmacResponse>
+
+/*************     PAYTM PostPaid    *****************/
+
+    @POST("api/payment/paytmpp/hmac")
+    suspend fun postPaidHmac(
+    @Query("userid") userid: String,
+    @Query("bookingid") bookingid: String,
+    @Query("booktype") booktype: String,
+    @Query("transid") transid: String,
+    @Query("unpaid") unpaid: String,
+    @Query("spi") spi: String,
+    @Query("av") version: String,
+    @Query("pt") platform: String
     ): Response<PaytmHmacResponse>
 
 
@@ -913,17 +973,6 @@ interface UserAPI {
 
     @POST("api/payment/paytm/withdraw")
     suspend fun postPaidMakePayment(
-        @Query("userid") userid: String,
-        @Query("bookingid") bookingid: String,
-        @Query("booktype") booktype: String,
-        @Query("transid") transid: String,
-        @Query("av") version: String,
-        @Query("pt") platform: String
-    ): Response<PaytmHmacResponse>
-
-
-    @POST("api/payment/paytm/hmac")
-    suspend fun paytmHmacOld(
         @Query("userid") userid: String,
         @Query("bookingid") bookingid: String,
         @Query("booktype") booktype: String,

@@ -331,17 +331,37 @@
                             app:layout_constraintTop_toBottomOf="@+id/textView117"
                             tools:text="Normal" />
 
-                        <TextView
-                            android:id="@+id/textView120"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/sf_pro_text_medium"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/dimen_14sp"
+                            android:orientation="horizontal"
                             app:layout_constraintBottom_toBottomOf="@+id/textView119"
                             app:layout_constraintEnd_toEndOf="@+id/view81"
-                            app:layout_constraintTop_toBottomOf="@+id/textView117"
-                            tools:text="12345" />
+                            app:layout_constraintTop_toBottomOf="@+id/textView117">
+                            <TextView
+                                android:id="@+id/cutPrice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/sf_pro_text_medium"
+                                android:textColor="@color/red"
+                                android:textSize="@dimen/dimen_14sp"
+                                android:visibility="gone"
+                                android:layout_marginEnd="@dimen/dimen_8dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/textView119"
+                                app:layout_constraintEnd_toEndOf="@+id/view81"
+                                app:layout_constraintTop_toBottomOf="@+id/textView117"
+                                tools:text="12345" />
+                            <TextView
+                                android:id="@+id/textView120"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/sf_pro_text_medium"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen_14sp"
+                                tools:text="12345" />
+
+                        </LinearLayout>
+
 
                         <!--Food Available-->
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -370,17 +390,72 @@
                                     app:layout_constraintTop_toTopOf="parent"
                                     tools:ignore="TextContrastCheck" />
 
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    android:id="@+id/fnbVocherView"
+                                    android:visibility="visible"
+                                    android:layout_marginTop="@dimen/dimen_5dp"
+                                    app:layout_constraintTop_toBottomOf="@+id/textView121">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/sf_pro_text_medium"
+                                        android:textColor="@color/black"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        android:textSize="@dimen/dimen_14sp"
+                                        android:text="Food Voucher" />
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:gravity="center"
+                                        android:id="@+id/fnbVoucherView"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+
+                                        <TextView
+                                            android:id="@+id/cutFoodPrice"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginEnd="@dimen/dimen_8dp"
+                                            android:fontFamily="@font/sf_pro_text_medium"
+                                            android:textColor="@color/red"
+                                            android:textSize="@dimen/dimen_14sp"
+                                            tools:text="12345" />
+
+                                        <TextView
+                                            android:id="@+id/foodPrice"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/sf_pro_text_medium"
+                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/dimen_14sp"
+                                            tools:text="12345" />
+
+                                    </LinearLayout>
+
+
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
                                 <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/recyclerView32"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/dimen_10dp"
                                     android:orientation="vertical"
-                                    android:visibility="visible"
+                                    android:visibility="gone"
                                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@+id/textView121"
+                                    app:layout_constraintTop_toBottomOf="@+id/fnbVocherView"
                                     tools:itemCount="2"
                                     tools:listitem="@layout/summery_item_food" />
 
@@ -714,7 +789,7 @@
                                 android:textSize="@dimen/dimen_12sp"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/textView165"
-                                tools:text="2/ticket" />
+                                android:text="2/ticket" />
 
                             <ImageView
                                 android:id="@+id/imageView147"
@@ -783,17 +858,38 @@
                             app:layout_constraintStart_toStartOf="@+id/view111"
                             app:layout_constraintTop_toBottomOf="@+id/view111" />
 
-                        <TextView
-                            android:id="@+id/textView168"
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/sf_pro_text_medium"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/dimen_14sp"
+                            android:orientation="horizontal"
                             app:layout_constraintBottom_toBottomOf="@+id/textView162"
                             app:layout_constraintEnd_toEndOf="@+id/textView169"
-                            app:layout_constraintTop_toTopOf="@+id/textView162"
-                            tools:text="TextView" />
+                            app:layout_constraintTop_toTopOf="@+id/textView162">
+                            <TextView
+                                android:id="@+id/cutPriceSub"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/sf_pro_text_medium"
+                                android:textColor="@color/red"
+                                android:textSize="@dimen/dimen_14sp"
+                                android:visibility="gone"
+                                android:layout_marginEnd="@dimen/dimen_8dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/textView119"
+                                app:layout_constraintEnd_toEndOf="@+id/view81"
+                                app:layout_constraintTop_toBottomOf="@+id/textView117"
+                                tools:text="12345" />
+                            <TextView
+                                android:id="@+id/textView168"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/sf_pro_text_medium"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen_14sp"
+                                tools:text="12345" />
+
+                        </LinearLayout>
+
 
                         <TextView
                             android:id="@+id/textView169"
@@ -820,19 +916,38 @@
                             app:layout_constraintTop_toTopOf="@+id/imageView77"
                             tools:text="TextView" />
 
-
-                        <TextView
-                            android:id="@+id/textView173"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/sf_pro_text_medium"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/dimen_14sp"
+                            android:orientation="horizontal"
                             app:layout_constraintBottom_toBottomOf="@+id/textView167"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/textView167"
-                            app:layout_constraintVertical_bias="0.0"
-                            tools:text="TextView" />
+                            app:layout_constraintTop_toTopOf="@+id/textView167">
+                            <TextView
+                                android:id="@+id/cutPriceGrand"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/sf_pro_text_medium"
+                                android:textColor="@color/red"
+                                android:textSize="@dimen/dimen_14sp"
+                                android:visibility="gone"
+                                android:layout_marginEnd="@dimen/dimen_8dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/textView119"
+                                app:layout_constraintEnd_toEndOf="@+id/view81"
+                                app:layout_constraintTop_toBottomOf="@+id/textView117"
+                                tools:text="12345" />
+                            <TextView
+                                android:id="@+id/textView173"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/sf_pro_text_medium"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen_14sp"
+                                tools:text="12345" />
+
+                        </LinearLayout>
+
+
 
                         <View
                             android:id="@+id/view111"

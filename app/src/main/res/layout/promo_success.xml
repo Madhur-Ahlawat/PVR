@@ -20,8 +20,8 @@
 
         <ImageView
             android:id="@+id/userImageProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dimen_60dp"
+            android:layout_height="@dimen/dimen_60dp"
             android:layout_centerHorizontal="true"
             android:elevation="8dp"
             android:src="@drawable/smilly"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginStart="@dimen/dimen_16dp"
-            android:layout_marginTop="-60dp"
+            android:layout_marginTop="-40dp"
             android:layout_marginEnd="@dimen/dimen_16dp"
             app:cardCornerRadius="20dp"
             app:cardElevation="4dp"
@@ -57,7 +57,7 @@
                     android:id="@+id/promcode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/sfprodisplay_regular"
+                    android:fontFamily="@font/sf_pro_text_medium"
                     android:gravity="center"
                     android:text="‘PV000664288DD605068’\nApplied!"
                     android:textColor="@color/black"
@@ -68,11 +68,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_15dp"
-                    android:fontFamily="@font/sfprodisplay_regular"
+                    android:fontFamily="@font/sf_pro_text_bold"
                     android:gravity="center"
-                    android:text="₹888\nsaved with this coupon code"
+                    android:text="₹888\nsaved with this\ncoupon code"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/done"
