@@ -2197,29 +2197,151 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
 
-    // Paytm paytmHmacOld
-    private val paytmHmacOldLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
-    val paytmHmacOldResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
-        get() = paytmHmacOldLiveData
 
-    suspend fun paytmHmacOld(
+    /**    Paytm Wallet Api        **/
+
+// Paytm PostPaid Hmac
+    private val paytmWalletHmacLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val paytmWalletHmacResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = paytmWalletHmacLiveData
+
+    suspend fun paytmWalletHmac(
         userid: String, bookingid: String, booktype: String, transid: String
     ) {
-        paytmHmacOldLiveData.postValue(NetworkResult.Loading())
-        val response = userAPI.paytmHmacOld(
-            userid, bookingid, booktype, transid, Constant.version, Constant.platform
+        paytmWalletHmacLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.paytmWalletHmac(
+            userid,
+            bookingid,
+            booktype,
+            transid,
+            Constant.version,
+            Constant.platform
         )
-        paytmHmacOldResponse(response)
+        paytmWalletHmacResponse(response)
     }
 
-    private fun paytmHmacOldResponse(response: Response<PaytmHmacResponse>) {
+    private fun paytmWalletHmacResponse(response: Response<PaytmHmacResponse>) {
         if (response.isSuccessful && response.body() != null) {
-            paytmHmacOldLiveData.postValue(NetworkResult.Success(response.body()!!))
+            paytmWalletHmacLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
             val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
-            paytmHmacOldLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            paytmWalletHmacLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
-            paytmHmacOldLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+            paytmWalletHmacLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    // Paytm paytmWallet SEND OTP
+    private val paytmWalletSendOTPLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val paytmWalletSendOTPResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = paytmWalletSendOTPLiveData
+
+    suspend fun paytmWalletSendOTP(
+        userid: String, bookingid: String, booktype: String, transid: String
+    ) {
+        paytmWalletSendOTPLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.paytmWalletSendOTP(
+            userid, bookingid, booktype, transid, "false", Constant.version, Constant.platform
+        )
+        paytmWalletSendOTPResponse(response)
+    }
+
+    private fun paytmWalletSendOTPResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            paytmWalletSendOTPLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            paytmWalletSendOTPLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            paytmWalletSendOTPLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    // Paytm paytmWallet VERIFY OTP
+    private val paytmWalletVerifyOTPLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val paytmWalletVerifyOTPResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = paytmWalletVerifyOTPLiveData
+
+    suspend fun paytmWalletVerifYOTP(
+        userid: String, bookingid: String, booktype: String, transid: String, otp: String, state_text: String
+    ) {
+        paytmWalletVerifyOTPLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.paytmWalletVerifYOTP(
+            userid, bookingid, booktype, transid, otp,state_text, "false", Constant.version, Constant.platform
+        )
+        paytmWalletVerifyOTPResponse(response)
+    }
+
+    private fun paytmWalletVerifyOTPResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            paytmWalletVerifyOTPLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            paytmWalletVerifyOTPLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            paytmWalletVerifyOTPLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    // Paytm paytmWallet MakePayment
+    private val paytmWalletMakePaymentLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val paytmWalletMakePaymentResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = paytmWalletMakePaymentLiveData
+
+    suspend fun paytmWalletMakePayment(
+        userid: String, bookingid: String, booktype: String, transid: String
+    ) {
+        paytmWalletMakePaymentLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.paytmWalletMakePayment(
+            userid, bookingid, booktype, transid, Constant.version, Constant.platform
+        )
+        paytmWalletMakePaymentResponse(response)
+    }
+
+    private fun paytmWalletMakePaymentResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            paytmWalletMakePaymentLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            paytmWalletMakePaymentLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            paytmWalletMakePaymentLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    // Paytm Wallet PAY
+    private val walletpaidPAYLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val walletpaidPAYResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = walletpaidPAYLiveData
+
+    suspend fun walletPay(
+        userid: String, bookingid: String, booktype: String, transid: String
+    ) {
+        walletpaidPAYLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.walletPaidPay(
+            userid,
+            bookingid,
+            booktype,
+            transid,
+            "false",
+            "false",
+            Constant.version,
+            Constant.platform
+        )
+        walletpaidPAYResponse(response)
+    }
+
+    private fun walletpaidPAYResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            walletpaidPAYLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            walletpaidPAYLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            walletpaidPAYLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 

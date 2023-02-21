@@ -203,11 +203,11 @@ class GiftCardRedeemActivity : AppCompatActivity() {
                                 } else {
                                     Constant.discount_val = it.data.output.di
                                     Constant.discount_txt = it.data.output.txt
-                                    launchActivity(
+                                    launchPaymentActivity(
                                         PaymentActivity::class.java,
-                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,intent.getStringExtra("paidAmount").toString()
                                     )
-                                    showTncDialog(this,it.data.output.di,"")
+                                    showTncDialog(this,it.data.output.di,"Gift Card")
 
                                 }
                             }

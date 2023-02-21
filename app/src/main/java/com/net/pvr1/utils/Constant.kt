@@ -56,6 +56,7 @@ class Constant {
         const val version = "11.3"
         const val status = "success"
         const val SUCCESS_CODE = 10001
+        const val SUCCESS_CODE_STAR = 14001
         var latitude: Double? = 0.0
         var longitude: Double? = 0.0
 

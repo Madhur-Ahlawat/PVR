@@ -133,7 +133,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
             val done = dialog.findViewById<View>(R.id.done) as TextView?
             val price = dialog.findViewById<View>(R.id.price) as TextView?
             val promCode = dialog.findViewById<View>(R.id.promcode) as TextView?
-            price?.text = "$priceText\nsaved with this coupon code"
+            price?.text = "$priceText\nsaved with this\ncoupon code"
             if (code != "") {
                 promCode?.text = "'$code'\nApplied"
             } else {
@@ -229,7 +229,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
 
     private fun movedNext() {
         binding?.include26?.imageView58?.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
+           onBackPressed()
         }
 
         binding?.cutPrice?.paintFlags =
@@ -394,7 +394,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                         binding?.couponView?.show()
                         binding?.applyCou?.hide()
                         binding?.promoCode?.setText("")
-                        actualAmt = (actualAmt.toDouble() + it.data.output.di.toDouble()).toString()
+                        actualAmt = ((actualAmt.toDouble() + discount_val.toDouble()).toString())
                         binding?.textView178?.text = getString(R.string.currency) + actualAmt
                         binding?.cutPrice?.hide()
                     }

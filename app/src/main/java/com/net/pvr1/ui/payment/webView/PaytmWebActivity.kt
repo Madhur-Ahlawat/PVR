@@ -42,15 +42,22 @@ class PaytmWebActivity : AppCompatActivity() {
             onBackPressed()
         }
         binding?.include3?.textView108?.text = intent.getStringExtra("title")
-        if (intent.getStringExtra("pTypeId") == "110") {
+        if (intent.getStringExtra("pTypeId") == "102") {
             authViewModel.airtelPay(
                 preferences.getUserId(),
                 Constant.BOOKING_ID,
                 Constant.TRANSACTION_ID,
                 Constant.BOOK_TYPE
             )
+        }else if (intent.getStringExtra("pTypeId") == "112"){
+            authViewModel.walletPay(
+                preferences.getUserId(),
+                Constant.BOOKING_ID,
+                Constant.TRANSACTION_ID,
+                Constant.BOOK_TYPE
+            )
         }else{
-            authViewModel.postPaidMakePayment(
+            authViewModel.postPaidPay(
                 preferences.getUserId(),
                 Constant.BOOKING_ID,
                 Constant.TRANSACTION_ID,
@@ -58,6 +65,7 @@ class PaytmWebActivity : AppCompatActivity() {
             )
         }
         getToken()
+        getWalletToken()
         getAirtelToken()
 
     }
@@ -65,7 +73,45 @@ class PaytmWebActivity : AppCompatActivity() {
 
 
     private fun getToken() {
-        authViewModel.liveDatapaytmHmacOldScope.observe(this) {
+        authViewModel.liveDatapayScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        postRequestInWebView(it.data.output)
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+    private fun getWalletToken() {
+        authViewModel.liveWalletpayScope.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
                     loader?.dismiss()

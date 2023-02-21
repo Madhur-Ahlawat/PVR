@@ -11,6 +11,9 @@ data class PaytmHmacResponse(
     data class Output(
         val amount: String,
         val bal: String,
+        val b: String,
+        val state: String,
+        val msg: String,
         val industry_type: String,
         val paytm_website: String,
         val bookid: String,
