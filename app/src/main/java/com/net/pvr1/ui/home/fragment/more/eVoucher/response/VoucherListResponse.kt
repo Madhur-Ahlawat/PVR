@@ -1,6 +1,6 @@
 package com.net.pvr1.ui.home.fragment.more.eVoucher.response
 
-data class VoucherList(
+data class VoucherListResponse(
     val code: Int,
     val minversion: Any,
     val msg: String,

@@ -23,6 +23,7 @@ import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.home.response.NextBookingResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
 import com.net.pvr1.ui.home.fragment.more.contactUs.response.ContactUsResponse
+import com.net.pvr1.ui.home.fragment.more.eVoucher.response.VoucherListResponse
 import com.net.pvr1.ui.home.fragment.more.experience.response.ExperienceDetailsResponse
 import com.net.pvr1.ui.home.fragment.more.experience.response.ExperienceResponse
 import com.net.pvr1.ui.home.fragment.more.offer.offerDetails.response.OfferDetailsResponse
@@ -421,6 +422,27 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             comingSoonLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             comingSoonLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+    //my Voucher
+    private val myVoucherLiveData = MutableLiveData<NetworkResult<VoucherListResponse>>()
+    val myVoucherResponseLiveData: LiveData<NetworkResult<VoucherListResponse>>
+        get() = myVoucherLiveData
+
+    suspend fun myVoucher(userid: String) {
+        myVoucherLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.myVoucher( userid, Constant.version, Constant.platform)
+        myVoucherResponse(response)
+    }
+
+    private fun myVoucherResponse(response: Response<VoucherListResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            myVoucherLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            myVoucherLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            myVoucherLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 

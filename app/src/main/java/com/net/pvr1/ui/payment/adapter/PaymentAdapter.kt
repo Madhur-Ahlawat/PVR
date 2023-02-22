@@ -81,7 +81,7 @@ class PaymentAdapter(
                     } else if (Constant.PAYTMPOSTPAID == this.id) {
                         binding.imageView81.setImageResource(R.drawable.p_postpiad)
                     } else if (Constant.MOBIKWIK == this.id) {
-                        binding.imageView81.setImageResource(R.drawable.p_mobi)
+                            binding.imageView81.setImageResource(R.drawable.p_mobi)
                     } else if (Constant.OXYGEN == this.id) {
                         binding.imageView81.setImageResource(R.drawable.oxigen)
                     } else if (Constant.GEIFT_CARD == this.id) {

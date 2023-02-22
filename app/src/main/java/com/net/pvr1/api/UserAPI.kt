@@ -20,6 +20,7 @@ import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr1.ui.home.fragment.home.response.NextBookingResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
 import com.net.pvr1.ui.home.fragment.more.contactUs.response.ContactUsResponse
+import com.net.pvr1.ui.home.fragment.more.eVoucher.response.VoucherListResponse
 import com.net.pvr1.ui.home.fragment.more.experience.response.ExperienceDetailsResponse
 import com.net.pvr1.ui.home.fragment.more.experience.response.ExperienceResponse
 import com.net.pvr1.ui.home.fragment.more.offer.offerDetails.response.OfferDetailsResponse
@@ -192,6 +193,13 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<CommingSoonResponse>
+
+    @POST("api/payment/e-voucher/get/my-voucher")
+    suspend fun myVoucher(
+        @Query("userid") userid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<VoucherListResponse>
 
     @POST("api/content/alltheater")
     suspend fun cinema(
