@@ -1,10 +1,14 @@
 package com.net.pvr1.ui.payment.paytmpostpaid.viewModel
 
+import android.provider.ContactsContract.CommonDataKinds.Email
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr1.repository.UserRepository
 import com.net.pvr1.ui.login.otpVerify.response.ResisterResponse
+import com.net.pvr1.ui.payment.mobikwik.response.MobiKwikCheckSumResponse
+import com.net.pvr1.ui.payment.mobikwik.response.MobiKwikPayResponse
+import com.net.pvr1.ui.payment.mobikwik.response.MobikwikOTPResponse
 import com.net.pvr1.ui.payment.response.CouponResponse
 import com.net.pvr1.ui.payment.response.PaymentResponse
 import com.net.pvr1.ui.payment.response.PaytmHmacResponse
@@ -146,10 +150,11 @@ class PaytmPostPaidViewModel @Inject constructor(private val userRepository: Use
         userid: String,
         bookingid: String,
         transid: String,
-        booktype: String
+        booktype: String,
+        mobile: String
     ) {
         viewModelScope.launch {
-            userRepository.paytmWalletSendOTP(userid, bookingid, booktype, transid)
+            userRepository.paytmWalletSendOTP(userid, bookingid, booktype, transid,mobile)
         }
     }
 
@@ -195,6 +200,67 @@ class PaytmPostPaidViewModel @Inject constructor(private val userRepository: Use
     ) {
         viewModelScope.launch {
             userRepository.walletPay(userid, bookingid, booktype, transid)
+        }
+    }
+
+
+    /***********     MOBIKWIK API  ***************/
+    val mobikwikOTPpayScope: LiveData<NetworkResult<MobikwikOTPResponse>> get() = userRepository.mobikwikOTPResponseLiveData
+    fun mobikwikOTP(
+        userid: String,
+        bookingid: String,
+        transid: String,
+        booktype: String,
+        mobile:String
+    ) {
+        viewModelScope.launch {
+            userRepository.mobikwikOTP(userid, bookingid, booktype, transid,mobile)
+        }
+    }
+
+    val mobikwikPaypayScope: LiveData<NetworkResult<MobiKwikPayResponse>> get() = userRepository.mobikwikPayResponseLiveData
+    fun mobikwikPay(
+        userid: String,
+        bookingid: String,
+        transid: String,
+        booktype: String,
+        mobile:String,
+        otp:String,
+        cinemacode:String
+    ) {
+        viewModelScope.launch {
+            userRepository.mobikwikPay(userid, bookingid, booktype, transid,mobile,otp,cinemacode)
+        }
+    }
+
+
+    val mobikwikCheckSumpayScope: LiveData<NetworkResult<MobiKwikCheckSumResponse>> get() = userRepository.mobikwikCheckSumResponseLiveData
+    fun mobikwikCheckSum(
+        userid: String,
+        bookingid: String,
+        transid: String,
+        booktype: String,
+        mobile:String,
+        otp:String
+    ) {
+        viewModelScope.launch {
+            userRepository.mobikwikCheckSum(userid, bookingid, booktype, transid,mobile,otp)
+        }
+    }
+
+
+    val mobikwikCreateWalletpayScope: LiveData<NetworkResult<MobiKwikPayResponse>> get() = userRepository.mobikwikCreateWalletResponseLiveData
+    fun mobikwikCreateWallet(
+        userid: String,
+        bookingid: String,
+        transid: String,
+        booktype: String,
+        mobile:String,
+        otp:String,
+        email: String
+    ) {
+        viewModelScope.launch {
+            userRepository.mobikwikCreateWallet(userid, bookingid, booktype, transid,mobile,otp,email)
         }
     }
 

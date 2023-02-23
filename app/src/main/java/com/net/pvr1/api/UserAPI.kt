@@ -40,6 +40,9 @@ import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.myBookings.response.ParkingResponse
+import com.net.pvr1.ui.payment.mobikwik.response.MobiKwikCheckSumResponse
+import com.net.pvr1.ui.payment.mobikwik.response.MobiKwikPayResponse
+import com.net.pvr1.ui.payment.mobikwik.response.MobikwikOTPResponse
 import com.net.pvr1.ui.payment.response.*
 import com.net.pvr1.ui.scanner.response.GetFoodResponse
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
@@ -887,6 +890,7 @@ interface UserAPI {
         @Query("bookingid") bookingid: String,
         @Query("booktype") booktype: String,
         @Query("transid") transid: String,
+        @Query("mobile") mobile: String,
         @Query("spi") spi: String,
         @Query("av") version: String,
         @Query("pt") platform: String
@@ -1348,9 +1352,11 @@ interface UserAPI {
         @Query("bookingid") bookingid: String,
         @Query("booktype") booktype: String,
         @Query("transid") transid: String,
+        @Query("mobile") mobile: String,
         @Query("av") version: String,
-        @Query("pt") platform: String
-    ): Response<UPIStatusResponse>
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<MobikwikOTPResponse>
 
     // mobikwik pay
     @POST("api/payment/mobikwik/pay")
@@ -1359,9 +1365,13 @@ interface UserAPI {
         @Query("bookingid") bookingid: String,
         @Query("booktype") booktype: String,
         @Query("transid") transid: String,
+        @Query("mobile") mobile: String,
+        @Query("otp") otp: String,
+        @Query("cinemacode") cinemacode: String,
         @Query("av") version: String,
-        @Query("pt") platform: String
-    ): Response<UPIStatusResponse>
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<MobiKwikPayResponse>
 
     // mobikwik checksum
     @POST("api/payment/mobikwik/checksum")
@@ -1370,9 +1380,27 @@ interface UserAPI {
         @Query("bookingid") bookingid: String,
         @Query("booktype") booktype: String,
         @Query("transid") transid: String,
+        @Query("mobile") mobile: String,
+        @Query("otp") otp: String,
         @Query("av") version: String,
-        @Query("pt") platform: String
-    ): Response<UPIStatusResponse>
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<MobiKwikCheckSumResponse>
+
+    // mobikwik Create Wallet
+    @POST("api/payment/mobikwik/createwallet")
+    suspend fun mobikwikCreateWallet(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("mobile") mobile: String,
+        @Query("otp") otp: String,
+        @Query("email") email: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<MobiKwikPayResponse>
 
     /****************** JUS PAY ****************/
     @POST("api/trans/extendtrans")

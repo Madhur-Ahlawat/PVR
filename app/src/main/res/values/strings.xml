@@ -57,7 +57,7 @@
     <string name="ok" tools:ignore="ButtonCase,Typos">Ok</string>
     <string name="pleaseWait">Please Wait for this process.....</string>
     <string name="no">No</string>
-    <string name="enterOtp">Please Enter Your Otp</string>
+    <string name="enterOtp">Please Enter Your OTP</string>
     <string name="enterName">Your name is required</string>
     <string name="lastName">Your last name is required</string>
     <string name="enterEmail">Your email address is required</string>
@@ -689,5 +689,8 @@ IMAX Corporation is one of the world\'s leading entertainment technology compani
     <string name="go_to_top">Go to Top</string>
     <string name="e_voucher">E Voucher</string>
     <string name="active_e_vouchers">Active E-Vouchers</string>
+
+    <string name="you_have_insufficient_balance">Kindly add money in your wallet.</string>
+
 
 </resources>

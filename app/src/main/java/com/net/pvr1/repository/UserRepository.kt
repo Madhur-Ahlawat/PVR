@@ -43,6 +43,9 @@ import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr1.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr1.ui.myBookings.response.GiftCardResponse
 import com.net.pvr1.ui.myBookings.response.ParkingResponse
+import com.net.pvr1.ui.payment.mobikwik.response.MobiKwikCheckSumResponse
+import com.net.pvr1.ui.payment.mobikwik.response.MobiKwikPayResponse
+import com.net.pvr1.ui.payment.mobikwik.response.MobikwikOTPResponse
 import com.net.pvr1.ui.payment.response.*
 import com.net.pvr1.ui.scanner.response.GetFoodResponse
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
@@ -2260,11 +2263,11 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         get() = paytmWalletSendOTPLiveData
 
     suspend fun paytmWalletSendOTP(
-        userid: String, bookingid: String, booktype: String, transid: String
+        userid: String, bookingid: String, booktype: String, transid: String,mobile:String
     ) {
         paytmWalletSendOTPLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.paytmWalletSendOTP(
-            userid, bookingid, booktype, transid, "false", Constant.version, Constant.platform
+            userid, bookingid, booktype, transid,mobile, "false", Constant.version, Constant.platform
         )
         paytmWalletSendOTPResponse(response)
     }
@@ -2653,8 +2656,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         val response = userAPI.mcoupon(
             userid,
             bookingid,
-            booktype,
             transid,
+            booktype,
             cinemacode,
             mccard,
             mcmobile,
@@ -3270,6 +3273,96 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             initJusPayLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
+
+    /***************     MOBIKWIK API   ***************/
+
+    private val mobikwikOTPLiveData = MutableLiveData<NetworkResult<MobikwikOTPResponse>>()
+    val mobikwikOTPResponseLiveData: LiveData<NetworkResult<MobikwikOTPResponse>>
+        get() = mobikwikOTPLiveData
+
+    suspend fun mobikwikOTP(userId: String, bookingid: String, transid: String, booktype: String,mobile: String) {
+        _userResponseLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.mobikwikOTP(userId, bookingid,transid,booktype,mobile, Constant.version, Constant.platform,Constant.getDid())
+        mobikwikOTPResponse(response)
+    }
+
+    private fun mobikwikOTPResponse(response: Response<MobikwikOTPResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            mobikwikOTPLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            mobikwikOTPLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            mobikwikOTPLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    private val mobikwikPayLiveData = MutableLiveData<NetworkResult<MobiKwikPayResponse>>()
+    val mobikwikPayResponseLiveData: LiveData<NetworkResult<MobiKwikPayResponse>>
+        get() = mobikwikPayLiveData
+
+    suspend fun mobikwikPay(userId: String, bookingid: String, transid: String, booktype: String,mobile: String,otp: String,cinemacode: String) {
+        _userResponseLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.mobikwikPAY(userId, bookingid,transid,booktype,mobile,otp,cinemacode, Constant.version, Constant.platform,Constant.getDid())
+        mobikwikPayResponse(response)
+    }
+
+    private fun mobikwikPayResponse(response: Response<MobiKwikPayResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            mobikwikPayLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            mobikwikPayLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            mobikwikPayLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    private val mobikwikCreateWalletLiveData = MutableLiveData<NetworkResult<MobiKwikPayResponse>>()
+    val mobikwikCreateWalletResponseLiveData: LiveData<NetworkResult<MobiKwikPayResponse>>
+        get() = mobikwikCreateWalletLiveData
+
+    suspend fun mobikwikCreateWallet(userId: String, bookingid: String, transid: String, booktype: String,mobile: String,otp: String,email: String) {
+        _userResponseLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.mobikwikCreateWallet(userId, bookingid,transid,booktype,mobile,otp,email, Constant.version, Constant.platform,Constant.getDid())
+        mobikwikCreateWalletResponse(response)
+    }
+
+    private fun mobikwikCreateWalletResponse(response: Response<MobiKwikPayResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            mobikwikCreateWalletLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            mobikwikCreateWalletLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            mobikwikCreateWalletLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    private val mobikwikCheckSumLiveData = MutableLiveData<NetworkResult<MobiKwikCheckSumResponse>>()
+    val mobikwikCheckSumResponseLiveData: LiveData<NetworkResult<MobiKwikCheckSumResponse>>
+        get() = mobikwikCheckSumLiveData
+
+    suspend fun mobikwikCheckSum(userId: String, bookingid: String, transid: String, booktype: String,mobile: String,otp: String) {
+        _userResponseLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.mobikwikChecksum(userId, bookingid,transid,booktype,mobile,otp, Constant.version, Constant.platform,Constant.getDid())
+        mobikwikCheckSumResponse(response)
+    }
+
+    private fun mobikwikCheckSumResponse(response: Response<MobiKwikCheckSumResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            mobikwikCheckSumLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            mobikwikCheckSumLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            mobikwikCheckSumLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
 
 
 }

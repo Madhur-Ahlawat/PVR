@@ -28,8 +28,10 @@ import com.net.pvr1.utils.Constant.Companion.M_COUPON
 import com.net.pvr1.utils.Constant.Companion.SELECTED_SEAT
 import com.net.pvr1.utils.view.CouponEditText
 import com.net.pvr1.utils.view.CouponEditText.DrawableClickListener
+import com.net.pvr1.utils.view.CouponEditText.DrawableClickListener.DrawablePosition
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class MCouponActivity : AppCompatActivity() { @Inject
@@ -96,8 +98,10 @@ lateinit var preferences: PreferenceManager
         }
 
         binding?.plus?.setOnClickListener {
+            println("ll.child1---"+getCount()+"----"+maxSeatSelected)
+
             if (getCount() < maxSeatSelected) {
-                addCoupon(binding!!)
+                addCoupon()
             }
         }
 
@@ -114,9 +118,10 @@ lateinit var preferences: PreferenceManager
             val gson = Gson()
             json = gson.toJson(mCoupon)
             println("jsonm--->$json")
+            val string: String = java.lang.String.join(",", couponCodeList)
 
             promoCodeViewModel.mcoupon(preferences.getUserId(),Constant.BOOKING_ID,Constant.TRANSACTION_ID,Constant.BOOK_TYPE,Constant.CINEMA_ID,binding?.ccEditText?.text.toString()
-            ,binding?.mobileEditText?.text.toString(),json)
+            ,binding?.mobileEditText?.text.toString(),string)
             return
         } else {
             val starPass = StarPasModel(
@@ -134,62 +139,31 @@ lateinit var preferences: PreferenceManager
     }
 
 
-    @SuppressLint("SetTextI18n")
-    private fun addCoupon(binding: ActivityMcouponBinding) {
-        if (binding.mobileLayout?.childCount!! > 0) {
-            val ll = binding?.mobileLayout?.getChildAt(binding.mobileLayout.childCount - 1) as LinearLayout
-            if (ll != null && ll.childCount == 1) {
-                val childView: CouponEditText = ll.getChildAt(0) as CouponEditText
-                binding.mobileLayout.removeView(binding.mobileLayout.getChildAt(binding.mobileLayout.childCount - 1))
-                val layoutParams = LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT, 2.0f
-                )
-                layoutParams.setMargins(0, 18, 0, 0)
-                val linearLayout = LinearLayout(this)
-                linearLayout.orientation = LinearLayout.HORIZONTAL
-                linearLayout.layoutParams = layoutParams
-
-                    addChild(
-                        linearLayout,
-                        getCount() + 1,
-                         childView.text.toString()
-                    )
-
-                binding.mobileLayout.addView(linearLayout)
-            } else {
-                val layoutParams = LinearLayout.LayoutParams(
-                    binding.mobileLayout.width,
-                    ViewGroup.LayoutParams.MATCH_PARENT
-                )
-                layoutParams.setMargins(0, 18, 0, 0)
-                val linearLayout = LinearLayout(this)
-                linearLayout.orientation = LinearLayout.HORIZONTAL
-                linearLayout.layoutParams = layoutParams
-                addChild(linearLayout, getCount() + 1, "")
-                binding.mobileLayout.addView(linearLayout)
-            }
-        } else {
-            val layoutParams = LinearLayout.LayoutParams(
-                binding.mobileLayout.width,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-            layoutParams.setMargins(0, 18, 0, 0)
-            val linearLayout = LinearLayout(this)
-            linearLayout.orientation = LinearLayout.HORIZONTAL
-            linearLayout.layoutParams = layoutParams
-            addChild(linearLayout, getCount(), "")
-            binding.mobileLayout.addView(linearLayout)
+    @SuppressLint("SetTextI18n", "SuspiciousIndentation")
+    private fun addCoupon() {
+        val layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        if (binding?.mobileLayout?.childCount!!>0) {
+            layoutParams.setMargins(8, 55, 25, 0)
+        }else{
+            layoutParams.setMargins(8, 0, 25, 0)
         }
+        val linearLayout = LinearLayout(this)
+        linearLayout.orientation = LinearLayout.VERTICAL
+        linearLayout.layoutParams = layoutParams
+        addChild(linearLayout, getCount() + 1, "")
+        binding?.mobileLayout?.addView(linearLayout)
 
-        binding.foodCount?.text = "" + getCount()
+        binding?.foodCount?.text = "" + getCount()
 
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (isFristTimeCalled) {
-            addCoupon(binding!!)
+            addCoupon()
             isFristTimeCalled = !isFristTimeCalled
         }
     }
@@ -197,25 +171,24 @@ lateinit var preferences: PreferenceManager
     private fun addChild(linearLayout: LinearLayout, position: Int, text: String) {
         val params = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            Constant().convertDpToPixel(60f,this), 2.0f
+            Constant().convertDpToPixel(58f,this), 1f
         )
-        params.setMargins(18, 0, 0, 0)
         val couponEditText = CouponEditText(this)
         couponEditText.layoutParams = params
         couponEditText.setBackgroundResource(R.drawable.text_curve)
-        couponEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.close, 0)
+        couponEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.close, 0)
         couponEditText.isSingleLine = true
         couponEditText.isAllCaps = true
         couponEditText.inputType = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
-        val FilterArray = arrayOfNulls<InputFilter>(1)
-        FilterArray[0] = LengthFilter(
+        val filterArray = arrayOfNulls<InputFilter>(1)
+        filterArray[0] = LengthFilter(
             if (paymentOptionMode.equals(
                     M_COUPON,
                     ignoreCase = true
                 )
             ) 8 else 10
         )
-        couponEditText.filters = FilterArray
+        couponEditText.filters = filterArray
         couponEditText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12F)
         couponEditText.setTextColor(resources.getColor(R.color.black))
         couponEditText.setPadding(
@@ -229,20 +202,34 @@ lateinit var preferences: PreferenceManager
         }
         couponEditText.tag = couponEditText
         couponEditText.setDrawableClickListener(object : DrawableClickListener {
-            override fun onClick(target: DrawableClickListener.DrawablePosition?, v: View?) {
-                val editText: CouponEditText = v?.tag as CouponEditText
+            override fun onClick(target: DrawablePosition?, v: View?) {
                 when (target) {
-                    DrawableClickListener.DrawablePosition.RIGHT -> {
-                        editText.setText("")
-                        editText.background = ContextCompat.getDrawable(
-                            this@MCouponActivity,
-                            R.drawable.text_curve
-                        )
+                    DrawablePosition.RIGHT -> {
+                        couponEditText.setText("")
                     }
-                    else -> {}
+                    else -> {
+                        couponEditText.setText("")
+                    }
                 }
             }
-        }, couponEditText)
+        })
+//        couponEditText.setDrawableClickListener(object : DrawableClickListener {
+//            override fun onClick(target: DrawableClickListener.DrawablePosition?, v: View?) {
+//                val editText: CouponEditText = v?.tag as CouponEditText
+//                editText.setText("")
+//
+//                when (target) {
+//                    DrawableClickListener.DrawablePosition.RIGHT -> {
+//                        editText.setText("")
+//                        editText.background = ContextCompat.getDrawable(
+//                            this@MCouponActivity,
+//                            R.drawable.text_curve
+//                        )
+//                    }
+//                    else -> {}
+//                }
+//            }
+//        }, couponEditText)
         linearLayout.addView(couponEditText)
     }
 
@@ -298,44 +285,26 @@ lateinit var preferences: PreferenceManager
 
     @SuppressLint("SetTextI18n")
     private fun deleteCoupon() {
-        if ((binding?.mobileLayout?.childCount ?: 0) > 0) {
-            val ll = binding?.mobileLayout?.getChildAt(binding?.mobileLayout?.childCount ?: (0 - 1)) as LinearLayout
-            if (ll.childCount == 1) {
-                binding?.mobileLayout?.removeView(ll)
-            } else {
-                val childView: CouponEditText = ll.getChildAt(0) as CouponEditText
-                binding?.mobileLayout?.removeView(ll)
-                val layoutParams = LinearLayout.LayoutParams(
-                    binding?.mobileLayout?.width ?: (0 / 2),
-                    ViewGroup.LayoutParams.MATCH_PARENT
-                )
-                layoutParams.setMargins(0,18, 0, 0)
-                val linearLayout = LinearLayout(this)
-                linearLayout.orientation = LinearLayout.HORIZONTAL
-                linearLayout.layoutParams = layoutParams
-                addChild(linearLayout, getCount() + 1, childView.text.toString())
-                binding?.mobileLayout?.addView(linearLayout)
+        try {
+            if ((binding?.mobileLayout?.childCount)!! > 1) {
+                val ll =
+                    binding?.mobileLayout?.getChildAt(binding?.mobileLayout?.childCount!! - 1) as LinearLayout
+                println("ll.child---" + ll.childCount)
+                if (ll.childCount == 1) {
+                    binding?.mobileLayout?.removeView(ll)
+                }
             }
+            binding?.mobileLayout?.invalidate()
+            binding?.foodCount?.text = "" + getCount()
+        }catch (e:java.lang.Exception){
+            e.printStackTrace()
         }
-        binding?.mobileLayout?.invalidate()
-        binding?.foodCount?.text = "" + getCount()
     }
 
     private fun getCount(): Int {
-        var count = 1
+        var count = 0
         try {
-            if (binding?.mobileLayout?.childCount == 1) {
-                val ll = binding?.mobileLayout?.getChildAt(
-                    binding?.mobileLayout?.childCount ?: (0 - 1)
-                ) as LinearLayout
-                count = ll.childCount
-            } else if ((binding?.mobileLayout?.childCount ?: 0) > 1) {
-                val ll = binding?.mobileLayout?.getChildAt(
-                    binding?.mobileLayout?.childCount ?: (0 - 1)
-                ) as LinearLayout
-                count = ll.childCount
-                count += 2 * (binding?.mobileLayout?.childCount ?: (0 - 1))
-            }
+             count = binding?.mobileLayout?.childCount!!
         }catch (e:Exception){
             e.printStackTrace()
         }

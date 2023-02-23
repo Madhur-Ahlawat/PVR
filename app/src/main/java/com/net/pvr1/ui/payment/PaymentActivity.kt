@@ -154,6 +154,8 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         val view = binding?.root
         setContentView(view)
 
+        binding?.name?.text = preferences.getString(Constant.SharedPreference.USER_NAME)
+        binding?.mobile?.text = preferences.getString(Constant.SharedPreference.USER_NUMBER)
         manageFunction()
     }
 

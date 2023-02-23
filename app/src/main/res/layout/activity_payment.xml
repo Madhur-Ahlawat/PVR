@@ -64,6 +64,68 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/nameView"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:background="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+
+                    <include
+                        android:id="@+id/topLine1"
+                        layout="@layout/horizontal_line"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/viewName114"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/topLine1" />
+
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:text="@string/to_be_paid"
+                        android:textColor="@color/otherCityColor"
+                        android:textSize="@dimen/dimen_14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/viewName114"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+                    <TextView
+                        android:id="@+id/mobile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="19dp"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:textColor="@color/otherCityColor"
+                        android:textSize="@dimen/dimen_14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/viewName114"
+                        app:layout_constraintTop_toTopOf="@+id/viewName114"
+                        tools:text="₹8888" />
+
+                    <include
+                        layout="@layout/horizontal_line"
+                        app:layout_constraintTop_toBottomOf="@+id/viewName114" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <TextView
                     android:id="@+id/discountVocher"
                     android:layout_width="0dp"
@@ -77,8 +139,7 @@
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
+                    app:layout_constraintTop_toBottomOf="@+id/nameView"/>
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout46"
                     android:layout_width="0dp"

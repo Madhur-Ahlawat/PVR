@@ -202,11 +202,7 @@
                     app:boxStrokeWidthFocused="0dp"
                     app:endIconMode="custom"
                     app:errorEnabled="false"
-                    app:hintTextColor="@color/textColor"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ccInputLayout">
+                    app:hintTextColor="@color/textColor">
 
                     <EditText
                         android:id="@+id/mobileEditText"
@@ -218,7 +214,7 @@
                         android:gravity="bottom"
                         android:imeOptions="actionDone"
                         android:inputType="phone"
-                        android:maxLength="4"
+                        android:maxLength="5"
                         android:textColor="@color/black"
                         android:textColorHint="@color/textColor"
                         android:textSize="16sp" />
@@ -229,7 +225,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/linearLayout14"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -239,17 +235,14 @@
                     android:id="@+id/mobileLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_16dp"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:layout_marginEnd="@dimen/dimen_25dp"
-                    android:paddingStart="@dimen/dimen_10dp"
                     android:paddingEnd="@dimen/dimen_5dp"
                     android:paddingBottom="@dimen/dimen_5dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/count"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/count"
                     app:layout_constraintWidth_percent="0.7">
 
                 </LinearLayout>

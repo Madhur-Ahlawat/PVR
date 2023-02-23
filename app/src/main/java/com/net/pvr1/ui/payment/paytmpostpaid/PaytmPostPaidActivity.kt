@@ -119,7 +119,8 @@ class PaytmPostPaidActivity : AppCompatActivity() {
                     preferences.getUserId(),
                     Constant.BOOKING_ID,
                     Constant.TRANSACTION_ID,
-                    Constant.BOOK_TYPE
+                    Constant.BOOK_TYPE,
+                    preferences.getString(Constant.SharedPreference.USER_NUMBER)
                 )
             }else{
                 paytmPostPaidViewModel.postPaidSendOTP(
@@ -323,7 +324,7 @@ class PaytmPostPaidActivity : AppCompatActivity() {
             when (it) {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
-                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                    if (Constant.status == it.data?.result) {
                         binding?.otpView?.show()
                         toast(it.data.msg)
                     } else {

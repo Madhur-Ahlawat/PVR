@@ -8,10 +8,8 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import android.widget.EditText
 import androidx.core.content.ContextCompat
 import com.net.pvr1.R
-import com.net.pvr1.ui.payment.mCoupon.MCouponActivity
 
 
 class CouponEditText @JvmOverloads constructor(
@@ -153,7 +151,7 @@ class CouponEditText @JvmOverloads constructor(
         drawableTop = null
     }
 
-    fun setDrawableClickListener(listener: DrawableClickListener?, view: View?) {
+    fun setDrawableClickListener(listener: DrawableClickListener?) {
         clickListener = listener
         this.view = view
     }

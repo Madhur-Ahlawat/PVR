@@ -81,9 +81,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:padding="@dimen/dimen_4dp"
+        android:layout_marginEnd="20dp"
         app:layout_constraintBottom_toTopOf="@+id/include30"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -112,10 +113,9 @@
 
         <RelativeLayout
             android:id="@+id/ccLayout"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dimen_60dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="26dp"
-            android:layout_weight="1.2"
             android:background="@drawable/text_curve"
             android:gravity="center"
             android:paddingTop="@dimen/dimen_8dp"
@@ -131,6 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:paddingStart="@dimen/dimen_4dp"
                 android:layout_marginTop="-8dp"
                 android:hint="@string/card_number"
                 app:boxBackgroundColor="@color/transparent"
@@ -164,20 +165,32 @@
             </com.google.android.material.textfield.TextInputLayout>
         </RelativeLayout>
 
+        <TextView
+            android:id="@+id/cardError"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:gravity="end"
+            android:textColor="@color/red"
+            android:textSize="@dimen/dimen_12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ccLayout"
+            tools:ignore="TextContrastCheck" />
+
         <RelativeLayout
             android:id="@+id/pinLayout"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dimen_60dp"
-            android:layout_weight="1.2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/text_curve"
             android:gravity="center"
             android:layout_marginTop="@dimen/dimen_20dp"
             android:paddingTop="@dimen/dimen_8dp"
-            android:paddingEnd="@dimen/dimen_5dp"
             android:paddingBottom="@dimen/dimen_5dp"
+            android:paddingEnd="@dimen/dimen_4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ccLayout"
+            app:layout_constraintTop_toBottomOf="@+id/cardError"
           >
 
             <com.google.android.material.textfield.TextInputLayout
@@ -192,6 +205,7 @@
                 app:boxStrokeColor="@color/transparent"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp"
+                android:paddingStart="@dimen/dimen_4dp"
                 app:endIconMode="custom"
                 app:errorEnabled="false"
                 app:hintTextColor="@color/textColor"
@@ -210,14 +224,28 @@
                     android:imeOptions="actionDone"
                     android:importantForAutofill="no"
                     android:inputType="textCapCharacters"
-                    android:maxLength="16"
+                    android:maxLength="6"
                     android:textColor="@color/black"
                     android:textColorHint="@color/textColor"
                     android:textSize="16sp"
                     tools:ignore="SpeakableTextPresentCheck" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/pinError"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:gravity="end"
+            android:textColor="@color/red"
+            android:textSize="@dimen/dimen_12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pinLayout"
+            tools:ignore="TextContrastCheck" />
 
 
         <TextView
@@ -231,7 +259,7 @@
             android:textSize="@dimen/dimen_16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pinLayout"
+            app:layout_constraintTop_toBottomOf="@+id/pinError"
             tools:ignore="TextContrastCheck" />
 
 

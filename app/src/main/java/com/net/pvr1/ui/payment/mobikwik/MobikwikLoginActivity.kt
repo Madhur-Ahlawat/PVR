@@ -19,6 +19,10 @@ import com.net.pvr1.ui.payment.paytmpostpaid.viewModel.PaytmPostPaidViewModel
 import com.net.pvr1.ui.payment.response.PaymentResponse
 import com.net.pvr1.ui.payment.webView.PaytmWebActivity
 import com.net.pvr1.utils.*
+import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
+import com.net.pvr1.utils.Constant.Companion.BOOK_TYPE
+import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
+import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
@@ -34,6 +38,7 @@ class MobikwikLoginActivity : AppCompatActivity() {
     private var catFilterPayment = ArrayList<PaymentResponse.Output.Gateway>()
     private var paidAmount = ""
     private var title = ""
+    private var pid = ""
     var state_text = ""
 
 
@@ -45,6 +50,7 @@ class MobikwikLoginActivity : AppCompatActivity() {
         setContentView(view)
         binding?.header?.textView108?.text = intent.getStringExtra("title")
         title = intent.getStringExtra("title").toString()
+        pid = intent.getStringExtra("pid").toString()
         paidAmount = intent.getStringExtra("paidAmount").toString()
         //paidAmount
         binding?.msg?.text = getString(R.string.currency) + paidAmount
@@ -54,8 +60,297 @@ class MobikwikLoginActivity : AppCompatActivity() {
             onBackPressed()
         }
 
+        binding?.mobileNumber?.setText(preferences.getString(Constant.SharedPreference.USER_NUMBER))
+        binding?.emailNumber?.setText(preferences.getString(Constant.SharedPreference.USER_EMAIL))
+
+
+        // GET OTP
+        binding?.sendOtp?.setOnClickListener {
+            if (binding?.sendOtp?.text == "Create Wallet") {
+                if (binding?.emailNumber?.text.toString().isNotEmpty()) {
+                    if (InputTextValidator.validateEmail(binding?.emailNumber?.text.toString())) {
+                        binding?.textInputLayout?.error = null
+                        paytmPostPaidViewModel.mobikwikCreateWallet(
+                            preferences.getUserId(), BOOKING_ID, TRANSACTION_ID,
+                            BOOK_TYPE, binding?.mobileNumber?.text.toString(),binding?.etOtp?.getStringFromFields().toString(),binding?.emailNumber?.text.toString()
+                        )
+                    } else {
+                       toast(getString(R.string.mobile_msg_invalid))
+                    }
+                } else {
+                    toast(getString(R.string.enterMobile))
+                }
+            }else{
+                if (binding?.mobileNumber?.text.toString().isNotEmpty()) {
+                    if (InputTextValidator.validatePhoneNumber(binding?.mobileNumber?.text.toString())) {
+                        binding?.textInputLayout?.error = null
+                        paytmPostPaidViewModel.mobikwikOTP(
+                            preferences.getUserId(), BOOKING_ID, TRANSACTION_ID,
+                            BOOK_TYPE, binding?.mobileNumber?.text.toString()
+                        )
+                    } else {
+                        toast(getString(R.string.mobile_msg_invalid))
+                    }
+                } else {
+                    toast(getString(R.string.enterMobile))
+                }
+            }
+        }
+        mobikwikOTP()
+        mobikwikCreateWallet()
+
+        // VERIFY OTP
+
+        binding?.subBtn?.setOnClickListener {
+            if (binding?.etOtp?.getStringFromFields().toString().isNotEmpty()) {
+                if (binding?.etOtp?.getStringFromFields().toString().length==6) {
+                    binding?.textInputLayout?.error = null
+                    paytmPostPaidViewModel.mobikwikPay(
+                        preferences.getUserId(), BOOKING_ID, TRANSACTION_ID,
+                        BOOK_TYPE, binding?.mobileNumber?.text.toString(),binding?.etOtp?.getStringFromFields().toString(),
+                        CINEMA_ID
+                    )
+                }else{
+                   toast("Enter valid OTP")
+                }
+            }else{
+                toast(getString(R.string.enterOtp))
+            }
+        }
+
+        mobikwikPay()
 
     }
+
+    private fun mobikwikOTP() {
+        paytmPostPaidViewModel.mobikwikOTPpayScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+
+                        if (it.data.output.statuscode == "0"){
+                            binding?.loginView?.hide()
+                            binding?.otpView?.show()
+                        }else{
+                            val dialog = OptionDialog(this,
+                                R.mipmap.ic_launcher,
+                                R.string.app_name,
+                                it.data.output.statusdescription,
+                                positiveBtnText = R.string.ok,
+                                negativeBtnText = R.string.no,
+                                positiveClick = {},
+                                negativeClick = {})
+                            dialog.show()
+                        }
+
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+    private fun mobikwikPay() {
+        paytmPostPaidViewModel.mobikwikPaypayScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        if (it.data.output.statuscode == "33"){
+                            val dialog = OptionDialog(this,
+                                R.mipmap.ic_launcher,
+                                R.string.app_name,
+                                getString(R.string.you_have_insufficient_balance),
+                                positiveBtnText = R.string.ok,
+                                negativeBtnText = R.string.no,
+                                positiveClick = {
+                                    val intent = Intent(this@MobikwikLoginActivity, PaytmWebActivity::class.java)
+                                    intent.putExtra("pTypeId", pid)
+                                    intent.putExtra("mobile", binding?.mobileNumber?.text.toString())
+                                    intent.putExtra("otp", binding?.etOtp?.getStringFromFields().toString())
+                                    intent.putExtra("paidAmount", paidAmount)
+                                    intent.putExtra("title", title)
+                                    startActivity(intent)
+                                },
+                                negativeClick = {})
+                            dialog.show()
+                        }else if (it.data.output.statuscode == "159") {
+                            // Create Wallet
+                            binding?.sendOtp?.text = "Create Wallet"
+                            val dialog = OptionDialog(this,
+                                R.mipmap.ic_launcher,
+                                R.string.app_name,
+                                it.data.output.statusdescription,
+                                positiveBtnText = R.string.ok,
+                                negativeBtnText = R.string.no,
+                                positiveClick = {
+                                                binding?.loginView?.show()
+                                                binding?.otpView?.hide()
+                                                binding?.mobileLayout?.hide()
+                                                binding?.emailLayout?.show()
+
+                                },
+                                negativeClick = {})
+                            dialog.show()
+                        }else if (it.data.output.statuscode == "164"){
+                            val dialog = OptionDialog(this,
+                                R.mipmap.ic_launcher,
+                                R.string.app_name,
+                                it.data.output.statusdescription,
+                                positiveBtnText = R.string.ok,
+                                negativeBtnText = R.string.no,
+                                positiveClick = {},
+                                negativeClick = {})
+                            dialog.show()
+                        }else if (it.data.output.statuscode == "0"){
+                            if (it.data.output.status == "SUCCESS"){
+                                Constant().printTicket(this)
+                                finish()
+                            }else{
+                                val dialog = OptionDialog(this,
+                                    R.mipmap.ic_launcher,
+                                    R.string.app_name,
+                                    it.data?.msg.toString(),
+                                    positiveBtnText = R.string.ok,
+                                    negativeBtnText = R.string.no,
+                                    positiveClick = {},
+                                    negativeClick = {})
+                                dialog.show()
+                            }
+                        }else{
+                            val dialog = OptionDialog(this,
+                                R.mipmap.ic_launcher,
+                                R.string.app_name,
+                                it.data?.msg.toString(),
+                                positiveBtnText = R.string.ok,
+                                negativeBtnText = R.string.no,
+                                positiveClick = {},
+                                negativeClick = {})
+                            dialog.show()
+                        }
+
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+    private fun mobikwikCreateWallet() {
+        paytmPostPaidViewModel.mobikwikCreateWalletpayScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        if (it.data.output.statuscode == "0"){
+                            val dialog = OptionDialog(this,
+                                R.mipmap.ic_launcher,
+                                R.string.app_name,
+                                it.data.output.statusdescription,
+                                positiveBtnText = R.string.ok,
+                                negativeBtnText = R.string.no,
+                                positiveClick = {
+                                    paytmPostPaidViewModel.mobikwikPay(
+                                        preferences.getUserId(), BOOKING_ID, TRANSACTION_ID,
+                                        BOOK_TYPE, binding?.mobileNumber?.text.toString(),binding?.etOtp?.getStringFromFields().toString(),CINEMA_ID
+                                    )
+                                },
+                                negativeClick = {})
+                            dialog.show()
+
+                        }else{
+                            val dialog = OptionDialog(this,
+                                R.mipmap.ic_launcher,
+                                R.string.app_name,
+                                it.data.output.statusdescription,
+                                positiveBtnText = R.string.ok,
+                                negativeBtnText = R.string.no,
+                                positiveClick = {},
+                                negativeClick = {})
+                            dialog.show()
+                        }
+
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+
 
 
     override fun onBackPressed() {

@@ -58,11 +58,14 @@ class GiftCardRedeemActivity : AppCompatActivity() {
           binding?.textView373?.text = intent.extras?.getString("tc")
 
 
-        binding?.include30?.constraintLayout10?.setOnClickListener(View.OnClickListener {
-            if (validateInputFields())
+        binding?.include30?.textView5?.setOnClickListener{
+            if (validateInputFields()) {
+                toast("called this")
+
                 setDataToApi()
-            Constant().hideKeyboard(this)
-        })
+                Constant().hideKeyboard(this)
+            }
+        }
 
         callZagglePay()
         callGiftCardRedeem()
@@ -117,30 +120,30 @@ class GiftCardRedeemActivity : AppCompatActivity() {
 
     private fun validateInputFields(): Boolean {
         if (!InputTextValidator.hasText(binding?.ccEditText!!)) {
-            binding?.ccInputLayout?.error == (getString(R.string.card_number_msg_required))
+            binding?.cardError?.text = (getString(R.string.card_number_msg_required))
         } else {
-            binding?.ccInputLayout?.error == (getString(R.string.card_number_msg))
+            binding?.cardError?.text = ""
         }
         if (!InputTextValidator.hasText(binding?.pinEditText!!)) {
-            binding?.pinInputLayout?.error == (getString(R.string.card_pin_msg_required))
+            binding?.pinError?.text = (getString(R.string.card_pin_msg_required))
         } else {
-            binding?.pinInputLayout?.error == (getString(R.string.card_pin_msg))
+            binding?.pinError?.text = ""
         }
         if (!paymentOptionMode.equals("126", ignoreCase = true)) {
             if (!InputTextValidator.validatePin(binding?.pinEditText!!)) {
                 if (binding?.pinEditText?.text.toString().trim { it <= ' ' }.isEmpty()) {
-                    binding?.pinInputLayout?.error == (getString(R.string.card_pin_msg_required))
-                } else binding?.pinInputLayout?.error == (getString(R.string.card_pin_msg_invalid))
+                    binding?.pinError?.text = (getString(R.string.card_pin_msg_required))
+                } else binding?.pinError?.text = (getString(R.string.card_pin_msg_invalid))
             } else {
-                binding?.pinInputLayout?.error == (getString(R.string.card_pin_msg))
+                binding?.pinError?.text = ""
             }
         }
         if (!InputTextValidator.validateCard(binding?.ccEditText!!)) {
             if (binding?.ccEditText?.text.toString().trim { it <= ' ' }.isEmpty()) {
-                binding?.ccInputLayout?.error == (getString(R.string.card_number_msg_required))
-            } else binding?.ccInputLayout?.error == (getString(R.string.card_number_msg_invalid))
+                binding?.cardError?.text = (getString(R.string.card_number_msg_required))
+            } else binding?.cardError?.text = (getString(R.string.card_number_msg_invalid))
         } else {
-            binding?.ccInputLayout?.error == (getString(R.string.card_number_msg))
+            binding?.cardError?.error = ""
         }
         return if (paymentOptionMode.equals("126", ignoreCase = true)) {
             (InputTextValidator.hasText(binding?.ccEditText!!) &&

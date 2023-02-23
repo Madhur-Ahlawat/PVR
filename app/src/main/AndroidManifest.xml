@@ -154,6 +154,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".ui.payment.giftcardredeem.GiftCardRedeemActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.home.fragment.more.contactUs.ContactUsActivity"
             android:exported="false">
             <meta-data

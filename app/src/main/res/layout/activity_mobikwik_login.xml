@@ -162,7 +162,7 @@
             android:textAllCaps="false"
             android:textColor="#2f2f2f"
             android:textSize="@dimen/dimen_14sp"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@+id/otpEditText"
             app:layout_constraintTop_toBottomOf="@+id/textView383" />
 
@@ -270,7 +270,7 @@
         <RelativeLayout
             android:id="@+id/mobileLayout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_70dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:background="@drawable/text_curve"
             android:gravity="center"
@@ -312,6 +312,59 @@
                     android:importantForAutofill="no"
                     android:inputType="phone"
                     android:maxLength="10"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/textColor"
+                    android:textSize="16sp"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/emailLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/text_curve"
+            android:gravity="center"
+            android:visibility="gone"
+            android:paddingStart="@dimen/dimen_10dp"
+            android:paddingTop="@dimen/dimen_8dp"
+            android:paddingEnd="@dimen/dimen_5dp"
+            android:paddingBottom="@dimen/dimen_5dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutEmail"
+                style="@style/styledBlackTilEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="-8dp"
+                android:hint="@string/email"
+                app:boxBackgroundColor="@color/transparent"
+                app:boxStrokeColor="@color/transparent"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                app:endIconDrawable="@drawable/ic_vector_call"
+                app:endIconMode="custom"
+                app:errorEnabled="false"
+                app:hintTextColor="@color/textColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:digits="1234567890"
+                    android:fontFamily="@font/sf_pro_text_bold"
+                    android:gravity="bottom"
+                    android:imeOptions="actionDone"
+                    android:importantForAutofill="no"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="30"
                     android:textColor="@color/black"
                     android:textColorHint="@color/textColor"
                     android:textSize="16sp"
