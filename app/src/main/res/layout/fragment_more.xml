@@ -142,7 +142,7 @@
                     android:id="@+id/profileLinear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <include
                         android:id="@+id/profileDetails"
@@ -280,7 +280,8 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/dimen_8dp">
 
                     <TextView
                         android:id="@+id/tvTerm"

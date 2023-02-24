@@ -16,7 +16,7 @@ import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.cinemaSession.CinemaSessionActivity
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingActivity
+import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingMovieDetailsActivity
 import com.net.pvr1.ui.search.searchHome.adapter.SearchHomeCinemaAdapter
 import com.net.pvr1.ui.search.searchHome.adapter.SearchHomeMovieAdapter
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
@@ -256,7 +256,7 @@ class SearchHomeActivity : AppCompatActivity(),
     }
 
     override fun onSearchMovie(selectCityList: HomeSearchResponse.Output.M) {
-        val intent = Intent(this, NowShowingActivity::class.java)
+        val intent = Intent(this, NowShowingMovieDetailsActivity::class.java)
         intent.putExtra("mid", selectCityList.id)
         startActivity(intent)
     }

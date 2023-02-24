@@ -52,34 +52,52 @@ class AlertTheaterAdapter(
                 binding.distanceTv.text = this.d
                 binding.detailTV.text = this.ad
 
-                if (this.itemSelectedOrNot) {
-                    binding.imageView134.setImageResource(R.drawable.curve_select)
-                    binding.constraintLayout92.setBackgroundResource(
-                        R.drawable.alert_curve_ui_select
-                    )
-                } else {
-                    binding.imageView134.setImageResource(R.drawable.curve_unselect)
-                    binding.constraintLayout92.setBackgroundResource(
-                        R.drawable.alert_curve_ui
-                    )
-                }
+
                 unableDisable.observe(context as SetAlertActivity) {
                     if (it) {
-                        binding.viewDisableLayout.show()
+                        binding.imageView134.setImageResource(R.drawable.curve_select)
+                        binding.constraintLayout92.setBackgroundResource(
+                            R.drawable.alert_curve_ui_select
+                        )
                         holder.itemView.isClickable = false
                     } else {
-                        binding.viewDisableLayout.hide()
+                        binding.imageView134.setImageResource(R.drawable.curve_unselect)
+                        binding.constraintLayout92.setBackgroundResource(
+                            R.drawable.alert_curve_ui
+                        )
                         holder.itemView.isClickable = true
                         holder.itemView.setOnClickListener {
                             if (this.itemSelectedOrNot) {
                                 this.itemSelectedOrNot = false
                                 selectedItemCount--
                                 onItemClick(this, false)
+                                if (this.itemSelectedOrNot) {
+                                    binding.imageView134.setImageResource(R.drawable.curve_select)
+                                    binding.constraintLayout92.setBackgroundResource(
+                                        R.drawable.alert_curve_ui_select
+                                    )
+                                } else {
+                                    binding.imageView134.setImageResource(R.drawable.curve_unselect)
+                                    binding.constraintLayout92.setBackgroundResource(
+                                        R.drawable.alert_curve_ui
+                                    )
+                                }
                             } else {
                                 if (selectedItemCount < 5) {
                                     this.itemSelectedOrNot = true
                                     selectedItemCount++
                                     onItemClick(this, true)
+                                }
+                                if (this.itemSelectedOrNot) {
+                                    binding.imageView134.setImageResource(R.drawable.curve_select)
+                                    binding.constraintLayout92.setBackgroundResource(
+                                        R.drawable.alert_curve_ui_select
+                                    )
+                                } else {
+                                    binding.imageView134.setImageResource(R.drawable.curve_unselect)
+                                    binding.constraintLayout92.setBackgroundResource(
+                                        R.drawable.alert_curve_ui
+                                    )
                                 }
                             }
                             notifyDataSetChanged()

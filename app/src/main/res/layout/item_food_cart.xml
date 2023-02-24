@@ -39,6 +39,35 @@
             app:layout_constraintStart_toEndOf="@+id/cardView15"
             app:layout_constraintTop_toTopOf="@+id/cardView15"
             tools:text="Regular Pepsi" />
+        <TextView
+            android:id="@+id/cal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="The Burger Club"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:layout_marginTop="@dimen/dimen_4dp"
+            android:textSize="@dimen/dimen_11sp"
+            android:textColor="#7A7A7A"
+            app:layout_constraintStart_toStartOf="@+id/textView147"
+            app:layout_constraintTop_toBottomOf="@+id/textView147" />
+
+        <TextView
+            android:id="@+id/fa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="The Burger Club"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:layout_marginTop="@dimen/dimen_2dp"
+            android:textSize="@dimen/dimen_11sp"
+            android:textColor="#7A7A7A"
+            app:layout_constraintStart_toStartOf="@+id/cal"
+            app:layout_constraintTop_toBottomOf="@+id/cal" />
 
         <TextView
             android:visibility="gone"
@@ -135,23 +164,22 @@
             android:id="@+id/textView146"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:paddingStart="32dp"
-            android:paddingEnd="32dp"
-            android:paddingTop="@dimen/dimen_5dp"
-            android:paddingBottom="@dimen/dimen_5dp"
             android:background="@drawable/yellow_book_curve"
             android:fontFamily="@font/sf_pro_text_bold"
             android:gravity="center"
-            android:visibility="visible"
+            android:paddingStart="32dp"
+            android:paddingTop="@dimen/dimen_5dp"
+            android:paddingEnd="32dp"
+            android:paddingBottom="@dimen/dimen_5dp"
             android:text="@string/add"
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textColor="@color/black"
             android:textSize="@dimen/dimen_14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/cardView15"
-            app:layout_constraintStart_toStartOf="@+id/textView147"
-            app:layout_constraintTop_toBottomOf="@+id/textView152"/>
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/view99"
+            app:layout_constraintStart_toStartOf="@+id/fa"
+            app:layout_constraintTop_toBottomOf="@+id/fa" />
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -160,9 +188,9 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/cardView15"
-            app:layout_constraintStart_toStartOf="@+id/textView147"
-            app:layout_constraintTop_toBottomOf="@+id/textView152">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/fa"
+            app:layout_constraintTop_toBottomOf="@+id/fa">
             <include
                 android:id="@+id/include25"
                 layout="@layout/food_layout_add"
@@ -176,7 +204,7 @@
             android:id="@+id/view102"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="35dp"
             android:background="@color/grayEd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

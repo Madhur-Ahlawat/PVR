@@ -36,6 +36,15 @@ class SummeryViewModel @Inject constructor(private val userRepository: UserRepos
         }
     }
 
+    fun foodDetails(
+        userid: String,
+        bookingid: String
+    ) {
+        viewModelScope.launch {
+            userRepository.foodDetails(userid, bookingid)
+        }
+    }
+
 
     //seatWithFood
     val seatWithFoodDataScope: LiveData<NetworkResult<SummeryResponse>>

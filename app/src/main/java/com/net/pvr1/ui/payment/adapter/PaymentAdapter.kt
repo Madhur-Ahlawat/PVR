@@ -56,6 +56,10 @@ class PaymentAdapter(
                     binding.paymentModeSubTitle.hide()
                 }
 
+                binding.paymentModeSubTitle.setOnClickListener {
+                    listener.onOfferTagClick(this)
+                }
+
                 if (this.id==Constant.PHONE_PE){
                     try {
                         if (isAppInstalled()) {
@@ -142,6 +146,7 @@ class PaymentAdapter(
 
     interface RecycleViewItemClickListenerCity {
         fun paymentClick(comingSoonItem: PaymentResponse.Output.Gateway)
+        fun onOfferTagClick(comingSoonItem: PaymentResponse.Output.Gateway)
 
     }
 

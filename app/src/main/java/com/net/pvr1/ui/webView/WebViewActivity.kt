@@ -2,6 +2,7 @@ package com.net.pvr1.ui.webView
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.pm.ActivityInfo
 import android.graphics.Bitmap
 import android.net.http.SslError
 import android.os.Bundle
@@ -30,6 +31,15 @@ class WebViewActivity : AppCompatActivity() {
         title = intent.getStringExtra("title").toString()
         get = intent.getStringExtra("getUrl").toString()
         movedNext()
+
+             if (from == "Experience") {
+                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
+                binding?.webView?.settings?.setSupportMultipleWindows(true)
+                binding?.webView?.settings?.javaScriptCanOpenWindowsAutomatically = true
+            } else {
+                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            }
+
 
         when (from) {
             "merchandise" -> {

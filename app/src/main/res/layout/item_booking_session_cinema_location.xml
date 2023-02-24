@@ -43,7 +43,7 @@
 
                 <com.net.pvr1.utils.view.TextViewDrawable
                     android:id="@+id/textView105"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableRight="@drawable/alert"
                     android:drawablePadding="@dimen/dimen_6dp"
@@ -52,10 +52,30 @@
                     android:includeFontPadding="false"
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimen_14sp"
+                    app:layout_constraintWidth_max="200dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="TextView  dshjdhshdshdgsfffff dshgdsghghds dsgdsgd dssdhdh ddffddffdfdfd fd  fdfdfdfddffd" />
+                    tools:text="TextView gygyyggy dsdsds udyuysduy uhuuu " />
+
+                <TextView
+                    android:id="@+id/cinemaLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_15dp"
+                    android:background="@drawable/yellow_curve_four"
+                    android:fontFamily="@font/sf_pro_text_semi_bold"
+                    android:paddingStart="@dimen/dimen_8dp"
+                    android:paddingTop="@dimen/dimen_2dp"
+                    android:paddingEnd="@dimen/dimen_8dp"
+                    android:paddingBottom="@dimen/dimen_2dp"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toEndOf="@+id/textView105"
+                    app:layout_constraintTop_toTopOf="@+id/textView105"
+                    tools:text="NEW" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

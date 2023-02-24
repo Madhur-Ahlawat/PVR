@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr1.R
 import com.net.pvr1.ui.home.fragment.cinema.response.CinemaResponse
-import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingActivity
+import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingMovieDetailsActivity
 
 
 class CinemaMovieAdapter(
@@ -37,7 +37,7 @@ class CinemaMovieAdapter(
 
         //click
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, NowShowingActivity::class.java)
+            val intent = Intent(context, NowShowingMovieDetailsActivity::class.java)
             intent.putExtra("mid", comingSoonItem.m)
             context.startActivity(intent)
         }

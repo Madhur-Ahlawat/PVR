@@ -46,6 +46,12 @@ class BookingShowsParentAdapter(
                 }else{
                     binding.hcIcon.hide()
                 }
+                if (this.newCinemaText!= null && this.newCinemaText!= ""){
+                    binding.cinemaLocation.show()
+                    binding.cinemaLocation.text = this.newCinemaText
+                } else {
+                    binding.cinemaLocation.hide()
+                }
                 if (position==0){
                     binding.recyclerView7.show()
                     binding.hcIcon.hide()

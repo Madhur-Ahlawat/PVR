@@ -107,6 +107,8 @@
             android:layout_marginTop="10dp"
             android:clipToPadding="true"
             android:inputType="number"
+            android:focusable="true"
+            android:focusedByDefault="true"
             app:layout_constraintStart_toStartOf="@+id/view11"
             app:layout_constraintTop_toBottomOf="@+id/textView13"
             app:otp_backgroundImage="@drawable/background"
@@ -251,6 +253,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:id="@+id/emailtext"
             android:includeFontPadding="false"
             android:fontFamily="@font/montserrat_alternates_semi_bold"
             android:text="Enter Mobile Number"
@@ -261,6 +264,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:id="@+id/otpMsg"
             android:fontFamily="@font/sf_pro_text_regular"
             android:text="Enter your mobile number to receive a One Time Password (OTP)"
             android:textColor="@color/textColor"
@@ -358,7 +362,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    android:digits="1234567890"
                     android:fontFamily="@font/sf_pro_text_bold"
                     android:gravity="bottom"
                     android:imeOptions="actionDone"
@@ -373,6 +376,17 @@
             </com.google.android.material.textfield.TextInputLayout>
         </RelativeLayout>
 
+
+        <TextView
+            android:id="@+id/errorText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_5dp"
+            android:gravity="end"
+            android:textColor="@color/red"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:textSize="@dimen/dimen_12sp"
+           />
 
         <TextView
             android:id="@+id/textView382"

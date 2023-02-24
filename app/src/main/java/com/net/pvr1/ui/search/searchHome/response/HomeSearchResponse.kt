@@ -12,7 +12,7 @@ data class HomeSearchResponse(
 ) : Serializable {
     data class Output(
         val lr: List<Any>,
-        val m: ArrayList<M>,
+        var m: ArrayList<M>,
         val t: ArrayList<T>
     ) : Serializable {
         data class T(

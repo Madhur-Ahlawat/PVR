@@ -16,6 +16,7 @@ import com.journeyapps.barcodescanner.*
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityScannerBinding
 import com.net.pvr1.di.preference.PreferenceManager
+import com.net.pvr1.ui.food.FoodActivity
 import com.net.pvr1.ui.scanner.bookings.SelectBookingsActivity
 import com.net.pvr1.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,6 +50,9 @@ class ScannerActivity : AppCompatActivity(), DecoratedBarcodeView.TorchListener 
         barcodeScannerView?.setTorchListener(this)
 
         viewfinderView = findViewById(R.id.zxing_viewfinder_view)
+
+        val rnd = Random()
+        val color = Color.argb(100, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
 
         titleScanner = findViewById(R.id.zxing_status_view)
 
@@ -119,87 +123,36 @@ class ScannerActivity : AppCompatActivity(), DecoratedBarcodeView.TorchListener 
                 getOfferCode()
             }
             else if (path?.contains("food") == true || path?.contains("booking") == true) {
-//                handler.postDelayed({
-                // close your dialog
-                if (parts?.size == 5) {
-//                            successIMG.setVisibility(View.VISIBLE)
-//                            fromScan = "scan"
-//                            val intent = Intent(this@PCCouponScan, GrabABiteActivity::class.java)
-//                            val paymentIntentData = PaymentIntentData()
-//                            intent.putExtra("from", "scan")
-//                            paymentIntentData.setCinemaID(parts[2])
-//                            paymentIntentData.setPaymentType(PCConstants.PaymentType.INTHEATRE)
-//                            paymentIntentData.setName("")
-//                            paymentIntentData.setFnb(PCConstants.FNB)
-//                            paymentIntentData.setSessionActive(true)
-//                            intent.putExtra(
-//                                PCConstants.IntentKey.TICKET_BOOKING_DETAILS,
-//                                paymentIntentData
-//                            )
-//                            intent.putExtra("SEAT", parts[4])
-//                            intent.putExtra("AUDI", parts[3])
-//                            startActivity(intent)
-                } else if (parts?.size!! > 2) {
-                    fromScan = "scan"
-                    var type = ""
-                    if (contents.contains("type")) {
-                        var params: List<NameValuePair?>? = null
-                        try {
-                            params = URLEncodedUtils.parse(URI(contents), "UTF-8")
-                            for (param in params) {
-                                printLog(param.name + " : " + param.value)
+                var type = ""
+                if (contents.contains("type")) {
+                    var params: List<NameValuePair?>? = null
+                    try {
+                        params = URLEncodedUtils.parse(URI(contents), "UTF-8")
+                        for (param in params) {
+                            printLog(param.name + " : " + param.value)
 
-                                if (param.name != "type") type = param.value
-                            }
-                        } catch (e: URISyntaxException) {
-                            e.printStackTrace()
+                            if (param.name != "type") type = param.value
                         }
+                    } catch (e: URISyntaxException) {
+                        e.printStackTrace()
                     }
-//                            successIMG.setVisibility(View.VISIBLE)
-                    val intent = Intent(this, SelectBookingsActivity::class.java)
-                    intent.putExtra("from", "pscan")
-//                            val paymentIntentData = PaymentIntentData()
-//                            paymentIntentData.setCinemaID(parts[2])
-//                            paymentIntentData.setPaymentType(PCConstants.PaymentType.INTHEATRE)
-//                            paymentIntentData.setName("")
-//                            paymentIntentData.setFnb(PCConstants.FNB)
-//                            paymentIntentData.setSessionActive(true)
-//                            intent.putExtra(
-//                                PCConstants.IntentKey.TICKET_BOOKING_DETAILS, paymentIntentData
-//                            )
-                    intent.putExtra("SEAT", "")
-                    intent.putExtra("cid", parts[2])
-                    intent.putExtra("AUDI", "")
-                    if (!TextUtils.isEmpty(type))
-                        intent.putExtra("type", type)
-                    if (path.contains("newpromo"))
-                        intent.putExtra("promo", "NEWPROMO")
-
-                    startActivity(intent)
-                    finish()
-
                 }
-//                }, 300)
+                val intent = Intent(this, SelectBookingsActivity::class.java)
+                intent.putExtra("from", "pscan")
+                intent.putExtra("SEAT", "")
+                intent.putExtra("cid", parts?.get(2))
+                intent.putExtra("AUDI", "")
+                if (!TextUtils.isEmpty(type))
+                    intent.putExtra("type", type)
+                if (path.contains("newpromo"))
+                    intent.putExtra("promo", "NEWPROMO")
+
+                startActivity(intent)
+                finish()
             }
             else if (path?.contains("getqrcode") == true) {
-//                handler.postDelayed({ // close your dialog
                 if (parts?.size == 5) {
-//                            successIMG.setVisibility(View.VISIBLE)
-//                            fromScan = "scan"
-//                            val intent = Intent(this@PCCouponScan, GrabABiteActivity::class.java)
-//                            val paymentIntentData = PaymentIntentData()
-//                            intent.putExtra("from", "scan")
-//                            paymentIntentData.setCinemaID(parts[2])
-//                            paymentIntentData.setPaymentType(PCConstants.PaymentType.INTHEATRE)
-//                            paymentIntentData.setName("")
-//                            paymentIntentData.setFnb(PCConstants.FNB)
-//                            paymentIntentData.setSessionActive(true)
-//                            intent.putExtra(
-//                                PCConstants.IntentKey.TICKET_BOOKING_DETAILS, paymentIntentData
-//                            )
-//                            intent.putExtra("SEAT", parts[4])
-//                            intent.putExtra("AUDI", parts[3])
-//                            startActivity(intent)
+
                 } else if (parts?.size!! > 2) {
                     fromScan = "scan"
                     var type = ""
@@ -231,74 +184,9 @@ class ScannerActivity : AppCompatActivity(), DecoratedBarcodeView.TorchListener 
                             e.printStackTrace()
                         }
                     }
-//                             successIMG.setVisibility( View.VISIBLE )
-
-                    if (option.equals("Food", ignoreCase = true)) {
-//                                val intent =
-//                                    Intent(this@PCCouponScan, GrabABiteActivity::class.java)
-//                                val paymentIntentData = PaymentIntentData()
-//                                intent.putExtra("from", "pscan")
-//                                paymentIntentData.setCinemaID(parts[2])
-//                                paymentIntentData.setPaymentType(PCConstants.PaymentType.INTHEATRE)
-//                                paymentIntentData.setName("")
-//                                paymentIntentData.setFnb(PCConstants.FNB)
-//                                paymentIntentData.setSessionActive(true)
-//                                intent.putExtra(
-//                                    PCConstants.IntentKey.TICKET_BOOKING_DETAILS, paymentIntentData
-//                                )
-//                                intent.putExtra("SEAT", seat)
-//                                intent.putExtra("AUDI", "")
-//                                if (!TextUtils.isEmpty(type)) intent.putExtra("type", type)
-//                                if (!TextUtils.isEmpty(iserv) && iserv.equals(
-//                                        "yes", ignoreCase = true
-//                                    )
-//                                ) intent.putExtra("iserv", iserv)
-//
-//                                startActivity(
-//                                    intent
-//                                )
-                    } else {
-//                                val intent =
-//                                    Intent(this@PCCouponScan, SelectBookingActivity::class.java)
-//                                val paymentIntentData = PaymentIntentData()
-//                                intent.putExtra("from", "pscan")
-//                                paymentIntentData.setCinemaID(parts[2])
-//                                paymentIntentData.setPaymentType(PCConstants.PaymentType.INTHEATRE)
-//                                paymentIntentData.setName("")
-//                                paymentIntentData.setFnb(PCConstants.FNB)
-//                                paymentIntentData.setSessionActive(true)
-//                                intent.putExtra(
-//                                    PCConstants.IntentKey.TICKET_BOOKING_DETAILS, paymentIntentData
-//                                )
-//                                intent.putExtra("SEAT", seat)
-//                                intent.putExtra("AUDI", "")
-//                                if (!TextUtils.isEmpty(type)) intent.putExtra("type", type)
-//                                if (path.contains("newpromo")) intent.putExtra(
-//                                    "promo", "NEWPROMO"
-//                                )
-//                                if (!TextUtils.isEmpty(iserv) && iserv.equals(
-//                                        "yes", ignoreCase = true
-//                                    )
-//                                ) intent.putExtra("iserv", iserv)
-//                                startActivity(
-//                                    intent
-//                                )
-                    }
 
                 }
-//                }, 300)
-//                } else {
-//                    println("successIMG============else")
-//                    successIMG.setVisibility(View.GONE)
-//                    textScan.setText(
-//                        """
-//                    Invalid QR code!
-//                    Try a new one or try again
-//                    """.trimIndent()
-//                    )
-//                    mScannerView.resumeCameraPreview(this@PCCouponScan)
-            }
-            else{
+            } else{
                 titleScanner?.text=getString(R.string.invalidQr)
             }
         } catch (e: Exception) {
@@ -341,9 +229,9 @@ class ScannerActivity : AppCompatActivity(), DecoratedBarcodeView.TorchListener 
 
     private fun changeMaskColor(view: View?) {
         val rnd = Random()
-        val color: Int = Color.argb(100, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
+        val color: Int = Color.argb(100, rnd.nextInt(255), rnd.nextInt(203), rnd.nextInt(7))
 
-        viewfinderView?.setMaskColor(getColor(R.color.transparent))
+        viewfinderView?.setMaskColor(color)
     }
 
     private fun changeLaserVisibility(visible: Boolean) {

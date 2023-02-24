@@ -14,6 +14,8 @@ import android.view.Window
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
+import com.google.gson.internal.LinkedTreeMap
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivitySetAlertBinding
 import com.net.pvr1.databinding.SetAlertDialogBinding
@@ -25,7 +27,9 @@ import com.net.pvr1.ui.movieDetails.comingSoonDetails.setAlert.viewModel.SetAler
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import com.net.pvr1.di.preference.PreferenceManager
+import com.net.pvr1.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
+import org.json.JSONObject
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -68,8 +72,11 @@ class SetAlertActivity : AppCompatActivity() {
             if (it) {
                 binding.textView280.text = "You have selected all the theaters"
                 binding.include14.textView5.background = getDrawable(R.drawable.yellow_book_curve)
+                binding.include14.textView5.isClickable = true
             } else {
                 binding.textView280.text = "${selectedItemList.size}/5 Selected"
+                binding.include14.textView5.isClickable = false
+
                 binding.include14.textView5.background =
                     getDrawable(R.drawable.alert_curve_ui_unselect)
                 //binding.include14.textView5.setBackgroundColor(getColor(R.color.unSelectBg))
@@ -128,7 +135,7 @@ class SetAlertActivity : AppCompatActivity() {
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
                             positiveClick = {
-                                setAlertDialog()
+                                //setAlertDialog()
                             },
                             negativeClick = {
                             })
@@ -182,7 +189,7 @@ class SetAlertActivity : AppCompatActivity() {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        retrieveData(it.data.output)
+                        retrieveData(it.data.output as LinkedTreeMap<*, *>)
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -216,10 +223,12 @@ class SetAlertActivity : AppCompatActivity() {
     }
 
     @SuppressLint("UseCompatLoadingForDrawables", "SetTextI18n")
-    private fun retrieveData(output: BookingRetrievalResponse.Output) {
+    private fun retrieveData(output: LinkedTreeMap<*, *>) {
+        val gson = Gson()
+        val data = gson.fromJson(JSONObject(output).toString(), BookingRetrievalResponse.Output::class.java)
         theaterAdapter = AlertTheaterAdapter(
             context = this@SetAlertActivity,
-            nowShowingList = output.c,
+            nowShowingList = data.c,
             unableDisable = unableDisable
         ) { item, addToList ->
             if (addToList) {

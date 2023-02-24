@@ -407,6 +407,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     private fun retrieverReserveSeatData(output: ReserveSeatResponse.Output) {
         BOOKING_ID = output.bookingid
         SELECTED_SEAT = selectedSeats.size
+        Constant.BOOK_TYPE = "BOOKING"
 
         if (output.fc == "true") {
             FOODENABLE = 0

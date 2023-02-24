@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -32,17 +33,22 @@ class HomeCinemaCategoryAdapter(
     override fun onBindViewHolder(holder: MyViewHolderNowShowing, position: Int) {
         val comingSoonItem = nowShowingList[position]
 
-        if (comingSoonItem.url.isEmpty()) {
-            holder.imageCat.hide()
-            holder.btText.show()
-            holder.textView.text = comingSoonItem.name
-        } else {
-            holder.imageCat.show()
-            holder.btText.hide()
-            //Image
+        if (nowShowingList.size == 1){
+            holder.cardTag.hide()
+            holder.imageCatNew.show()
             Glide.with(context)
-                .load(comingSoonItem.url)
-                .into(holder.image)
+                .load(comingSoonItem.nurl)
+                .placeholder(R.drawable.format_placeholder)
+                .error(R.drawable.format_placeholder)
+                .into(holder.imageCatNew)
+        }else{
+            holder.cardTag.show()
+            holder.imageCatNew.hide()
+            Glide.with(context)
+                .load(comingSoonItem.nurl)
+                .placeholder(R.drawable.format_placeholder)
+                .error(R.drawable.format_placeholder)
+                .into(holder.imageCat)
         }
 
         holder.itemView.setOnClickListener {
@@ -55,10 +61,9 @@ class HomeCinemaCategoryAdapter(
     }
 
     class MyViewHolderNowShowing(view: View) : RecyclerView.ViewHolder(view) {
-        var image: ImageView = view.findViewById(R.id.imageView10)
-        var btText: ConstraintLayout = view.findViewById(R.id.btText)
-        var imageCat: ConstraintLayout = view.findViewById(R.id.imageCat)
-        var textView: TextView = view.findViewById(R.id.textView)
+        var cardTag: CardView = view.findViewById(R.id.cardTag)
+        var imageCat: ImageView = view.findViewById(R.id.ivTag)
+        var imageCatNew: ImageView = view.findViewById(R.id.ivTagNew)
 
     }
 

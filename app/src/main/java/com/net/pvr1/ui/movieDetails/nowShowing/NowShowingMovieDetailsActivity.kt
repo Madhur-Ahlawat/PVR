@@ -33,7 +33,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class NowShowingActivity : AppCompatActivity(), MusicVideoAdapter.RecycleViewItemClickListener,
+class NowShowingMovieDetailsActivity : AppCompatActivity(), MusicVideoAdapter.RecycleViewItemClickListener,
     TrailerAdapter.RecycleViewItemClickListener, TrailerTrsAdapter.RecycleViewItemClickListener,
     MusicVideoTrsAdapter.RecycleViewItemClickListener {
     private var binding: ActivityNowShowingBinding? = null
@@ -126,7 +126,7 @@ class NowShowingActivity : AppCompatActivity(), MusicVideoAdapter.RecycleViewIte
         }
 
         binding?.imageView29?.setOnClickListener {
-            val intent = Intent(this@NowShowingActivity, PlayerActivity::class.java)
+            val intent = Intent(this@NowShowingMovieDetailsActivity, PlayerActivity::class.java)
             intent.putExtra("trailerUrl", output.t)
             startActivity(intent)
         }
@@ -209,7 +209,7 @@ class NowShowingActivity : AppCompatActivity(), MusicVideoAdapter.RecycleViewIte
         binding?.textView79?.text = output.p
         //MovedNext
         binding?.include?.textView5?.setOnClickListener {
-            val intent = Intent(this@NowShowingActivity, MovieSessionActivity::class.java)
+            val intent = Intent(this@NowShowingMovieDetailsActivity, MovieSessionActivity::class.java)
             intent.putExtra("mid", output.id)
             intent.putExtra("cid", output.c)
             startActivity(intent)
@@ -381,26 +381,26 @@ class NowShowingActivity : AppCompatActivity(), MusicVideoAdapter.RecycleViewIte
     }
 
     override fun musicVideo(comingSoonItem: MovieDetailsResponse.Mb.Crew.Role) {
-        val intent = Intent(this@NowShowingActivity, PlayerActivity::class.java)
+        val intent = Intent(this@NowShowingMovieDetailsActivity, PlayerActivity::class.java)
         intent.putExtra("trailerUrl", comingSoonItem.url)
         startActivity(intent)
 
     }
 
     override fun trailerClick(comingSoonItem: MovieDetailsResponse.Mb.Video) {
-        val intent = Intent(this@NowShowingActivity, PlayerActivity::class.java)
+        val intent = Intent(this@NowShowingMovieDetailsActivity, PlayerActivity::class.java)
         intent.putExtra("trailerUrl", comingSoonItem.url)
         startActivity(intent)
     }
 
     override fun trailerTrsClick(comingSoonItem: MovieDetailsResponse.Trs) {
-        val intent = Intent(this@NowShowingActivity, PlayerActivity::class.java)
+        val intent = Intent(this@NowShowingMovieDetailsActivity, PlayerActivity::class.java)
         intent.putExtra("trailerUrl", comingSoonItem.u)
         startActivity(intent)
     }
 
     override fun musicVideoTrsClick(comingSoonItem: MovieDetailsResponse.Trs) {
-        val intent = Intent(this@NowShowingActivity, PlayerActivity::class.java)
+        val intent = Intent(this@NowShowingMovieDetailsActivity, PlayerActivity::class.java)
         intent.putExtra("trailerUrl", comingSoonItem.u)
         startActivity(intent)
     }

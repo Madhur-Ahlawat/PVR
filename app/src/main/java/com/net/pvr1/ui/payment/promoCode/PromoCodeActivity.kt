@@ -156,7 +156,6 @@ class PromoCodeActivity : AppCompatActivity() {
 
     private fun checkpromo(): Boolean {
         var retVal = false
-        toast(promomap.size.toString())
         for (data in promomap) {
             if (data.key.equals(binding?.ccEditText?.text.toString().uppercase(Locale.getDefault()))) {
                 stringtex = data.value.toString()
@@ -180,17 +179,17 @@ class PromoCodeActivity : AppCompatActivity() {
     }
     private fun validateInputFields(): Boolean {
         if (!InputTextValidator.hasText(binding?.ccEditText!!)) {
-            binding?.ccInputLayout?.error == (getString(R.string.promo_code_msg_required))
+            binding?.errorText?.text = (getString(R.string.promo_code_msg_required))
         } else {
-            binding?.ccInputLayout?.error == (getString(R.string.promo_code_msg))
+            binding?.errorText?.text = ""
         }
         if (!InputTextValidator.validatePromoCode(binding?.ccEditText!!)) {
             if (binding?.ccEditText?.text.toString().trim { it <= ' ' }.isEmpty()) {
-                binding?.ccInputLayout?.error == (getString(R.string.promo_code_msg_required))
-            } else binding?.ccInputLayout?.error == (getString(R.string.promo_code_msg_invalid))
+                binding?.errorText?.text = (getString(R.string.promo_code_msg_required))
+            } else binding?.errorText?.text = (getString(R.string.promo_code_msg_invalid))
 
         } else {
-            binding?.ccInputLayout?.error == (getString(R.string.promo_code_msg))
+            binding?.errorText?.text = ""
         }
         return  (InputTextValidator.hasText(binding?.ccEditText!!) && InputTextValidator.validatePromoCode(binding?.ccEditText!!))
     }
@@ -236,7 +235,7 @@ class PromoCodeActivity : AppCompatActivity() {
                                     launchPaymentActivity(
                                         PaymentActivity::class.java,
                                         Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,intent.getStringExtra("paidAmount").toString()
-                                    )
+                                    ,binding?.ccEditText?.text.toString())
 
                                 }
                             }
@@ -312,7 +311,7 @@ class PromoCodeActivity : AppCompatActivity() {
                                     launchPaymentActivity(
                                         PaymentActivity::class.java,
                                         Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,intent.getStringExtra("paidAmount").toString()
-                                    )
+                                   ,"GYFTR" )
 
                                 }
                             }
@@ -388,7 +387,7 @@ class PromoCodeActivity : AppCompatActivity() {
                                     launchPaymentActivity(
                                         PaymentActivity::class.java,
                                         Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,intent.getStringExtra("paidAmount").toString()
-                                    )
+                                    ,"ACCENTIVE")
 
 
                                 }
@@ -511,7 +510,7 @@ class PromoCodeActivity : AppCompatActivity() {
                                     launchPaymentActivity(
                                         PaymentActivity::class.java,
                                         Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,intent.getStringExtra("paidAmount").toString()
-                                    )
+                                    ,"ACCENTIVE")
 
 
                                 }

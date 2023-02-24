@@ -13,7 +13,7 @@
         android:id="@+id/constraintLayout154"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -129,15 +129,60 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/foodMsg"
+                        android:visibility="gone"
+                        android:background="#80E0E0E0"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/h1Text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_20dp"
+                            android:fontFamily="@font/sf_pro_text_semi_bold"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_14sp"
+                            android:layout_marginTop="@dimen/padding_10"
+                            android:includeFontPadding="false"
+                            app:layout_constraintBottom_toBottomOf="@+id/imageView58"
+                            app:layout_constraintStart_toEndOf="@+id/imageView58"
+                            app:layout_constraintTop_toTopOf="@+id/imageView58"
+                            tools:text="TextView" />
+                        <TextView
+                            android:id="@+id/h2Text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_20dp"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:textColor="@color/black"
+                            android:layout_marginBottom="@dimen/padding_10"
+                            android:textSize="@dimen/dimen_14sp"
+                            android:layout_marginTop="@dimen/dimen_5dp"
+                            android:includeFontPadding="false"
+                            app:layout_constraintBottom_toBottomOf="@+id/imageView58"
+                            app:layout_constraintStart_toEndOf="@+id/imageView58"
+                            app:layout_constraintTop_toTopOf="@+id/imageView58"
+                            tools:text="TextView" />
+
+
+                    </LinearLayout>
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/previousFoodView"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="#F9F9F9"
                         android:paddingStart="@dimen/dimen_24dp"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/view87"
-                        app:layout_constraintTop_toTopOf="@+id/view87"
+                        app:layout_constraintTop_toBottomOf="@+id/foodMsg"
                         tools:ignore="RtlSymmetry">
 
                         <TextView
@@ -610,7 +655,7 @@
         android:id="@+id/constraintLayout145"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

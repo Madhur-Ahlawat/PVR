@@ -41,13 +41,12 @@
 
             <ImageView
                 android:id="@+id/imageView142"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dimen_50dp"
+                android:layout_height="@dimen/dimen_50dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/view195"
-                app:srcCompat="@drawable/rotate"
+                app:srcCompat="@drawable/icon_360"
                 tools:ignore="ContentDescription" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -57,7 +56,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="match_parent"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:padding="@dimen/padding_10"
                 android:layout_marginStart="@dimen/dimen_11dp"
                 android:layout_height="0dp">
@@ -70,9 +69,11 @@
                     android:drawablePadding="@dimen/dimen_5dp"
                     android:fontFamily="@font/sf_pro_text_regular"
                     android:text="@string/know_more_new"
+                    android:visibility="visible"
                     android:textAlignment="textStart"
                     android:textColor="@color/white"
                     android:textSize="14sp"
+                    android:gravity="start"
                     app:drawableTint="@color/white"
                     android:layout_marginTop="@dimen/dimen_15dp"
                     app:layout_constraintBottom_toTopOf="@+id/textView189"
@@ -86,10 +87,12 @@
                     android:fontFamily="@font/sf_pro_text_regular"
                     android:textSize="14sp"
                     android:textColor="@color/white"
+                    android:textAlignment="center"
                     android:text="@string/know_more_new"
+                    android:includeFontPadding="false"
                     android:drawablePadding="@dimen/dimen_5dp"
                     app:drawableTint="@color/white"
-                    app:drawableEndCompat="@drawable/arrow_right"
+                    app:drawableEndCompat="@drawable/right_arrow"
                     android:gravity="center"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />

@@ -32,6 +32,7 @@ data class CinemaResponse(
             val lat: String,
             val m: List<M>,
             val mc: String,
+            val newCinemaText: String,
             val me: Boolean,
             val mo: String,
             val n: String,

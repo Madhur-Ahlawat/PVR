@@ -10,6 +10,7 @@ import com.net.pvr1.R
 import com.net.pvr1.databinding.SummeryItemFoodBinding
 import com.net.pvr1.ui.food.CartModel
 import com.net.pvr1.utils.Constant
+import com.net.pvr1.utils.hide
 
 
 class AddFoodCartAdapter(
@@ -38,6 +39,10 @@ class AddFoodCartAdapter(
                 binding.textView122.text = this.title
                 //quantity
                 binding.uiPlusMinus.foodCount.text = this.quantity.toString()
+
+                if (Constant.BOOK_TYPE == "FOOD"){
+                    binding?.constraintLayout41?.hide()
+                }
 
                 calculateQt = this.quantity
                 totalPrice = calculateQt * this.price

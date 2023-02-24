@@ -160,7 +160,7 @@
                         android:layout_height="match_parent"
                         android:background="@null"
                         android:digits="1234567890"
-                        android:fontFamily="@font/sf_pro_text_bold"
+                        android:fontFamily="@font/sf_pro_text_semi_bold"
                         android:gravity="bottom"
                         android:imeOptions="actionDone"
                         android:inputType="phone"
@@ -171,6 +171,20 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
             </RelativeLayout>
+
+            <TextView
+                android:id="@+id/creditError"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:textColor="@color/red"
+                android:gravity="end"
+                android:visibility="visible"
+                android:textSize="@dimen/dimen_12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ccLayout" />
+
 
             <RelativeLayout
                 android:id="@+id/mobileNoLayout"
@@ -186,7 +200,7 @@
                 android:paddingBottom="@dimen/dimen_5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ccLayout">
+                app:layout_constraintTop_toBottomOf="@+id/creditError">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/mobileInputLayout"
@@ -210,7 +224,7 @@
                         android:layout_height="match_parent"
                         android:background="@null"
                         android:digits="1234567890"
-                        android:fontFamily="@font/sf_pro_text_bold"
+                        android:fontFamily="@font/sf_pro_text_semi_bold"
                         android:gravity="bottom"
                         android:imeOptions="actionDone"
                         android:inputType="phone"
@@ -222,6 +236,20 @@
                 </com.google.android.material.textfield.TextInputLayout>
             </RelativeLayout>
 
+            <TextView
+                android:id="@+id/mobileError"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:textColor="@color/red"
+                android:gravity="end"
+                android:visibility="visible"
+                android:textSize="@dimen/dimen_12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mobileNoLayout" />
+
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/linearLayout14"
@@ -229,7 +257,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mobileNoLayout">
+                app:layout_constraintTop_toBottomOf="@+id/mobileError">
 
                 <LinearLayout
                     android:id="@+id/mobileLayout"
@@ -239,13 +267,24 @@
                     android:orientation="vertical"
                     android:paddingEnd="@dimen/dimen_5dp"
                     android:paddingBottom="@dimen/dimen_5dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/count"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/count"
                     app:layout_constraintWidth_percent="0.7">
 
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/errorText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sf_pro_text_regular"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/dimen_11sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/mobileLayout"
+                    app:layout_constraintWidth_percent="0.7" />
+
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/count"

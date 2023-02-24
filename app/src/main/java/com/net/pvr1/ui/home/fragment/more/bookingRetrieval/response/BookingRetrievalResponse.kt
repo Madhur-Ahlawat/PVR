@@ -6,7 +6,7 @@ data class BookingRetrievalResponse(
     val code: Int,
     val minversion: Any,
     val msg: String,
-    val output: Output,
+    val output: Any,
     val result: String,
     val version: Any
 ) : Serializable {

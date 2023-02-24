@@ -8,18 +8,22 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
+import com.google.gson.internal.LinkedTreeMap
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityBookingRetrievalBinding
 import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.bookingSession.response.BookingResponse
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.home.fragment.home.response.NextBookingResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.adapter.BookingRetrievalAdapter
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
 import com.net.pvr1.ui.home.fragment.more.bookingRetrieval.viewModel.BookingRetrievalViewModel
 import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
+import org.json.JSONObject
 import java.util.*
 import javax.inject.Inject
 
@@ -83,7 +87,7 @@ class BookingRetrievalActivity : AppCompatActivity(),BookingRetrievalAdapter.Rec
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        retrieveData(it.data.output)
+                        retrieveData(it.data.output as LinkedTreeMap<*, *>)
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -116,15 +120,17 @@ class BookingRetrievalActivity : AppCompatActivity(),BookingRetrievalAdapter.Rec
         }
     }
 
-    private fun retrieveData(output: BookingRetrievalResponse.Output) {
+    private fun retrieveData(output: LinkedTreeMap<*, *>) {
 //        Set Filter Data
-        filterCityList = output.c
+        val gson = Gson()
+        val data = gson.fromJson(JSONObject(output).toString(), BookingRetrievalResponse.Output::class.java)
+        filterCityList = data.c
 
 //        Array List
         val gridLayout =
             GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
         binding?.recyclerView32?.layoutManager = LinearLayoutManager(this)
-        bookingRetrieval = BookingRetrievalAdapter(this, output.c, this,binding?.include14?.textView5)
+        bookingRetrieval = BookingRetrievalAdapter(this, data.c, this,binding?.include14?.textView5)
         binding?.recyclerView32?.layoutManager = gridLayout
         binding?.recyclerView32?.adapter = bookingRetrieval
     }

@@ -2,7 +2,9 @@ package com.net.pvr1.ui.food.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.text.Html
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -50,6 +52,31 @@ class AllFoodAdapter(
                 binding.textView132.text = this.nm
                 //price
                 binding.textView133.text = "₹ " + Constant.DECIFORMAT.format(this.dp / 100.0)
+
+                if (this.r[0].wt != null && this.r[0].wt !="" && this.r[0].en != null && this.r[0].en != "") {
+                    binding.cal.text = this.r[0].wt + "  •  " + this.r[0].en
+                    binding.cal.show()
+                } else if (this.r[0].wt != null && this.r[0].wt != "") {
+                    binding.cal.text = this.r[0].wt
+                    binding.cal.show()
+                } else if (this.r[0].en != null && this.r[0].en != "") {
+                    binding.cal.text = this.r[0].wt
+                    binding.cal.show()
+                } else {
+                    binding.cal.hide()
+                }
+                if (this.r[0].fa != null && this.r[0].fa != "") {
+                    if (this.r[0].fa.split(",").size > 2) {
+                        val text =
+                            "<font color=#7A7A7A> Allergens " + this.r[0].fa.split(",")[0] + ", " + this.r[0].fa.split(",")[1] + " </font> <font color=#000000><b> +" + (this.r[0].fa.split(",").size - 2) + "</b></font>"
+                        binding.fa.text = Html.fromHtml(text)
+                    } else {
+                        binding.fa.text = "Allergens " + this.r[0].fa
+                    }
+                    binding.fa.show()
+                } else {
+                    binding.fa.hide()
+                }
 
                 if (this.r.size > 1) {
                     binding.textView134.show()

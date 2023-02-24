@@ -51,6 +51,7 @@ class BookingCinemaNameAdapter(
                     binding.imageView56.rotation = 180f
                 }
 
+
                 binding.constraintLayout111.setOnClickListener {
                     if (binding.recyclerView11.visibility == View.GONE) {
                         binding.recyclerView11.show()

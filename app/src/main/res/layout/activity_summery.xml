@@ -1008,6 +1008,7 @@
                             android:id="@+id/constraintLayout114"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:paddingBottom="@dimen/dimen_15dp"
                             android:background="@drawable/curve_field"
                             app:layout_constraintEnd_toEndOf="@+id/view214"
                             app:layout_constraintStart_toStartOf="@+id/view214"

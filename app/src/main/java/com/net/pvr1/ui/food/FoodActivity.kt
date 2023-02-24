@@ -11,6 +11,7 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.text.Html
 import android.text.TextUtils
 import android.util.DisplayMetrics
 import android.view.*
@@ -39,6 +40,7 @@ import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr1.utils.Constant.Companion.BOOK_TYPE
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
+import com.net.pvr1.utils.Constant.Companion.QR
 import com.net.pvr1.utils.Constant.Companion.SUMMERYBACK
 import com.net.pvr1.utils.Constant.Companion.TRANSACTION_ID
 import com.net.pvr1.utils.Constant.Companion.foodCartModel
@@ -46,9 +48,9 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import jp.shts.android.storiesprogressview.StoriesProgressView
+import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 
 @AndroidEntryPoint
@@ -64,6 +66,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     private var binding: ActivityFoodBinding? = null
     private val authViewModel: FoodViewModel by viewModels()
     private var loader: LoaderDialog? = null
+    private var itemDescription: String = ""
 
     private var cartModel: ArrayList<CartModel> = arrayListOf()
     private var filterResponse: ArrayList<FoodResponse.Output.Mfl>? = null
@@ -146,6 +149,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
 
         movedNext()
         foodDetails()
+        saveFoodResponseLiveData()
         getShimmerData()
     }
 
@@ -167,9 +171,63 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
                         limitCount = it.data.output.aqt
                         seatMessage = it.data.output.nams
                         catFilterBestSeller = it.data.output.bestsellers
+                        if (it.data.output.h1!=null && it.data.output.h1 != ""){
+                            binding?.foodMsg?.show()
+                            binding?.h1Text?.text = it.data.output.h1
+                            binding?.h2Text?.text = it.data.output.h2
+                        }
                         retrieveData(it.data.output)
                         loader?.dismiss()
 
+                    } else {
+                        //ui Data Load
+                        binding?.constraintLayout154?.show()
+                        //shimmer
+                        binding?.constraintLayout145?.hide()
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                        loader?.dismiss()
+
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+
+                }
+            }
+        }
+
+    }
+    private fun saveFoodResponseLiveData() {
+        authViewModel.saveFoodResponseLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        BOOKING_ID = it.data.output.bi
+                        TRANSACTION_ID = it.data.output.tid
+                        loader?.dismiss()
+                        val intent = Intent(this@FoodActivity, SummeryActivity::class.java)
+                        intent.putExtra(BOOK_TYPE, "FOOD")
+                        intent.putExtra("food", cartModel)
+                        startActivity(intent)
                     } else {
                         //ui Data Load
                         binding?.constraintLayout154?.show()
@@ -304,10 +362,33 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
 
         //with Food
         binding?.include24?.textView5?.setOnClickListener {
-            val intent = Intent(this@FoodActivity, SummeryActivity::class.java)
-            intent.putExtra(BOOK_TYPE, "BOOKING")
-            intent.putExtra("food", cartModel)
-            startActivity(intent)
+            var totalPrice = 0;
+            if (BOOK_TYPE == "FOOD"){
+                cartModel.forEachIndexed { index, food ->
+                    itemDescription = if (index == 0) {
+                        food.title + "|" + food.id + "|" + food.quantity + "|" + food.price + "|" + food.ho +"|"+food.veg
+                    } else {
+                        itemDescription + "#" + food.title + "|" + food.id + "|" + food.quantity + "|" + food.price + "|" + food.ho +"|"+food.veg
+                    }
+                    totalPrice += food.price
+                }
+                val readFormat = SimpleDateFormat("MMM dd, yyyy")
+               val type = if (QR == "YES"){
+                   ""
+                }else{
+                      ""
+                }
+                println("itemDescription-->$itemDescription")
+                authViewModel.saveFood(preferences.getUserId(),CINEMA_ID,totalPrice.toString(),itemDescription,
+                    readFormat.format(
+                        Calendar.getInstance().time
+                    ), BOOKING_ID,"","",type,"", QR,"","")
+            } else {
+                val intent = Intent(this@FoodActivity, SummeryActivity::class.java)
+                intent.putExtra(BOOK_TYPE, "BOOKING")
+                intent.putExtra("food", cartModel)
+                startActivity(intent)
+            }
         }
 
         //veg
@@ -556,6 +637,25 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
         dialog.window?.setGravity(Gravity.BOTTOM)
         dialog.show()
+
+        if (comingSoonItem.r[0].wt != null && comingSoonItem.r[0].wt !="" && comingSoonItem.r[0].en != null && comingSoonItem.r[0].en != "") {
+            bindingBottom.cal.text = comingSoonItem.r[0].wt + "  •  " + comingSoonItem.r[0].en
+            bindingBottom.cal.show()
+        } else if (comingSoonItem.r[0].wt != null && comingSoonItem.r[0].wt != "") {
+            bindingBottom.cal.text = comingSoonItem.r[0].wt
+            bindingBottom.cal.show()
+        } else if (comingSoonItem.r[0].en != null && comingSoonItem.r[0].en != "") {
+            bindingBottom.cal.text = comingSoonItem.r[0].wt
+            bindingBottom.cal.show()
+        } else {
+            bindingBottom.cal.hide()
+        }
+        if (comingSoonItem.r[0].fa != null && comingSoonItem.r[0].fa != "") {
+            bindingBottom.fa.text = "Allergens " + comingSoonItem.r[0].fa
+            bindingBottom.fa.show()
+        } else {
+            bindingBottom.fa.hide()
+        }
 //Mange Veg Non-Veg
         if (comingSoonItem.veg) {
             bindingBottom.imageView69.setImageDrawable(this.getDrawable(R.drawable.veg_ic))
@@ -1316,6 +1416,26 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         //price
         bindingBottom.textView150.text =
             getString(R.string.currency) + " " + Constant.DECIFORMAT.format(comingSoonItem.dp / 100.0)
+
+        if (comingSoonItem.r[0].wt != null && comingSoonItem.r[0].wt !="" && comingSoonItem.r[0].en != null && comingSoonItem.r[0].en != "") {
+            bindingBottom.cal.text = comingSoonItem.r[0].wt + "  •  " + comingSoonItem.r[0].en
+            bindingBottom.cal.show()
+        } else if (comingSoonItem.r[0].wt != null && comingSoonItem.r[0].wt != "") {
+            bindingBottom.cal.text = comingSoonItem.r[0].wt
+            bindingBottom.cal.show()
+        } else if (comingSoonItem.r[0].en != null && comingSoonItem.r[0].en != "") {
+            bindingBottom.cal.text = comingSoonItem.r[0].wt
+            bindingBottom.cal.show()
+        } else {
+            bindingBottom.cal.hide()
+        }
+
+        if (comingSoonItem.r[0].fa != null && comingSoonItem.r[0].fa != "") {
+            bindingBottom.fa.text = "Allergens " + comingSoonItem.r[0].fa
+            bindingBottom.fa.show()
+        } else {
+            bindingBottom.fa.hide()
+        }
 
         //manageUI
         if (comingSoonItem.qt != 0) {

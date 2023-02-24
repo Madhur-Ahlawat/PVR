@@ -21,7 +21,7 @@ import com.net.pvr1.ui.home.formats.response.FormatResponse
 import com.net.pvr1.ui.home.formats.viewModel.FormatsViewModel
 import com.net.pvr1.ui.home.fragment.home.adapter.HomeMoviesAdapter
 import com.net.pvr1.ui.home.fragment.home.response.HomeResponse
-import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingActivity
+import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingMovieDetailsActivity
 import com.net.pvr1.ui.player.PlayerActivity
 import com.net.pvr1.ui.webView.WebViewActivity
 import com.net.pvr1.utils.*
@@ -180,7 +180,7 @@ class FormatsActivity : AppCompatActivity() , FormatCategoryAdapter.RecycleViewI
     }
 
     override fun onMoviesClick(comingSoonItem: HomeResponse.Mv) {
-        val intent = Intent(this@FormatsActivity, NowShowingActivity::class.java)
+        val intent = Intent(this@FormatsActivity, NowShowingMovieDetailsActivity::class.java)
         intent.putExtra("mid", comingSoonItem.id)
         startActivity(intent)
     }

@@ -2,6 +2,7 @@ package com.net.pvr1.ui.payment.bankoffers
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -21,6 +22,7 @@ import com.net.pvr1.ui.payment.bankoffers.adapter.BankOfferAdapter
 import com.net.pvr1.ui.payment.promoCode.viewModel.PromoCodeViewModel
 import com.net.pvr1.ui.payment.response.PaymentResponse
 import com.net.pvr1.di.preference.PreferenceManager
+import com.net.pvr1.utils.Constant
 import com.net.pvr1.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -34,8 +36,7 @@ class BankOffersActivity : AppCompatActivity(),BankOfferAdapter.RecycleViewItemC
     private var couponList = ArrayList<StarPasModel>()
     private var itemSize: Int = 3
     private val promoCodeViewModel: PromoCodeViewModel by viewModels()
-
-
+    private var paidAmount = "0"
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,8 +49,9 @@ class BankOffersActivity : AppCompatActivity(),BankOfferAdapter.RecycleViewItemC
         binding?.include29?.textView108?.text = getString(R.string.bank_offer)
 
         //PaidAmount
+        paidAmount = intent.getStringExtra("paidAmount").toString()
         binding?.textView178?.text =
-            getString(R.string.pay) + " " + getString(R.string.currency) + intent.getStringExtra("paidAmount")
+            getString(R.string.pay) + " " + getString(R.string.currency) + Constant.DECIFORMAT.format(paidAmount.toDouble())
 
         val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
         val foodBestSellerAdapter = BankOfferAdapter(PaymentActivity.offerList, this, this)
@@ -59,8 +61,12 @@ class BankOffersActivity : AppCompatActivity(),BankOfferAdapter.RecycleViewItemC
     }
 
     override fun onPromoClick(binoffer: PaymentResponse.Output.Binoffer) {
-
-        toast("coming soon")
+        val intent = Intent(this@BankOffersActivity, BankOfferDetailsActivity::class.java)
+        intent.putExtra("paidAmount", Constant.DECIFORMAT.format(paidAmount.toDouble()))
+        intent.putExtra("scheem", binoffer.scheme)
+        intent.putExtra("title", binoffer.name)
+        intent.putExtra("pTypeId", binoffer.pty)
+        startActivity(intent)
     }
 
     override fun onTNCClick(binoffer: PaymentResponse.Output.Binoffer) {

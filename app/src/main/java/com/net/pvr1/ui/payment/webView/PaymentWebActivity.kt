@@ -120,7 +120,7 @@ class PaymentWebActivity : AppCompatActivity() {
         getToken()
 
         binding?.include3?.imageView58?.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
+            onBackPressed()
         }
 
     }
@@ -386,8 +386,8 @@ class PaymentWebActivity : AppCompatActivity() {
             R.mipmap.ic_launcher,
             R.string.app_name,
             "Do you want to end the session?",
-            positiveBtnText = R.string.ok,
-            negativeBtnText = R.string.no,
+            positiveBtnText = R.string.yes,
+            negativeBtnText = R.string.cancel,
             positiveClick = {
                 when (BOOK_TYPE) {
                     "GIFTCARD" -> {

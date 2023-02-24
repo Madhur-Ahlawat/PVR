@@ -225,7 +225,7 @@ class MoreFragment : Fragment() {
     //   Ui ClickAction
     private fun movedNext() {
         //Account
-        binding?.profileDetails?.textView206?.setOnClickListener {
+        binding?.profileDetails?.nameView?.setOnClickListener {
             val intent = Intent(requireContext(), ProfileActivity::class.java)
             startActivity(intent)
         }
@@ -489,28 +489,12 @@ class MoreFragment : Fragment() {
                         loader?.dismiss()
                         retrieveProfileData(it.data.output)
                     } else {
-                        val dialog = OptionDialog(requireActivity(),
-                            R.mipmap.ic_launcher,
-                            R.string.app_name,
-                            it.data?.msg.toString(),
-                            positiveBtnText = R.string.ok,
-                            negativeBtnText = R.string.no,
-                            positiveClick = {},
-                            negativeClick = {})
-                        dialog.show()
+
                     }
                 }
                 is NetworkResult.Error -> {
                     loader?.dismiss()
-                    val dialog = OptionDialog(requireContext(),
-                        R.mipmap.ic_launcher,
-                        R.string.app_name,
-                        it.message.toString(),
-                        positiveBtnText = R.string.ok,
-                        negativeBtnText = R.string.no,
-                        positiveClick = {},
-                        negativeClick = {})
-                    dialog.show()
+
                 }
                 is NetworkResult.Loading -> {
                     println("loadingHome--->")

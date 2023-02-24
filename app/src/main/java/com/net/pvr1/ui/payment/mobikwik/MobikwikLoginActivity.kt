@@ -69,30 +69,30 @@ class MobikwikLoginActivity : AppCompatActivity() {
             if (binding?.sendOtp?.text == "Create Wallet") {
                 if (binding?.emailNumber?.text.toString().isNotEmpty()) {
                     if (InputTextValidator.validateEmail(binding?.emailNumber?.text.toString())) {
-                        binding?.textInputLayout?.error = null
+                        binding?.errorText?.text = ""
                         paytmPostPaidViewModel.mobikwikCreateWallet(
                             preferences.getUserId(), BOOKING_ID, TRANSACTION_ID,
                             BOOK_TYPE, binding?.mobileNumber?.text.toString(),binding?.etOtp?.getStringFromFields().toString(),binding?.emailNumber?.text.toString()
                         )
                     } else {
-                       toast(getString(R.string.mobile_msg_invalid))
+                        binding?.errorText?.text = getString(R.string.email_msg_invalid)
                     }
                 } else {
-                    toast(getString(R.string.enterMobile))
+                    binding?.errorText?.text = getString(R.string.email_msg_required)
                 }
             }else{
                 if (binding?.mobileNumber?.text.toString().isNotEmpty()) {
                     if (InputTextValidator.validatePhoneNumber(binding?.mobileNumber?.text.toString())) {
-                        binding?.textInputLayout?.error = null
+                        binding?.errorText?.text = ""
                         paytmPostPaidViewModel.mobikwikOTP(
                             preferences.getUserId(), BOOKING_ID, TRANSACTION_ID,
                             BOOK_TYPE, binding?.mobileNumber?.text.toString()
                         )
                     } else {
-                        toast(getString(R.string.mobile_msg_invalid))
+                        binding?.errorText?.text = getString(R.string.mobile_msg_invalid)
                     }
                 } else {
-                    toast(getString(R.string.enterMobile))
+                    binding?.errorText?.text = getString(R.string.enterMobile)
                 }
             }
         }
@@ -104,7 +104,7 @@ class MobikwikLoginActivity : AppCompatActivity() {
         binding?.subBtn?.setOnClickListener {
             if (binding?.etOtp?.getStringFromFields().toString().isNotEmpty()) {
                 if (binding?.etOtp?.getStringFromFields().toString().length==6) {
-                    binding?.textInputLayout?.error = null
+                    binding?.errorText?.text = ""
                     paytmPostPaidViewModel.mobikwikPay(
                         preferences.getUserId(), BOOKING_ID, TRANSACTION_ID,
                         BOOK_TYPE, binding?.mobileNumber?.text.toString(),binding?.etOtp?.getStringFromFields().toString(),
@@ -202,6 +202,9 @@ class MobikwikLoginActivity : AppCompatActivity() {
                         }else if (it.data.output.statuscode == "159") {
                             // Create Wallet
                             binding?.sendOtp?.text = "Create Wallet"
+                            binding?.emailtext?.text = "Enter Email ID"
+                            binding?.textView382?.hide()
+                            binding?.otpMsg?.hide()
                             val dialog = OptionDialog(this,
                                 R.mipmap.ic_launcher,
                                 R.string.app_name,
@@ -358,8 +361,8 @@ class MobikwikLoginActivity : AppCompatActivity() {
             R.mipmap.ic_launcher,
             R.string.app_name,
             "Do you want to end the session?",
-            positiveBtnText = R.string.ok,
-            negativeBtnText = R.string.no,
+            positiveBtnText = R.string.yes,
+            negativeBtnText = R.string.cancel,
             positiveClick = {
                launchActivity(HomeActivity::class.java,FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
             },

@@ -55,6 +55,7 @@ import com.net.pvr1.ui.summery.viewModel.SummeryViewModel
 import com.net.pvr1.ui.webView.WebViewActivity
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.BOOKING_ID
+import com.net.pvr1.utils.Constant.Companion.BOOK_TYPE
 import com.net.pvr1.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr1.utils.Constant.Companion.DONATION
 import com.net.pvr1.utils.Constant.Companion.FOODENABLE
@@ -110,6 +111,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                 manageFunction()
             } else {
                 try {
+                    //if (intent.hasExtra("food"))
                     cartModel = intent.getSerializableExtra("food") as ArrayList<CartModel>
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -117,8 +119,8 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                 manageFunction()
             }
         } else {
-            if (intent.hasExtra("food")) foodCartModel =
-                intent.getSerializableExtra("food") as ArrayList<CartModel>
+           // if (intent.hasExtra("food"))
+                foodCartModel = intent.getSerializableExtra("food") as ArrayList<CartModel>
             val intent = Intent(this@SummeryActivity, LoginActivity::class.java)
             intent.putExtra("from", "summery")
             startActivity(intent)
@@ -130,9 +132,13 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
     private fun manageFunction() {
         Constant.viewModel = authViewModel
-        authViewModel.summery(
-            TRANSACTION_ID, CINEMA_ID, preferences.getUserId(), BOOKING_ID, DONATION
-        )
+        if (Constant.BOOK_TYPE == "FOOD"){
+            authViewModel.foodDetails(preferences.getUserId(), BOOKING_ID)
+        }else {
+            authViewModel.summery(
+                TRANSACTION_ID, CINEMA_ID, preferences.getUserId(), BOOKING_ID, DONATION
+            )
+        }
         authViewModel.initJusPay(preferences.getUserId(), BOOKING_ID)
 
         movedNext()
@@ -141,13 +147,16 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         saveFood()
         setDonation()
         getShimmerData()
-        timerManage()
         extendTime()
         paytmHMAC()
         credCheck()
         upiStatus()
         phonePeHmac()
         phonePeStatus()
+
+        if (BOOK_TYPE == "BOOKING")
+        timerManage()
+
     }
 
 
@@ -158,6 +167,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
     //CartFood
     private fun foodCart() {
+        println("cartModel--->"+cartModel.size)
         if (cartModel.isNotEmpty()) {
             binding?.constraintLayout171?.show()
             binding?.recyclerView32?.show()
@@ -458,21 +468,89 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     private fun retrieveData(output: SummeryResponse.Output) {
         summeryResponse = output
 
-        if (!TextUtils.isEmpty(output.bnd) && output.bnd.toDouble() > 0) {
-            if (output.cv){
-                binding?.fnbVocherView?.show()
-                binding?.cutPrice?.show()
-                binding?.cutPriceSub?.show()
-                binding?.cutPriceSub?.paintFlags = binding?.cutPriceSub?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-                binding?.cutPrice?.paintFlags = binding?.cutPrice?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-                binding?.cutFoodPrice?.paintFlags = binding?.cutFoodPrice?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
+        if (BOOK_TYPE == "FOOD"){
+            binding?.cardView7?.hide()
+            binding?.constraintLayout40?.hide()
+            binding?.view211?.hide()
+            binding?.textView117?.hide()
+            binding?.textView119?.hide()
+            binding?.textView120?.hide()
+            binding?.constraintLayout156?.hide()
+            binding?.constraintLayout170?.hide()
+            binding?.textView164?.hide()
+            binding?.taxes?.hide()
+            binding?.line?.hide()
+            binding?.imageView150?.hide()
+            binding?.imageView77?.hide()
+            binding?.textView111?.hide()
+            binding?.constraintLayout115?.hide()
+            ticketPrice = output.a.toDouble()
+            //shows
+            binding?.textView112?.text = output.t
 
-            }else{
-                binding?.fnbVocherView?.hide()
-                binding?.cutPrice?.hide()
-                binding?.cutPriceSub?.hide()
+        }else{
+            binding?.textView111?.show()
+            binding?.cardView7?.show()
+            binding?.imageView77?.show()
+            binding?.constraintLayout40?.show()
+            binding?.view211?.show()
+            binding?.textView117?.show()
+            binding?.textView119?.show()
+            binding?.textView120?.show()
+            binding?.constraintLayout156?.show()
+            binding?.constraintLayout170?.show()
+            binding?.textView164?.show()
+            binding?.taxes?.show()
+            binding?.line?.show()
+            binding?.imageView150?.show()
+            binding?.constraintLayout115?.show()
+            if (!TextUtils.isEmpty(output.bnd) && output.bnd.toDouble() > 0) {
+                if (output.cv){
+                    binding?.fnbVocherView?.show()
+                    binding?.cutPrice?.show()
+                    binding?.cutPriceSub?.show()
+                    binding?.cutPriceSub?.paintFlags = binding?.cutPriceSub?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
+                    binding?.cutPrice?.paintFlags = binding?.cutPrice?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
+                    binding?.cutFoodPrice?.paintFlags = binding?.cutFoodPrice?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
+
+                }else{
+                    binding?.fnbVocherView?.hide()
+                    binding?.cutPrice?.hide()
+                    binding?.cutPriceSub?.hide()
+                }
+            }
+            //ticket
+            binding?.textView119?.text = output.f[0].it[0].n
+            //price
+            binding?.textView120?.text = getString(R.string.currency) + output.f[0].v
+            binding?.cutPrice?.text = getString(R.string.currency) + output.f[0].cp
+            ticketPrice = output.f[0].v.toDouble()
+            //subtotal
+//        binding?.textView168?.text =  getString(R.string.currency)+output.a
+
+            //movie Details
+            binding?.textView111?.text =
+                output.cen + getString(R.string.dots) + output.lg + getString(R.string.dots) + output.fmt
+
+            //audi
+            binding?.textView115?.text = output.audi + "-" + output.st
+            //shows
+            binding?.textView112?.text = output.md + ", " + output.t
+
+            //manageFood
+            if (FOODENABLE == 1) {
+                if (!output.cv) {
+                    binding?.constraintLayout157?.hide()
+                    binding?.constraintLayout156?.hide()
+                }else{
+                    binding?.constraintLayout157?.show()
+                    binding?.constraintLayout156?.hide()
+                }
+            } else {
+                binding?.constraintLayout157?.show()
             }
         }
+
 
 // quickPay
         if (output.pp != null) {
@@ -492,23 +570,11 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             binding?.textView313?.text = "You will earn  " + 0 + " Privilege Points."
         }
 
-        //subtotal
-//        binding?.textView168?.text =  getString(R.string.currency)+output.a
 
-        //movie Details
-        binding?.textView111?.text =
-            output.cen + getString(R.string.dots) + output.lg + getString(R.string.dots) + output.fmt
 
-        //audi
-        binding?.textView115?.text = output.audi + "-" + output.st
 
-        //ticket
-        binding?.textView119?.text = output.f[0].it[0].n
 
-        //price
-        binding?.textView120?.text = getString(R.string.currency) + output.f[0].v
-        binding?.cutPrice?.text = getString(R.string.currency) + output.f[0].cp
-        ticketPrice = output.f[0].v.toDouble()
+
 
         //coupon
         binding?.textView169?.text = ""
@@ -565,9 +631,6 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         //title
         binding?.textView110?.text = output.m
 
-        //shows
-        binding?.textView112?.text = output.md + ", " + output.t
-
         //location
         binding?.textView113?.text = output.c
         binding?.imageView60?.setOnClickListener {
@@ -620,7 +683,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                 }
             }
 
-            if (cartModel.isNotEmpty()) {
+            if (cartModel.isNotEmpty() && BOOK_TYPE != "FOOD") {
                 authViewModel.seatWithFood(
                     itemDescription,
                     TRANSACTION_ID,
@@ -639,18 +702,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             }
         }
 
-        //manageFood
-        if (FOODENABLE == 1) {
-            if (!output.cv) {
-                binding?.constraintLayout157?.hide()
-                binding?.constraintLayout156?.hide()
-            }else{
-                binding?.constraintLayout157?.show()
-                binding?.constraintLayout156?.hide()
-            }
-        } else {
-            binding?.constraintLayout157?.show()
-        }
+
 
         //Add More Food
         binding?.textView312?.setOnClickListener {
@@ -947,16 +999,20 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
     override fun onResume() {
         super.onResume()
+        if (BOOK_TYPE == "BOOKING")
         registerReceiver(br, IntentFilter(BroadcastService.COUNTDOWN_BR))
     }
 
     override fun onPause() {
         super.onPause()
+        if (BOOK_TYPE == "BOOKING")
         unregisterReceiver(br)
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onStop() {
         try {
+            if (BOOK_TYPE == "BOOKING")
             unregisterReceiver(br)
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
@@ -966,6 +1022,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     }
 
     override fun onDestroy() {
+        if (BOOK_TYPE == "BOOKING")
         stopService(Intent(this, BroadcastService::class.java))
         super.onDestroy()
     }
@@ -1020,7 +1077,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
         //AVAIL TIME
         Constant.AVAILABETIME = Constant().convertTime(output.at)
-
+        if (BOOK_TYPE == "BOOKING")
         timerManage()
     }
 

@@ -59,6 +59,7 @@ class Constant {
         const val SUCCESS_CODE_STAR = 14001
         var latitude: Double? = 0.0
         var longitude: Double? = 0.0
+        var QR = "NO"
 
         const val donation = "https://www.pvrcinemas.com/pvrstatic/donation/tnc.html"
         const val pvrCare = " https://www.pvrcinemas.com/pvrstatic/pvr-care/index.html"
@@ -96,8 +97,8 @@ class Constant {
         var TRANSACTION_ID = "0"
 
         var DISCOUNT = 0.0
-        var BOOKING_ID = "0"
-        var CINEMA_ID = "0"
+        var BOOKING_ID = ""
+        var CINEMA_ID = ""
         var DONATION = "false"
         var OfferDialogImage = "0"
         var SELECTED_SEAT = 0
@@ -734,12 +735,13 @@ class Constant {
         return if (date != null && date != "") {
             try {
                 val sdf = SimpleDateFormat("dd-MM-yyyy")
-                val d = sdf.parse(date)
                 val displayFormat = SimpleDateFormat("dd MMM, yyyy")
-                d?.let { displayFormat.format(it) }
+                val d = displayFormat.parse(date)
+
+                d?.let { sdf.format(it) }
             } catch (e: Exception) {
                 e.printStackTrace()
-                ""
+                date
             }
         } else {
             ""

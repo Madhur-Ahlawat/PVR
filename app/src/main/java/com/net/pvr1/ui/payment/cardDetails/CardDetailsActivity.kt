@@ -86,6 +86,13 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
         paytmHMAC()
         bankList()
         paytmRHMAC()
+        bankOffer()
+        if (intent.hasExtra("ccnumber")){
+            binding?.cardNumber?.setText(intent.getStringExtra("ccnumber"))
+            binding?.cardNumber?.isEnabled =false
+            binding?.cardNumber?.isFocusable =false
+            binding?.cardNumber?.isFocusableInTouchMode =false
+        }
         if (BOOK_TYPE == "RECURRING")
             checkBinForRecurring()
         if (paymentType.equals("116", ignoreCase = true)) {
@@ -203,17 +210,30 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                         "NO"
                     )
                 }else{
-                    authViewModel.paytmHMAC(
-                        preferences.getUserId(),
-                        Constant.BOOKING_ID,
-                        Constant.TRANSACTION_ID,
-                        false,
-                        cardNumber,
-                        BOOK_TYPE,
-                        paymentType,
-                        "no",
-                        "NO"
-                    )
+                    if (paymentType == "BIN"){
+                        authViewModel.bankOffer(
+                            preferences.getUserId(),
+                            Constant.BOOKING_ID,
+                            Constant.TRANSACTION_ID,
+                            BOOK_TYPE,
+                            intent.getStringExtra("scheem").toString(),
+                            cardNumber,
+                            "YES",
+                            intent.getStringExtra("ptype").toString()
+                        )
+                    }else {
+                        authViewModel.paytmHMAC(
+                            preferences.getUserId(),
+                            Constant.BOOKING_ID,
+                            Constant.TRANSACTION_ID,
+                            false,
+                            cardNumber,
+                            BOOK_TYPE,
+                            paymentType,
+                            "no",
+                            "NO"
+                        )
+                    }
                 }
             }
 
@@ -665,6 +685,47 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
             // Change this to what you want... ' ', '-' etc..
             private const val space = ' '
         }
+    }
+
+
+    private fun bankOffer() {
+        authViewModel.bankOfferDataScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        retrieveData(it.data.output)
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(this.supportFragmentManager, null)
+                }
+            }
+        }
+
     }
 
 

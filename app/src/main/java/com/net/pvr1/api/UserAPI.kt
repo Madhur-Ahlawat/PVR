@@ -704,6 +704,17 @@ interface UserAPI {
     ): Response<SummeryResponse>
 
 
+    @POST("api/food/fooddetails")
+    suspend fun foodSummary(
+        @Query("pktransid") pktransid: String,
+        @Query("userid") userid: String,
+        @Query("qr") qr: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<SummeryResponse>
+
+
     @POST("api/trans/ticketBooked")
     suspend fun ticketConfirmation(
         @Query("booktype") booktype: String,
@@ -797,6 +808,7 @@ interface UserAPI {
 
     @POST("api/food/savefoods")
     suspend fun addFood(
+        @Query("userid") userid: String,
         @Query("cinemacode") cinemacode: String,
         @Query("fb_totalprice") fb_totalprice: String,
         @Query("fb_itemStrDescription") fb_itemStrDescription: String,
@@ -810,7 +822,8 @@ interface UserAPI {
         @Query("isSpi") isSpi: String,
         @Query("srilanka") srilanka: String,
         @Query("av") version: String,
-        @Query("pt") platform: String
+        @Query("pt") platform: String,
+        @Query("did") did: String
     ): Response<AddFoodResponse>
 
 
@@ -1401,6 +1414,23 @@ interface UserAPI {
         @Query("pt") platform: String,
         @Query("did") did: String
     ): Response<MobiKwikPayResponse>
+
+    /****************** BANK OFFER ****************/
+    @POST("api/payment/bin-offer/discount")
+    suspend fun bankOffer(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("booktype") booktype: String,
+        @Query("transid") transid: String,
+        @Query("schemeid") schemeid: String,
+        @Query("cardNo") cardNo: String,
+        @Query("bindiscount") bindiscount: String,
+        @Query("ptype") ptype: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<PaytmHmacResponse>
+
 
     /****************** JUS PAY ****************/
     @POST("api/trans/extendtrans")

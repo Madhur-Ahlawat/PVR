@@ -43,6 +43,7 @@ class ComingSoonMovieAdapter(
             Glide.with(context)
                 .load(comingSoonItem.miv)
                 .error(R.drawable.placeholder_vertical)
+                .placeholder(R.drawable.placeholder_vertical)
                 .into(holder.image)
 
             //Manage Video Play

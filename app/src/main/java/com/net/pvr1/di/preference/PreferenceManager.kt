@@ -190,8 +190,8 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
 
 
     fun clearData(requireActivity: Activity) {
-        editor = prefs.edit()
-        editor?.clear()
+        editor?.putBoolean(IS_LOGIN, false)
+        editor?.putString(USER_ID, "")
         editor?.commit()
 
     }

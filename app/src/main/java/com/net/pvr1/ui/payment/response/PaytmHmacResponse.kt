@@ -40,6 +40,9 @@ data class PaytmHmacResponse(
         val di: String,
         val txt: String,
         val bin: String,
+        val disc: String,
+        var TICKET_DISCOUNT: Int = 0,
+        var FOOD_DISCOUNT: Int = 0,
         val website: String
     ):java.io.Serializable{
         data class Nblist(

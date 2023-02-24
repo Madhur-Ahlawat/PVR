@@ -1581,6 +1581,19 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         summeryLayoutResponse(response)
     }
 
+    suspend fun foodDetails(userid: String, bookingid: String) {
+        formatsLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.foodSummary(
+            bookingid,
+            userid,
+            Constant.QR,
+            Constant.version,
+            Constant.platform,
+            Constant.getDid()
+        )
+        summeryLayoutResponse(response)
+    }
+
     private fun summeryLayoutResponse(response: Response<SummeryResponse>) {
         if (response.isSuccessful && response.body() != null) {
             summerLiveData.postValue(NetworkResult.Success(response.body()!!))
@@ -1878,6 +1891,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         get() = foodAddLiveData
 
     suspend fun foodAddLayout(
+        userid: String,
         cinemacode: String,
         fb_totalprice: String,
         fb_itemStrDescription: String,
@@ -1892,7 +1906,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         srilanka: String
     ) {
         foodAddLiveData.postValue(NetworkResult.Loading())
-        val response = userAPI.addFood(
+        val response = userAPI.addFood(userid,
             cinemacode,
             fb_totalprice,
             fb_itemStrDescription,
@@ -1906,7 +1920,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             isSpi,
             srilanka,
             Constant.version,
-            Constant.platform
+            Constant.platform,
+            Constant.getDid()
         )
         foodAddLayoutResponse(response)
     }
@@ -3363,6 +3378,27 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
     }
 
+    /***********   BANK OFFER ************/
 
+    private val bankOfferLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val bankOfferResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = bankOfferLiveData
+
+    suspend fun bankOffer(userId: String, bookingid: String, transid: String, booktype: String,scheme: String,cardNo: String,binOffer: String,paymentType: String) {
+        _userResponseLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.bankOffer(userId, bookingid,booktype,transid,scheme,cardNo,binOffer,paymentType, Constant.version, Constant.platform,Constant.getDid())
+        bankOfferResponse(response)
+    }
+
+    private fun bankOfferResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            bankOfferLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            bankOfferLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            bankOfferLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
 
 }

@@ -33,7 +33,7 @@ class CouponsViewModel @Inject constructor(private val userRepository: UserRepos
         srilanka: String,
     ) {
         viewModelScope.launch {
-            userRepository.foodAddLayout(
+            userRepository.foodAddLayout(userid,
                 cinemacode,
                 fb_totalprice,
                 fb_itemStrDescription,

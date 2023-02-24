@@ -164,6 +164,7 @@ class SelectBookingsActivity : AppCompatActivity() {
 
         binding?.llTicketFood?.setOnClickListener {
             if (cinemaId.isNotEmpty()){
+                Constant.QR = "YES"
                 val intent = Intent(this, CinemaSessionActivity::class.java)
                 intent.putExtra("cid", cinemaId)
                 intent.putExtra("lat", latitude.toString())
@@ -491,7 +492,6 @@ class SelectBookingsActivity : AppCompatActivity() {
     }
 
     private fun dataToOutletsFood(output: List<GetFoodResponse.Output>) {
-        toast("1")
 //        if ((click || clickF) && !TextUtils.isEmpty(childcinemaId)) {
 //            EventBus.getDefault().postSticky(output)
 //            fromScan = "scan"
@@ -511,10 +511,10 @@ class SelectBookingsActivity : AppCompatActivity() {
     }
 
     private fun dataToFood(output: List<GetFoodResponse.Output>) {
-        toast("2")
         if ((click || clickF) && !TextUtils.isEmpty(childcinemaId)) {
             Constant.CINEMA_ID=childcinemaId
-
+            Constant.QR = "YES"
+            Constant.BOOK_TYPE = "FOOD"
             val intent = Intent(this, FoodActivity::class.java)
             startActivity(intent)
 //            fromScan = "scan"

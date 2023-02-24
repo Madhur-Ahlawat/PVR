@@ -371,6 +371,13 @@ class CinemaSessionActivity : AppCompatActivity(),
             binding?.recyclerView15?.adapter = cinemaSessionCinParentAdapter
             binding?.textView99?.text = output.cn
 
+            if (output.newCinemaText!= null && output.newCinemaText!= ""){
+                binding?.cinemaLocation?.show()
+                binding?.cinemaLocation?.text = output.newCinemaText
+            } else {
+                binding?.cinemaLocation?.hide()
+            }
+
             if (output.like) {
                 rowIndex = true
                 binding?.imageView43?.setImageResource(R.drawable.like)

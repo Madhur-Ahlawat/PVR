@@ -88,7 +88,7 @@
     <string name="gift_cards">Gift Cards</string>
     <string name="scan_qr">Scan QR</string>
     <string name="merchandise">Merchandise</string>
-    <string name="experience">Experience</string>
+    <string name="experience">Experiences</string>
     <string name="pvr_cares">PVR Cares</string>
     <string name="movies">Movies</string>
     <string name="alert_movie">Alert Movie</string>
@@ -492,8 +492,8 @@
     <string name="shared_successfully">Shared successfully</string>
     <string name="apply_name">APPLY</string>
 
-    <string name="promo_code_msg_required">Promocode is required</string>
-    <string name="promo_code_msg_invalid">Invalid Promocode</string>
+    <string name="promo_code_msg_required">promocode is required</string>
+    <string name="promo_code_msg_invalid">invalid promocode</string>
 
     <string name="email_msg">We promise to keep the noise low</string>
     <string name="mobile_msg">We will only use your number for transactional information</string>

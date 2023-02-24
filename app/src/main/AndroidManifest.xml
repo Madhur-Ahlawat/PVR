@@ -125,6 +125,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".ui.payment.bankoffers.BankOfferDetailsActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.payment.webView.PaymentWebActivity"
             android:exported="false">
             <meta-data
@@ -218,7 +225,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.movieDetails.nowShowing.NowShowingActivity"
+            android:name=".ui.movieDetails.nowShowing.NowShowingMovieDetailsActivity"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data

@@ -8,9 +8,11 @@ import android.text.InputFilter.LengthFilter
 import android.text.InputType
 import android.text.TextUtils
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -83,10 +85,8 @@ lateinit var preferences: PreferenceManager
         binding?.include30?.textView5?.setOnClickListener {
             val couponCodeList = getCouponCode()
             if (paymentOptionMode.equals(M_COUPON, ignoreCase = true)) {
-                if (validateInputFields() && couponCodeList != null && couponCodeList.size == getCount())
+                if (validateInputFields() && couponCodeList != null && couponCodeList.size == getCount()) {
                     redeemCoupon(couponCodeList)
-                else {
-                    toast(getErrorMessage())
                 }
             } else {
                 if (couponCodeList != null && couponCodeList.size == getCount()) {
@@ -268,14 +268,14 @@ lateinit var preferences: PreferenceManager
 
     private fun validateInputFields(): Boolean {
         if (!InputTextValidator.hasText(binding?.mobileEditText!!) || binding?.mobileEditText?.text.toString().length != 5) {
-            binding?.mobileInputLayout?.error = getString(R.string.mobile_msg_invalid)
+            binding?.mobileError?.text = getString(R.string.mobile_msg_invalid)
         } else {
-            binding?.mobileInputLayout?.error = null
+            binding?.mobileError?.text = ""
         }
         if (!InputTextValidator.hasText(binding?.ccEditText!!) || binding?.ccEditText?.text.toString().length != 4) {
-            binding?.ccInputLayout?.error = getString(R.string.card_number_msg_invalid)
+            binding?.creditError?.text = getString(R.string.card_number_msg_invalid)
         } else {
-            binding?.ccInputLayout?.error = null
+            binding?.creditError?.text = ""
         }
         return (InputTextValidator.hasText(binding?.ccEditText!!)
                 && InputTextValidator.hasText(binding?.mobileEditText!!)
@@ -320,12 +320,16 @@ lateinit var preferences: PreferenceManager
                 if (ll != null) {
                     for (j in 0 until ll.childCount) {
                         val couponEditText: CouponEditText = ll.getChildAt(j) as CouponEditText
-                        if (!TextUtils.isEmpty(couponEditText.text.toString())) couponCode.add(
-                            couponEditText.text.toString().toUpperCase()
-                        ) else couponEditText.background = ContextCompat.getDrawable(
-                            this,
-                            R.drawable.text_curve
-                        )
+                        if (!TextUtils.isEmpty(couponEditText.text.toString())) {
+                            couponCode.add(couponEditText.text.toString().toUpperCase())
+                            binding?.errorText?.text = ""
+                        } else {
+                            binding?.errorText?.text = "coupon code required"
+                            couponEditText.background = ContextCompat.getDrawable(
+                                this,
+                                R.drawable.text_curve
+                            )
+                        }
                     }
                 }
             }
@@ -372,8 +376,8 @@ lateinit var preferences: PreferenceManager
                                     Constant.discount_txt = it.data.output.txt
                                     launchPaymentActivity(PaymentActivity::class.java,
                                         Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK, intent.getStringExtra("paidAmount").toString()
-                                    )
-                                    PaymentActivity.showTncDialog(this, it.data.output.di, "MCoupon")
+                                    ,"MCoupon")
+//                                    PaymentActivity.showTncDialog(this, it.data.output.di, "MCoupon")
 
                                 }
                             }
@@ -448,8 +452,8 @@ lateinit var preferences: PreferenceManager
                                     Constant.discount_txt = it.data.output.txt
                                     launchPaymentActivity(PaymentActivity::class.java,
                                         Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK, intent.getStringExtra("paidAmount").toString()
-                                    )
-                                    PaymentActivity.showTncDialog(this, it.data.output.di, "Star Pass")
+                                    ,"Star Pass")
+//                                    PaymentActivity.showTncDialog(this, it.data.output.di, )
 
                                 }
                             }

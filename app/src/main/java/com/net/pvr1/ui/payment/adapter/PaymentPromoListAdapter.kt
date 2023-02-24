@@ -40,14 +40,14 @@ class PaymentPromoListAdapter(
         with(holder) {
             with(nowShowingList[position]) {
 
-//                if (this.image!="") {
-//                    Glide.with(context)
-//                        .load(this.image)
-//                        .error(R.drawable.app_icon)
-//                        .into(binding.imageView5)
-//                } else {
-//                    binding.imageView5.setImageResource(R.drawable.app_icon)
-//                }
+                if (this.image!="") {
+                    Glide.with(context)
+                        .load(this.image)
+                        .error(R.drawable.placeholder_horizental)
+                        .into(binding.imageView5)
+                } else {
+                    binding.imageView5.setImageResource(R.drawable.placeholder_horizental)
+                }
 //                if (this.promocode == "") {
 //                    binding.textView7.visibility = View.GONE
 //                    binding.btnApplyCoupon.visibility = View.GONE

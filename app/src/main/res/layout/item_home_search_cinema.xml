@@ -18,24 +18,42 @@
 
         <TextView
             android:id="@+id/textView50"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="@dimen/dimen_8dp"
             android:ellipsize="end"
-            android:gravity="center_vertical"
+            app:layout_constraintWidth_max="300dp"
             android:fontFamily="@font/sf_pro_text_medium"
+            android:gravity="center_vertical"
+            android:includeFontPadding="false"
             android:singleLine="true"
             android:textAllCaps="false"
             android:textColor="@color/black"
             android:textSize="@dimen/dimen_14sp"
-            android:includeFontPadding="false"
-            app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Pvr Gurgaon" />
+
+        <TextView
+            android:id="@+id/cinemaLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_15dp"
+            android:background="@drawable/yellow_curve_four"
+            android:fontFamily="@font/sf_pro_text_semi_bold"
+            android:paddingStart="@dimen/dimen_8dp"
+            android:paddingTop="@dimen/dimen_2dp"
+            android:paddingEnd="@dimen/dimen_8dp"
+            android:paddingBottom="@dimen/dimen_2dp"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/textView50"
+            app:layout_constraintTop_toTopOf="@+id/textView50"
+            tools:text="NEW" />
+
 
         <TextView
             android:id="@+id/textView51"

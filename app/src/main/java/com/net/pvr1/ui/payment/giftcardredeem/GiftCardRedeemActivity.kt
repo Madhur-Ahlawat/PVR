@@ -60,8 +60,6 @@ class GiftCardRedeemActivity : AppCompatActivity() {
 
         binding?.include30?.textView5?.setOnClickListener{
             if (validateInputFields()) {
-                toast("called this")
-
                 setDataToApi()
                 Constant().hideKeyboard(this)
             }
@@ -143,7 +141,7 @@ class GiftCardRedeemActivity : AppCompatActivity() {
                 binding?.cardError?.text = (getString(R.string.card_number_msg_required))
             } else binding?.cardError?.text = (getString(R.string.card_number_msg_invalid))
         } else {
-            binding?.cardError?.error = ""
+            binding?.cardError?.text = ""
         }
         return if (paymentOptionMode.equals("126", ignoreCase = true)) {
             (InputTextValidator.hasText(binding?.ccEditText!!) &&
@@ -209,8 +207,8 @@ class GiftCardRedeemActivity : AppCompatActivity() {
                                     launchPaymentActivity(
                                         PaymentActivity::class.java,
                                         Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,intent.getStringExtra("paidAmount").toString()
-                                    )
-                                    showTncDialog(this,it.data.output.di,"Gift Card")
+                                        ,"Gift Card")
+//                                    showTncDialog(this,it.data.output.di,"Gift Card")
 
                                 }
                             }

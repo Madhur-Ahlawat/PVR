@@ -2,6 +2,7 @@ package com.net.pvr1.ui.food.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -48,7 +49,30 @@ class BottomFoodAdapter(
                 //price
                 binding.textView153.text =context.getString(R.string.currency)+" " + Constant.DECIFORMAT.format(this.dp / 100.0)
 
-
+                if (this.wt != null && this.wt !="" && this.en != null && this.en != "") {
+                    binding.cal.text = this.wt + "  •  " + this.en
+                    binding.cal.show()
+                } else if (this.wt != null && this.wt != "") {
+                    binding.cal.text = this.wt
+                    binding.cal.show()
+                } else if (this.en != null && this.en != "") {
+                    binding.cal.text = this.wt
+                    binding.cal.show()
+                } else {
+                    binding.cal.hide()
+                }
+                if (this.fa != null && this.fa != "") {
+                    if (this.fa.split(",").size > 2) {
+                        val text =
+                            "<font color=#7A7A7A> Allergens " + this.fa.split(",")[0] + ", " + this.fa.split(",")[1] + " </font> <font color=#000000><b> +" + (this.fa.split(",").size - 2) + "</b></font>"
+                        binding.fa.text = Html.fromHtml(text)
+                    } else {
+                        binding.fa.text = "Allergens " + this.fa
+                    }
+                    binding.fa.show()
+                } else {
+                    binding.fa.hide()
+                }
                 //Add
                 binding.include25.plus.setOnClickListener {
                     listener.filterBtFoodPlus(this,nowShowingList)

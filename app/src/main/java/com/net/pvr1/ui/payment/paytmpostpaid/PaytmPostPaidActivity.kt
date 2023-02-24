@@ -78,7 +78,7 @@ class PaytmPostPaidActivity : AppCompatActivity() {
                         Constant.TRANSACTION_ID,
                         Constant.BOOK_TYPE
                     )
-                else if (binding?.etOtp?.getStringFromFields().toString().length >= 6) {
+                else if (binding?.etOtp?.getStringFromFields()?.length!! >= 6) {
                     paytmPostPaidViewModel.walletVerifYOTP(
                         preferences.getUserId(),
                         Constant.BOOKING_ID,
@@ -97,7 +97,8 @@ class PaytmPostPaidActivity : AppCompatActivity() {
                         Constant.TRANSACTION_ID,
                         Constant.BOOK_TYPE
                     )
-                else if (binding?.etOtp?.getStringFromFields().toString().length >= 6) {
+                else if (binding?.etOtp?.getStringFromFields()?.length!! >= 6) {
+                    println("binding?.etOtp?.getStringFromFields().toString().length"+binding?.etOtp?.getStringFromFields().toString().length)
                     paytmPostPaidViewModel.postPaidVerifYOTP(
                         preferences.getUserId(),
                         Constant.BOOKING_ID,

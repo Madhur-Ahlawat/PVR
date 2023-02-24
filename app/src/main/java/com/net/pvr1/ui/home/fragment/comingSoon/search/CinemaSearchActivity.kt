@@ -15,7 +15,7 @@ import com.net.pvr1.databinding.ActivityCinemaSearchBinding
 import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
-import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingActivity
+import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingMovieDetailsActivity
 import com.net.pvr1.ui.search.searchHome.adapter.SearchHomeMovieAdapter
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr1.ui.search.searchHome.viewModel.HomeSearchViewModel
@@ -56,6 +56,7 @@ class CinemaSearchActivity : AppCompatActivity(),
 
     private fun movedNext() {
 //        Voice Search
+        binding?.include42?.editTextTextPersonName?.hint = "Search a movie"
         binding?.include42?.voiceBtn?.setOnClickListener {
             val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
             intent.putExtra(
@@ -140,7 +141,9 @@ class CinemaSearchActivity : AppCompatActivity(),
     }
 
     private fun retrieveData(output: HomeSearchResponse.Output) {
+
 //        SetData  Filter
+        output.m = getComingMovie(output.m)
         filterCinemaList= output.m
 
 //        SetData
@@ -148,6 +151,16 @@ class CinemaSearchActivity : AppCompatActivity(),
         searchHomeMovieAdapter = SearchHomeMovieAdapter(output.m, this, this)
         binding?.recyclerCinemaSearch?.layoutManager = gridLayout2
         binding?.recyclerCinemaSearch?.adapter = searchHomeMovieAdapter
+    }
+
+    private fun getComingMovie(m: ArrayList<HomeSearchResponse.Output.M>): ArrayList<HomeSearchResponse.Output.M> {
+        val coming = ArrayList<HomeSearchResponse.Output.M>()
+        for ( data in m){
+            if (data.t == "C"){
+                coming.add(data)
+            }
+        }
+        return coming
     }
 
 
@@ -170,7 +183,7 @@ class CinemaSearchActivity : AppCompatActivity(),
         }
 
     override fun onSearchMovie(selectCityList: HomeSearchResponse.Output.M) {
-        val intent = Intent(this, NowShowingActivity::class.java)
+        val intent = Intent(this, NowShowingMovieDetailsActivity::class.java)
         intent.putExtra("mid", selectCityList.id)
         startActivity(intent)
     }

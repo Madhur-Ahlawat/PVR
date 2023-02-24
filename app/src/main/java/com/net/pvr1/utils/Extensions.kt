@@ -45,9 +45,10 @@ fun Context.launchGiftActivity(cls: Class<*>, flags: Int) {
 
 }
 
-fun Context.launchPaymentActivity(cls: Class<*>, flags: Int,amt:String) {
+fun Context.launchPaymentActivity(cls: Class<*>, flags: Int,amt:String,from:String) {
     val intent = Intent(this, cls).apply {
         putExtra("paidAmount",amt)
+        putExtra("from",from)
         addFlags(flags)
     }
     this.startActivity(intent)

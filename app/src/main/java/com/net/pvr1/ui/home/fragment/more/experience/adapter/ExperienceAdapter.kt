@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.net.pvr1.R
 import com.net.pvr1.databinding.FormatsItemBinding
 import com.net.pvr1.ui.home.fragment.more.experience.response.ExperienceResponse
 import com.net.pvr1.utils.hide
@@ -41,6 +42,8 @@ class ExperienceAdapter(
 //                image
                 Glide.with(context)
                     .load(this.imageUrl)
+                    .error(R.drawable.placeholder_horizental)
+                    .placeholder(R.drawable.placeholder_horizental)
                     .into(binding.imageView141)
 
                 if (this.rurl!=""){

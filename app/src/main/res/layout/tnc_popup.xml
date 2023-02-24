@@ -6,6 +6,18 @@
     android:orientation="vertical"
     android:background="@drawable/top_curve_bottomsheet">
 
+    <View
+        android:id="@+id/vis"
+        android:layout_width="@dimen/dimen_30dp"
+        android:layout_height="@dimen/dimen_4dp"
+        android:layout_marginTop="@dimen/dimen_15dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/grey_seat_curve"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/cross"
         android:fontFamily="@font/sf_pro_text_medium"
@@ -17,7 +29,6 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:drawableEnd="@drawable/ic_food_cross"
         android:text="Terms &amp; Condition"
         android:layout_marginBottom="20dp"/>
 

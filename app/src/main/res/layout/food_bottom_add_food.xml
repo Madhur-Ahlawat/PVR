@@ -90,10 +90,8 @@
             android:id="@+id/constraintLayout109"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/view101"
-            app:layout_constraintTop_toTopOf="@+id/textView137">
+            app:layout_constraintBottom_toBottomOf="@+id/textView150"
+            app:layout_constraintEnd_toEndOf="@+id/view101">
 
             <TextView
                 android:id="@+id/textView309"
@@ -155,6 +153,34 @@
             tools:text="Chicken Dimsum 6N" />
 
         <TextView
+            android:id="@+id/cal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="The Burger Club"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:layout_marginTop="@dimen/dimen_4dp"
+            android:textSize="@dimen/dimen_11sp"
+            android:textColor="#7A7A7A"
+            app:layout_constraintStart_toStartOf="@+id/textView137"
+            app:layout_constraintTop_toBottomOf="@+id/textView137" />
+
+        <TextView
+            android:id="@+id/fa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="The Burger Club"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:layout_marginTop="@dimen/dimen_2dp"
+            android:textSize="@dimen/dimen_11sp"
+            android:textColor="#7A7A7A"
+            app:layout_constraintStart_toStartOf="@+id/cal"
+            app:layout_constraintTop_toBottomOf="@+id/cal" />
+
+        <TextView
             android:id="@+id/textView150"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -164,8 +190,8 @@
             android:textSize="@dimen/dimen_16sp"
             android:layout_marginBottom="@dimen/dimen_30dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textView137"
-            app:layout_constraintTop_toBottomOf="@+id/textView137"
+            app:layout_constraintStart_toStartOf="@+id/fa"
+            app:layout_constraintTop_toBottomOf="@+id/fa"
             tools:text="₹287" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

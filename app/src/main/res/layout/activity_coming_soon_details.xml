@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.core.widget.NestedScrollView
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/nestedScrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -72,6 +72,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/imageView27"
                 app:srcCompat="@drawable/share"
+                app:tint="@color/white"
                 tools:ignore="ContentDescription,ImageContrastCheck" />
 
             <ImageView
@@ -772,7 +773,7 @@
         android:id="@+id/constraintLayout148"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

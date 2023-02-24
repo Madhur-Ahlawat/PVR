@@ -18,6 +18,7 @@ import android.os.Parcelable
 import android.os.SystemClock
 import android.text.Editable
 import android.text.Html
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.*
 import android.widget.*
@@ -26,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.net.pvr1.R
@@ -123,7 +125,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         var offerList: ArrayList<PaymentResponse.Output.Binoffer> = ArrayList()
 
         @SuppressLint("SetTextI18n")
-        fun showTncDialog(mContext: Context?, priceText: String, code: String) {
+        fun showTncDialog(mContext: Context?, priceTextV: String, code: String) {
             val dialog = Dialog(mContext!!, R.style.AppTheme_Dialog)
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog.setContentView(R.layout.promo_success)
@@ -134,10 +136,12 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
             dialog.window!!.setGravity(Gravity.CENTER)
             val done = dialog.findViewById<View>(R.id.done) as TextView?
             val price = dialog.findViewById<View>(R.id.price) as TextView?
+            val priceText = dialog.findViewById<View>(R.id.priceText) as TextView?
             val promCode = dialog.findViewById<View>(R.id.promcode) as TextView?
-            price?.text = "$priceText\nsaved with this\ncoupon code"
+            price?.text = "₹ $priceTextV"
+            priceText?.text = "\nsaved with this\ncoupon code"
             if (code != "") {
-                promCode?.text = "'$code'\nApplied"
+                promCode?.text = "'$code' Applied!"
             } else {
                 promCode?.text = ""
             }
@@ -155,7 +159,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         setContentView(view)
 
         binding?.name?.text = preferences.getString(Constant.SharedPreference.USER_NAME)
-        binding?.mobile?.text = preferences.getString(Constant.SharedPreference.USER_NUMBER)
+        binding?.mobile?.text = "+91 "+preferences.getString(Constant.SharedPreference.USER_NUMBER)
         manageFunction()
     }
 
@@ -170,10 +174,10 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
 
         //paidAmount
         binding?.textView178?.text =
-            getString(R.string.currency) + intent.getStringExtra("paidAmount")
+            getString(R.string.currency) + Constant.DECIFORMAT.format(intent.getStringExtra("paidAmount")?.toDouble())
 
-        paidAmount = intent.getStringExtra("paidAmount").toString()
-        actualAmt = intent.getStringExtra("paidAmount").toString()
+        paidAmount = Constant.DECIFORMAT.format(intent.getStringExtra("paidAmount")?.toDouble())
+        actualAmt = Constant.DECIFORMAT.format(intent.getStringExtra("paidAmount")?.toDouble())
 
 
         authViewModel.promoList()
@@ -260,9 +264,13 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
     @SuppressLint("SetTextI18n")
     override fun onResume() {
         super.onResume()
+        if (BOOK_TYPE == "BOOKING")
         registerReceiver(br, IntentFilter(BroadcastService.COUNTDOWN_BR))
-
+        println("discount_val--->$discount_val")
         if (discount_val != "0.0") {
+            binding?.discountVocher?.show()
+            binding?.discountVocher?.text =
+                "total saving ₹ $discount_val "
             binding?.cutPrice?.show()
             actualAmt = (intent.getStringExtra("paidAmount")
                 ?.toDouble()!! - discount_val.toDouble()).toString()
@@ -277,7 +285,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 binding?.cutPrice?.show()
                 binding?.couponView?.hide()
                 DISCOUNT += discount_val.toDouble()
-                binding?.promoCodetxt?.text = "'${binding?.promoCode?.text}' Applied"
+                binding?.promoCodetxt?.text = "'${binding?.promoCode?.text}' Applied!"
                 binding?.applyco?.text = getString(R.string.currency) + discount_val + " Saved"
                 binding?.removeoff?.setOnClickListener {
                     authViewModel.removePromo(
@@ -293,7 +301,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                     getString(R.string.currency) + intent.getStringExtra("paidAmount").toString()
                 showTncDialog(this, discount_val, isPromoCode)
             } else {
-                showTncDialog(this, discount_val, "")
+                showTncDialog(this, discount_val, intent.getStringExtra("from").toString())
             }
         }
 
@@ -675,6 +683,10 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         }
     }
 
+    override fun onOfferTagClick(comingSoonItem: PaymentResponse.Output.Gateway) {
+        showOfferTag(comingSoonItem.name,comingSoonItem.c)
+    }
+
     private fun credCheck() {
         authViewModel.credCheckLiveDataScope.observe(this) {
             when (it) {
@@ -1026,6 +1038,10 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         }
 
 
+    }
+
+    override fun onOfferTagClick(comingSoonItem: PaymentResponse.Output.Offer) {
+        showOfferTag(comingSoonItem.name,comingSoonItem.c)
     }
 
     override fun couponClick(
@@ -1393,6 +1409,8 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         val searchTextView: EditText = promoDialog?.findViewById(R.id.searchTextView) as EditText
         val clearBtn: ImageView = promoDialog?.findViewById(R.id.clearBtn) as ImageView
         val cancel: ImageView = promoDialog?.findViewById(R.id.imageView4) as ImageView
+        val textView287: TextView = promoDialog?.findViewById(R.id.textView287) as TextView
+        textView287.text = actualAmt
         cancel.setOnClickListener { promoDialog?.dismiss() }
         promoList = promoDialog?.findViewById(R.id.promoList) as RecyclerView
         catList?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -1487,8 +1505,16 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         dialog.window!!.setGravity(Gravity.CENTER)
         val titleText = dialog.findViewById<View>(R.id.titleText) as TextView?
         val tncTxt = dialog.findViewById<View>(R.id.tncTxt) as TextView?
+        val imageView5 = dialog.findViewById<View>(R.id.imageView5) as ImageView?
         val btnApplyCoupon = dialog.findViewById<View>(R.id.btnApplyCoupon) as TextView?
-
+        if (data.image!="") {
+            Glide.with(this)
+                .load(data.image)
+                .error(R.drawable.placeholder_horizental)
+                .into(imageView5!!)
+        } else {
+            imageView5?.setImageResource(R.drawable.placeholder_horizental)
+        }
         tncTxt?.text = Html.fromHtml(data.tnc.replace("~","<br></br>"))
         titleText?.text = Html.fromHtml(data.title)
         if (data.promocode != null && data.promocode != "") {
@@ -1543,7 +1569,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                                 binding?.couponView?.hide()
                                 DISCOUNT += it.data.output.di.toDouble()
                                 binding?.promoCodetxt?.text =
-                                    "'${binding?.promoCode?.text}' Applied"
+                                    "'${binding?.promoCode?.text}' Applied!"
                                 binding?.applyco?.text =
                                     getString(R.string.currency) + it.data.output.di + " Saved"
                                 binding?.removeoff?.setOnClickListener {
@@ -1617,11 +1643,13 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
 
     override fun onPause() {
         super.onPause()
+        if (BOOK_TYPE == "BOOKING")
         unregisterReceiver(br)
     }
 
     override fun onStop() {
         try {
+            if (BOOK_TYPE == "BOOKING")
             unregisterReceiver(br)
         } catch (e: java.lang.Exception) {
             // Receiver was probably already stopped in onPause()
@@ -1630,6 +1658,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
     }
 
     override fun onDestroy() {
+        if (BOOK_TYPE == "BOOKING")
         stopService(Intent(this, BroadcastService::class.java))
         super.onDestroy()
     }
@@ -1684,7 +1713,45 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         //AVAIL TIME
         Constant.AVAILABETIME = Constant().convertTime(output.at)
 
+        if (BOOK_TYPE == "BOOKING")
         timerManage()
+    }
+
+    private fun showOfferTag(title:String ,c: String){
+        val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.payment_offer_tag)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window!!.setLayout(
+            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.window!!.setGravity(Gravity.CENTER)
+        val offerTag = dialog.findViewById<LinearLayout>(R.id.offerTag)
+
+        if (c != null && !TextUtils.isEmpty(c)) {
+            if (c.contains("|")) {
+                val separated = c.split("\\|".toRegex()).dropLastWhile { it.isEmpty() }
+                    .toTypedArray()
+                for (i in separated.indices) {
+                    val childview: View = LayoutInflater.from(this)
+                        .inflate(R.layout.row_offer, offerTag, false)
+                    val tvTextData: TextView = childview.findViewById(R.id.tvTextData)
+                    val view1 = childview.findViewById<View>(R.id.View1)
+                    tvTextData.text = separated[i]
+                    view1.show()
+                    offerTag?.addView(childview)
+                }
+            } else {
+                val childview: View = LayoutInflater.from(this).inflate(R.layout.row_offer, offerTag, false)
+                val tvTextData: TextView = childview.findViewById(R.id.tvTextData)
+                val view1 = childview.findViewById<View>(R.id.View1)
+                view1.hide()
+                tvTextData.text = c
+                offerTag?.addView(childview)
+            }
+        }
+
+        dialog.show()
     }
 
 

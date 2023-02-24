@@ -153,7 +153,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
             android:drawablePadding="@dimen/dimen_5dp"
             android:layout_gravity="center_horizontal"
             android:fontFamily="@font/helvetica_neu_medium"

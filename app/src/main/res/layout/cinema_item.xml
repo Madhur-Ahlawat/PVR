@@ -81,18 +81,18 @@
 
                     <TextView
                         android:id="@+id/cinemaName"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
-                        android:layout_marginBottom="15dp"
                         android:ellipsize="end"
+                        app:layout_constraintWidth_max="280dp"
+                        android:layout_marginBottom="@dimen/dimen_20dp"
                         android:fontFamily="@font/montserrat_bold"
                         android:includeFontPadding="false"
                         android:maxLines="2"
                         android:textColor="@color/white"
                         android:textSize="16sp"
-                        app:layout_constraintBottom_toTopOf="@+id/multipleCinema"
-                        app:layout_constraintEnd_toStartOf="@id/cbFav"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         tools:ignore="TextContrastCheck"
                         tools:text="PVR Opulent Ghaziabad" />
@@ -115,20 +115,22 @@
 
                     <TextView
                         android:id="@+id/cinemaLocation"
-                        style="@style/H4SizeBold"
-                        android:visibility="gone"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
-                        android:ellipsize="end"
-                        android:lineSpacingExtra="3dp"
-                        android:maxLines="2"
-                        android:textColor="@color/white"
+                        android:fontFamily="@font/sf_pro_text_semi_bold"
+                        android:background="@drawable/yellow_curve_four"
+                        android:textColor="@color/black"
+                        android:paddingEnd="@dimen/dimen_8dp"
+                        android:paddingStart="@dimen/dimen_8dp"
                         android:textSize="12sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        tools:text="Plot No. 3, M-Block, Sector 18, NOIDA - 201301, UP" />
+                        android:paddingTop="@dimen/dimen_2dp"
+                        android:paddingBottom="@dimen/dimen_2dp"
+                        android:layout_marginStart="@dimen/dimen_15dp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/cinemaName"
+                        app:layout_constraintStart_toEndOf="@+id/cinemaName"
+                        app:layout_constraintTop_toTopOf="@+id/cinemaName"
+                        tools:text="NEW" />
 
 
                     <ImageView

@@ -237,7 +237,7 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
 
             //Crew
             if (output.mb.crew.isNotEmpty()) {
-                binding?.crew?.show()
+                binding?.recyclerCrew?.show()
                 binding?.textView68?.show()
                 val layoutManagerCrew =
                     GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
@@ -245,7 +245,8 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
                 binding?.recyclerCrew?.layoutManager = layoutManagerCrew
                 binding?.recyclerCrew?.adapter = crewAdapter
             } else {
-                binding?.crew?.hide()
+                binding?.recyclerCrew?.hide()
+                binding?.textView68?.hide()
             }
 
             //condition check for Trailer and Music video
@@ -408,7 +409,7 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
         for (data in crew){
             list.addAll(data.roles)
         }
-        for (data in listRole){
+        for (data in list){
             if (data.role == "Director") {
                 listRole.add(data)
             }else{

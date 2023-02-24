@@ -22,7 +22,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -57,7 +56,7 @@ import com.net.pvr1.ui.home.fragment.more.offer.offerDetails.OfferDetailsActivit
 import com.net.pvr1.ui.home.fragment.more.profile.userDetails.ProfileActivity
 import com.net.pvr1.ui.home.interfaces.PlayPopup
 import com.net.pvr1.ui.location.selectCity.SelectCityActivity
-import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingActivity
+import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingMovieDetailsActivity
 import com.net.pvr1.ui.movieDetails.nowShowing.adapter.MusicVideoTrsAdapter
 import com.net.pvr1.ui.movieDetails.nowShowing.adapter.TrailerTrsAdapter
 import com.net.pvr1.ui.movieDetails.nowShowing.response.MovieDetailsResponse
@@ -524,7 +523,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
             //details
             binding?.homeRecommend?.rlRecomm?.setOnClickListener {
-                val intent = Intent(requireActivity(), NowShowingActivity::class.java)
+                val intent = Intent(requireActivity(), NowShowingMovieDetailsActivity::class.java)
                 intent.putExtra("mid", rm.id)
                 startActivity(intent)
             }
@@ -639,13 +638,13 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     override fun onSliderBookClick(comingSoonItem: HomeResponse.Mv) {
-        val intent = Intent(requireActivity(), NowShowingActivity::class.java)
+        val intent = Intent(requireActivity(), NowShowingMovieDetailsActivity::class.java)
         intent.putExtra("mid", comingSoonItem.id)
         startActivity(intent)
     }
 
     override fun onPromotionClick(comingSoonItem: HomeResponse.Mfi) {
-        val intent = Intent(requireActivity(), NowShowingActivity::class.java)
+        val intent = Intent(requireActivity(), NowShowingMovieDetailsActivity::class.java)
         intent.putExtra("mid", comingSoonItem.name)
         startActivity(intent)
     }
@@ -662,7 +661,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     override fun onMoviesClick(comingSoonItem: HomeResponse.Mv) {
-        val intent = Intent(requireActivity(), NowShowingActivity::class.java)
+        val intent = Intent(requireActivity(), NowShowingMovieDetailsActivity::class.java)
         intent.putExtra("mid", comingSoonItem.id)
         startActivity(intent)
     }
@@ -688,7 +687,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 intent.putExtra("mid", comingSoonItem.id)
                 startActivity(intent)
             } else {
-                val intent = Intent(requireActivity(), NowShowingActivity::class.java)
+                val intent = Intent(requireActivity(), NowShowingMovieDetailsActivity::class.java)
                 intent.putExtra("mid", comingSoonItem.id)
                 startActivity(intent)
             }

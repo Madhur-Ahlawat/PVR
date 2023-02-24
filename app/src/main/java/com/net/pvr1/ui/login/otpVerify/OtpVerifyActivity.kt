@@ -70,6 +70,7 @@ class OtpVerifyActivity : AppCompatActivity() {
         if (intent.hasExtra("from"))
         from = intent.getStringExtra("from").toString()
         if (from == "summery") {
+            if (Constant.BOOK_TYPE == "BOOKING")
             timerManage()
         }
 
@@ -330,6 +331,8 @@ class OtpVerifyActivity : AppCompatActivity() {
                             privilegeRetrieveData(
                                 it1
                             )
+                        }else{
+                            checkMoved()
                         }
                     }
                 }
@@ -519,11 +522,13 @@ class OtpVerifyActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        if (Constant.BOOK_TYPE == "BOOKING")
         registerReceiver(br, IntentFilter(BroadcastService.COUNTDOWN_BR))
     }
 
     override fun onPause() {
         super.onPause()
+        if (Constant.BOOK_TYPE == "BOOKING")
         unregisterReceiver(br)
     }
 
@@ -533,6 +538,7 @@ class OtpVerifyActivity : AppCompatActivity() {
         unregisterReceiver(smsBroadcastReceiver)
 
         try {
+            if (Constant.BOOK_TYPE == "BOOKING")
             unregisterReceiver(br)
         } catch (e: java.lang.Exception) {
             // Receiver was probably already stopped in onPause()
@@ -540,6 +546,7 @@ class OtpVerifyActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        if (Constant.BOOK_TYPE == "BOOKING")
         stopService(Intent(this, BroadcastService::class.java))
         super.onDestroy()
     }

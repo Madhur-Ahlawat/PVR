@@ -51,6 +51,9 @@ class PaymentExclusiveAdapter(
                 }else{
                     binding.paymentModeSubTitle.hide()
                 }
+                binding.paymentModeSubTitle.setOnClickListener {
+                    listener.onOfferTagClick(this)
+                }
                 binding.imageView81.setImageResource(R.drawable.ic_star)
                 //title
                 binding.textView124.text = this.name
@@ -70,6 +73,7 @@ class PaymentExclusiveAdapter(
 
     interface RecycleViewItemClickListenerCity {
         fun paymentExclusiveClick(comingSoonItem: PaymentResponse.Output.Offer)
+        fun onOfferTagClick(comingSoonItem: PaymentResponse.Output.Offer)
 
     }
 

@@ -89,4 +89,19 @@ class CardDetailsViewModel @Inject constructor(private val userRepository: UserR
         }
     }
 
+
+    //Bank Offer
+    val bankOfferDataScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.bankOfferResponseLiveData
+
+    fun bankOffer( userid: String,
+                   bookingid: String,
+                   transid: String,
+                   booktype: String,
+                   scheem:String,
+                   cardNo:String,binOffer:String,paymentType:String) {
+        viewModelScope.launch {
+            userRepository.bankOffer(userid,bookingid,transid,booktype,scheem,cardNo, binOffer,paymentType)
+        }
+    }
+
 }

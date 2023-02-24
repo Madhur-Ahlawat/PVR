@@ -8,7 +8,8 @@ data class AddFoodResponse(
     val result: String,
     val version: String
 ):java.io.Serializable{
-    class Output{
+    class Output(val bi:String,val tid:String, val pktransid:String){
+
 
     }
 }

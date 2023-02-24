@@ -9,6 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr1.R
 import com.net.pvr1.ui.search.searchHome.response.HomeSearchResponse
+import com.net.pvr1.utils.hide
+import com.net.pvr1.utils.show
 
 class SearchHomeCinemaAdapter(
     private var selectCityList: ArrayList<HomeSearchResponse.Output.T>,
@@ -30,6 +32,13 @@ class SearchHomeCinemaAdapter(
         holder.address.text = selectCityItemList.ad
         holder.distance.text = selectCityItemList.length
 
+        if (selectCityItemList.desc!= null && selectCityItemList.desc!= ""){
+            holder.cinemaLocation.show()
+            holder.cinemaLocation.text = selectCityItemList.desc
+        } else {
+            holder.cinemaLocation.hide()
+        }
+
         holder.itemView.setOnClickListener {
             listner.onSearchCinema(selectCityItemList)
         }
@@ -48,6 +57,7 @@ class SearchHomeCinemaAdapter(
         var title: TextView = view.findViewById(R.id.textView50)
         var address: TextView = view.findViewById(R.id.textView51)
         var distance: TextView = view.findViewById(R.id.textView53)
+        var cinemaLocation: TextView = view.findViewById(R.id.cinemaLocation)
         var direction: ImageView = view.findViewById(R.id.direction)
     }
 

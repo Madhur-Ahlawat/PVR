@@ -62,10 +62,14 @@ data class FoodResponse(
                 val op: Int,
                 var qt: Int,
                 val sf: Boolean,
+                val wt: String,
+                val en: String,
+                val fa: String,
                 val si: String,
                 val veg: Boolean
             ) : Serializable
         }
+
 
         data class Cat(
             val i: String,

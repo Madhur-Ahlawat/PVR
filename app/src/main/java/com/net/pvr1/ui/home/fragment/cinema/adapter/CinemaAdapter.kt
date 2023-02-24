@@ -44,7 +44,13 @@ class CinemaAdapter(
                 //type
                 binding.multipleCinema.text = this.mc
                 //address
-                binding.cinemaLocation.text = this.ad
+                if (this.newCinemaText!=null && this.newCinemaText!=""){
+                    binding.cinemaLocation.show()
+                    binding.cinemaLocation.text = this.newCinemaText
+                }else{
+                    binding.cinemaLocation.hide()
+                }
+//                binding.cinemaLocation.text = this.ad
                 //Distance
                 binding.tvDistance.text = this.d
                 //Image

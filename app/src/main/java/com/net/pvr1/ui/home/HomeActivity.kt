@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.gms.analytics.Tracker
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.net.pvr1.R
@@ -44,7 +43,7 @@ import com.net.pvr1.ui.home.fragment.privilege.NonMemberFragment
 import com.net.pvr1.ui.home.fragment.privilege.adapter.PrivilegeHomeDialogAdapter
 import com.net.pvr1.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr1.ui.home.interfaces.PlayPopup
-import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingActivity
+import com.net.pvr1.ui.movieDetails.nowShowing.NowShowingMovieDetailsActivity
 import com.net.pvr1.ui.player.PlayerActivity
 import com.net.pvr1.utils.*
 import com.net.pvr1.utils.Constant.Companion.PRIVILEGEVOUCHER
@@ -615,14 +614,14 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                 } else if (path?.contains("/comingsoontrailer") == true) {
                     val trailerPathUrl = path.split("/".toRegex()).dropLastWhile { it.isEmpty() }
                         .toTypedArray()
-                    val intent = Intent(this, NowShowingActivity::class.java)
+                    val intent = Intent(this, NowShowingMovieDetailsActivity::class.java)
                     intent.putExtra("mid", trailerPathUrl[2])
                     startActivity(intent)
                 } else if (path?.contains("/comingsoon") == true) {
                     if (path.contains("NHO")) {
                         val pathUrl = path.split("/".toRegex()).dropLastWhile { it.isEmpty() }
                             .toTypedArray()
-                        val intent = Intent(this, NowShowingActivity::class.java)
+                        val intent = Intent(this, NowShowingMovieDetailsActivity::class.java)
                         intent.putExtra("mid", pathUrl[4])
                         startActivity(intent)
                     } else setCurrentFragment(fourthFragment)

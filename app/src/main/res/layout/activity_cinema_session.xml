@@ -129,11 +129,31 @@
                     android:fontFamily="@font/montserrat_alternates_bold"
                     android:textColor="@color/white"
                     android:textSize="20sp"
+                    app:layout_constraintWidth_max="300dp"
                     app:layout_constraintBottom_toTopOf="@+id/textView81"
-                    app:layout_constraintEnd_toEndOf="@+id/textView81"
                     app:layout_constraintStart_toStartOf="@+id/textView81"
                     tools:ignore="TextContrastCheck"
                     tools:text="PVR, Golf Course" />
+
+                <TextView
+                    android:id="@+id/cinemaLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sf_pro_text_semi_bold"
+                    android:background="@drawable/yellow_curve_four"
+                    android:textColor="@color/black"
+                    android:paddingEnd="@dimen/dimen_8dp"
+                    android:paddingStart="@dimen/dimen_8dp"
+                    android:textSize="12sp"
+                    android:paddingTop="@dimen/dimen_2dp"
+                    android:paddingBottom="@dimen/dimen_2dp"
+                    android:layout_marginStart="@dimen/dimen_15dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView84"
+                    app:layout_constraintStart_toEndOf="@+id/textView84"
+                    app:layout_constraintTop_toTopOf="@+id/textView84"
+                    tools:text="NEW" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
