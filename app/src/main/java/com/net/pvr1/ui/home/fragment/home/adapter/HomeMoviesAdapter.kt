@@ -101,17 +101,22 @@ class HomeMoviesAdapter(
 
  //Manage Genre
                 if (this.othergenres != "") {
-                    if (this.othergenres.split(",").size > 2) {
-                        binding.genrePlus.show()
-                        binding.genrePlus.text = "+" + (this.othergenres.split(",").size - 2)
-                        binding.textView45.text =
-                            this.othergenres.split(",")[0] + " | " + this.othergenres.split(
-                                ","
-                            )[1]
-                    } else {
-                        binding.genrePlus.hide()
-                        binding.textView45.text = this.othergenres.replace(",", " | ")
+                    try {
+                        if (this.othergenres.split(",").size > 2) {
+                            binding.genrePlus.show()
+                            binding.genrePlus.text = "+" + (this.othergenres.split(",").size - 2)
+                            binding.textView45.text =
+                                this.othergenres.split(",")[0] + " | " + this.othergenres.split(
+                                    ","
+                                )[1]
+                        } else {
+                            binding.genrePlus.hide()
+                            binding.textView45.text = this.othergenres.replace(",", " | ")
+                        }
+                    }catch (e:java.lang.Exception){
+                        e.printStackTrace()
                     }
+
                 } else {
                     binding.textView45.text = this.tag
                 }

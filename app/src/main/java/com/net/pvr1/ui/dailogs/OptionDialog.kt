@@ -18,13 +18,13 @@ import kotlin.math.roundToInt
 
 class OptionDialog(
     context: Context,
-    @DrawableRes private val illustrationRes: Int = -1,
+    @DrawableRes private val illustrationRes : Int = -1,
     @StringRes private val title: Int,
     private val subtitle: String,
     @StringRes private val positiveBtnText: Int,
     @StringRes private val negativeBtnText: Int,
-    private val positiveClick: (() -> Unit)? = null,
-    private val negativeClick: (() -> Unit)? = null
+    private val positiveClick : (() -> Unit)? = null,
+    private val negativeClick : (() -> Unit)? = null
 ) : Dialog(context, R.style.AppTheme_Dialog) {
 
     private var binding: DialogOptionBinding? = null
@@ -33,6 +33,7 @@ class OptionDialog(
         super.onCreate(savedInstanceState)
          binding = DialogOptionBinding.inflate(layoutInflater, null, false)
         setContentView(binding?.root!!)
+
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val width = (context.resources.displayMetrics.widthPixels * 0.80)
 

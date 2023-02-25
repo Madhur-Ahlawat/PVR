@@ -5,6 +5,7 @@ import android.app.DatePickerDialog.OnDateSetListener
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.*
 import android.widget.*
 import androidx.activity.viewModels
@@ -265,12 +266,11 @@ class ProfileActivity : AppCompatActivity() {
             println("anniversary--->$dob---$anniversary")
 
             if (selectedMarital=="Married"){
-
-                if (bindingProfile.email.text.toString()==""){
+                if (bindingProfile.name.text.toString()==""){
                     val dialog = OptionDialog(this,
                         R.mipmap.ic_launcher,
                         R.string.app_name,
-                        "Enter Email",
+                        "Enter Name",
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
                         positiveClick = {},
@@ -286,11 +286,22 @@ class ProfileActivity : AppCompatActivity() {
                         positiveClick = {},
                         negativeClick = {})
                     dialog.show()
-                }else if (bindingProfile.name.text.toString()==""){
+                }
+                else if (bindingProfile.email.text.toString()==""){
                     val dialog = OptionDialog(this,
                         R.mipmap.ic_launcher,
                         R.string.app_name,
-                        "Enter Name",
+                        "Enter Email",
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }else if (selectedGender==""){
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        "Select Gender",
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
                         positiveClick = {},
@@ -306,11 +317,15 @@ class ProfileActivity : AppCompatActivity() {
                         positiveClick = {},
                         negativeClick = {})
                     dialog.show()
+<<<<<<< HEAD
                 }else if (selectedGender=="" || selectedGender=="Select"){
+=======
+                }else if ( Data(dob.toString()) < 13){
+>>>>>>> 0564f926 (fixes)
                     val dialog = OptionDialog(this,
                         R.mipmap.ic_launcher,
                         R.string.app_name,
-                        "Select Gender",
+                        "Minimum 13 years of age required for enrolling this functionality.",
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
                         positiveClick = {},
@@ -375,6 +390,41 @@ class ProfileActivity : AppCompatActivity() {
         myCalendar[Calendar.MONTH] = monthOfYear
         myCalendar[Calendar.DAY_OF_MONTH] = dayOfMonth
         updateLabel()
+    }
+
+    fun Data(date: String?): Int {
+        if (!TextUtils.isEmpty(date)) {
+            val cal = Calendar.getInstance()
+            val dateInString = SimpleDateFormat("dd MMM, yyyy")
+                .format(cal.time)
+            val formatter = SimpleDateFormat("dd MMM, yyyy")
+            var parsedDate: Date? = null
+            var Date: Date? = null
+            try {
+                parsedDate = formatter.parse(dateInString)
+                Date = formatter.parse(date)
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+            if (parsedDate != null && Date != null) return getDiffYears(Date, parsedDate)
+        }
+        return 0
+    }
+
+    private fun getDiffYears(first: Date?, last: Date?): Int {
+        val a: Calendar = getCalendar(first)
+        val b: Calendar = getCalendar(last)
+        var diff = b[Calendar.YEAR] - a[Calendar.YEAR]
+        if ((a[Calendar.MONTH] > b[Calendar.MONTH] || a[Calendar.MONTH] == b[Calendar.MONTH]) && a[Calendar.DATE] > b[Calendar.DATE]) {
+            diff--
+        }
+        return diff
+    }
+
+    private fun getCalendar(date: Date?): Calendar {
+        val cal = Calendar.getInstance(Locale.US)
+        cal.time = date
+        return cal
     }
 
     private fun updateLabel() {

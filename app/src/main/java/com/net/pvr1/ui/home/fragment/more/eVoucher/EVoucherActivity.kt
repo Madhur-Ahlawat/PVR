@@ -4,11 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.net.pvr1.R
 import com.net.pvr1.databinding.ActivityEvoucherBinding
 import com.net.pvr1.di.preference.PreferenceManager
 import com.net.pvr1.ui.dailogs.LoaderDialog
 import com.net.pvr1.ui.dailogs.OptionDialog
+import com.net.pvr1.ui.home.fragment.more.eVoucher.adapter.VoucherListAdapter
 import com.net.pvr1.ui.home.fragment.more.eVoucher.details.EVoucherDetailsActivity
 import com.net.pvr1.ui.home.fragment.more.eVoucher.response.VoucherListResponse
 import com.net.pvr1.ui.home.fragment.more.eVoucher.viewModel.EVoucherViewModel
@@ -18,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class EVoucherActivity : AppCompatActivity() {
+class EVoucherActivity : AppCompatActivity(),VoucherListAdapter.RecycleViewItemClickListener {
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityEvoucherBinding? = null
@@ -96,6 +98,13 @@ class EVoucherActivity : AppCompatActivity() {
     }
 
     private fun retrieveData(output: VoucherListResponse.Output) {
+        val layoutManager = LinearLayoutManager(this)
+        binding?.recyclerView62?.layoutManager = layoutManager
+        val termsAdapter = VoucherListAdapter(this, output.ev, this)
+        binding?.recyclerView62?.adapter = termsAdapter
+    }
+
+    override fun itemClick(ev: VoucherListResponse.Output.Ev) {
 
     }
 
