@@ -9,7 +9,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.net.pvr1"
+        applicationId "com.net.pvr"
         minSdk 24
         targetSdk 33
         versionCode 1
@@ -54,7 +54,7 @@ android {
     kapt {
         correctErrorTypes true
     }
-    namespace 'com.net.pvr1'
+    namespace 'com.net.pvr'
 
 }
 

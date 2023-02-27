@@ -209,14 +209,14 @@
     <style name="NoBackgroundDialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:windowBackground">@color/transparent</item>
     </style>
-//progressBar
+    //progressBar
     <style name="CustomProgressBarHorizontalNew"
         parent="android:Widget.ProgressBar.Horizontal">
         <item name="android:minHeight">10dp</item>
         <item name="android:maxHeight">20dp</item>
     </style>
 
-//progressBar
+    //progressBar
 
     <style name="textInputLayout" parent="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="boxStrokeColor">#00000000</item>

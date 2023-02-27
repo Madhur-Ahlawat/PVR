@@ -41,7 +41,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <com.net.pvr1.utils.view.TextViewDrawable
+                <com.net.pvr.utils.view.TextViewDrawable
                     android:id="@+id/textView105"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

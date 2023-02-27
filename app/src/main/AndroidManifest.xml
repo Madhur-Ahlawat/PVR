@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.net.pvr1">
+    package="com.net.pvr">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -21,7 +21,7 @@
     </queries>
 
     <application
-        android:name=".MainApplication"
+        android:name="com.net.pvr.MainApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -31,19 +31,19 @@
         android:theme="@style/NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.home.fragment.more.eVoucher.details.EVoucherDetailsActivity"
+            android:name="com.net.pvr.ui.home.fragment.more.eVoucher.details.EVoucherDetailsActivity"
             android:exported="false" />
 
         <activity
-            android:name=".ui.home.fragment.more.eVoucher.EVoucherActivity"
+            android:name="com.net.pvr.ui.home.fragment.more.eVoucher.EVoucherActivity"
             android:exported="false" />
 
         <activity
-            android:name=".ui.home.fragment.more.experience.ExperienceActivity"
+            android:name="com.net.pvr.ui.home.fragment.more.experience.ExperienceActivity"
             android:exported="false" />
 
         <activity
-            android:name=".ui.cinemaSession.cinemaDetails.CinemaDetailsActivity"
+            android:name="com.net.pvr.ui.cinemaSession.cinemaDetails.CinemaDetailsActivity"
             android:exported="false">
 
             <meta-data
@@ -52,7 +52,7 @@
         </activity>
 
         <activity
-            android:name=".ui.home.fragment.more.offer.OfferActivity"
+            android:name="com.net.pvr.ui.home.fragment.more.offer.OfferActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -60,7 +60,7 @@
         </activity>
 
         <activity
-            android:name=".ui.food.old.OldFoodActivity"
+            android:name="com.net.pvr.ui.food.old.OldFoodActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -68,7 +68,7 @@
         </activity>
 
         <activity
-            android:name=".ui.scanner.bookings.SelectBookingsActivity"
+            android:name="com.net.pvr.ui.scanner.bookings.SelectBookingsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -76,77 +76,77 @@
         </activity>
 
         <activity
-            android:name=".ui.home.fragment.more.offer.list.OfferListActivity"
+            android:name="com.net.pvr.ui.home.fragment.more.offer.list.OfferListActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.home.fragment.more.privacy.TermsPrivacyActivity"
+            android:name="com.net.pvr.ui.home.fragment.more.privacy.TermsPrivacyActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.home.fragment.privilege.PrivilegeDetailsActivity"
+            android:name="com.net.pvr.ui.home.fragment.privilege.PrivilegeDetailsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.home.fragment.comingSoon.search.CinemaSearchActivity"
+            android:name="com.net.pvr.ui.home.fragment.comingSoon.search.CinemaSearchActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.payment.mCoupon.MCouponActivity"
+            android:name="com.net.pvr.ui.payment.mCoupon.MCouponActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.payment.promoCode.PromoCodeActivity"
+            android:name="com.net.pvr.ui.payment.promoCode.PromoCodeActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.payment.bankoffers.BankOffersActivity"
+            android:name="com.net.pvr.ui.payment.bankoffers.BankOffersActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.payment.bankoffers.BankOfferDetailsActivity"
+            android:name="com.net.pvr.ui.payment.bankoffers.BankOfferDetailsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.payment.webView.PaymentWebActivity"
+            android:name="com.net.pvr.ui.payment.webView.PaymentWebActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.ticketConfirmation.TicketConfirmationActivity"
+            android:name="com.net.pvr.ui.ticketConfirmation.TicketConfirmationActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.net.pvr.MainActivity"
             android:exported="false"
             android:screenOrientation="fullSensor">
             <meta-data
@@ -154,70 +154,70 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.payment.cardDetails.CardDetailsActivity"
+            android:name="com.net.pvr.ui.payment.cardDetails.CardDetailsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.payment.giftcardredeem.GiftCardRedeemActivity"
+            android:name="com.net.pvr.ui.payment.giftcardredeem.GiftCardRedeemActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.home.fragment.more.contactUs.ContactUsActivity"
+            android:name="com.net.pvr.ui.home.fragment.more.contactUs.ContactUsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.home.formats.FormatsActivity"
+            android:name="com.net.pvr.ui.home.formats.FormatsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.summery.coupons.CouponsActivity"
+            android:name="com.net.pvr.ui.summery.coupons.CouponsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.watchList.WatchListActivity"
+            android:name="com.net.pvr.ui.watchList.WatchListActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.movieDetails.comingSoonDetails.setAlert.SetAlertActivity"
+            android:name="com.net.pvr.ui.movieDetails.comingSoonDetails.setAlert.SetAlertActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.movieDetails.comingSoonDetails.ComingSoonDetailsActivity"
+            android:name="com.net.pvr.ui.movieDetails.comingSoonDetails.ComingSoonDetailsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.home.fragment.comingSoon.ComingSoonActivity"
+            android:name="com.net.pvr.ui.home.fragment.comingSoon.ComingSoonActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.home.fragment.privilege.NonMemberActivity"
+            android:name="com.net.pvr.ui.home.fragment.privilege.NonMemberActivity"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data
@@ -225,7 +225,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.movieDetails.nowShowing.NowShowingMovieDetailsActivity"
+            android:name="com.net.pvr.ui.movieDetails.nowShowing.NowShowingMovieDetailsActivity"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data
@@ -233,7 +233,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.home.fragment.more.bookingRetrieval.BookingRetrievalActivity"
+            android:name="com.net.pvr.ui.home.fragment.more.bookingRetrieval.BookingRetrievalActivity"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data
@@ -241,7 +241,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.giftCard.activateGiftCard.ActivateGiftCardActivity"
+            android:name="com.net.pvr.ui.giftCard.activateGiftCard.ActivateGiftCardActivity"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data
@@ -249,7 +249,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.giftCard.activateGiftCard.ExpiredGiftCardActivity"
+            android:name="com.net.pvr.ui.giftCard.activateGiftCard.ExpiredGiftCardActivity"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data
@@ -257,7 +257,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.giftCard.activateGiftCard.CreateGiftCardActivity"
+            android:name="com.net.pvr.ui.giftCard.activateGiftCard.CreateGiftCardActivity"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data
@@ -265,7 +265,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.giftCard.activateGiftCard.AddGiftCardActivity"
+            android:name="com.net.pvr.ui.giftCard.activateGiftCard.AddGiftCardActivity"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data
@@ -273,7 +273,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.giftCard.activateGiftCard.GiftCardPlaceOrderActivity"
+            android:name="com.net.pvr.ui.giftCard.activateGiftCard.GiftCardPlaceOrderActivity"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data
@@ -281,7 +281,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.giftCard.GiftCardSummaryActivity"
+            android:name="com.net.pvr.ui.giftCard.GiftCardSummaryActivity"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data
@@ -289,7 +289,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.home.fragment.more.prefrence.PreferenceActivity"
+            android:name="com.net.pvr.ui.home.fragment.more.prefrence.PreferenceActivity"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data
@@ -297,7 +297,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.home.fragment.more.profile.userDetails.ProfileActivity"
+            android:name="com.net.pvr.ui.home.fragment.more.profile.userDetails.ProfileActivity"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data
@@ -305,102 +305,102 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.home.fragment.more.offer.offerDetails.OfferDetailsActivity"
+            android:name="com.net.pvr.ui.home.fragment.more.offer.offerDetails.OfferDetailsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.payment.PaymentActivity"
+            android:name="com.net.pvr.ui.payment.PaymentActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.payment.PaymentStatusActivity"
+            android:name="com.net.pvr.ui.payment.PaymentStatusActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.summery.SummeryActivity"
+            android:name="com.net.pvr.ui.summery.SummeryActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.seatLayout.SeatLayoutActivity"
+            android:name="com.net.pvr.ui.seatLayout.SeatLayoutActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.food.FoodActivity"
+            android:name="com.net.pvr.ui.food.FoodActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.bookingSession.MovieSessionActivity"
+            android:name="com.net.pvr.ui.bookingSession.MovieSessionActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.cinemaSession.CinemaSessionActivity"
+            android:name="com.net.pvr.ui.cinemaSession.CinemaSessionActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.scanner.ScannerActivity"
+            android:name="com.net.pvr.ui.scanner.ScannerActivity"
             android:exported="false"
             android:screenOrientation="fullSensor"
             android:stateNotNeeded="true"
             tools:replace="android:screenOrientation" />
         <activity
-            android:name=".ui.location.selectCity.SelectCityActivity"
+            android:name="com.net.pvr.ui.location.selectCity.SelectCityActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.search.searchComingSoon.SearchComingSoonActivity"
+            android:name="com.net.pvr.ui.search.searchComingSoon.SearchComingSoonActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.search.searchCinema.SearchCinemaActivity"
+            android:name="com.net.pvr.ui.search.searchCinema.SearchCinemaActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.search.searchHome.SearchHomeActivity"
+            android:name="com.net.pvr.ui.search.searchHome.SearchHomeActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.location.enableLocation.EnableLocationActivity"
+            android:name="com.net.pvr.ui.location.enableLocation.EnableLocationActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.player.PlayerActivity"
+            android:name="com.net.pvr.ui.player.PlayerActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".ui.privateScreenings.PrivateScreeningsActivity"
+            android:name="com.net.pvr.ui.privateScreenings.PrivateScreeningsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.giftCard.GiftCardActivity"
+            android:name="com.net.pvr.ui.giftCard.GiftCardActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.webView.WebViewActivity"
+            android:name="com.net.pvr.ui.webView.WebViewActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.myBookings.MyBookingsActivity"
+            android:name="com.net.pvr.ui.myBookings.MyBookingsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.myBookings.PastBookingsActivity"
+            android:name="com.net.pvr.ui.myBookings.PastBookingsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.login.otpVerify.OtpVerifyActivity"
+            android:name="com.net.pvr.ui.login.otpVerify.OtpVerifyActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name="com.net.pvr.ui.login.LoginActivity"
             android:exported="false"
             android:noHistory="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.splash.onBoarding.LandingActivity"
+            android:name="com.net.pvr.ui.splash.onBoarding.LandingActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.HomeActivity"
+            android:name="com.net.pvr.ui.home.HomeActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter android:autoVerify="true">
@@ -535,23 +535,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.payment.paytmpostpaid.PaytmPostPaidActivity"
+            android:name="com.net.pvr.ui.payment.paytmpostpaid.PaytmPostPaidActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.payment.mobikwik.MobikwikLoginActivity"
+            android:name="com.net.pvr.ui.payment.mobikwik.MobikwikLoginActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.payment.webView.PaytmWebActivity"
+            android:name="com.net.pvr.ui.payment.webView.PaytmWebActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.fragment.privilege.EnrollInPassportActivity"
+            android:name="com.net.pvr.ui.home.fragment.privilege.EnrollInPassportActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.splash.SplashActivity"
+            android:name="com.net.pvr.ui.splash.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -560,10 +560,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- Location Service -->
-        <service android:name=".utils.FetchAddressIntentServices" /> <!-- Network Service -->
-        <service android:name=".utils.BroadcastService" /> <!-- Network Service -->
+        <service android:name="com.net.pvr.utils.FetchAddressIntentServices" /> <!-- Network Service -->
+        <service android:name="com.net.pvr.utils.BroadcastService" /> <!-- Network Service -->
         <receiver
-            android:name=".utils.NetworkReceiver"
+            android:name="com.net.pvr.utils.NetworkReceiver"
             android:exported="true">
             <intent-filter>
                 <action
@@ -586,10 +586,10 @@
             android:name="com.phonepe.android.sdk.Debuggable"
             android:value="true" /> <!-- // Push Action manager -->
         <receiver
-            android:name=".utils.sfmc.SFMCActionReceiver"
+            android:name="com.net.pvr.utils.sfmc.SFMCActionReceiver"
             android:exported="true" /> <!-- // Message Service for SFMC -->
         <service
-            android:name=".utils.sfmc.MyFcmMessageListenerService"
+            android:name="com.net.pvr.utils.sfmc.MyFcmMessageListenerService"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

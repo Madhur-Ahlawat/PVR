@@ -280,7 +280,7 @@
                     app:hintEnabled="true"
                     app:hintTextColor="#908E8E">
 
-                    <com.net.pvr1.utils.view.AutoCompleteDropDown
+                    <com.net.pvr.utils.view.AutoCompleteDropDown
                         android:id="@+id/Gender_autodrop"
                         android:fontFamily="@font/sf_pro_text_regular"
                         android:layout_width="match_parent"

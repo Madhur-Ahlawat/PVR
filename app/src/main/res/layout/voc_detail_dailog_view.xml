@@ -39,7 +39,7 @@
     </RelativeLayout>
 
 
-    <com.net.pvr1.utils.view.CustomViewPager
+    <com.net.pvr.utils.view.CustomViewPager
         android:id="@+id/overlap_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
