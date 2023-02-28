@@ -28,6 +28,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
+import com.evergage.android.ClientConfiguration
 import com.evergage.android.Evergage
 import com.net.pvr.R
 import com.net.pvr.di.preference.PreferenceManager
@@ -294,6 +295,8 @@ class Constant {
                 e.printStackTrace()
             }
         }
+
+
 
         fun setUPSFMCSDK(preference: PreferenceManager){
             val phoneNo = preference.getString(SharedPreference.USER_NUMBER)

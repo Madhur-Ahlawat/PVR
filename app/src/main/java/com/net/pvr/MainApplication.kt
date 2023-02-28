@@ -8,6 +8,8 @@ import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.evergage.android.ClientConfiguration
+import com.evergage.android.Evergage
 import com.google.firebase.FirebaseApp
 import com.net.pvr.ui.splash.SplashActivity
 import com.net.pvr.utils.sfmc.SFMCActionReceiver
@@ -31,6 +33,7 @@ class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         PhonePe.init(this)
+        setUpEvegageSdk()
         FirebaseApp.initializeApp(this)
 
         // Loging SFMC
@@ -139,5 +142,19 @@ class MainApplication : Application() {
             }
         }
         return builder
+    }
+
+    fun setUpEvegageSdk() {
+        Evergage.initialize(this)
+        val evergage = Evergage.getInstance()
+
+        evergage.start(
+            ClientConfiguration.Builder()
+                .account("pvrltd")
+                .dataset("pvr_prod")
+                .usePushNotifications(true)
+                .build()
+        )
+
     }
 }
