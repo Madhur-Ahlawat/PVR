@@ -34,6 +34,7 @@ import com.net.pvr.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.food.FoodActivity
+import com.net.pvr.ui.home.fragment.home.HomeFragment
 import com.net.pvr.ui.seatLayout.adapter.CinemaShowsAdapter
 import com.net.pvr.ui.seatLayout.adapter.ShowsAdapter
 import com.net.pvr.ui.seatLayout.request.ReserveSeatRequest
@@ -50,6 +51,7 @@ import com.net.pvr.utils.Constant.Companion.FOODENABLE
 import com.net.pvr.utils.Constant.Companion.SELECTED_SEAT
 import com.net.pvr.utils.Constant.Companion.SeatBack
 import com.net.pvr.utils.Constant.Companion.TRANSACTION_ID
+import com.net.pvr.utils.isevent.ISEvents
 import dagger.hilt.android.AndroidEntryPoint
 import java.math.BigDecimal
 import javax.inject.Inject
@@ -369,6 +371,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         retrieverReserveSeatData(it.data.output)
+                        ISEvents().addToCArt(this,HomeFragment.mcId,priceVal.toString(),"BOOKING",selectedSeats.size)
                     } else {
                         selectSeatPriceCode.clear()
                         val dialog = OptionDialog(this,

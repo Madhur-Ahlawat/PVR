@@ -306,6 +306,7 @@ class Constant {
                     val registrationManager: RegistrationManager = it.registrationManager
                     val check = registrationManager.edit().setContactKey("VM$phoneNo").commit()
                     val splited = preference.getString(SharedPreference.USER_NAME).split(" ")
+                    println("splited--->${splited[0]}---->${splited[1]}")
                     if (splited.size == 2) {
                         registrationManager.edit().setAttribute("FirstName", splited[0]).commit()
                         registrationManager.edit().setAttribute("LastName", splited[1]).commit()

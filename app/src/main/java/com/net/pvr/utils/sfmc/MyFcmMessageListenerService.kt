@@ -27,6 +27,7 @@ public class MyFcmMessageListenerService : FirebaseMessagingService() {
     }
 
     override fun onNewToken(token: String) {
+        println("token--->$token")
         SFMCSdk.requestSdk { sdk ->
             sdk.mp {
                 it.pushMessageManager.setPushToken(token)

@@ -32,9 +32,9 @@ import com.net.pvr.R
 class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
+        FirebaseApp.initializeApp(this)
         PhonePe.init(this)
         setUpEvegageSdk()
-        FirebaseApp.initializeApp(this)
 
         // Loging SFMC
         if (BuildConfig.DEBUG) {
@@ -54,6 +54,8 @@ class MainApplication : Application() {
                 setMarketingCloudServerUrl("https://mcnd1yfl2dm3wzz62nbwyjffcvl0.device.marketingcloudapis.com/")
                 setPiAnalyticsEnabled(true)
                 setAnalyticsEnabled(true)
+                setGeofencingEnabled(true)
+                setProximityEnabled(true)
                 setNotificationCustomizationOptions(
                     NotificationCustomizationOptions.create { context, notificationMessage ->
                         val builder = NotificationManager.getDefaultNotificationBuilder(

@@ -16,6 +16,7 @@ import com.net.pvr.databinding.ActivityComingSoonDetailsBinding
 import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
+import com.net.pvr.ui.home.fragment.home.HomeFragment
 import com.net.pvr.ui.movieDetails.comingSoonDetails.adapter.ComDetailsPhAdapter
 import com.net.pvr.ui.movieDetails.comingSoonDetails.setAlert.SetAlertActivity
 import com.net.pvr.ui.movieDetails.comingSoonDetails.viewModels.ComingSoonDetailsViewModel
@@ -24,6 +25,7 @@ import com.net.pvr.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr.ui.player.PlayerActivity
 import com.net.pvr.ui.watchList.WatchListActivity
 import com.net.pvr.utils.*
+import com.net.pvr.utils.isevent.ISEvents
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -205,6 +207,7 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
         binding?.constraintLayout148?.hide()
         //uiShow
         binding?.nestedScrollView?.show()
+        ISEvents().movieDetail(this,HomeFragment.mcId)
 
         //Promotion
         val snapHelper = PagerSnapHelper()

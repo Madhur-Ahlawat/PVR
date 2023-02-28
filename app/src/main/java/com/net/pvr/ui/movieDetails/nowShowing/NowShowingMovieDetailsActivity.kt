@@ -18,6 +18,7 @@ import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.bookingSession.MovieSessionActivity
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
+import com.net.pvr.ui.home.fragment.home.HomeFragment
 import com.net.pvr.ui.home.fragment.home.adapter.PromotionAdapter
 import com.net.pvr.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr.ui.movieDetails.nowShowing.adapter.*
@@ -27,6 +28,7 @@ import com.net.pvr.ui.player.PlayerActivity
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.NetworkResult
 import com.net.pvr.utils.hide
+import com.net.pvr.utils.isevent.ISEvents
 import com.net.pvr.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -114,6 +116,7 @@ class NowShowingMovieDetailsActivity : AppCompatActivity(), MusicVideoAdapter.Re
 
     private fun retrieveData(output: MovieDetailsResponse.Output) {
 
+        ISEvents().movieDetail(this, HomeFragment.mcId)
 
         //Image
         Glide.with(this).load(output.wit).error(R.drawable.app_icon).into(binding?.imageView26!!)

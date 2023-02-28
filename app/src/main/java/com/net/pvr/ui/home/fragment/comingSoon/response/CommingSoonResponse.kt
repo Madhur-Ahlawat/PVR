@@ -27,6 +27,7 @@ data class CommingSoonResponse(
             val image: String,
             val language: String,
             val like_count: String,
+            val mcc: String,
             val liked: Boolean,
             val masterMovieId: String,
             val mih: String,

@@ -24,6 +24,7 @@ import com.net.pvr.ui.bookingSession.MovieSessionActivity
 import com.net.pvr.ui.bookingSession.MovieSessionActivity.Companion.btnc
 import com.net.pvr.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr.ui.dailogs.OptionDialog
+import com.net.pvr.ui.home.fragment.home.HomeFragment
 import com.net.pvr.ui.seatLayout.SeatLayoutActivity
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.hide
@@ -118,6 +119,8 @@ class CinemaSessionTimeAdapter(
 
                 Constant.SESSION_ID = this.sid.toString()
                 Constant.CINEMA_ID = cinemaId.toString()
+                HomeFragment.mcId = this.mc
+
 
                 if (this.ss!=0&&this.ss!=3)
                 holder.itemView.setOnClickListener {
@@ -137,6 +140,7 @@ class CinemaSessionTimeAdapter(
                         } else {
                             sidText = this.sid.toString()
                             ccText = this.cc
+                            HomeFragment.mcId = this.mc
                             val intent = Intent(context, SeatLayoutActivity::class.java)
                             intent.putExtra("clickPosition", position.toString())
                             intent.putExtra("shows", nowShowingList)
@@ -497,6 +501,7 @@ class CinemaSessionTimeAdapter(
             dialog.dismiss()
             sidText = sid.toString()
             ccText = cc
+            HomeFragment.mcId = nowShowingList[position].mc
             val intent = Intent(context, SeatLayoutActivity::class.java)
             intent.putExtra("clickPosition", position.toString())
             intent.putExtra("shows", nowShowingList)
@@ -609,6 +614,7 @@ class CinemaSessionTimeAdapter(
             dialog.dismiss()
             sidText = sid.toString()
             ccText = cc
+            HomeFragment.mcId = nowShowingList[position].mc
             val intent = Intent(context, SeatLayoutActivity::class.java)
             intent.putExtra("clickPosition", position.toString())
             intent.putExtra("shows", nowShowingList)
