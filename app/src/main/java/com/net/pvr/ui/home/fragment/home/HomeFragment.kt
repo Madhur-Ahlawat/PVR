@@ -72,6 +72,7 @@ import com.net.pvr.utils.Constant.Companion.PRIVILEGEVOUCHER
 import com.net.pvr.utils.Constant.Companion.PlaceHolder
 import com.net.pvr.utils.Constant.SharedPreference.Companion.ACTIVE
 import com.net.pvr.utils.ga.GoogleAnalytics
+import com.net.pvr.utils.isevent.ISEvents
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -80,6 +81,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickListener,
@@ -135,6 +137,10 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         ArrayList<MovieDetailsResponse.Trs>()
     private var videoData: ArrayList<MovieDetailsResponse.Trs> =
         ArrayList<MovieDetailsResponse.Trs>()
+
+    companion object{
+       var mcId = ""
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -565,6 +571,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             binding?.homeRecommend?.tvBook?.setOnClickListener {
                 val intent = Intent(requireActivity(), MovieSessionActivity::class.java)
                 intent.putExtra("mid", rm.id)
+                ISEvents().bookBtn(requireActivity(),rm.mcc)
+                mcId = rm.mcc
                 startActivity(intent)
             }
 
@@ -694,6 +702,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     override fun onMoviesClick(comingSoonItem: HomeResponse.Mv) {
+        mcId = comingSoonItem.mcc
         val intent = Intent(requireActivity(), NowShowingMovieDetailsActivity::class.java)
         intent.putExtra("mid", comingSoonItem.id)
         startActivity(intent)
@@ -702,6 +711,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     override fun onBookClick(comingSoonItem: HomeResponse.Mv) {
         val intent = Intent(requireActivity(), MovieSessionActivity::class.java)
         intent.putExtra("mid", comingSoonItem.id)
+        mcId = comingSoonItem.mcc
+        ISEvents().bookBtn(requireActivity(),comingSoonItem.mcc)
         startActivity(intent)
     }
 

@@ -31,6 +31,7 @@ import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.home.HomeActivity
+import com.net.pvr.ui.home.fragment.home.HomeFragment
 import com.net.pvr.ui.home.fragment.home.response.FeedbackDataResponse
 import com.net.pvr.ui.ticketConfirmation.adapter.TicketFoodAdapter
 import com.net.pvr.ui.ticketConfirmation.adapter.TicketPlaceHolderAdapter
@@ -39,6 +40,7 @@ import com.net.pvr.ui.ticketConfirmation.response.TicketBookedResponse
 import com.net.pvr.ui.ticketConfirmation.viewModel.TicketConfirmationViewModel
 import com.net.pvr.ui.webView.WebViewActivity
 import com.net.pvr.utils.*
+import com.net.pvr.utils.isevent.ISEvents
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -461,6 +463,9 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 }catch (e:Exception){
                     e.printStackTrace()
                 }
+            }
+            if(from == "T"){
+                ISEvents().confirmationOrder(this,Constant.BOOKING_ID,output.f,HomeFragment.mcId,output.amount,output.food)
             }
 
             if (from == "T" && output.bfeedback == "true") {

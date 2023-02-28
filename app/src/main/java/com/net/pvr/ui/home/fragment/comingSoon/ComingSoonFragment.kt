@@ -33,6 +33,7 @@ import com.net.pvr.ui.home.fragment.comingSoon.adapter.ComingSoonMovieAdapter
 import com.net.pvr.ui.home.fragment.comingSoon.response.CommingSoonResponse
 import com.net.pvr.ui.home.fragment.comingSoon.search.CinemaSearchActivity
 import com.net.pvr.ui.home.fragment.comingSoon.viewModel.ComingSoonViewModel
+import com.net.pvr.ui.home.fragment.home.HomeFragment
 import com.net.pvr.ui.movieDetails.comingSoonDetails.ComingSoonDetailsActivity
 import com.net.pvr.ui.movieDetails.comingSoonDetails.adapter.ComDetailsHomePhAdapter
 import com.net.pvr.ui.movieDetails.nowShowing.adapter.MusicVideoTrsAdapter
@@ -294,6 +295,7 @@ class ComingSoonFragment : Fragment(),
 
     override fun onDateClick(comingSoonItem: CommingSoonResponse.Output.Movy) {
         val intent = Intent(requireActivity(), ComingSoonDetailsActivity::class.java)
+        HomeFragment.mcId = comingSoonItem.mcc
         intent.putExtra("mid", comingSoonItem.masterMovieId)
         startActivity(intent)
     }

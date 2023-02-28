@@ -43,9 +43,11 @@ import com.net.pvr.ui.cinemaSession.cinemaDetails.CinemaDetailsActivity
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.filter.GenericFilterMsession
+import com.net.pvr.ui.home.fragment.home.HomeFragment
 import com.net.pvr.ui.home.fragment.home.adapter.PromotionAdapter
 import com.net.pvr.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr.utils.*
+import com.net.pvr.utils.isevent.ISEvents
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint

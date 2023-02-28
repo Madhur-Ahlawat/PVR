@@ -1,0 +1,65 @@
+{
+  "project_info": {
+    "project_number": "305576178599",
+    "firebase_url": "https://pvrcinemas-141506.firebaseio.com",
+    "project_id": "pvrcinemas-141506",
+    "storage_bucket": "pvrcinemas-141506.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:305576178599:android:de5d546eec583c7d",
+        "android_client_info": {
+          "package_name": "com.net.pvr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "305576178599-k7nfpakrc11cup9anru69p7d1uc2tm4o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.net.pvr",
+            "certificate_hash": "dc391170cd596066b94e392bd063eb74f0bc5826"
+          }
+        },
+        {
+          "client_id": "305576178599-ovd889bkaale4igh20s82p3trvjquu31.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.net.pvr",
+            "certificate_hash": "2204a5713128ef1cb80f20aa55ca7a4bd16514cc"
+          }
+        },
+        {
+          "client_id": "305576178599-k88skueq8s8s18m66j5l6nlih3j2ngiq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHqqCEPXq1hU3nEcsBgROgwGOsiSDZlfc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      },
+
+      "analytics_service": {
+        "status": 2,
+        "analytics_property": {
+          "tracking_id": "UA-19434392-8"
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
