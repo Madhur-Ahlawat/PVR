@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.net.pvr.repository.UserRepository
 import com.net.pvr.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr.ui.home.fragment.more.prefrence.response.PreferenceResponse
+import com.net.pvr.ui.payment.response.PaytmHmacResponse
 import com.net.pvr.ui.scanner.response.GetFoodResponse
 import com.net.pvr.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -117,6 +118,17 @@ class SelectBookingViewModel @Inject constructor(private val userRepository: Use
     ) {
         viewModelScope.launch {
             userRepository.userLocation(userid, lat,lng,city)
+        }
+    }
+
+    //CheckUserLocation
+    val augOfferLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = userRepository.augOfferResponseLiveData
+
+    fun augOffer(userid: String
+    ) {
+        viewModelScope.launch {
+            userRepository.augOffer(userid)
         }
     }
 

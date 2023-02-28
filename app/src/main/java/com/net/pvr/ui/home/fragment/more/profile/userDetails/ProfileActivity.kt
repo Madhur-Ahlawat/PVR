@@ -479,7 +479,8 @@ class ProfileActivity : AppCompatActivity() {
     private fun retrieveDataProfile(output: ProfileResponse.Output) {
         profileResponse = output
         ProfileResponseConst = output
-        binding?.textView212?.text = preferences.getUserName()
+        preferences.saveUserName(output.un)
+        binding?.textView212?.text = output.un
 
         //member
         binding?.textView213?.text = output.cd

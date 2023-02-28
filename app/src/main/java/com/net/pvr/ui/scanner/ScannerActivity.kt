@@ -1,5 +1,7 @@
 package com.net.pvr.ui.scanner
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -7,17 +9,29 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.KeyEvent
+import android.view.LayoutInflater
 import android.view.View
+import android.view.Window
+import android.widget.FrameLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.NameValuePair
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URLEncodedUtils
 import com.journeyapps.barcodescanner.*
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityScannerBinding
+import com.net.pvr.databinding.SacnAugOfferBinding
 import com.net.pvr.di.preference.PreferenceManager
+import com.net.pvr.ui.dailogs.LoaderDialog
+import com.net.pvr.ui.dailogs.OptionDialog
+import com.net.pvr.ui.home.HomeActivity
 import com.net.pvr.ui.scanner.bookings.SelectBookingsActivity
-import com.net.pvr.utils.printLog
+import com.net.pvr.ui.scanner.bookings.viewModel.SelectBookingViewModel
+import com.net.pvr.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.net.URI
 import java.net.URISyntaxException
@@ -38,6 +52,9 @@ class ScannerActivity : AppCompatActivity(), DecoratedBarcodeView.TorchListener 
     private  var titleScanner:TextView?=null
     private var viewfinderView: ViewfinderView? = null
     private var torchClick = 0
+    private var loader: LoaderDialog? = null
+    private val authViewModel: SelectBookingViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -238,8 +255,89 @@ class ScannerActivity : AppCompatActivity(), DecoratedBarcodeView.TorchListener 
     }
 
     private fun getOfferCode() {
-
+        authViewModel.augOffer(preferences.getUserId())
+        augOffer()
     }
+
+    private fun augOffer() {
+        authViewModel.augOfferLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        showAugOffer(it.data.output.cpn,it.data.output.cmsg)
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(this.supportFragmentManager, null)
+                }
+            }
+        }
+    }
+
+    private fun showAugOffer(cpn: String, cmsg: String) {
+        capture?.onPause()
+        var couponCode = ""
+        val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val inflater = LayoutInflater.from(this)
+        val bindingProfile = SacnAugOfferBinding.inflate(inflater)
+        val behavior: BottomSheetBehavior<FrameLayout> = dialog.behavior
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog.setContentView(bindingProfile.root)
+        if (cpn == null || cpn.isEmpty()) {
+            bindingProfile.tvTitle.text = "Alert!"
+            bindingProfile.btnRedeem.text = "Done"
+            couponCode = ""
+            bindingProfile.tvCoupon.hide()
+        } else {
+            couponCode = cpn
+            bindingProfile.tvCoupon.text = couponCode
+        }
+        if (cmsg != null && cmsg.isNotEmpty()) {
+            bindingProfile.tvMsg.text = cmsg
+        }
+
+        bindingProfile.btnRedeem.setOnClickListener(View.OnClickListener {
+            if (couponCode.isNotEmpty()) {
+                val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                val clip = ClipData.newPlainText("couponCode", couponCode)
+                clipboard.setPrimaryClip(clip)
+                Toast.makeText(this@ScannerActivity, "Coupon copied on clipboard", Toast.LENGTH_SHORT)
+                    .show()
+                launchActivity(
+                    HomeActivity::class.java,
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                )
+            }
+            dialog.dismiss()
+        })
+        dialog.show()
+    }
+
 
     override fun onTorchOn() {
 

@@ -13,6 +13,8 @@ data class PaytmHmacResponse(
         val bal: String,
         val balance: String,
         val otpId: String,
+        val cpn: String,
+        val cmsg: String,
         val b: String,
         val state: String,
         val msg: String,
