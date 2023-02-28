@@ -1533,6 +1533,17 @@ interface UserAPI {
 
 
 
+/****************** GO DIGITAL ****************/
+    @POST("api/content/create/promo")
+    suspend fun augOffer(
+        @Query("userid") userid: String,
+        @Query("lng") lng: String,
+        @Query("lat") lat: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<PaytmHmacResponse>
+
 /****************** JUS PAY ****************/
     @POST("api/trans/extendtrans")
     suspend fun initJusPay(

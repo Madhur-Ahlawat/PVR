@@ -3290,6 +3290,29 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             initJusPayLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
+    /***************** GO DIGITAL ***************************/
+
+
+    private val augOfferLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val augOfferResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = augOfferLiveData
+
+    suspend fun augOffer(userId: String) {
+        _userResponseLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.augOffer(userId, "0.0", "0.0",Constant.version, Constant.platform,Constant.getDid())
+        augOfferResponse(response)
+    }
+
+    private fun augOfferResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            augOfferLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            augOfferLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            augOfferLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
 
     /***************     MOBIKWIK API   ***************/
 
