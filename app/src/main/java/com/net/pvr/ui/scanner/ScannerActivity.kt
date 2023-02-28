@@ -79,6 +79,11 @@ class ScannerActivity : AppCompatActivity(), DecoratedBarcodeView.TorchListener 
         capture = CaptureManager(this, barcodeScannerView)
         capture?.initializeFromIntent(intent, savedInstanceState)
         capture?.setShowMissingCameraPermissionDialog(true)
+        if (intent != null) {
+            if (intent.hasExtra("promo") && intent.getStringExtra("promo") != null) {
+                getOfferCode()
+            }
+        }
 
         manageFunction()
     }
@@ -136,6 +141,7 @@ class ScannerActivity : AppCompatActivity(), DecoratedBarcodeView.TorchListener 
             val path = uri.path
             val parts = path?.split("/")?.toTypedArray()
             if (path?.contains("newpromo") == true) {
+                capture?.onPause()
                 getOfferCode()
             }
             else if (path?.contains("food") == true || path?.contains("booking") == true) {
@@ -306,6 +312,7 @@ class ScannerActivity : AppCompatActivity(), DecoratedBarcodeView.TorchListener 
         val inflater = LayoutInflater.from(this)
         val bindingProfile = SacnAugOfferBinding.inflate(inflater)
         val behavior: BottomSheetBehavior<FrameLayout> = dialog.behavior
+        dialog.setCancelable(false)
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
         dialog.setContentView(bindingProfile.root)
         if (cpn == null || cpn.isEmpty()) {

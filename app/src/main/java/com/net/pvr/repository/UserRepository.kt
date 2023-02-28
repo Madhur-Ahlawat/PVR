@@ -838,7 +838,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         spShow: String,
         isSpi: String
     ) {
-        selectCityLiveData.postValue(NetworkResult.Loading())
+        homeLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.home(
             city,
             Constant.version,

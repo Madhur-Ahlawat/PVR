@@ -60,7 +60,6 @@ import com.net.pvr.utils.ga.GoogleAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 import java.util.*
-import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -73,6 +72,8 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     private val authViewModel: HomeViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var offerShow = 0
+    var back_flag = 0
+
 
     private var offerResponse: ArrayList<OfferResponse.Output>? = null
 
@@ -581,16 +582,23 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 
     override fun onBackPressed() {
         if (binding?.bottomNavigationView?.selectedItemId == R.id.homeFragment) {
-            val dialog = OptionDialog(this,
-                R.mipmap.ic_launcher,
-                R.string.app_name,
-                getString(R.string.exitApp),
-                positiveBtnText = R.string.ok,
-                negativeBtnText = R.string.no,
-                positiveClick = {},
-                negativeClick = {})
-            dialog.show()
-            finish()
+            //if (back_flag==0) {
+                val dialog = OptionDialog(this,
+                    R.mipmap.ic_launcher,
+                    R.string.app_name,
+                    getString(R.string.exitApp),
+                    positiveBtnText = R.string.yes,
+                    negativeBtnText = R.string.no,
+                    positiveClick = {
+                        back_flag = 1
+                        finish()
+                    },
+                    negativeClick = {})
+                dialog.show()
+                back_flag = 1
+//            } else {
+//                finish()
+//            }
 
         } else {
             binding?.bottomNavigationView?.selectedItemId = R.id.homeFragment

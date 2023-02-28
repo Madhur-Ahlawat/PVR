@@ -100,6 +100,7 @@
     <color name="header_collapsed_color">#ffffff</color>
     <color name="bg_landing_screen">#E0E0E0</color>
     <color name="translucent">#10000000</color>
+    <color name="translucent1">#4D000000</color>
     <color name="navigation_header_lint">#454545</color>
     <color name="listSelectorColor">#00000000</color>
     <color name="bg_contact_screen">#F7F7F7</color>

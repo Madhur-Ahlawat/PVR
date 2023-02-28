@@ -1223,7 +1223,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                             ignoreCase = true
                         )
                     ) {
-                        if (bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)) {
+                        if (!bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)) {
                             if (bannerModels[counterStory].redirect_url.lowercase(Locale.ROOT)
                                     .contains("/loyalty/home")
                             ) {
@@ -1245,24 +1245,20 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                                 startActivity(intent)
                             }
                         }
-                    } else if (bannerModels[counterStory].redirect_url.equals(
-                            "INAPP",
-                            ignoreCase = true
-                        )
-                    ) {
-                        if (bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)) {
+                    } else if (bannerModels[counterStory].redirectView == "INAPP") {
+                        if (bannerModels[counterStory].redirect_url.isNotEmpty()) {
                             val intent = Intent(context, WebViewActivity::class.java)
                             intent.putExtra("title", bannerModels[counterStory].name)
                             intent.putExtra("from", "web")
                             intent.putExtra("getUrl", bannerModels[counterStory].redirect_url)
                             startActivity(intent)
                         }
-                    } else if (bannerModels[counterStory].redirect_url.equals(
+                    } else if (bannerModels[counterStory].redirectView.equals(
                             "WEB",
                             ignoreCase = true
                         )
                     ) {
-                        if (bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)) {
+                        if (!bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)) {
                             val intent = Intent(
                                 Intent.ACTION_VIEW,
                                 Uri.parse(bannerModels[counterStory].redirect_url)

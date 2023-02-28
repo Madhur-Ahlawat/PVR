@@ -330,12 +330,62 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.net.pvr.ui.bookingSession.MovieSessionActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+            android:exported="true"
+            android:screenOrientation="portrait">
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/moviesessions"
+                    android:scheme="https" />
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/moviesessions"
+                    android:scheme="app" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/moviesessions"
+                    android:scheme="app" />
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/moviesessions"
+                    android:scheme="app" />
+            </intent-filter>
+
+        </activity>
         <activity
             android:name="com.net.pvr.ui.cinemaSession.CinemaSessionActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+            android:exported="true"
+            android:screenOrientation="portrait" >
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/cinemasessions"
+                    android:scheme="https" />
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/cinemasessions"
+                    android:scheme="app" />
+            </intent-filter>
+
+        </activity>
         <activity
             android:name="com.net.pvr.ui.scanner.ScannerActivity"
             android:exported="false"
@@ -558,6 +608,41 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/food"
+                    android:scheme="https" />
+
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/food"
+                    android:scheme="app" />
+
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/booking"
+                    android:scheme="https" />
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/booking"
+                    android:scheme="app" />
+
+
             </intent-filter>
         </activity> <!-- Location Service -->
         <service android:name="com.net.pvr.utils.FetchAddressIntentServices" /> <!-- Network Service -->

@@ -94,10 +94,19 @@
     </androidx.cardview.widget.CardView>
 
     <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_10"
+        app:srcCompat="@drawable/ic_dialoge_line" />
+
+    <ImageView
         android:id="@+id/popcornImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dimen_25dp"
+        android:layout_below="@+id/imageView7"
         android:scaleType="centerCrop"
         android:src="@drawable/big_popcorn"
         android:translationZ="10dp" />

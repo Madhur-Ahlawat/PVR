@@ -43,11 +43,9 @@ import com.net.pvr.ui.cinemaSession.cinemaDetails.CinemaDetailsActivity
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.filter.GenericFilterMsession
-import com.net.pvr.ui.home.fragment.home.HomeFragment
 import com.net.pvr.ui.home.fragment.home.adapter.PromotionAdapter
 import com.net.pvr.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr.utils.*
-import com.net.pvr.utils.isevent.ISEvents
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -88,6 +86,7 @@ class MovieSessionActivity : AppCompatActivity(),
     private var show2 = "ALL"
     private var special = "ALL"
     private var cinemaType = "ALL"
+    private var movieId = ""
     private var appliedFilterItem = HashMap<String?, String?>()
     private var appliedFilterType = ""
 
@@ -121,6 +120,27 @@ class MovieSessionActivity : AppCompatActivity(),
         val view = binding?.root
         setContentView(view)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        if (intent.hasExtra("mid"))
+            movieId = intent.getStringExtra("mid").toString()
+        val intent = intent
+        val action = intent.action
+        val data = intent.data
+        if (data != null) {
+            val path = data.path
+//            if (path!!.contains("utm"))
+//                sendGACampaign(data.toString(), "ShowSelection")
+            val parts = path!!.split("/".toRegex()).dropLastWhile { it.isEmpty() }
+                .toTypedArray()
+            if (parts.size == 5) {
+                preferences.saveString(Constant.SharedPreference.SELECTED_CITY_NAME, parts[2])
+                preferences.saveString(Constant.SharedPreference.SELECTED_CITY_ID, parts[2])
+                movieId = parts[4]
+
+            } else if (parts.size == 4) {
+                movieId = parts[3]
+            }
+        }
 
         manageFunctions()
     }
@@ -188,7 +208,7 @@ class MovieSessionActivity : AppCompatActivity(),
 
                         authViewModel.bookingTicket(
                             preferences.getCityName(),
-                            intent.getStringExtra("mid").toString(),
+                            movieId,
                             lat,
                             lng,
                             "NA",
@@ -207,7 +227,7 @@ class MovieSessionActivity : AppCompatActivity(),
         } else {
             authViewModel.bookingTicket(
                 preferences.getCityName(),
-                intent.getStringExtra("mid").toString(),
+                movieId,
                 lat,
                 lng,
                 "NA",
@@ -468,7 +488,7 @@ class MovieSessionActivity : AppCompatActivity(),
             preferences.getCityName(),
             string,
             preferences.getUserId(),
-            intent.getStringExtra("mid").toString(),
+            movieId,
             "HINDI",
             "no"
         )
@@ -566,7 +586,7 @@ class MovieSessionActivity : AppCompatActivity(),
         daysClick = true
         authViewModel.bookingTicket(
             preferences.getCityName(),
-            intent.getStringExtra("mid").toString(),
+            movieId,
             lat,
             lng,
             comingSoonItem.dt,
@@ -726,7 +746,7 @@ class MovieSessionActivity : AppCompatActivity(),
             }
             authViewModel.bookingTicket(
                 preferences.getCityName(),
-                intent.getStringExtra("mid").toString(),
+                movieId,
                 lat,
                 lng,
                 "NA",
@@ -771,7 +791,7 @@ class MovieSessionActivity : AppCompatActivity(),
          cinemaType = "ALL"
         authViewModel.bookingTicket(
             preferences.getCityName(),
-            intent.getStringExtra("mid").toString(),
+            movieId,
             lat,
             lng,
             "NA",
