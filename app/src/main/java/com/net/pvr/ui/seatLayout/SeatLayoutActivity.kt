@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivitySeatLayoutBinding
@@ -50,6 +51,7 @@ import com.net.pvr.utils.Constant.Companion.FOODENABLE
 import com.net.pvr.utils.Constant.Companion.SELECTED_SEAT
 import com.net.pvr.utils.Constant.Companion.SeatBack
 import com.net.pvr.utils.Constant.Companion.TRANSACTION_ID
+import com.net.pvr.utils.ga.GoogleAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import java.math.BigDecimal
 import javax.inject.Inject
@@ -119,8 +121,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         binding = ActivitySeatLayoutBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        sessionId = Constant.SESSION_ID
 
+        sessionId = Constant.SESSION_ID
         manageFunctions()
     }
 
@@ -190,6 +192,15 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     private fun movedNext() {
         // back btn
         binding?.imageView95?.setOnClickListener {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Seat Layout screen")
+                GoogleAnalytics.hitEvent(this, "back_button_dynamic", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
             onBackPressed()
         }
 
@@ -200,6 +211,18 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
         //Alert Dialog
         binding?.imageView97?.setOnClickListener {
+
+
+// Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Seat Layout screen")
+//                bundle.putString("var_login_city", cityNameMAin)
+                GoogleAnalytics.hitEvent(this, "booking_now_with_ticket_cancellation", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
 
             dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
             dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -407,6 +430,17 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         SELECTED_SEAT = selectedSeats.size
         Constant.BOOK_TYPE = "BOOKING"
 
+
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Seat Layout screen")
+            GoogleAnalytics.hitEvent(this, "booking_add_to_cart", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
+
         if (output.fc == "true") {
             FOODENABLE = 0
             startActivity(Intent(this, FoodActivity::class.java))
@@ -415,20 +449,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             startActivity(Intent(this, SummeryActivity::class.java))
         }
 
-//        when (output.nf) {
-//            "true" -> {
-//                FOODENABLE = 0
-//                startActivity(Intent(this, FoodActivity::class.java))
-//            }
-//            "false" -> {
-//                FOODENABLE = 0
-////                startActivity(Intent(this, FoodActivity::class.java))
-//            }
-//            else -> {
-//                FOODENABLE = 1
-//                startActivity(Intent(this, SummeryActivity::class.java))
-//            }
-//        }
     }
 
     //initTrans
@@ -1596,12 +1616,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             binding?.constraintLayout56?.isClickable = true
             binding?.constraintLayout56?.setBackgroundResource(R.drawable.btn_yellow_curve)
 
-//            binding?.constraintLayout56?.setBackgroundColor(
-//                ContextCompat.getColor(
-//                    this,
-//                    R.color.yellow
-//                )
-//            )
+
         } else {
             binding?.textView195?.hide()
             binding?.textView196?.hide()
@@ -1612,12 +1627,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             binding?.constraintLayout56?.isClickable = false
             binding?.constraintLayout56?.setBackgroundResource(R.drawable.grey_seat_curve)
 
-//            binding?.constraintLayout56?.setBackgroundColor(
-//                ContextCompat.getColor(
-//                    this,
-//                    R.color.unSelectBg
-//                )
-//            )
+
             if (!isDit) binding?.textView195?.text =
                 "No Seats Selected" else binding?.textView196?.text = "No Vehicle Slots Selected"
         }
@@ -1665,7 +1675,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                         )
                         binding?.textView195?.text = noOfSeatsSelected.size.toString() + " Seats |"
-//                        binding?.textView195?.append(wordToSpan)
                     }
                     else -> {
                         seatNo = if (binding?.textView195?.text.toString()
@@ -1683,11 +1692,9 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                         )
                         binding?.textView195?.text = noOfSeatsSelected.size.toString() + " Seats |"
-//                        binding?.textView195?.append(wordToSpan)
                     }
                 }
                 selectSeat.add(wordToSpan)
-//                binding?.txtArea?.setText(price.)
                 bigDecimal = BigDecimal(totalPrice.toString()).add(BigDecimal(price?.price))
                 totalPrice = bigDecimal.toFloat()
             } catch (e: java.lang.Exception) {
@@ -1699,7 +1706,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             "PAY " + getString(R.string.currency) + " " + Constant().removeTrailingZeroFormatter(
                 bigDecimal.toFloat()
             )
-//        binding?.seatCounterLayout?.seatCounter?.text = selectSeat.size.toString()
         priceVal = bigDecimal.toFloat().toDouble()
     }
 
@@ -1741,6 +1747,16 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         selectedSeatsBox?.add(selectedSeat1)
         calculatePrice()
         printLog("SeatClick--->${selectedSeat1}")
+
+// Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Seat Layout screen")
+            bundle.putString("var_book_seat_number", seat.sn)
+            GoogleAnalytics.hitEvent(this, "book_seat_sel", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
 
     }
 

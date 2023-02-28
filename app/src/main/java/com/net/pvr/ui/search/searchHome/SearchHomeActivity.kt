@@ -10,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivitySearchHomeBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -23,6 +24,7 @@ import com.net.pvr.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr.ui.search.searchHome.viewModel.HomeSearchViewModel
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.NetworkResult
+import com.net.pvr.utils.ga.GoogleAnalytics
 import com.net.pvr.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -289,8 +291,28 @@ class SearchHomeActivity : AppCompatActivity(),
             }
         }
         if (filtered.isEmpty()) {
+
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Home Screen")
+                bundle.putString("header_movie_name", filtered1.toString())
+                GoogleAnalytics.hitEvent(this, "header_search_bar_click", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
             searchHomeCinemaAdapter?.filterCinemaList(filtered1)
         } else {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Home Screen")
+                bundle.putString("header_cinema_name", filtered1.toString())
+                GoogleAnalytics.hitEvent(this, "header_search_bar_click", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
             searchHomeCinemaAdapter?.filterCinemaList(filtered)
         }
     }

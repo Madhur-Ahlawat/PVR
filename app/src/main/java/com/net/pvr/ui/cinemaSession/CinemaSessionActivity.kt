@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityCinemaSessionBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -38,6 +39,7 @@ import com.net.pvr.ui.filter.GenericFilter
 import com.net.pvr.ui.home.fragment.home.adapter.PromotionAdapter
 import com.net.pvr.ui.login.LoginActivity
 import com.net.pvr.utils.*
+import com.net.pvr.utils.ga.GoogleAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 import java.text.DateFormat
@@ -50,7 +52,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CinemaSessionActivity : AppCompatActivity(),
     CinemaSessionDaysAdapter.RecycleViewItemClickListenerCity,
-    CinemaSessionLanguageAdapter.RecycleViewItemClickListenerCity,CinemaSessionNearTheaterAdapter.RecycleViewItemClickListenerCity,
+    CinemaSessionLanguageAdapter.RecycleViewItemClickListenerCity,
+    CinemaSessionNearTheaterAdapter.RecycleViewItemClickListenerCity,
     GenericFilter.onButtonSelected {
     @Inject
     lateinit var preferences: PreferenceManager
@@ -90,8 +93,6 @@ class CinemaSessionActivity : AppCompatActivity(),
 
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
 
-
-
     //internet Check
     private var broadcastReceiver: BroadcastReceiver? = null
 
@@ -106,117 +107,118 @@ class CinemaSessionActivity : AppCompatActivity(),
 
     @SuppressLint("MissingPermission")
     private fun getLocation() {
-            if (isLocationEnabled() && checkPermissions()) {
-                mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
-                    val location: Location? = task.result
-                    val geocoder = Geocoder(this, Locale.getDefault())
-                    try {
-                        val addresses = location?.longitude?.let {
-                            location.latitude.let { it1 ->
-                                geocoder.getFromLocation(
-                                    it1, it, 1
-                                )
-                            }
+        if (isLocationEnabled() && checkPermissions()) {
+            mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
+                val location: Location? = task.result
+                val geocoder = Geocoder(this, Locale.getDefault())
+                try {
+                    val addresses = location?.longitude?.let {
+                        location.latitude.let { it1 ->
+                            geocoder.getFromLocation(
+                                it1, it, 1
+                            )
                         }
-                        if (addresses?.isNotEmpty() == true) {
+                    }
+                    if (addresses?.isNotEmpty() == true) {
 //                            val currentAddress: String = addresses[0].locality
 //                            preferences.cityNameCinema(currentAddress)
-                            lat = location.latitude.toString()
-                            lng = location.longitude.toString()
+                        lat = location.latitude.toString()
+                        lng = location.longitude.toString()
 
-                            if (intent.getStringExtra("addressCinema") == "yes") {
-                                authViewModel.cinemaSession(
-                                    preferences.getCityName(),
-                                    cinemaId,
-                                    lat,
-                                    lng,
-                                    preferences.getUserId(),
-                                    sessionDate,
-                                    lang,
-                                    format,
-                                    price1,
-                                    price1,
-                                    hc,
-                                    cc,
-                                    ad,
-                                    "no",
-                                    cinema_type,
-                                    ""
-                                )
-                            } else {
-                                authViewModel.cinemaSession(
-                                    preferences.getCityName(),
-                                    cinemaId,
-                                    lat,
-                                    lng,
-                                    preferences.getUserId(),
-                                    sessionDate,
-                                    lang,
-                                    format,
-                                    price1,
-                                    price1,
-                                    hc,
-                                    cc,
-                                    ad,
-                                    "no",
-                                    cinema_type,
-                                    ""
-                                )
-                            }
-
+                        if (intent.getStringExtra("addressCinema") == "yes") {
+                            authViewModel.cinemaSession(
+                                preferences.getCityName(),
+                                cinemaId,
+                                lat,
+                                lng,
+                                preferences.getUserId(),
+                                sessionDate,
+                                lang,
+                                format,
+                                price1,
+                                price1,
+                                hc,
+                                cc,
+                                ad,
+                                "no",
+                                cinema_type,
+                                ""
+                            )
+                        } else {
+                            authViewModel.cinemaSession(
+                                preferences.getCityName(),
+                                cinemaId,
+                                lat,
+                                lng,
+                                preferences.getUserId(),
+                                sessionDate,
+                                lang,
+                                format,
+                                price1,
+                                price1,
+                                hc,
+                                cc,
+                                ad,
+                                "no",
+                                cinema_type,
+                                ""
+                            )
                         }
 
-                    } catch (e: IOException) {
-                        e.printStackTrace()
                     }
 
+                } catch (e: IOException) {
+                    e.printStackTrace()
                 }
-            } else {
-                if (intent.getStringExtra("addressCinema") == "yes") {
-                    authViewModel.cinemaSession(
-                        preferences.getCityName(),
-                        cinemaId,
-                        lat,
-                        lng,
-                        preferences.getUserId(),
-                        sessionDate,
-                        lang,
-                        format,
-                        price1,
-                        price1,
-                        hc,
-                        cc,
-                        ad,
-                        "no",
-                        cinema_type,
-                        ""
-                    )
-                } else {
-                    authViewModel.cinemaSession(
-                        preferences.getCityName(),
-                        cinemaId,
-                        lat,
-                        lng,
-                        preferences.getUserId(),
-                        sessionDate,
-                        lang,
-                        format,
-                        price1,
-                        price1,
-                        hc,
-                        cc,
-                        ad,
-                        "no",
-                        cinema_type,
-                        ""
-                    )
-                }
+
             }
+        } else {
+            if (intent.getStringExtra("addressCinema") == "yes") {
+                authViewModel.cinemaSession(
+                    preferences.getCityName(),
+                    cinemaId,
+                    lat,
+                    lng,
+                    preferences.getUserId(),
+                    sessionDate,
+                    lang,
+                    format,
+                    price1,
+                    price1,
+                    hc,
+                    cc,
+                    ad,
+                    "no",
+                    cinema_type,
+                    ""
+                )
+            } else {
+                authViewModel.cinemaSession(
+                    preferences.getCityName(),
+                    cinemaId,
+                    lat,
+                    lng,
+                    preferences.getUserId(),
+                    sessionDate,
+                    lang,
+                    format,
+                    price1,
+                    price1,
+                    hc,
+                    cc,
+                    ad,
+                    "no",
+                    cinema_type,
+                    ""
+                )
+            }
+        }
 
     }
 
     private fun isLocationEnabled(): Boolean {
-        val locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationManager: LocationManager =
+            getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER
         )
@@ -255,9 +257,10 @@ class CinemaSessionActivity : AppCompatActivity(),
         }
         return false
     }
+
     private fun getShimmerData() {
-        Constant().getData(binding?.include38?.tvFirstText,binding?.include38?.tvSecondText)
-        Constant().getData(binding?.include38?.tvSecondText,null)
+        Constant().getData(binding?.include38?.tvFirstText, binding?.include38?.tvSecondText)
+        Constant().getData(binding?.include38?.tvSecondText, null)
     }
 
     private fun cinemaSessionDataLoad() {
@@ -350,6 +353,18 @@ class CinemaSessionActivity : AppCompatActivity(),
                 .into(binding?.imageView40!!)
             //Direction
             binding?.view64?.setOnClickListener {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "CINEMA PROFILE PAGE")
+//                    bundle.putString("var_login_city", cityNameMAin)
+                    GoogleAnalytics.hitEvent(this, "cinema_movie_directions", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
+
+
                 Constant().openMap(this, output.lat, output.lang)
             }
             //Share
@@ -369,7 +384,7 @@ class CinemaSessionActivity : AppCompatActivity(),
             binding?.recyclerView15?.adapter = cinemaSessionCinParentAdapter
             binding?.textView99?.text = output.cn
 
-            if (output.newCinemaText!= null && output.newCinemaText!= ""){
+            if (output.newCinemaText != null && output.newCinemaText != "") {
                 binding?.cinemaLocation?.show()
                 binding?.cinemaLocation?.text = output.newCinemaText
             } else {
@@ -433,13 +448,13 @@ class CinemaSessionActivity : AppCompatActivity(),
             binding?.recyclerView13?.adapter = cinemaSessionDaysAdapter
 
             //Promotion
-            if (output.phd!=null && output.phd.isNotEmpty()) {
+            if (output.phd != null && output.phd.isNotEmpty()) {
                 binding?.constraintLayout16?.show()
                 val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
                 val cinemaSessionLanguageAdapter = PromotionAdapter(this, output.phd)
                 binding?.recyclerView14?.layoutManager = gridLayout
                 binding?.recyclerView14?.adapter = cinemaSessionLanguageAdapter
-            }else{
+            } else {
                 binding?.constraintLayout16?.hide()
             }
 
@@ -469,22 +484,30 @@ class CinemaSessionActivity : AppCompatActivity(),
             )
             filterPoints[Constant.FilterType.SHOWTIME_FILTER] = ArrayList()
             filterPoints[Constant.FilterType.CINEMA_FORMAT] = ArrayList()
-            filterPoints[Constant.FilterType.SPECIAL_SHOW] =
-                ArrayList()
+            filterPoints[Constant.FilterType.SPECIAL_SHOW] = ArrayList()
             gFilter.openFilters(
                 this, "ShowTimeT", this, appliedFilterType, appliedFilterItem, filterPoints
             )
         }
 //Theater
         authViewModel.cinemaNearTheater(
-            preferences.getCityName(),
-            cinemaLat,
-            cinemaLng,
-            cinemaId
+            preferences.getCityName(), cinemaLat, cinemaLng, cinemaId
         )
     }
 
     override fun dateClick(comingSoonItem: CinemaSessionResponse.Output.Bd) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "CINEMA PROFILE PAGE")
+//            bundle.putString("var_login_city", cityNameMAin)
+            GoogleAnalytics.hitEvent(this, "cinema_movie_show_time", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
+
+
         openTime = 1
         sessionDate = comingSoonItem.dt
         if (intent.getStringExtra("addressCinema") == "yes") {
@@ -532,39 +555,38 @@ class CinemaSessionActivity : AppCompatActivity(),
 
     }
 
-//    Theater Shows
+    //    Theater Shows
     override fun showsClick(comingSoonItem: CinemaNearTheaterResponse.Output.C) {
-        cinemaId= comingSoonItem.cId.toString()
-    authViewModel.cinemaSession(
-        preferences.getCityName(),
-        cinemaId,
-        lat,
-        lng,
-        preferences.getUserId(),
-        sessionDate,
-        lang,
-        format,
-        price1,
-        price1,
-        hc,
-        cc,
-        ad,
-        "no",
-        cinema_type,
-        ""
-    )
+        cinemaId = comingSoonItem.cId.toString()
+        authViewModel.cinemaSession(
+            preferences.getCityName(),
+            cinemaId,
+            lat,
+            lng,
+            preferences.getUserId(),
+            sessionDate,
+            lang,
+            format,
+            price1,
+            price1,
+            hc,
+            cc,
+            ad,
+            "no",
+            cinema_type,
+            ""
+        )
     }
 
-//Map theater
+    //Map theater
     override fun nearTheaterDirectionClick(comingSoonItem: CinemaNearTheaterResponse.Output.C) {
-        Constant().openMap(this,comingSoonItem.lat,comingSoonItem.lang )
+        Constant().openMap(this, comingSoonItem.lat, comingSoonItem.lang)
     }
 
     //Internet Check
     private fun broadcastIntent() {
         registerReceiver(
-            broadcastReceiver,
-            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+            broadcastReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         )
     }
 
@@ -575,16 +597,14 @@ class CinemaSessionActivity : AppCompatActivity(),
         filterItemSelected: String?
     ) {
         if (type!!.size > 0) {
-            println("type--->$type---->$name---->")
-
             binding?.filterFab?.setImageResource(R.drawable.filter_selected)
             appliedFilterItem = name!!
             val containLanguage = type.contains("language")
             if (containLanguage) {
                 val index = type.indexOf("language")
                 val value: String = name[type[index]].toString()
-                if (value != null && !value.equals("", ignoreCase = true))
-                    lang = value.uppercase(Locale.getDefault()
+                if (value != null && !value.equals("", ignoreCase = true)) lang = value.uppercase(
+                    Locale.getDefault()
                 ) else lang = "ALL"
             }
 
@@ -595,31 +615,29 @@ class CinemaSessionActivity : AppCompatActivity(),
                 if (value != null && !value.equals("", ignoreCase = true)) {
                     val pos = value.indexOf("(") + 1
                     value = value.substring(pos)
-                    val splitSymbol = value.split("-".toRegex()).dropLastWhile { it.isEmpty() }
-                        .toTypedArray()
-                   show1 = splitSymbol[0]
-                   show2 = splitSymbol[1]
+                    val splitSymbol =
+                        value.split("-".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                    show1 = splitSymbol[0]
+                    show2 = splitSymbol[1]
                     val inputFormat: DateFormat = SimpleDateFormat("h:mma")
                     val outputFormatter: DateFormat = SimpleDateFormat("H:mm")
                     try {
-                       show1 =
-                            outputFormatter.format(inputFormat.parse(show1))
-                       show2 =
-                            outputFormatter.format(inputFormat.parse(show2))
+                        show1 = outputFormatter.format(inputFormat.parse(show1))
+                        show2 = outputFormatter.format(inputFormat.parse(show2))
                     } catch (e: ParseException) {
                         e.printStackTrace()
                     }
                 } else {
-                   show1 = "ALL"
-                   show2 = "ALL"
+                    show1 = "ALL"
+                    show2 = "ALL"
                 }
             }
             val containFormat = type.contains("format")
             if (containFormat) {
                 val index = type.indexOf("format")
                 val value: String = name[type[index]].toString()
-                if (value != null && !value.equals("", ignoreCase = true))
-                    format = value.uppercase(Locale.getDefault()
+                if (value != null && !value.equals("", ignoreCase = true)) format = value.uppercase(
+                    Locale.getDefault()
                 ) else format = "ALL"
             }
             val containPrice = type.contains("price")
@@ -652,23 +670,21 @@ class CinemaSessionActivity : AppCompatActivity(),
                 val index = type.indexOf("accessability")
                 val value: String? = name[type[index]]
                 if (value != null && !value.equals("", ignoreCase = true)) {
-                    if (value.contains("Wheelchair"))
-                        hc = "hc"
-                    if (value.contains("Subtitles"))
-                        special = "RST"
+                    if (value.contains("Wheelchair")) hc = "hc"
+                    if (value.contains("Subtitles")) special = "RST"
                 } else {
-                   special = "ALL"
-                   hc = "ALL"
+                    special = "ALL"
+                    hc = "ALL"
                 }
                 Log.d("ShowSelection", "onAply filter accessability: $value")
             }
 
             var show = "ALL"
             var price = "ALL"
-            if (price1 != "ALL"){
+            if (price1 != "ALL") {
                 price = "$price1-$price2"
             }
-            if (show1 != "ALL"){
+            if (show1 != "ALL") {
                 show = "$show1-$show2"
             }
 
@@ -701,8 +717,7 @@ class CinemaSessionActivity : AppCompatActivity(),
     private fun selectedFilter(filterItemSelected: HashMap<String, String>): Boolean {
         var selected = false
         for (key: Map.Entry<String, String> in filterItemSelected) {
-            println("selectedFilters---->" + key.key + "----")
-            if (!key.value.equals("", ignoreCase = true) && !key.value!!.contains("ALL")) {
+            if (!key.value.equals("", ignoreCase = true) && !key.value.contains("ALL")) {
                 selected = true
             }
         }

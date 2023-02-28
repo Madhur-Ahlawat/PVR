@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.privateScreenings.PrivateScreeningsActivity">
 
     <View
@@ -17,7 +18,7 @@
 
     <include
         android:id="@+id/include5"
-        layout="@layout/common_toolbar"
+        layout="@layout/toolbar"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dimen_60dp"
         app:layout_constraintEnd_toEndOf="@+id/view23"
@@ -25,87 +26,81 @@
         app:layout_constraintTop_toTopOf="@+id/view23" />
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
-        android:layout_width="0dp"
+        android:id="@+id/nestedScrollView6"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@+id/textView29"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/view23"
-        app:layout_constraintTop_toBottomOf="@+id/include5"
-        tools:ignore="SpeakableTextPresentCheck">
+        android:layout_above="@+id/tvSend_request"
+        android:layout_below="@id/include5"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/tvSend_request"
+        app:layout_constraintTop_toBottomOf="@+id/include5">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imageView22"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/private_screen_banner"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription" />
-
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="16dp"
-                android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/imageView22">
+                android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/text_input_layout_MovieType"
-                    style="@style/styleSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/movieType"
-                        style="@style/H4SizeBold"
+                    <com.net.pvr.utils.view.AutoCompleteDropDown
+                        android:id="@+id/MovieType_autodrop"
+                        style="@style/H2HNStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/movie_type"
                         android:inputType="textNoSuggestions"
                         android:textSize="16sp" />
-
                 </com.google.android.material.textfield.TextInputLayout>
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/text_input_layout_cinema"
-                    style="@style/styleSpinner"
+                    style="@style/StyledPrivate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp">
 
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/cinemaAutoDrop"
-                        style="@style/H4SizeBold"
+                    <com.net.pvr.utils.view.AutoCompleteDropDown
+                        android:id="@+id/Cinema_autodrop"
+                        style="@style/H2HNStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/cinema"
                         android:inputType="textNoSuggestions"
                         android:textSize="16sp" />
+
                 </com.google.android.material.textfield.TextInputLayout>
 
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/text_input_layout_movie"
-                    style="@style/styleSpinner"
+                    style="@style/StyledPrivate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp">
 
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/movieAutoDrop"
-                        style="@style/H4SizeBold"
+                    <com.net.pvr.utils.view.AutoCompleteDropDown
+                        android:id="@+id/Movie_autodrop"
+                        style="@style/H2HNStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/movie"
@@ -118,15 +113,15 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/TextInputLayout_et_movie"
-                    style="@style/H1Size"
+                    style="@style/StyledPrivate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:visibility="gone">
 
-                    <androidx.appcompat.widget.AppCompatEditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_movie"
-                        style="@style/H2SizeDark"
+                        style="@style/H2HNStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/movie"
@@ -140,21 +135,20 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/text_input_layout_Seat"
-                    style="@style/H1Size"
+                    style="@style/StyledPrivate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp">
 
-                    <androidx.appcompat.widget.AppCompatEditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_seats"
-                        style="@style/H2SizeDark"
+                        style="@style/H2HNStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/no_of_seats"
                         android:inputType="number"
                         android:textColor="@color/pvr_dark_black"
                         android:textSize="16sp" />
-
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -164,15 +158,17 @@
 
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textDate"
-                        style="@style/H1Size"
+                        android:id="@+id/text_input_layout_edob"
+                        style="@style/StyledPrivate"
+                        android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp">
 
-                        <androidx.appcompat.widget.AppCompatEditText
+
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/dob_et"
-                            style="@style/H2SizeDark"
+                            style="@style/H2HNStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:cursorVisible="false"
@@ -194,21 +190,20 @@
                         android:src="@drawable/ic_dob_icon"
                         tools:ignore="ContentDescription" />
 
-
                 </RelativeLayout>
 
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/TextInputLayout_et_name"
-                    style="@style/H1Size"
+                    style="@style/StyledPrivate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:visibility="visible">
 
-                    <androidx.appcompat.widget.AppCompatEditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_name"
-                        style="@style/H2SizeDark"
+                        style="@style/H2HNStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/name"
@@ -222,15 +217,15 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/TextInputLayout_et_email"
-                    style="@style/H1Size"
+                    style="@style/StyledPrivate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:visibility="visible">
 
-                    <androidx.appcompat.widget.AppCompatEditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_email"
-                        style="@style/H2SizeDark"
+                        style="@style/H2HNStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/email"
@@ -244,15 +239,15 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/TextInputLayout_et_number"
-                    style="@style/H1Size"
+                    style="@style/StyledPrivate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:visibility="visible">
 
-                    <androidx.appcompat.widget.AppCompatEditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_number"
-                        style="@style/H2SizeDark"
+                        style="@style/H2HNStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/mobile"
@@ -267,23 +262,23 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/TextInputLayout_et_requirement"
-                    style="@style/H1Size"
+                    style="@style/StyledPrivate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:visibility="visible">
 
-                    <androidx.appcompat.widget.AppCompatEditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_requirement"
-                        style="@style/H2SizeDark"
+                        style="@style/H2HNStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/your_requirements"
                         android:inputType="text"
                         android:maxLength="250"
                         android:textColor="@color/pvr_dark_black"
-                        android:textSize="16sp" />
-
+                        android:textSize="16sp"
+                        android:importantForAutofill="no" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -308,20 +303,21 @@
             </LinearLayout>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 
     <TextView
-        android:id="@+id/textView29"
-        style="@style/H3SizeBold"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/dimen_60dp"
+        android:id="@+id/tvSend_request"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:background="@color/yellow"
         android:gravity="center"
+        android:padding="10dp"
         android:text="@string/send_request"
+        android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/nestedScrollView"
-        app:layout_constraintStart_toStartOf="@+id/nestedScrollView" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

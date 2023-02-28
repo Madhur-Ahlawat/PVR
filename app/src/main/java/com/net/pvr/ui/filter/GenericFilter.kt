@@ -1,5 +1,6 @@
 package com.net.pvr.ui.filter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Rect
@@ -12,6 +13,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
@@ -42,13 +44,6 @@ class GenericFilter : GenericFilterAdapter.onFilterItemSelected {
     var cinemaStr = ""
     var accessabilityStr = ""
 
-    //        HashMap<String, ArrayList<String>> filterPoints = new HashMap<>();
-//        filterPoints.put(PCConstants.FilterType.LANG_FILTER, new ArrayList<>(Arrays.asList(new String[]{"English", "Kannada", "Hindi", "Punjabi", "Tamil", "Telugu"})));
-//        filterPoints.put(PCConstants.FilterType.GENERE_FILTER, new ArrayList<>(Arrays.asList(new String[]{"Drama", "Action", "Comedy", "Thriller", "Romance", "Adventure"})));
-//        filterPoints.put(PCConstants.FilterType.FORMAT_FILTER, new ArrayList<>(Arrays.asList(new String[]{"3D", "IMAX", "4DX", "Playhouse", "GOLD", "ONYX"})));
-//        filterPoints.put(PCConstants.FilterType.ACCESSABILITY_FILTER, new ArrayList<>(Arrays.asList(new String[]{"Subtitles", "Wheelchair Friendly"})));
-//        filterPoints.put(PCConstants.FilterType.PRICE_FILTER, new ArrayList<>(Arrays.asList(new String[]{"Below ₹300", "₹301 - 500", "₹501 - 1000", "₹1001 - 1500", "Above ₹1500"})));
-//        filterPoints.put(PCConstants.FilterType.SHOWTIME_FILTER, new ArrayList<>(Arrays.asList(new String[]{"Morning (6:00am-11:59am)", "Afternoon (12:00am-3:59pm)", "Evening (4:00pm-7:59pm)", "Night (8:00pm-11:59pm)"})));
     var filters = HashMap<String, ArrayList<String>>()
     var priceStr = ""
     var timeStr = ""
@@ -67,7 +62,6 @@ class GenericFilter : GenericFilterAdapter.onFilterItemSelected {
         selectedFilters = filteredSelectedItem
         filters = allFilterList
 
-//        type = new ArrayList<>();
         val dialog = BottomSheetDialog(context, R.style.NoBackgroundDialogTheme)
         val behavior: BottomSheetBehavior<*> = dialog.behavior
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
@@ -77,14 +71,12 @@ class GenericFilter : GenericFilterAdapter.onFilterItemSelected {
         val displayRectangle = Rect()
         dialog.window!!.decorView
             .getWindowVisibleDisplayFrame(displayRectangle)
-        val mainView = dialog.findViewById<View>(R.id.mainView) as LinearLayout?
+        val mainView = dialog.findViewById<View>(R.id.mainView) as ConstraintLayout?
         val params = FrameLayout.LayoutParams(
             (displayRectangle.width() * 1f).toInt(),
             (displayRectangle.height() * 0.8f).toInt()
         )
         mainView!!.layoutParams = params
-        //        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//        dialog.getWindow().setGravity(Gravity.BOTTOM);
         val adapterGeners: GenericFilterAdapter
         val adapterLanguage: GenericFilterAdapter
         val adapterFormat: GenericFilterAdapter
@@ -293,6 +285,7 @@ class GenericFilter : GenericFilterAdapter.onFilterItemSelected {
                 context
             )
         }
+
         timeFilterLay.setOnClickListener { view: View? ->
             updateUI(
                 time_filter_tabs,
@@ -339,11 +332,7 @@ class GenericFilter : GenericFilterAdapter.onFilterItemSelected {
         val accessabilityList = filters[Constant.FilterType.ACCESSABILITY_FILTER]!!
         val cinemaFormatList = filters[Constant.FilterType.CINEMA_FORMAT]!!
         val specialShowList = filters[Constant.FilterType.SPECIAL_SHOW]!!
-        //       for (String lang : languageList) {
-//           FilterData data = new FilterData(lang, false);
-//           tabList.add(data);
-//       }
-//        ArrayList<FilterData> languageList = new ArrayList<>();
+
         if (languageList.size > 0) {
             val layoutManager = FlexboxLayoutManager(context)
             layoutManager.flexDirection = FlexDirection.ROW
@@ -397,15 +386,6 @@ class GenericFilter : GenericFilterAdapter.onFilterItemSelected {
             priceFilterLay.visibility = View.GONE
         }
 
-
-//        if (showTimeList.size() > 0) {
-//            timeFilterLay.setVisibility(View.VISIBLE);
-//            adapterShowTime = new GenericFilterAdapter(showTimeList, context, "time", this, selectedFilters, type);
-//            recyclerShowTIme.setLayoutManager(new StaggeredGridLayoutManager(2, LinearLayoutManager.HORIZONTAL));
-//            recyclerShowTIme.setAdapter(adapterShowTime);
-//        }else {
-//            timeFilterLay.setVisibility(View.GONE);
-//        }
         if (accessabilityList.size > 0) {
             val layoutManager = FlexboxLayoutManager(context)
             layoutManager.flexDirection = FlexDirection.ROW
@@ -549,6 +529,7 @@ class GenericFilter : GenericFilterAdapter.onFilterItemSelected {
         fun onReset()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setAlreadySelected() {
         if (type.size > 0) {
             val containLanguage = type.contains("language")
@@ -666,7 +647,7 @@ class GenericFilter : GenericFilterAdapter.onFilterItemSelected {
             if (layout_filter_tabs!!.visibility == View.VISIBLE) {
                 layout_filter_tabs.visibility = View.GONE
                 dropImage!!.background =
-                    ContextCompat.getDrawable(context, R.drawable.ic_arrow_drop)
+                    ContextCompat.getDrawable(context, R.drawable.arrow_down)
             } else {
                 layout_filter_tabs.visibility = View.VISIBLE
                 dropImage!!.background = ContextCompat.getDrawable(context, R.drawable.arrow_up)

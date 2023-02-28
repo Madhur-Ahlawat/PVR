@@ -25,6 +25,7 @@ import com.google.android.gms.location.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.net.pvr.R
 import com.net.pvr.databinding.ActivitySelectCityBinding
 import com.net.pvr.databinding.CitySelectDialogBinding
 import com.net.pvr.databinding.LocationDialogBinding
@@ -40,11 +41,10 @@ import com.net.pvr.ui.location.selectCity.response.SelectCityResponse
 import com.net.pvr.ui.location.selectCity.viewModel.SelectCityViewModel
 import com.net.pvr.ui.scanner.bookings.SelectBookingsActivity
 import com.net.pvr.utils.*
+import com.net.pvr.utils.ga.GoogleAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
-import com.net.pvr.R
-import com.net.pvr.utils.ga.GoogleAnalytics
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
@@ -79,6 +79,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         binding = ActivitySelectCityBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
         manageFunction()
     }
 
@@ -94,15 +95,14 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             "no",
             "no"
         )
-
 //Location
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         cityName = preferences.getCityName()
 
         // Location City Name
-        if (preferences.getCityName().isEmpty()){
+        if (preferences.getCityName().isEmpty()) {
             binding?.consSelectedLocation?.show()
-        }else{
+        } else {
             binding?.txtSelectedCity?.text = preferences.getCityName()
             binding?.consSelectedLocation?.show()
         }
@@ -233,7 +233,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
             bundle.putString("var_login_city", city[position].name)
             GoogleAnalytics.hitEvent(this, "login_city", bundle)
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
@@ -244,8 +244,19 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
                 intent.putExtra("cid", cid)
                 startActivity(intent)
             } else {
+// Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
+                    bundle.putString("var_login_city", city[position].name)
+                    GoogleAnalytics.hitEvent(this, "home_city_name", bundle)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+
                 val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
-                intent.putExtra("from",from)
+                intent.putExtra("from", from)
                 startActivity(intent)
                 finish()
             }
@@ -256,12 +267,22 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
 
     private fun retrieveData(output: SelectCityResponse.Output) {
 //        if (preferences.getIsLogin()){
-            preferences.saveCityName(output.cc.name)
+        preferences.saveCityName(output.cc.name)
 //        }
 
         if (enableLocation == 1) {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
+                bundle.putString("var_login_city", output.cc.name)
+                GoogleAnalytics.hitEvent(this, "home_city_name", bundle)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
             val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
-            intent.putExtra("from",from)
+            intent.putExtra("from", from)
             startActivity(intent)
             finish()
         } else {
@@ -277,7 +298,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             binding?.recyclerCity?.adapter = selectCityAdapter
 
             val gridLayout3 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-            searchCityAdapter = SearchCityAdapter(filterCityList!!,  this,preferences.getCityName())
+            searchCityAdapter = SearchCityAdapter(filterCityList!!, this, preferences.getCityName())
             binding?.recyclerViewSearchCity?.layoutManager = gridLayout3
             binding?.recyclerViewSearchCity?.adapter = searchCityAdapter
 
@@ -301,7 +322,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
             bundle.putString("var_login_city", city[position].name)
             GoogleAnalytics.hitEvent(this, "login_city", bundle)
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
@@ -312,8 +333,18 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
                 intent.putExtra("cid", cid)
                 startActivity(intent)
             } else {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
+                    bundle.putString("var_login_city", city[position].name)
+                    GoogleAnalytics.hitEvent(this, "home_city_name", bundle)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
                 val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
-                intent.putExtra("from",from)
+                intent.putExtra("from", from)
                 startActivity(intent)
                 finish()
             }
@@ -322,7 +353,10 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         }
     }
 
-    override fun onItemClickCityImgCity(city: ArrayList<SelectCityResponse.Output.Pc>, position: Int) {
+    override fun onItemClickCityImgCity(
+        city: ArrayList<SelectCityResponse.Output.Pc>,
+        position: Int
+    ) {
         list = arrayListOf(*city[position].subcities.split(",").toTypedArray())
         list.add(0, "All")
         binding?.consSelectedLocation?.show()
@@ -336,7 +370,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
             bundle.putString("var_login_city", city[position].name)
             GoogleAnalytics.hitEvent(this, "login_city", bundle)
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
@@ -347,8 +381,18 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
                 intent.putExtra("cid", cid)
                 startActivity(intent)
             } else {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
+                    bundle.putString("var_login_city", city[position].subcities)
+                    GoogleAnalytics.hitEvent(this, "home_city_name", bundle)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
                 val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
-                intent.putExtra("from",from)
+                intent.putExtra("from", from)
                 startActivity(intent)
                 finish()
             }
@@ -423,7 +467,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
                 bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
                 bundle.putString("var_login_city", cityNameMAin)
                 GoogleAnalytics.hitEvent(this, "login_city", bundle)
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
         } else {
@@ -434,7 +478,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
                 bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
                 bundle.putString("var_login_city", city)
                 GoogleAnalytics.hitEvent(this, "login_city", bundle)
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
@@ -445,8 +489,18 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             intent.putExtra("cid", cid)
             startActivity(intent)
         } else {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
+                bundle.putString("var_login_city", city)
+                GoogleAnalytics.hitEvent(this, "home_city_name", bundle)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
             val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
-            intent.putExtra("from",from)
+            intent.putExtra("from", from)
             startActivity(intent)
             finish()
         }
@@ -487,7 +541,8 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
                         preferences.saveLongitudeData(long.toString())
 
                         if (from == "qr") {
-                            val intent = Intent(this@SelectCityActivity, SelectBookingsActivity::class.java)
+                            val intent =
+                                Intent(this@SelectCityActivity, SelectBookingsActivity::class.java)
                             intent.putExtra("from", "qr")
                             intent.putExtra("cid", cid)
                             startActivity(intent)
@@ -547,8 +602,22 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             }
         }
     }
-//    Location Dialog
+
+    //    Location Dialog
     private fun enableLocation() {
+
+        if (from == "Homepage") {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
+                bundle.putString("var_enable_location", "")
+                GoogleAnalytics.hitEvent(this, "home_city_name", bundle)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
         val dialog = BottomSheetDialog(this@SelectCityActivity, R.style.NoBackgroundDialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED

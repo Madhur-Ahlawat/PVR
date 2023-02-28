@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityHomeBinding
@@ -55,6 +56,7 @@ import com.net.pvr.ui.ticketConfirmation.response.TicketBookedResponse
 import com.net.pvr.utils.*
 import com.net.pvr.utils.Constant.Companion.PRIVILEGEVOUCHER
 import com.net.pvr.utils.Constant.Companion.PrivilegeHomeResponseConst
+import com.net.pvr.utils.ga.GoogleAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 import java.util.*
@@ -146,7 +148,17 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                     } else {
                         binding?.constraintLayout55?.hide()
                     }
+                    // Hit Event
+                    try {
+                        val bundle = Bundle()
+                        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Homepage")
+                        GoogleAnalytics.hitEvent(this, "home_page_click ", bundle)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
                 }
+
                 R.id.cinemaFragment -> {
                     setCurrentFragment(secondFragment)
                 }

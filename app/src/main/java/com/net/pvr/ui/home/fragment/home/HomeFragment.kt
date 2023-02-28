@@ -204,13 +204,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             binding?.constraintLayout135?.hide()
         }
 
-        getShimmerData()
-        movedNext()
-        homeApi()
-        nextBooking()
-        createQr()
-        getMovieFormatFromApi()
-        makeToTop()
 
 
         //internet Check
@@ -224,6 +217,15 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             val itemView = newView as BottomNavigationItemView
             itemView.performClick()
         }
+
+
+        getShimmerData()
+        movedNext()
+        homeApi()
+        nextBooking()
+        createQr()
+        getMovieFormatFromApi()
+        makeToTop()
     }
 
     private fun makeToTop() {
@@ -252,17 +254,47 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     private fun movedNext() {
         // manage top bar ui
         binding?.includeAppBar?.searchBtn?.setOnClickListener {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Home Screen")
+                bundle.putString("var_header_search", "")
+                GoogleAnalytics.hitEvent(requireActivity(), "header_search_bar_click", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
             val intent = Intent(requireActivity(), SearchHomeActivity::class.java)
             startActivity(intent)
         }
 
         // Select City
         binding?.includeAppBar?.txtCity?.setOnClickListener {
+
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Homepage")
+                GoogleAnalytics.hitEvent(requireActivity(), "home_location", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
             val intent = Intent(requireActivity(), SelectCityActivity::class.java)
+            intent.putExtra("from","Homepage")
             startActivity(intent)
         }
         // Qr COde
         binding?.includeAppBar?.scanQr?.setOnClickListener {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Home Screen")
+//                bundle.putString("var_header_search", "")
+                GoogleAnalytics.hitEvent(requireActivity(), "hearder_qr_code", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
             val intent = Intent(requireActivity(), ScannerActivity::class.java)
             startActivity(intent)
         }
@@ -351,7 +383,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    println("loadingHome--->")
                     loader = LoaderDialog(R.string.pleaseWait)
                     loader?.show(requireActivity().supportFragmentManager, null)
                 }
@@ -475,6 +506,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             filterPoints[Constant.FilterType.SHOWTIME_FILTER] = ArrayList()
             filterPoints[Constant.FilterType.CINEMA_FORMAT] = ArrayList()
             filterPoints[Constant.FilterType.SPECIAL_SHOW] = ArrayList()
+
             gFilter?.openFilters(
                 context,
                 "Home",
@@ -495,7 +527,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     @SuppressLint("SetTextI18n")
     private fun recommend(rm: HomeResponse.Mv) {
         if (upcomingBooking) {
-
             binding?.homeRecommend?.CLLayout1?.hide()
             binding?.homeRecommend?.CLLayout2?.show()
         } else {
@@ -926,6 +957,18 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                             buttonPressed.add("$s-language")
                     }
                     binding?.filterFab?.setImageResource(R.drawable.filter_selected)
+
+
+                    // Hit Event
+                    try {
+                        val bundle = Bundle()
+                        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Homepage")
+                        bundle.putString("home_filter_genre", value)
+                        GoogleAnalytics.hitEvent(requireActivity(), "home_filter_genre", bundle)
+                    }catch (e:Exception){
+                        e.printStackTrace()
+                    }
+
                 } else {
                     binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
                     buttonPressed = ArrayList()
@@ -935,6 +978,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             }else{
                 buttonPressed = ArrayList()
             }
+
             val containGenres = filterItemSelected.contains("geners")
             if (containGenres) {
                 val index = type.indexOf("geners")
@@ -948,6 +992,16 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                         if (!generaSelected?.contains(s)!!) generaSelected?.add("$s-geners")
                     }
                     binding?.filterFab?.setImageResource(R.drawable.filter_selected)
+
+                    // Hit Event
+                    try {
+                        val bundle = Bundle()
+                        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Homepage")
+                        bundle.putString("var_home_filter", valuesString.toString())
+                        GoogleAnalytics.hitEvent(requireActivity(), "home_filter_genre", bundle)
+                    }catch (e:Exception){
+                        e.printStackTrace()
+                    }
                 } else {
                     binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
                     generaSelected = ArrayList()
@@ -955,6 +1009,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             }else{
                 generaSelected = ArrayList()
             }
+
             val containAccessibility = filterItemSelected.contains("accessability")
             if (containAccessibility) {
                 val index = type.indexOf("accessability")
@@ -963,9 +1018,20 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                     special = "English Subtitle"
                     binding?.filterFab?.setImageResource(R.drawable.filter_selected)
                 }
+
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Homepage")
+                    bundle.putString("home_filter_subtiltel", value)
+                    GoogleAnalytics.hitEvent(requireActivity(), "home_filter_genre", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
             }else{
                 special = "ALL"
             }
+
             getMovieFormatFromApi()
         } else {
             binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
@@ -1132,6 +1198,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 }catch (e:Exception){
                     e.printStackTrace()
                 }
+
                 rlBanner?.hide()
                 listener?.onShowNotification()
                 listener?.onShowPrivilege()

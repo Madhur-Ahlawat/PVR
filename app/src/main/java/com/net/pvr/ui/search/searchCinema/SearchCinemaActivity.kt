@@ -10,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivitySearchCinemaBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -21,6 +22,7 @@ import com.net.pvr.ui.search.searchHome.adapter.SearchHomeCinemaAdapter
 import com.net.pvr.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.NetworkResult
+import com.net.pvr.utils.ga.GoogleAnalytics
 import com.net.pvr.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -182,6 +184,16 @@ class SearchCinemaActivity : AppCompatActivity(),
     }
 
     private fun filter(text: String) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Cinemas 'All Theater")
+            bundle.putString("header_cinema_name", text)
+            GoogleAnalytics.hitEvent(this, "var_header_cinema_name", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
         val filtered: ArrayList<HomeSearchResponse.Output.T> = ArrayList()
         val filtered1: ArrayList<HomeSearchResponse.Output.T> = ArrayList()
         for (item in filterCinemaList!!) {
@@ -191,12 +203,13 @@ class SearchCinemaActivity : AppCompatActivity(),
                 filtered.add(item)
             }
         }
-        if (filtered.isEmpty()) {
-            searchHomeCinemaAdapter?.filterCinemaList(filtered1)
-        } else {
+        searchHomeCinemaAdapter?.filterCinemaList(filtered1)
 
-            searchHomeCinemaAdapter?.filterCinemaList(filtered)
-        }
+//        if (filtered.isEmpty()) {
+//            searchHomeCinemaAdapter?.filterCinemaList(filtered1)
+//        } else {
+//            searchHomeCinemaAdapter?.filterCinemaList(filtered)
+//        }
     }
 
 

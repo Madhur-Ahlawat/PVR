@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -89,7 +90,7 @@ public class GenericFilterHome implements GenericFilterAdapter.onFilterItemSelec
         Rect displayRectangle = new Rect();
         dialog.getWindow().getDecorView()
                 .getWindowVisibleDisplayFrame(displayRectangle);
-        LinearLayout mainView = dialog.findViewById(R.id.mainView);
+        ConstraintLayout mainView = dialog.findViewById(R.id.mainView);
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams((int) (displayRectangle.width() * 1f),(int) (displayRectangle.height() * 0.8f));
 //        mainView.setLayoutParams(params);

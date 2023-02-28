@@ -3,6 +3,7 @@ package com.net.pvr.ui.privateScreenings
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.net.pvr.R
 import com.net.pvr.databinding.ActivityPrivateScreeningsBinding
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.privateScreenings.viewModel.PrivateScreenViewModel
@@ -10,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PrivateScreeningsActivity : AppCompatActivity() {
-//    @Inject
+    //    @Inject
 //    lateinit var preferences: AppPreferences
     private var binding: ActivityPrivateScreeningsBinding? = null
     private var loader: LoaderDialog? = null
@@ -26,5 +27,12 @@ class PrivateScreeningsActivity : AppCompatActivity() {
 
     private fun sendYourRequest() {
 
+        // Back Press
+        binding?.include5?.imageView58?.setOnClickListener {
+            finish()
+        }
+
+        // title
+        binding?.include5?.textView108?.text = getString(R.string.private_screening)
     }
 }

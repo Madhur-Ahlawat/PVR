@@ -1,5 +1,6 @@
 package com.net.pvr.ui.cinemaSession.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -25,11 +26,10 @@ class CinemaSessionDaysAdapter(
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
 
         with(holder){
             with(nowShowingList[position]){
-
 
                 if (position == rowIndex){
                     holder.itemView.setBackgroundResource(R.drawable.bottom_bar_yellow)

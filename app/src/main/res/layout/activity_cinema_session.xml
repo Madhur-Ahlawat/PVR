@@ -499,6 +499,7 @@
         android:layout_height="match_parent"
         android:gravity="bottom"
         android:layout_marginBottom="@dimen/dimen_50dp">
+
         <com.net.pvr.utils.view.MovableFloatingActionButton
             android:id="@+id/filter_fab"
             android:layout_width="wrap_content"
@@ -513,6 +514,7 @@
             app:layout_anchorGravity="bottom|right|end"
             app:tint="@null"
             tools:ignore="SpeakableTextPresentCheck" />
+
     </RelativeLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
