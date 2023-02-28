@@ -42,7 +42,6 @@ class PaymentStatusActivity : AppCompatActivity() {
     private var paidAmount = ""
     private var title = ""
     private var upiCount = 0
-    private var progressCount = 0
     private var upiLoader = false
 
     //internet Check
@@ -55,16 +54,20 @@ class PaymentStatusActivity : AppCompatActivity() {
         binding = ActivityPaymentStatusBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        paidAmount = intent.getStringExtra("paidAmount").toString()
-        title = intent.getStringExtra("title").toString()
-        binding?.include27?.textView108?.text = title
-        binding?.textView287?.text = "₹$paidAmount"
 
         manageFunction()
     }
 
     @SuppressLint("SetTextI18n")
     private fun manageFunction() {
+
+        paidAmount = intent.getStringExtra("paidAmount").toString()
+        title = intent.getStringExtra("title").toString()
+        binding?.include27?.textView108?.text = title
+        binding?.textView287?.text = "₹$paidAmount"
+
+
+
         binding?.circularProgress?.interpolator = LinearInterpolator()
         binding?.circularProgress?.maxProgress = 60.0
         binding?.circularProgress?.setProgressTextAdapter(progressTextAdapter)

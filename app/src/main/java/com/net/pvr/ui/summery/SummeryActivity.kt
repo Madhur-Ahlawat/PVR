@@ -28,6 +28,7 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivitySummeryBinding
 import com.net.pvr.databinding.CarveryDialogBinding
@@ -62,6 +63,7 @@ import com.net.pvr.utils.Constant.Companion.FOODENABLE
 import com.net.pvr.utils.Constant.Companion.SeatBack
 import com.net.pvr.utils.Constant.Companion.TRANSACTION_ID
 import com.net.pvr.utils.Constant.Companion.foodCartModel
+import com.net.pvr.utils.ga.GoogleAnalytics
 import com.phonepe.intent.sdk.api.PhonePe
 import com.phonepe.intent.sdk.api.TransactionRequestBuilder
 import dagger.hilt.android.AndroidEntryPoint
@@ -382,6 +384,17 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
 //                        println("paidAmount--->$paidAmount")
+                        // Hit Event
+                        try {
+                            val bundle = Bundle()
+                            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Book ticket")
+//                bundle.putString("var_login_city", cityNameMAin)
+                            GoogleAnalytics.hitEvent(this, "FnB_add_checkout", bundle)
+                        }catch (e:Exception){
+                            e.printStackTrace()
+                        }
+
+
                         val intent = Intent(this@SummeryActivity, PaymentActivity::class.java)
                         intent.putExtra("paidAmount", paidAmount.toString())
                         startActivity(intent)
@@ -696,6 +709,16 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                     output.audi
                 )
             } else {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Book ticket")
+//                bundle.putString("var_login_city", cityNameMAin)
+                    GoogleAnalytics.hitEvent(this, "FnB_add_checkout", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
                 val intent = Intent(this@SummeryActivity, PaymentActivity::class.java)
                 intent.putExtra("paidAmount", output.a.toString())
                 startActivity(intent)
@@ -706,6 +729,17 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
         //Add More Food
         binding?.textView312?.setOnClickListener {
+
+// Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Book ticket")
+//                bundle.putString("var_login_city", cityNameMAin)
+                GoogleAnalytics.hitEvent(this, "FndB_add_snacks", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
             Constant.SUMMERYBACK = 1
             foodCartModel = cartModel
             finish()
@@ -738,6 +772,16 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     }
 
     private fun setDonationData(output: SummeryResponse.Output) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "check out screen")
+            bundle.putString("var_add_donation", "")
+            GoogleAnalytics.hitEvent(this, "book_add_donation", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
         //add
         binding?.textView400?.hide()
 
@@ -785,6 +829,17 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     }
 
     private fun removeDonationData(output: SummeryResponse.Output) {
+
+// Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "check out screen")
+            bundle.putString("var_book_remove_donation", "")
+            GoogleAnalytics.hitEvent(this, "book_remove_donation", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
         //add
         binding?.textView400?.show()
         //remove

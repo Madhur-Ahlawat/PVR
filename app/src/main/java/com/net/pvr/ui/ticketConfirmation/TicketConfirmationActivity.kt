@@ -22,6 +22,7 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityTicketConfirmatonBinding
@@ -40,6 +41,7 @@ import com.net.pvr.ui.ticketConfirmation.response.TicketBookedResponse
 import com.net.pvr.ui.ticketConfirmation.viewModel.TicketConfirmationViewModel
 import com.net.pvr.ui.webView.WebViewActivity
 import com.net.pvr.utils.*
+import com.net.pvr.utils.ga.GoogleAnalytics
 import com.net.pvr.utils.isevent.ISEvents
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -465,7 +467,18 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 }
             }
             if(from == "T"){
-                ISEvents().confirmationOrder(this,Constant.BOOKING_ID,output.f,HomeFragment.mcId,output.amount,output.food)
+
+// Hit Event
+                try {
+                    ISEvents().confirmationOrder(this,Constant.BOOKING_ID,output.f,HomeFragment.mcId,output.amount,output.food)
+//                    val bundle = Bundle()
+//                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
+//                    bundle.putString("var_login_city", cityNameMAin)
+//                    GoogleAnalytics.hitEvent(this, "login_city", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
             }
 
             if (from == "T" && output.bfeedback == "true") {

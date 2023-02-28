@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityPaymentBinding
 import com.net.pvr.databinding.ItemPaymentPrivlegeBinding
@@ -78,6 +79,7 @@ import com.net.pvr.utils.Constant.Companion.UPI
 import com.net.pvr.utils.Constant.Companion.ZAGGLE
 import com.net.pvr.utils.Constant.Companion.discount_val
 import com.net.pvr.utils.Constant.Companion.isPromoCode
+import com.net.pvr.utils.ga.GoogleAnalytics
 import com.phonepe.intent.sdk.api.PhonePe
 import com.phonepe.intent.sdk.api.TransactionRequestBuilder
 import dagger.hilt.android.AndroidEntryPoint
@@ -159,16 +161,15 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         val view = binding?.root
         setContentView(view)
 
-        binding?.name?.text = preferences.getString(Constant.SharedPreference.USER_NAME)
-        binding?.mobile?.text = "+91 "+preferences.getString(Constant.SharedPreference.USER_NUMBER)
         manageFunction()
     }
 
     @SuppressLint("SetTextI18n")
     private fun manageFunction() {
-        Constant.viewModel = authViewModel
+        binding?.name?.text = preferences.getString(Constant.SharedPreference.USER_NAME)
+        binding?.mobile?.text = "+91 "+preferences.getString(Constant.SharedPreference.USER_NUMBER)
 
-        extendTime()
+        Constant.viewModel = authViewModel
 
 //        title
         binding?.include26?.textView108?.text = getString(R.string.payment)
@@ -196,7 +197,6 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
             false
         )
 
-//        voucherDataLoad()
         if (BOOK_TYPE == "RECURRING") {
             authViewModel.recurringInit(
                 preferences.getUserId(), BOOKING_ID
@@ -219,6 +219,9 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
             binding?.constraintLayout110?.hide()
         }
 
+
+
+
         //internet Check
         broadcastReceiver = NetworkReceiver()
         broadcastIntent()
@@ -235,6 +238,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         removePromo()
         callPromoData()
         movedNext()
+        extendTime()
     }
 
     private fun movedNext() {
@@ -250,6 +254,17 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         }
 
         binding?.apply?.setOnClickListener {
+// Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
+                bundle.putString("var_make_payment_promo_code", binding?.promoCode?.text.toString())
+                GoogleAnalytics.hitEvent(this, "payment_promo_code-Dynamic", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
+
             if (validateInputFields()) {
                 authViewModel.promoCode(
                     preferences.getUserId(),

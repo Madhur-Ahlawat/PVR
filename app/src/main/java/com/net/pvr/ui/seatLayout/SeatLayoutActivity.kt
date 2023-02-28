@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
+import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.text.Spannable
@@ -18,6 +19,7 @@ import android.util.TypedValue
 import android.view.*
 import android.widget.*
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -87,6 +89,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     private var coupleSeat = 0
     private var messageText = ""
     private var sessionId = ""
+    private var movieName = ""
     private var isDit = false
 
     private var noOfRowsSmall: ArrayList<SeatResponse.Output.Row>? = null
@@ -439,6 +442,11 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         try {
             val bundle = Bundle()
             bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Seat Layout screen")
+            bundle.putString("tem_name", movieName)
+            bundle.putString("item_quantity", noOfSeatsSelected.size.toString())
+            bundle.putString("item_id", HomeFragment.mcId)
+            bundle.putString("price", priceVal.toString())
+            bundle.putString("brand", getString(R.string.app_name))
             GoogleAnalytics.hitEvent(this, "booking_add_to_cart", bundle)
         }catch (e:Exception){
             e.printStackTrace()
@@ -529,7 +537,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     }
 
     private fun retrieveData(data: SeatResponse.Output) {
-
         //shimmer
         binding?.constraintLayout145?.hide()
         //design
@@ -542,6 +549,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         }
 
         //title
+        movieName= data.mn
         binding?.textView197?.text = data.mn
         binding?.textView197?.isSelected = true
 
@@ -565,6 +573,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         drawColumn(data.rows)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun drawColumn(noOfRows: List<SeatResponse.Output.Row>) {
         binding?.llSeatLayout?.removeAllViews()
         var areaName = ""
@@ -656,6 +665,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun drawRow(
         llDrawRow: LinearLayout,
         noSeats: List<SeatResponse.Output.Row.S>,
