@@ -120,11 +120,10 @@ class OfferDetailsActivity : AppCompatActivity() {
         //Description
         binding?.textView188?.loadDataWithBaseURL(null, output.d, "text/html", "utf-8", null);
 
-        if (output.btn!=null&&output.btn!=""){
-            binding?.include8?.textView5?.text= getString(R.string.book_now)
-
+        if (output.btn!=null &&output.btn!=""){
+            binding?.include8?.textView5?.text=output.btn
         }else{
-            binding?.include8?.textView5?.text= output.btn
+            binding?.include8?.textView5?.text= getString(R.string.book_now)
         }
 
 

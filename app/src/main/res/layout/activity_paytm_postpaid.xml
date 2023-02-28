@@ -117,6 +117,25 @@
             app:otp_itemWidth="42dp"
             app:otp_showCursor="false" />
 
+        <com.kevinschildhorn.otpview.OTPView
+            android:id="@+id/fc_et_otp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-15dp"
+            android:layout_marginTop="10dp"
+            android:clipToPadding="true"
+            android:inputType="number"
+            app:layout_constraintStart_toStartOf="@+id/view11"
+            app:layout_constraintTop_toBottomOf="@+id/textView13"
+            app:otp_backgroundImage="@drawable/background"
+            app:otp_filledBackgroundImage="@drawable/background"
+            app:otp_highlightedBackgroundImage="@drawable/background_highlighted"
+            app:otp_itemCount="4"
+            android:visibility="gone"
+            app:otp_itemHeight="42dp"
+            app:otp_itemWidth="42dp"
+            app:otp_showCursor="false" />
+
         <TextView
             android:id="@+id/textView383"
             android:layout_width="match_parent"

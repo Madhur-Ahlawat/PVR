@@ -11,6 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.phone.SmsRetriever
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityOtpVerifyBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -29,6 +30,7 @@ import com.net.pvr.ui.summery.SummeryActivity
 import com.net.pvr.ui.summery.response.ExtendTimeResponse
 import com.net.pvr.utils.*
 import com.net.pvr.utils.SmsBroadcastReceiver.SmsBroadcastReceiverListener
+import com.net.pvr.utils.ga.GoogleAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.internal.and
 import org.json.JSONObject
@@ -116,6 +118,14 @@ class OtpVerifyActivity : AppCompatActivity() {
             binding?.textView15?.isFocusable = false
             binding?.textView15?.isEnabled = false
             binding?.textView15?.setBackgroundResource(R.drawable.grey_seat_curve)
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
+                GoogleAnalytics.hitEvent(this, "login_resent", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
             authViewModel.loginMobileUser(mobile, preferences.getCityName(), "INDIA")
         }
 
@@ -278,7 +288,15 @@ class OtpVerifyActivity : AppCompatActivity() {
     private fun retrieveResisterData(output: ResisterResponse.Output) {
         Constant.setAverageUserIdSCM(preferences)
         Constant.setUPSFMCSDK(preferences)
-
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
+            bundle.putString("user_id", output.id)
+            GoogleAnalytics.hitEvent(this, "login_success_new", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
         preferences.saveIsLogin(true)
         output.id.let { preferences.saveUserId(it) }
         output.un.let { preferences.saveUserName(it) }
@@ -297,6 +315,15 @@ class OtpVerifyActivity : AppCompatActivity() {
         try {
             Constant.setAverageUserIdSCM(preferences)
             Constant.setUPSFMCSDK(preferences)
+
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
+                GoogleAnalytics.hitEvent(this, "login_success_existing", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
 
             preferences.saveIsLogin(true)
             output?.id?.let { preferences.saveUserId(it) }
@@ -356,7 +383,7 @@ class OtpVerifyActivity : AppCompatActivity() {
 
     private fun privilegeRetrieveData(output: PrivilegeHomeResponse.Output) {
         try {
-            toast("hello1")
+//            toast("hello1")
             Constant.PrivilegeHomeResponseConst = output
             preferences.saveString("FAQ", output.faq)
             preferences.saveString(Constant.SharedPreference.pcities, output.pcities)
@@ -380,7 +407,7 @@ class OtpVerifyActivity : AppCompatActivity() {
 
 
     private fun checkMoved() {
-        toast("hello2")
+//        toast("hello2")
         if (!Constant().locationServicesEnabled(this@OtpVerifyActivity)) {
             val intent = Intent(this@OtpVerifyActivity, EnableLocationActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)

@@ -117,6 +117,8 @@ class PaymentAdapter(
                         binding.imageView81.setImageResource(R.drawable.p_upi)
                     } else if (Constant.PAYTMUPI == this.id) {
                         binding.imageView81.setImageResource(R.drawable.p_upi)
+                    }else if (Constant.FREECHARGE == this.id) {
+                        binding.imageView81.setImageResource(R.drawable.freecharge_logo)
                     } else if (Constant.PAYPAL == this.id) {
                         binding.imageView81.setImageResource(R.drawable.paypal)
                     } else if (Constant.PAYTM_CREDIT_CARD == this.id) {

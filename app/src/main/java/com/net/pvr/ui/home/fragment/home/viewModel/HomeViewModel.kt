@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr.repository.UserRepository
+import com.net.pvr.ui.home.fragment.home.response.FeedbackDataResponse
 import com.net.pvr.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr.ui.home.fragment.home.response.NextBookingResponse
 import com.net.pvr.ui.home.fragment.more.offer.response.OfferResponse
@@ -60,6 +61,30 @@ class HomeViewModel @Inject constructor(private val userRepository: UserReposito
     ) {
         viewModelScope.launch {
             userRepository.nextBookingData(userid,did)
+        }
+    }
+
+    /****************** FEEDBACK FOR MOVIE AND CINEMA ****************/
+    val getFeedBackDataResponseLiveData: LiveData<NetworkResult<FeedbackDataResponse>>
+        get() = userRepository.getFeedBackDataResponseLiveData
+
+    fun getFeedBackData(
+        userid: String,
+        type: String
+    ) {
+        viewModelScope.launch {
+            userRepository.getFeedBackData(userid,type)
+        }
+    }
+
+    val setFeedBackDataResponseLiveData: LiveData<NetworkResult<FeedbackDataResponse>>
+        get() = userRepository.setFeedBackDataResponseLiveData
+
+    fun setFeedBackData(
+        userId: String, type: String,code:String,text: String,tags:String,comment: String
+    ) {
+        viewModelScope.launch {
+            userRepository.setFeedBackData(userId,type,code,text,tags,comment)
         }
     }
 

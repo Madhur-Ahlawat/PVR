@@ -32,8 +32,13 @@ class PaytmPostPaidActivity : AppCompatActivity() {
     private var loader: LoaderDialog? = null
     private var catFilterPayment = ArrayList<PaymentResponse.Output.Gateway>()
     private var paidAmount = ""
+    private var newAmt = "0.0"
     private var title = ""
     var state_text = ""
+
+    companion object{
+        var callFc = false
+    }
 
 
     @SuppressLint("SetTextI18n")
@@ -58,6 +63,16 @@ class PaytmPostPaidActivity : AppCompatActivity() {
                 Constant.TRANSACTION_ID,
                 Constant.BOOK_TYPE
             )
+        }else if (intent.getStringExtra("title") == "FreeCharge") {
+            binding?.fcEtOtp?.show()
+            binding?.etOtp?.hide()
+            paytmPostPaidViewModel.freechargeOTP(
+                preferences.getUserId(),
+                Constant.BOOKING_ID,
+                Constant.TRANSACTION_ID,
+                Constant.BOOK_TYPE
+            )
+            freechargeOTP()
         }else {
             paytmPostPaidViewModel.getBalance(
                 preferences.getUserId(),
@@ -89,6 +104,27 @@ class PaytmPostPaidActivity : AppCompatActivity() {
                 } else {
                     toast("Please enter OTP!")
                 }
+            }else if (title == "FreeCharge"){
+                if (binding?.subBtn?.text.toString().equals("Make Payment", ignoreCase = true)) {
+                    paytmPostPaidViewModel.freechargePayment(
+                        preferences.getUserId(),
+                        Constant.BOOKING_ID,
+                        Constant.TRANSACTION_ID,
+                        Constant.BOOK_TYPE
+                    )
+                    freechargePayment()
+                }else if (binding?.fcEtOtp?.getStringFromFields()?.length!! >= 4) {
+                    paytmPostPaidViewModel.freechargeLogin(
+                        preferences.getUserId(),
+                        Constant.BOOKING_ID,
+                        Constant.TRANSACTION_ID,
+                        Constant.BOOK_TYPE,
+                        binding?.fcEtOtp?.getStringFromFields().toString(),state_text
+                    )
+                    freechargeLogin()
+                } else {
+                    toast("Please enter OTP!")
+                }
             }else {
                 if (binding?.subBtn?.text.toString().equals("Make Payment", ignoreCase = true))
                     paytmPostPaidViewModel.postPaidPay(
@@ -113,6 +149,8 @@ class PaytmPostPaidActivity : AppCompatActivity() {
         })
 
         binding?.resendOTP?.setOnClickListener(View.OnClickListener {
+            binding?.fcEtOtp?.clearText(true)
+            binding?.etOtp?.clearText(true)
             if (title.equals("epaylater", ignoreCase = true)) {
                 getEpayOTP()
             } else if (title == "Paytm"){
@@ -123,6 +161,15 @@ class PaytmPostPaidActivity : AppCompatActivity() {
                     Constant.BOOK_TYPE,
                     preferences.getString(Constant.SharedPreference.USER_NUMBER)
                 )
+            }else if (title == "FreeCharge"){
+                paytmPostPaidViewModel.freechargeResend(
+                    preferences.getUserId(),
+                    Constant.BOOKING_ID,
+                    Constant.TRANSACTION_ID,
+                    Constant.BOOK_TYPE,
+                    state_text
+                )
+                freechargeResend()
             }else{
                 paytmPostPaidViewModel.postPaidSendOTP(
                     preferences.getUserId(),
@@ -147,6 +194,22 @@ class PaytmPostPaidActivity : AppCompatActivity() {
                     val intent = Intent(this@PaytmPostPaidActivity, PaytmWebActivity::class.java)
                     intent.putExtra("pTypeId", intent.getStringExtra("pid"))
                     intent.putExtra("paidAmount", paidAmount)
+                    intent.putExtra("title", title)
+                    startActivity(intent)
+                }
+            }else if (title == "FreeCharge") {
+                if (binding?.addPay?.text.toString().equals("PAY NOW", ignoreCase = true)) {
+                    paytmPostPaidViewModel.freechargePayment(
+                        preferences.getUserId(),
+                        Constant.BOOKING_ID,
+                        Constant.TRANSACTION_ID,
+                        Constant.BOOK_TYPE
+                    )
+                    freechargePayment()
+                } else {
+                    val intent = Intent(this@PaytmPostPaidActivity, PaytmWebActivity::class.java)
+                    intent.putExtra("pTypeId", intent.getStringExtra("pid"))
+                    intent.putExtra("paidAmount", newAmt)
                     intent.putExtra("title", title)
                     startActivity(intent)
                 }
@@ -376,6 +439,8 @@ class PaytmPostPaidActivity : AppCompatActivity() {
                                     binding?.balance?.text = "Rs " + it.data.output.bal
                                     binding?.subBtn?.text = "Make Payment"
                                 } else {
+                                    binding?.subBtn?.text = "Add Money"
+
                                     binding?.balance?.text = "Rs " + it.data.output.bal
                                     binding?.balance?.setCompoundDrawablesWithIntrinsicBounds(
                                         0,
@@ -510,6 +575,7 @@ class PaytmPostPaidActivity : AppCompatActivity() {
                                     binding?.balance?.text = "Rs " + it.data.output.b
                                     binding?.subBtn?.text = "Make Payment"
                                 } else {
+                                    binding?.subBtn?.text = "Add Money"
                                     binding?.balance?.text = "Rs " + it.data.output.b
                                     binding?.balance?.setCompoundDrawablesWithIntrinsicBounds(
                                         0,
@@ -711,6 +777,293 @@ class PaytmPostPaidActivity : AppCompatActivity() {
             }
         }
     }
+    private fun freechargeOTP() {
+        paytmPostPaidViewModel.freechargeOTPpayScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                       state_text = it.data.output.otpId
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+    private fun freechargeResend() {
+        paytmPostPaidViewModel.freechargeResendpayScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+//                        val dialog = OptionDialog(this,
+//                            R.mipmap.ic_launcher,
+//                            R.string.app_name,
+//                            it.data.msg.toString(),
+//                            positiveBtnText = R.string.ok,
+//                            negativeBtnText = R.string.no,
+//                            positiveClick = {},
+//                            negativeClick = {})
+//                        dialog.show()
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+    private fun freechargeLogin() {
+        paytmPostPaidViewModel.freechargeLoginpayScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        try {
+                            if (it.data.output.balance.toDouble() > paidAmount.toDouble() || it.data.output.balance.toDouble() == paidAmount.toDouble()) {
+                                binding?.otpView?.hide()
+                                binding?.balanceView?.show()
+                                binding?.balance?.text = "Rs " + it.data.output.balance
+                                binding?.subBtn?.text = "Make Payment"
+                            } else {
+                                newAmt = (paidAmount.toDouble()-it.data.output.balance.toDouble()).toString()
+                                binding?.subBtn?.text = "Add Money"
+                                binding?.balance?.text = "Rs " + it.data.output.balance
+                                binding?.balance?.setCompoundDrawablesWithIntrinsicBounds(
+                                    0,
+                                    0,
+                                    R.drawable.close_notif,
+                                    0
+                                )
+                                binding?.otpView?.hide()
+                                binding?.balanceView?.show()
+                                binding?.insuficient?.show()
+                                binding?.subBtn?.isEnabled = false
+                                binding?.subBtn?.setTextColor(resources.getColor(R.color.disabled_text))
+                            }
+                        } catch (e: Exception) {
+                            binding?.balance?.text = "Rs " + it.data.output.balance
+                            binding?.balance?.setCompoundDrawablesWithIntrinsicBounds(
+                                0,
+                                0,
+                                R.drawable.close_notif,
+                                0
+                            )
+                            binding?.otpView?.hide()
+                            binding?.balanceView?.show()
+                            binding?.insuficient?.show()
+                            binding?.subBtn?.isEnabled = false
+                            binding?.subBtn?.setTextColor(resources.getColor(R.color.disabled_text))
+                            e.printStackTrace()
+                        }
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+    private fun freechargeDetail() {
+        paytmPostPaidViewModel.freechargeDetailpayScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        try {
+                            if (it.data.output.balance.toDouble() > paidAmount.toDouble()
+                                || it.data.output.balance.toDouble() == paidAmount.toDouble()
+                            ) {
+                                binding?.otpView?.hide()
+                                binding?.balanceView?.show()
+                                binding?.balance?.text = "Rs " + it.data.output.balance
+                                binding?.subBtn?.text = "Make Payment"
+                            } else {
+                                newAmt = (paidAmount.toDouble()-it.data.output.balance.toDouble()).toString()
+                                binding?.subBtn?.text = "Add Money"
+                                binding?.balance?.text = "Rs " + it.data.output.balance
+                                binding?.balance?.setCompoundDrawablesWithIntrinsicBounds(
+                                    0,
+                                    0,
+                                    R.drawable.close_notif,
+                                    0
+                                )
+                                binding?.otpView?.hide()
+                                binding?.balanceView?.show()
+                                binding?.insuficient?.show()
+                                binding?.subBtn?.isEnabled = false
+                                binding?.subBtn?.setTextColor(resources.getColor(R.color.disabled_text))
+                            }
+                        } catch (e: Exception) {
+                            binding?.balance?.text = "Rs " + it.data.output.balance
+                            binding?.balance?.setCompoundDrawablesWithIntrinsicBounds(
+                                0,
+                                0,
+                                R.drawable.close_notif,
+                                0
+                            )
+                            binding?.otpView?.hide()
+                            binding?.balanceView?.show()
+                            binding?.insuficient?.show()
+                            binding?.subBtn?.isEnabled = false
+                            binding?.subBtn?.setTextColor(resources.getColor(R.color.disabled_text))
+                            e.printStackTrace()
+                        }
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+    private fun freechargePayment() {
+        paytmPostPaidViewModel.freechargePaymentpayScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        if (it.data?.output?.p == true) {
+                            Constant().printTicket(this)
+                            finish()
+                        } else {
+                            val dialog = OptionDialog(this,
+                                R.mipmap.ic_launcher,
+                                R.string.app_name,
+                                it.data.msg.toString(),
+                                positiveBtnText = R.string.ok,
+                                negativeBtnText = R.string.no,
+                                positiveClick = {
+                                    onBackPressed()
+                                },
+                                negativeClick = {})
+                            dialog.show()
+                        }
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
 
 
     override fun onBackPressed() {
@@ -727,4 +1080,18 @@ class PaytmPostPaidActivity : AppCompatActivity() {
             })
         dialog.show()
     }
+
+    override fun onResume() {
+        super.onResume()
+        if (callFc){
+            paytmPostPaidViewModel.freechargeDetail(
+                preferences.getUserId(),
+                Constant.BOOKING_ID,
+                Constant.TRANSACTION_ID,
+                Constant.BOOK_TYPE
+            )
+            freechargeDetail()
+        }
+    }
+
 }

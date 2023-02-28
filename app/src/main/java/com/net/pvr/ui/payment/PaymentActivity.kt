@@ -61,6 +61,7 @@ import com.net.pvr.utils.Constant.Companion.CRED
 import com.net.pvr.utils.Constant.Companion.CREDIT_CARD
 import com.net.pvr.utils.Constant.Companion.DEBIT_CARD
 import com.net.pvr.utils.Constant.Companion.DISCOUNT
+import com.net.pvr.utils.Constant.Companion.FREECHARGE
 import com.net.pvr.utils.Constant.Companion.GEIFT_CARD
 import com.net.pvr.utils.Constant.Companion.GYFTR
 import com.net.pvr.utils.Constant.Companion.HYATT
@@ -173,11 +174,12 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         binding?.include26?.textView108?.text = getString(R.string.payment)
 
         //paidAmount
-        binding?.textView178?.text =
-            getString(R.string.currency) + Constant.DECIFORMAT.format(intent.getStringExtra("paidAmount")?.toDouble())
-
         paidAmount = Constant.DECIFORMAT.format(intent.getStringExtra("paidAmount")?.toDouble())
-        actualAmt = Constant.DECIFORMAT.format(intent.getStringExtra("paidAmount")?.toDouble())
+
+        binding?.textView178?.text =
+            getString(R.string.currency) + paidAmount
+
+        actualAmt = paidAmount
 
 
         authViewModel.promoList()
@@ -272,11 +274,11 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
             binding?.discountVocher?.text =
                 "total saving ₹ $discount_val "
             binding?.cutPrice?.show()
-            actualAmt = (intent.getStringExtra("paidAmount")
+            actualAmt = (paidAmount
                 ?.toDouble()!! - discount_val.toDouble()).toString()
-            binding?.textView178?.text = getString(R.string.currency) + actualAmt
+            binding?.textView178?.text = getString(R.string.currency) + Constant.DECIFORMAT.format(actualAmt.toDouble())
             binding?.cutPrice?.text =
-                getString(R.string.currency) + intent.getStringExtra("paidAmount").toString()
+                getString(R.string.currency) + paidAmount.toString()
             if (isPromoCode != "") {
                 binding?.promoCode?.setText(isPromoCode)
                 binding?.cutPrice?.paintFlags =
@@ -295,10 +297,10 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                     )
                 }
                 actualAmt =
-                    (intent.getStringExtra("paidAmount")?.toDouble()!! - DISCOUNT).toString()
-                binding?.textView178?.text = getString(R.string.currency) + actualAmt
+                    (paidAmount?.toDouble()!! - DISCOUNT).toString()
+                binding?.textView178?.text = getString(R.string.currency) + Constant.DECIFORMAT.format(actualAmt.toDouble())
                 binding?.cutPrice?.text =
-                    getString(R.string.currency) + intent.getStringExtra("paidAmount").toString()
+                    getString(R.string.currency) + paidAmount.toString()
                 showTncDialog(this, discount_val, isPromoCode)
             } else {
                 showTncDialog(this, discount_val, intent.getStringExtra("from").toString())
@@ -407,7 +409,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                         binding?.applyCou?.hide()
                         binding?.promoCode?.setText("")
                         actualAmt = ((actualAmt.toDouble() + discount_val.toDouble()).toString())
-                        binding?.textView178?.text = getString(R.string.currency) + actualAmt
+                        binding?.textView178?.text = getString(R.string.currency) + Constant.DECIFORMAT.format(actualAmt.toDouble())
                         binding?.cutPrice?.hide()
                     }
                 }
@@ -625,6 +627,16 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 startActivity(intent)
             }
             PAYTM_WALLET -> {
+                val intent = Intent(this, PaytmPostPaidActivity::class.java)
+                intent.putExtra("type", "P")
+                intent.putExtra("ca_a", paymentItem.ca_a)
+                intent.putExtra("tc", paymentItem.tc)
+                intent.putExtra("ca_t", paymentItem.ca_t)
+                intent.putExtra("title", paymentItem.name)
+                intent.putExtra("paidAmount", actualAmt)
+                startActivity(intent)
+            }
+            FREECHARGE -> {
                 val intent = Intent(this, PaytmPostPaidActivity::class.java)
                 intent.putExtra("type", "P")
                 intent.putExtra("ca_a", paymentItem.ca_a)
@@ -922,13 +934,15 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        println("transactionRequest2--->$requestCode---->$resultCode")
+
         if (requestCode == 120) {
             val intent = Intent(this, PaymentStatusActivity::class.java)
             intent.putExtra("title", "UPI")
             intent.putExtra("paidAmount", actualAmt)
             startActivity(intent)
 
-        } else if (resultCode == 300) {
+        } else if (requestCode == 300) {
             val intent = Intent(this, PaymentStatusActivity::class.java)
             intent.putExtra("title", "PhonePe")
             intent.putExtra("paidAmount", actualAmt)
@@ -1111,8 +1125,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         val transactionRequest2 =
                             TransactionRequestBuilder().setData(it.data.output.bs)
-                                .setChecksum(it.data.output.bs).setUrl(it.data.output.bs).build()
-
+                                .setChecksum(it.data.output.ch).setUrl(it.data.output.api).build()
                         startActivityForResult(
                             PhonePe.getTransactionIntent(
                                 transactionRequest2
@@ -1276,11 +1289,11 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                         binding?.cutPrice?.show()
                         binding?.discountVocher?.text =
                             "$vocCount Vouchers worth $DISCOUNT Redeemed!"
-                        actualAmt = (intent.getStringExtra("paidAmount")
+                        actualAmt = (paidAmount
                             ?.toDouble()!! - DISCOUNT).toString()
-                        binding?.textView178?.text = getString(R.string.currency) + actualAmt
+                        binding?.textView178?.text = getString(R.string.currency) + Constant.DECIFORMAT.format(actualAmt.toDouble())
                         binding?.cutPrice?.text =
-                            getString(R.string.currency) + intent.getStringExtra("paidAmount")
+                            getString(R.string.currency) + paidAmount
                                 .toString()
                         newBinding?.parrentView?.isEnabled = false
                         printLog(voucherData?.voucher_type + voucherData?.type)
@@ -1579,12 +1592,12 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                                         BOOK_TYPE
                                     )
                                 }
-                                actualAmt = (intent.getStringExtra("paidAmount")
+                                actualAmt = (paidAmount
                                     ?.toDouble()!! - DISCOUNT).toString()
                                 binding?.textView178?.text =
-                                    getString(R.string.currency) + actualAmt
+                                    getString(R.string.currency) + Constant.DECIFORMAT.format(actualAmt.toDouble())
                                 binding?.cutPrice?.text =
-                                    getString(R.string.currency) + intent.getStringExtra("paidAmount")
+                                    getString(R.string.currency) + paidAmount
                                         .toString()
                             }
                         }

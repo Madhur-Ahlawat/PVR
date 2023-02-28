@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.credentials.Credential
 import com.google.android.gms.auth.api.credentials.Credentials
 import com.google.android.gms.auth.api.credentials.CredentialsApi
 import com.google.android.gms.auth.api.credentials.HintRequest
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityLoginBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -36,6 +37,7 @@ import com.net.pvr.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr.utils.Constant.Companion.EXTANDTIME
 import com.net.pvr.utils.Constant.Companion.SUCCESS_CODE
 import com.net.pvr.utils.Constant.Companion.TRANSACTION_ID
+import com.net.pvr.utils.ga.GoogleAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -112,6 +114,14 @@ class LoginActivity : AppCompatActivity() {
                     binding?.textView382?.show()
                     binding?.textView382?.text = getString(R.string.checkNumber)
                 } else {
+                    // Hit Event
+                    try {
+                        val bundle = Bundle()
+                        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
+                        GoogleAnalytics.hitEvent(this, "login_with_otp", bundle)
+                    }catch (e:Exception){
+                        e.printStackTrace()
+                    }
                     binding?.textView382?.hide()
                     authViewModel.loginMobileUser(mobile, preferences.getCityName(), "INDIA")
                 }
@@ -129,12 +139,28 @@ class LoginActivity : AppCompatActivity() {
                 binding?.textView382?.text = getString(R.string.checkNumber)
             } else {
                 binding?.textView382?.hide()
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
+                    GoogleAnalytics.hitEvent(this, "login_with_otp", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
                 authViewModel.loginMobileUser(mobile, preferences.getCityName(), "INDIA")
             }
         }
 
         //Skip
         binding?.textView8?.setOnClickListener {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
+                GoogleAnalytics.hitEvent(this, "login_skip", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
             if (!Constant().locationServicesEnabled(this@LoginActivity)) {
                 val intent = Intent(this@LoginActivity, EnableLocationActivity::class.java)
                 startActivity(intent)

@@ -1,5 +1,6 @@
 package com.net.pvr.ui.payment.paytmpostpaid.viewModel
 
+import android.icu.util.CurrencyAmount
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -257,6 +258,83 @@ class PaytmPostPaidViewModel @Inject constructor(private val userRepository: Use
     ) {
         viewModelScope.launch {
             userRepository.mobikwikCreateWallet(userid, bookingid, booktype, transid,mobile,otp,email)
+        }
+    }
+
+    /****************** FREECHARGE PAY ****************/
+    val freechargeOTPpayScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.freechargeOTPResponseLiveData
+    fun freechargeOTP(
+        userid: String,
+        bookingid: String,
+        transid: String,
+        booktype: String,
+    ) {
+        viewModelScope.launch {
+            userRepository.freechargeOTP(userid, transid, booktype, bookingid)
+        }
+    }
+
+    val freechargeLoginpayScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.freechargeLoginResponseLiveData
+    fun freechargeLogin(
+        userid: String,
+        bookingid: String,
+        transid: String,
+        booktype: String,
+        otp:String,
+        otpId:String
+    ) {
+        viewModelScope.launch {
+            userRepository.freechargeLogin(userid, transid, booktype, bookingid,otp,otpId)
+        }
+    }
+
+    val freechargeResendpayScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.freechargeResendResponseLiveData
+    fun freechargeResend(
+        userid: String,
+        bookingid: String,
+        transid: String,
+        booktype: String,
+        otpId:String
+    ) {
+        viewModelScope.launch {
+            userRepository.freechargeResend(userid, transid, booktype, bookingid,otpId)
+        }
+    }
+
+    val freechargeDetailpayScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.freechargeDetailResponseLiveData
+    fun freechargeDetail(
+        userid: String,
+        bookingid: String,
+        transid: String,
+        booktype: String
+    ) {
+        viewModelScope.launch {
+            userRepository.freechargeDetail(userid, transid, booktype, bookingid)
+        }
+    }
+
+    val freechargePaymentpayScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.freechargePaymentResponseLiveData
+    fun freechargePayment(
+        userid: String,
+        bookingid: String,
+        transid: String,
+        booktype: String
+    ) {
+        viewModelScope.launch {
+            userRepository.freechargePayment(userid, transid, booktype, bookingid)
+        }
+    }
+
+    val freechargeAddMoneypayScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.freechargeAddMoneyResponseLiveData
+    fun freechargeAddMoney(
+        userid: String,
+        bookingid: String,
+        transid: String,
+        booktype: String,
+        amount: String
+    ) {
+        viewModelScope.launch {
+            userRepository.freechargeAddMoney(userid, transid, booktype, bookingid,amount)
         }
     }
 

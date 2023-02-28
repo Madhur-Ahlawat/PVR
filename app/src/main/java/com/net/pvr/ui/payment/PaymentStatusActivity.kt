@@ -78,6 +78,7 @@ class PaymentStatusActivity : AppCompatActivity() {
             }
 
         } else if (title == "PhonePe") {
+            binding?.circularProgress?.hide()
             authViewModel.phonepeStatus(
                 preferences.getUserId(), BOOKING_ID, BOOK_TYPE, TRANSACTION_ID
             )
@@ -86,10 +87,9 @@ class PaymentStatusActivity : AppCompatActivity() {
         phonePeStatus()
         upiStatus()
 
-        val timer = object : CountDownTimer(60000, 1000) {
+        val timer = object : CountDownTimer(62000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                println("onTick-->${millisUntilFinished / 1000}")
-                binding?.circularProgress?.setCurrentProgress(millisUntilFinished.toDouble() / 1000.0)
+                binding?.circularProgress?.setCurrentProgress(60-(millisUntilFinished.toDouble() / 1000.0))
             }
 
             override fun onFinish() {
@@ -101,7 +101,9 @@ class PaymentStatusActivity : AppCompatActivity() {
 
     private val progressTextAdapter =
         ProgressTextAdapter { time ->
-            var time = time
+            println("onTick-->${time}")
+
+            var time = 60-time
             val hours = (time / 3600).toInt()
             time %= 3600.0
             val minutes = (time / 60).toInt()
@@ -119,12 +121,36 @@ class PaymentStatusActivity : AppCompatActivity() {
                 sb.append(0)
             }
             sb.append(seconds)
+            sb.append("\nremaining")
             sb.toString()
         }
 
     private fun movedNext() {
         binding?.include27?.imageView58?.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
+            when (BOOK_TYPE) {
+                "GIFTCARD" -> {
+                    launchActivity(
+                        GiftCardActivity::class.java,
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    )
+                }
+                "BOOKING", "FOOD" -> {
+                    launchActivity(
+                        HomeActivity::class.java,
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    )
+                }
+                else -> {
+                    launchPrivilegeActivity(
+                        HomeActivity::class.java,
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,
+                        "",
+                        "",
+                        "",
+                        "P"
+                    )
+                }
+            }
         }
     }
 
@@ -183,7 +209,32 @@ class PaymentStatusActivity : AppCompatActivity() {
                                 it.data.msg.toString(),
                                 positiveBtnText = R.string.ok,
                                 negativeBtnText = R.string.no,
-                                positiveClick = {},
+                                positiveClick = {
+                                    when (BOOK_TYPE) {
+                                        "GIFTCARD" -> {
+                                            launchActivity(
+                                                GiftCardActivity::class.java,
+                                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                            )
+                                        }
+                                        "BOOKING", "FOOD" -> {
+                                            launchActivity(
+                                                HomeActivity::class.java,
+                                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                            )
+                                        }
+                                        else -> {
+                                            launchPrivilegeActivity(
+                                                HomeActivity::class.java,
+                                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,
+                                                "",
+                                                "",
+                                                "",
+                                                "P"
+                                            )
+                                        }
+                                    }
+                                },
                                 negativeClick = {})
                             dialog.show()
                         }
@@ -291,7 +342,30 @@ class PaymentStatusActivity : AppCompatActivity() {
                         startActivity(intent)
                     },
                     negativeClick = {
-                        onBackPressedDispatcher.onBackPressed()
+                        when (BOOK_TYPE) {
+                            "GIFTCARD" -> {
+                                launchActivity(
+                                    GiftCardActivity::class.java,
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                )
+                            }
+                            "BOOKING", "FOOD" -> {
+                                launchActivity(
+                                    HomeActivity::class.java,
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                )
+                            }
+                            else -> {
+                                launchPrivilegeActivity(
+                                    HomeActivity::class.java,
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,
+                                    "",
+                                    "",
+                                    "",
+                                    "P"
+                                )
+                            }
+                        }
                     })
                 dialog.show()
             }
@@ -304,7 +378,124 @@ class PaymentStatusActivity : AppCompatActivity() {
                 positiveBtnText = R.string.ok,
                 negativeBtnText = R.string.no,
                 positiveClick = {
-                    onBackPressedDispatcher.onBackPressed()
+                    when (BOOK_TYPE) {
+                        "GIFTCARD" -> {
+                            launchActivity(
+                                GiftCardActivity::class.java,
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            )
+                        }
+                        "BOOKING", "FOOD" -> {
+                            launchActivity(
+                                HomeActivity::class.java,
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            )
+                        }
+                        else -> {
+                            launchPrivilegeActivity(
+                                HomeActivity::class.java,
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,
+                                "",
+                                "",
+                                "",
+                                "P"
+                            )
+                        }
+                    }
+                },
+                negativeClick = {
+
+                })
+            dialog.show()
+        }
+    }
+    private fun retrieveStatusPhonePe(output: UPIStatusResponse.Output) {
+        upiLoader = true
+        if (output.p.equals("PAID", ignoreCase = true)) {
+            loader?.dismiss()
+            Constant().printTicket(this@PaymentStatusActivity)
+        } else if (output.p.equals("PENDING", ignoreCase = true)) {
+            if (upiCount <= 6) {
+                val handler = Handler()
+                upiCount += 1
+                handler.postDelayed({ // close your dialog
+                    authViewModel.upiStatus(
+                        BOOKING_ID, BOOK_TYPE
+                    )
+                }, 10000)
+            } else {
+                loader?.dismiss()
+                val dialog = OptionDialog(this,
+                    R.mipmap.ic_launcher,
+                    R.string.app_name,
+                    "If you want to try again then press retry otherwise press cancel.",
+                    positiveBtnText = R.string.retry,
+                    negativeBtnText = R.string.cancel,
+                    positiveClick = {
+                        finish()
+                        startActivity(intent)
+                    },
+                    negativeClick = {
+                        when (BOOK_TYPE) {
+                            "GIFTCARD" -> {
+                                launchActivity(
+                                    GiftCardActivity::class.java,
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                )
+                            }
+                            "BOOKING", "FOOD" -> {
+                                launchActivity(
+                                    HomeActivity::class.java,
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                )
+                            }
+                            else -> {
+                                launchPrivilegeActivity(
+                                    HomeActivity::class.java,
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,
+                                    "",
+                                    "",
+                                    "",
+                                    "P"
+                                )
+                            }
+                        }
+                    })
+                dialog.show()
+            }
+        } else {
+            loader?.dismiss()
+            val dialog = OptionDialog(this,
+                R.mipmap.ic_launcher,
+                R.string.app_name,
+                "Transaction Failed!",
+                positiveBtnText = R.string.ok,
+                negativeBtnText = R.string.no,
+                positiveClick = {
+                    when (BOOK_TYPE) {
+                        "GIFTCARD" -> {
+                            launchActivity(
+                                GiftCardActivity::class.java,
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            )
+                        }
+                        "BOOKING", "FOOD" -> {
+                            launchActivity(
+                                HomeActivity::class.java,
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            )
+                        }
+                        else -> {
+                            launchPrivilegeActivity(
+                                HomeActivity::class.java,
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,
+                                "",
+                                "",
+                                "",
+                                "P"
+                            )
+                        }
+                    }
                 },
                 negativeClick = {
 

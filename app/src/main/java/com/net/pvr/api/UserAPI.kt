@@ -16,6 +16,7 @@ import com.net.pvr.ui.home.formats.response.FormatResponse
 import com.net.pvr.ui.home.fragment.cinema.response.CinemaPreferenceResponse
 import com.net.pvr.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr.ui.home.fragment.comingSoon.response.CommingSoonResponse
+import com.net.pvr.ui.home.fragment.home.response.FeedbackDataResponse
 import com.net.pvr.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr.ui.home.fragment.home.response.NextBookingResponse
 import com.net.pvr.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
@@ -1431,8 +1432,108 @@ interface UserAPI {
         @Query("did") did: String
     ): Response<PaytmHmacResponse>
 
+    /****************** FEEDBACK FOR MOVIE AND CINEMA ****************/
 
-    /****************** JUS PAY ****************/
+    @POST("api/common/feedback/get")
+    suspend fun getFeedBackData(
+        @Query("userid") userid: String,
+        @Query("type") type: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<FeedbackDataResponse>
+
+    @POST("api/common/feedback/set")
+    suspend fun setFeedBackData(
+        @Query("userid") userid: String,
+        @Query("type") type: String,
+        @Query("code") code: String,
+        @Query("text") text: String,
+        @Query("tags") tags: String,
+        @Query("comments") comments: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<FeedbackDataResponse>
+
+
+    /****************** FREECHARGE PAY ****************/
+
+    @POST("api/payment/freecharge/otp")
+    suspend fun freechargeOTP(
+        @Query("userid") userid: String,
+        @Query("transid") transid: String,
+        @Query("booktype") booktype: String,
+        @Query("bookingid") bookingid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<PaytmHmacResponse>
+
+    @POST("api/payment/freecharge/otp/login")
+    suspend fun freechargeLogin(
+        @Query("userid") userid: String,
+        @Query("transid") transid: String,
+        @Query("booktype") booktype: String,
+        @Query("bookingid") bookingid: String,
+        @Query("otp") otp: String,
+        @Query("otpId") otpId: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<PaytmHmacResponse>
+
+    @POST("api/payment/freecharge/otp/resend")
+    suspend fun freechargeResend(
+        @Query("userid") userid: String,
+        @Query("transid") transid: String,
+        @Query("booktype") booktype: String,
+        @Query("bookingid") bookingid: String,
+        @Query("otpId") otpId: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<PaytmHmacResponse>
+
+    @POST("api/payment/freecharge/user/detail")
+    suspend fun freechargeDetail(
+        @Query("userid") userid: String,
+        @Query("transid") transid: String,
+        @Query("booktype") booktype: String,
+        @Query("bookingid") bookingid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<PaytmHmacResponse>
+
+
+    @POST("api/payment/freecharge/wallet/payment")
+    suspend fun freechargePayment(
+        @Query("userid") userid: String,
+        @Query("transid") transid: String,
+        @Query("booktype") booktype: String,
+        @Query("bookingid") bookingid: String,
+        @Query("unpaid") unpaid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<PaytmHmacResponse>
+
+    @POST("api/payment/freecharge/add/money")
+    suspend fun freechargeAddMoney(
+        @Query("userid") userid: String,
+        @Query("transid") transid: String,
+        @Query("booktype") booktype: String,
+        @Query("bookingid") bookingid: String,
+        @Query("amount") amount: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<PaytmHmacResponse>
+
+
+
+/****************** JUS PAY ****************/
     @POST("api/trans/extendtrans")
     suspend fun initJusPay(
         @Query("userid") userid: String,
@@ -1441,6 +1542,9 @@ interface UserAPI {
         @Query("pt") platform: String,
         @Query("did") did: String
     ): Response<JusPayInitResponse>
+
+
+
 
 
 }

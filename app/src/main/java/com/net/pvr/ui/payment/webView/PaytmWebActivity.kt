@@ -20,6 +20,7 @@ import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.home.HomeActivity
 import com.net.pvr.ui.payment.mobikwik.response.MobiKwikCheckSumResponse
+import com.net.pvr.ui.payment.paytmpostpaid.PaytmPostPaidActivity
 import com.net.pvr.ui.payment.paytmpostpaid.viewModel.PaytmPostPaidViewModel
 import com.net.pvr.ui.payment.response.PaytmHmacResponse
 import com.net.pvr.utils.*
@@ -60,6 +61,14 @@ class PaytmWebActivity : AppCompatActivity() {
                 Constant.TRANSACTION_ID,
                 Constant.BOOK_TYPE
             )
+        }else if (intent.getStringExtra("title") == "FreeCharge"){
+            authViewModel.freechargeAddMoney(
+                preferences.getUserId(),
+                Constant.BOOKING_ID,
+                Constant.TRANSACTION_ID,
+                Constant.BOOK_TYPE,intent.getStringExtra("newAmt").toString()
+            )
+            freechargeAddMoney()
         }else if (intent.getStringExtra("pTypeId") == Constant.MOBIKWIK){
             authViewModel.mobikwikCheckSum(
                 preferences.getUserId(),
@@ -240,6 +249,44 @@ class PaytmWebActivity : AppCompatActivity() {
             }
         }
     }
+    private fun freechargeAddMoney() {
+        authViewModel.freechargeAddMoneypayScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        postFreechargeWebView(it.data.output)
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
 
     //    <div  style="display: none;">
     // <form name="airtelform" id="airtelform" action="${AIRTEL_URL}" method="POST">
@@ -275,6 +322,21 @@ class PaytmWebActivity : AppCompatActivity() {
             urlParams = urlParams + "&service=" + nullCheck("WT")
             urlParams = urlParams + "&HASH=" + nullCheck(data.hmackey)
             val url: String = data.callingurl
+            postWebView(url, urlParams)
+        }
+    }
+
+    private fun postFreechargeWebView(data: PaytmHmacResponse.Output) {
+        if (null != data) {
+            var urlParams = "amount=" + data.amt
+            urlParams = urlParams + "&callbackUrl=" + data.cbk
+            urlParams = urlParams + "&channel=" + data.pt
+            urlParams = urlParams + "&checksum=" + data.chk
+            urlParams = urlParams + "&loginToken=" + data.token
+            urlParams = urlParams + "&merchantId=" + data.mid
+            urlParams = urlParams + "&metadata=" + data.mta
+            urlParams = urlParams + "&HASH=" + nullCheck(data.hmackey)
+            val url: String = data.fcurl
             postWebView(url, urlParams)
         }
     }
@@ -565,6 +627,33 @@ class PaytmWebActivity : AppCompatActivity() {
                                     Constant.CINEMA_ID
                                 )
                             }
+                        }else if (url.contains("fcmobresp")){
+                            val sanitzer = UrlQuerySanitizer(url)
+                            val value = sanitzer.getValue("result")
+                            val value1 = sanitzer.getValue("errorMessage").replace("_".toRegex(), " ")
+                                    .replace("\\+".toRegex(), " ")
+                            if (value == "fail"){
+                                val dialog = OptionDialog(this@PaytmWebActivity,
+                                    R.mipmap.ic_launcher,
+                                    R.string.app_name,
+                                    "$value1",
+                                    positiveBtnText = R.string.ok,
+                                    negativeBtnText = R.string.no,
+                                    positiveClick = {
+                                        launchActivity(
+                                            HomeActivity::class.java,
+                                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                        )
+                                    },
+                                    negativeClick = {
+
+                                    })
+                                dialog.show()
+                            }else{
+                                // Mobikwik Query
+                                PaytmPostPaidActivity.callFc = true
+                                onBackPressed()
+                            }
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -584,21 +673,25 @@ class PaytmWebActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val dialog = OptionDialog(this,
-            R.mipmap.ic_launcher,
-            R.string.app_name,
-            "Do you want to end the session?",
-            positiveBtnText = R.string.yes,
-            negativeBtnText = R.string.cancel,
-            positiveClick = {
-                launchActivity(
-                    HomeActivity::class.java,
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                )
-            },
-            negativeClick = {
-            })
-        dialog.show()
+        if (!PaytmPostPaidActivity.callFc) {
+            val dialog = OptionDialog(this,
+                R.mipmap.ic_launcher,
+                R.string.app_name,
+                "Do you want to end the session?",
+                positiveBtnText = R.string.yes,
+                negativeBtnText = R.string.cancel,
+                positiveClick = {
+                    launchActivity(
+                        HomeActivity::class.java,
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    )
+                },
+                negativeClick = {
+                })
+            dialog.show()
+        }else{
+            super.onBackPressed()
+        }
     }
 
 

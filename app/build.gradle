@@ -21,9 +21,9 @@ android {
     buildTypes {
         debug {
 //            buildConfigField "String", "API_URL", "\"https://devapi.pvrcinemas.com/PVRCinemasCMS/\""//dev
-//            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/\""//Prod
+            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/\""//Prod
 //            buildConfigField "String", "API_URL", "\"https://preprodapi.pvrcinemas.com/PVRCinemasCMS/\""//PreProd
-            buildConfigField "String", "API_URL", "\"https://demoapi.pvrcinemas.com/PVRCinemasCMS/\""//stage
+//            buildConfigField "String", "API_URL", "\"https://demoapi.pvrcinemas.com/PVRCinemasCMS/\""//stage
 
             minifyEnabled false
             debuggable true
@@ -74,6 +74,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-safetynet:18.0.1'
     implementation 'com.google.firebase:firebase-messaging-ktx:23.1.1'
     implementation 'com.google.android.gms:play-services-analytics-impl:18.0.2'
+    implementation 'com.google.android.gms:play-services-measurement-api:21.2.0'
 
     //noinspection GradleDynamicVersion
     testImplementation 'junit:junit:4.+'

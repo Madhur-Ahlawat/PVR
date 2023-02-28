@@ -19,6 +19,7 @@ import com.net.pvr.ui.home.formats.response.FormatResponse
 import com.net.pvr.ui.home.fragment.cinema.response.CinemaPreferenceResponse
 import com.net.pvr.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr.ui.home.fragment.comingSoon.response.CommingSoonResponse
+import com.net.pvr.ui.home.fragment.home.response.FeedbackDataResponse
 import com.net.pvr.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr.ui.home.fragment.home.response.NextBookingResponse
 import com.net.pvr.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
@@ -66,6 +67,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
 import retrofit2.Response
+import java.time.temporal.TemporalAmount
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(private val userAPI: UserAPI) {
@@ -3398,6 +3400,179 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             bankOfferLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
         } else {
             bankOfferLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    /***************** FEEDBACK FOR MOVIE AND CINEMA ***************************/
+
+
+    private val getFeedBackDataLiveData = MutableLiveData<NetworkResult<FeedbackDataResponse>>()
+    val getFeedBackDataResponseLiveData: LiveData<NetworkResult<FeedbackDataResponse>>
+        get() = getFeedBackDataLiveData
+
+    suspend fun getFeedBackData(userId: String, type: String) {
+        _userResponseLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.getFeedBackData(userId, type, Constant.version, Constant.platform,Constant.getDid())
+        getFeedBackDataResponse(response)
+    }
+
+    private fun getFeedBackDataResponse(response: Response<FeedbackDataResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            getFeedBackDataLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            getFeedBackDataLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            getFeedBackDataLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    private val setFeedBackDataLiveData = MutableLiveData<NetworkResult<FeedbackDataResponse>>()
+    val setFeedBackDataResponseLiveData: LiveData<NetworkResult<FeedbackDataResponse>>
+        get() = setFeedBackDataLiveData
+
+    suspend fun setFeedBackData(userId: String, type: String,code:String,text: String,tags:String,comment: String) {
+        _userResponseLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.setFeedBackData(userId, type,code,text,tags,comment, Constant.version, Constant.platform,Constant.getDid())
+        setFeedBackDataResponse(response)
+    }
+
+    private fun setFeedBackDataResponse(response: Response<FeedbackDataResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            setFeedBackDataLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            setFeedBackDataLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            setFeedBackDataLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    /****************** FREECHARGE PAY ****************/
+    private val freechargeOTPLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val freechargeOTPResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = freechargeOTPLiveData
+
+    suspend fun freechargeOTP(userId: String, transid: String,booktype:String,bookingid: String) {
+        _userResponseLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.freechargeOTP(userId, transid,booktype,bookingid, Constant.version, Constant.platform,Constant.getDid())
+        freechargeOTPResponse(response)
+    }
+
+    private fun freechargeOTPResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            freechargeOTPLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            freechargeOTPLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            freechargeOTPLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    private val freechargeLoginLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val freechargeLoginResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = freechargeLoginLiveData
+
+    suspend fun freechargeLogin(userId: String, transid: String,booktype:String,bookingid: String,otp: String,otpId: String) {
+        _userResponseLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.freechargeLogin(userId, transid,booktype,bookingid,otp,otpId, Constant.version, Constant.platform,Constant.getDid())
+        freechargeLoginResponse(response)
+    }
+
+    private fun freechargeLoginResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            freechargeLoginLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            freechargeLoginLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            freechargeLoginLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    private val freechargeResendLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val freechargeResendResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = freechargeResendLiveData
+
+    suspend fun freechargeResend(userId: String, transid: String,booktype:String,bookingid: String,otpId: String) {
+        _userResponseLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.freechargeResend(userId, transid,booktype,bookingid,otpId, Constant.version, Constant.platform,Constant.getDid())
+        freechargeResendResponse(response)
+    }
+
+    private fun freechargeResendResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            freechargeResendLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            freechargeResendLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            freechargeResendLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    private val freechargeDetailLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val freechargeDetailResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = freechargeDetailLiveData
+
+    suspend fun freechargeDetail(userId: String, transid: String,booktype:String,bookingid: String) {
+        _userResponseLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.freechargeDetail(userId, transid,booktype,bookingid, Constant.version, Constant.platform,Constant.getDid())
+        freechargeDetailResponse(response)
+    }
+
+    private fun freechargeDetailResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            freechargeDetailLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            freechargeDetailLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            freechargeDetailLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    private val freechargePaymentLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val freechargePaymentResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = freechargePaymentLiveData
+
+    suspend fun freechargePayment(userId: String, transid: String,booktype:String,bookingid: String) {
+        _userResponseLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.freechargePayment(userId, transid,booktype,bookingid,"false" ,Constant.version, Constant.platform,Constant.getDid())
+        freechargePaymentResponse(response)
+    }
+
+    private fun freechargePaymentResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            freechargePaymentLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            freechargePaymentLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            freechargePaymentLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    private val freechargeAddMoneyLiveData = MutableLiveData<NetworkResult<PaytmHmacResponse>>()
+    val freechargeAddMoneyResponseLiveData: LiveData<NetworkResult<PaytmHmacResponse>>
+        get() = freechargeAddMoneyLiveData
+
+    suspend fun freechargeAddMoney(userId: String, transid: String,booktype:String,bookingid: String,amount: String) {
+        _userResponseLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.freechargeAddMoney(userId, transid,booktype,bookingid,amount, Constant.version, Constant.platform,Constant.getDid())
+        freechargeAddMoneyResponse(response)
+    }
+
+    private fun freechargeAddMoneyResponse(response: Response<PaytmHmacResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            freechargeAddMoneyLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            freechargeAddMoneyLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            freechargeAddMoneyLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 

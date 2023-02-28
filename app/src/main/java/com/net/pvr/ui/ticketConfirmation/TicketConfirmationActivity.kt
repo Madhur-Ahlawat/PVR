@@ -7,12 +7,10 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.text.Html
 import android.view.*
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.RadioButton
-import android.widget.TextView
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,12 +22,16 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.Gson
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityTicketConfirmatonBinding
+import com.net.pvr.databinding.FeedbackDialogeBinding
+import com.net.pvr.databinding.FeedbackThanksBinding
 import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.home.HomeActivity
+import com.net.pvr.ui.home.fragment.home.response.FeedbackDataResponse
 import com.net.pvr.ui.ticketConfirmation.adapter.TicketFoodAdapter
 import com.net.pvr.ui.ticketConfirmation.adapter.TicketPlaceHolderAdapter
 import com.net.pvr.ui.ticketConfirmation.adapter.TicketSeatAdapter
@@ -105,7 +107,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        retrieveData(it.data.output)
+                        retrieveData(it.data.output,"T")
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -146,7 +148,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        retrieveData(it.data.output)
+                        retrieveData(it.data.output,"S")
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -188,7 +190,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         try {
-                            retrieveData(it.data.output)
+                            retrieveData(it.data.output,"F")
                         }catch (e:Exception){
                             e.printStackTrace()
                         }
@@ -226,7 +228,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun retrieveData(output: TicketBookedResponse.Output) {
+    private fun retrieveData(output: TicketBookedResponse.Output,from:String) {
         printLog(Constant.BOOK_TYPE+output.toString())
 
         if (Constant.BOOK_TYPE == "BOOKING") {
@@ -461,7 +463,18 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 }
             }
 
-
+            if (from == "T" && output.bfeedback == "true") {
+                val gson = Gson()
+                val json = gson.toJson(output)
+                preferences.saveString("CINEMADATA", json)
+                preferences.saveString(Constant.SharedPreference.CINEMA_FEEDBACK, "")
+                preferences.saveString(Constant.SharedPreference.FEEDBACK, output.cfeedback)
+                val handler = Handler()
+                handler.postDelayed({
+                    authViewModel.getFeedBackData(preferences.getUserId(), "CINEMA")
+                    getFeedBackData()
+                }, 5000)
+            }
         } else if (Constant.BOOK_TYPE == "FOOD") {
             binding?.foodView?.show()
             binding?.ticketView?.hide()
@@ -869,5 +882,133 @@ class TicketConfirmationActivity : AppCompatActivity() {
             HomeActivity::class.java,
             Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         )
+    }
+
+    private fun getFeedBackData() {
+        authViewModel.getFeedBackDataResponseLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        retrieveFeedbackData(it.data.output)
+                    }
+                }
+                is NetworkResult.Error -> {
+
+                }
+                is NetworkResult.Loading -> {
+                }
+            }
+        }
+    }
+
+    private fun retrieveFeedbackData(output: FeedbackDataResponse.Output) {
+        var rateVal = "5"
+        val gson = Gson()
+        val ticketData: TicketBookedResponse.Output =
+            gson.fromJson(preferences.getString("CINEMADATA"), TicketBookedResponse.Output::class.java)
+        val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val inflater = LayoutInflater.from(this)
+        val bindingProfile = FeedbackDialogeBinding.inflate(inflater)
+        val behavior: BottomSheetBehavior<FrameLayout> = dialog.behavior
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog.setContentView(bindingProfile.root)
+
+        bindingProfile.title.text = output.title
+        bindingProfile.subTitle.text = output.dsc
+        bindingProfile.feedbackText.hide()
+
+        bindingProfile.rate1.setOnClickListener(View.OnClickListener {
+            bindingProfile.feedbackText.text = output.ratings.L1
+            bindingProfile.commentView.show()
+            bindingProfile.feedbackText.show()
+            bindingProfile.rate1.setImageResource(R.drawable.select_sad)
+            bindingProfile.rate2.setImageResource(R.drawable.emotion_unhappy)
+            bindingProfile.rate3.setImageResource(R.drawable.emotion_normal)
+            bindingProfile.rate4.setImageResource(R.drawable.emotion_laugh)
+            bindingProfile.rate5.setImageResource(R.drawable.emotion_happy)
+            rateVal = "1"
+        })
+        bindingProfile.rate2.setOnClickListener(View.OnClickListener {
+            bindingProfile.feedbackText.text = output.ratings.L2
+            bindingProfile.commentView.show()
+            bindingProfile.feedbackText.show()
+            bindingProfile.rate1.setImageResource(R.drawable.emotion_sad)
+            bindingProfile.rate2.setImageResource(R.drawable.select_unhappy)
+            bindingProfile.rate3.setImageResource(R.drawable.emotion_normal)
+            bindingProfile.rate4.setImageResource(R.drawable.emotion_laugh)
+            bindingProfile.rate5.setImageResource(R.drawable.emotion_happy)
+            rateVal = "2"
+        })
+        bindingProfile.rate3.setOnClickListener(View.OnClickListener {
+            bindingProfile.feedbackText.text = output.ratings.L3
+            bindingProfile.commentView.show()
+            bindingProfile.feedbackText.show()
+            bindingProfile.rate1.setImageResource(R.drawable.emotion_sad)
+            bindingProfile.rate2.setImageResource(R.drawable.emotion_unhappy)
+            bindingProfile.rate3.setImageResource(R.drawable.select_normal)
+            bindingProfile.rate4.setImageResource(R.drawable.emotion_laugh)
+            bindingProfile.rate5.setImageResource(R.drawable.emotion_happy)
+            rateVal = "3"
+        })
+        bindingProfile.rate4.setOnClickListener(View.OnClickListener {
+            bindingProfile.feedbackText.text = output.ratings.L4
+            bindingProfile.commentView.show()
+            bindingProfile.feedbackText.show()
+            bindingProfile.rate1.setImageResource(R.drawable.emotion_sad)
+            bindingProfile.rate2.setImageResource(R.drawable.emotion_unhappy)
+            bindingProfile.rate3.setImageResource(R.drawable.emotion_normal)
+            bindingProfile.rate4.setImageResource(R.drawable.select_laugh)
+            bindingProfile.rate5.setImageResource(R.drawable.emotion_happy)
+            rateVal = "4"
+        })
+        bindingProfile.rate5.setOnClickListener(View.OnClickListener {
+            bindingProfile.feedbackText.text = output.ratings.L5
+            bindingProfile.commentView.show()
+            bindingProfile.feedbackText.show()
+            bindingProfile.rate1.setImageResource(R.drawable.emotion_sad)
+            bindingProfile.rate2.setImageResource(R.drawable.emotion_unhappy)
+            bindingProfile.rate3.setImageResource(R.drawable.emotion_normal)
+            bindingProfile.rate4.setImageResource(R.drawable.emotion_laugh)
+            bindingProfile.rate5.setImageResource(R.drawable.select_happy)
+            rateVal = "5"
+        })
+
+        bindingProfile.doneBtn.setOnClickListener(View.OnClickListener {
+            authViewModel.setFeedBackData(preferences.getUserId(),"BOOKING",ticketData.cid,bindingProfile.feedbackText.text.toString(),"",bindingProfile.commentBox.text.toString())
+            setFeedBackData()
+            dialog.dismiss()
+        })
+
+
+        dialog.show()
+    }
+
+    private fun setFeedBackData() {
+        authViewModel.setFeedBackDataResponseLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        retrieveSetFeedbackData(it.data.output)
+                    }
+                }
+                is NetworkResult.Error -> {
+
+                }
+                is NetworkResult.Loading -> {
+                }
+            }
+        }
+    }
+
+    private fun retrieveSetFeedbackData(output: FeedbackDataResponse.Output) {
+        val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val inflater = LayoutInflater.from(this)
+        val bindingProfile = FeedbackThanksBinding.inflate(inflater)
+        val behavior: BottomSheetBehavior<FrameLayout> = dialog.behavior
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog.setContentView(bindingProfile.root)
+        dialog.show()
     }
 }

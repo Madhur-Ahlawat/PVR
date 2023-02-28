@@ -35,6 +35,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 import com.google.gson.internal.LinkedTreeMap
 import com.net.pvr.R
@@ -70,6 +71,7 @@ import com.net.pvr.utils.Constant.Companion.PRIVILEGEPOINT
 import com.net.pvr.utils.Constant.Companion.PRIVILEGEVOUCHER
 import com.net.pvr.utils.Constant.Companion.PlaceHolder
 import com.net.pvr.utils.Constant.SharedPreference.Companion.ACTIVE
+import com.net.pvr.utils.ga.GoogleAnalytics
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -1121,6 +1123,15 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             skip?.setOnClickListener { stories?.skip() }
             skip?.setOnTouchListener(onTouchListener)
             tvButton?.setOnClickListener {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Home Screen")
+                    bundle.putString("var_popup_name ", bannerModels[counterStory].name)
+                    GoogleAnalytics.hitEvent(requireContext(), "app_popups", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
                 rlBanner?.hide()
                 listener?.onShowNotification()
                 listener?.onShowPrivilege()

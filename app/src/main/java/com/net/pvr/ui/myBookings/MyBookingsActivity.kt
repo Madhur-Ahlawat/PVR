@@ -1,5 +1,6 @@
 package com.net.pvr.ui.myBookings
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -437,6 +438,8 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
     //Food With Ticket Response
     private fun retrieveFoodTicketData(output: FoodTicketResponse.Output) {
         //title
+        binding?.ticketView?.show()
+        binding?.giftView?.hide()
         binding?.textView3?.text = getString(R.string.upcomingBooking) + output.c.size
         if (output.c.size > 0) {
             binding?.llAlsoPlaying?.show()
@@ -465,11 +468,15 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
     }
 
     //GiftCard
+    @SuppressLint("NotifyDataSetChanged")
     private fun retrieveGiftCardData(output: GiftCardResponse.Output) {
+        binding?.giftView?.show()
+        binding?.ticketView?.hide()
         val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
         val giftCardAdapter = GiftCardAdapter(output.gc, this, this)
-        binding?.recyclerMyBooking?.layoutManager = gridLayout2
-        binding?.recyclerMyBooking?.adapter = giftCardAdapter
+        binding?.recyclerMyGift?.layoutManager = gridLayout2
+        binding?.recyclerMyGift?.adapter = giftCardAdapter
+        println("GiftCardResponse--->"+output.gc.size)
     }
 
     override fun resend(comingSoonItem: GiftCardResponse.Output.Gc) {

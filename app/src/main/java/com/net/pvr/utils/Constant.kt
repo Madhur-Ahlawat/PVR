@@ -146,6 +146,7 @@ class Constant {
         var NET_BANKING = "118"
         var PAYTMPOSTPAID = "124"
         var PAYTM_WALLET = "102"
+        var FREECHARGE = "131"
         var CRED = "125"
         var ZAGGLE = "126"
         var UPI = "119"
@@ -239,6 +240,26 @@ class Constant {
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
                 ""
+            }
+        }
+    fun getUpdatedDate(oldformat: String, newformat: String, olddate: String): Date? {
+            return try {
+                val newDateString: String
+                val sdf = SimpleDateFormat(oldformat)
+                val sdf1 = SimpleDateFormat(newformat)
+                var d: Date? = null
+                val d1: Date? = null
+                d = try {
+                    sdf.parse(olddate)
+                } catch (e: ParseException) {
+                    e.printStackTrace()
+                    sdf1.parse(olddate)
+                }
+                sdf.applyPattern(newformat)
+                d
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+                Date()
             }
         }
 

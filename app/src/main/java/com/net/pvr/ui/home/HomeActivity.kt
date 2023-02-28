@@ -7,7 +7,9 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.provider.Settings
+import android.text.Html
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -24,9 +26,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.Gson
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityHomeBinding
 import com.net.pvr.databinding.ExperienceDialogBinding
+import com.net.pvr.databinding.FeedbackDialogeBinding
+import com.net.pvr.databinding.FeedbackThanksBinding
 import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
@@ -34,6 +39,7 @@ import com.net.pvr.ui.home.adapter.HomeOfferAdapter
 import com.net.pvr.ui.home.fragment.cinema.CinemasFragment
 import com.net.pvr.ui.home.fragment.comingSoon.ComingSoonFragment
 import com.net.pvr.ui.home.fragment.home.HomeFragment
+import com.net.pvr.ui.home.fragment.home.response.FeedbackDataResponse
 import com.net.pvr.ui.home.fragment.home.viewModel.HomeViewModel
 import com.net.pvr.ui.home.fragment.more.MoreFragment
 import com.net.pvr.ui.home.fragment.more.offer.response.OfferResponse
@@ -45,12 +51,14 @@ import com.net.pvr.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr.ui.home.interfaces.PlayPopup
 import com.net.pvr.ui.movieDetails.nowShowing.NowShowingMovieDetailsActivity
 import com.net.pvr.ui.player.PlayerActivity
+import com.net.pvr.ui.ticketConfirmation.response.TicketBookedResponse
 import com.net.pvr.utils.*
 import com.net.pvr.utils.Constant.Companion.PRIVILEGEVOUCHER
 import com.net.pvr.utils.Constant.Companion.PrivilegeHomeResponseConst
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 import java.util.*
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -513,6 +521,19 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     }
 
     override fun onFeedbackOffers() {
+        if (preferences.getString(Constant.SharedPreference.FEEDBACK) == ("true") && preferences.getString("CINEMADATA") != ("")) {
+            if (preferences.getString(Constant.SharedPreference.CINEMA_FEEDBACK) == ("")) {
+                val gson = Gson()
+                val output: TicketBookedResponse.Output = gson.fromJson(preferences.getString("CINEMADATA"), TicketBookedResponse.Output::class.java)
+                if (getTimeBond(output.stgs.split("to")[1], output.md)) {
+                    val handler = Handler()
+                    handler.postDelayed({
+                        authViewModel.getFeedBackData(preferences.getUserId(),"CINEMA")
+                        getFeedBackData()
+                                        }, 2000)
+                }
+            }
+        }
     }
 
     private fun areNotificationsEnabled(): Boolean {
@@ -655,4 +676,139 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 //        )
     }
 
+    private fun getTimeBond(et: String, md: String): Boolean {
+        val endDate = md + " " + et.trim { it <= ' ' } + " 2023"
+        return Date().after(Constant.getUpdatedDate("EEE, MMM dd HH:mm a yyyy", "yyyy/dd/MM HH:mm:ss", endDate))
+    }
+
+
+    private fun getFeedBackData() {
+        authViewModel.getFeedBackDataResponseLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        retrieveFeedbackData(it.data.output)
+                    }
+                }
+                is NetworkResult.Error -> {
+
+                }
+                is NetworkResult.Loading -> {
+                }
+            }
+        }
+    }
+
+    private fun retrieveFeedbackData(output: FeedbackDataResponse.Output) {
+        var rateVal = "5"
+        val gson = Gson()
+        val ticketData: TicketBookedResponse.Output =
+            gson.fromJson(preferences.getString("CINEMADATA"), TicketBookedResponse.Output::class.java)
+        val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val inflater = LayoutInflater.from(this)
+        val bindingProfile = FeedbackDialogeBinding.inflate(inflater)
+        val behavior: BottomSheetBehavior<FrameLayout> = dialog.behavior
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog.setContentView(bindingProfile.root)
+
+        bindingProfile.title.text = output.title
+        val text =
+            "<font color=#000000>How was your experience with </font> <font color=#000000><b>" + ticketData.c + "</b></font><font color=#000000> for the movie </font><font><b>'" + ticketData.m + "'</b></font>"
+        bindingProfile.subTitle.text = Html.fromHtml(text)
+        bindingProfile.feedbackText.hide()
+
+        bindingProfile.rate1.setOnClickListener(View.OnClickListener {
+            bindingProfile.feedbackText.text = output.ratings.L1
+            bindingProfile.commentView.show()
+            bindingProfile.feedbackText.show()
+            bindingProfile.rate1.setImageResource(R.drawable.select_sad)
+            bindingProfile.rate2.setImageResource(R.drawable.emotion_unhappy)
+            bindingProfile.rate3.setImageResource(R.drawable.emotion_normal)
+            bindingProfile.rate4.setImageResource(R.drawable.emotion_laugh)
+            bindingProfile.rate5.setImageResource(R.drawable.emotion_happy)
+            rateVal = "1"
+        })
+        bindingProfile.rate2.setOnClickListener(View.OnClickListener {
+            bindingProfile.feedbackText.text = output.ratings.L2
+            bindingProfile.commentView.show()
+            bindingProfile.feedbackText.show()
+            bindingProfile.rate1.setImageResource(R.drawable.emotion_sad)
+            bindingProfile.rate2.setImageResource(R.drawable.select_unhappy)
+            bindingProfile.rate3.setImageResource(R.drawable.emotion_normal)
+            bindingProfile.rate4.setImageResource(R.drawable.emotion_laugh)
+            bindingProfile.rate5.setImageResource(R.drawable.emotion_happy)
+            rateVal = "2"
+        })
+        bindingProfile.rate3.setOnClickListener(View.OnClickListener {
+            bindingProfile.feedbackText.text = output.ratings.L3
+            bindingProfile.commentView.show()
+            bindingProfile.feedbackText.show()
+            bindingProfile.rate1.setImageResource(R.drawable.emotion_sad)
+            bindingProfile.rate2.setImageResource(R.drawable.emotion_unhappy)
+            bindingProfile.rate3.setImageResource(R.drawable.select_normal)
+            bindingProfile.rate4.setImageResource(R.drawable.emotion_laugh)
+            bindingProfile.rate5.setImageResource(R.drawable.emotion_happy)
+            rateVal = "3"
+        })
+        bindingProfile.rate4.setOnClickListener(View.OnClickListener {
+            bindingProfile.feedbackText.text = output.ratings.L4
+            bindingProfile.commentView.show()
+            bindingProfile.feedbackText.show()
+            bindingProfile.rate1.setImageResource(R.drawable.emotion_sad)
+            bindingProfile.rate2.setImageResource(R.drawable.emotion_unhappy)
+            bindingProfile.rate3.setImageResource(R.drawable.emotion_normal)
+            bindingProfile.rate4.setImageResource(R.drawable.select_laugh)
+            bindingProfile.rate5.setImageResource(R.drawable.emotion_happy)
+            rateVal = "4"
+        })
+        bindingProfile.rate5.setOnClickListener(View.OnClickListener {
+            bindingProfile.feedbackText.text = output.ratings.L5
+            bindingProfile.commentView.show()
+            bindingProfile.feedbackText.show()
+            bindingProfile.rate1.setImageResource(R.drawable.emotion_sad)
+            bindingProfile.rate2.setImageResource(R.drawable.emotion_unhappy)
+            bindingProfile.rate3.setImageResource(R.drawable.emotion_normal)
+            bindingProfile.rate4.setImageResource(R.drawable.emotion_laugh)
+            bindingProfile.rate5.setImageResource(R.drawable.select_happy)
+            rateVal = "5"
+        })
+
+        bindingProfile.doneBtn.setOnClickListener(View.OnClickListener {
+            authViewModel.setFeedBackData(preferences.getUserId(),"CINEMA",ticketData.cid,bindingProfile.feedbackText.text.toString(),"",bindingProfile.commentBox.text.toString())
+            setFeedBackData()
+            dialog.dismiss()
+        })
+
+
+        dialog.show()
+    }
+
+    private fun setFeedBackData() {
+        authViewModel.setFeedBackDataResponseLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        retrieveSetFeedbackData(it.data.output)
+                    }
+                }
+                is NetworkResult.Error -> {
+
+                }
+                is NetworkResult.Loading -> {
+                }
+            }
+        }
+    }
+
+    private fun retrieveSetFeedbackData(output: FeedbackDataResponse.Output) {
+        val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val inflater = LayoutInflater.from(this)
+        val bindingProfile = FeedbackThanksBinding.inflate(inflater)
+        val behavior: BottomSheetBehavior<FrameLayout> = dialog.behavior
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog.setContentView(bindingProfile.root)
+        dialog.show()
+    }
 }

@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.gms.location.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.databinding.ActivitySelectCityBinding
 import com.net.pvr.databinding.CitySelectDialogBinding
 import com.net.pvr.databinding.LocationDialogBinding
@@ -43,6 +44,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
 import com.net.pvr.R
+import com.net.pvr.utils.ga.GoogleAnalytics
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
@@ -225,6 +227,16 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         preferences.saveLatitudeData(city[position].lat)
         preferences.saveLongitudeData(city[position].lng)
 
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
+            bundle.putString("var_login_city", city[position].name)
+            GoogleAnalytics.hitEvent(this, "login_city", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
         if (city[position].subcities.isEmpty()) {
             if (from == "qr") {
                 val intent = Intent(this@SelectCityActivity, SelectBookingsActivity::class.java)
@@ -283,6 +295,15 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         preferences.saveCityName(city[position].name)
         preferences.saveLatitudeData(city[position].lat)
         preferences.saveLongitudeData(city[position].lng)
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
+            bundle.putString("var_login_city", city[position].name)
+            GoogleAnalytics.hitEvent(this, "login_city", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
 
         if (city[position].subcities.isEmpty()) {
             if (from == "qr") {
@@ -309,6 +330,15 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         preferences.saveCityName(city[position].name)
         preferences.saveLatitudeData(city[position].lat)
         preferences.saveLongitudeData(city[position].lng)
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
+            bundle.putString("var_login_city", city[position].name)
+            GoogleAnalytics.hitEvent(this, "login_city", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
 
         if (city[position].subcities.isEmpty()) {
             if (from == "qr") {
@@ -387,9 +417,28 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
     override fun onItemClickCityDialog(city: String) {
         if (city == "All") {
             preferences.saveCityName(cityNameMAin)
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
+                bundle.putString("var_login_city", cityNameMAin)
+                GoogleAnalytics.hitEvent(this, "login_city", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
         } else {
             preferences.saveCityName(city)
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
+                bundle.putString("var_login_city", city)
+                GoogleAnalytics.hitEvent(this, "login_city", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
         }
+
         if (from == "qr") {
             val intent = Intent(this@SelectCityActivity, SelectBookingsActivity::class.java)
             intent.putExtra("from", "qr")

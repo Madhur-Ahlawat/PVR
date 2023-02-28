@@ -50,6 +50,7 @@ import jp.shts.android.storiesprogressview.StoriesProgressView
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 
 @AndroidEntryPoint
@@ -132,6 +133,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         binding = ActivityFoodBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+        foodCartModel = ArrayList()
 
         manageFunction()
     }

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_gravity="bottom"
+    android:background="@drawable/bottom_corner">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_24dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_10"
+            app:srcCompat="@drawable/ic_dialoge_line" />
+
+
+        <TextView
+            android:id="@+id/title"
+            android:fontFamily="@font/sf_pro_text_semi_bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="Your Experience"
+            />
+
+        <TextView
+            android:id="@+id/subTitle"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:textColor="@color/black"
+            android:lineSpacingExtra="4dp"
+            android:textSize="@dimen/dimen_16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="How was your experience with PVR Plaza Delhi for the movie ‘Joker’. "
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/dimen_40dp"
+            android:layout_marginBottom="@dimen/dimen_30dp"
+            android:gravity="center_horizontal|center_vertical">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/padding_10"
+                android:id="@+id/rate1"
+                android:src="@drawable/emotion_sad"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/emotion_unhappy"
+                android:id="@+id/rate2"
+                android:layout_marginStart="@dimen/padding_10"
+                android:layout_marginEnd="@dimen/padding_10"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/emotion_normal"
+                android:layout_marginStart="@dimen/padding_10"
+                android:id="@+id/rate3"
+                android:layout_marginEnd="@dimen/padding_10"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/emotion_laugh"
+                android:layout_marginStart="@dimen/padding_10"
+                android:id="@+id/rate4"
+                android:layout_marginEnd="@dimen/padding_10"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rate5"
+                android:src="@drawable/emotion_happy"
+                android:layout_marginStart="@dimen/padding_10" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/commentView"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:fontFamily="@font/montserrat_medium"
+                android:id="@+id/feedbackText"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
+                android:paddingStart="@dimen/dimen_30dp"
+                android:paddingEnd="@dimen/dimen_30dp"
+                android:paddingBottom="@dimen/dimen_15dp"
+                android:paddingTop="@dimen/dimen_15dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/round_corner_8"
+                android:layout_marginTop="@dimen/padding_10"
+                android:backgroundTint="#F9F9F9"
+                android:lineSpacingExtra="@dimen/dimen_5dp"
+                android:text="We wanna turn that into a smile.\n
+Tell us what we can improve"/>
+
+
+
+            <EditText
+                android:id="@+id/commentBox"
+                style="@style/myEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/emailEditText"
+                android:layout_marginTop="@dimen/dimen_30dp"
+                android:background="@drawable/gray_border"
+                android:gravity="left"
+                android:hint="@string/comment"
+                android:maxLength="500"
+                android:maxLines="7"
+                android:minLines="7"
+                android:padding="@dimen/contact_us_padding_default"
+                android:scrollbars="vertical" />
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:id="@+id/doneBtn"
+                android:gravity="center_vertical"
+                android:background="@drawable/yellow_curve_four"
+                android:backgroundTint="@color/pvr_yellow"
+                android:layout_marginTop="40dp"
+                android:layout_gravity="bottom"
+                android:visibility="visible"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/latter"
+                    android:fontFamily="@font/sf_pro_text_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    app:textAllCaps="true"
+                    android:textSize="18sp"
+                    android:text="Submit Feedback"
+                    />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

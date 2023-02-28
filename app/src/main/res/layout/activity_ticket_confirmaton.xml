@@ -385,7 +385,7 @@
                 android:id="@+id/ticketView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone">
+                android:visibility="visible">
 
 
                 <TextView
@@ -395,7 +395,7 @@
                     android:fontFamily="@font/sf_pro_text_medium"
                     android:text="@string/thank_you_for_choosing_pvr"
                     android:textColor="@color/black"
-                    android:layout_marginTop="@dimen/dimen_15dp"
+                    android:layout_marginTop="@dimen/padding_10"
                     android:textSize="@dimen/dimen_14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -405,7 +405,6 @@
                     android:id="@+id/textView370"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:fontFamily="@font/montserrat_extra_bold"
                     android:text="@string/enjoy_your_show"
                     android:textColor="@color/black"
@@ -419,6 +418,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dimen_35dp"
                     android:layout_marginTop="8dp"
+                    android:visibility="gone"
                     android:background="@drawable/ticket_conf_curve_direction"
                     android:paddingStart="@dimen/dimen_14dp"
                     android:paddingTop="@dimen/dimen_8dp"
@@ -456,7 +456,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:layout_marginEnd="24dp"
                     android:visibility="visible"
                     app:cardCornerRadius="@dimen/dimen_24dp"
@@ -940,6 +940,71 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout128"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView17">
+
+                    <TextView
+                        android:id="@+id/textView366"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="@string/official_merchandise"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14sp"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/recyclerView49"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:adjustViewBounds="true"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView366"
+                        tools:ignore="ContentDescription"
+                        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+                    <TextView
+                        android:id="@+id/textView367"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="@string/offers_for_you"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/recyclerView49" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView51"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal"
+                        android:visibility="visible"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView367"
+                        tools:listitem="@layout/ticket__conf_item_offer" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
                 <!--Add Location-->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout124"
@@ -952,7 +1017,7 @@
                     android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cardView17">
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout128">
 
 
                     <TextView
@@ -1386,7 +1451,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/cancelTicket"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         android:orientation="horizontal">
 
                         <androidx.cardview.widget.CardView
@@ -1456,69 +1521,6 @@ ididunt ut labore et dolore magna aliqua." />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout128"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/padding_10"
-                    android:visibility="visible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout127">
-
-                    <TextView
-                        android:id="@+id/textView366"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:text="@string/official_merchandise"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/dimen_14sp"
-                        android:visibility="gone"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
-                        android:id="@+id/recyclerView49"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:adjustViewBounds="true"
-                        android:visibility="gone"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView366"
-                        tools:ignore="ContentDescription"
-                        tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
-                    <TextView
-                        android:id="@+id/textView367"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="24dp"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:text="@string/offers_for_you"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/dimen_14sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/recyclerView49" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerView51"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:orientation="horizontal"
-                        android:visibility="visible"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView367"
-                        tools:listitem="@layout/ticket__conf_item_offer" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 

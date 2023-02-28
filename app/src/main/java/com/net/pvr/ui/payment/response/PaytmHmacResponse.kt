@@ -11,6 +11,8 @@ data class PaytmHmacResponse(
     data class Output(
         val amount: String,
         val bal: String,
+        val balance: String,
+        val otpId: String,
         val b: String,
         val state: String,
         val msg: String,
@@ -41,6 +43,13 @@ data class PaytmHmacResponse(
         val txt: String,
         val bin: String,
         val disc: String,
+        var amt: String,
+        var mta: String,
+        var cbk: String,
+        var pt: String,
+        var chk: String,
+        var fcurl: String,
+        var token: String,
         var TICKET_DISCOUNT: Int = 0,
         var FOOD_DISCOUNT: Int = 0,
         val website: String
