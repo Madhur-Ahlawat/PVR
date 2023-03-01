@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
@@ -16,12 +17,14 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.ui.home.HomeActivity
 import com.net.pvr.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr.ui.player.PlayerActivity
 import com.net.pvr.ui.webView.WebViewActivity
 import com.net.pvr.utils.Constant
+import com.net.pvr.utils.ga.GoogleAnalytics
 import com.net.pvr.utils.hide
 import com.net.pvr.utils.show
 import java.util.*
@@ -32,6 +35,7 @@ class TicketPlaceHolderAdapter(
     private val context: Activity,
     private val movies: ArrayList<HomeResponse.Ph>,
 ) : RecyclerView.Adapter<TicketPlaceHolderAdapter.MovieViewHolder>() {
+
     private var displayMetrics = DisplayMetrics()
     private var screenWidth = 0
     override fun getItemCount() = movies.size
@@ -118,6 +122,16 @@ class TicketPlaceHolderAdapter(
 
         //Manage Functions
         holder.itemView.setOnClickListener {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                bundle.putString("var_thankyou_promotion", obj.name)
+                GoogleAnalytics.hitEvent(context, "thankyou_promotion_banner", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
             if (obj.type == "IMAGE" && obj.redirectView == "DEEPLINK") {
                 if (obj.redirect_url.equals("", ignoreCase = true)) {
                     if (obj.redirect_url.lowercase(Locale.ROOT).contains("/loyalty/home")) {

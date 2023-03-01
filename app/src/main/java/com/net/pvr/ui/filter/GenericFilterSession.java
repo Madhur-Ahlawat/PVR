@@ -6,7 +6,6 @@ import static com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_
 import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
@@ -14,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
@@ -34,7 +33,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Objects;
 
-public class GenericFilterMsession implements GenericFilterAdapter.onFilterItemSelected {
+public class GenericFilterSession implements GenericFilterAdapter.onFilterItemSelected {
+    static ArrayList<String> type = new ArrayList<>();
+    static HashMap<String, String> selectedFilters = new HashMap<>();
     public String show2 = "ALL";
     public String show1 = "ALL";
     int start_time = 8;
@@ -54,11 +55,18 @@ public class GenericFilterMsession implements GenericFilterAdapter.onFilterItemS
     boolean isSelected = false;
     String filterItemSelected = "";
     boolean openFlag = false;
-    static ArrayList<String> type = new ArrayList<>();
-    ;
-    static HashMap<String, String> selectedFilters = new HashMap<>();
     onButtonSelected onSelection;
 
+    private static void updateUI(LinearLayout layout_filter_tabs, ImageView dropImage, Context context) {
+
+        if (layout_filter_tabs.getVisibility() == View.VISIBLE) {
+            layout_filter_tabs.setVisibility(View.GONE);
+            dropImage.setRotation(360f);
+        } else {
+            layout_filter_tabs.setVisibility(View.VISIBLE);
+            dropImage.setRotation(180f);
+        }
+    }
 
     public HashMap<String, ArrayList<String>> getFilters() {
 //        HashMap<String, ArrayList<String>> filterPoints = new HashMap<>();
@@ -87,68 +95,66 @@ public class GenericFilterMsession implements GenericFilterAdapter.onFilterItemS
 //        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 //        dialog.getWindow().setGravity(Gravity.BOTTOM);
         Rect displayRectangle = new Rect();
-        dialog.getWindow().getDecorView()
-                .getWindowVisibleDisplayFrame(displayRectangle);
-        LinearLayout mainView = (LinearLayout) dialog.findViewById(R.id.mainView);
+        dialog.getWindow().getDecorView().getWindowVisibleDisplayFrame(displayRectangle);
+        ConstraintLayout mainView = dialog.findViewById(R.id.mainView);
 
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams((int) (displayRectangle.width() * 1f),(int) (displayRectangle.height() * 0.8f));
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams((int) (displayRectangle.width() * 1f), (int) (displayRectangle.height() * 0.8f));
 //        mainView.setLayoutParams(params);
         GenericFilterAdapter adapterGeners, adapterLanguage, adapterFormat, adapterShowTime, adapterAccessability, adapterPriceRange;
         RecyclerView recyclerGeners, recyclerLanguage, recyclerFormat, recyclerShowTIme, recyclerAccessibility, recyclerPriceRange, cinemaRecyclerFormat, specialRecyclerFormat;
 
-        cinemaRecyclerFormat = (RecyclerView) dialog.findViewById(R.id.cinemaRecyclerFormat);
-        specialRecyclerFormat = (RecyclerView) dialog.findViewById(R.id.specialRecyclerFormat);
-        recyclerLanguage = (RecyclerView) dialog.findViewById(R.id.recyclerLanguage);
-        recyclerGeners = (RecyclerView) dialog.findViewById(R.id.recyclerGenere);
-        recyclerFormat = (RecyclerView) dialog.findViewById(R.id.recyclerFormat);
-        recyclerPriceRange = (RecyclerView) dialog.findViewById(R.id.recyclerPrice);
-        recyclerShowTIme = (RecyclerView) dialog.findViewById(R.id.recyclerTime);
-        recyclerAccessibility = (RecyclerView) dialog.findViewById(R.id.recyclerAccessibility);
+        cinemaRecyclerFormat = dialog.findViewById(R.id.cinemaRecyclerFormat);
+        specialRecyclerFormat = dialog.findViewById(R.id.specialRecyclerFormat);
+        recyclerLanguage = dialog.findViewById(R.id.recyclerLanguage);
+        recyclerGeners = dialog.findViewById(R.id.recyclerGenere);
+        recyclerFormat = dialog.findViewById(R.id.recyclerFormat);
+        recyclerPriceRange = dialog.findViewById(R.id.recyclerPrice);
+        recyclerShowTIme = dialog.findViewById(R.id.recyclerTime);
+        recyclerAccessibility = dialog.findViewById(R.id.recyclerAccessibility);
 
-        TextView formatT = (TextView) dialog.findViewById(R.id.formatT);
-        ImageView langDropImage = (ImageView) dialog.findViewById(R.id.langDropImage);
-        ImageView genereDropImage = (ImageView) dialog.findViewById(R.id.genereDropImage);
-        ImageView cinemaFormatDropImage = (ImageView) dialog.findViewById(R.id.cinemaFormatDropImage);
-        ImageView specialFormatDropImage = (ImageView) dialog.findViewById(R.id.specialFormatDropImage);
-        ImageView formatDropImage = (ImageView) dialog.findViewById(R.id.formatDropImage);
-        ImageView priceDropImage = (ImageView) dialog.findViewById(R.id.priceDropImage);
-        ImageView timeDropImage = (ImageView) dialog.findViewById(R.id.timeDropImage);
-        ImageView accessabilityDropImage = (ImageView) dialog.findViewById(R.id.accessabilityDropImage);
+        TextView formatT = dialog.findViewById(R.id.formatT);
+        ImageView langDropImage = dialog.findViewById(R.id.langDropImage);
+        ImageView genereDropImage = dialog.findViewById(R.id.genereDropImage);
+        ImageView cinemaFormatDropImage = dialog.findViewById(R.id.cinemaFormatDropImage);
+        ImageView specialFormatDropImage = dialog.findViewById(R.id.specialFormatDropImage);
+        ImageView formatDropImage = dialog.findViewById(R.id.formatDropImage);
+        ImageView priceDropImage = dialog.findViewById(R.id.priceDropImage);
+        ImageView timeDropImage = dialog.findViewById(R.id.timeDropImage);
+        ImageView accessabilityDropImage = dialog.findViewById(R.id.accessabilityDropImage);
 
-        LinearLayout language_filter_tabs = (LinearLayout) dialog.findViewById(R.id.language_filter_tabs);
-        LinearLayout cinemaFormat_filter_tabs = (LinearLayout) dialog.findViewById(R.id.cinemaFormat_filter_tabs);
-        LinearLayout specialFormat_filter_tabs = (LinearLayout) dialog.findViewById(R.id.specialFormat_filter_tabs);
-        LinearLayout genre_filter_tabs = (LinearLayout) dialog.findViewById(R.id.genere_filter_tabs);
-        LinearLayout format_filter_tabs = (LinearLayout) dialog.findViewById(R.id.format_filter_tabs);
-        LinearLayout price_filter_tabs = (LinearLayout) dialog.findViewById(R.id.price_filter_tabs);
-        LinearLayout time_filter_tabs = (LinearLayout) dialog.findViewById(R.id.time_filter_tabs);
-        LinearLayout accessability_filter_tabs = (LinearLayout) dialog.findViewById(R.id.accessibility_filter_tabs);
+        LinearLayout language_filter_tabs = dialog.findViewById(R.id.language_filter_tabs);
+        LinearLayout cinemaFormat_filter_tabs = dialog.findViewById(R.id.cinemaFormat_filter_tabs);
+        LinearLayout specialFormat_filter_tabs = dialog.findViewById(R.id.specialFormat_filter_tabs);
+        LinearLayout genre_filter_tabs = dialog.findViewById(R.id.genere_filter_tabs);
+        LinearLayout format_filter_tabs = dialog.findViewById(R.id.format_filter_tabs);
+        LinearLayout price_filter_tabs = dialog.findViewById(R.id.price_filter_tabs);
+        LinearLayout time_filter_tabs = dialog.findViewById(R.id.time_filter_tabs);
+        LinearLayout accessability_filter_tabs = dialog.findViewById(R.id.accessibility_filter_tabs);
 
-        LinearLayout languageFilterLay = (LinearLayout) dialog.findViewById(R.id.languageFilterLay);
-        LinearLayout genereFilterLay = (LinearLayout) dialog.findViewById(R.id.genereFilterLay);
-        LinearLayout cinemaFormatFilterLay = (LinearLayout) dialog.findViewById(R.id.cinemaFormatFilterLay);
-        LinearLayout specialFormatFilterLay = (LinearLayout) dialog.findViewById(R.id.specialFormatFilterLay);
-        LinearLayout formatFilterLay = (LinearLayout) dialog.findViewById(R.id.formatFilterLay);
-        LinearLayout priceFilterLay = (LinearLayout) dialog.findViewById(R.id.priceFilterLay);
-        LinearLayout timeFilterLay = (LinearLayout) dialog.findViewById(R.id.timeFilterLay);
-        LinearLayout accessibilityFilterLay = (LinearLayout) dialog.findViewById(R.id.accessibilityFilterLay);
+        LinearLayout languageFilterLay = dialog.findViewById(R.id.languageFilterLay);
+        LinearLayout genereFilterLay = dialog.findViewById(R.id.genereFilterLay);
+        LinearLayout cinemaFormatFilterLay = dialog.findViewById(R.id.cinemaFormatFilterLay);
+        LinearLayout specialFormatFilterLay = dialog.findViewById(R.id.specialFormatFilterLay);
+        LinearLayout formatFilterLay = dialog.findViewById(R.id.formatFilterLay);
+        LinearLayout priceFilterLay = dialog.findViewById(R.id.priceFilterLay);
+        LinearLayout timeFilterLay = dialog.findViewById(R.id.timeFilterLay);
+        LinearLayout accessibilityFilterLay = dialog.findViewById(R.id.accessibilityFilterLay);
 
 
-
-        seek_progress = (CrystalRangeSeekbar) dialog.findViewById(R.id.seek_progress1);
-        left_text = (TextView) dialog.findViewById(R.id.left_text);
-        right_text = (TextView) dialog.findViewById(R.id.right_text);
+        seek_progress = dialog.findViewById(R.id.seek_progress1);
+        left_text = dialog.findViewById(R.id.left_text);
+        right_text = dialog.findViewById(R.id.right_text);
         if (start_time < 10) {
-            left_text.setText("0" + String.valueOf(start_time) + ":00 hrs");
+            left_text.setText("0" + start_time + ":00 hrs");
         } else {
-            left_text.setText(String.valueOf(start_time) + ":00 hrs");
+            left_text.setText(start_time + ":00 hrs");
 
         }
 
         if (end_time < 10) {
-            right_text.setText("0" + String.valueOf(end_time) + ":00 hrs");
+            right_text.setText("0" + end_time + ":00 hrs");
         } else {
-            right_text.setText(String.valueOf(end_time) + ":00 hrs");
+            right_text.setText(end_time + ":00 hrs");
         }
 
         seek_progress.setGap(1);
@@ -162,19 +168,18 @@ public class GenericFilterMsession implements GenericFilterAdapter.onFilterItemS
 
                 if (start_time > 8 || end_time < 24) {
                     if (Integer.parseInt(String.valueOf(minValue)) < 10) {
-                        left_text.setText("0" + String.valueOf(minValue) + ":00 hrs");
-                        show1 = String.valueOf(minValue) + ":00";
+                        left_text.setText("0" + minValue + ":00 hrs");
+                        show1 = minValue + ":00";
                     } else {
-                        left_text.setText(String.valueOf(minValue) + ":00 hrs");
-                        show1 = String.valueOf(minValue) + ":00";
+                        left_text.setText(minValue + ":00 hrs");
+                        show1 = minValue + ":00";
                     }
                     if (Integer.parseInt(String.valueOf(maxValue)) < 10) {
-                        right_text.setText("0" + String.valueOf(maxValue) + ":00 hrs");
-                        show2 = String.valueOf(maxValue) + ":00";
+                        right_text.setText("0" + maxValue + ":00 hrs");
                     } else {
-                        right_text.setText(String.valueOf(maxValue) + ":00 hrs");
-                        show2 = String.valueOf(maxValue) + ":00";
+                        right_text.setText(maxValue + ":00 hrs");
                     }
+                    show2 = maxValue + ":00";
                 }
 
             }
@@ -246,28 +251,28 @@ public class GenericFilterMsession implements GenericFilterAdapter.onFilterItemS
                 specialFormatDropImage.setRotation(180f);
             }
         }
-        if (from.equalsIgnoreCase("Home") || from.equalsIgnoreCase("ComingSoon")){
+        if (from.equalsIgnoreCase("Home") || from.equalsIgnoreCase("ComingSoon")) {
             language_filter_tabs.setVisibility(View.GONE);
             updateUI(language_filter_tabs, langDropImage, context);
-        }else if (selectedFilters.containsKey("language")){
+        } else if (selectedFilters.containsKey("language")) {
             language_filter_tabs.setVisibility(View.GONE);
             updateUI(language_filter_tabs, langDropImage, context);
-        }else if (selectedFilters.containsKey("geners")){
+        } else if (selectedFilters.containsKey("geners")) {
             genre_filter_tabs.setVisibility(View.GONE);
             updateUI(genre_filter_tabs, genereDropImage, context);
-        }else if (selectedFilters.containsKey("accessability")){
+        } else if (selectedFilters.containsKey("accessability")) {
             accessability_filter_tabs.setVisibility(View.GONE);
             updateUI(accessability_filter_tabs, accessabilityDropImage, context);
-        }else if (selectedFilters.containsKey("format")){
+        } else if (selectedFilters.containsKey("format")) {
             format_filter_tabs.setVisibility(View.GONE);
             updateUI(format_filter_tabs, accessabilityDropImage, context);
-        }else if (selectedFilters.containsKey("time")){
+        } else if (selectedFilters.containsKey("time")) {
             time_filter_tabs.setVisibility(View.GONE);
             updateUI(time_filter_tabs, accessabilityDropImage, context);
-        }else if (selectedFilters.containsKey("cinemaformat")){
+        } else if (selectedFilters.containsKey("cinemaformat")) {
             cinemaFormat_filter_tabs.setVisibility(View.GONE);
             updateUI(cinemaFormat_filter_tabs, accessabilityDropImage, context);
-        }else if (selectedFilters.containsKey("specialshow")){
+        } else if (selectedFilters.containsKey("specialshow")) {
             specialFormat_filter_tabs.setVisibility(View.GONE);
             updateUI(specialFormat_filter_tabs, accessabilityDropImage, context);
         }
@@ -419,14 +424,13 @@ public class GenericFilterMsession implements GenericFilterAdapter.onFilterItemS
         }
 
 
-        TextView btnApplyFilter = (TextView) dialog.findViewById(R.id.btnApplyFilter);
-        TextView btnReset = (TextView) dialog.findViewById(R.id.btnReset);
+        TextView btnApplyFilter = dialog.findViewById(R.id.btnApplyFilter);
+        TextView btnReset = dialog.findViewById(R.id.btnReset);
         onSelection = onClickListener;
 
         btnApplyFilter.setOnClickListener(v -> {
             dialog.dismiss();
-            if (!type.contains("time"))
-                type.add("time");
+            if (!type.contains("time")) type.add("time");
             selectedFilters.put("time", show1 + "-" + show2);
             onSelection.onApply(type, selectedFilters, isSelected, filterItemSelected);
         });
@@ -436,43 +440,43 @@ public class GenericFilterMsession implements GenericFilterAdapter.onFilterItemS
             onSelection.onReset();
         });
 
-        if (languageFilterLay.getVisibility()==View.VISIBLE){
-            openFlag=true;
+        if (languageFilterLay.getVisibility() == View.VISIBLE) {
+            openFlag = true;
             language_filter_tabs.setVisibility(View.GONE);
             updateUI(language_filter_tabs, langDropImage, context);
 
-        }else if (cinemaFormatFilterLay.getVisibility()==View.VISIBLE){
-            if (!openFlag){
+        } else if (cinemaFormatFilterLay.getVisibility() == View.VISIBLE) {
+            if (!openFlag) {
                 openFlag = true;
                 cinemaFormat_filter_tabs.setVisibility(View.GONE);
                 updateUI(cinemaFormat_filter_tabs, cinemaFormatDropImage, context);
             }
-        } else if (specialFormatFilterLay.getVisibility()==View.VISIBLE){
-            if (!openFlag){
+        } else if (specialFormatFilterLay.getVisibility() == View.VISIBLE) {
+            if (!openFlag) {
                 openFlag = true;
                 specialFormat_filter_tabs.setVisibility(View.GONE);
                 updateUI(specialFormat_filter_tabs, specialFormatDropImage, context);
             }
-        } else if (formatFilterLay.getVisibility()==View.VISIBLE){
-            if (!openFlag){
+        } else if (formatFilterLay.getVisibility() == View.VISIBLE) {
+            if (!openFlag) {
                 openFlag = true;
                 format_filter_tabs.setVisibility(View.GONE);
                 updateUI(format_filter_tabs, formatDropImage, context);
             }
-        } else if (priceFilterLay.getVisibility()==View.VISIBLE){
-            if (!openFlag){
+        } else if (priceFilterLay.getVisibility() == View.VISIBLE) {
+            if (!openFlag) {
                 openFlag = true;
                 price_filter_tabs.setVisibility(View.GONE);
                 updateUI(price_filter_tabs, priceDropImage, context);
             }
-        } else if (timeFilterLay.getVisibility()==View.VISIBLE){
-            if (!openFlag){
+        } else if (timeFilterLay.getVisibility() == View.VISIBLE) {
+            if (!openFlag) {
                 openFlag = true;
                 time_filter_tabs.setVisibility(View.GONE);
                 updateUI(time_filter_tabs, timeDropImage, context);
             }
-        }else if (accessibilityFilterLay.getVisibility()==View.VISIBLE){
-            if (!openFlag){
+        } else if (accessibilityFilterLay.getVisibility() == View.VISIBLE) {
+            if (!openFlag) {
                 openFlag = true;
                 accessability_filter_tabs.setVisibility(View.GONE);
                 updateUI(accessability_filter_tabs, accessabilityDropImage, context);
@@ -481,18 +485,6 @@ public class GenericFilterMsession implements GenericFilterAdapter.onFilterItemS
 
         dialog.show();
     }
-
-    private static void updateUI(LinearLayout layout_filter_tabs, ImageView dropImage, Context context) {
-
-        if (layout_filter_tabs.getVisibility() == View.VISIBLE) {
-            layout_filter_tabs.setVisibility(View.GONE);
-            dropImage.setRotation(360f);
-        } else {
-            layout_filter_tabs.setVisibility(View.VISIBLE);
-            dropImage.setRotation(180f);
-        }
-    }
-
 
     @Override
     public void onFilterItemClick(int position, String typeStr, String itemSelected, boolean selectedValue) {
@@ -503,8 +495,7 @@ public class GenericFilterMsession implements GenericFilterAdapter.onFilterItemS
         switch (typeStr) {
             case "language":
 
-                if (!type.contains(typeStr))
-                    type.add(typeStr);
+                if (!type.contains(typeStr)) type.add(typeStr);
                 if (languagesStr.equalsIgnoreCase("")) {
                     languagesStr = itemSelected;
                 } else {
@@ -542,8 +533,7 @@ public class GenericFilterMsession implements GenericFilterAdapter.onFilterItemS
 
                 break;
             case "geners":
-                if (!type.contains(typeStr))
-                    type.add(typeStr);
+                if (!type.contains(typeStr)) type.add(typeStr);
 
                 if (genereStr.equalsIgnoreCase("")) {
                     genereStr = itemSelected;
@@ -561,8 +551,7 @@ public class GenericFilterMsession implements GenericFilterAdapter.onFilterItemS
 
                 break;
             case "format":
-                if (!type.contains(typeStr))
-                    type.add(typeStr);
+                if (!type.contains(typeStr)) type.add(typeStr);
 
                 if (formatStr.equalsIgnoreCase("")) {
                     formatStr = itemSelected;
@@ -579,8 +568,7 @@ public class GenericFilterMsession implements GenericFilterAdapter.onFilterItemS
 
                 break;
             case "cinema":
-                if (!type.contains(typeStr))
-                    type.add(typeStr);
+                if (!type.contains(typeStr)) type.add(typeStr);
 
                 if (cinemaStr.equalsIgnoreCase("")) {
                     cinemaStr = itemSelected;
@@ -598,8 +586,7 @@ public class GenericFilterMsession implements GenericFilterAdapter.onFilterItemS
                 break;
 
             case "special":
-                if (!type.contains(typeStr))
-                    type.add(typeStr);
+                if (!type.contains(typeStr)) type.add(typeStr);
 
                 if (specialStr.equalsIgnoreCase("")) {
                     specialStr = itemSelected;
@@ -616,26 +603,23 @@ public class GenericFilterMsession implements GenericFilterAdapter.onFilterItemS
 
                 break;
             case "price":
-                if (!type.contains(typeStr))
-                    type.add(typeStr);
-                if (priceStr==itemSelected){
+                if (!type.contains(typeStr)) type.add(typeStr);
+                if (priceStr == itemSelected) {
                     priceStr = "";
-                }else {
+                } else {
                     priceStr = itemSelected;
                 }
                 selectedFilters.put(typeStr, priceStr);
 
                 break;
             case "time":
-                if (!type.contains(typeStr))
-                    type.add(typeStr);
+                if (!type.contains(typeStr)) type.add(typeStr);
                 timeStr = itemSelected;
                 selectedFilters.put(typeStr, timeStr);
 
                 break;
             case "accessability":
-                if (!type.contains(typeStr))
-                    type.add(typeStr);
+                if (!type.contains(typeStr)) type.add(typeStr);
 
                 if (accessabilityStr.equalsIgnoreCase("")) {
                     accessabilityStr = itemSelected;
@@ -661,20 +645,12 @@ public class GenericFilterMsession implements GenericFilterAdapter.onFilterItemS
         if (languagesStr.contains(", " + itemSelected)) {
             return languagesStr.replaceAll(", " + itemSelected, "");
         } else if (languagesStr.equalsIgnoreCase(itemSelected)) {
-            return languagesStr.replaceAll(itemSelected , "");
-        }else if (languagesStr.contains(",")) {
+            return languagesStr.replaceAll(itemSelected, "");
+        } else if (languagesStr.contains(",")) {
             return languagesStr.replaceAll(itemSelected + ", ", "");
         } else {
             return "";
         }
-    }
-
-    public interface onButtonSelected {
-
-        void onApply(ArrayList<String> type, HashMap<String, String> name, boolean isSelected, String filterItemSelected);
-
-        void onReset();
-
     }
 
     private void setAlreadySelected() {
@@ -702,14 +678,14 @@ public class GenericFilterMsession implements GenericFilterAdapter.onFilterItemS
             if (containTime) {
                 int index = type.indexOf("time");
                 String value = selectedFilters.get(type.get(index));
-                if (value != null && !value.equalsIgnoreCase("")&& !value.contains("ALL")) {
+                if (value != null && !value.equalsIgnoreCase("") && !value.contains("ALL")) {
                     timeStr = value;
-                    System.out.println("timeStr--->"+timeStr);
+                    System.out.println("timeStr--->" + timeStr);
                     timeStr.split("-");
-                    left_text.setText( timeStr.split("-")[0]+" hrs");
-                    right_text.setText( timeStr.split("-")[1]+ " hrs");
+                    left_text.setText(timeStr.split("-")[0] + " hrs");
+                    right_text.setText(timeStr.split("-")[1] + " hrs");
 //                    seek_progress.setMaxStartValue(Float.parseFloat(timeStr.split("-")[1].replaceAll(":00",""))).apply();
-                    seek_progress.setMinStartValue(Float.parseFloat(timeStr.split("-")[0].replaceAll(":00",""))).setMaxStartValue(Float.parseFloat(timeStr.split("-")[1].replaceAll(":00",""))).apply();
+                    seek_progress.setMinStartValue(Float.parseFloat(timeStr.split("-")[0].replaceAll(":00", ""))).setMaxStartValue(Float.parseFloat(timeStr.split("-")[1].replaceAll(":00", ""))).apply();
                 }
             }
 
@@ -760,17 +736,23 @@ public class GenericFilterMsession implements GenericFilterAdapter.onFilterItemS
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void updateFilters(String type, String data){
+    public void updateFilters(String type, String data) {
 
-        if (Objects.requireNonNull(selectedFilters.get(type)).contains(data.split("-")[0]+",")) {
-            selectedFilters.replace(type,selectedFilters.get(type).toUpperCase(Locale.ROOT).replaceAll(data.split("-")[0].toUpperCase(Locale.ROOT)+",",""));
-        }else {
-            selectedFilters.replace(type,selectedFilters.get(type).toUpperCase(Locale.ROOT).replaceAll(data.split("-")[0].toUpperCase(Locale.ROOT),""));
-            System.out.println("languagesStrNewc--->"+selectedFilters+"----"+data.split("-")[0]+"---"+type);
+        if (Objects.requireNonNull(selectedFilters.get(type)).contains(data.split("-")[0] + ",")) {
+            selectedFilters.replace(type, selectedFilters.get(type).toUpperCase(Locale.ROOT).replaceAll(data.split("-")[0].toUpperCase(Locale.ROOT) + ",", ""));
+        } else {
+            selectedFilters.replace(type, selectedFilters.get(type).toUpperCase(Locale.ROOT).replaceAll(data.split("-")[0].toUpperCase(Locale.ROOT), ""));
+            System.out.println("languagesStrNewc--->" + selectedFilters + "----" + data.split("-")[0] + "---" + type);
         }
 
 
+    }
+
+    public interface onButtonSelected {
+
+        void onApply(ArrayList<String> type, HashMap<String, String> name, boolean isSelected, String filterItemSelected);
+
+        void onReset();
 
     }
 }

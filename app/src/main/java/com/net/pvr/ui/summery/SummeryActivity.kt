@@ -775,7 +775,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         // Hit Event
         try {
             val bundle = Bundle()
-            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "check out screen")
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
             bundle.putString("var_add_donation", "")
             GoogleAnalytics.hitEvent(this, "book_add_donation", bundle)
         }catch (e:Exception){
@@ -833,7 +833,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 // Hit Event
         try {
             val bundle = Bundle()
-            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "check out screen")
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
             bundle.putString("var_book_remove_donation", "")
             GoogleAnalytics.hitEvent(this, "book_remove_donation", bundle)
         }catch (e:Exception){
@@ -1491,6 +1491,15 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         }
 
         exploreMenu.setOnClickListener {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+//                bundle.putString("var_FnB_food_type","veg")
+                GoogleAnalytics.hitEvent(this, "FnB_explore_menu", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
             dialog.dismiss()
             Constant.SUMMERYBACK = 1
             foodCartModel = cartModel
@@ -1498,6 +1507,16 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         }
 
         endSession.setOnClickListener {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+//                bundle.putString("var_FnB_food_type","veg")
+                GoogleAnalytics.hitEvent(this, "FnB_end_the_session", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
             authViewModel.cancelTrans(
                 CINEMA_ID, TRANSACTION_ID, BOOKING_ID
             )

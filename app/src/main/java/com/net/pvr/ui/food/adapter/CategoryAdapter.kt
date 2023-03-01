@@ -46,7 +46,6 @@ class CategoryAdapter(
                     binding.imageView66.setBackgroundResource(R.drawable.border_circle_gray)
                     binding.imageView66.setPadding(40)
                 }else{
-
                     Glide.with(context)
                         .load(this.i)
                         .error(R.drawable.app_icon)
