@@ -37,7 +37,7 @@
                 android:layout_marginTop="@dimen/padding_10"
                 android:gravity="center"
                 android:letterSpacing=".01"
-                android:text="@string/congratulations"
+                android:text="Congratulations"
                 android:textColor="#000000"
                 android:textSize="@dimen/dimen_20sp"
                 android:textStyle="bold" />
@@ -98,7 +98,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/popcorn"
+        android:src="@drawable/big_popcorn"
         android:translationZ="10dp"
         tools:ignore="ContentDescription" />
 
