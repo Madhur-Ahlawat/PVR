@@ -153,25 +153,41 @@ class LoginActivity : AppCompatActivity() {
 
         //Skip
         binding?.textView8?.setOnClickListener {
-            // Hit Event
-            try {
-                val bundle = Bundle()
-                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
-                GoogleAnalytics.hitEvent(this, "login_skip", bundle)
-            }catch (e:Exception){
-                e.printStackTrace()
-            }
-            if (!Constant().locationServicesEnabled(this@LoginActivity)) {
-                val intent = Intent(this@LoginActivity, EnableLocationActivity::class.java)
-                startActivity(intent)
-            } else if (preferences.getCityName() == "") {
-                val intent = Intent(this@LoginActivity, SelectCityActivity::class.java)
-                startActivity(intent)
-                finish()
-            } else {
-                val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-                startActivity(intent)
-                finish()
+            if (intent.hasExtra("from")){
+                val dialog = OptionDialog(this,
+                    R.mipmap.ic_launcher,
+                    R.string.blank_space,
+                    "Your booking is not yet complete.",
+                    positiveBtnText = R.string.accept,
+                    negativeBtnText = R.string.cancel,
+                    positiveClick = {
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        finish()
+                    },
+                    negativeClick = {})
+                dialog.show()
+            }else {
+
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
+                    GoogleAnalytics.hitEvent(this, "login_skip", bundle)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                if (!Constant().locationServicesEnabled(this@LoginActivity)) {
+                    val intent = Intent(this@LoginActivity, EnableLocationActivity::class.java)
+                    startActivity(intent)
+                } else if (preferences.getCityName() == "") {
+                    val intent = Intent(this@LoginActivity, SelectCityActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }
         }
 
@@ -269,10 +285,25 @@ class LoginActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (from == "seat") {
-            seatRedirectDialog()
-        }else{
-            super.onBackPressed()
+        if (intent.hasExtra("from")){
+            val dialog = OptionDialog(this,
+                R.mipmap.ic_launcher,
+                R.string.blank_space,
+                "Your booking is not yet complete.",
+                positiveBtnText = R.string.accept,
+                negativeBtnText = R.string.cancel,
+                positiveClick = {
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    finish()
+                },
+                negativeClick = {})
+            dialog.show()
+        }else {
+            if (from == "seat") {
+                seatRedirectDialog()
+            } else {
+                super.onBackPressed()
+            }
         }
     }
 
