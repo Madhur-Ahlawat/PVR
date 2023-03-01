@@ -583,7 +583,7 @@ class SelectBookingsActivity : AppCompatActivity() {
                 printLog("$latitude---->$longitude")
 
             } else {
-                Toast.makeText(this, "Unable to find location.", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "Unable to find location.", Toast.LENGTH_SHORT).show()
             }
         }
     }
