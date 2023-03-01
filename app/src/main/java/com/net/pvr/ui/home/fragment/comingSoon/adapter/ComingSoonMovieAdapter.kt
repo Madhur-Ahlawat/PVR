@@ -16,6 +16,7 @@ import com.net.pvr.R
 import com.net.pvr.ui.home.fragment.comingSoon.response.CommingSoonResponse
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.hide
+import com.net.pvr.utils.invisible
 import com.net.pvr.utils.show
 
 
@@ -54,7 +55,7 @@ class ComingSoonMovieAdapter(
             {
                 holder.play.show()
             } else {
-                holder.play.hide()
+                holder.play.invisible()
             }
 
             //Video Play Click
@@ -72,7 +73,7 @@ class ComingSoonMovieAdapter(
                     holder.wishlist.background =
                         ContextCompat.getDrawable(context, R.drawable.ic_wishlist_yellow)
                 } else {
-                    holder.wishlist.show()
+                    holder.wishlist.invisible()
                     holder.wishlist.background =
                         ContextCompat.getDrawable(context, R.drawable.ic_wishlist_white)
                 }
@@ -81,7 +82,7 @@ class ComingSoonMovieAdapter(
 //        //Release Manage
             holder.release.text = comingSoonItem.date_caption
             if (comingSoonItem.date_caption == "") {
-                holder.release.hide()
+                holder.release.invisible()
             } else {
                 holder.release.show()
             }
@@ -109,7 +110,7 @@ class ComingSoonMovieAdapter(
                             ","
                         )[1]
                 } else {
-                    holder.otherGenre.hide()
+                    holder.otherGenre.invisible()
                     holder.genre.text = comingSoonItem.othergenres.replace(",", " | ")
                 }
             } else {

@@ -32,13 +32,18 @@ class SearchHomeMovieAdapter(
         holder.title.text = selectCityItemList.n
 
 //        CAt
-         val category = selectCityItemList.c.replace("[", "").replace("]", "").replace("(", "").replace(")", "")
-        holder.timeCategory.text =
-            category +" "+
-                context.getString(R.string.dots)+" "+
-                selectCityItemList.length+" "+
-                context.getString(R.string.dots)+" "+
-                selectCityItemList.genre
+        if (selectCityItemList.length != null && selectCityItemList.length != "") {
+            val category = selectCityItemList.c.replace("[", "").replace("]", "").replace("(", "")
+                .replace(")", "")
+            holder.timeCategory.text =
+                category + " " +
+                        context.getString(R.string.dots) + " " +
+                        selectCityItemList.length + " " +
+                        context.getString(R.string.dots) + " " +
+                        selectCityItemList.genre
+        }else{
+            holder.timeCategory.text = selectCityItemList.genre
+        }
 
 //lng
         holder.language.text = selectCityItemList.l

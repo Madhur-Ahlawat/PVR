@@ -230,6 +230,8 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
 //                            preferences.cityNameCinema(currentAddress)
                             lat = location.latitude.toString()
                             lng = location.longitude.toString()
+                            preferences.saveLatitudeData(lat.toString())
+                            preferences.saveLongitudeData(lng.toString())
                             authViewModel.cinema(preferences.getCityName(), lat, lng, preferences.getUserId(), "")
                         }
 

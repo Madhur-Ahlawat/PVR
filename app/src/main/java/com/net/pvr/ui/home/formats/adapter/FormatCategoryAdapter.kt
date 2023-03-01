@@ -5,11 +5,13 @@ import android.app.Activity
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr.R
 import com.net.pvr.databinding.FormatsItemBinding
 import com.net.pvr.ui.home.formats.response.FormatResponse
+import com.net.pvr.utils.Constant
 import com.net.pvr.utils.hide
 import com.net.pvr.utils.show
 
@@ -41,10 +43,57 @@ class FormatCategoryAdapter(
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
-                val lp = holder.itemView.layoutParams
-                lp.height = lp.height
-                lp.width = ((screenWidth-40)/1.17f).toInt()
-                holder.itemView.layoutParams = lp
+                if (nowShowingList.size > 1) {
+                    if (nowShowingList.size == 2) {
+                        val itemWidth = ((screenWidth - 0) / 1.10f).toInt()
+                        val layoutParams = ConstraintLayout.LayoutParams(
+                            itemWidth,
+                            ConstraintLayout.LayoutParams.WRAP_CONTENT
+                        )
+                        if (position == 0) {
+                            layoutParams.leftMargin = Constant().convertDpToPixel(13f, context)
+                            layoutParams.rightMargin = Constant().convertDpToPixel(1f, context)
+                        } else {
+                            layoutParams.leftMargin = Constant().convertDpToPixel(1f, context)
+                            layoutParams.rightMargin = Constant().convertDpToPixel(13f, context)
+                        }
+                        holder.itemView.layoutParams = layoutParams
+                    } else if (position == 0) {
+                        val itemWidth = ((screenWidth - 0) / 1.10f).toInt()
+                        val layoutParams = ConstraintLayout.LayoutParams(
+                            itemWidth,
+                            ConstraintLayout.LayoutParams.WRAP_CONTENT
+                        )
+                        layoutParams.leftMargin = Constant().convertDpToPixel(13f, context)
+                        holder.itemView.layoutParams = layoutParams
+                    } else if (position == nowShowingList.size - 1) {
+                        val itemWidth = ((screenWidth - 0) / 1.10f).toInt()
+                        val layoutParams = ConstraintLayout.LayoutParams(
+                            itemWidth,
+                            ConstraintLayout.LayoutParams.WRAP_CONTENT
+                        )
+                        layoutParams.rightMargin = Constant().convertDpToPixel(13f, context)
+                        holder.itemView.layoutParams = layoutParams
+                    } else {
+                        val itemWidth = ((screenWidth - 0) / 1.1f).toInt()
+                        val layoutParams = ConstraintLayout.LayoutParams(
+                            itemWidth,
+                            ConstraintLayout.LayoutParams.WRAP_CONTENT
+                        )
+                        layoutParams.rightMargin = Constant().convertDpToPixel(1f, context)
+                        layoutParams.leftMargin = Constant().convertDpToPixel(1f, context)
+                        holder.itemView.layoutParams = layoutParams
+                    }
+                } else {
+//            int itemWidth = (int) ((screenWidth - 0)/(1.10f));
+                    val layoutParams = ConstraintLayout.LayoutParams(
+                        ConstraintLayout.LayoutParams.MATCH_PARENT,
+                        ConstraintLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    layoutParams.leftMargin = Constant().convertDpToPixel(13F, context)
+                    layoutParams.rightMargin = Constant().convertDpToPixel(13F, context)
+                    holder.itemView.layoutParams = layoutParams
+                }
 
                 //title
                 Glide.with(context)
@@ -54,7 +103,7 @@ class FormatCategoryAdapter(
 
                 if (this.redirect_url!=""){
                     binding.imageView142.show()
-                }else{
+                } else {
                     binding.imageView142.hide()
                 }
 

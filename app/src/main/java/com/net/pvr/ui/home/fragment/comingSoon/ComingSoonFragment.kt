@@ -37,6 +37,7 @@ import com.net.pvr.ui.home.fragment.comingSoon.viewModel.ComingSoonViewModel
 import com.net.pvr.ui.home.fragment.home.HomeFragment
 import com.net.pvr.ui.movieDetails.comingSoonDetails.ComingSoonDetailsActivity
 import com.net.pvr.ui.movieDetails.comingSoonDetails.adapter.ComDetailsHomePhAdapter
+import com.net.pvr.ui.movieDetails.comingSoonDetails.setAlert.SetAlertActivity
 import com.net.pvr.ui.movieDetails.nowShowing.adapter.MusicVideoTrsAdapter
 import com.net.pvr.ui.movieDetails.nowShowing.adapter.TrailerTrsAdapter
 import com.net.pvr.ui.movieDetails.nowShowing.response.MovieDetailsResponse
@@ -616,13 +617,20 @@ class ComingSoonFragment : Fragment(),
         bindingTrailer.include49.textView108.text = getString(R.string.trailer_amp_music)
 
         //button
-        bindingTrailer.include50.textView5.text = getString(R.string.book_now)
+        bindingTrailer.include50.textView5.text = getString(R.string.set_alert)
 
         bindingTrailer.include50.textView5.setOnClickListener {
-
+            val intent = Intent(requireContext(), SetAlertActivity::class.java)
+            intent.putExtra("cid",comingSoonItem.masterMovieId)
+            startActivity(intent)
         }
 
 //trailer
+        if (videoData.size>0){
+            bindingTrailer.textView69.show()
+        }else{
+            bindingTrailer.textView69.hide()
+        }
         val gridLayoutManager1 =
             GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
         val trailerAdapter = TrailerTrsAdapter(videoData, requireContext(), this)
@@ -630,6 +638,11 @@ class ComingSoonFragment : Fragment(),
         bindingTrailer.recyclerView5.adapter = trailerAdapter
 
 //music
+        if (musicData.size>0){
+            bindingTrailer.textView70.show()
+        }else{
+            bindingTrailer.textView70.hide()
+        }
         val gridLayoutManager =
             GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
         val musicVideoTrsAdapter = MusicVideoTrsAdapter(musicData, requireContext(), this)

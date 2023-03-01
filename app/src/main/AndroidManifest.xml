@@ -69,7 +69,8 @@
 
         <activity
             android:name="com.net.pvr.ui.scanner.bookings.SelectBookingsActivity"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

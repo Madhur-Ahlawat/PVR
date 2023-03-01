@@ -192,4 +192,7 @@ dependencies {
     // HyperSDK
 //    implementation 'in.juspay:hypersdk:2.1.11'
 
+    implementation 'com.scottyab:rootbeer-lib:0.1.0'
+
+
 }

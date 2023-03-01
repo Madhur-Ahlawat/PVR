@@ -97,10 +97,10 @@ public class GenericFilterComing implements GenericFilterAdapter.onFilterItemSel
 //        dialog.getWindow().setGravity(Gravity.BOTTOM);
         Rect displayRectangle = new Rect();
         dialog.getWindow().getDecorView().getWindowVisibleDisplayFrame(displayRectangle);
-        LinearLayout mainView = (LinearLayout) dialog.findViewById(R.id.mainView);
-
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams((int) (displayRectangle.width() * 1f), (int) (displayRectangle.height() * 0.8f));
-        mainView.setLayoutParams(params);
+//        LinearLayout mainView = (LinearLayout) dialog.findViewById(R.id.mainView);
+//
+//        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams((int) (displayRectangle.width() * 1f), (int) (displayRectangle.height() * 0.8f));
+//        mainView.setLayoutParams(params);
         GenericFilterAdapter adapterGeners, adapterLanguage, adapterFormat, adapterShowTime, adapterAccessability, adapterPriceRange;
         RecyclerView recyclerGeners, recyclerLanguage, recyclerFormat, recyclerShowTIme, recyclerAccessibility, recyclerPriceRange, cinemaRecyclerFormat, specialRecyclerFormat;
 

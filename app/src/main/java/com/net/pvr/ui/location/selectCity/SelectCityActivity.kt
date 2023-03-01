@@ -224,8 +224,8 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         binding?.consSelectedLocation?.show()
         binding?.txtSelectedCity?.text = city[position].name
         preferences.saveCityName(city[position].name)
-        preferences.saveLatitudeData(city[position].lat)
-        preferences.saveLongitudeData(city[position].lng)
+//        preferences.saveLatitudeData(city[position].lat)
+//        preferences.saveLongitudeData(city[position].lng)
 
         // Hit Event
         try {
@@ -243,6 +243,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
                 intent.putExtra("from", "qr")
                 intent.putExtra("cid", cid)
                 startActivity(intent)
+                finish()
             } else {
 // Hit Event
                 try {
@@ -314,8 +315,8 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         binding?.consSelectedLocation?.show()
         binding?.txtSelectedCity?.text = city[position].name
         preferences.saveCityName(city[position].name)
-        preferences.saveLatitudeData(city[position].lat)
-        preferences.saveLongitudeData(city[position].lng)
+//        preferences.saveLatitudeData(city[position].lat)
+//        preferences.saveLongitudeData(city[position].lng)
         // Hit Event
         try {
             val bundle = Bundle()
@@ -332,6 +333,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
                 intent.putExtra("from", "qr")
                 intent.putExtra("cid", cid)
                 startActivity(intent)
+                finish()
             } else {
                 // Hit Event
                 try {
@@ -362,8 +364,8 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
         binding?.consSelectedLocation?.show()
         binding?.txtSelectedCity?.text = city[position].name
         preferences.saveCityName(city[position].name)
-        preferences.saveLatitudeData(city[position].lat)
-        preferences.saveLongitudeData(city[position].lng)
+//        preferences.saveLatitudeData(city[position].lat)
+//        preferences.saveLongitudeData(city[position].lng)
         // Hit Event
         try {
             val bundle = Bundle()
@@ -380,6 +382,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
                 intent.putExtra("from", "qr")
                 intent.putExtra("cid", cid)
                 startActivity(intent)
+                finish()
             } else {
                 // Hit Event
                 try {
@@ -488,6 +491,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
             intent.putExtra("from", "qr")
             intent.putExtra("cid", cid)
             startActivity(intent)
+            finish()
         } else {
             // Hit Event
             try {
@@ -546,6 +550,7 @@ class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewIte
                             intent.putExtra("from", "qr")
                             intent.putExtra("cid", cid)
                             startActivity(intent)
+                            finish()
                         } else {
                             enableLocation = 1
                             selectCityViewModel.selectCity(

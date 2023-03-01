@@ -18,13 +18,12 @@
 
         <TextView
             android:id="@+id/textView50"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
             android:ellipsize="end"
-            app:layout_constraintWidth_max="300dp"
             android:fontFamily="@font/sf_pro_text_medium"
             android:gravity="center_vertical"
             android:includeFontPadding="false"
@@ -34,7 +33,8 @@
             android:textSize="@dimen/dimen_14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Pvr Gurgaon" />
+            app:layout_constraintWidth_max="250dp"
+            tools:text="Pvr Gurgaoefdfddffdfdfdfd fffddfdffdfdfdfddffdfdfdn" />
 
         <TextView
             android:id="@+id/cinemaLocation"
@@ -49,7 +49,7 @@
             android:paddingBottom="@dimen/dimen_2dp"
             android:textColor="@color/black"
             android:textSize="12sp"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintStart_toEndOf="@+id/textView50"
             app:layout_constraintTop_toTopOf="@+id/textView50"
             tools:text="NEW" />

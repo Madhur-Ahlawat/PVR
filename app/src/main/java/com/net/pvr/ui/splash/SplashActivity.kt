@@ -24,7 +24,6 @@ import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.food.FoodActivity
 import com.net.pvr.ui.home.HomeActivity
-import com.net.pvr.ui.location.enableLocation.EnableLocationActivity
 import com.net.pvr.ui.location.selectCity.SelectCityActivity
 import com.net.pvr.ui.login.LoginActivity
 import com.net.pvr.ui.scanner.ScannerActivity
@@ -36,8 +35,6 @@ import com.net.pvr.utils.*
 import com.net.pvr.utils.Constant.Companion.DONATION
 import com.net.pvr.utils.Constant.Companion.newTag
 import dagger.hilt.android.AndroidEntryPoint
-import java.net.URI
-import java.net.URISyntaxException
 import javax.inject.Inject
 
 @Suppress("DEPRECATION")
@@ -85,15 +82,20 @@ class SplashActivity : AppCompatActivity() {
         clickOnBoarding = sharedpreferences?.getBoolean(OnBoardingClick, false)!!
 
         //Check interNet Connection
-        if (isConnected()) {
-            if (preferences.getCityName() == "") {
-                authViewModel.splash("")
-            } else {
-                authViewModel.splash(preferences.getCityName())
-            }
+        if (Util.isRooted(this) == true) {
+            finish()
         } else {
-            networkDialog()
+            if (isConnected()) {
+                if (preferences.getCityName() == "") {
+                    authViewModel.splash("")
+                } else {
+                    authViewModel.splash(preferences.getCityName())
+                }
+            } else {
+                networkDialog()
+            }
         }
+
         summeryDetails()
         Constant.setAverageUserIdSCM(preferences)
         Constant.setUPSFMCSDK(preferences)

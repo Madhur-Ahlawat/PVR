@@ -41,7 +41,7 @@
         android:shape="ring"
         android:thicknessRatio="1.9"
         app:cardCornerRadius="40dp"
-        app:layout_constraintStart_toStartOf="@+id/view142"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
@@ -64,7 +64,7 @@
         android:includeFontPadding="false"
         android:textColor="@color/black"
         android:textSize="@dimen/dimen_16sp"
-        app:layout_constraintEnd_toEndOf="@+id/view142"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/view2"
         app:layout_constraintTop_toTopOf="@+id/view2"
         tools:text="Jessica Walsh" />
@@ -82,7 +82,7 @@
         app:drawableEndCompat="@drawable/ic_bright"
         app:drawableTint="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/view2"
-        app:layout_constraintEnd_toEndOf="@+id/view142"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView205"
         app:layout_constraintTop_toBottomOf="@+id/textView205"
         tools:text="Member since Nov 2016" />

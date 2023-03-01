@@ -849,7 +849,11 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         bindingTrailer.include50.textView5.text = getString(R.string.book_now)
 
         bindingTrailer.include50.textView5.setOnClickListener {
-
+            val intent = Intent(requireActivity(), MovieSessionActivity::class.java)
+            intent.putExtra("mid", mv.id)
+            ISEvents().bookBtn(requireActivity(),mv.mcc)
+            mcId = mv.mcc
+            startActivity(intent)
         }
 
 //trailer
@@ -1433,4 +1437,15 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         startActivity(intent)
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding?.includeAppBar?.txtCity?.text = preferences.getCityName()
+        if (preferences.getIsLogin()) {
+            binding?.includeAppBar?.profileBtn?.show()
+            binding?.includeAppBar?.textView2?.text = "Hello, " + preferences.getUserName()
+        } else {
+            binding?.includeAppBar?.profileBtn?.hide()
+            binding?.includeAppBar?.textView2?.text = "Hello!"
+        }
+    }
 }

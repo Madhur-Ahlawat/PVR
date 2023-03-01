@@ -39,6 +39,7 @@ data class HomeSearchResponse(
             val desc: String,
             val distance: Int,
             val genre: String,
+            val date_caption: String,
             val id: String,
             val im: String,
             val iwt: String,

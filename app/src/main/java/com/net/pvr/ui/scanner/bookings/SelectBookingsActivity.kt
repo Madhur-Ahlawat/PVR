@@ -149,13 +149,14 @@ class SelectBookingsActivity : AppCompatActivity() {
             binding?.tvCinemaName?.hide()
         }
         //title
-        binding?.include33?.textView108?.text = getString(R.string.scan_qr_code)
+        binding?.include33?.textView108?.text = "Select Booking"
         //Back
         binding?.include33?.imageView58?.setOnClickListener {
             finish()
         }
 
         binding?.onlyFood?.setOnClickListener {
+            println("onlyFood-->$clickF")
             if (clickF)
             getOutlets()
         }
@@ -330,6 +331,8 @@ class SelectBookingsActivity : AppCompatActivity() {
     }
 
     private fun retrieveDataTheater(output: CinemaSessionResponse.Output) {
+        enableFood()
+
         if (output.childs.isNotEmpty()) {
             childcinemaId = output.childs[0].ccid
             childCinemaname = output.cn
