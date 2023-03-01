@@ -672,6 +672,16 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     override fun onCategoryClick(comingSoonItem: HomeResponse.Mfi) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Book ticket")
+                                bundle.putString("var_cinema_format","veg")
+            GoogleAnalytics.hitEvent(requireActivity(), "book_cinema_format", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
 
         val intent = Intent(requireActivity(), FormatsActivity::class.java)
         intent.putExtra("format", comingSoonItem.name)
@@ -709,6 +719,16 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     override fun onBookClick(comingSoonItem: HomeResponse.Mv) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "HomePage")
+            bundle.putString("var_book_now_screenname","HomePage")
+            GoogleAnalytics.hitEvent(requireActivity(), "book_now", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
         val intent = Intent(requireActivity(), MovieSessionActivity::class.java)
         intent.putExtra("mid", comingSoonItem.id)
         mcId = comingSoonItem.mcc

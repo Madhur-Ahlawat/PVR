@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
+import android.os.Bundle
 import android.text.TextUtils
 import android.util.TypedValue
 import android.view.*
@@ -18,6 +19,7 @@ import android.widget.TextView
 import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ItemCinemaDetailsShowTimeBinding
 import com.net.pvr.ui.bookingSession.MovieSessionActivity.Companion.btnc
@@ -27,6 +29,7 @@ import com.net.pvr.ui.seatLayout.SeatLayoutActivity
 import com.net.pvr.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr.utils.Constant.Companion.OfferDialogImage
 import com.net.pvr.utils.Constant.Companion.SESSION_ID
+import com.net.pvr.utils.ga.GoogleAnalytics
 import com.net.pvr.utils.hide
 import com.net.pvr.utils.show
 import java.util.*
@@ -48,7 +51,6 @@ class BookingShowsTimeAdapter(
     private var rowIndex: Int = 0
     private var sidText: String = ""
     private var ccText: String = ""
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemCinemaDetailsShowTimeBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -132,6 +134,18 @@ class BookingShowsTimeAdapter(
                         } else {
                             sidText = this.sid.toString()
                             ccText = this.cc
+
+                            // Hit Event
+                            try {
+                                val bundle = Bundle()
+                                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+//                                bundle.putString("var_FnB_food_type","veg")
+                                GoogleAnalytics.hitEvent(context, "movie_show_time", bundle)
+                            }catch (e:Exception){
+                                e.printStackTrace()
+                            }
+
+
                             val intent = Intent(context, SeatLayoutActivity::class.java)
                             intent.putExtra("clickPosition", rowIndex.toString())
                             intent.putExtra("shows", nowShowingList)
@@ -488,6 +502,17 @@ class BookingShowsTimeAdapter(
             dialog.dismiss()
             sidText = sid.toString()
             ccText = cc
+
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+//                                bundle.putString("var_FnB_food_type","veg")
+                GoogleAnalytics.hitEvent(context, "movie_show_time", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
             val intent = Intent(context, SeatLayoutActivity::class.java)
             intent.putExtra("clickPosition", rowIndex.toString())
             intent.putExtra("shows", nowShowingList)
@@ -600,6 +625,17 @@ class BookingShowsTimeAdapter(
             dialog.dismiss()
             sidText = sid.toString()
             ccText = cc
+
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+//                                bundle.putString("var_FnB_food_type","veg")
+                GoogleAnalytics.hitEvent(context, "movie_show_time", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
             val intent = Intent(context, SeatLayoutActivity::class.java)
             intent.putExtra("clickPosition", rowIndex.toString())
             intent.putExtra("shows", nowShowingList)

@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.SnapHelper
 import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityBookingBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -42,10 +43,11 @@ import com.net.pvr.ui.bookingSession.viewModel.BookingViewModel
 import com.net.pvr.ui.cinemaSession.cinemaDetails.CinemaDetailsActivity
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
-import com.net.pvr.ui.filter.GenericFilterMsession
+import com.net.pvr.ui.filter.GenericFilterSession
 import com.net.pvr.ui.home.fragment.home.adapter.PromotionAdapter
 import com.net.pvr.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr.utils.*
+import com.net.pvr.utils.ga.GoogleAnalytics
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -65,7 +67,7 @@ class MovieSessionActivity : AppCompatActivity(),
     BookingShowsLanguageAdapter.RecycleViewItemClickListenerCity,
     BookingTheatreAdapter.RecycleViewItemClickListener,
     BookingPlaceHolderAdapter.RecycleViewItemClickListenerCity,
-    BookingShowsParentAdapter.RecycleViewItemClickListener, GenericFilterMsession.onButtonSelected,
+    BookingShowsParentAdapter.RecycleViewItemClickListener, GenericFilterSession.onButtonSelected,
     StoriesProgressView.StoriesListener {
 
     @Inject
@@ -110,7 +112,8 @@ class MovieSessionActivity : AppCompatActivity(),
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
     private var lat = "0.0"
     private var lng = "0.0"
-    companion object{
+
+    companion object {
         var btnc = ""
     }
 
@@ -121,8 +124,7 @@ class MovieSessionActivity : AppCompatActivity(),
         setContentView(view)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        if (intent.hasExtra("mid"))
-            movieId = intent.getStringExtra("mid").toString()
+        if (intent.hasExtra("mid")) movieId = intent.getStringExtra("mid").toString()
         val intent = intent
         val action = intent.action
         val data = intent.data
@@ -130,8 +132,7 @@ class MovieSessionActivity : AppCompatActivity(),
             val path = data.path
 //            if (path!!.contains("utm"))
 //                sendGACampaign(data.toString(), "ShowSelection")
-            val parts = path!!.split("/".toRegex()).dropLastWhile { it.isEmpty() }
-                .toTypedArray()
+            val parts = path!!.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             if (parts.size == 5) {
                 preferences.saveString(Constant.SharedPreference.SELECTED_CITY_NAME, parts[2])
                 preferences.saveString(Constant.SharedPreference.SELECTED_CITY_ID, parts[2])
@@ -157,7 +158,7 @@ class MovieSessionActivity : AppCompatActivity(),
         broadcastReceiver = NetworkReceiver()
 
         binding?.imageView54?.setOnClickListener {
-            Constant.onShareClick(this, su,sm)
+            Constant.onShareClick(this, su, sm)
         }
 
         movedNext()
@@ -168,7 +169,8 @@ class MovieSessionActivity : AppCompatActivity(),
     }
 
     private fun isLocationEnabled(): Boolean {
-        val locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationManager: LocationManager =
+            getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER
         )
@@ -214,7 +216,14 @@ class MovieSessionActivity : AppCompatActivity(),
                             "NA",
                             "no",
                             "no",
-                            preferences.getUserId(),lang,format,price1,hc,show1,cinemaType,special
+                            preferences.getUserId(),
+                            lang,
+                            format,
+                            price1,
+                            hc,
+                            show1,
+                            cinemaType,
+                            special
                         )
 
                     }
@@ -233,7 +242,14 @@ class MovieSessionActivity : AppCompatActivity(),
                 "NA",
                 "no",
                 "no",
-                preferences.getUserId(),lang,format,price1,hc,show1,cinemaType,special
+                preferences.getUserId(),
+                lang,
+                format,
+                price1,
+                hc,
+                show1,
+                cinemaType,
+                special
             )
         }
 
@@ -475,7 +491,8 @@ class MovieSessionActivity : AppCompatActivity(),
 
         //Shows
         val gridLayout3 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        bookingShowsParentAdapter = BookingShowsParentAdapter(output.cinemas, this, this,output.adlt)
+        bookingShowsParentAdapter =
+            BookingShowsParentAdapter(output.cinemas, this, this, output.adlt)
         binding?.recyclerView8?.layoutManager = gridLayout3
         binding?.recyclerView8?.adapter = bookingShowsParentAdapter
 
@@ -485,17 +502,12 @@ class MovieSessionActivity : AppCompatActivity(),
 
         val string: String = java.lang.String.join(",", cinemaId)
         authViewModel.bookingTheatre(
-            preferences.getCityName(),
-            string,
-            preferences.getUserId(),
-            movieId,
-            "HINDI",
-            "no"
+            preferences.getCityName(), string, preferences.getUserId(), movieId, "HINDI", "no"
         )
 
 
         binding?.filterFab?.setOnClickListener {
-            val gFilter = GenericFilterMsession()
+            val gFilter = GenericFilterSession()
             val filterPoints = HashMap<String, ArrayList<String>>()
             if (output.lngs != null && output.lngs.size > 1) filterPoints[Constant.FilterType.LANG_FILTER] =
                 output.lngs
@@ -526,7 +538,7 @@ class MovieSessionActivity : AppCompatActivity(),
         } else {
             binding?.constraintLayout123?.hide()
         }
-        
+
         if (bannerShow == 0 && output.pu.isNotEmpty()) {
             initBanner(output.pu)
         }
@@ -592,9 +604,16 @@ class MovieSessionActivity : AppCompatActivity(),
             comingSoonItem.dt,
             "no",
             "no",
-            preferences.getUserId(),lang,format,price1,hc,show1,cinemaType,special
+            preferences.getUserId(),
+            lang,
+            format,
+            price1,
+            hc,
+            show1,
+            cinemaType,
+            special
         )
-        Constant.focusOnView(itemView,binding?.recyclerView9!!)
+        Constant.focusOnView(itemView, binding?.recyclerView9!!)
     }
 
     override fun languageClick(comingSoonItem: String) {
@@ -615,25 +634,40 @@ class MovieSessionActivity : AppCompatActivity(),
 
     override fun alertClick(comingSoonItem: BookingResponse.Output.Cinema) {
         val intent = Intent(this@MovieSessionActivity, CinemaDetailsActivity::class.java)
-        intent.putExtra("cid",comingSoonItem.cid.toString())
+        intent.putExtra("cid", comingSoonItem.cid.toString())
         startActivity(intent)
     }
 
+    private fun selectedFilter(filterItemSelected: HashMap<String?, String?>?): Boolean {
+        var selected = false
+        if (filterItemSelected != null) {
+            for (key: Map.Entry<String?, String?> in filterItemSelected) {
+                println("selectedFilters---->" + key.value + "----")
+                if (!key.value.equals("", ignoreCase = true) && !key.value!!.contains("ALL")) {
+                    selected = true
+                }
+            }
+        }
+        return selected
+    }
 
-    @SuppressLint("SimpleDateFormat")
+
+
     override fun onApply(
-        type: ArrayList<String?>,
-        filterItemSelected: HashMap<String?, String?>,
+        type: ArrayList<String>?,
+        filterItemSelected: HashMap<String?, String?>?,
         isSelected: Boolean,
         itemSelected: String?
     ) {
-        if (type.size > 0) {
+        if (type?.size!! > 0) {
             binding?.filterFab?.setImageResource(R.drawable.filter_selected)
-            appliedFilterItem = filterItemSelected
+            if (filterItemSelected != null) {
+                appliedFilterItem = filterItemSelected
+            }
             val containLanguage = type.contains("language")
-            if (containLanguage) {
+            if (containLanguage == true) {
                 val index = type.indexOf("language")
-                val value = filterItemSelected[type[index]]
+                val value = filterItemSelected?.get(type[index!!])
                 if (value != null && !value.equals("", ignoreCase = true)) {
                     appliedFilterType = "language"
                     lang = value.uppercase(Locale.getDefault())
@@ -643,9 +677,9 @@ class MovieSessionActivity : AppCompatActivity(),
             }
 
             val containTime = type.contains("time")
-            if (containTime) {
+            if (containTime == true) {
                 val index = type.indexOf("time")
-                var value = filterItemSelected[type[index]]
+                var value = filterItemSelected?.get(type[index])
                 if (value != null && !value.equals("", ignoreCase = true)) {
                     appliedFilterType = "time"
                     val pos = value.indexOf("(") + 1
@@ -656,12 +690,11 @@ class MovieSessionActivity : AppCompatActivity(),
                     val inputFormat: DateFormat = SimpleDateFormat("h:mma")
                     val outputFormatter: DateFormat = SimpleDateFormat("H:mm")
                     try {
-                        if (show1 != "ALL"){
+                        if (show1 != "ALL") {
                             show1 = inputFormat.parse(show1)?.let { outputFormatter.format(it) }
                                 .toString()
-                        show2 = outputFormatter.format(show2)
-                    }
-
+                            show2 = outputFormatter.format(show2)
+                        }
                     } catch (e: ParseException) {
                         e.printStackTrace()
                     }
@@ -671,27 +704,38 @@ class MovieSessionActivity : AppCompatActivity(),
                 }
             }
             val containFormat = type.contains("format")
-            if (containFormat) {
+            if (containFormat == true) {
                 val index = type.indexOf("format")
-                val value = filterItemSelected[type[index]]
+                val value = filterItemSelected?.get(type[index])
                 format = if (value != null && !value.equals(
                         "", ignoreCase = true
                     )
                 ) value else "ALL"
             }
+
             val containCinemaFormat = type.contains("cinema")
-            if (containCinemaFormat) {
+            if (containCinemaFormat == true) {
                 val index = type.indexOf("cinema")
-                val value = filterItemSelected[type[index]]
+                val value = filterItemSelected?.get(type[index])
                 cinemaType = if (value != null && !value.equals(
                         "", ignoreCase = true
                     )
                 ) value else "ALL"
+
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                    bundle.putString("var_cinema_format", cinemaType)
+                    GoogleAnalytics.hitEvent(this, "book_cinema_format", bundle)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
             val containSpecialFormat = type.contains("special")
-            if (containSpecialFormat) {
+            if (containSpecialFormat == true) {
                 val index = type.indexOf("special")
-                val value = filterItemSelected[type[index]]
+                val value = filterItemSelected?.get(type[index])
                 special = if (value != null && !value.equals(
                         "", ignoreCase = true
                     )
@@ -699,9 +743,9 @@ class MovieSessionActivity : AppCompatActivity(),
             }
 
             val containPrice = type.contains("price")
-            if (containPrice) {
+            if (containPrice == true) {
                 val index = type.indexOf("price")
-                var value = filterItemSelected[type[index]]
+                var value = filterItemSelected?.get(type[index])
                 if (value != null && !value.equals("", ignoreCase = true)) {
                     val splitSymbol = value.split("₹").toTypedArray()
                     value = splitSymbol[1]
@@ -721,11 +765,20 @@ class MovieSessionActivity : AppCompatActivity(),
                     price1 = "ALL"
                     price2 = "ALL"
                 }
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                    bundle.putString("var_price_range", price2)
+                    GoogleAnalytics.hitEvent(this, "book_price_range", bundle)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
             val containAccessibility = type.contains("accessability")
-            if (containAccessibility) {
+            if (containAccessibility == true) {
                 val index = type.indexOf("accessability")
-                val value = filterItemSelected[type[index]]
+                val value = filterItemSelected?.get(type[index])
                 if (value != null && !value.equals("", ignoreCase = true)) {
                     if (value.contains("Wheelchair")) hc = "hc"
                     if (value.contains("Subtitles")) special = "RST"
@@ -733,62 +786,67 @@ class MovieSessionActivity : AppCompatActivity(),
                     hc = "ALL"
                     special = "ALL"
                 }
-            }
-            var show = "ALL"
-            var price = "ALL"
-            if (price1 != "ALL"){
-                price = "$price1-$price2"
-            }else{
-                price = "ALL"
-            }
-            if (show1 != "ALL"){
-                show = "$show1-$show2"
-            }
-            authViewModel.bookingTicket(
-                preferences.getCityName(),
-                movieId,
-                lat,
-                lng,
-                "NA",
-                "no",
-                "no",
-                preferences.getUserId(),lang,format, price,hc,show,cinemaType,special
-            )
-            if (!selectedFilter(filterItemSelected)) {
-                binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
-            }
-        } else {
-            //            appliedFilter.setVisibility(View.GONE)
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+//                    bundle.putString("var_price_range", price2)
+                    GoogleAnalytics.hitEvent(this, "book_accessibility", bundle)
+                } catch (e: Exception) {
 
-        }
-    }
+                }
+                var show = "ALL"
+                var price = "ALL"
+                price = if (price1 != "ALL") {
+                    "$price1-$price2"
+                } else {
+                    "ALL"
+                }
 
-    private fun selectedFilter(filterItemSelected: HashMap<String?, String?>): Boolean {
-        var selected = false
-        for (key: Map.Entry<String?, String?> in filterItemSelected) {
-            println("selectedFilters---->" + key.value + "----")
-            if (!key.value.equals("", ignoreCase = true) && !key.value!!
-                    .contains("ALL")
-            ) {
-                selected = true
+                if (show1 != "ALL") {
+                    show = "$show1-$show2"
+                }
+
+                authViewModel.bookingTicket(
+                    preferences.getCityName(),
+                    movieId,
+                    lat,
+                    lng,
+                    "NA",
+                    "no",
+                    "no",
+                    preferences.getUserId(),
+                    lang,
+                    format,
+                    price,
+                    hc,
+                    show,
+                    cinemaType,
+                    special
+                )
+
+                if (!selectedFilter(filterItemSelected)) {
+                    binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
+                }
+
             }
         }
-        return selected
+        
     }
 
 
     override fun onReset() {
         binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
         appliedFilterItem = HashMap()
-         lang = "ALL"
-         format = "ALL"
-         price1 = "ALL"
-         price2 = "ALL"
-         show1 = "ALL"
-         hc = "ALL"
-         show2 = "ALL"
-         special = "ALL"
-         cinemaType = "ALL"
+        lang = "ALL"
+        format = "ALL"
+        price1 = "ALL"
+        price2 = "ALL"
+        show1 = "ALL"
+        hc = "ALL"
+        show2 = "ALL"
+        special = "ALL"
+        cinemaType = "ALL"
         authViewModel.bookingTicket(
             preferences.getCityName(),
             movieId,
@@ -797,7 +855,14 @@ class MovieSessionActivity : AppCompatActivity(),
             "NA",
             "no",
             "no",
-            preferences.getUserId(),lang,format,price1,hc,show1,cinemaType,special
+            preferences.getUserId(),
+            lang,
+            format,
+            price1,
+            hc,
+            show1,
+            cinemaType,
+            special
         )
     }
 
@@ -820,7 +885,7 @@ class MovieSessionActivity : AppCompatActivity(),
                         RecognizerIntent.EXTRA_RESULTS
                     )
                     binding?.include43?.editTextTextPersonName?.setText(
-                        Objects.requireNonNull(result)!![0]
+                        Objects.requireNonNull(result)?.get(0)
                     )
                 }
             }
@@ -936,7 +1001,7 @@ class MovieSessionActivity : AppCompatActivity(),
     }
 
     private fun showButton(bannerModel: BookingResponse.Output.Pu) {
-        if (bannerModel.type.uppercase(Locale.getDefault()) == "VIDEO" && bannerModel.trailerUrl!=""){
+        if (bannerModel.type.uppercase(Locale.getDefault()) == "VIDEO" && bannerModel.trailerUrl != "") {
             binding?.bannerLayout?.ivPlay?.show()
             binding?.bannerLayout?.tvButton?.hide()
         } else if (bannerModel.type.uppercase(Locale.getDefault()) == "IMAGE" && bannerModel.redirect_url != "") {

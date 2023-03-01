@@ -1214,7 +1214,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 }catch (e:Exception){
                     e.printStackTrace()
                 }
-                
+
                 val intent = Intent(this@PaymentActivity, MCouponActivity::class.java)
                 intent.putExtra("pid", paymentItem.id)
                 intent.putExtra("ca_a", paymentItem.ca_a)

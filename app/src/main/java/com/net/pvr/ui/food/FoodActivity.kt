@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.*
 import com.bumptech.glide.Glide
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityFoodBinding
 import com.net.pvr.databinding.FoodBottomAddFoodBinding
@@ -43,6 +44,7 @@ import com.net.pvr.utils.Constant.Companion.QR
 import com.net.pvr.utils.Constant.Companion.SUMMERYBACK
 import com.net.pvr.utils.Constant.Companion.TRANSACTION_ID
 import com.net.pvr.utils.Constant.Companion.foodCartModel
+import com.net.pvr.utils.ga.GoogleAnalytics
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -104,7 +106,6 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
 
 
     companion object{
-
         var itemCount = 0
         var limitCount = 0
         var seatMessage = "0"
@@ -352,17 +353,37 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         }
         //without food
         binding?.textView374?.setOnClickListener {
+// Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+//                bundle.putString("var_add_payment_info","")
+                GoogleAnalytics.hitEvent(this, "FnB_continue", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
             val intent = Intent(this@FoodActivity, SummeryActivity::class.java)
             intent.putExtra(BOOK_TYPE, "FOOD")
             startActivity(intent)
-
         }
+
         binding?.textView108?.text = getString(R.string.order_snack)
         binding?.include24?.textView5?.text = getString(R.string.submit)
         binding?.include24?.textView5?.text = getString(R.string.proceed)
 
         //with Food
         binding?.include24?.textView5?.setOnClickListener {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                bundle.putString("var_FnB_food_type","veg")
+                GoogleAnalytics.hitEvent(this, "FnB_proceed", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
 
             cartShow = false
             binding?.constraintLayout30?.hide()
@@ -399,6 +420,17 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         //veg
         binding?.switch2?.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                    bundle.putString("var_FnB_food_type","veg")
+                    GoogleAnalytics.hitEvent(this, "FnB_food_type", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
+
                 menuType = 1
                 binding?.switch3?.isChecked = false
                 bestSellerType = "Veg"
@@ -452,6 +484,16 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         //Non veg
         binding?.switch3?.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                    bundle.putString("var_FnB_food_type","non-veg")
+                    GoogleAnalytics.hitEvent(this, "FnB_food_type", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
                 menuType = 2
                 binding?.switch2?.isChecked = false
                 bestSellerType = "Veg"
@@ -509,6 +551,17 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
 
     //Category By Name
     override fun categoryClick(comingSoonItem: FoodResponse.Output.Cat) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                bundle.putString("var_FnB_category",comingSoonItem.name)
+            GoogleAnalytics.hitEvent(this, "FnB_category", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
+
         categoryName = comingSoonItem.name
         if (comingSoonItem.name == "ALL") {
             val layoutManagerCrew = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)

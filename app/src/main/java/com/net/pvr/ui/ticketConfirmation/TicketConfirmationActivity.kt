@@ -61,6 +61,11 @@ class TicketConfirmationActivity : AppCompatActivity() {
         val view = binding?.root
         setContentView(view)
 
+
+        manageFunction()
+    }
+
+    private fun manageFunction() {
         if (Constant.BOOK_TYPE == "BOOKING") {
             if (Constant.TRANSACTION_ID==""){
                 authViewModel.singleTicket(
@@ -89,6 +94,19 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 Constant.BOOK_TYPE
             )
         }
+
+
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+            bundle.putString("all ecommecrce variable","")
+            GoogleAnalytics.hitEvent(this, "purchase", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
+
         ticketDetails()
         singleTicketPrint()
         fnbTicketPrint()
@@ -482,6 +500,18 @@ class TicketConfirmationActivity : AppCompatActivity() {
 
             // Share
             binding?.shareBtn?.setOnClickListener {
+
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+//                    bundle.putString("all ecommecrce variable","")
+                    GoogleAnalytics.hitEvent(this, "thankyou_share_button", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
+
                 try{
                     val sendIntent = Intent()
                     sendIntent.action = Intent.ACTION_SEND

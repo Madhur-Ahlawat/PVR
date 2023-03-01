@@ -33,7 +33,6 @@ class BookingShowsParentAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
-        println("BookingResponse--->${nowShowingList[position].cn}")
 
         with(holder) {
             with(nowShowingList[position]) {
