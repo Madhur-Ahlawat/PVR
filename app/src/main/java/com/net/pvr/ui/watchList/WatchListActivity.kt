@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityWatchListBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -17,6 +18,7 @@ import com.net.pvr.ui.watchList.response.WatchListResponse
 import com.net.pvr.ui.watchList.viewModel.WatchListViewModel
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.NetworkResult
+import com.net.pvr.utils.ga.GoogleAnalytics
 import com.net.pvr.utils.hide
 import com.net.pvr.utils.show
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +43,7 @@ class WatchListActivity : AppCompatActivity(),WatchListAdapter.RecycleViewItemCl
 
     private fun manageFunctions() {
         authViewModel.watchlist(preferences.getUserId(),preferences.getCityName(),Constant().getDeviceId(this))
+
         watchListData()
         deleteAlert()
         movedNext()
@@ -126,6 +129,17 @@ class WatchListActivity : AppCompatActivity(),WatchListAdapter.RecycleViewItemCl
 
 
     override fun deleteAlertClick(comingSoonItem: WatchListResponse.Output) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Watchlist")
+//            bundle.putString("my_pvr_edit_my_watchlist", comingSoonItem.name)
+            GoogleAnalytics.hitEvent(this, "my_pvr_edit_my_watchlist", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
+
         authViewModel.deleteAlert(preferences.getUserId(),comingSoonItem.moviecode,comingSoonItem.city)
     }
 

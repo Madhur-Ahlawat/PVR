@@ -472,19 +472,15 @@ class BookingShowsTimeAdapter(
         offerPrice.paintFlags = offerPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
         var discountPrice = 0
         for (data in progressDialog) {
-
-            val offerPriceText =
-                ((data.p ?: "0.0").toDouble().roundToInt() + (data.bv
-                    ?: "0.0").toDouble()
-                    .roundToInt())
             ticket.text = context.getString(R.string.currency) + data.p
             food.text = context.getString(R.string.currency) + data.bv
-            offerPrice.text = context.getString(R.string.currency) + offerPriceText
             totalPrice.text = context.getString(R.string.currency) + data.bp
+
+            val offerPriceText = (data.p.toDouble().roundToInt() + data.bv.toDouble().roundToInt())
+
+            offerPrice.text = context.getString(R.string.currency) + offerPriceText
             discountPrice = offerPriceText - data.bp.toInt()
-
             break
-
         }
 
 

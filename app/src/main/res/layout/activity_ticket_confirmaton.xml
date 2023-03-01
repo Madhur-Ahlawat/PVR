@@ -385,17 +385,21 @@
                 android:id="@+id/ticketView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="visible">
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
 
                 <TextView
                     android:id="@+id/textView369"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_10"
                     android:fontFamily="@font/sf_pro_text_medium"
                     android:text="@string/thank_you_for_choosing_pvr"
                     android:textColor="@color/black"
-                    android:layout_marginTop="@dimen/padding_10"
                     android:textSize="@dimen/dimen_14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -418,12 +422,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dimen_35dp"
                     android:layout_marginTop="8dp"
-                    android:visibility="gone"
                     android:background="@drawable/ticket_conf_curve_direction"
                     android:paddingStart="@dimen/dimen_14dp"
                     android:paddingTop="@dimen/dimen_8dp"
                     android:paddingEnd="@dimen/dimen_14dp"
                     android:paddingBottom="@dimen/dimen_8dp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView370">
@@ -503,8 +507,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="100dp"
                                 android:adjustViewBounds="true"
-                                app:layout_constraintDimensionRatio="H,1:0.4625"
                                 app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintDimensionRatio="H,1:0.4625"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 tools:ignore="ContentDescription"
@@ -552,8 +556,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="14dp"
-                                android:layout_marginEnd="4dp"
                                 android:layout_marginTop="@dimen/dimen_4dp"
+                                android:layout_marginEnd="4dp"
                                 android:fontFamily="@font/sf_pro_text_regular"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/dimen_12sp"
@@ -683,8 +687,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:visibility="gone"
                             android:src="@drawable/line"
+                            android:visibility="gone"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/recyclerView47"
@@ -697,12 +701,12 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="24dp"
                             android:layout_marginTop="10dp"
-                            android:visibility="gone"
                             android:fontFamily="@font/sf_pro_text_regular"
                             android:text="@string/food_beverages"
                             android:textAllCaps="true"
                             android:textColor="@color/gray_payment"
                             android:textSize="@dimen/dimen_11sp"
+                            android:visibility="gone"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/imageView153" />
 
@@ -739,8 +743,8 @@
                             android:layout_marginStart="24dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="24dp"
+                            android:visibility="visible"
                             app:cardBackgroundColor="#FFF0D6"
-                            android:visibility="gone"
                             app:cardCornerRadius="@dimen/dimen_6dp"
                             app:cardUseCompatPadding="true"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -813,7 +817,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:src="@drawable/line"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             app:layout_constraintEnd_toEndOf="@+id/view224"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/cardView16"
@@ -835,12 +839,11 @@
                                 android:id="@+id/imageView156"
                                 android:layout_width="82dp"
                                 android:layout_height="0dp"
+                                android:adjustViewBounds="true"
                                 android:src="@drawable/ic_barcode_qr"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                android:adjustViewBounds="true"
-                                 />
+                                app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
                                 android:id="@+id/textView341"
@@ -898,10 +901,10 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/cushineView"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="24dp"
-                            android:id="@+id/cushineView"
                             android:background="@color/gray_color"
                             app:layout_constraintBottom_toBottomOf="@+id/view224"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -926,10 +929,10 @@
                                 android:layout_marginStart="8dp"
                                 android:layout_marginTop="14dp"
                                 android:layout_marginBottom="14dp"
+                                android:drawableEnd="@drawable/noti_info"
                                 android:fontFamily="@font/sf_pro_text_medium"
                                 android:text="@string/seat_cushions_for_children_are_available_at_cinema"
                                 android:textColor="#7D7D7D"
-                                android:drawableEnd="@drawable/noti_info"
                                 android:textSize="@dimen/dimen_11sp"
                                 app:layout_constraintBottom_toBottomOf="@+id/imageView158"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -1014,7 +1017,7 @@
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="24dp"
                     android:background="@drawable/ticket_conf_curv"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout128">
@@ -1024,16 +1027,16 @@
                         android:id="@+id/textView346"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_12dp"
                         android:fontFamily="@font/sf_pro_text_medium"
                         android:text="@string/know_when_to_leave_for_your_movie"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimen_14sp"
-                        android:layout_marginStart="@dimen/dimen_12dp"
                         android:visibility="visible"
-                        app:layout_constraintWidth_percent="0.5"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.5" />
 
 
                     <androidx.cardview.widget.CardView
@@ -1043,22 +1046,22 @@
                         app:cardBackgroundColor="@color/yellow"
                         app:cardCornerRadius="@dimen/dimen_50dp"
                         app:cardUseCompatPadding="true"
-                        app:layout_constraintWidth_percent="0.5"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/textView346"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.5">
 
                         <TextView
                             android:id="@+id/textView347"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/dimen_45dp"
-                            android:fontFamily="@font/sf_pro_text_semi_bold"
-                            android:text="@string/add_location"
                             android:layout_gravity="center"
-                            android:paddingEnd="@dimen/dimen_15dp"
-                            android:paddingStart="@dimen/dimen_15dp"
+                            android:fontFamily="@font/sf_pro_text_semi_bold"
                             android:gravity="center"
+                            android:paddingStart="@dimen/dimen_15dp"
+                            android:paddingEnd="@dimen/dimen_15dp"
+                            android:text="@string/add_location"
                             android:textAllCaps="true"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen_12sp" />
@@ -1128,10 +1131,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/padding_10"
+                            android:gravity="end"
                             android:text="Discount Text"
                             android:textColor="@color/green_color"
                             android:textSize="@dimen/dimen_12sp"
-                            android:gravity="end"
                             android:visibility="gone"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -1306,10 +1309,10 @@
                         app:layout_constraintTop_toBottomOf="@+id/constraintLayout125" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/ppView"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:id="@+id/ppView"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/view226">
@@ -1350,19 +1353,19 @@
                     android:id="@+id/ll_refund_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout126"
-                    android:layout_marginTop="@dimen/dimen_15dp"
                     android:layout_marginStart="24dp"
+                    android:layout_marginTop="@dimen/dimen_15dp"
                     android:layout_marginEnd="24dp"
                     android:layout_marginBottom="@dimen/padding_10"
                     android:background="@drawable/ticket_conf_curve_white"
-                    android:padding="@dimen/dimen_15dp">
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_15dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout126">
 
                     <ImageView
                         android:layout_width="@dimen/dimen_30dp"
@@ -1372,18 +1375,18 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginStart="@dimen/padding_10"
+                        android:layout_weight="1"
                         android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/tv_refund_txt_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textStyle="bold"
                             android:text="Discount Text"
                             android:textColor="@color/green_color"
-                            android:textSize="@dimen/dimen_14sp" />
+                            android:textSize="@dimen/dimen_14sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/tv_refund_txt"
@@ -1422,8 +1425,8 @@
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            app:cardBackgroundColor="@color/yellow"
                             android:visibility="gone"
+                            app:cardBackgroundColor="@color/yellow"
                             app:cardCornerRadius="@dimen/dimen_50dp">
 
                             <TextView
@@ -1446,20 +1449,19 @@
                     </LinearLayout>
 
 
-
                     <LinearLayout
+                        android:id="@+id/cancelTicket"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/cancelTicket"
-                        android:visibility="gone"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             app:cardBackgroundColor="@color/grayEd"
-                            app:cardUseCompatPadding="true"
-                            app:cardCornerRadius="@dimen/dimen_50dp">
+                            app:cardCornerRadius="@dimen/dimen_50dp"
+                            app:cardUseCompatPadding="true">
 
 
                             <TextView
@@ -1522,17 +1524,21 @@ ididunt ut labore et dolore magna aliqua." />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--            // Gift Card Ticket-->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/GCView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible">
-        </androidx.constraintlayout.widget.ConstraintLayout>
+<!--&lt;!&ndash;            // Gift Card Ticket&ndash;&gt;-->
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                android:id="@+id/GCView"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:visibility="visible"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="@+id/ticketView"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent">-->
+
+
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

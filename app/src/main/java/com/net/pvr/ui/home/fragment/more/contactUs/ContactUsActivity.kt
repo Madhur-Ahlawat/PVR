@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityContactUsBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -14,6 +15,7 @@ import com.net.pvr.ui.home.fragment.more.contactUs.adapter.ContactUsItemAdapter
 import com.net.pvr.ui.home.fragment.more.contactUs.viewModel.ContactUsViewModel
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.NetworkResult
+import com.net.pvr.utils.ga.GoogleAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -61,7 +63,8 @@ class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewI
         binding?.recyclerView40?.layoutManager = gridLayout
         binding?.recyclerView40?.adapter = adapter
         movedNext()
-        contactUs()    }
+        contactUs()
+    }
 
     private fun movedNext() {
         //toolbar Back
@@ -112,6 +115,61 @@ class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewI
                     })
                 dialog.show()
             } else {
+                when (type) {
+                    "Feedback" -> {
+                        // Hit Event
+                        try {
+                            val bundle = Bundle()
+                            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Contact Us")
+                            GoogleAnalytics.hitEvent(this, "contact_us_feedback", bundle)
+                        }catch (e:Exception){
+                            e.printStackTrace()
+                        }
+
+                    }
+                    "Advertising/Corporate" -> {
+                        // Hit Event
+                        try {
+                            val bundle = Bundle()
+                            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Contact Us")
+                            GoogleAnalytics.hitEvent(this, "contact_us_corporate", bundle)
+                        }catch (e:Exception){
+                            e.printStackTrace()
+                        }
+
+                    }
+                    "Bulk Booking" -> {
+                        // Hit Event
+                        try {
+                            val bundle = Bundle()
+                            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Contact Us")
+                            GoogleAnalytics.hitEvent(this, "contact_us_bulk", bundle)
+                        }catch (e:Exception){
+                            e.printStackTrace()
+                        }
+                    }
+                }
+
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Contact Us")
+//                    bundle.putString("var_experiences_banner", comingSoonItem.name)
+                    GoogleAnalytics.hitEvent(this, "contact_us_with_text", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Contact Us")
+//                    bundle.putString("var_experiences_banner", comingSoonItem.name)
+                    GoogleAnalytics.hitEvent(this, "generate_lead", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
                 authViewModel.contactUs(
                     notes,
                     email,

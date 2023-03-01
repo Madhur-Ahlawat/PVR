@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityProfileBinding
 import com.net.pvr.databinding.EditProfileDialogBinding
@@ -23,6 +24,7 @@ import com.net.pvr.ui.home.fragment.more.response.ProfileResponse
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.Constant.Companion.ProfileResponseConst
 import com.net.pvr.utils.NetworkResult
+import com.net.pvr.utils.ga.GoogleAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.internal.and
 import java.security.MessageDigest
@@ -99,8 +101,17 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun movedNext() {
-
         binding?.imageView117?.setOnClickListener {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Profile")
+//                bundle.putString("var_experiences_banner", comingSoonItem.name)
+                GoogleAnalytics.hitEvent(this, "my_pvr_edit_button", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
             editProfileDialog()
         }
 

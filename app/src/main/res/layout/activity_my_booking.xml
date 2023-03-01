@@ -99,7 +99,6 @@
                 android:id="@+id/textView52"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-
                 android:textSize="@dimen/dimen_12sp"
                 android:fontFamily="@font/sf_pro_text_medium"
                 android:textColor="@color/black_40"
@@ -205,10 +204,10 @@
 
                     <TextView
                         android:textStyle="bold"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Past Bookings"
+                        android:text="@string/past_bookings"
                         android:layout_marginStart="@dimen/padding_10"
                         android:textAllCaps="true"
                         android:textColor="@color/black"
@@ -221,7 +220,8 @@
                         android:layout_marginEnd="@dimen/dimen_20dp"
                         android:rotation="270"
                         android:visibility="gone"
-                        android:src="@drawable/back_new" />
+                        android:src="@drawable/back_new"
+                        tools:ignore="ContentDescription" />
 
                     <ImageView
                         android:id="@+id/iv_past_drop_up"
@@ -230,7 +230,8 @@
                         android:layout_marginEnd="@dimen/dimen_20dp"
                         android:rotation="90"
                         android:src="@drawable/back_new"
-                        android:visibility="visible" />
+                        android:visibility="visible"
+                        tools:ignore="ContentDescription" />
 
                 </LinearLayout>
 
@@ -273,7 +274,7 @@
                 android:elevation="@dimen/dimen_5dp"
                 android:paddingStart="@dimen/dimen_30dp"
                 android:paddingEnd="@dimen/dimen_30dp"
-                android:text="Show All"
+                android:text="@string/show_all"
                 android:textColor="@color/black"
                 android:textSize="@dimen/dimen_14sp"
                 android:visibility="visible" />
@@ -291,7 +292,6 @@
             android:id="@+id/ll_also_playing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:orientation="vertical"
             android:visibility="visible"
             android:layout_marginStart="@dimen/dimen_15dp">

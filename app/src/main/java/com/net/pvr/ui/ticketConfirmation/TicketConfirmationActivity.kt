@@ -243,10 +243,17 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 binding?.imageView153?.show()
                 binding?.textView339?.show()
                 binding?.recyclerView48?.show()
+            }else{
+                binding?.imageView153?.hide()
+                binding?.textView339?.hide()
+                binding?.recyclerView48?.hide()
             }
             if (output.fa && output.ca_d != "true"){
                 binding?.cardView16?.show()
                 binding?.imageView157?.show()
+            }else{
+                binding?.cardView16?.hide()
+                binding?.imageView157?.hide()
             }
 
             if (output.ca_d == "true"){
@@ -272,6 +279,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 binding?.textView347?.text = "Add Location"
             }
 
+            //AddLocation
             binding?.textView347?.setOnClickListener {
                 if (binding?.textView347?.text == "Book Again"){
                     launchActivity(
@@ -283,8 +291,20 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 }
             }
 
-            // Cancel Ticket
+            //AddFood
+            binding?.textView312?.setOnClickListener {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Ticket Confirmation screen")
+                bundle.putString("FnB_order_snaks", "")
+                    GoogleAnalytics.hitEvent(this, "F&B_book_food_pay_success", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+            }
 
+            // Cancel Ticket
             if (!output.partialCancellationAllowed || output.seat.size == 1)
                 binding?.textView363?.text = resources.getString(R.string.cancel_ticket_small)
             else binding?.textView363?.text = resources.getString(R.string.Partially_Cancel)
@@ -335,6 +355,13 @@ class TicketConfirmationActivity : AppCompatActivity() {
 
             //order Id
             binding?.textView342?.text = output.bi
+            if (output.qrc.isNullOrEmpty()){
+                binding?.textView343?.hide()
+                binding?.textView344?.hide()
+            }else{
+                binding?.textView343?.show()
+                binding?.textView344?.show()
+            }
             //kiosk Id
             binding?.textView344?.text = output.qrc
             //Qr Code
@@ -360,6 +387,14 @@ class TicketConfirmationActivity : AppCompatActivity() {
             binding?.recyclerView48?.adapter = ticketFoodAdapter
 
             //placeholder
+            if (output.ph.isEmpty()){
+                binding?.textView367?.hide()
+                binding?.recyclerView51?.hide()
+            }else{
+                binding?.textView367?.show()
+                binding?.recyclerView51?.show()
+            }
+
             val snapHelper = PagerSnapHelper()
             snapHelper.attachToRecyclerView(binding?.recyclerView51)
             val layoutManagerPlaceHolder =
@@ -497,6 +532,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
             binding?.foodView?.show()
             binding?.ticketView?.hide()
             binding?.bottomView?.hide()
+
             Glide.with(this)
                 .load(output.im)
                 .error(R.drawable.placeholder_vertical)
@@ -515,6 +551,15 @@ class TicketConfirmationActivity : AppCompatActivity() {
             binding?.foodOrderId?.text = output.bi
             binding?.foodPrice?.text = output.ft
             binding?.foodCount?.text = output.food.size.toString() + " Food Items Ordered"
+            if (output.food.isNotEmpty()){
+                binding?.foodItems?.show()
+                binding?.imageView153?.show()
+
+            }else{
+                binding?.imageView153?.hide()
+                binding?.foodItems?.hide()
+
+            }
             //food
             val layoutManagerFood = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
             val ticketFoodAdapter = TicketFoodAdapter(output.food)

@@ -10,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityCinemaSearchBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -22,6 +23,7 @@ import com.net.pvr.ui.search.searchHome.response.HomeSearchResponse
 import com.net.pvr.ui.search.searchHome.viewModel.HomeSearchViewModel
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.NetworkResult
+import com.net.pvr.utils.ga.GoogleAnalytics
 import com.net.pvr.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -51,6 +53,7 @@ class CinemaSearchActivity : AppCompatActivity(),
 
     private fun manageFunction() {
         authViewModel.homeSearch(preferences.getCityName(), "", "", preferences.getLatitudeData(), preferences.getLongitudeData())
+
         search()
         movedNext()
     }
@@ -201,8 +204,49 @@ class CinemaSearchActivity : AppCompatActivity(),
             }
         }
         if (filtered.isEmpty()) {
+
+// Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Coming Soon")
+                bundle.putString("var_coming_soon_search_movie", "")
+                GoogleAnalytics.hitEvent(this, "coming_soon_search_movie", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
+// Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Coming Soon")
+//                bundle.putString("var_coming_soon_search_movie", "")
+                GoogleAnalytics.hitEvent(this, "coming_soon_search_movie_keywords", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
             searchHomeMovieAdapter?.filterMovieList(filtered1)
         } else {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Coming Soon")
+                bundle.putString("var_coming_soon_search_movie", "")
+                GoogleAnalytics.hitEvent(this, "coming_soon_search_movie", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Coming Soon")
+//                bundle.putString("var_coming_soon_search_movie", "")
+                GoogleAnalytics.hitEvent(this, "coming_soon_search_movie_keywords", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
             searchHomeMovieAdapter?.filterMovieList(filtered)
         }
     }

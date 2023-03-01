@@ -23,6 +23,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.base.Splitter
 import com.net.pvr.R
 import com.net.pvr.databinding.FragmentMoreBinding
@@ -52,6 +53,7 @@ import com.net.pvr.ui.webView.WebViewActivity
 import com.net.pvr.utils.*
 import com.net.pvr.utils.Constant.Companion.ProfileResponseConst
 import com.net.pvr.utils.Constant.Companion.newTag
+import com.net.pvr.utils.ga.GoogleAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.internal.and
 import java.security.MessageDigest
@@ -238,6 +240,15 @@ class MoreFragment : Fragment() {
 
         //Experience
         binding?.logout?.experience?.setOnClickListener {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Experiences Page")
+//                bundle.putString("var_experiences_banner", comingSoonItem.name)
+                GoogleAnalytics.hitEvent(requireActivity(), "experiences", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
             val intent = Intent(requireContext(), ExperienceActivity::class.java)
             startActivity(intent)
         }
@@ -253,6 +264,16 @@ class MoreFragment : Fragment() {
 
         //Offers
         binding?.logout?.constraintLayout78?.setOnClickListener {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Offer")
+//                bundle.putString("var_experiences_banner", comingSoonItem.name)
+                GoogleAnalytics.hitEvent(requireActivity(), "offers_button", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
             val intent = Intent(requireContext(), OfferActivity::class.java)
             startActivity(intent)
         }
@@ -352,6 +373,16 @@ class MoreFragment : Fragment() {
 
         //preference
         binding?.login?.constraintLayout73?.setOnClickListener {
+// Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "My Preferences")
+//                bundle.putString("var_experiences_banner", comingSoonItem.name)
+                GoogleAnalytics.hitEvent(requireActivity(), "my_pvr", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
             val intent = Intent(requireContext(), PreferenceActivity::class.java)
             startActivity(intent)
         }

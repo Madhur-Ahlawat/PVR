@@ -85,7 +85,6 @@ class OffersAdapter(
 
             printLog("catList---->$list")
 
-
             val adapter1 = OfferFilterAdapter(list , context, this, rowIndex, holder.offerRecList)
             holder.offerRecList.adapter = adapter1
             if (rowIndex >= 0 && rowIndex < list.size)
@@ -104,10 +103,10 @@ class OffersAdapter(
                 holder.demoSlider.onFlingListener = null
                 snapHelper.attachToRecyclerView(holder.demoSlider)
                 holder.demoSlider.layoutManager = layoutManager
-                val recyclerAdapter = PHAdapter(context, phList, this, 1)
+                val recyclerAdapter = phList?.let { PHAdapter(context, it, this, 1) }
                 holder.demoSlider.adapter = recyclerAdapter
                 if (phList!!.size > 1) {
-                    addTimer(recyclerAdapter, holder.demoSlider)
+                    recyclerAdapter?.let { addTimer(it, holder.demoSlider) }
                 }
             } else {
                 holder.upperView.visibility = View.GONE
@@ -123,7 +122,8 @@ class OffersAdapter(
             } else {
                 holder.seeAll.visibility = View.GONE
             }
-            val adapter1 = OffersFAdapter(context, offerList1, "F")
+
+            val adapter1 = OffersFAdapter(context, offerList1, "F",cat)
             holder.offerRecList.adapter = adapter1
             holder.titlePcTextView.visibility = View.VISIBLE
             holder.headerView.visibility = View.VISIBLE

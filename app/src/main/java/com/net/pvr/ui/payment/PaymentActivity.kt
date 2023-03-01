@@ -572,6 +572,16 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 )
             }
             CREDIT_CARD -> {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
+                    bundle.putString("add_payment_info","")
+                    GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
                 val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
                 intent.putExtra("pTypeId", paymentItem.id)
                 intent.putExtra("paidAmount", actualAmt)
@@ -580,6 +590,16 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 startActivity(intent)
             }
             CRED -> {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
+                    bundle.putString("add_payment_info","")
+                    GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
                 paymentItemHold = paymentItem
                 authViewModel.credCheck(
                     preferences.getUserId(),
@@ -593,6 +613,16 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
 
             }
             AIRTEL -> {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
+                    bundle.putString("add_payment_info","")
+                    GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
                 val intent = Intent(this@PaymentActivity, PaytmWebActivity::class.java)
                 intent.putExtra("pTypeId", paymentItem.id)
                 intent.putExtra("paidAmount", actualAmt)
@@ -601,6 +631,16 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 startActivity(intent)
             }
             DEBIT_CARD -> {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
+                    bundle.putString("add_payment_info","")
+                    GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
                 val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
                 intent.putExtra("pTypeId", paymentItem.id)
                 intent.putExtra("paidAmount", actualAmt)
@@ -609,6 +649,16 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 startActivity(intent)
             }
             NET_BANKING -> {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
+                    bundle.putString("add_payment_info","")
+                    GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
                 val intent = Intent(this@PaymentActivity, CardDetailsActivity::class.java)
                 intent.putExtra("pTypeId", paymentItem.id)
                 intent.putExtra("tc", paymentItem.tc)
@@ -617,11 +667,31 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 startActivity(intent)
             }
             PHONE_PE -> {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
+                    bundle.putString("add_payment_info","")
+                    GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
                 authViewModel.phonepeHMAC(
                     preferences.getUserId(), BOOKING_ID, BOOK_TYPE, TRANSACTION_ID
                 )
             }
             PAYTMPOSTPAID -> {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
+                    bundle.putString("add_payment_info","")
+                    GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
                 val intent = Intent(this, PaytmPostPaidActivity::class.java)
                 intent.putExtra("type", "PP")
                 intent.putExtra("ca_a", paymentItem.ca_a)
@@ -630,7 +700,18 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 intent.putExtra("title", paymentItem.name)
                 intent.putExtra("paidAmount", actualAmt)
                 startActivity(intent)
-            } MOBIKWIK -> {
+            }
+            MOBIKWIK -> {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
+                    bundle.putString("add_payment_info","")
+                    GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
                 val intent = Intent(this, MobikwikLoginActivity::class.java)
                 intent.putExtra("type", "MOBI")
                 intent.putExtra("ca_a", paymentItem.ca_a)
@@ -642,6 +723,16 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 startActivity(intent)
             }
             PAYTM_WALLET -> {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
+                    bundle.putString("add_payment_info","")
+                    GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
                 val intent = Intent(this, PaytmPostPaidActivity::class.java)
                 intent.putExtra("type", "P")
                 intent.putExtra("ca_a", paymentItem.ca_a)
@@ -652,6 +743,15 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 startActivity(intent)
             }
             FREECHARGE -> {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
+                    bundle.putString("add_payment_info","")
+                    GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
                 val intent = Intent(this, PaytmPostPaidActivity::class.java)
                 intent.putExtra("type", "P")
                 intent.putExtra("ca_a", paymentItem.ca_a)
@@ -662,6 +762,15 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 startActivity(intent)
             }
             GYFTR -> {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
+                    bundle.putString("add_payment_info","")
+                    GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
                 val intent = Intent(this, PromoCodeActivity::class.java)
                 intent.putExtra("type", "GYFTR")
                 intent.putExtra("pid", paymentItem.id)
@@ -673,6 +782,15 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 startActivity(intent)
             }
             GEIFT_CARD -> {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
+                    bundle.putString("add_payment_info","")
+                    GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
                 val intent = Intent(this, GiftCardRedeemActivity::class.java)
                 intent.putExtra("type", "GEIFT_CARD")
                 intent.putExtra("pid", paymentItem.id)
@@ -685,6 +803,16 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 startActivity(intent)
             }
             ZAGGLE -> {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
+                    bundle.putString("add_payment_info","")
+                    GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
                 val intent = Intent(this, GiftCardRedeemActivity::class.java)
                 intent.putExtra("type", "ZAGGLE")
                 intent.putExtra("pid", paymentItem.id)
@@ -697,6 +825,16 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 startActivity(intent)
             }
             ACCENTIVE -> {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
+                    bundle.putString("add_payment_info","")
+                    GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
                 val intent = Intent(this, PromoCodeActivity::class.java)
                 intent.putExtra("type", "ACCENTIVE")
                 intent.putExtra("pid", paymentItem.id)
@@ -933,19 +1071,21 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
     }
 
     private fun retrieveDataUpi(output: PaytmHmacResponse.Output) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
+                bundle.putString("var_add_payment_info","")
+            GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(output.deepLink)
         startActivityForResult(intent, 120)
-//        resultLauncher.launch(intent,120)
     }
 
-//    var resultLauncher = registerForActivityResult(StartActivityForResult()) { result ->
-//        if (result.resultCode == Activity.RESULT_OK) {
-//            // There are no request codes
-//            val data: Intent? = result.data
-//            doSomeOperations()
-//        }
-//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -962,33 +1102,23 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
             intent.putExtra("title", "PhonePe")
             intent.putExtra("paidAmount", actualAmt)
             startActivity(intent)
-//            var bundle: Bundle
-//            val txnResult: String? = null
-//            if (data != null) {
-//                if (resultCode == RESULT_OK) {
-//                    authViewModel.phonepeStatus(
-//                        preferences.getUserId(), BOOKING_ID, BOOK_TYPE, TRANSACTION_ID
-//                    )
-//                } else if (resultCode == RESULT_CANCELED) {
-//                    val dialog = OptionDialog(this,
-//                        R.mipmap.ic_launcher,
-//                        R.string.app_name,
-//                        "Transaction Failed!",
-//                        positiveBtnText = R.string.ok,
-//                        negativeBtnText = R.string.no,
-//                        positiveClick = {
-//
-//                        },
-//                        negativeClick = {})
-//                    dialog.show()
-//                }
-//            }
+
         }
     }
 
     override fun paymentExclusiveClick(paymentItem: PaymentResponse.Output.Offer) {
         when (paymentItem.id) {
             PROMOCODE -> {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
+                    bundle.putString("var_make_payment_coupon_name","")
+                    GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
                 val intent = Intent(this, PromoCodeActivity::class.java)
                 intent.putExtra("type", "PROMO")
                 intent.putExtra("pid", paymentItem.id)
@@ -1012,6 +1142,16 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 startActivity(intent)
             }
             GYFTR -> {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
+                    bundle.putString("var_make_payment_coupon_name","")
+                    GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
                 val intent = Intent(this, PromoCodeActivity::class.java)
                 intent.putExtra("type", "PROMO")
                 intent.putExtra("pid", paymentItem.id)
@@ -1023,6 +1163,16 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 startActivity(intent)
             }
             HYATT -> {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
+                    bundle.putString("var_make_payment_coupon_name","")
+                    GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
                 val intent = Intent(this, PromoCodeActivity::class.java)
                 intent.putExtra("type", "HYATT")
                 intent.putExtra("pid", paymentItem.id)
@@ -1034,6 +1184,16 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 startActivity(intent)
             }
             ACCENTIVE -> {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
+                    bundle.putString("var_make_payment_coupon_name","")
+                    GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
                 val intent = Intent(this, PromoCodeActivity::class.java)
                 intent.putExtra("type", "ACCENTIVE")
                 intent.putExtra("pid", paymentItem.id)
@@ -1045,6 +1205,16 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 startActivity(intent)
             }
             STAR_PASS -> {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
+                    bundle.putString("var_make_payment_coupon_name","")
+                    GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+                
                 val intent = Intent(this@PaymentActivity, MCouponActivity::class.java)
                 intent.putExtra("pid", paymentItem.id)
                 intent.putExtra("ca_a", paymentItem.ca_a)
@@ -1055,6 +1225,15 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 startActivity(intent)
             }
             M_COUPON -> {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
+                    bundle.putString("var_make_payment_coupon_name","")
+                    GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
                 val intent = Intent(this@PaymentActivity, MCouponActivity::class.java)
                 intent.putExtra("pid", paymentItem.id)
                 intent.putExtra("tc", paymentItem.tc)
@@ -1073,9 +1252,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         showOfferTag(comingSoonItem.name,comingSoonItem.c)
     }
 
-    override fun couponClick(
-        data: CouponResponse.Output.Voucher, position: Int, binding: ItemPaymentPrivlegeBinding
-    ) {
+    override fun couponClick(data: CouponResponse.Output.Voucher, position: Int, binding: ItemPaymentPrivlegeBinding) {
         newBinding = binding
         voucherData = data
         if (showPopup && dc) {
@@ -1138,9 +1315,12 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
             when (it) {
                 is NetworkResult.Success -> {
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        val transactionRequest2 =
-                            TransactionRequestBuilder().setData(it.data.output.bs)
-                                .setChecksum(it.data.output.ch).setUrl(it.data.output.api).build()
+                        val transactionRequest2 = TransactionRequestBuilder()
+                                .setData(it.data.output.bs)
+                                .setChecksum(it.data.output.ch)
+                                .setUrl(it.data.output.api)
+                                .build()
+
                         startActivityForResult(
                             PhonePe.getTransactionIntent(
                                 transactionRequest2

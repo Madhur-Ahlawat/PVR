@@ -16,9 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="88dp"
         app:cardUseCompatPadding="false"
-        android:padding="@dimen/dimen_20dp"
-        >
-
+        android:padding="@dimen/dimen_20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,7 +35,7 @@
                 android:layout_marginTop="@dimen/padding_10"
                 android:gravity="center"
                 android:letterSpacing=".01"
-                android:text="Congratulations"
+                android:text="@string/congratulations"
                 android:textColor="#000000"
                 android:textSize="@dimen/dimen_20sp"
                 android:textStyle="bold" />
@@ -97,7 +95,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_10"
-        app:srcCompat="@drawable/ic_dialoge_line" />
+        app:srcCompat="@drawable/ic_dialoge_line"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/popcornImage"

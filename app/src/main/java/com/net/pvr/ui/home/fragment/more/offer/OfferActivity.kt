@@ -105,7 +105,6 @@ class OfferActivity : AppCompatActivity(), OffersAdapter.RecycleViewItemClickLis
     }
 
     private fun updateAdapter(offer: ArrayList<OfferLocalData>) {
-
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding?.recyclerView?.layoutManager = layoutManager
         val adapter = OffersAdapter(this, offer, offer, this)
@@ -140,6 +139,7 @@ class OfferActivity : AppCompatActivity(), OffersAdapter.RecycleViewItemClickLis
     }
 
     override fun onItemClick(offer: MOfferResponse.Output.Offer?) {
+
 
     }
 

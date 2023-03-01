@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityPrefrenceBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -13,6 +14,7 @@ import com.net.pvr.ui.home.fragment.more.prefrence.adapter.*
 import com.net.pvr.ui.home.fragment.more.prefrence.response.PreferenceResponse
 import com.net.pvr.ui.home.fragment.more.profile.userDetails.viewModel.PreferenceViewModel
 import com.net.pvr.utils.*
+import com.net.pvr.utils.ga.GoogleAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -163,7 +165,6 @@ class PreferenceActivity : AppCompatActivity(),
         }
     }
 
-
     private fun retrieveData(output: PreferenceResponse.Output) {
         //liked genre
         when (selectedPos) {
@@ -271,14 +272,34 @@ class PreferenceActivity : AppCompatActivity(),
     }
 
 
+    //Genre
     override fun allGenreClick(comingSoonItem: PreferenceResponse.Output.Genre.Other) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "My Preferences")
+//            bundle.putString("var_experiences_banner", comingSoonItem.name)
+            GoogleAnalytics.hitEvent(this, "my_pvr_edit_genre", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
 //        authViewModel.setPreference(
 //            preferences.getUserId(), comingSoonItem.id, true, "g", Constant().getDeviceId(this)
 //        )
     }
 
-
     override fun genreLikeClick(comingSoonItem: PreferenceResponse.Output.Genre.Liked) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "My Preferences")
+            bundle.putString("var_my_pvr_edit_genre_fav", "")
+            GoogleAnalytics.hitEvent(this, "my_pvr_edit_genre_favourite", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
 //        authViewModel.setPreference(
 //            preferences.getUserId(), comingSoonItem.id, false, "g", Constant().getDeviceId(this)
 //        )
@@ -338,13 +359,33 @@ class PreferenceActivity : AppCompatActivity(),
     }
 
 
+    //Language
     override fun allLanguageClick(comingSoonItem: PreferenceResponse.Output.Genre.Other) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "My Preferences")
+//            bundle.putString("var_experiences_banner", comingSoonItem.name)
+            GoogleAnalytics.hitEvent(this, "my_pvr_edit_language", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
 //        authViewModel.setPreference(
 //            preferences.getUserId(), comingSoonItem.id, true, "l", Constant().getDeviceId(this)
 //        )
     }
 
     override fun languageLikeClick(comingSoonItem: PreferenceResponse.Output.Genre.Liked) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "My Preferences")
+            bundle.putString("var_my_pvr_edit_language_fav", "")
+            GoogleAnalytics.hitEvent(this, "my_pvr_edit_language_favourite", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
 //        authViewModel.setPreference(
 //            preferences.getUserId(), comingSoonItem.id, false, "l", Constant().getDeviceId(this)
 //        )
@@ -380,13 +421,35 @@ class PreferenceActivity : AppCompatActivity(),
         binding?.recyclerView56?.adapter = allGenreAdapter
     }
 
+    //theater
     override fun allTheaterClick(comingSoonItem: PreferenceResponse.Output.Genre.Other) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "My Preferences")
+//            bundle.putString("var_experiences_banner", comingSoonItem.name)
+            GoogleAnalytics.hitEvent(this, "my_pvr_edit_theatres", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
 //        authViewModel.setPreference(
 //            preferences.getUserId(), comingSoonItem.id, true, "t", Constant().getDeviceId(this)
 //        )
     }
 
     override fun favouriteTheaterClick(comingSoonItem: PreferenceResponse.Output.Genre.Liked) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "My Preferences")
+            bundle.putString("var_my_pvr_edit_theatres_fav", "")
+            GoogleAnalytics.hitEvent(this, "my_pvr_edit_theatres_favourite", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
+
 //        authViewModel.setPreference(
 //            preferences.getUserId(), comingSoonItem.id, false, "t", Constant().getDeviceId(this)
 //        )
@@ -423,7 +486,7 @@ class PreferenceActivity : AppCompatActivity(),
 
     }
 
-
+    //Payment
     private fun payment() {
         //liked language
         if (apiResponse?.pp?.isEmpty() == true) {
@@ -456,12 +519,31 @@ class PreferenceActivity : AppCompatActivity(),
     }
 
     override fun paymentAllClick(comingSoonItem: PreferenceResponse.Output.Genre.Other) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "My Preferences")
+//            bundle.putString("var_experiences_banner", comingSoonItem.name)
+            GoogleAnalytics.hitEvent(this, "my_pvr_edit_payment", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
 //        authViewModel.setPreference(
 //            preferences.getUserId(), comingSoonItem.id, true, "p", Constant().getDeviceId(this)
 //        )
     }
 
     override fun paymentWalletClick(comingSoonItem: PreferenceResponse.Output.Genre.Other) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "My Preferences")
+            bundle.putString("var_my_pvr_edit_payment_fav", "")
+            GoogleAnalytics.hitEvent(this, "my_pvr_edit_payment_favourite", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
 //        authViewModel.setPreference(
 //            preferences.getUserId(), comingSoonItem.id, true, "p", Constant().getDeviceId(this)
 //        )

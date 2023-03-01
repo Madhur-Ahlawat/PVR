@@ -22,7 +22,6 @@ class OfferFilterAdapter(
     init {
         this.rowIndex = rowIndex
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilterViewHolder {
         val view: View =
             LayoutInflater.from(context).inflate(R.layout.item_filter_list, parent, false)

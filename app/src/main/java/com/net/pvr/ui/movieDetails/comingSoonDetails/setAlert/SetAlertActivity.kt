@@ -14,6 +14,7 @@ import android.view.Window
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 import com.google.gson.internal.LinkedTreeMap
 import com.net.pvr.R
@@ -27,6 +28,7 @@ import com.net.pvr.ui.movieDetails.comingSoonDetails.setAlert.viewModel.SetAlert
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.NetworkResult
 import com.net.pvr.di.preference.PreferenceManager
+import com.net.pvr.utils.ga.GoogleAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 import javax.inject.Inject
@@ -48,7 +50,13 @@ class SetAlertActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivitySetAlertBinding.inflate(layoutInflater, null, false)
         setContentView(binding.root)
+
+        manageFunction()
+    }
+
+    private fun manageFunction() {
         authViewModel.allTheater(preferences.getCityName(), preferences.getLatitudeData(), preferences.getLongitudeData(), preferences.getUserId(), "")
+
         allTheater()
         movedNext()
         setUiValue()
@@ -125,6 +133,17 @@ class SetAlertActivity : AppCompatActivity() {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+
+                        // Hit Event
+                        try {
+                            val bundle = Bundle()
+                            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Set Alert")
+                            bundle.putString("var_my_pvr_edit_my_watchlist_fav", "")
+                            GoogleAnalytics.hitEvent(this, "my_pvr_edit_my_watchlist_favourite", bundle)
+                        }catch (e:Exception){
+                            e.printStackTrace()
+                        }
+
                         setAlertDialog()
                     } else {
                         val dialog = OptionDialog(this,

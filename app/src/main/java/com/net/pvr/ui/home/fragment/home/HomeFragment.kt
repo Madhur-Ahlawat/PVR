@@ -275,7 +275,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
         // Select City
         binding?.includeAppBar?.txtCity?.setOnClickListener {
-
             // Hit Event
             try {
                 val bundle = Bundle()
@@ -673,6 +672,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     override fun onCategoryClick(comingSoonItem: HomeResponse.Mfi) {
+
         val intent = Intent(requireActivity(), FormatsActivity::class.java)
         intent.putExtra("format", comingSoonItem.name)
         startActivity(intent)

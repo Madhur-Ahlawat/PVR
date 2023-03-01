@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.SnapHelper
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityExperienceBinding
 import com.net.pvr.databinding.ExperienceDetailsDialogBinding
@@ -37,6 +38,7 @@ import com.net.pvr.ui.home.fragment.more.experience.viewModel.ExperienceViewMode
 import com.net.pvr.ui.ticketConfirmation.adapter.TicketPlaceHolderAdapter
 import com.net.pvr.ui.webView.WebViewActivity
 import com.net.pvr.utils.*
+import com.net.pvr.utils.ga.GoogleAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -198,6 +200,15 @@ class ExperienceActivity : AppCompatActivity(), ExperienceAdapter.RecycleViewIte
     }
 
     override fun itemClick(comingSoonItem: ExperienceResponse.Output.Format) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Experiences Page")
+            bundle.putString("var_experiences_banner", comingSoonItem.name)
+            GoogleAnalytics.hitEvent(this, "experiences_banner", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
         authViewModel.experienceDetails(preferences.getCityName(), comingSoonItem.type)
     }
 

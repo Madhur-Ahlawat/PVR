@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.bumptech.glide.Glide
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityComingSoonDetailsBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -25,6 +26,7 @@ import com.net.pvr.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr.ui.player.PlayerActivity
 import com.net.pvr.ui.watchList.WatchListActivity
 import com.net.pvr.utils.*
+import com.net.pvr.utils.ga.GoogleAnalytics
 import com.net.pvr.utils.isevent.ISEvents
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -178,6 +180,18 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
 
         //movie Alert
         binding?.constraintLayout89?.setOnClickListener {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Coming Soon")
+//                bundle.putString("var_experiences_banner", comingSoonItem.name)
+                GoogleAnalytics.hitEvent(this, "coming_soon_add_to_wishlist", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
+
+
             val intent = Intent(this@ComingSoonDetailsActivity, SetAlertActivity::class.java)
             intent.putExtra("cid",cinemaId)
             startActivity(intent)
@@ -329,6 +343,16 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
         
 
         binding?.imageView29?.setOnClickListener {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Coming Soon")
+//                bundle.putString("var_coming_soon_search_movie", "")
+                GoogleAnalytics.hitEvent(this, "coming_soon_play_trailer", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
             val intent = Intent(this@ComingSoonDetailsActivity, PlayerActivity::class.java)
             intent.putExtra("trailerUrl", output.t)
             startActivity(intent)

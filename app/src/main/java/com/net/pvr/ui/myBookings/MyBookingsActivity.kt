@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityMyBookingBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -27,6 +28,7 @@ import com.net.pvr.ui.myBookings.viewModel.MyBookingViewModel
 import com.net.pvr.ui.webView.WebViewActivity
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.NetworkResult
+import com.net.pvr.utils.ga.GoogleAnalytics
 import com.net.pvr.utils.hide
 import com.net.pvr.utils.show
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,7 +46,7 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
     lateinit var preferences: PreferenceManager
     private var binding: ActivityMyBookingBinding? = null
     private var loader: LoaderDialog? = null
-    private var ticketpastList = ArrayList<FoodTicketResponse.Output.C>()
+    private var ticketPastList = ArrayList<FoodTicketResponse.Output.C>()
     private val authViewModel: MyBookingViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,8 +77,8 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
         movedNext()
         movies()
 
-        binding?.ivPastDrop?.setOnClickListener(View.OnClickListener {
-            if (ticketpastList.size > 0) {
+        binding?.ivPastDrop?.setOnClickListener {
+            if (ticketPastList.size > 0) {
                 binding?.ivPastDrop?.hide()
                 binding?.ivPastDropUp?.show()
                 binding?.pastTicketListView?.show()
@@ -85,19 +87,40 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
                 val intent = Intent(this, PastBookingsActivity::class.java)
                 startActivity(intent)
             }
-        })
 
-        binding?.ivPastDropUp?.setOnClickListener(View.OnClickListener {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "My Bookings")
+//                bundle.putString("var_experiences_banner", comingSoonItem.name)
+                GoogleAnalytics.hitEvent(this, "my_bookings_previous_booking", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+        }
+
+        binding?.ivPastDropUp?.setOnClickListener {
             binding?.pastTicketListView?.hide()
             binding?.tvShowAll?.hide()
             binding?.ivPastDropUp?.hide()
             binding?.ivPastDrop?.show()
-        })
 
-        binding?.tvShowAll?.setOnClickListener(View.OnClickListener {
+
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "My Bookings")
+//                bundle.putString("var_experiences_banner", comingSoonItem.name)
+                GoogleAnalytics.hitEvent(this, "my_bookings_previous_booking", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+        }
+
+        binding?.tvShowAll?.setOnClickListener {
             val intent = Intent(this, PastBookingsActivity::class.java)
             startActivity(intent)
-        })
+        }
     }
 
     //Item Action
@@ -113,6 +136,16 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
 
         //GiftCard Action
         binding?.textView52?.setOnClickListener {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "My Bookings")
+//                bundle.putString("var_experiences_banner", comingSoonItem.name)
+                GoogleAnalytics.hitEvent(this, "my_bookings_previous_gift_card ", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
             //quantity
             binding?.textView3?.hide()
 
@@ -140,6 +173,16 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
 
         //Ticket & Food Action
         binding?.textView4?.setOnClickListener {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "My Bookings")
+//                bundle.putString("var_experiences_banner", comingSoonItem.name)
+                GoogleAnalytics.hitEvent(this, "my_bookings_previous_food", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
             //quantity
             binding?.textView3?.show()
 
@@ -262,7 +305,7 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-
+                        println("hello")
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -455,7 +498,7 @@ class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemC
             binding?.llAlsoPlaying?.hide()
         }
 
-        ticketpastList = output.p
+        ticketPastList = output.p
         val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
         val foodTicketAdapter = FoodTicketChildAdapter(output.c, this, false, this)
         binding?.recyclerMyBooking?.layoutManager = gridLayout2

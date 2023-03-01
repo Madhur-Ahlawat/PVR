@@ -697,6 +697,9 @@ IMAX Corporation is one of the world\'s leading entertainment technology compani
     <string name="do_not_hit_back_button_or_close_the_app_until_the_payment_is_complete">Do not hit back button or close the app until the payment is complete</string>
     <string name="redeem_coupon">Redeem Coupon</string>
     <string name="xxxxxxx">XXXXXXX</string>
+    <string name="congratulations">Congratulations</string>
+    <string name="past_bookings">Past Bookings</string>
+    <string name="show_all">Show All</string>
 
 
 </resources>

@@ -21,6 +21,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.bumptech.glide.Glide
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityComingSoonBinding
 import com.net.pvr.databinding.TrailersDialogBinding
@@ -41,6 +42,7 @@ import com.net.pvr.ui.movieDetails.nowShowing.adapter.TrailerTrsAdapter
 import com.net.pvr.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr.ui.player.PlayerActivity
 import com.net.pvr.utils.*
+import com.net.pvr.utils.ga.GoogleAnalytics
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -294,8 +296,18 @@ class ComingSoonFragment : Fragment(),
     }
 
     override fun onDateClick(comingSoonItem: CommingSoonResponse.Output.Movy) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Coming Soon")
+            bundle.putString("var_coming_soon_banner", "")
+            GoogleAnalytics.hitEvent(requireActivity(), "coming_soon_movie_banner", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
         val intent = Intent(requireActivity(), ComingSoonDetailsActivity::class.java)
-        HomeFragment.mcId = comingSoonItem.mcc
+        HomeFragment.mcId = comingSoonItem.movieId
         intent.putExtra("mid", comingSoonItem.masterMovieId)
         startActivity(intent)
     }
