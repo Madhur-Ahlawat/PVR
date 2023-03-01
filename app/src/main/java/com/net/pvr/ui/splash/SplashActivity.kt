@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
+import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
 import android.view.Window
@@ -21,10 +22,13 @@ import com.net.pvr.databinding.ActivitySplashBinding
 import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
+import com.net.pvr.ui.food.FoodActivity
 import com.net.pvr.ui.home.HomeActivity
 import com.net.pvr.ui.location.enableLocation.EnableLocationActivity
 import com.net.pvr.ui.location.selectCity.SelectCityActivity
 import com.net.pvr.ui.login.LoginActivity
+import com.net.pvr.ui.scanner.ScannerActivity
+import com.net.pvr.ui.scanner.bookings.SelectBookingsActivity
 import com.net.pvr.ui.splash.onBoarding.LandingActivity
 import com.net.pvr.ui.splash.response.SplashResponse
 import com.net.pvr.ui.splash.viewModel.SplashViewModel
@@ -32,6 +36,8 @@ import com.net.pvr.utils.*
 import com.net.pvr.utils.Constant.Companion.DONATION
 import com.net.pvr.utils.Constant.Companion.newTag
 import dagger.hilt.android.AndroidEntryPoint
+import java.net.URI
+import java.net.URISyntaxException
 import javax.inject.Inject
 
 @Suppress("DEPRECATION")
@@ -49,12 +55,30 @@ class SplashActivity : AppCompatActivity() {
     private var sharedpreferences: SharedPreferences? = null
     private val OnBoardingClick = "Name"
     private var clickOnBoarding: Boolean = false
-
+    var path = ""
+    var path_part = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
+        val intent = intent
+        val data = intent.data
+
+
+        if (data != null) {
+            if (data.toString().contains("/food") || data.toString().contains("/booking") || data.toString().contains("/getqrcode")) {
+                path = data.toString()
+//                if (path.contains("utm"))
+//                    sendGACampaign(path, "Splash")
+                path_part = data.path.toString()
+
+            } else {
+                val token = data.getQueryParameter("token")
+                //if (token != null) PCApplication.InfyToken = token
+            }
+        }
 
         //OnBoarding Click Check
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE)
@@ -74,23 +98,52 @@ class SplashActivity : AppCompatActivity() {
         Constant.setAverageUserIdSCM(preferences)
         Constant.setUPSFMCSDK(preferences)
 
+
     }
 
     private fun movedNext() {
         val runnable = Runnable {
             if (preferences.getIsLogin()) {
-                if (!Constant().locationServicesEnabled(this@SplashActivity) ) {
-                    val intent = Intent(this@SplashActivity, EnableLocationActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                } else if (preferences.getCityName() == "") {
-                    val intent = Intent(this@SplashActivity, SelectCityActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                } else {
-                    val intent = Intent(this@SplashActivity, HomeActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                if (path.contains("/food") || path.contains("/booking")) {
+                    val parts = path_part.split("/".toRegex()).dropLastWhile { it.isEmpty() }
+                        .toTypedArray()
+                    if (path.contains("newpromo")) {
+                        val intent = Intent(this@SplashActivity, ScannerActivity::class.java)
+                        intent.putExtra("promo", "NEWPROMO")
+                        startActivity(intent)
+                        finish()
+                    } else if (parts.size == 5) {
+                        val intent = Intent(this@SplashActivity, FoodActivity::class.java)
+                        intent.putExtra("from", "scan")
+                        intent.putExtra("SEAT", parts[4])
+                        intent.putExtra("AUDI", parts[3])
+                        startActivity(intent)
+                        finish()
+                    } else if (parts.size > 2) {
+                        var type = ""
+                        val intent = Intent(this@SplashActivity, SelectBookingsActivity::class.java)
+                        intent.putExtra("from", "pscan")
+                        intent.putExtra("SEAT", "")
+                        intent.putExtra("cid", parts?.get(2))
+                        intent.putExtra("AUDI", "")
+                        if (!TextUtils.isEmpty(type))
+                            intent.putExtra("type", type)
+                        if (path.contains("newpromo"))
+                            intent.putExtra("promo", "NEWPROMO")
+
+                        startActivity(intent)
+                        finish()
+                    }
+                }else {
+                    if (preferences.getCityName() == "") {
+                        val intent = Intent(this@SplashActivity, SelectCityActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        val intent = Intent(this@SplashActivity, HomeActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
                 }
             } else {
                 if (!clickOnBoarding) {

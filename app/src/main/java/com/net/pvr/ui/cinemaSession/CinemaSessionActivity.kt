@@ -62,6 +62,7 @@ class CinemaSessionActivity : AppCompatActivity(),
     private var loader: LoaderDialog? = null
 
     private var cinemaId = "0"
+    private var cinemaName = "0"
     private var openTime = 0
     private var rowIndex = false
 
@@ -101,8 +102,24 @@ class CinemaSessionActivity : AppCompatActivity(),
         binding = ActivityCinemaSessionBinding.inflate(layoutInflater, null, false)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         val view = binding?.root
-        setContentView(view)
+        if (intent.hasExtra("cid"))
+        cinemaId = intent.getStringExtra("cid").toString()
         manageFunctions()
+
+        val intent = intent
+        val action = intent.action
+        val data = intent.data
+        if (data != null) {
+            val path = data.path
+            val parts = path!!.split("/".toRegex()).dropLastWhile { it.isEmpty() }
+                .toTypedArray()
+            preferences.saveString(Constant.SharedPreference.SELECTED_CITY_NAME, parts[2])
+            preferences.saveString(Constant.SharedPreference.SELECTED_CITY_ID, parts[2])
+            cinemaId = parts[4]
+            cinemaName = parts[3].replace("-".toRegex(), " ")
+        }
+        setContentView(view)
+
     }
 
     @SuppressLint("MissingPermission")
@@ -225,7 +242,6 @@ class CinemaSessionActivity : AppCompatActivity(),
     }
 
     private fun manageFunctions() {
-        cinemaId = intent.getStringExtra("cid").toString()
         getLocation()
 
         cinemaSessionDataLoad()

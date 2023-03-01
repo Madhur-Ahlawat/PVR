@@ -18,7 +18,7 @@
     <string name="txt_login">Login</string>
     <string name="checkNumber">Invalid mobile number</string>
     <string name="enterMobileNo">Your mobile number is required</string>
-    <string name="exitApp">Are You Sure You want to exit</string>
+    <string name="exitApp">Are You Sure You want to exit?</string>
 
     <string name="txt_error_message">%1$S*</string>
     <string name="note_title">Title</string>
@@ -55,7 +55,7 @@
     <string name="onboard_txt3">Seamless ticket booking \n &amp; rewards</string>
     <string name="onboard_txt4">Enroll in our Privilege\n program to earn points &amp;\n vouchers  </string>
     <string name="ok" tools:ignore="ButtonCase,Typos">Ok</string>
-    <string name="pleaseWait">Please Wait for this process.....</string>
+    <string name="pleaseWait">It\'s movie time!</string>
     <string name="no">No</string>
     <string name="enterOtp">Please Enter Your OTP</string>
     <string name="enterName">Your name is required</string>

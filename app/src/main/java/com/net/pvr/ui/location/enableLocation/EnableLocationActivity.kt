@@ -20,6 +20,7 @@ import com.net.pvr.R
 import com.net.pvr.databinding.ActivityEnableLocationBinding
 import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.dailogs.OptionDialog
+import com.net.pvr.ui.home.HomeActivity
 import com.net.pvr.ui.location.selectCity.SelectCityActivity
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.FetchAddressIntentServices
@@ -63,11 +64,15 @@ class EnableLocationActivity : AppCompatActivity() {
 
         //not Now
         binding?.noThanksTextView?.setOnClickListener {
-            val intent = Intent(this@EnableLocationActivity, SelectCityActivity::class.java)
-            intent.putExtra("from", from)
-            intent.putExtra("cid", cid)
-            startActivity(intent)
-            finish()
+            if (preferences.getCityName() == "") {
+                val intent = Intent(this@EnableLocationActivity, SelectCityActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else {
+                val intent = Intent(this@EnableLocationActivity, HomeActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
 
         //Enable Location
@@ -124,12 +129,15 @@ class EnableLocationActivity : AppCompatActivity() {
                         preferences.saveLatitudeData(lat.toString())
                         preferences.saveLongitudeData(long.toString())
 
-                        val intent2 =
-                            Intent(this@EnableLocationActivity, SelectCityActivity::class.java)
-                        intent.putExtra("from", from)
-                        intent.putExtra("cid", cid)
-                        startActivity(intent2)
-                        finish()
+                        if (preferences.getCityName() == "") {
+                            val intent = Intent(this@EnableLocationActivity, SelectCityActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            val intent = Intent(this@EnableLocationActivity, HomeActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
 
                         location.longitude = long
                         location.latitude = lat

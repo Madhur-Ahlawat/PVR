@@ -4,34 +4,33 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/transparent"
-    android:padding="24dp"
-    android:elevation="5dp"
+    android:background="#4D000000"
     android:layout_gravity="center"
     android:orientation="vertical"
     android:gravity="center"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/dimen_10dp"
-        app:cardBackgroundColor="@color/white"
-        app:contentPadding="@dimen/dimen_10dp"
-        app:cardUseCompatPadding="true">
+        android:background="@color/transparent1"
+       >
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/transparent1">
 
-            <ProgressBar
+            <pl.droidsonroids.gif.GifImageView
                 android:id="@+id/progress"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:indeterminateTint="@color/yellow"
+                android:layout_height="200dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/loader"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="MissingClass" />
@@ -40,23 +39,24 @@
                 android:id="@+id/pleaseWait"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:fontFamily="@font/sf_pro_text_regular"
-                android:gravity="start"
+                android:gravity="center"
+                android:textAlignment="center"
                 android:lineSpacingExtra="1dp"
                 android:paddingStart="@dimen/dimen_1dp"
-                android:paddingEnd="@dimen/dimen_50dp"
+                android:layout_marginTop="-20dp"
                 android:text="@string/pleaseWait"
-                android:textColor="@color/textColor"
+                android:textColor="@color/white"
                 android:textSize="@dimen/dimen_12sp"
                 android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="@+id/progress"
-                app:layout_constraintStart_toEndOf="@+id/progress"
-                app:layout_constraintTop_toTopOf="@+id/progress" />
+                android:layout_marginBottom="@dimen/dimen_30dp"
+                app:layout_constraintTop_toBottomOf="@+id/progress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.cardview.widget.CardView>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/message"
