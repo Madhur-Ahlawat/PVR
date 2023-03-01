@@ -149,7 +149,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         get() = couponsLiveData
 
     suspend fun coupons(token: String,mobile: String, city: String, userid: String, timestamp: String) {
-        otpVerifyLiveData.postValue(NetworkResult.Loading())
+        couponsLiveData.postValue(NetworkResult.Loading())
         val response =
             userAPI.getCoupons(token,mobile, city,userid, timestamp , "V", "true", Constant.version, Constant.platform,Constant.getDid())
         couponsResponse(response)
@@ -173,7 +173,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         get() = voucherApplyLiveData
 
     suspend fun voucherApply(promocode: String, userid: String, booktype: String, bookingid: String, transid: String, loyalitytype: String, unlimitedvoucher: String, voucheramt: String) {
-        otpVerifyLiveData.postValue(NetworkResult.Loading())
+        voucherApplyLiveData.postValue(NetworkResult.Loading())
         val response =
             userAPI.loyaltyPromo(promocode,userid, booktype,bookingid,transid,loyalitytype ,unlimitedvoucher,voucheramt, Constant.version, Constant.platform,Constant.getDid())
         voucherApplyResponse(response)
@@ -355,7 +355,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         get() = upiStatusLiveData
 
     suspend fun upiStatus(bookingid: String, booktype: String) {
-        payModeLiveData.postValue(NetworkResult.Loading())
+        upiStatusLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.upiStatus(
             bookingid, booktype, Constant.version, Constant.platform
         )
@@ -388,7 +388,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         city: String,
         cname: Boolean
     ) {
-        otpVerifyLiveData.postValue(NetworkResult.Loading())
+        resisterLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.resister(
             hash, email, name, mobile, otp, city, cname, Constant.version, Constant.platform
         )
@@ -1446,7 +1446,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         iserv: String,
         isSpi: String
     ) {
-        seatLiveData.postValue(NetworkResult.Loading())
+        foodLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.food(
             userid,
             ccode,
