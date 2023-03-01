@@ -2,6 +2,7 @@ package com.net.pvr.di.preference
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import com.net.pvr.utils.Constant.Companion.CITY
 import com.net.pvr.utils.Constant.Companion.CITY_CC
@@ -19,6 +20,7 @@ import com.net.pvr.utils.Constant.SharedPreference.Companion.PS
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import com.net.pvr.R
+import com.net.pvr.ui.login.LoginActivity
 
 class PreferenceManager @Inject constructor(@ApplicationContext context: Context) {
     var editor: SharedPreferences.Editor? = null
@@ -191,9 +193,14 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
 
 
     fun clearData(requireActivity: Activity) {
+        editor = prefs.edit()
         editor?.putBoolean(IS_LOGIN, false)
         editor?.putString(USER_ID, "")
+        editor?.apply()
         editor?.commit()
-
+        val intent = Intent(requireActivity, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        requireActivity.startActivity(intent)
+        requireActivity.finish()
     }
 }

@@ -121,7 +121,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                 manageFunction()
             }
         } else {
-           // if (intent.hasExtra("food"))
+            if (intent.hasExtra("food"))
                 foodCartModel = intent.getSerializableExtra("food") as ArrayList<CartModel>
             val intent = Intent(this@SummeryActivity, LoginActivity::class.java)
             intent.putExtra("from", "summery")

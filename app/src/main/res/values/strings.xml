@@ -698,5 +698,9 @@ IMAX Corporation is one of the world\'s leading entertainment technology compani
     <string name="redeem_coupon">Redeem Coupon</string>
     <string name="xxxxxxx">XXXXXXX</string>
 
+    <string name="seat_arrangement">SEAT ARRANGEMENT</string>
+    <string name="screen_way">screen this way</string>
+    <string name="evening_time_filter">5:01PM - 8:00PM</string>
+    <string name="all_theatres">ALL THEATRES</string>
 
 </resources>

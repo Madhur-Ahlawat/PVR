@@ -2,15 +2,21 @@ package com.net.pvr.ui.seatLayout
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Dialog
 import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Html
 import android.text.Spannable
 import android.text.SpannableString
@@ -21,7 +27,9 @@ import android.widget.*
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -71,7 +79,15 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     private var binding: ActivitySeatLayoutBinding? = null
     private val authViewModel: SeatLayoutViewModel by viewModels()
     private var loader: LoaderDialog? = null
-
+    private var show_seat: PopupWindow? = null
+    private var flag_count = 0
+    private val noOfRows_small: List<SeatResponse.Output.Row>? = null
+    private var move_view: View? = null
+    private var llSeatLayout_small:LinearLayout? = null
+    private var llRowname_small:LinearLayout? = null
+    private var posX = 0
+    private var posY = 0
+    private var popupView: View? = null
     private var selectBuddy = false
     private var hcSeat = false
     private var hcSeat1 = false
@@ -90,6 +106,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     private var messageText = ""
     private var sessionId = ""
     private var movieName = ""
+    private var cinemaName = ""
     private var isDit = false
 
     private var noOfRowsSmall: ArrayList<SeatResponse.Output.Row>? = null
@@ -120,6 +137,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -131,7 +149,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         manageFunctions()
     }
 
-    @SuppressLint("SetTextI18n")
+    @RequiresApi(Build.VERSION_CODES.O)
+    @SuppressLint("SetTextI18n", "ClickableViewAccessibility")
     private fun manageFunctions() {
         //from Movie
         if (intent.getStringExtra("from") == "cinema") {
@@ -187,6 +206,35 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         initTrans()
         movedNext()
         getShimmerData()
+
+        //        cancel_message.setVisibility(View.GONE);
+//        Util.applyLetterSpacing(btnContinue, getResources().getString(R.string.cantinue), PCConstants.LETTER_SPACING);
+        binding?.outerScroll?.setOnTouchListener{ view, motionEvent -> //  System.out.println("Action" + motionEvent.getAction());
+            if (motionEvent.action == MotionEvent.ACTION_UP) {
+                if (show_seat != null && show_seat?.isShowing == true) {
+                    show_seat?.dismiss()
+                    flag_count = 1
+                }
+            } else {
+                if (show_seat == null || show_seat?.isShowing==false) {
+                    showSeats()
+                }
+            }
+            false
+        }
+        binding?.llHorizontalScroll?.setOnTouchListener { view, motionEvent -> //  System.out.println("Action1-" + motionEvent.getAction());
+            if (motionEvent.action == MotionEvent.ACTION_UP) {
+                if (show_seat != null && show_seat?.isShowing == true) {
+                    show_seat?.dismiss()
+                    flag_count = 1
+                }
+            } else {
+                if (show_seat == null || show_seat?.isShowing == false) {
+                    showSeats()
+                }
+            }
+            false
+        }
     }
 
     private fun getShimmerData() {
@@ -211,7 +259,14 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
         // Share data
         binding?.imageView96?.setOnClickListener {
-            Constant().shareData(this, "", "")
+            if (((binding?.outerScroll?.getChildAt(0)?.height
+                    ?: 0) > 0) && ((binding?.outerScroll?.getChildAt(0)?.width ?: 0) > 0)
+            ) {
+                val bitmap: Bitmap? = getBitmapFromView(binding?.outerScroll!!, (binding?.outerScroll?.getChildAt(0)?.height ?: 0), (binding?.outerScroll?.getChildAt(0)?.width ?: 0))
+                //                Bitmap bitmap = getBitmapFromView(llHorizontalScroll, llHorizontalScroll.getChildAt(0).getHeight(), llHorizontalScroll.getChildAt(0).getWidth());
+                shareDialog(this@SeatLayoutActivity, bitmap!!,binding?.outerScroll!!)
+            }
+           // Constant().shareData(this, "", "")
         }
 
         //Alert Dialog
@@ -338,6 +393,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
 
     //SeatLayout
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun seatLayout() {
         authViewModel.userResponseLiveData.observe(this) {
             when (it) {
@@ -536,6 +592,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun retrieveData(data: SeatResponse.Output) {
         //shimmer
         binding?.constraintLayout145?.hide()
@@ -555,6 +612,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
         //location
         binding?.textView198?.text = data.cn
+        cinemaName = data.cn
 
 
 
@@ -571,6 +629,44 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         priceMap = data.priceList
         noOfRowsSmall = data.rows
         drawColumn(data.rows)
+        // arrange seat partial_layout align bottom and center.
+        binding?.outerScroll?.post(Runnable {
+            val scrollWidth: Int = binding?.llHorizontalScroll?.left!!
+            val scrollHeight: Int = binding?.llHorizontalScroll?.right!!
+            binding?.outerScroll?.bottom?.let { binding?.outerScroll?.scrollTo(0, it) }
+            binding?.llHorizontalScroll?.scrollTo((scrollWidth + scrollHeight) / 2, 0)
+            val observer: ViewTreeObserver? = binding?.outerScroll?.viewTreeObserver
+            observer?.addOnScrollChangedListener {
+                val scrollX: Int? = binding?.outerScroll?.scrollX
+                val scrollY: Int? = binding?.outerScroll?.scrollY
+                val scrollX1: Int? = binding?.llHorizontalScroll?.scrollX
+                val scrollY1: Int? = binding?.llHorizontalScroll?.scrollY
+                if (move_view != null) {
+                    //   System.out.println(popupView.getWidth() + "<ejej>" + popupView.getHeight() + "scrollHeight" + scrollX1 + "scrollX" + scrollX + "scrollY" + scrollY + "scrollY1" + scrollY1);
+                    if (scrollX1 != null) {
+                        if (scrollX1 < popupView!!.width - move_view!!.width) {
+                            move_view!!.x = scrollX1.toFloat()
+                            if (scrollX1 != null) {
+                                posX = scrollX1
+                            }
+                        } else if (scrollX1 == 0) {
+                            move_view!!.x = -move_view!!.width.toFloat()
+                            posX = -move_view!!.width
+                        }
+                    }
+                    if (scrollY != null) {
+                        if (scrollY < popupView!!.height - move_view!!.height) {
+                            move_view!!.y = scrollY.toFloat()
+                            posY = scrollY
+                        } else if (scrollY == 0) {
+                            move_view!!.x = -move_view!!.height.toFloat()
+                            posY = -move_view!!.height
+                        }
+                    }
+                }
+            }
+        })
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -641,6 +737,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.seat_t_c_dialog_layout)
+        dialog.setCancelable(false)
         val behavior: BottomSheetBehavior<FrameLayout> = dialog.behavior
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
         dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
@@ -899,6 +996,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setClick(seatView: TextView, num1: Int, num2: Int) {
         seatView.setOnClickListener {
             try {
@@ -2140,4 +2238,182 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         }
 
     }
+
+    private fun getBitmapFromView(view: View, height: Int, width: Int): Bitmap? {
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        val bgDrawable = view.background
+        if (bgDrawable != null) bgDrawable.draw(canvas) else canvas.drawColor(Color.WHITE)
+        view.draw(canvas)
+        return bitmap
+    }
+
+    private fun shareDialog(mContext: Context, bitmap: Bitmap, outerScroll: NestedScrollView) {
+        val dialog = Dialog(mContext)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.share_dialogue)
+        dialog.window!!.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.window!!.setGravity(Gravity.CENTER)
+        val imgMovie = dialog.findViewById<View>(R.id.imgMovie) as ImageView
+        val ivClose = dialog.findViewById<View>(R.id.ivClose) as ImageView
+        val ivShareImg = dialog.findViewById<View>(R.id.ivShareImg) as ImageView
+        val tvShareImg: TextView = dialog.findViewById<View>(R.id.tvShareImg) as TextView
+        val tvMovieName: TextView = dialog.findViewById<View>(R.id.tvMovieName) as TextView
+        val tvTheatre: TextView = dialog.findViewById<View>(R.id.tvTheatre) as TextView
+        val tvTime: TextView = dialog.findViewById<View>(R.id.tvTime) as TextView
+        val layout = dialog.findViewById<ConstraintLayout>(R.id.screenLayout)
+        tvMovieName.text = movieName
+        tvTheatre.text = cinemaName
+        if (intent.getStringExtra("from") == "cinema") {
+            tvTime.text = cinemaSessionShows[position.toInt()].st
+        } else {
+            tvTime.text = showsArray[position.toInt()].st
+        }
+
+        ivShareImg.setImageBitmap(bitmap)
+        tvShareImg.setOnClickListener(View.OnClickListener { v ->
+            if (outerScroll.getChildAt(0).height > 0 && outerScroll.getChildAt(0).width > 0) {
+                v.visibility = View.GONE
+                ivClose.visibility = View.GONE
+                imgMovie.visibility = View.GONE
+                val bitmap1 = getBitmapFromView(layout, layout.height, layout.width)
+                share(bitmap1)
+                dialog.dismiss()
+            }
+        })
+        ivClose.setOnClickListener { dialog.dismiss() }
+        dialog.show()
+    }
+
+    private fun share(bitmap: Bitmap?) {
+        val pathofBmp = MediaStore.Images.Media.insertImage(contentResolver, bitmap, "Seat", null)
+        val uri = Uri.parse(pathofBmp)
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "image/*"
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Star App")
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "")
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+        startActivity(Intent.createChooser(shareIntent, "hello"))
+    }
+
+    private fun showSeats() {
+        val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        popupView = inflater.inflate(R.layout.seat_layout_small, findViewById<ViewGroup>(R.id.small_seat)
+        )
+        move_view = popupView?.findViewById<View>(R.id.move_view) as View
+        if (flag_count == 1) {
+            move_view?.x = 0f
+            move_view?.y = 0f
+        }
+        llSeatLayout_small = popupView?.findViewById<View>(R.id.llSeatlayout) as LinearLayout
+        llRowname_small = popupView?.findViewById<View>(R.id.llRowName) as LinearLayout
+        llRowname_small?.removeAllViews()
+        llSeatLayout_small?.removeAllViews()
+        if (posX > 0 || posY > 0) {
+            move_view?.x = posX.toFloat()
+            move_view?.y = posY.toFloat()
+        }
+        try {
+            drowColumSmall(noOfRowsSmall!!, llSeatLayout_small!!)
+        } catch (e: java.lang.Exception) {
+        }
+        show_seat = PopupWindow()
+        show_seat?.contentView = popupView
+        show_seat?.height = WindowManager.LayoutParams.WRAP_CONTENT
+        show_seat?.width = WindowManager.LayoutParams.WRAP_CONTENT
+        show_seat?.showAtLocation(popupView, Gravity.TOP or Gravity.LEFT, 80, 450)
+        show_seat?.update()
+
+    }
+
+    private fun drowColumSmall(noOfRows: List<SeatResponse.Output.Row>, llColumLayout: LinearLayout) {
+        llColumLayout.removeAllViews()
+        var areaName = ""
+        for (i in noOfRows.indices) {
+            val row: SeatResponse.Output.Row = noOfRows[i]
+            val noSeats: List<SeatResponse.Output.Row.S> = row.s
+            if (noSeats.isNotEmpty()) {
+                //draw extras space for row name
+//                addRowNameSmall(row.getN(), false);
+                //Draw seats ==================
+                val linearLayout = LinearLayout(this)
+                linearLayout.orientation = LinearLayout.HORIZONTAL
+                val layoutParams = LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+                linearLayout.layoutParams = layoutParams
+                llColumLayout.addView(linearLayout)
+                drowRowSmall(linearLayout, noSeats, areaName)
+            } else {
+                areaName = row.n
+
+                //Draw Area==================
+                val rlLayuout = RelativeLayout(this)
+                val layoutParams = LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    Util.convertDpToPixel(10f, this)
+                )
+                rlLayuout.layoutParams = layoutParams
+                if (row.c != null) {
+                    val colorCodes: String = if (row.c.contains("#")) row.c else "#" + row.c
+                    rlLayuout.setBackgroundColor(Color.parseColor(colorCodes))
+                }
+                val centerLayout = LinearLayout(this)
+                val centerLayoutParameter = RelativeLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+                centerLayoutParameter.addRule(RelativeLayout.CENTER_IN_PARENT)
+                centerLayout.gravity = Gravity.CENTER_VERTICAL
+                centerLayout.orientation = LinearLayout.HORIZONTAL
+                centerLayout.layoutParams = centerLayoutParameter
+                rlLayuout.addView(centerLayout)
+                llColumLayout.addView(rlLayuout)
+            }
+        }
+    }
+
+
+    private fun drowRowSmall(llDarwRow: LinearLayout, noSeats: List<SeatResponse.Output.Row.S>, areaName: String) {
+        for (i in noSeats.indices) {
+            val seat: SeatResponse.Output.Row.S = noSeats[i]
+            if (seat.b != null && seat.b != "") {
+                val seatView = ImageButton(this)
+                seatView.id = i + 45
+                seatView.setBackgroundColor(Color.WHITE)
+                val layoutParams = LinearLayout.LayoutParams(10, 10)
+                val margin = Util.convertDpToPixel(1f, this)
+                layoutParams.setMargins(margin, margin, margin, margin)
+                seatView.layoutParams = layoutParams
+                if (seat.s == Constant.SEAT_AVAILABEL || seat.s == Constant.HATCHBACK || seat.s == Constant.SUV || seat.s == Constant.BIKE) {
+                    seatView.setImageResource(R.drawable.group)
+                } else if (seat.s == Constant.SEAT_SELECTED || seat.s == Constant.SEAT_SELECTED_HATCHBACK || seat.s == Constant.SEAT_SELECTED_SUV || seat.s == Constant.SEAT_SELECTED_BIKE) {
+                    seatView.setBackgroundColor(resources.getColor(R.color.pvr_yellow))
+
+                } else if (seat.s === Constant.SEAT_BOOKED) {
+                    seatView.setImageResource(R.drawable.occupied)
+                    seatView.isClickable = false
+                    seatView.isEnabled = false
+                } else {
+                    seatView.setBackgroundColor(Color.TRANSPARENT)
+                }
+
+                llDarwRow.addView(seatView)
+            } else {
+                val seatView = ImageButton(this)
+                val layoutParams = LinearLayout.LayoutParams(10, 10)
+                seatView.layoutParams = layoutParams
+                val margin = Util.convertDpToPixel(1f, this)
+                layoutParams.setMargins(margin, margin, margin, margin)
+                seatView.setBackgroundColor(Color.TRANSPARENT)
+                llDarwRow.addView(seatView)
+            }
+        }
+    }
+
+
 }

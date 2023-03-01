@@ -107,6 +107,7 @@ class SelectBookingsActivity : AppCompatActivity() {
 
     private fun enableFood() {
         clickF = true
+        click = true
         binding?.tvCinemaName?.setTextColor(getColor(R.color.pvr_dark_black))
         binding?.tvSelectBookDummy?.setTextColor(getColor(R.color.pvr_dark_black))
         // tvTicket_.setTextColor(getResources().getColor(R.color.pvr_dark_black));
@@ -155,6 +156,7 @@ class SelectBookingsActivity : AppCompatActivity() {
         }
 
         binding?.onlyFood?.setOnClickListener {
+            if (clickF)
             getOutlets()
         }
 
@@ -163,7 +165,7 @@ class SelectBookingsActivity : AppCompatActivity() {
             intent.getStringExtra("type").toString()
 
         binding?.llTicketFood?.setOnClickListener {
-            if (cinemaId.isNotEmpty()){
+            if (cinemaId.isNotEmpty() && click){
                 Constant.QR = "YES"
                 val intent = Intent(this, CinemaSessionActivity::class.java)
                 intent.putExtra("cid", cinemaId)
@@ -253,15 +255,7 @@ class SelectBookingsActivity : AppCompatActivity() {
                 }
                 is NetworkResult.Error -> {
                     loader?.dismiss()
-                    val dialog = OptionDialog(this,
-                        R.mipmap.ic_launcher,
-                        R.string.app_name,
-                        it.message.toString(),
-                        positiveBtnText = R.string.ok,
-                        negativeBtnText = R.string.no,
-                        positiveClick = {},
-                        negativeClick = {})
-                    dialog.show()
+                    disable()
                 }
                 is NetworkResult.Loading -> {
                     loader = LoaderDialog(R.string.pleaseWait)
@@ -404,15 +398,17 @@ class SelectBookingsActivity : AppCompatActivity() {
                 }
                 is NetworkResult.Error -> {
                     loader?.dismiss()
-                    val dialog = OptionDialog(this,
-                        R.mipmap.ic_launcher,
-                        R.string.app_name,
-                        it.message.toString(),
-                        positiveBtnText = R.string.ok,
-                        negativeBtnText = R.string.no,
-                        positiveClick = {},
-                        negativeClick = {})
-                    dialog.show()
+                    disable()
+//                    loader?.dismiss()
+//                    val dialog = OptionDialog(this,
+//                        R.mipmap.ic_launcher,
+//                        R.string.app_name,
+//                        it.message.toString(),
+//                        positiveBtnText = R.string.ok,
+//                        negativeBtnText = R.string.no,
+//                        positiveClick = {},
+//                        negativeClick = {})
+//                    dialog.show()
                 }
                 is NetworkResult.Loading -> {
                     loader = LoaderDialog(R.string.pleaseWait)
@@ -423,14 +419,8 @@ class SelectBookingsActivity : AppCompatActivity() {
     }
 
     private fun retrieveCode(output: PreferenceResponse.Output) {
-//        childcinemaId = output.get(0).getCinemacode()
-//
-//        if (!TextUtils.isEmpty(data.getOutput().get(0).getCinemaName())) {
-//            childCinemaname = data.getOutput().get(0).getCinemaName()
-//            val cinemaname =
-//                "Hi, Welcome to " + "<b>" + data.getOutput().get(0).getCinemaName() + "</b>"
-//            binding?.tvCinemaName?.text = Html.fromHtml(cinemaname)
-//        }
+//        val cinemaName = "Hi, Welcome to " + "<b>" + output.cn + "</b>"
+//        binding?.tvCinemaName?.text = Html.fromHtml(cinemaName)
 
         enableFood()
     }

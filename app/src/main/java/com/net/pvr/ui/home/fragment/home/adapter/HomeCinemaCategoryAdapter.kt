@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -32,6 +33,9 @@ class HomeCinemaCategoryAdapter(
         val comingSoonItem = nowShowingList[position]
 
         if (nowShowingList.size == 1){
+            holder.itemView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+            holder.mainView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+            holder.imageCatNew.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT)
             holder.cardTag.hide()
             holder.imageCatNew.show()
             Glide.with(context)
@@ -40,6 +44,8 @@ class HomeCinemaCategoryAdapter(
                 .error(R.drawable.format_placeholder)
                 .into(holder.imageCatNew)
         }else{
+            holder.mainView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+            holder.itemView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT)
             holder.cardTag.show()
             holder.imageCatNew.hide()
             Glide.with(context)
@@ -59,6 +65,7 @@ class HomeCinemaCategoryAdapter(
     }
 
     class MyViewHolderNowShowing(view: View) : RecyclerView.ViewHolder(view) {
+        var mainView: LinearLayout = view.findViewById(R.id.mainView)
         var cardTag: CardView = view.findViewById(R.id.cardTag)
         var imageCat: ImageView = view.findViewById(R.id.ivTag)
         var imageCatNew: ImageView = view.findViewById(R.id.ivTagNew)

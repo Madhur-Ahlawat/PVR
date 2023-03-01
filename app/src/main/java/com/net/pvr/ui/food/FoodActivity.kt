@@ -363,6 +363,10 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
 
         //with Food
         binding?.include24?.textView5?.setOnClickListener {
+
+            cartShow = false
+            binding?.constraintLayout30?.hide()
+            binding?.textView374?.show()
             var totalPrice = 0;
             if (BOOK_TYPE == "FOOD"){
                 cartModel.forEachIndexed { index, food ->
@@ -552,6 +556,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     }
 
     private fun updateBestSellerCartList(comingSoonItem: FoodResponse.Output.Bestseller) {
+        println("updateBestSellerCartList--->${cartModel.size}")
         if (cartModel.size == 0) {
             cartModel.add(
                 CartModel(
@@ -1084,6 +1089,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
 
 
         if (cartModel.isEmpty()) {
+            cartShow = false
             binding?.constraintLayout30?.hide()
             binding?.textView374?.show()
 
@@ -1143,19 +1149,19 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
 
             itemCount = getItemCount(cartModel)
 
-//            binding?.constraintLayout30?.setOnClickListener {
-//                newLayoutParams.height = height/5
-//                binding?.constraintLayout30?.setBackgroundColor(getColor(R.color.transparent1))
-//                binding?.constraintLayout30?.layoutParams = newLayoutParams
-//                binding?.constraintLayout112?.hide()
-//                cartShow = false
-//                binding?.textView149?.setCompoundDrawablesWithIntrinsicBounds(
-//                    0,
-//                    0,
-//                    R.drawable.food_arrow_up,
-//                    0
-//                )
-//            }
+            binding?.constraintLayout30?.setOnClickListener {
+                newLayoutParams.height = height/5
+                binding?.constraintLayout30?.setBackgroundColor(getColor(R.color.transparent1))
+                binding?.constraintLayout30?.layoutParams = newLayoutParams
+                binding?.constraintLayout112?.hide()
+                cartShow = false
+                binding?.textView149?.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0,
+                    R.drawable.food_arrow_up,
+                    0
+                )
+            }
 
         }
     }
@@ -1168,6 +1174,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
                 if (item.id == recyclerData.id) {
                     if (recyclerData.quantity == 0) {
                         removeCartItem(item)
+                        break
                     } else {
                         item.quantity = recyclerData.quantity
                         break
@@ -1185,11 +1192,15 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
     @SuppressLint("NotifyDataSetChanged")
     private fun updateCartMainList(recyclerData: CartModel) {
         for (item in foodResponse!!.bestsellers) {
-            for (data in item.r){
-                if (recyclerData.id == data.id){
-                    data.qt = recyclerData.quantity
-                    break
+            if (item.r.size>1) {
+                for (data in item.r) {
+                    if (recyclerData.id == data.id) {
+                        data.qt = recyclerData.quantity
+                        break
+                    }
                 }
+            }else{
+                item.qt = recyclerData.quantity
             }
         }
         cartData()

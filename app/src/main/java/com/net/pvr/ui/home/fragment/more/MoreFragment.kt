@@ -410,10 +410,7 @@ class MoreFragment : Fragment() {
             negativeBtnText = R.string.no,
             positiveClick = {
                 preferences.clearData(requireActivity())
-                val intent = Intent(requireActivity(), LoginActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-                activity?.finish()
+
             },
             negativeClick = {})
         dialog.show()
