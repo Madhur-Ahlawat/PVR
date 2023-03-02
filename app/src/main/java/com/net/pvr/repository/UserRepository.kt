@@ -1465,7 +1465,6 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         )
         foodLayoutResponse(response)
     }
-
     private fun foodLayoutResponse(response: Response<FoodResponse>) {
         if (response.isSuccessful && response.body() != null) {
             foodLiveData.postValue(NetworkResult.Success(response.body()!!))
@@ -1476,7 +1475,6 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             foodLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
-
 
     //Old Food
     private val oldfoodLiveData = MutableLiveData<NetworkResult<OldFoodResponse>>()

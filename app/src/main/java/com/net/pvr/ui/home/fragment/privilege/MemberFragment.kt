@@ -26,6 +26,7 @@ import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityPrivilegeLogInBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -48,6 +49,7 @@ import com.net.pvr.utils.Constant.SharedPreference.Companion.ACTIVE
 import com.net.pvr.utils.Constant.SharedPreference.Companion.LOYALITY_STATUS
 import com.net.pvr.utils.Constant.SharedPreference.Companion.SUBSCRIPTION_STATUS
 import com.net.pvr.utils.Constant.SharedPreference.Companion.SUBS_OPEN
+import com.net.pvr.utils.ga.GoogleAnalytics
 import com.net.pvr.utils.view.CustomViewPager
 import dagger.hilt.android.AndroidEntryPoint
 import jp.shts.android.storiesprogressview.StoriesProgressView
@@ -61,14 +63,14 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickListener,PrivilegeVochersAdapter.RecycleViewItemClickListener,
     StoriesListener,HowItWorkAdapter.RecycleViewItemClickListener {
-    var storiesProgressView: StoriesProgressView? = null
-    var storyDialog: Dialog? = null
-    var ivBanner: RecyclerView? = null
-    var counterStory = 0
-    var currentPage = 1
-    var pressTime = 0L
-    var recyclerAdapter: HowItWorkAdapter? = null
-    var limit = 500L
+    private var storiesProgressView: StoriesProgressView? = null
+    private var storyDialog: Dialog? = null
+    private var ivBanner: RecyclerView? = null
+    private var counterStory = 0
+    private var currentPage = 1
+    private var pressTime = 0L
+    private var recyclerAdapter: HowItWorkAdapter? = null
+    private var limit = 500L
     private var binding: ActivityPrivilegeLogInBinding? = null
     private var loader: LoaderDialog? = null
 
@@ -216,6 +218,15 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
             binding?.totalVocBoxIn?.text = getCounOfActivVo(voucherList)
         }
         binding?.hisInactiveLayout?.setOnClickListener {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Privilege")
+                GoogleAnalytics.hitEvent(requireActivity(), "privilege_history_tab", bundle)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
             binding?.hisInactiveLayout?.hide()
             binding?.vocCard?.hide()
             binding?.historyCard?.show()
@@ -283,6 +294,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
     }
 
     private fun retrieveData(output: LoyaltyDataResponse.Output) {
+        binding?.scrollView?.show()
         try {
             addLoyalty(output)
             updateHeaderView(output)

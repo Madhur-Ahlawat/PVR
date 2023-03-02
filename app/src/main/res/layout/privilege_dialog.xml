@@ -13,7 +13,8 @@
         android:id="@+id/logo"
         android:src="@drawable/noti_fi_icon"
         android:layout_marginTop="@dimen/dimen_40dp"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        tools:ignore="ContentDescription" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
@@ -52,8 +53,8 @@
             android:gravity="center"
             android:textAllCaps="true"
             android:textSize="16sp"
-            android:text="Know more"
-            />
+            android:text="@string/know_more"
+            tools:ignore="AllCaps,InefficientWeight" />
 
     </LinearLayout>
 

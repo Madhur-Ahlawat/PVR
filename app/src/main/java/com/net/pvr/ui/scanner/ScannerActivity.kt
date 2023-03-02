@@ -19,6 +19,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.NameValuePair
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URLEncodedUtils
 import com.journeyapps.barcodescanner.*
@@ -32,6 +33,7 @@ import com.net.pvr.ui.home.HomeActivity
 import com.net.pvr.ui.scanner.bookings.SelectBookingsActivity
 import com.net.pvr.ui.scanner.bookings.viewModel.SelectBookingViewModel
 import com.net.pvr.utils.*
+import com.net.pvr.utils.ga.GoogleAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import java.net.URI
 import java.net.URISyntaxException
@@ -89,6 +91,17 @@ class ScannerActivity : AppCompatActivity(), DecoratedBarcodeView.TorchListener 
     }
 
     private fun manageFunction() {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Scanner")
+            GoogleAnalytics.hitEvent(this, "qr_code_button", bundle)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+
+
         barcodeScannerView?.decodeContinuous {
             handelResult(it.text)
         }
