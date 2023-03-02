@@ -527,6 +527,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         }
 
         recommend(output.rm)
+
+        GoogleAnalytics.hitItemListEvent(requireContext(),"Ticket",output.mv)
     }
 
     @SuppressLint("SetTextI18n")
