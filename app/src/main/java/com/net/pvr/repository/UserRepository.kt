@@ -1254,7 +1254,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         cinetype: String,
         special: String
     ) {
-        cinemaSessionLiveData.postValue(NetworkResult.Loading())
+        bookingSessionLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.bookingSession(
             city, mid, lat, lng, date, Constant.version, Constant.platform, isSpi, srilanka, userid,lang,format,price,hc,time,cinetype,special
 
