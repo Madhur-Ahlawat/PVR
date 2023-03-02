@@ -20,8 +20,8 @@ object Util {
     fun isRooted(context: Context?): Boolean? {
         return try {
             val rootBeer = RootBeer(context)
-            return rootBeer.isRooted
-//            false
+//            return rootBeer.isRooted
+            false
         } catch (e: Exception) {
             false
         }

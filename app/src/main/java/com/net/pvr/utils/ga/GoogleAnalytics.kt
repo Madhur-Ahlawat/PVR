@@ -9,8 +9,13 @@ class GoogleAnalytics {
         private var mFirebaseAnalytics: FirebaseAnalytics? = null
 
         fun hitEvent(context: Context, eventName: String, bundle: Bundle) {
-            mFirebaseAnalytics = FirebaseAnalytics.getInstance(context)
-            mFirebaseAnalytics?.logEvent(eventName, bundle)
+            try {
+                println("eventName--->$eventName")
+                mFirebaseAnalytics = FirebaseAnalytics.getInstance(context)
+                mFirebaseAnalytics?.logEvent(eventName.trim(), bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
 
         }
     }

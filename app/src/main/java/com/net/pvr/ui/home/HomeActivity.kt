@@ -153,7 +153,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                     try {
                         val bundle = Bundle()
                         bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Homepage")
-                        GoogleAnalytics.hitEvent(this, "home_page_click ", bundle)
+                        GoogleAnalytics.hitEvent(this, "home_page_click", bundle)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
