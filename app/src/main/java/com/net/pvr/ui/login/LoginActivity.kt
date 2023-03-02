@@ -52,7 +52,6 @@ class LoginActivity : AppCompatActivity() {
     private val authViewModel: LoginViewModel by viewModels()
     private val mobileRequest = 1
     private var from: String = ""
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater, null, false)
@@ -153,6 +152,16 @@ class LoginActivity : AppCompatActivity() {
 
         //Skip
         binding?.textView8?.setOnClickListener {
+
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
+                GoogleAnalytics.hitEvent(this, "login_skip", bundle)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
             if (intent.hasExtra("from")){
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
@@ -168,14 +177,6 @@ class LoginActivity : AppCompatActivity() {
                 dialog.show()
             }else {
 
-                // Hit Event
-                try {
-                    val bundle = Bundle()
-                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
-                    GoogleAnalytics.hitEvent(this, "login_skip", bundle)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
                 if (!Constant().locationServicesEnabled(this@LoginActivity)) {
                     val intent = Intent(this@LoginActivity, EnableLocationActivity::class.java)
                     startActivity(intent)

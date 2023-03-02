@@ -209,6 +209,7 @@ class ExperienceActivity : AppCompatActivity(), ExperienceAdapter.RecycleViewIte
         }catch (e:Exception){
             e.printStackTrace()
         }
+
         authViewModel.experienceDetails(preferences.getCityName(), comingSoonItem.type)
     }
 

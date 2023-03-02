@@ -87,7 +87,8 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClickListenerCity,
+class PaymentActivity : AppCompatActivity(),
+    PaymentAdapter.RecycleViewItemClickListenerCity,
     PaymentExclusiveAdapter.RecycleViewItemClickListenerCity,
     CouponAdapter.RecycleViewItemClickListenerCity,
     PaymentPromoCatAdapter.RecycleViewItemClickListenerCity,
@@ -590,6 +591,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                 startActivity(intent)
             }
             CRED -> {
+
                 // Hit Event
                 try {
                     val bundle = Bundle()
@@ -620,6 +622,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
                     bundle.putString("add_payment_info","")
                     GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
                 }catch (e:Exception){
+                    printLog("errorMsg---->${e.message}")
                     e.printStackTrace()
                 }
 

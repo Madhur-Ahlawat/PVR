@@ -31,8 +31,8 @@ class FetchAddressIntentServices : IntentService("FetchAddressIntentServices") {
                 Log.e("", "Error in getting address for the location")
             }
             if (addresses == null || addresses.size == 0) {
-                errormessgae = "No address found for the location"
-                Toast.makeText(this, "" + errormessgae, Toast.LENGTH_SHORT).show()
+//                errormessgae = "No address found for the location"
+//                Toast.makeText(this, "" + errormessgae, Toast.LENGTH_SHORT).show()
             } else {
                 val address = addresses[0]
                 val str_postcode = address.postalCode

@@ -208,7 +208,7 @@ class CinemaSearchActivity : AppCompatActivity(),
 // Hit Event
             try {
                 val bundle = Bundle()
-                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Coming Soon")
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Coming Soon Search")
                 bundle.putString("var_coming_soon_search_movie", "")
                 GoogleAnalytics.hitEvent(this, "coming_soon_search_movie", bundle)
             }catch (e:Exception){
@@ -218,7 +218,7 @@ class CinemaSearchActivity : AppCompatActivity(),
 // Hit Event
             try {
                 val bundle = Bundle()
-                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Coming Soon")
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Coming Soon Search")
 //                bundle.putString("var_coming_soon_search_movie", "")
                 GoogleAnalytics.hitEvent(this, "coming_soon_search_movie_keywords", bundle)
             }catch (e:Exception){
@@ -230,7 +230,7 @@ class CinemaSearchActivity : AppCompatActivity(),
             // Hit Event
             try {
                 val bundle = Bundle()
-                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Coming Soon")
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Coming Soon Search")
                 bundle.putString("var_coming_soon_search_movie", "")
                 GoogleAnalytics.hitEvent(this, "coming_soon_search_movie", bundle)
             }catch (e:Exception){
@@ -240,7 +240,7 @@ class CinemaSearchActivity : AppCompatActivity(),
             // Hit Event
             try {
                 val bundle = Bundle()
-                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Coming Soon")
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Coming Soon Search")
 //                bundle.putString("var_coming_soon_search_movie", "")
                 GoogleAnalytics.hitEvent(this, "coming_soon_search_movie_keywords", bundle)
             }catch (e:Exception){
