@@ -74,7 +74,6 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     private var offerShow = 0
     var back_flag = 0
 
-
     private var offerResponse: ArrayList<OfferResponse.Output>? = null
 
     private val firstFragment = HomeFragment()
@@ -163,8 +162,28 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                 R.id.cinemaFragment -> {
                     setCurrentFragment(secondFragment)
                 }
-                R.id.privilegeFragment ->
+                R.id.privilegeFragment ->{
+                    // Hit Event
+                    try {
+                        val bundle = Bundle()
+                        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Privilege")
+                        GoogleAnalytics.hitEvent(this, "footer_privilege_button", bundle)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+
+                    }
+                    // Hit Event
+                    try {
+                        val bundle = Bundle()
+                        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Privilege")
+                        GoogleAnalytics.hitEvent(this, "privilege_expand_button", bundle)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
                     managePrivilege("")
+                }
+
                 R.id.comingSoonFragment ->
                     setCurrentFragment(fourthFragment)
                 R.id.moreFragment ->
@@ -290,7 +309,6 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                 recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                     override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                         super.onScrollStateChanged(recyclerView, newState)
-                        println("reviewPositionNewState--->$newState")
                         if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
                             //Dragging
                         } else if (newState == RecyclerView.SCROLL_STATE_IDLE) {
@@ -323,7 +341,6 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     }
 
     private fun hasDaysPassed(days: Int): Boolean {
-        println("wert-------" + preferences.getLong("SHOW_LOYALTY"))
         return if (preferences.getLong("SHOW_LOYALTY")>0) {
             val lastTimestamp: Long = preferences.getLong("SHOW_LOYALTY")
             val currentTimestamp = System.currentTimeMillis()
@@ -473,6 +490,16 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 
     override fun privilegeHomeClick(comingSoonItem: PrivilegeHomeResponse.Output.Pinfo) {
 
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Home")
+                    bundle.putString("var_home_passport_banner", "")
+            GoogleAnalytics.hitEvent(this, "home_passport_banner", bundle)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
     @SuppressLint("SuspiciousIndentation")
@@ -496,7 +523,9 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                 is NetworkResult.Error -> {
 
                 }
+
                 is NetworkResult.Loading -> {
+
                 }
             }
         }
@@ -567,7 +596,6 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         }
     }
 
-
     private fun hasMonthPassed(): Boolean {
         return if (preferences.getLong("SHOW_POP") > 0) {
             val lastTimestamp: Long = preferences.getLong("SHOW_POP")
@@ -604,7 +632,6 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
             binding?.bottomNavigationView?.selectedItemId = R.id.homeFragment
         }
     }
-
 
     private fun manageDeepLinks(){
         try {
@@ -700,7 +727,6 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         val endDate = md + " " + et.trim { it <= ' ' } + " 2023"
         return Date().after(Constant.getUpdatedDate("EEE, MMM dd HH:mm a yyyy", "yyyy/dd/MM HH:mm:ss", endDate))
     }
-
 
     private fun getFeedBackData() {
         authViewModel.getFeedBackDataResponseLiveData.observe(this) {

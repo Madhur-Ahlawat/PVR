@@ -124,24 +124,6 @@ class MovieSessionActivity : AppCompatActivity(),
         setContentView(view)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        if (intent.hasExtra("mid")) movieId = intent.getStringExtra("mid").toString()
-        val intent = intent
-        val action = intent.action
-        val data = intent.data
-        if (data != null) {
-            val path = data.path
-//            if (path!!.contains("utm"))
-//                sendGACampaign(data.toString(), "ShowSelection")
-            val parts = path!!.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            if (parts.size == 5) {
-                preferences.saveString(Constant.SharedPreference.SELECTED_CITY_NAME, parts[2])
-                preferences.saveString(Constant.SharedPreference.SELECTED_CITY_ID, parts[2])
-                movieId = parts[4]
-
-            } else if (parts.size == 4) {
-                movieId = parts[3]
-            }
-        }
 
         manageFunctions()
     }
@@ -159,6 +141,24 @@ class MovieSessionActivity : AppCompatActivity(),
 
         binding?.imageView54?.setOnClickListener {
             Constant.onShareClick(this, su, sm)
+        }
+
+        if (intent.hasExtra("mid")) movieId = intent.getStringExtra("mid").toString()
+        val intent = intent
+        val action = intent.action
+        val data = intent.data
+        if (data != null) {
+            val path = data.path
+
+            val parts = path!!.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            if (parts.size == 5) {
+                preferences.saveString(Constant.SharedPreference.SELECTED_CITY_NAME, parts[2])
+                preferences.saveString(Constant.SharedPreference.SELECTED_CITY_ID, parts[2])
+                movieId = parts[4]
+
+            } else if (parts.size == 4) {
+                movieId = parts[3]
+            }
         }
 
         movedNext()
@@ -621,6 +621,15 @@ class MovieSessionActivity : AppCompatActivity(),
     }
 
     override fun theatreClick(comingSoonItem: BookingTheatreResponse.Output.M) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Movie Showtimes page")
+            GoogleAnalytics.hitEvent(this, "movie_also_playing_list", bundle)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
         val intent = Intent(this, MovieSessionActivity::class.java)
         intent.putExtra("mid", comingSoonItem.m)
         startActivity(intent)
@@ -652,7 +661,6 @@ class MovieSessionActivity : AppCompatActivity(),
     }
 
 
-
     override fun onApply(
         type: ArrayList<String>?,
         filterItemSelected: HashMap<String?, String?>?,
@@ -667,7 +675,7 @@ class MovieSessionActivity : AppCompatActivity(),
             val containLanguage = type.contains("language")
             if (containLanguage == true) {
                 val index = type.indexOf("language")
-                val value = filterItemSelected?.get(type[index!!])
+                val value = filterItemSelected?.get(type[index])
                 if (value != null && !value.equals("", ignoreCase = true)) {
                     appliedFilterType = "language"
                     lang = value.uppercase(Locale.getDefault())
@@ -831,11 +839,21 @@ class MovieSessionActivity : AppCompatActivity(),
 
             }
         }
-        
+
     }
 
 
     override fun onReset() {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+//                    bundle.putString("var_price_range", price2)
+            GoogleAnalytics.hitEvent(this, "book_reset_filter", bundle)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
         binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
         appliedFilterItem = HashMap()
         lang = "ALL"

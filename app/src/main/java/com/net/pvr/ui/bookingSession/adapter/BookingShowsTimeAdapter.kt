@@ -67,7 +67,6 @@ class BookingShowsTimeAdapter(
 
                 binding.textView96.setTextColor(Color.parseColor(colorCode))
 
-
                 //between 0-255
                 val alpha = 10
                 val alphaColor = ColorUtils.setAlphaComponent(Color.parseColor(colorCode), alpha)
@@ -123,6 +122,16 @@ class BookingShowsTimeAdapter(
                 binding.imageView50.setColorFilter(Color.parseColor(colorCode))
 
                 holder.itemView.setOnClickListener {
+                    // Hit Event
+                    try {
+                        val bundle = Bundle()
+                        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                                bundle.putString("var_show_time",this.st)
+                        GoogleAnalytics.hitEvent(context, "book_show_time", bundle)
+                    }catch (e:Exception){
+                        e.printStackTrace()
+                    }
+
                     rowIndex = position
                     if (this.ss != 0 && this.ss != 3) {
                         if (this.ba) {
@@ -144,7 +153,6 @@ class BookingShowsTimeAdapter(
                             }catch (e:Exception){
                                 e.printStackTrace()
                             }
-
 
                             val intent = Intent(context, SeatLayoutActivity::class.java)
                             intent.putExtra("clickPosition", rowIndex.toString())
@@ -258,14 +266,12 @@ class BookingShowsTimeAdapter(
                 }
 
                 holder.itemView.setOnLongClickListener {
-
                     showChangeLangDialogNew(
                         context,
                         ccn,
                         this,
                         holder.itemView
                     )
-
                     return@setOnLongClickListener true
                 }
             }
@@ -279,6 +285,18 @@ class BookingShowsTimeAdapter(
         item: BookingResponse.Output.Cinema.Child.Sw.S,
         itemView: View
     ) {
+
+
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+//                    bundle.putString("var_price_range", price2)
+            GoogleAnalytics.hitEvent(context, "cinema_movie_long_press", bundle)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
         val dialogBuilder = AlertDialog.Builder(context)
         val priceDaos: List<BookingResponse.Output.Cinema.Child.Sw.S.Pr> = item.prs
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -357,7 +375,7 @@ class BookingShowsTimeAdapter(
             title.ellipsize = TextUtils.TruncateAt.END
             title.setTextAppearance(context, R.style.text_black)
             // title.setTypeface(title.getTypeface(), Typeface.BOLD);
-            title.setText(priceDao.n)
+            title.text = priceDao.n
             layout.addView(title)
             val params5 = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -508,6 +526,7 @@ class BookingShowsTimeAdapter(
                 val bundle = Bundle()
                 bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
 //                                bundle.putString("var_FnB_food_type","veg")
+                GoogleAnalytics.hitEvent(context, "book_apply_offer_skip", bundle)
                 GoogleAnalytics.hitEvent(context, "movie_show_time", bundle)
             }catch (e:Exception){
                 e.printStackTrace()
@@ -542,6 +561,15 @@ class BookingShowsTimeAdapter(
                                             positiveBtnText = R.string.accept,
                                             negativeBtnText = R.string.cancel,
                                             positiveClick = {
+                                                // Hit Event
+                                                try {
+                                                    val bundle = Bundle()
+                                                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                                                    bundle.putString("var_book_movie_disclaimer","accept")
+                                                    GoogleAnalytics.hitEvent(context, "book_movie_disclaimer", bundle)
+                                                }catch (e:Exception){
+                                                    e.printStackTrace()
+                                                }
                                                 context.startActivity(intent)
                                             },
                                             negativeClick = {})
@@ -550,7 +578,17 @@ class BookingShowsTimeAdapter(
                                         context.startActivity(intent)
                                     }
                                 },
-                                negativeClick = {})
+                                negativeClick = {
+                                    // Hit Event
+                                    try {
+                                        val bundle = Bundle()
+                                        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                                        bundle.putString("var_book_movie_disclaimer","cancel")
+                                        GoogleAnalytics.hitEvent(context, "book_movie_disclaimer", bundle)
+                                    }catch (e:Exception){
+                                        e.printStackTrace()
+                                    }
+                                })
                             dialog.show()
                         } else {
                             if (newAt != "") {
@@ -561,16 +599,46 @@ class BookingShowsTimeAdapter(
                                     positiveBtnText = R.string.accept,
                                     negativeBtnText = R.string.cancel,
                                     positiveClick = {
+                                        // Hit Event
+                                        try {
+                                            val bundle = Bundle()
+                                            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                                            bundle.putString("var_book_movie_disclaimer","accept")
+                                            GoogleAnalytics.hitEvent(context, "book_movie_disclaimer", bundle)
+                                        }catch (e:Exception){
+                                            e.printStackTrace()
+                                        }
                                         context.startActivity(intent)
                                     },
-                                    negativeClick = {})
+                                    negativeClick = {
+                                        // Hit Event
+                                        try {
+                                            val bundle = Bundle()
+                                            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                                            bundle.putString("var_book_movie_disclaimer","cancel")
+                                            GoogleAnalytics.hitEvent(context, "book_movie_disclaimer", bundle)
+                                        }catch (e:Exception){
+                                            e.printStackTrace()
+                                        }
+                                    })
                                 dialog.show()
                             } else {
                                 context.startActivity(intent)
                             }
                         }
                     },
-                    negativeClick = {})
+                    negativeClick = {
+                        // Hit Event
+                        try {
+                            val bundle = Bundle()
+                            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                            bundle.putString("var_book_movie_disclaimer","cancel")
+                            GoogleAnalytics.hitEvent(context, "book_movie_disclaimer", bundle)
+                        }catch (e:Exception){
+                            e.printStackTrace()
+                        }
+
+                    })
                 dialog.show()
 
             } else {
@@ -590,17 +658,48 @@ class BookingShowsTimeAdapter(
                                     positiveBtnText = R.string.accept,
                                     negativeBtnText = R.string.cancel,
                                     positiveClick = {
+                                        // Hit Event
+                                        try {
+                                            val bundle = Bundle()
+                                            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                                            bundle.putString("var_book_movie_disclaimer","accept")
+                                            GoogleAnalytics.hitEvent(context, "book_movie_disclaimer", bundle)
+                                        }catch (e:Exception){
+                                            e.printStackTrace()
+                                        }
                                         context.startActivity(intent)
                                     },
-                                    negativeClick = {})
+                                    negativeClick = {
+                                        // Hit Event
+                                        try {
+                                            val bundle = Bundle()
+                                            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                                            bundle.putString("var_book_movie_disclaimer","cancel")
+                                            GoogleAnalytics.hitEvent(context, "book_movie_disclaimer", bundle)
+                                        }catch (e:Exception){
+                                            e.printStackTrace()
+                                        }
+                                    })
                                 dialog.show()
                             } else {
                                 context.startActivity(intent)
                             }
                         },
-                        negativeClick = {})
+                        negativeClick = {
+                            // Hit Event
+                            try {
+                                val bundle = Bundle()
+                                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                                bundle.putString("var_book_movie_disclaimer","cancel")
+                                GoogleAnalytics.hitEvent(context, "book_movie_disclaimer", bundle)
+                            }catch (e:Exception){
+                                e.printStackTrace()
+                            }
+                        })
                     dialog.show()
                 } else {
+
+
                     if (newAt != "") {
                         val dialog = OptionDialog(context,
                             R.mipmap.ic_launcher,
@@ -609,9 +708,28 @@ class BookingShowsTimeAdapter(
                             positiveBtnText = R.string.accept,
                             negativeBtnText = R.string.cancel,
                             positiveClick = {
+                                // Hit Event
+                                try {
+                                    val bundle = Bundle()
+                                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                                    bundle.putString("var_book_movie_disclaimer","accept")
+                                    GoogleAnalytics.hitEvent(context, "book_movie_disclaimer", bundle)
+                                }catch (e:Exception){
+                                    e.printStackTrace()
+                                }
                                 context.startActivity(intent)
                             },
-                            negativeClick = {})
+                            negativeClick = {
+                                // Hit Event
+                                try {
+                                    val bundle = Bundle()
+                                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                                    bundle.putString("var_book_movie_disclaimer","cancel")
+                                    GoogleAnalytics.hitEvent(context, "book_movie_disclaimer", bundle)
+                                }catch (e:Exception){
+                                    e.printStackTrace()
+                                }
+                            })
                         dialog.show()
                     } else {
                         context.startActivity(intent)
@@ -632,9 +750,11 @@ class BookingShowsTimeAdapter(
                 bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
 //                                bundle.putString("var_FnB_food_type","veg")
                 GoogleAnalytics.hitEvent(context, "movie_show_time", bundle)
+                GoogleAnalytics.hitEvent(context, "book_apply_offer", bundle)
             }catch (e:Exception){
                 e.printStackTrace()
             }
+
 
             val intent = Intent(context, SeatLayoutActivity::class.java)
             intent.putExtra("clickPosition", rowIndex.toString())

@@ -157,13 +157,10 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             cinemaSessionShows =
                 intent.getSerializableExtra("shows") as ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>
             position = intent.getStringExtra("clickPosition").toString()
-            printLog("shows---->${cinemaSessionShows}")
             cinemaShows()
         } else {
             position = intent.getStringExtra("clickPosition").toString()
             showsArray = intent.getSerializableExtra("shows") as ArrayList<Child.Sw.S>
-            printLog("shows---->${position}")
-
             shows()
         }
 
@@ -180,18 +177,11 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             offerEnable = false
         }
 
-        //Remove Offer
-        binding?.textView203?.setOnClickListener {
-            removeBundle()
-        }
 
         //from Shows
-
         authViewModel.seatLayout(
             CINEMA_ID, sessionId, "", "", "", offerEnable, ""
         )
-
-
 
         //Show  end time
         if (intent.getStringExtra("from") == "cinema") {
@@ -207,8 +197,21 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         movedNext()
         getShimmerData()
 
-        //        cancel_message.setVisibility(View.GONE);
-//        Util.applyLetterSpacing(btnContinue, getResources().getString(R.string.cantinue), PCConstants.LETTER_SPACING);
+
+    }
+
+    private fun getShimmerData() {
+        Constant().getData(binding?.include38?.tvFirstText, binding?.include38?.tvSecondText)
+        Constant().getData(binding?.include38?.tvSecondText, null)
+    }
+
+    private fun movedNext() {
+
+        //Remove Offer
+        binding?.textView203?.setOnClickListener {
+            removeBundle()
+        }
+
         binding?.outerScroll?.setOnTouchListener{ view, motionEvent -> //  System.out.println("Action" + motionEvent.getAction());
             if (motionEvent.action == MotionEvent.ACTION_UP) {
                 if (show_seat != null && show_seat?.isShowing == true) {
@@ -222,6 +225,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             }
             false
         }
+
         binding?.llHorizontalScroll?.setOnTouchListener { view, motionEvent -> //  System.out.println("Action1-" + motionEvent.getAction());
             if (motionEvent.action == MotionEvent.ACTION_UP) {
                 if (show_seat != null && show_seat?.isShowing == true) {
@@ -235,14 +239,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             }
             false
         }
-    }
 
-    private fun getShimmerData() {
-        Constant().getData(binding?.include38?.tvFirstText, binding?.include38?.tvSecondText)
-        Constant().getData(binding?.include38?.tvSecondText, null)
-    }
-
-    private fun movedNext() {
         // back btn
         binding?.imageView95?.setOnClickListener {
             // Hit Event
@@ -402,6 +399,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         retrieveData(it.data.output)
                     } else {
+                        printLog("error--->${it.data?.code}")
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
                             R.string.app_name,
@@ -587,7 +585,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         val reserve = ReserveSeatRequest(CINEMA_ID, selectSeatPriceCode, sessionId, output.transid)
         val gson = Gson()
         val mMineUserEntity = gson.toJson(reserve, ReserveSeatRequest::class.java)
-        println("request--->${mMineUserEntity}")
         authViewModel.reserveSeat(mMineUserEntity)
 
     }
@@ -669,8 +666,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun drawColumn(noOfRows: List<SeatResponse.Output.Row>) {
+        printLog("counts----->")
         binding?.llSeatLayout?.removeAllViews()
         var areaName = ""
         for (i in noOfRows.indices) {
@@ -2156,7 +2153,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         cancel = dialog.findViewById<View>(R.id.yes) as TextView
         cancel.text = "Remove Offer"
         cancel.setOnClickListener {
-
             binding?.llRowName?.removeAllViews()
             selectedSeats.clear()
             selectSeatPriceCode.clear()
@@ -2188,10 +2184,10 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         selectSeatPriceCode.clear()
         noOfSeatsSelected.clear()
         calculatePrice()
+
         authViewModel.seatLayout(
             CINEMA_ID, sessionId, "", "", "", offerEnable, ""
         )
-
     }
 
     override fun cinemaShowsClick(comingSoonItem: Int, itemView: View, position: Int) {
@@ -2225,6 +2221,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     //refresh seat
     override fun onResume() {
         super.onResume()
+        binding?.llRowName?.removeAllViews()
         if (SeatBack == 1){
             binding?.llRowName?.removeAllViews()
             //clear List
@@ -2232,6 +2229,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             selectSeatPriceCode.clear()
             noOfSeatsSelected.clear()
             calculatePrice()
+            printLog("hello123----->${SeatBack}")
             authViewModel.seatLayout(
                 CINEMA_ID, sessionId, "", "", "", offerEnable, ""
             )
@@ -2416,4 +2414,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
     }
 
 
+    override fun onBackPressed() {
+        SeatBack =0
+        super.onBackPressed()
+    }
 }

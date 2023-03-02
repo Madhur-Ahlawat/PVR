@@ -32,6 +32,7 @@ class BookingShowsParentAdapter(
         return ViewHolder(binding)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
 
         with(holder) {
@@ -78,8 +79,8 @@ class BookingShowsParentAdapter(
 
                     }
                 }
+
                 binding.constraintLayout121.setOnClickListener {
-                    printLog("size--->${this.childs[0].sws.size}")
                     if (binding.recyclerView7.visibility == View.GONE) {
                         binding.recyclerView7.show()
                         binding.hcIcon.hide()
@@ -113,9 +114,6 @@ class BookingShowsParentAdapter(
 
                     }
                 }
-
-                //click
-//                binding.textView105.setOnClickListener { listener.alertClick(this) }
 
 
                 binding.textView105.setOnTouchListener(object : RightDrawableOnTouchListener(binding.textView105) {
