@@ -27,6 +27,7 @@ class OfferDetailsActivity : AppCompatActivity() {
     lateinit var preferences: PreferenceManager
     private var binding: ActivityOfferDetialsBinding? = null
     private var loader: LoaderDialog? = null
+    private var offerId = ""
     private val authViewModel: OfferDetailsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,8 +40,25 @@ class OfferDetailsActivity : AppCompatActivity() {
     }
 
     private fun manageFunction() {
+
+        if (intent.hasExtra("id"))
+        offerId = intent.getStringExtra("id").toString()
+        val intent = intent
+        val data = intent.data
+        if (data != null) {
+            println("cjchsjhcjsdhcjdate-->$data")
+            val server = data.authority
+            val path = data.path
+//            if (path!!.contains("utm"))
+//                sendGACampaign(path, "OfferDetail")
+            val parts = path?.split("/".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()
+            offerId = parts!![3]
+        }
+
+
+
         authViewModel.offerDetails(
-            intent.getStringExtra("id").toString(),
+            offerId,
             Constant().getDeviceId(this)
         )
         movedNext()
@@ -54,10 +72,7 @@ class OfferDetailsActivity : AppCompatActivity() {
             finish()
         }
 
-        //Share
-        binding?.imageView93?.setOnClickListener {
-            Constant().shareData(this, "", "")
-        }
+
     }
 
     private fun offerDetailsDataLoad() {
@@ -106,6 +121,13 @@ class OfferDetailsActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun retrieveData(output: OfferDetailsResponse.Output) {
+        val newUrl = "https://www.pvrcinemas.com/offers/offersdetails/" + output.id+ "/" + output.c
+
+        //Share
+        binding?.imageView93?.setOnClickListener {
+            Constant().shareData(this, output.t, newUrl)
+        }
+
         //title
         binding?.textView186?.text= intent.getStringExtra("title")
 

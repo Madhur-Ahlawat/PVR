@@ -53,10 +53,26 @@
 
         <activity
             android:name="com.net.pvr.ui.home.fragment.more.offer.OfferActivity"
-            android:exported="false">
+            android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:path="/offers"
+                    android:scheme="https" />
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:path="/offers"
+                    android:scheme="app" />
+            </intent-filter>
+
         </activity>
 
         <activity
@@ -307,8 +323,25 @@
         </activity>
         <activity
             android:name="com.net.pvr.ui.home.fragment.more.offer.offerDetails.OfferDetailsActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+            android:exported="true"
+            android:screenOrientation="portrait" >
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/offers/offersdetails"
+                    android:scheme="https" />
+                <data
+                    android:host="www.pvrcinemas.com"
+                    android:pathPrefix="/offers/offersdetails"
+                    android:scheme="app" />
+            </intent-filter>
+
+        </activity>
         <activity
             android:name="com.net.pvr.ui.payment.PaymentActivity"
             android:exported="false"

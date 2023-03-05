@@ -75,7 +75,7 @@ class OffersFAdapter(
         }
 
         Glide.with(context)
-            .load(obj.i1)
+            .load(obj.i)
             .into(holder.offerImg)
 
         holder.itemView.setOnClickListener {

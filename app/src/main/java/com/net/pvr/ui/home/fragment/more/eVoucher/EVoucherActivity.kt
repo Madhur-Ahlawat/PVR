@@ -16,6 +16,8 @@ import com.net.pvr.ui.home.fragment.more.eVoucher.response.VoucherListResponse
 import com.net.pvr.ui.home.fragment.more.eVoucher.viewModel.EVoucherViewModel
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.NetworkResult
+import com.net.pvr.utils.printLog
+import com.net.pvr.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -37,11 +39,11 @@ class EVoucherActivity : AppCompatActivity(),VoucherListAdapter.RecycleViewItemC
     }
 
     private fun manageFunction() {
-        authViewModel.myVouchers(preferences.getUserId())
-
         //title
         binding?.include51?.textView108?.text = getString(R.string.vouchers)
-        vouchers()
+
+        authViewModel.myEVouchers("DWAR","")
+        myEVouchers()
         movedNext()
     }
 
@@ -56,28 +58,39 @@ class EVoucherActivity : AppCompatActivity(),VoucherListAdapter.RecycleViewItemC
             startActivity(intent)
         }
     }
-    private fun vouchers() {
-        authViewModel.userResponseLiveData.observe(this) {
+
+    private fun myEVouchers() {
+        authViewModel.userResponseEVoucherLiveData.observe(this@EVoucherActivity) {
             when (it) {
                 is NetworkResult.Success -> {
+                    toast("sucsess")
+
                     loader?.dismiss()
-                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        retrieveData(it.data.output)
-                    } else {
-                        val dialog = OptionDialog(this,
-                            R.mipmap.ic_launcher,
-                            R.string.app_name,
-                            it.data?.msg.toString(),
-                            positiveBtnText = R.string.ok,
-                            negativeBtnText = R.string.no,
-                            positiveClick = {
-                                finish()
-                            },
-                            negativeClick = {})
-                        dialog.show()
-                    }
+                    it.data?.output?.let { it1 -> retrieveData(it1) }
+                        toast("hello123")
+
+//                    if (Constant.status == it.data?.result) {
+//                        toast("hello123")
+//
+//                        retrieveData(it.data.output)
+//                    } else {
+//                        toast("hello1234567")
+//
+//                        val dialog = OptionDialog(this,
+//                            R.mipmap.ic_launcher,
+//                            R.string.app_name,
+//                            it.data?.msg.toString(),
+//                            positiveBtnText = R.string.ok,
+//                            negativeBtnText = R.string.no,
+//                            positiveClick = {
+//                                finish()
+//                            },
+//                            negativeClick = {})
+//                        dialog.show()
+//                    }
                 }
                 is NetworkResult.Error -> {
+
                     loader?.dismiss()
                     val dialog = OptionDialog(this,
                         R.mipmap.ic_launcher,
@@ -98,7 +111,7 @@ class EVoucherActivity : AppCompatActivity(),VoucherListAdapter.RecycleViewItemC
     }
 
     private fun retrieveData(output: VoucherListResponse.Output) {
-        val layoutManager = LinearLayoutManager(this)
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding?.recyclerView62?.layoutManager = layoutManager
         val termsAdapter = VoucherListAdapter(this, output.ev, this)
         binding?.recyclerView62?.adapter = termsAdapter
@@ -106,6 +119,7 @@ class EVoucherActivity : AppCompatActivity(),VoucherListAdapter.RecycleViewItemC
 
     override fun itemClick(ev: VoucherListResponse.Output.Ev) {
 
+        toast(ev.binDiscountId)
     }
 
 }

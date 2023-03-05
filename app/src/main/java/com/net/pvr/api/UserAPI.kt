@@ -205,6 +205,14 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<VoucherListResponse>
 
+    @POST("api/payment/e-voucher/get")
+    suspend fun myeVoucher(
+        @Query("cname") cname: String,
+//        @Query("cat") cat: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<VoucherListResponse>
+
     @POST("api/content/alltheater")
     suspend fun cinema(
         @Query("city") city: String,

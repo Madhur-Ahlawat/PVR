@@ -29,6 +29,15 @@ class EVoucherDetailsActivity : AppCompatActivity() {
 
     private fun manageFunction() {
 
+        movedNext()
+    }
+
+    private fun movedNext() {
+        binding?.include52?.textView108?.text="Purchase Voucher"
+
+        binding?.include52?.imageView58?.setOnClickListener {
+            finish()
+        }
     }
 
 }

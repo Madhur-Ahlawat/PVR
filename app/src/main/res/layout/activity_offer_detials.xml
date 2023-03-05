@@ -20,14 +20,14 @@
         android:layout_height="0dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@+id/include8"
-        app:layout_constraintEnd_toEndOf="@+id/view125"
-        app:layout_constraintStart_toStartOf="@+id/view125"
-        app:layout_constraintTop_toTopOf="@+id/view125"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <View
@@ -48,6 +48,18 @@
                 app:layout_constraintStart_toStartOf="@+id/view126"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@tools:sample/backgrounds/scenic"
+                tools:ignore="ContentDescription" />
+
+
+            <ImageView
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/movie_detail_bg"
+                android:rotation="180"
+                android:scaleType="fitXY"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 tools:ignore="ContentDescription" />
 
             <ImageView
@@ -85,8 +97,8 @@
 
                 <View
                     android:id="@+id/view127"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:layout_marginTop="22dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -101,21 +113,21 @@
                     android:fontFamily="@font/montserrat_bold"
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimen_16sp"
-                    tools:text="99 Bestsellers offer"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/view127" />
+                    app:layout_constraintTop_toTopOf="@+id/view127"
+                    tools:text="99 Bestsellers offer" />
 
                 <TextView
                     android:id="@+id/textView187"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:textSize="@dimen/dimen_12sp"
-                    android:textColor="@color/textColorGray"
                     android:fontFamily="@font/montserrat_regular"
-                    tools:text="Valid till 20 Aug 2022"
+                    android:textColor="@color/textColorGray"
+                    android:textSize="@dimen/dimen_12sp"
                     app:layout_constraintStart_toStartOf="@+id/view127"
-                    app:layout_constraintTop_toBottomOf="@+id/textView186" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView186"
+                    tools:text="Valid till 20 Aug 2022" />
 
                 <View
                     android:id="@+id/view128"
@@ -127,19 +139,25 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView187" />
 
-                <WebView
+
+                <com.net.pvr.utils.NestedWebView
                     android:id="@+id/textView188"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:background="#000000"
+                    android:fillViewport="true"
+                    android:focusable="true"
+                    android:isScrollContainer="false"
                     android:layout_marginTop="24dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/view127"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view128" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.core.widget.NestedScrollView>
 
     <include
@@ -149,5 +167,6 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/view125" />
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

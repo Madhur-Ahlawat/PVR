@@ -43,57 +43,57 @@ class FormatCategoryAdapter(
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
-                if (nowShowingList.size > 1) {
-                    if (nowShowingList.size == 2) {
-                        val itemWidth = ((screenWidth - 0) / 1.10f).toInt()
-                        val layoutParams = ConstraintLayout.LayoutParams(
-                            itemWidth,
-                            ConstraintLayout.LayoutParams.WRAP_CONTENT
-                        )
-                        if (position == 0) {
-                            layoutParams.leftMargin = Constant().convertDpToPixel(13f, context)
-                            layoutParams.rightMargin = Constant().convertDpToPixel(1f, context)
-                        } else {
-                            layoutParams.leftMargin = Constant().convertDpToPixel(1f, context)
-                            layoutParams.rightMargin = Constant().convertDpToPixel(13f, context)
-                        }
-                        holder.itemView.layoutParams = layoutParams
-                    } else if (position == 0) {
-                        val itemWidth = ((screenWidth - 0) / 1.10f).toInt()
-                        val layoutParams = ConstraintLayout.LayoutParams(
-                            itemWidth,
-                            ConstraintLayout.LayoutParams.WRAP_CONTENT
-                        )
-                        layoutParams.leftMargin = Constant().convertDpToPixel(13f, context)
-                        holder.itemView.layoutParams = layoutParams
-                    } else if (position == nowShowingList.size - 1) {
-                        val itemWidth = ((screenWidth - 0) / 1.10f).toInt()
-                        val layoutParams = ConstraintLayout.LayoutParams(
-                            itemWidth,
-                            ConstraintLayout.LayoutParams.WRAP_CONTENT
-                        )
-                        layoutParams.rightMargin = Constant().convertDpToPixel(13f, context)
-                        holder.itemView.layoutParams = layoutParams
-                    } else {
-                        val itemWidth = ((screenWidth - 0) / 1.1f).toInt()
-                        val layoutParams = ConstraintLayout.LayoutParams(
-                            itemWidth,
-                            ConstraintLayout.LayoutParams.WRAP_CONTENT
-                        )
-                        layoutParams.rightMargin = Constant().convertDpToPixel(1f, context)
-                        layoutParams.leftMargin = Constant().convertDpToPixel(1f, context)
-                        holder.itemView.layoutParams = layoutParams
-                    }
-                } else {
-//            int itemWidth = (int) ((screenWidth - 0)/(1.10f));
-                    val layoutParams = ConstraintLayout.LayoutParams(
-                        ConstraintLayout.LayoutParams.MATCH_PARENT,
-                        ConstraintLayout.LayoutParams.WRAP_CONTENT
-                    )
-                    layoutParams.leftMargin = Constant().convertDpToPixel(13F, context)
-                    layoutParams.rightMargin = Constant().convertDpToPixel(13F, context)
-                    holder.itemView.layoutParams = layoutParams
-                }
+//                if (nowShowingList.size > 1) {
+//                    if (nowShowingList.size == 2) {
+//                        val itemWidth = ((screenWidth - 0) / 1.10f).toInt()
+//                        val layoutParams = ConstraintLayout.LayoutParams(
+//                            itemWidth,
+//                            ConstraintLayout.LayoutParams.WRAP_CONTENT
+//                        )
+//                        if (position == 0) {
+//                            layoutParams.leftMargin = Constant().convertDpToPixel(13f, context)
+//                            layoutParams.rightMargin = Constant().convertDpToPixel(1f, context)
+//                        } else {
+//                            layoutParams.leftMargin = Constant().convertDpToPixel(1f, context)
+//                            layoutParams.rightMargin = Constant().convertDpToPixel(13f, context)
+//                        }
+//                        holder.itemView.layoutParams = layoutParams
+//                    } else if (position == 0) {
+//                        val itemWidth = ((screenWidth - 0) / 1.10f).toInt()
+//                        val layoutParams = ConstraintLayout.LayoutParams(
+//                            itemWidth,
+//                            ConstraintLayout.LayoutParams.WRAP_CONTENT
+//                        )
+//                        layoutParams.leftMargin = Constant().convertDpToPixel(13f, context)
+//                        holder.itemView.layoutParams = layoutParams
+//                    } else if (position == nowShowingList.size - 1) {
+//                        val itemWidth = ((screenWidth - 0) / 1.10f).toInt()
+//                        val layoutParams = ConstraintLayout.LayoutParams(
+//                            itemWidth,
+//                            ConstraintLayout.LayoutParams.WRAP_CONTENT
+//                        )
+//                        layoutParams.rightMargin = Constant().convertDpToPixel(13f, context)
+//                        holder.itemView.layoutParams = layoutParams
+//                    } else {
+//                        val itemWidth = ((screenWidth - 0) / 1.1f).toInt()
+//                        val layoutParams = ConstraintLayout.LayoutParams(
+//                            itemWidth,
+//                            ConstraintLayout.LayoutParams.WRAP_CONTENT
+//                        )
+//                        layoutParams.rightMargin = Constant().convertDpToPixel(1f, context)
+//                        layoutParams.leftMargin = Constant().convertDpToPixel(1f, context)
+//                        holder.itemView.layoutParams = layoutParams
+//                    }
+//                } else {
+////            int itemWidth = (int) ((screenWidth - 0)/(1.10f));
+//                    val layoutParams = ConstraintLayout.LayoutParams(
+//                        ConstraintLayout.LayoutParams.MATCH_PARENT,
+//                        ConstraintLayout.LayoutParams.WRAP_CONTENT
+//                    )
+//                    layoutParams.leftMargin = Constant().convertDpToPixel(13F, context)
+//                    layoutParams.rightMargin = Constant().convertDpToPixel(13F, context)
+//                    holder.itemView.layoutParams = layoutParams
+//                }
 
                 //title
                 Glide.with(context)

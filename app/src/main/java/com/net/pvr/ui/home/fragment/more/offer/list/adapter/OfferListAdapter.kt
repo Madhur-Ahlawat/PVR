@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr.R
 import com.net.pvr.databinding.OfferItemBinding
-import com.net.pvr.ui.food.response.FoodResponse
 import com.net.pvr.ui.home.fragment.more.offer.response.MOfferResponse
 
 //category
@@ -46,6 +45,10 @@ class OfferListAdapter(
 
 //                expiry
                 binding.expiry.text = "Valid till " + this.vt
+
+                holder.itemView.setOnClickListener {
+                    listener.itemClick(this)
+                }
             }
         }
 
@@ -57,7 +60,7 @@ class OfferListAdapter(
 
 
     interface RecycleViewItemClickListenerCity {
-        fun itemClick(comingSoonItem: FoodResponse.Output.Mfl)
+        fun itemClick(comingSoonItem: MOfferResponse.Output.Offer)
 
     }
 
