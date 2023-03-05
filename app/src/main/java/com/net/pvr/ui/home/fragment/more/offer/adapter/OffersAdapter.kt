@@ -59,6 +59,7 @@ class OffersAdapter(
         } else {
             holder.view.visibility = View.VISIBLE
         }
+
         if (position == 0) {
             if (cat.equals("TRENDING", ignoreCase = true)) {
                 holder.mainView.setBackgroundColor(Color.parseColor("#EDE8E9"))
@@ -70,20 +71,18 @@ class OffersAdapter(
         }
 
         val layoutParams: ViewGroup.LayoutParams = LinearLayout.LayoutParams(
-            displayMetrics.widthPixels, ViewGroup.LayoutParams.WRAP_CONTENT
-        )
+            displayMetrics.widthPixels, ViewGroup.LayoutParams.WRAP_CONTENT)
         holder.mainView.layoutParams = layoutParams
         val snapHelper1: SnapHelper = PagerSnapHelper()
         holder.offerRecList.onFlingListener = null
         snapHelper1.attachToRecyclerView(holder.offerRecList)
+
         holder.offerRecList.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         if (cat.equals("", ignoreCase = true)) {
 
             val list: List<String> =
                 offerList!![0].offerList[0].catp.replace("Trending,", "",ignoreCase = true).replace("TREND,", "",ignoreCase = true).split(",")
-
-            printLog("catList---->$list")
 
             val adapter1 = OfferFilterAdapter(list , context, this, rowIndex, holder.offerRecList)
             holder.offerRecList.adapter = adapter1

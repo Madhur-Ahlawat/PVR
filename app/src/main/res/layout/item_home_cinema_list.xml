@@ -66,28 +66,25 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/imageView35"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageView16">
 
                 <TextView
                     android:id="@+id/tvNewRe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#ffcb07"
-                    android:fontFamily="@font/helvetica_neu_medium"
-                    android:paddingStart="12dp"
-                    android:paddingTop="3dp"
-                    android:paddingEnd="6dp"
-                    android:paddingBottom="3dp"
-                    android:textColor="@color/pvr_dark_black"
-                    android:textSize="11sp"
-                    android:visibility="visible"
+                    android:background="@drawable/curve_home_title"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    android:textColor="@color/pvr_dark_black"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/helvetica_neu_medium"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:text="New Release" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 

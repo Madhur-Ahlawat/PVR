@@ -770,6 +770,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             val seat: SeatResponse.Output.Row.S = noSeats[i]
             if (seat.b != "") {
                 val seatView = TextView(this)
+                seatView.id = i + 1000
+
                 seatView.setBackgroundColor(Color.TRANSPARENT)
                 seatView.gravity = Gravity.CENTER
                 seatView.textSize = 10f
@@ -843,6 +845,11 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                     seatView.setBackgroundResource(R.drawable.ic_selected)
                     if (isDit) seatView.setBackgroundResource(R.drawable.ic_selected_car)
                 } else if (seat.s == Constant.SEAT_BOOKED) {
+                    seatView.isEnabled = false
+                    seatView.isClickable = false
+                    seatView.isSaveEnabled = false
+                    seatView.isLongClickable = false
+                    seatView.isFocusable = false
                     if (seatsN != null && seatsN!!.size > 0 && seatsN!!.contains(seat.sn)) {
                         when (seat.st) {
                             1 -> {
@@ -2381,7 +2388,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
             val seat: SeatResponse.Output.Row.S = noSeats[i]
             if (seat.b != null && seat.b != "") {
                 val seatView = ImageButton(this)
-                seatView.id = i + 45
                 seatView.setBackgroundColor(Color.WHITE)
                 val layoutParams = LinearLayout.LayoutParams(10, 10)
                 val margin = Util.convertDpToPixel(1f, this)
@@ -2392,10 +2398,13 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 } else if (seat.s == Constant.SEAT_SELECTED || seat.s == Constant.SEAT_SELECTED_HATCHBACK || seat.s == Constant.SEAT_SELECTED_SUV || seat.s == Constant.SEAT_SELECTED_BIKE) {
                     seatView.setBackgroundColor(resources.getColor(R.color.pvr_yellow))
 
-                } else if (seat.s === Constant.SEAT_BOOKED) {
+                } else if (seat.s == Constant.SEAT_BOOKED) {
                     seatView.setImageResource(R.drawable.occupied)
-                    seatView.isClickable = false
                     seatView.isEnabled = false
+                    seatView.isClickable = false
+                    seatView.isSaveEnabled = false
+                    seatView.isLongClickable = false
+                    seatView.isFocusable = false
                 } else {
                     seatView.setBackgroundColor(Color.TRANSPARENT)
                 }

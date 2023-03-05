@@ -164,6 +164,7 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
         authViewModel.userResponseLiveData.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
+                    loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         foodResponse = it.data.output
                         foodResponseCategory.add(FoodResponse.Output.Cat("", "ALL", 0))
@@ -212,7 +213,8 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(this.supportFragmentManager, null)
                 }
             }
         }

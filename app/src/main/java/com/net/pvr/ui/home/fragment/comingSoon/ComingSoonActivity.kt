@@ -30,13 +30,12 @@ class ComingSoonActivity : AppCompatActivity(), LanguageAdapter.RecycleViewItemC
     private var loader: LoaderDialog? = null
     private val authViewModel: ComingSoonViewModel by viewModels()
     private var checkLogin: Boolean = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityComingSoonBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        authViewModel.comingSoon("Delhi-NCR", "ALL", "ALL", "")
+        authViewModel.comingSoon(preferences.getCityName(), "ALL", "ALL", "")
         comingSoonApi()
         movedNext()
     }

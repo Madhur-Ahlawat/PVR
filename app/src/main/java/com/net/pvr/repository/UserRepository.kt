@@ -451,6 +451,28 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
     }
 
+    //myE Voucher
+    private val myeVoucherLiveData = MutableLiveData<NetworkResult<VoucherListResponse>>()
+    val myeVoucherResponseLiveData: LiveData<NetworkResult<VoucherListResponse>>
+        get() = myVoucherLiveData
+
+    suspend fun myEVoucher(cname: String,cat: String) {
+        myeVoucherLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.myeVoucher( cname, Constant.version, Constant.platform)
+        myEVoucherResponse(response)
+    }
+
+    private fun myEVoucherResponse(response: Response<VoucherListResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            myeVoucherLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            myeVoucherLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            myeVoucherLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
     //Cinema
     private val cinemaLiveData = MutableLiveData<NetworkResult<CinemaResponse>>()
     val cinemaResponseLiveData: LiveData<NetworkResult<CinemaResponse>>
@@ -1254,7 +1276,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         cinetype: String,
         special: String
     ) {
-        cinemaSessionLiveData.postValue(NetworkResult.Loading())
+        bookingSessionLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.bookingSession(
             city, mid, lat, lng, date, Constant.version, Constant.platform, isSpi, srilanka, userid,lang,format,price,hc,time,cinetype,special
 

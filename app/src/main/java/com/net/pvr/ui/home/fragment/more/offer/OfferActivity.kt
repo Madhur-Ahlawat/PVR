@@ -19,7 +19,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class OfferActivity : AppCompatActivity(), OffersAdapter.RecycleViewItemClickListener {
+class OfferActivity : AppCompatActivity(),
+    OffersAdapter.RecycleViewItemClickListener {
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityOfferBinding? = null
@@ -42,6 +43,7 @@ class OfferActivity : AppCompatActivity(), OffersAdapter.RecycleViewItemClickLis
     private fun manageFunction() {
         binding?.include4?.textView108?.text = getString(R.string.offers)
         authViewModel.offer(Constant().getDeviceId(this), preferences.getCityName())
+
         offerDataLoad()
         movedNext()
     }
@@ -50,6 +52,7 @@ class OfferActivity : AppCompatActivity(), OffersAdapter.RecycleViewItemClickLis
         binding?.include4?.imageView58?.setOnClickListener {
             finish()
         }
+
     }
 
     private fun offerDataLoad() {
@@ -70,7 +73,6 @@ class OfferActivity : AppCompatActivity(), OffersAdapter.RecycleViewItemClickLis
                             offerList = getList(data)
                             updateAdapter(offerList)
                         }
-
 
                     } else {
                         val dialog = OptionDialog(this,

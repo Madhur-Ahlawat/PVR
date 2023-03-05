@@ -24,8 +24,10 @@
             <ImageView
                 android:id="@+id/offerImg"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                app:layout_constraintDimensionRatio="H,1:0.5147"
                 android:src="@drawable/pvr_logo"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -44,7 +46,7 @@
 
                 <TextView
                     android:id="@+id/name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="marquee"
                     android:fontFamily="@font/montserrat_bold"
@@ -55,7 +57,7 @@
 
                 <TextView
                     android:id="@+id/expiry"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sf_pro_text_regular"
                     android:textColor="#2f2f2f"
