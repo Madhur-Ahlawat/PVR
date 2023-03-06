@@ -22,11 +22,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class EVoucherActivity : AppCompatActivity(),VoucherListAdapter.RecycleViewItemClickListener {
+class EVoucherActivity : AppCompatActivity(),
+    VoucherListAdapter.RecycleViewItemClickListener {
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityEvoucherBinding? = null
     private var loader: LoaderDialog? = null
+
     private val authViewModel: EVoucherViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,8 +43,8 @@ class EVoucherActivity : AppCompatActivity(),VoucherListAdapter.RecycleViewItemC
     private fun manageFunction() {
         //title
         binding?.include51?.textView108?.text = getString(R.string.vouchers)
-
         authViewModel.myEVouchers("DWAR","")
+
         myEVouchers()
         movedNext()
     }
@@ -63,31 +65,27 @@ class EVoucherActivity : AppCompatActivity(),VoucherListAdapter.RecycleViewItemC
         authViewModel.userResponseEVoucherLiveData.observe(this@EVoucherActivity) {
             when (it) {
                 is NetworkResult.Success -> {
-                    toast("sucsess")
-
                     loader?.dismiss()
-                    it.data?.output?.let { it1 -> retrieveData(it1) }
+
+                    if (Constant.status == it.data?.result) {
                         toast("hello123")
 
-//                    if (Constant.status == it.data?.result) {
-//                        toast("hello123")
-//
-//                        retrieveData(it.data.output)
-//                    } else {
-//                        toast("hello1234567")
-//
-//                        val dialog = OptionDialog(this,
-//                            R.mipmap.ic_launcher,
-//                            R.string.app_name,
-//                            it.data?.msg.toString(),
-//                            positiveBtnText = R.string.ok,
-//                            negativeBtnText = R.string.no,
-//                            positiveClick = {
-//                                finish()
-//                            },
-//                            negativeClick = {})
-//                        dialog.show()
-//                    }
+                        retrieveData(it.data.output)
+                    } else {
+                        toast("hello1234567")
+
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {
+                                finish()
+                            },
+                            negativeClick = {})
+                        dialog.show()
+                    }
                 }
                 is NetworkResult.Error -> {
 
