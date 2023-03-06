@@ -67,7 +67,8 @@ class MovieSessionActivity : AppCompatActivity(),
     BookingShowsLanguageAdapter.RecycleViewItemClickListenerCity,
     BookingTheatreAdapter.RecycleViewItemClickListener,
     BookingPlaceHolderAdapter.RecycleViewItemClickListenerCity,
-    BookingShowsParentAdapter.RecycleViewItemClickListener, GenericFilterSession.onButtonSelected,
+    BookingShowsParentAdapter.RecycleViewItemClickListener,
+    GenericFilterSession.onButtonSelected,
     StoriesProgressView.StoriesListener {
 
     @Inject
@@ -706,6 +707,17 @@ class MovieSessionActivity : AppCompatActivity(),
                     } catch (e: ParseException) {
                         e.printStackTrace()
                     }
+                    // Hit Event
+                    try {
+                        val bundle = Bundle()
+                        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Movie Session")
+                          bundle.putString("var_cinema_showtime_filter","")
+                        GoogleAnalytics.hitEvent(this, "cinema_showtime_filter", bundle)
+                    }catch (e:Exception){
+                        e.printStackTrace()
+                    }
+//                    toast("time1----->${show1}----->${show2}")
+
                 } else {
                     show1 = "ALL"
                     show2 = "ALL"

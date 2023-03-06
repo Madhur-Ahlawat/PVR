@@ -684,7 +684,9 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 )
                 linearLayout.layoutParams = layoutParams
                 binding?.llSeatLayout?.addView(linearLayout)
-                drawRow(linearLayout, noSeats, areaName, i)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    drawRow(linearLayout, noSeats, areaName, i)
+                }
             } else {
 
                 //draw extras space for row name
@@ -714,9 +716,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                 centerLayout.orientation = LinearLayout.HORIZONTAL
                 centerLayout.layoutParams = centerLayoutParameter
                 val padding: Int = Constant().convertDpToPixel(2F, this)
-                val layoutParameter1 = LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
-                )
+                val layoutParameter1 = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                 val textView = TextView(this)
                 textView.layoutParams = layoutParameter1
                 textView.gravity = Gravity.CENTER

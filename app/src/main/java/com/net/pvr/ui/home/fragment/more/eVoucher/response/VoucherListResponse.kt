@@ -10,7 +10,7 @@ data class VoucherListResponse(
 ) : java.io.Serializable {
     data class Output(
         val ev: ArrayList<Ev>
-    ) : java.io.Serializable {
+        ) : java.io.Serializable {
         data class Ev(
             val binDiscountId: String,
             val binDiscountName: String,

@@ -45,6 +45,7 @@ class PreferenceActivity : AppCompatActivity(),
         binding = ActivityPrefrenceBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
         manageData()
     }
 
@@ -87,7 +88,6 @@ class PreferenceActivity : AppCompatActivity(),
                             itemClick += 1
                         }
                         retrieveData(it.data.output)
-
 
                     } else {
                         val dialog = OptionDialog(this,
@@ -166,6 +166,7 @@ class PreferenceActivity : AppCompatActivity(),
     }
 
     private fun retrieveData(output: PreferenceResponse.Output) {
+        binding?.constraintLayout173?.show()
         //liked genre
         when (selectedPos) {
             0 -> {
@@ -189,30 +190,7 @@ class PreferenceActivity : AppCompatActivity(),
                 language()
             }
         }
-//        if (output.genre.liked.isEmpty()) {
-//            binding?.constraintLayout80?.show()
-//            binding?.recyclerView55?.hide()
-//            binding?.textView240?.hide()
-//        } else {
-//            printLog("output--->${output.genre.liked.size}")
-//
-//            binding?.constraintLayout80?.hide()
-//            val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-//            binding?.recyclerView55?.layoutManager = layoutManager
-//            val termsAdapter = PreferdGenreAdapter(this, output.genre.liked, this)
-//            binding?.recyclerView55?.adapter = termsAdapter
-//        }
-//        //All genre
-//        val layoutManagerAll = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-//        binding?.recyclerView56?.layoutManager = layoutManagerAll
-//        val allGenreAdapter = AllGenreAdapter(
-//            this,
-//            removeAllSubList(
-//                output.genre.other,
-//                output.genre.liked
-//            ) as ArrayList<PreferenceResponse.Output.Genre.Other>, this
-//        )
-//        binding?.recyclerView56?.adapter = allGenreAdapter
+
     }
 
     private fun removeAllSubList(list: ArrayList<*>, subList: ArrayList<*>): ArrayList<*> {

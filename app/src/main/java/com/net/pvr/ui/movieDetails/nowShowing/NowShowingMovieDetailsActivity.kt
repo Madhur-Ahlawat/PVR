@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.SnapHelper
 import com.bumptech.glide.Glide
 import com.devs.readmoreoption.ReadMoreOption
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityNowShowingBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -27,6 +28,7 @@ import com.net.pvr.ui.movieDetails.nowShowing.viewModel.MovieDetailsViewModel
 import com.net.pvr.ui.player.PlayerActivity
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.NetworkResult
+import com.net.pvr.utils.ga.GoogleAnalytics
 import com.net.pvr.utils.hide
 import com.net.pvr.utils.isevent.ISEvents
 import com.net.pvr.utils.show
@@ -129,6 +131,16 @@ class NowShowingMovieDetailsActivity : AppCompatActivity(), MusicVideoAdapter.Re
         }
 
         binding?.imageView29?.setOnClickListener {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Now Showing Details")
+                bundle.putString("var_movie_trailer","")
+                GoogleAnalytics.hitEvent(this, "movie_trailer", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
             val intent = Intent(this@NowShowingMovieDetailsActivity, PlayerActivity::class.java)
             intent.putExtra("trailerUrl", output.t)
             startActivity(intent)
@@ -212,6 +224,16 @@ class NowShowingMovieDetailsActivity : AppCompatActivity(), MusicVideoAdapter.Re
         binding?.textView79?.text = output.p
         //MovedNext
         binding?.include?.textView5?.setOnClickListener {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Now Showing Details")
+//                bundle.putString("var_book_now_screenname","HomePage")
+                GoogleAnalytics.hitEvent(this, "movie_book_now", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
             val intent = Intent(this@NowShowingMovieDetailsActivity, MovieSessionActivity::class.java)
             intent.putExtra("mid", output.id)
             intent.putExtra("cid", output.c)

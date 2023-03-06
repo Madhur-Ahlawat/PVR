@@ -17,6 +17,8 @@ import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.cinemaSession.CinemaSessionActivity
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
+import com.net.pvr.ui.home.fragment.home.HomeFragment
+import com.net.pvr.ui.movieDetails.comingSoonDetails.ComingSoonDetailsActivity
 import com.net.pvr.ui.movieDetails.nowShowing.NowShowingMovieDetailsActivity
 import com.net.pvr.ui.search.searchHome.adapter.SearchHomeCinemaAdapter
 import com.net.pvr.ui.search.searchHome.adapter.SearchHomeMovieAdapter
@@ -53,11 +55,13 @@ class SearchHomeActivity : AppCompatActivity(),
         binding = ActivitySearchHomeBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
         manageFunctions()
     }
 
     private fun manageFunctions() {
         authViewModel.homeSearch(preferences.getCityName(), "", "", preferences.getLatitudeData(), preferences.getLongitudeData())
+
         movedNext()
         search()
     }
@@ -228,6 +232,7 @@ class SearchHomeActivity : AppCompatActivity(),
 
         //Movie
         binding?.linearLayout7?.setOnClickListener {
+
             cinemaClick = false
             binding?.include42?.editTextTextPersonName?.text?.clear()
             binding?.moviesBtn?.setTextColor(getColor(R.color.black))
@@ -258,9 +263,16 @@ class SearchHomeActivity : AppCompatActivity(),
     }
 
     override fun onSearchMovie(selectCityList: HomeSearchResponse.Output.M) {
-        val intent = Intent(this, NowShowingMovieDetailsActivity::class.java)
-        intent.putExtra("mid", selectCityList.id)
-        startActivity(intent)
+        if (selectCityList.t=="C"){
+            val intent = Intent(this, ComingSoonDetailsActivity::class.java)
+            HomeFragment.mcId = selectCityList.id
+            intent.putExtra("mid", selectCityList.mid)
+            startActivity(intent)
+        }else{
+            val intent = Intent(this, NowShowingMovieDetailsActivity::class.java)
+            intent.putExtra("mid", selectCityList.id)
+            startActivity(intent)
+        }
     }
 
     private fun filterMovie(text: String) {
@@ -295,9 +307,9 @@ class SearchHomeActivity : AppCompatActivity(),
             // Hit Event
             try {
                 val bundle = Bundle()
-                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Home Screen")
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Search Home Screen")
                 bundle.putString("header_movie_name", filtered1.toString())
-                GoogleAnalytics.hitEvent(this, "header_search_bar_click", bundle)
+                GoogleAnalytics.hitEvent(this, "header_movie_name", bundle)
             }catch (e:Exception){
                 e.printStackTrace()
             }
@@ -307,9 +319,9 @@ class SearchHomeActivity : AppCompatActivity(),
             // Hit Event
             try {
                 val bundle = Bundle()
-                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Home Screen")
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Search Home Screen")
                 bundle.putString("header_cinema_name", filtered1.toString())
-                GoogleAnalytics.hitEvent(this, "header_search_bar_click", bundle)
+                GoogleAnalytics.hitEvent(this, "header_cinema_name", bundle)
             }catch (e:Exception){
                 e.printStackTrace()
             }
