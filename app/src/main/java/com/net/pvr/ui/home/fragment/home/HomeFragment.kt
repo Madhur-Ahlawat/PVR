@@ -562,6 +562,15 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
             //details
             binding?.homeRecommend?.rlRecomm?.setOnClickListener {
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "HomePage")
+                    bundle.putString("var_book_now_screenname","HomePage")
+                    GoogleAnalytics.hitEvent(requireActivity(), "book_now", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
                 val intent = Intent(requireActivity(), NowShowingMovieDetailsActivity::class.java)
                 intent.putExtra("mid", rm.id)
                 startActivity(intent)
