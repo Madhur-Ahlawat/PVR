@@ -536,6 +536,9 @@ class TicketConfirmationActivity : AppCompatActivity() {
 // Hit Event
                 try {
                     ISEvents().confirmationOrder(this,Constant.BOOKING_ID,output.f,HomeFragment.mcId,output.amount,output.food)
+                    GoogleAnalytics.hitPurchaseEvent(this,
+                        Constant.BOOKING_ID,output.amount,"Ticket",Constant.SELECTED_SEAT)
+
 //                    val bundle = Bundle()
 //                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
 //                    bundle.putString("var_login_city", cityNameMAin)

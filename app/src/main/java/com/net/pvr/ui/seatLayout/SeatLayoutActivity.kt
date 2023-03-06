@@ -451,8 +451,8 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         retrieverReserveSeatData(it.data.output)
-                        ISEvents().addToCArt(this,
-                            HomeFragment.mcId,priceVal.toString(),"BOOKING",selectedSeats.size)
+                        ISEvents().addToCArt(this, HomeFragment.mcId,priceVal.toString(),"BOOKING",selectedSeats.size)
+                        GoogleAnalytics.hitAddCartEvent(this, HomeFragment.mcId,priceVal.toString(),"Ticket",selectedSeats.size)
                     } else {
                         selectSeatPriceCode.clear()
                         val dialog = OptionDialog(this,

@@ -572,6 +572,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 val intent = Intent(requireActivity(), MovieSessionActivity::class.java)
                 intent.putExtra("mid", rm.id)
                 ISEvents().bookBtn(requireActivity(),rm.mcc)
+                GoogleAnalytics.hitViewItemEvent(requireActivity(),"Ticket",rm.mcc,rm.n)
                 mcId = rm.mcc
                 startActivity(intent)
             }

@@ -39,6 +39,7 @@ import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.giftCard.GiftCardActivity
 import com.net.pvr.ui.home.HomeActivity
+import com.net.pvr.ui.home.fragment.home.HomeFragment
 import com.net.pvr.ui.payment.adapter.*
 import com.net.pvr.ui.payment.bankoffers.BankOffersActivity
 import com.net.pvr.ui.payment.cardDetails.CardDetailsActivity
@@ -152,6 +153,7 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
             done?.setOnClickListener { dialog.dismiss() }
             dialog.show()
         }
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -162,6 +164,12 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
         setContentView(view)
 
         manageFunction()
+
+        try {
+            GoogleAnalytics.hitBeginCheckOutEvent(this, BOOKING_ID,paidAmount,"Ticket",Constant.SELECTED_SEAT)
+        }catch (e:java.lang.Exception){
+
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -557,6 +565,10 @@ class PaymentActivity : AppCompatActivity(), PaymentAdapter.RecycleViewItemClick
 
     //Payment Option Clicks
     override fun paymentClick(paymentItem: PaymentResponse.Output.Gateway) {
+        try {
+            GoogleAnalytics.hitPaymentInfo(this, BOOKING_ID,paidAmount,"Ticket",paymentItem.name)
+        }catch (e:java.lang.Exception){
+        }
         when (paymentItem.id.uppercase(Locale.getDefault())) {
             UPI -> {
                 authViewModel.paytmHMAC(
