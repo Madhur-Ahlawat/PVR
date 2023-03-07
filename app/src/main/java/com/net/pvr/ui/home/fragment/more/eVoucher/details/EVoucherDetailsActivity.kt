@@ -95,9 +95,9 @@ class EVoucherDetailsActivity : AppCompatActivity() {
 
     private fun categoryData() {
 
-        howItWorkModel.add(
-            HowItWorkModel("How to buy:",HowItWorkModel.Category
-        )
+//        howItWorkModel.add(
+//            HowItWorkModel("How to buy:",HowItWorkModel.Category
+//        )
 
     }
 

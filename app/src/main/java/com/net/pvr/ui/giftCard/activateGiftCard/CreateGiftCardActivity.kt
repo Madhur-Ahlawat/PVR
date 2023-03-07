@@ -1,10 +1,17 @@
 package com.net.pvr.ui.giftCard.activateGiftCard
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.content.ContentUris
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.view.View
 import androidx.activity.viewModels
@@ -18,9 +25,13 @@ import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.giftCard.activateGiftCard.viewModel.ActivateGiftCardViewModel
 import com.net.pvr.ui.giftCard.response.GiftCardListResponse
-import com.net.pvr.utils.hide
-import com.net.pvr.utils.show
+import com.net.pvr.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
+import java.net.URISyntaxException
 import javax.inject.Inject
 
 @Suppress("DEPRECATION")
@@ -97,19 +108,107 @@ class CreateGiftCardActivity : AppCompatActivity(), View.OnClickListener {
                 dialog.show()
             }
             R.id.ll_proceed_gift -> {
-                val intent = Intent(this, AddGiftCardActivity::class.java)
-                if (selectedImageUri != null) intent.putExtra(
-                    "imageValueUri",
-                    selectedImageUri.toString()
-                )
-                intent.putExtra("genericList", giftCardListFilter)
-                intent.putExtra("key", giftCardListFilter[0].channel)
-                intent.putExtra("limit", limit)
-                intent.putExtra("custom", "true")
-                startActivity(intent)
+                if (intent.getStringExtra("from") == "upload") {
+                    val intent = Intent(this, AddGiftCardActivity::class.java)
+                    if (selectedImageUri != null) intent.putExtra(
+                        "imageValueUri",
+                        selectedImageUri.toString()
+                    )
+                    intent.putExtra("genericList", giftCardListFilter)
+                    intent.putExtra("key", giftCardListFilter[0].channel)
+                    intent.putExtra("limit", limit)
+                    intent.putExtra("custom", "true")
+                    startActivity(intent)
+                }else{
+                    val file = File(getPath(this, selectedImageUri!!)!!)
+                    val requestFile: RequestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
+
+                    val body = MultipartBody.Part.createFormData("fileImage", file.name, requestFile)
+
+                    val fullName: RequestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), preferences.getUserName().toString())
+                    authViewModel.uploadGiftCard(body,fullName)
+                    uploadGiftCard()
+                }
             }
             R.id.ll_cancel_gift -> onBackPressed()
         }
+    }
+
+    @SuppressLint("NewApi")
+    @Throws(URISyntaxException::class)
+    fun getPath(context: Context, uri: Uri): String? {
+        var uri = uri
+        val needToCheckUri = Build.VERSION.SDK_INT >= 19
+        var selection: String? = null
+        var selectionArgs: Array<String>? = null
+        // Uri is different in versions after KITKAT (Android 4.4), we need to
+        // deal with different Uris.
+        if (needToCheckUri && DocumentsContract.isDocumentUri(context.applicationContext, uri)) {
+            if (isExternalStorageDocument(uri)) {
+                val docId = DocumentsContract.getDocumentId(uri)
+                val split = docId.split(":".toRegex()).dropLastWhile { it.isEmpty() }
+                    .toTypedArray()
+                return Environment.getExternalStorageDirectory().toString() + "/" + split[1]
+            } else if (isDownloadsDocument(uri)) {
+                val id = DocumentsContract.getDocumentId(uri)
+                uri = ContentUris.withAppendedId(
+                    Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id)
+                )
+            } else if (isMediaDocument(uri)) {
+                val docId = DocumentsContract.getDocumentId(uri)
+                val split = docId.split(":".toRegex()).dropLastWhile { it.isEmpty() }
+                    .toTypedArray()
+                when (split[0]) {
+                    "image" -> {
+                        uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                    }
+                    "video" -> {
+                        uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+                    }
+                    "audio" -> {
+                        uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+                    }
+                }
+                selection = "_id=?"
+                selectionArgs = arrayOf(split[1])
+            }
+        }
+        if ("content".equals(uri.scheme, ignoreCase = true)) {
+            val projection = arrayOf(MediaStore.Images.Media.DATA)
+            var cursor: Cursor? = null
+            try {
+                cursor =
+                    context.contentResolver.query(uri, projection, selection, selectionArgs, null)
+                val column_index = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+                if (cursor.moveToFirst()) {
+                    return cursor.getString(column_index)
+                }
+            } catch (e: Exception) {
+            }
+        } else if ("file".equals(uri.scheme, ignoreCase = true)) {
+            return uri.path
+        }
+        return null
+    }
+
+    private fun isExternalStorageDocument(uri: Uri): Boolean {
+        return "com.android.externalstorage.documents" == uri.authority
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is DownloadsProvider.
+     */
+    private fun isDownloadsDocument(uri: Uri): Boolean {
+        return "com.android.providers.downloads.documents" == uri.authority
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is MediaProvider.
+     */
+    private fun isMediaDocument(uri: Uri): Boolean {
+        return "com.android.providers.media.documents" == uri.authority
     }
 
 
@@ -179,5 +278,100 @@ class CreateGiftCardActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
+
+    private fun uploadGiftCard() {
+        authViewModel.uploadGCResponseLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        authViewModel.reUpload(preferences.getUserId(),it.data.output.url,
+                            preferences.getUserName().toString(),it.data.output.id)
+                        reUploadGiftCard()
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {
+                            },
+                            negativeClick = {
+                            })
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {
+                        },
+                        negativeClick = {
+                        })
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+    private fun reUploadGiftCard() {
+        authViewModel.reUploadGCResponseLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        val intent = Intent(
+                            this@CreateGiftCardActivity,
+                            ActivateGiftCardActivity::class.java
+                        )
+                        intent.flags =
+                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {
+                            },
+                            negativeClick = {
+                            })
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {
+                        },
+                        negativeClick = {
+                        })
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+
 
 }

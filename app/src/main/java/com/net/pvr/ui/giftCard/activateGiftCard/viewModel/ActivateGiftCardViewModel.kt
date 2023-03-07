@@ -80,4 +80,25 @@ class ActivateGiftCardViewModel @Inject constructor(private val userRepository: 
         }
     }
 
+
+    //Update GiftCard
+    val updateGCResponseLiveData: LiveData<NetworkResult<UploadImageGC>>
+        get() = userRepository.updateGiftCardResponseLiveData
+
+    fun updateGiftCard(userId: String,pkGiftId: String) {
+        viewModelScope.launch {
+            userRepository.updateGiftCard(userId,pkGiftId)
+        }
+    }
+
+    //Update GiftCard
+    val reUploadGCResponseLiveData: LiveData<NetworkResult<UploadImageGC>>
+        get() = userRepository.reUploadGiftCardResponseLiveData
+
+    fun reUpload(userId: String,customImage: String,customName: String,pkGiftId: String) {
+        viewModelScope.launch {
+            userRepository.reUploadGiftCard(userId,customImage,customName,pkGiftId)
+        }
+    }
+
 }

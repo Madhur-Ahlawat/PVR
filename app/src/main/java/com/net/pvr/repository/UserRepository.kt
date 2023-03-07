@@ -665,6 +665,51 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
     }
 
+
+    //Update GiftCard
+    private val updateGiftCardLiveData = MutableLiveData<NetworkResult<UploadImageGC>>()
+    val updateGiftCardResponseLiveData: LiveData<NetworkResult<UploadImageGC>>
+        get() = updateGiftCardLiveData
+
+    suspend fun updateGiftCard(userId: String,pkGiftId: String) {
+        giftCardLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.generateGeneric(userId,pkGiftId,Constant.version, Constant.platform,Constant.getDid())
+        updateGiftCardResponse(response)
+    }
+
+    private fun updateGiftCardResponse(response: Response<UploadImageGC>) {
+        if (response.isSuccessful && response.body() != null) {
+            updateGiftCardLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            updateGiftCardLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            updateGiftCardLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    //Reupload GiftCard
+    private val reUploadGiftCardLiveData = MutableLiveData<NetworkResult<UploadImageGC>>()
+    val reUploadGiftCardResponseLiveData: LiveData<NetworkResult<UploadImageGC>>
+        get() = reUploadGiftCardLiveData
+
+    suspend fun reUploadGiftCard(userId: String,customImage: String,customName: String,pkGiftId: String) {
+        giftCardLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.reUpload(userId,customImage,customName,pkGiftId,Constant.version, Constant.platform,Constant.getDid())
+        reUploadGiftCardResponse(response)
+    }
+
+    private fun reUploadGiftCardResponse(response: Response<UploadImageGC>) {
+        if (response.isSuccessful && response.body() != null) {
+            reUploadGiftCardLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            reUploadGiftCardLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            reUploadGiftCardLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
     //FoodTicket
     private val foodTicketLiveData = MutableLiveData<NetworkResult<FoodTicketResponse>>()
     val foodTicketResponseLiveData: LiveData<NetworkResult<FoodTicketResponse>>

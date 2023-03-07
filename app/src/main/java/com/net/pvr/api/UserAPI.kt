@@ -1347,6 +1347,27 @@ interface UserAPI {
     ): Response<UploadImageGC>
 
 
+    @POST("api/history/giftcard/update/genric")
+    suspend fun generateGeneric(
+        @Query("userid") userid: String,
+        @Query("pkGiftId") pkGiftId: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String,
+    ): Response<UploadImageGC>
+
+    @POST("api/history/giftcard/update/reupload")
+    suspend fun reUpload(
+        @Query("userid") userid: String,
+        @Query("customImage") customImage: String,
+        @Query("customName") customName: String,
+        @Query("pkGiftId") pkGiftId: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String,
+    ): Response<UploadImageGC>
+
+
     @POST("api/giftcard/purchasedetails")
     suspend fun giftcardDetails(
         @Query("gcorderid") gcorderid: String,

@@ -62,7 +62,7 @@
                 android:text="No"
                 android:layout_weight="1"
                 android:background="@drawable/bg_grey_booking"
-                android:backgroundTint="@color/gray_booking"
+                android:backgroundTint="@color/grayEd"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/black"
                 android:fontFamily="@font/helvetica_neu_bold"

@@ -19,7 +19,10 @@ import com.net.pvr.R
 import com.net.pvr.databinding.ActivityRejectedGiftcardBinding
 import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.dailogs.LoaderDialog
+import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.giftCard.activateGiftCard.viewModel.ActivateGiftCardViewModel
+import com.net.pvr.utils.Constant
+import com.net.pvr.utils.NetworkResult
 import com.net.pvr.utils.hide
 import com.net.pvr.utils.show
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,7 +60,7 @@ class RejectedGiftCardActivity : AppCompatActivity(){
             .into(binding?.imageLandingScreen!!)
         binding?.tvProceedDetail?.setOnClickListener(View.OnClickListener {
             showDialogLoyalty(
-                context,
+                this,
                 intent.getStringExtra("pkGiftId")
             )
         })
@@ -88,12 +91,57 @@ class RejectedGiftCardActivity : AppCompatActivity(){
         val no = dialog.findViewById<View>(R.id.no) as TextView?
         val yes = dialog.findViewById<View>(R.id.yes) as TextView?
         yes!!.setOnClickListener {
-            generateGenricCard(id)
+            authViewModel.updateGiftCard(preferences.getUserId(), id.toString())
+            getGiftCardDetails()
             dialog.dismiss()
         }
         no!!.setOnClickListener { dialog.dismiss() }
         dialog.show()
     }
+
+    private fun getGiftCardDetails() {
+        authViewModel.updateGCResponseLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        onBackPressed()
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {
+                            },
+                            negativeClick = {
+                            })
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {
+                        },
+                        negativeClick = {
+                        })
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+
 
 
 }
