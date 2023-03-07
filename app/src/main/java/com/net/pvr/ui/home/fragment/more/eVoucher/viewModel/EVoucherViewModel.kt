@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EVoucherViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
-////my Voucher
+//my Voucher
     val userResponseLiveData: LiveData<NetworkResult<VoucherListResponse>>
         get() = userRepository.myVoucherResponseLiveData
 

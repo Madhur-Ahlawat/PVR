@@ -454,7 +454,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     //myE Voucher
     private val myeVoucherLiveData = MutableLiveData<NetworkResult<VoucherListResponse>>()
     val myeVoucherResponseLiveData: LiveData<NetworkResult<VoucherListResponse>>
-        get() = myVoucherLiveData
+        get() = myeVoucherLiveData
 
     suspend fun myEVoucher(cname: String,cat: String) {
         myeVoucherLiveData.postValue(NetworkResult.Loading())

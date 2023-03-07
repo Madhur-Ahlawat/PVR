@@ -48,10 +48,12 @@ import javax.inject.Inject
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
-class SelectCityActivity : AppCompatActivity(), SearchCityAdapter.RecycleViewItemClickListener,
+class SelectCityActivity : AppCompatActivity(),
+    SearchCityAdapter.RecycleViewItemClickListener,
     OtherCityAdapter.RecycleViewItemClickListenerCity,
     SelectCityAdapter.RecycleViewItemClickListenerSelectCity,
     PopUpCityAdapter.RecycleViewItemClickListener {
+
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivitySelectCityBinding? = null

@@ -39,9 +39,11 @@ import kotlin.getValue
 import kotlin.toString
 
 @AndroidEntryPoint
-class MyBookingsActivity : AppCompatActivity(), GiftCardAdapter.RecycleViewItemClickListener,
+class MyBookingsActivity : AppCompatActivity(),
+    GiftCardAdapter.RecycleViewItemClickListener,
     FoodTicketChildAdapter.RecycleViewItemClickListener,
     BookingTheatreAdapter.RecycleViewItemClickListener {
+
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityMyBookingBinding? = null

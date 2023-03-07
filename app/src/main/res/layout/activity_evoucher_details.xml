@@ -32,69 +32,255 @@
 
             <View
                 android:id="@+id/view240"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView20"
-                android:layout_width="0dp"
+            <!--            details-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout174"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="24dp"
-                app:cardCornerRadius="@dimen/dimen_8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/imageView133"
-                    android:layout_width="wrap_content"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView20"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    tools:ignore="ContentDescription"
-                    tools:srcCompat="@tools:sample/backgrounds/scenic" />
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="24dp"
+                    app:cardCornerRadius="@dimen/dimen_8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            </androidx.cardview.widget.CardView>
+                    <ImageView
+                        android:id="@+id/imageView133"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        tools:ignore="ContentDescription"
+                        tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-            <TextView
-                android:id="@+id/textView408"
-                android:layout_width="0dp"
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/textView408"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_16sp"
+                    app:layout_constraintEnd_toEndOf="@+id/cardView20"
+                    app:layout_constraintStart_toStartOf="@+id/cardView20"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView20"
+                    tools:text="Lorem Ipsum Dummy Text Lorem" />
+
+                <TextView
+                    android:id="@+id/textView409"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/sf_pro_text_regular"
+                    android:textColor="@color/textColorGray"
+                    android:textSize="@dimen/dimen_12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/textView408"
+                    app:layout_constraintStart_toStartOf="@+id/textView408"
+                    app:layout_constraintTop_toBottomOf="@+id/textView408"
+                    tools:text="Valid till 20 Aug 2022" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--Voucher Details-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout175"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout174">
+
+
+                <View
+                    android:id="@+id/view56"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="#EDE8E9"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageView178"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/voucher"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/textView29"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/sf_pro_text_semi_bold"
+                        android:text="@string/voucher_details"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageView178"
+                        app:layout_constraintStart_toEndOf="@+id/imageView178"
+                        app:layout_constraintTop_toTopOf="@+id/imageView178" />
+
+                    <ImageView
+                        android:id="@+id/imageView179"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView29"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView29"
+                        app:srcCompat="@drawable/arrow_down"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/textView413"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:text="@string/know_details_about_this_voucher"
+                        android:textColor="@color/gray_payment"
+                        android:textSize="@dimen/dimen_12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/textView29"
+                        app:layout_constraintTop_toBottomOf="@+id/textView29" />
+
+                    <TextView
+                        android:id="@+id/textView414"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:text="@string/know_details_about_this_voucher"
+                        android:textColor="@color/gray_payment"
+                        android:textSize="@dimen/dimen_12sp"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView29" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- How it work-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout176"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="14dp"
-                android:fontFamily="@font/montserrat_bold"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimen_16sp"
-                app:layout_constraintEnd_toEndOf="@+id/cardView20"
-                app:layout_constraintStart_toStartOf="@+id/cardView20"
-                app:layout_constraintTop_toBottomOf="@+id/cardView20"
-                tools:text="Lorem Ipsum Dummy Text Lorem" />
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout175">
 
-            <TextView
-                android:id="@+id/textView409"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/sf_pro_text_regular"
-                android:textColor="@color/textColorGray"
-                android:textSize="@dimen/dimen_12sp"
-                app:layout_constraintEnd_toEndOf="@+id/textView408"
-                app:layout_constraintStart_toStartOf="@+id/textView408"
-                app:layout_constraintTop_toBottomOf="@+id/textView408"
-                tools:text="Valid till 20 Aug 2022" />
+
+                <View
+                    android:id="@+id/view57"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="#EDE8E9"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageView180"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/question_alert"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/textView415"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/sf_pro_text_semi_bold"
+                        android:text="@string/how_it_works"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageView180"
+                        app:layout_constraintStart_toEndOf="@+id/imageView180"
+                        app:layout_constraintTop_toTopOf="@+id/imageView180" />
+
+                    <ImageView
+                        android:id="@+id/imageView181"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView415"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView415"
+                        app:srcCompat="@drawable/arrow_down"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/textView416"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:text="@string/know_how_to_avail_this_voucher"
+                        android:textColor="@color/gray_payment"
+                        android:textSize="@dimen/dimen_12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/textView415"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView181" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/cardView20"
-                app:layout_constraintStart_toStartOf="@+id/cardView20"
-                app:layout_constraintTop_toBottomOf="@+id/textView409"
+                app:layout_constraintEnd_toEndOf="@+id/constraintLayout176"
+                app:layout_constraintStart_toStartOf="@+id/constraintLayout176"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout176"
+                tools:itemCount="2"
                 tools:listitem="@layout/voucher_purchase_list" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

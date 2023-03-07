@@ -28,7 +28,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
-import com.evergage.android.ClientConfiguration
 import com.evergage.android.Evergage
 import com.net.pvr.R
 import com.net.pvr.di.preference.PreferenceManager
@@ -41,6 +40,7 @@ import com.net.pvr.ui.ticketConfirmation.TicketConfirmationActivity
 import com.salesforce.marketingcloud.registration.RegistrationManager
 import com.salesforce.marketingcloud.sfmcsdk.SFMCSdk
 import okhttp3.internal.and
+import java.lang.Long
 import java.net.MalformedURLException
 import java.net.URL
 import java.security.MessageDigest
@@ -875,5 +875,17 @@ class Constant {
     fun convertTime(timeString: Int): Int {
         return timeString * 60 * 1000
     }
+    fun getDateTime(s: String): String? {
+        return try {
+            val sdf = SimpleDateFormat("dd MMM yyyy")
+            val netDate = Date(Long.parseLong(s) * 1000)
+            sdf.format(netDate)
+        } catch (e: Exception) {
+            e.toString()
+        }
+    }
 
+    fun dateFormatter(milliseconds: String): String {
+        return SimpleDateFormat("dd MMM yyyy").format(Date(milliseconds.toLong())).toString()
+    }
 }
