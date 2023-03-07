@@ -22,14 +22,15 @@
     <TextView
         android:id="@+id/titleCommonToolbar"
         style="@style/H4SizeBold"
-        android:textAlignment="textStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textSize="@dimen/dimen_16sp"
         android:layout_toStartOf="@+id/subTitle"
         android:layout_toEndOf="@+id/btnBack"
-        android:ellipsize="marquee" />
+        android:ellipsize="marquee"
+        android:fontFamily="@font/montserrat_bold"
+        android:textAlignment="textStart"
+        android:textSize="@dimen/dimen_16sp" />
 
     <TextView
         android:id="@+id/subTitle"

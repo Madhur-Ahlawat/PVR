@@ -1,5 +1,6 @@
 package com.net.pvr.ui.giftCard.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -25,6 +26,7 @@ class GiftFilterAdapter(
         return ViewHolder(binding)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder){
             with(nowShowingList[position]){
@@ -35,7 +37,7 @@ class GiftFilterAdapter(
                 }else {
                     Glide.with(context)
                         .load(this.imageValue)
-                        .error(R.drawable.placeholder_horizental)
+                        .error(R.drawable.gift_card_default)
                         .into(binding.imageView8)
                 }
 

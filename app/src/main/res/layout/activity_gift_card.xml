@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,281 +7,299 @@
     android:background="@color/white"
     tools:context=".ui.giftCard.GiftCardActivity">
 
-    <View
-        android:id="@+id/view25"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--//top view-->
+        <include layout="@layout/common_toolbar"
+            android:id="@+id/include6"
+            />
 
-    <include
-        android:id="@+id/include6"
-        layout="@layout/common_toolbar"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dimen_60dp"
-        app:layout_constraintEnd_toEndOf="@+id/view25"
-        app:layout_constraintStart_toStartOf="@+id/view25"
-        app:layout_constraintTop_toTopOf="@+id/view25" />
-
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@+id/include37"
-        app:layout_constraintEnd_toEndOf="@+id/view25"
-        app:layout_constraintStart_toStartOf="@+id/view25"
-        app:layout_constraintTop_toBottomOf="@+id/include6">
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <View
+            android:id="@+id/view_top"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_below="@+id/include6"
+            android:background="@color/grayEd" />
 
-            <View
-                android:id="@+id/view26"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/dimen_60dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/view_bottom"
+            android:layout_below="@+id/view_top"
+            android:scrollIndicators="none">
 
-            <TextView
-                android:id="@+id/textView31"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:fontFamily="@font/montserrat_bold"
-                android:text="@string/active_gift_cards"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimen_14sp"
-                app:layout_constraintBottom_toBottomOf="@+id/view26"
-                app:layout_constraintStart_toStartOf="@+id/view26"
-                app:layout_constraintTop_toTopOf="@+id/view26" />
-
-            <TextView
-                android:id="@+id/textView32"
-                style="@style/H1Size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView31"
-                app:layout_constraintStart_toEndOf="@+id/textView31"
-                app:layout_constraintTop_toTopOf="@+id/textView31"
-                tools:text="24" />
-
-            <ImageView
-                android:id="@+id/imageView106"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                app:layout_constraintBottom_toBottomOf="@+id/view26"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/view26"
-                app:srcCompat="@drawable/right_arrow_large"
-                tools:ignore="ContentDescription" />
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout4"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@color/background_color"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/view28"
-                app:layout_constraintTop_toBottomOf="@+id/view26">
-
-                <include
-                    android:id="@+id/topView"
-                    layout="@layout/horizontal_line"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_1dp"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/textView33"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginBottom="24dp"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:gravity="center"
-                    android:text="@string/generic"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dimen_18sp"
-                    app:layout_constraintBottom_toTopOf="@+id/viewPager2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/topView"
-                    app:layout_constraintTop_toTopOf="parent" />
+                android:orientation="vertical">
 
                 <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/view_top_bottom"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/dimen_20dp"
-                    android:layout_marginTop="@dimen/dimen_25dp"
-                    android:layout_marginEnd="@dimen/dimen_20dp"
-                    android:layout_marginBottom="@dimen/dimen_50dp"
-                    android:background="@drawable/bg_grey_booking"
-                    android:backgroundTint="#66000000"
-                    app:layout_constraintBottom_toTopOf="@+id/bottomView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView33">
-
-                    <com.joooonho.SelectableRoundedImageView
-                        android:id="@+id/iv_image_generic"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:adjustViewBounds="true"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/placeholder_horizental"
-                        app:sriv_left_bottom_corner_radius="5dp"
-                        app:sriv_left_top_corner_radius="5dp"
-                        app:sriv_right_bottom_corner_radius="5dp"
-                        app:sriv_right_top_corner_radius="5dp" />
+                    android:id="@+id/ll_active_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/ll_pvr_logo"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginStart="@dimen/padding_10"
-                        android:layout_marginTop="@dimen/padding_10"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_gravity="center"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/dimen_15dp"
+                        android:layout_marginEnd="@dimen/dimen_15dp">
+
+                        <!--//to set textview in between-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/text_black_bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Active Gift cards"
+                                android:includeFontPadding="false"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen_14sp" />
+
+                            <TextView
+                                android:id="@+id/tv_active_counts"
+                                style="@style/text_gray_gift"
+                                android:visibility="gone"
+                                android:includeFontPadding="false"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/padding_10"
+                                android:layout_marginEnd="@dimen/padding_10"
+                                android:text="0"
+                                android:textSize="@dimen/dimen_14sp" />
+
+                        </LinearLayout>
 
                         <ImageView
-                            android:layout_width="@dimen/dimen_50dp"
+                            android:id="@+id/iv_next"
+                            android:layout_width="@dimen/dimen_30dp"
                             android:layout_height="@dimen/dimen_20dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/pvr_logo" />
-
-                        <View
-                            android:layout_width="@dimen/dimen_2dp"
-                            android:layout_height="@dimen/dimen_15dp"
-                            android:layout_gravity="center"
-                            android:background="#7D7D7D" />
-
-                        <TextView
-                            android:id="@+id/tv_gift_card_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="@dimen/padding_10"
-                            android:text="Gift Card"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/dimen_14sp"
-                            android:textStyle="bold" />
+                            android:src="@drawable/ic_arrow_right_white"
+                            app:tint="@color/black" />
 
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_gravity="bottom"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/grayEd" />
+
                 </RelativeLayout>
 
-                <include
-                    android:id="@+id/bottomView"
-                    layout="@layout/horizontal_line"
+
+
+                <LinearLayout
+                    android:id="@+id/upperView"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_1dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <View
-                android:id="@+id/view29"
-                android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:background="#F9F9F9"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/constraintLayout4"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
-
-            <TextView
-                android:id="@+id/textView34"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_24dp"
-                android:fontFamily="@font/montserrat_bold"
-                android:gravity="center"
-                android:text="@string/occasions"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimen_18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/view29"
-                app:layout_constraintTop_toBottomOf="@+id/view29" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_24dp"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/dimen_20dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/view29"
-                app:layout_constraintTop_toBottomOf="@+id/textView34"
-                tools:itemCount="3"
-                tools:listitem="@layout/gift_card_cateogry_item" />
-            <View
-                android:id="@+id/lineView"
-                android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:background="#CCCCCC"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/constraintLayout4"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerView2" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_20dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="@dimen/dimen_20dp"
-                android:layout_marginBottom="16dp"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toTopOf="@+id/constraintLayout5"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lineView"
-                tools:itemCount="3"
-                tools:listitem="@layout/gift_card_image_item" />
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="1dp"
-                android:background="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/recyclerView2"
-                app:layout_constraintStart_toStartOf="@+id/recyclerView2"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerView3">
+                    <include
+                        layout="@layout/placeholder_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_15dp"
+                        android:visibility="visible" />
+
+                    <include
+                        layout="@layout/horizontal_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/dimen_15dp"
+                        />
+
+                </LinearLayout>
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_gift_generic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/padding_10"
+                        android:layout_marginEnd="@dimen/padding_10"
+                        android:visibility="gone"
+                        android:scrollIndicators="none"/>
 
-    </androidx.core.widget.NestedScrollView>
+                    <TextView
+                        android:id="@+id/tv_gift_name"
+                        style="@style/text_black_bold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginTop="@dimen/padding_10"
+                        android:text="Generic"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_18sp" />
 
-    <include
-        android:id="@+id/include37"
-        layout="@layout/button_next"
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardUseCompatPadding="false"
+                        app:cardCornerRadius="@dimen/dimen_8dp"
+                        android:layout_marginStart="@dimen/dimen_20dp"
+                        android:layout_marginTop="@dimen/dimen_20dp"
+                        android:layout_marginEnd="@dimen/dimen_20dp"
+                        android:elevation="@dimen/dimen_8dp"
+                        android:layout_marginBottom="@dimen/dimen_15dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/view_top_bottom"
+                            android:layout_gravity="center"
+                            android:background="@drawable/bg_grey_booking"
+                            android:backgroundTint="@color/grayEd">
+
+                            <ImageView
+                                android:id="@+id/iv_image_generic"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:adjustViewBounds="true"
+                                android:scaleType="fitXY"
+                                app:layout_constraintDimensionRatio="H,1:1.94"
+                                android:src="@drawable/gift_card_default"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:sriv_left_bottom_corner_radius="8dp"
+                                app:sriv_left_top_corner_radius="8dp"
+                                app:sriv_right_bottom_corner_radius="8dp"
+                                app:sriv_right_top_corner_radius="8dp" />
+
+                            <LinearLayout
+                                android:id="@+id/ll_pvr_logo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:visibility="gone"
+                                android:layout_marginStart="@dimen/padding_10"
+                                android:layout_marginTop="@dimen/padding_10"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="@dimen/dimen_50dp"
+                                    android:layout_height="@dimen/dimen_20dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/pvr_logo" />
+
+                                <View
+                                    android:layout_width="@dimen/dimen_2dp"
+                                    android:layout_height="@dimen/dimen_15dp"
+                                    android:layout_gravity="center"
+                                    android:background="@color/grayEd" />
+
+                                <TextView
+                                    android:id="@+id/tv_gift_card_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginStart="@dimen/padding_10"
+                                    android:text="Gift Card"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/dimen_14sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible"
+                    android:id="@+id/allView">
+
+                    <TextView
+                        android:id="@+id/tv_occasions"
+                        style="@style/text_black_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/padding_10"
+                        android:text="Occasions"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_18sp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_filter_gift_cards"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:layout_marginTop="@dimen/padding_10"
+                        android:layout_marginStart="@dimen/padding_10"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:nestedScrollingEnabled="false"
+                        android:background="@color/grayEd" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_gift_cards"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/padding_10" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <LinearLayout
+            android:id="@+id/view_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+           <include layout="@layout/button_next"
+               android:id="@+id/include37"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/RlBanner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_height="match_parent"
+        android:background="#E8000000"
+        android:visibility="gone">
+
+        <include layout="@layout/banner_layout" />
+    </RelativeLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

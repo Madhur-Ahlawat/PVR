@@ -81,7 +81,7 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
     }
 
     private fun movedNext() {
-        binding?.view26?.setOnClickListener {
+        binding?.llActiveCard?.setOnClickListener {
             startActivity(Intent(this,ActivateGiftCardActivity::class.java))
         }
 
@@ -156,14 +156,14 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
         limit = output.limit.toInt()
         giftCartList = output.giftCards
         gcFilterList = ArrayList<GiftCardsFilter>()
-        gcFilterList.add(GiftCardsFilter("All Occasions","",true))
+        gcFilterList.add(GiftCardsFilter("ALL OCCASIONS","",true))
         for (data in output.giftCards){
-            if (!checkExist(gcFilterList,data.type))
+            if (!checkExist(gcFilterList,data.type) && data.type != "GENERIC")
             gcFilterList.add(GiftCardsFilter(data.type,data.newImageUrl?:"",false))
             if (data.type == "GENERIC" && !genricFound){
                 Glide.with(this)
                     .load(data.newImageUrl)
-                    .error(R.drawable.app_icon)
+                    .error(R.drawable.gift_card_default)
                     .into(binding?.ivImageGeneric!!)
                 genricFound = true
                // break
@@ -172,13 +172,18 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
 
         val filterLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
         val filterAdapter = GiftFilterAdapter(gcFilterList,  this, this)
-        binding?.recyclerView2?.layoutManager = filterLayout
-        binding?.recyclerView2?.adapter = filterAdapter
+        binding?.rvFilterGiftCards?.layoutManager = filterLayout
+        binding?.rvFilterGiftCards?.adapter = filterAdapter
 
         val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        val giftCardMainAdapter2 = GiftCardMainAdapter(output.giftCards,  this, this)
-        binding?.recyclerView3?.layoutManager = gridLayout2
-        binding?.recyclerView3?.adapter = giftCardMainAdapter2
+        val giftCardMainAdapter2 = GiftCardMainAdapter(
+            getNewList(output.giftCards),
+            this,
+            this,
+            "ALL OCCASIONS"
+        )
+        binding?.rvGiftCards?.layoutManager = gridLayout2
+        binding?.rvGiftCards?.adapter = giftCardMainAdapter2
 
         binding?.ivImageGeneric?.setOnClickListener {
             giftCardListFilter = ArrayList()
@@ -202,9 +207,33 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
 
     }
 
+    private fun getNewList(giftCards: ArrayList<GiftCardListResponse.Output.GiftCard>): List<GiftCardListResponse.Output.GiftCard> {
+        var newList = ArrayList<GiftCardListResponse.Output.GiftCard>()
+        for (data in giftCards){
+            if (newList.size == 0){
+                newList.add(data)
+            }else{
+                if (!checkGCExist(newList,data.type)){
+                    newList.add(data)
+                }
+            }
+        }
+
+        return newList
+    }
+
     private fun checkExist(gcFilterList: ArrayList<GiftCardsFilter>, type: String): Boolean {
         for (data in gcFilterList){
             if (data.filterText == (type)){
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun checkGCExist(gcFilterList: ArrayList<GiftCardListResponse.Output.GiftCard>, type: String): Boolean {
+        for (data in gcFilterList){
+            if (data.type == (type)){
                 return true
             }
         }
@@ -236,12 +265,17 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
 
     @SuppressLint("SuspiciousIndentation")
     override fun gcFilterClick(comingSoonItem: GiftCardsFilter, position: Int) {
-        if (position<binding?.recyclerView2?.adapter?.itemCount!! && position>0)
-        binding?.recyclerView2?.scrollToPosition(position+1)
+        val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+
+        if (position<binding?.rvFilterGiftCards?.adapter?.itemCount!! && position>0)
+        binding?.rvFilterGiftCards?.scrollToPosition(position+1)
         var gcNewList = ArrayList<GiftCardListResponse.Output.GiftCard>()
-        if (comingSoonItem.filterText == "All Occasions"){
+        if (comingSoonItem.filterText == "ALL OCCASIONS"){
             gcNewList = giftCartList
             giftCardListFilter = giftCartList
+            val giftCardMainAdapter2 = GiftCardMainAdapter(getNewList(gcNewList),  this, this,comingSoonItem.filterText)
+            binding?.rvGiftCards?.layoutManager = gridLayout2
+            binding?.rvGiftCards?.adapter = giftCardMainAdapter2
         }else {
             for (data in giftCartList) {
                 if (comingSoonItem.filterText == data.type) {
@@ -249,11 +283,12 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
                 }
             }
             giftCardListFilter = gcNewList
+            val giftCardMainAdapter2 = GiftCardMainAdapter(gcNewList,  this, this,comingSoonItem.filterText)
+            binding?.rvGiftCards?.layoutManager = gridLayout2
+            binding?.rvGiftCards?.adapter = giftCardMainAdapter2
         }
-        val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        val giftCardMainAdapter2 = GiftCardMainAdapter(gcNewList,  this, this)
-        binding?.recyclerView3?.layoutManager = gridLayout2
-        binding?.recyclerView3?.adapter = giftCardMainAdapter2
+
+
     }
 
     private fun showDialogLoyalty(mContext: Context?, price1: String, id: String, date: String?) {

@@ -34,11 +34,19 @@ class ActivateGiftCardAdapter(
     override fun onBindViewHolder(holder: MyViewHolderNowShowing, position: Int) {
         val cinemaItem = nowShowingList[position]
 
-        Glide.with(context)
-            .load(R.drawable.gift_card_default)
-            .error(R.drawable.gift_card_default)
-            .placeholder(R.drawable.gift_card_default)
-            .into(holder.image)
+        if (cinemaItem.ci != null && cinemaItem.ci != ""){
+            Glide.with(context)
+                .load(cinemaItem.ci)
+                .error(R.drawable.gift_card_default)
+                .placeholder(R.drawable.gift_card_default)
+                .into(holder.image)
+        }else {
+            Glide.with(context)
+                .load(cinemaItem.gi)
+                .error(R.drawable.gift_card_default)
+                .placeholder(R.drawable.gift_card_default)
+                .into(holder.image)
+        }
 
 //        holder.orderId.text =context.getString(R.string.order)+ cinemaItem.active
 
@@ -47,15 +55,15 @@ class ActivateGiftCardAdapter(
             holder.price.hide()
             holder.value.hide()
         }
-        holder.tvresend.text = "View >"
+        holder.tvresend.text = "View"
         if (cinemaItem.r != null)
             holder.giftedTo.text = Html.fromHtml(cinemaItem.r)
         if (cinemaItem.ta != null)
             holder.price.text = context.resources.getString(R.string.currency) + cinemaItem.ta.replace("Rs. ".toRegex(), "")
         if (cinemaItem.id != null)
-            holder.orderId.text = "Order Id: " + cinemaItem.id
+            holder.orderId.text = "Card No: " + cinemaItem.gcn
         if (cinemaItem.d != null)
-            holder.date.text = cinemaItem.dn + " • " + cinemaItem.tn
+            holder.date.text = cinemaItem.dn.replace("Date:","") + " • " + cinemaItem.tn
 
 
     holder.itemView.setOnClickListener {

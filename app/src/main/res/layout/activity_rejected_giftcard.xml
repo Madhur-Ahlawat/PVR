@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.giftCard.activateGiftCard.RejectedGiftCardActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_above="@+id/bottom">
+
+        <!--//top view-->
+        <LinearLayout
+            android:id="@+id/ll_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_10">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="@dimen/dimen_30dp"
+                android:layout_height="@dimen/dimen_20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/back_new" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_10"
+                android:gravity="center_vertical"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="Rejected Gift Card"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/padding_10"
+            android:background="@color/grayEd"/>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_20dp"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:layout_marginBottom="@dimen/dimen_5dp"
+                android:layout_marginStart="@dimen/dimen_20dp"
+                android:layout_marginEnd="@dimen/dimen_20dp"
+                android:background="@drawable/red_border_with_white_background">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Your customized Gift card has been rejected!"
+                    android:textColor="@color/red"
+                    android:fontFamily="@font/helvetica_neu_bold"
+                    android:textSize="@dimen/dimen_14sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Dummy text ipsum lorem dummyoremipsum ipsum dummy text ipsum loremlorem ipsum dummyummy text ipsum lorem dummytext Lorem ipsum dummy text ipsum loremipsum dummy."
+                    android:layout_marginTop="@dimen/dimen_20dp"
+                    android:textColor="@color/black"
+                    android:id="@+id/cim"
+                    android:fontFamily="@font/helvetica_neu"
+                    android:lineSpacingExtra="@dimen/dimen_4sp"
+                    android:textSize="@dimen/dimen_14sp" />
+
+
+            </LinearLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/CLlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_20dp"
+                android:background="@drawable/bg_grey_booking"
+                >
+
+                <RelativeLayout
+                    android:id="@+id/rl_landing_screen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <ImageView
+                            android:id="@+id/imageLandingScreen"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/gift_card_default"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="H,1:1.94"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="@dimen/padding_10"
+                        android:layout_marginTop="@dimen/padding_10"
+                        android:visibility="invisible"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen_50dp"
+                            android:layout_height="@dimen/dimen_20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/pvr_logo" />
+
+                        <View
+                            android:layout_width="@dimen/dimen_2dp"
+                            android:layout_height="@dimen/dimen_15dp"
+                            android:layout_gravity="center"
+                            android:background="@color/grayEd" />
+
+                        <TextView
+                            android:id="@+id/tv_gift_card_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/padding_10"
+                            android:text="Gift Card"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/dimen_14sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_gift_msg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:backgroundTint="@color/yellow_gift_bg"
+                    android:background="@drawable/bottom_loyalty_corner_8"
+                    app:layout_constraintTop_toBottomOf="@id/rl_landing_screen">
+
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        android:fontFamily="@font/sf_pro_text_semi_bold"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerInParent="true"
+                        android:textColor="@color/pvr_dark_black"
+                        android:textSize="14sp"
+                        android:text="Generic Gift Card" />
+
+                    <TextView
+                        android:id="@+id/tvMessage"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:background="@color/yellow_gift_bg"
+                        android:textColor="@color/pvr_dark_black"
+                        android:textSize="12sp"
+                        android:text="Today is an awesome day to acknowledge how awesome it is to have you!" />
+
+
+                </LinearLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:id="@+id/bottom"
+        android:layout_alignParentBottom="true">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/padding_10"
+            android:background="@color/grayEd"/>
+        <TextView
+            android:id="@+id/uploadImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Uplaod another image"
+            android:layout_gravity="center"
+            android:gravity="start"
+            android:textColor="@color/black"
+            style="@style/text_black_bold"
+            android:drawableTint="@color/black"
+            android:drawableEnd="@drawable/ic_arrow_right_white"
+            android:textStyle="bold"
+            android:paddingTop="@dimen/dimen_15dp"
+            android:paddingBottom="@dimen/dimen_15dp"
+            android:paddingStart="@dimen/dimen_20dp"
+            android:paddingEnd="@dimen/dimen_20dp"
+            android:layout_above="@+id/view_bottom"
+            android:layout_marginStart="@dimen/dimen_20dp"
+            android:layout_marginEnd="@dimen/dimen_20dp"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:background="@drawable/bg_grey_booking"
+            android:backgroundTint="@color/yellow"/>
+        <TextView
+            android:id="@+id/tv_proceed_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Continue with regular gift card"
+            android:layout_gravity="center"
+            android:gravity="start"
+            android:textColor="@color/black"
+            style="@style/text_black_bold"
+            android:textStyle="bold"
+            android:drawableTint="@color/black"
+            android:drawableEnd="@drawable/ic_arrow_right_white"
+            android:paddingTop="@dimen/dimen_15dp"
+            android:paddingBottom="@dimen/dimen_15dp"
+            android:paddingStart="@dimen/dimen_20dp"
+            android:paddingEnd="@dimen/dimen_20dp"
+            android:layout_above="@+id/view_bottom"
+            android:layout_marginTop="@dimen/padding_10"
+            android:layout_marginStart="@dimen/dimen_20dp"
+            android:layout_marginEnd="@dimen/dimen_20dp"
+            android:layout_marginBottom="@dimen/dimen_20dp"
+            android:background="@drawable/bg_grey_booking"
+            android:backgroundTint="#EDE8E9"/>
+    </LinearLayout>
+</RelativeLayout>

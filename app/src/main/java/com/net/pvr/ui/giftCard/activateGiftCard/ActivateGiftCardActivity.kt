@@ -10,10 +10,13 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.joooonho.SelectableRoundedImageView
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityActivateGiftCardBinding
@@ -118,11 +121,22 @@ class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.Re
     }
 
     override fun activateGiftCard(comingSoonItem: ActiveGCResponse.Gca) {
-        showDialog(comingSoonItem.gcn)
+        if (comingSoonItem.customImageApprove != null && comingSoonItem.customImageApprove && comingSoonItem.ci != null && comingSoonItem.ci != "") {
+            //Approved
+            showDialog(comingSoonItem,comingSoonItem.gcn.replace("ID:", ""))
+        } else if (comingSoonItem.up) {
+            // Waiting for Approval
+            showApprovalDialog(comingSoonItem,comingSoonItem.gcn.replace("ID:", ""))
+        } else if (comingSoonItem.ci == null || comingSoonItem.ci == "") {
+            // Details
+            showDialog(comingSoonItem,comingSoonItem.gcn.replace("ID:", ""))
+        } else {
+           //Rejected
+        }
     }
 
-    private fun showDialog(giftId: String) {
-        val pinDialog = Dialog(this)
+    private fun showDialog(data: ActiveGCResponse.Gca,giftId: String) {
+        val pinDialog =  BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
         pinDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         pinDialog.setCancelable(true)
         pinDialog.setCanceledOnTouchOutside(true)
@@ -136,10 +150,22 @@ class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.Re
         val et_card_pin = pinDialog.findViewById<EditText>(R.id.et_card_pin)
         val tv_proceed_detail = pinDialog.findViewById<TextView>(R.id.tv_proceed_detail)
         val iv_gift_image = pinDialog.findViewById<SelectableRoundedImageView>(R.id.iv_gift_image)
-        tv_proceed_detail.setOnClickListener {
-            if (et_card_pin.text.toString().isNotEmpty()) {
-                authViewModel.redeemGC(preferences.getUserId(), giftId.replace("ID:", "").trim(),et_card_pin.text.toString())
-                et_card_pin.setText("")
+        if (data.ci != null && data.ci != "")
+            Glide.with(this)
+                .load(data.ci)
+                .error(R.drawable.gift_card_default)
+                .placeholder(R.drawable.gift_card_default)
+                .into(iv_gift_image!!)
+        else
+            Glide.with(this)
+                .load(data.ci)
+                .error(R.drawable.gift_card_default)
+                .placeholder(R.drawable.gift_card_default)
+                .into(iv_gift_image!!)
+        tv_proceed_detail?.setOnClickListener {
+            if (et_card_pin?.text.toString().isNotEmpty()) {
+                authViewModel.redeemGC(preferences.getUserId(), giftId.replace("ID:", "").trim(),et_card_pin?.text.toString())
+                et_card_pin?.setText("")
                 pinDialog.dismiss()
             } else {
                 val dialog = OptionDialog(this,
@@ -155,6 +181,37 @@ class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.Re
                 dialog.show()
             }
         }
+        pinDialog.window!!.setWindowAnimations(R.style.AppTheme_Slide)
+        pinDialog.show()
+    }
+
+    private fun showApprovalDialog(data: ActiveGCResponse.Gca, giftId: String?) {
+        val pinDialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
+        pinDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        pinDialog.setCancelable(true)
+        pinDialog.setCanceledOnTouchOutside(true)
+        pinDialog.setContentView(R.layout.gift_approval_dialog)
+        pinDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        pinDialog.window!!.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        pinDialog.window!!.setGravity(Gravity.BOTTOM)
+        val upText:TextView = pinDialog.findViewById<TextView>(R.id.upText)!!
+        upText.text = data.cim.toString()
+        val iv_gift_image = pinDialog.findViewById<ImageView>(R.id.iv_gift_image)
+        if (data.ci != null && data.ci != "")
+            Glide.with(this)
+                .load(data.ci)
+                .error(R.drawable.gift_card_default)
+                .placeholder(R.drawable.gift_card_default)
+                .into(iv_gift_image!!)
+             else
+        Glide.with(this)
+            .load(data.ci)
+            .error(R.drawable.gift_card_default)
+            .placeholder(R.drawable.gift_card_default)
+            .into(iv_gift_image!!)
         pinDialog.window!!.setWindowAnimations(R.style.AppTheme_Slide)
         pinDialog.show()
     }

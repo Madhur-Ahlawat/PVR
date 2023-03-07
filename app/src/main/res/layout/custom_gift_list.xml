@@ -24,6 +24,7 @@
         <ImageView
             android:layout_width="@dimen/dimen_100dp"
             android:layout_height="@dimen/dimen_50dp"
+            android:visibility="gone"
             android:src="@color/black_75" />
 
         <TextView

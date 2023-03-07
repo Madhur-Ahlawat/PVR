@@ -12,7 +12,9 @@ import com.net.pvr.ui.giftCard.response.GiftCardListResponse
 
 class GiftCardMainAdapter(
     private var nowShowingList: List<GiftCardListResponse.Output.GiftCard>,
-    private var context: Context, private var listner : RecycleViewItemClickListener
+    private var context: Context,
+    private var listner: RecycleViewItemClickListener,
+    private val filterText: String
 ) :
     RecyclerView.Adapter<GiftCardMainAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: GiftCardMainBinding) : RecyclerView.ViewHolder(binding.root)
@@ -24,16 +26,31 @@ class GiftCardMainAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder){
-            with(nowShowingList[position]){
-                //Image
-                Glide.with(context)
-                    .load(this.newImageUrl)
-                    .error(R.drawable.gift_card_default)
-                    .placeholder(R.drawable.gift_card_default)
-                    .into(binding.ivImageGeneric)
+            if (filterText != "ALL OCCASIONS") {
+                with(nowShowingList[nowShowingList.size - 1]) {
+                    //Image
+                    Glide.with(context)
+                        .load(this.newImageUrl)
+                        .error(R.drawable.gift_card_default)
+                        .placeholder(R.drawable.gift_card_default)
+                        .into(binding.ivImageGeneric)
 
-                holder.itemView.setOnClickListener {
-                    listner.giftCardClick(this)
+                    holder.itemView.setOnClickListener {
+                        listner.giftCardClick(this)
+                    }
+                }
+            }else{
+                with(nowShowingList[position]) {
+                    //Image
+                    Glide.with(context)
+                        .load(this.newImageUrl)
+                        .error(R.drawable.gift_card_default)
+                        .placeholder(R.drawable.gift_card_default)
+                        .into(binding.ivImageGeneric)
+
+                    holder.itemView.setOnClickListener {
+                        listner.giftCardClick(this)
+                    }
                 }
             }
         }
@@ -41,7 +58,11 @@ class GiftCardMainAdapter(
     }
 
     override fun getItemCount(): Int {
-        return if (nowShowingList.isNotEmpty()) nowShowingList.size else 0
+        if (filterText == "ALL OCCASIONS") {
+            return if (nowShowingList.isNotEmpty()) nowShowingList.size else 0
+        }else{
+            return 1
+        }
     }
 
 

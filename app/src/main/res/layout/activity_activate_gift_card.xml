@@ -48,8 +48,8 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="8dp"
-            android:background="@color/bg_landing_screen" />
+            android:layout_height="1dp"
+            android:background="@color/grayEd" />
 
         <TextView
             android:id="@+id/tv_expired_gift"
@@ -70,6 +70,7 @@
             android:id="@+id/view_bottom"
             android:layout_width="200dp"
             android:layout_height="5dp"
+            android:visibility="gone"
             android:layout_gravity="center"
             android:background="@color/black" />
 

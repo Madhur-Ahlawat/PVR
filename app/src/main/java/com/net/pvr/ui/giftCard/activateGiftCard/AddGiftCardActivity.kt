@@ -114,7 +114,7 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
                     binding?.llCustom?.hide()
                 }
             }
-            binding?.llPvrLogo?.show()
+            binding?.llPvrLogo?.hide()
         }
         if (giftCardListFilter.size > 0) {
             if (isCustom.equals("true", ignoreCase = true)) {

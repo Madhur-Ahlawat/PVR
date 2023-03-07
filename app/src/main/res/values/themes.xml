@@ -277,7 +277,7 @@
     <style name="text_gray_gift">
         <item name="android:textSize">@dimen/dim_h19</item>
         <item name="android:textColor">@color/gray_</item>
-        <item name="fontFamily">@font/helvetica_neu_reg</item>
+        <item name="fontFamily">@font/helvetica_neu</item>
     </style>
 
     //spinner
