@@ -56,12 +56,14 @@ import kotlin.collections.ArrayList
 
 
 @AndroidEntryPoint
-class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemClickListenerCity,
+class FoodActivity : AppCompatActivity(),
+    BestSellerFoodAdapter.RecycleViewItemClickListenerCity,
     CategoryAdapter.RecycleViewItemClickListenerCity,
     AllFoodAdapter.RecycleViewItemClickListenerCity,
     BottomFoodAdapter.RecycleViewItemClickListenerCity,
     CartAdapter.RecycleViewItemClickListenerCity,
-    PreviousFoodAdapter.RecycleViewItemClickListenerCity, StoriesProgressView.StoriesListener {
+    PreviousFoodAdapter.RecycleViewItemClickListenerCity,
+    StoriesProgressView.StoriesListener {
 
     @Inject
     lateinit var preferences: PreferenceManager
@@ -724,7 +726,9 @@ class FoodActivity : AppCompatActivity(), BestSellerFoodAdapter.RecycleViewItemC
             bindingBottom.imageView69.setImageDrawable(this.getDrawable(R.drawable.nonveg_ic))
         }
         //Image View
-        Glide.with(this).load(comingSoonItem.mi).error(R.drawable.app_icon)
+        Glide.with(this)
+            .load(comingSoonItem.mi)
+            .error(R.drawable.placeholder_horizental)
             .into(bindingBottom.imageView64)
 
 //        //title

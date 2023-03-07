@@ -2,6 +2,7 @@ package com.net.pvr.ui.home.fragment.more.eVoucher.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,8 +10,14 @@ import com.bumptech.glide.Glide
 import com.net.pvr.R
 import com.net.pvr.databinding.EVoucherItemBinding
 import com.net.pvr.ui.home.fragment.more.eVoucher.response.VoucherListResponse
+import com.net.pvr.utils.Constant
+import com.net.pvr.utils.printLog
+
+import java.util.*
+import kotlin.collections.ArrayList
 
 
+@Suppress("DEPRECATION")
 class VoucherListAdapter(
     private var context: Context,
     private var profileList: ArrayList<VoucherListResponse.Output.Ev>
@@ -24,18 +31,34 @@ class VoucherListAdapter(
         return ViewHolder(binding)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         with(holder) {
             with(profileList[position]) {
+
                 //title
                 binding.textView403.text = this.binDiscountName
-                //valid
-                binding.textView404.text= this.voucherCategory
-                //amount
-                binding.textView405.text= this.voucherCategory
-                //discount
-                binding.textView406.text= this.voucherCategory
 
+                //valid
+                binding.textView404.text= context.getString(R.string.valid_till)+" "+
+                        Constant().dateFormatter(this.endDate.toString())
+
+                //amount
+                val data = "<font color=#7A7A7A>${context.getString(R.string.amount)+ " "}</font> <font color=#007D23>${
+                    context.getString(R.string.currency)+
+                            Constant.DECIFORMAT.format(this.sellAllowedValue / 100.0)}</font>"
+
+                binding.textView405.text= Html.fromHtml(data)
+
+                //discount
+                val percentage=  (this.sellAllowedCPValue.toInt() - this.sellAllowedValue) * 100 / 20000
+                binding.textView406.text= "$percentage %"
+
+                //total Price
+                binding.textView412.text =context.getString(R.string.currency)+
+                        Constant.DECIFORMAT.format(this.sellAllowedCPValue.toInt() / 100.0)
+
+                //Image
                 Glide.with(context)
                     .load(this.imageUrl1)
                     .error(R.drawable.placeholder_horizental)
@@ -45,7 +68,6 @@ class VoucherListAdapter(
                 holder.itemView.setOnClickListener {
                     listner.itemClick(this)
                 }
-
             }
         }
     }
@@ -58,5 +80,6 @@ class VoucherListAdapter(
     interface RecycleViewItemClickListener {
         fun itemClick(ev: VoucherListResponse.Output.Ev)
     }
+
 
 }
