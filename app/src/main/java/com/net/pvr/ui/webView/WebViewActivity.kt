@@ -8,9 +8,11 @@ import android.net.http.SslError
 import android.os.Bundle
 import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityWebViewBinding
 import com.net.pvr.ui.dailogs.LoaderDialog
+import com.net.pvr.utils.ga.GoogleAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -50,6 +52,18 @@ class WebViewActivity : AppCompatActivity() {
                 binding?.include3?.textView108?.text= title
                 loadWebData(get)
             }"passFaq" -> {
+
+                binding?.include3?.textView108?.text= title
+                loadWebData(get)
+            }"kotakApply" -> {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Privilege")
+                GoogleAnalytics.hitEvent(this, "kotak_saving_account", bundle)
+            }catch (e:Exception) {
+                e.printStackTrace()
+            }
                 binding?.include3?.textView108?.text= title
                 loadWebData(get)
             }

@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.FragmentPrivilegeBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -28,6 +29,7 @@ import com.net.pvr.ui.home.fragment.privilege.viewModel.PrivilegeLoginViewModel
 import com.net.pvr.ui.login.LoginActivity
 import com.net.pvr.ui.webView.WebViewActivity
 import com.net.pvr.utils.*
+import com.net.pvr.utils.ga.GoogleAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -276,6 +278,7 @@ class NonMemberActivity : AppCompatActivity() {
         }
 
         binding?.tvEnroll?.setOnClickListener {
+
             if (binding?.tvTerms1?.isChecked == false) {
                 toast("Please agree to the terms & conditions.")
             } else {
@@ -286,6 +289,10 @@ class NonMemberActivity : AppCompatActivity() {
                     startActivity(intent4)
                    finish()
                 } else {
+
+
+
+
                     if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(reviewPosition)?.ptype == ("P")) {
 //
 //                            intent4 = Intent(this, EnrollmentActivity::class.java)
@@ -296,14 +303,33 @@ class NonMemberActivity : AppCompatActivity() {
 //
 //                        startActivity(intent4)
                     } else if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(reviewPosition)?.ptype == ("PP")) {
+                        // Hit Event
+                        try {
+                            val bundle = Bundle()
+                            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Privilege")
+
+                            GoogleAnalytics.hitEvent(this, "passport_join_button", bundle)
+                        }catch (e:Exception) {
+                            e.printStackTrace()
+                        }
                         val intent = Intent(this, EnrollInPassportActivity::class.java)
                         intent.putExtra("scheme_id", scheme_id)
                         intent.putExtra("scheme_price", scheme_price)
                         startActivity(intent)
                     } else {
+                        // Hit Event
+                        try {
+                            val bundle = Bundle()
+                            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Privilege")
+                            bundle.putString("var_passport_apply_now", "")
+
+                            GoogleAnalytics.hitEvent(this, "kotak_apply_now", bundle)
+                        }catch (e:Exception) {
+                            e.printStackTrace()
+                        }
 
                         val intent = Intent(this, WebViewActivity::class.java)
-                        intent.putExtra("from", "passFaq")
+                        intent.putExtra("from", "kotakApply")
                         intent.putExtra("title", "Privilege+")
                         intent.putExtra("getUrl", "https://www.kotak.com/en/personal-banking/cards/debit-cards/pvr-debit-card-redirection-pvr-website.html")
                         startActivity(intent)

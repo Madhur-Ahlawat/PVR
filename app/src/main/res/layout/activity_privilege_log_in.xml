@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -635,7 +635,6 @@
                                 android:layout_alignParentBottom="true"
                                 android:background="@color/yellow" />
 
-
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -653,14 +652,14 @@
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:layout_gravity="center"
-                            android:drawableStart="@drawable/ic_history_fill"
                             android:drawablePadding="@dimen/dimen_8dp"
-                            android:drawableTint="#80000000"
                             android:fontFamily="@font/sf_pro_text_regular"
                             android:gravity="center"
                             android:text="@string/history_text"
                             android:textColor="@color/pvr_dark_black"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            app:drawableStartCompat="@drawable/ic_history_fill"
+                            app:drawableTint="#80000000" />
 
                         <View
                             android:layout_width="match_parent"
@@ -677,14 +676,48 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/privilegeList"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/ll"
                     android:layout_marginStart="@dimen/dimen_15dp"
-                    android:layout_marginEnd="@dimen/dimen_15dp"
                     android:layout_marginTop="@dimen/dimen_12dp"
-                    android:layout_marginBottom="@dimen/dimen_15dp"
-                    android:layout_alignParentBottom="true"
-                     />
+                    android:layout_marginEnd="@dimen/dimen_15dp" />
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/about_pvr_ll"
+                    android:paddingStart="16dp"
+                    android:layout_below="@+id/privilegeList"
+                    android:layout_marginTop="12dp"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content"
+                    tools:ignore="RtlSymmetry">
+
+                    <LinearLayout
+                        android:id="@+id/about_pvr"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:ignore="UseCompoundDrawables,UselessParent">
+
+                        <TextView
+                            android:text="@string/about_pvr_privilege_program"
+                            android:layout_width="wrap_content"
+                            android:textSize="@dimen/dimen_14sp"
+                            android:fontFamily="@font/helvetica_neu_medium"
+                            android:textColor="@color/pvr_dark_black"
+                            android:layout_height="wrap_content" />
+
+                        <ImageView
+                            android:layout_width="13dp"
+                            android:layout_height="8dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_shape_forward"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginStart="5dp"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
 
 
             </RelativeLayout>

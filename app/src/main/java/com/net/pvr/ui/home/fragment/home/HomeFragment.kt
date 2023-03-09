@@ -1239,7 +1239,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 try {
                     val bundle = Bundle()
                     bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Home Screen")
-                    bundle.putString("var_popup_name ", bannerModels[counterStory].name)
+                    bundle.putString("var_popup_name", bannerModels[counterStory].name.toString())
                     GoogleAnalytics.hitEvent(requireContext(), "app_popups", bundle)
                 }catch (e:Exception){
                     e.printStackTrace()
@@ -1307,6 +1307,16 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             (requireActivity().findViewById(R.id.bannerLayout) as RelativeLayout).show()
 
             ivPlay?.setOnClickListener {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Home Screen")
+                    bundle.putString("var_popup_name", bannerModels[counterStory].name.toString())
+                    GoogleAnalytics.hitEvent(requireContext(), "app_popups", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
                 rlBanner?.hide()
                 listener?.onShowNotification()
                 listener?.onShowPrivilege()

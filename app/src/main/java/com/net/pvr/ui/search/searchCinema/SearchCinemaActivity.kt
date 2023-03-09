@@ -171,6 +171,16 @@ class SearchCinemaActivity : AppCompatActivity(),
         }
 
     override fun onSearchCinema(selectCityItemList: HomeSearchResponse.Output.T) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Cinemas 'All Theater")
+            bundle.putString("header_cinema_name", selectCityItemList.t)
+            GoogleAnalytics.hitEvent(this, "var_header_cinema_name", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
         val intent = Intent(this, CinemaSessionActivity::class.java)
         intent.putExtra("cid", selectCityItemList.id)
         intent.putExtra("lat", selectCityItemList.lat)
@@ -184,15 +194,6 @@ class SearchCinemaActivity : AppCompatActivity(),
     }
 
     private fun filter(text: String) {
-        // Hit Event
-        try {
-            val bundle = Bundle()
-            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Cinemas 'All Theater")
-            bundle.putString("header_cinema_name", text)
-            GoogleAnalytics.hitEvent(this, "var_header_cinema_name", bundle)
-        }catch (e:Exception){
-            e.printStackTrace()
-        }
 
         val filtered: ArrayList<HomeSearchResponse.Output.T> = ArrayList()
         val filtered1: ArrayList<HomeSearchResponse.Output.T> = ArrayList()
@@ -205,11 +206,6 @@ class SearchCinemaActivity : AppCompatActivity(),
         }
         searchHomeCinemaAdapter?.filterCinemaList(filtered1)
 
-//        if (filtered.isEmpty()) {
-//            searchHomeCinemaAdapter?.filterCinemaList(filtered1)
-//        } else {
-//            searchHomeCinemaAdapter?.filterCinemaList(filtered)
-//        }
     }
 
 

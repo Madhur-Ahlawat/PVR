@@ -192,6 +192,7 @@ class ExperienceActivity : AppCompatActivity(), ExperienceAdapter.RecycleViewIte
     }
 
     override fun itemPlayerClick(comingSoonItem: ExperienceResponse.Output.Format) {
+
         val intent = Intent(this, WebViewActivity::class.java)
         intent.putExtra("title", comingSoonItem.name)
         intent.putExtra("from", "Experience")
@@ -209,7 +210,6 @@ class ExperienceActivity : AppCompatActivity(), ExperienceAdapter.RecycleViewIte
         }catch (e:Exception){
             e.printStackTrace()
         }
-
         authViewModel.experienceDetails(preferences.getCityName(), comingSoonItem.type)
     }
 

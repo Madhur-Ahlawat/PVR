@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -95,7 +96,7 @@ class OffersFAdapter(
                 try {
                     val bundle = Bundle()
                     bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Offers")
-//                bundle.putString("var_experiences_banner", comingSoonItem.name)
+                    bundle.putString("var_offers_banner", obj.c)
                     GoogleAnalytics.hitEvent(context, "offers_more_offers", bundle)
                 }catch (e:Exception){
                     e.printStackTrace()

@@ -190,6 +190,8 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
         binding?.privilegeList?.adapter = cardAdapter
 //        MMM dd yyyy hh:mma
         binding?.vocCard?.setOnClickListener {
+
+            binding?.aboutPvrLl?.hide()
 //            Toast.makeText(context, "called.....", Toast.LENGTH_SHORT).show()
 //            binding?.hisInactiveLayout?.show()
 //            binding?.vocCard?.show()
@@ -197,6 +199,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
 //            binding?.hisInactiveLayout?.hide()
         }
         binding?.historyCard?.setOnClickListener {
+            binding?.aboutPvrLl?.hide()
 //            binding?.hisInactiveLayout?.show()
 //            binding?.vocCard?.show()
 //            binding?.historyCard?.show()
@@ -208,6 +211,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
             binding?.hisInactiveLayout?.show()
             binding?.vocCard?.show()
             binding?.historyCard?.hide()
+            binding?.aboutPvrLl?.hide()
             binding?.vocIncLayout?.hide()
             val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             binding?.privilegeList?.layoutManager = layoutManager
@@ -218,6 +222,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
             binding?.totalVocBoxIn?.text = getCounOfActivVo(voucherList)
         }
         binding?.hisInactiveLayout?.setOnClickListener {
+
             // Hit Event
             try {
                 val bundle = Bundle()
@@ -230,6 +235,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
             binding?.hisInactiveLayout?.hide()
             binding?.vocCard?.hide()
             binding?.historyCard?.show()
+            binding?.aboutPvrLl?.show()
             binding?.vocIncLayout?.show()
             val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             binding?.privilegeList?.layoutManager = layoutManager
@@ -238,6 +244,25 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
             binding?.privilegeList?.adapter = cardAdapter
             binding?.totalVocBox?.text = getCounOfActivVo(voucherList)
             binding?.totalVocBoxIn?.text = getCounOfActivVo(voucherList)
+        }
+        //About Click
+        binding?.aboutPvrLl?.setOnClickListener {
+
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Privilege")
+                GoogleAnalytics.hitEvent(requireActivity(), "privilege_about_priviege", bundle)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            val intent = Intent(requireActivity(), WebViewActivity::class.java)
+            intent.putExtra("from", "privilege")
+            intent.putExtra("title", getString(R.string.terms_condition_text))
+            intent.putExtra("getUrl", Constant.termsCondition)
+            startActivity(intent)
+
         }
     }
 
@@ -888,6 +913,17 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
 
 
     private fun showDialogLoyalty(mContext: Context?, price1: String, id: String) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Privilege")
+            bundle.putString("ecommerce values will be pass", "")
+
+            GoogleAnalytics.hitEvent(requireActivity(), "passport_purchase", bundle)
+        }catch (e:Exception) {
+            e.printStackTrace()
+        }
+
         val dialog = BottomSheetDialog(mContext!!, R.style.NoBackgroundDialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.payment_success_gc_pp)
