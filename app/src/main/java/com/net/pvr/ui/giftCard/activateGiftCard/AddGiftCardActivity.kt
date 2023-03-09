@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.SystemClock
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.view.View
@@ -69,7 +70,8 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
 
         //Screen Width
 
-        binding?.ivBack?.setOnClickListener(this)
+        binding?.llTop?.btnBack?.setOnClickListener(this)
+        binding?.llTop?.titleCommonToolbar?.text = "Add Amount"
         binding?.llCancelGift?.setOnClickListener(this)
         binding?.llProceedGiftUnselect?.setOnClickListener(this)
         binding?.llProceedGift?.setOnClickListener(this)
@@ -80,7 +82,6 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
         if (intent != null) {
             if (intent.hasExtra("genericList")) {
                 giftCardListFilter = intent.getSerializableExtra("genericList") as ArrayList<GiftCardListResponse.Output.GiftCard>
-                toast("called this one....."+giftCardListFilter.size)
 
             }
             if (intent.hasExtra("key")) {
@@ -91,7 +92,7 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
                 if (imageValue != null) {
                     Picasso.get()
                             .load(imageValue)
-                            .placeholder(resources.getDrawable(R.drawable.gift_card_default))
+                            .placeholder(resources.getDrawable(R.drawable.gift_card_placeholder))
                             .into(binding?.ivUploadedImage);
                 }
             }
@@ -129,7 +130,7 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.ll_cancel_gift, R.id.iv_back -> onBackPressed()
+            R.id.ll_cancel_gift, R.id.btnBack -> onBackPressed()
             R.id.ll_proceed_gift -> if (imageValueUri != null) {
                 val file = File(getPath(this, imageValueUri!!))
                 val requestFile: RequestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
@@ -137,7 +138,16 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
                 val body = MultipartBody.Part.createFormData("fileImage", file.name, requestFile)
 
                 val fullName: RequestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), preferences.getUserName().toString())
-                authViewModel.uploadGiftCard(body,fullName)
+                val time = SystemClock.uptimeMillis()
+                val userID: String = preferences.getUserId()
+                val userNum: String = preferences.getString(Constant.SharedPreference.USER_TOKEN)
+                try {
+                    val token = Constant.getHash("$userID|$userNum|$time")
+                    authViewModel.uploadGiftCard(body,fullName,RequestBody.create("multipart/form-data".toMediaTypeOrNull(), time.toString()),RequestBody.create("multipart/form-data".toMediaTypeOrNull(), userID),RequestBody.create("multipart/form-data".toMediaTypeOrNull(), userNum),token)
+                    uploadGiftCard()
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
             } else {
                 sendData("")
             }

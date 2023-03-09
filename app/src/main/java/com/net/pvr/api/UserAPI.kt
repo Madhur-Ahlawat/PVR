@@ -8,10 +8,7 @@ import com.net.pvr.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr.ui.food.old.reponse.OldFoodResponse
 import com.net.pvr.ui.food.response.CancelTransResponse
 import com.net.pvr.ui.food.response.FoodResponse
-import com.net.pvr.ui.giftCard.response.ActiveGCResponse
-import com.net.pvr.ui.giftCard.response.GiftCardDetailResponse
-import com.net.pvr.ui.giftCard.response.GiftCardListResponse
-import com.net.pvr.ui.giftCard.response.UploadImageGC
+import com.net.pvr.ui.giftCard.response.*
 import com.net.pvr.ui.home.formats.response.FormatResponse
 import com.net.pvr.ui.home.fragment.cinema.response.CinemaPreferenceResponse
 import com.net.pvr.ui.home.fragment.cinema.response.CinemaResponse
@@ -1312,7 +1309,7 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String,
         @Query("did") did: String,
-    ): Response<ActiveGCResponse>
+    ): Response<GiftcardDetailsResponse>
 
     @POST("api/giftcard/savegiftcard")
     suspend fun saveGiftCard(
@@ -1343,8 +1340,12 @@ interface UserAPI {
     @POST("api/giftcard/save/image")
     suspend fun uploadGCImage(
         @Part fileImage: MultipartBody.Part,
-        @Part("name") name: RequestBody
-    ): Response<UploadImageGC>
+        @Part("name") name: RequestBody,
+        @Part("timestamp") timestamp: RequestBody,
+        @Part("userid") userid: RequestBody,
+        @Part("mobile") mobile: RequestBody,
+        @Header("X-Token") token: String
+        ): Response<UploadImageGC>
 
 
     @POST("api/history/giftcard/update/genric")

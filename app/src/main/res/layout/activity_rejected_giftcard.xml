@@ -121,7 +121,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:scaleType="fitXY"
-                            android:src="@drawable/gift_card_default"
+                            android:src="@drawable/gift_card_placeholder"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintDimensionRatio="H,1:1.94"
                             app:layout_constraintEnd_toEndOf="parent"

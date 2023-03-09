@@ -70,14 +70,16 @@
     </LinearLayout>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/view_top_bottom"
-        android:layout_marginStart="@dimen/dimen_20dp"
-        android:background="@drawable/bg_grey_booking"
+        android:layout_marginStart="@dimen/dimen_15dp"
         android:layout_marginTop="@dimen/dimen_20dp"
-        android:layout_marginEnd="@dimen/dimen_20dp"
+        android:layout_marginEnd="@dimen/dimen_15dp"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="@dimen/dimen_5dp"
+        app:cardCornerRadius="@dimen/dimen_8dp"
         android:layout_marginBottom="@dimen/dimen_40dp"
         android:layout_gravity="center"
         >
@@ -89,7 +91,7 @@
             android:layout_centerInParent="true"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
-            android:src="@drawable/gift_card_default"
+            android:src="@drawable/gift_card_placeholder"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="H,1:1.94"
             app:layout_constraintEnd_toEndOf="parent"
@@ -131,7 +133,7 @@
 
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
 
 

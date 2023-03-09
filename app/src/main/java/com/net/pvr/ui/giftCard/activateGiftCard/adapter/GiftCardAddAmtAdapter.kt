@@ -44,14 +44,14 @@ class GiftCardAddAmtAdapter(
         if (imageUri != null && imageUri.toString()!="") {
             Glide.with(context)
                 .load(imageUri)
-                .error(R.drawable.gift_card_default)
-                .placeholder(R.drawable.gift_card_default)
+                .error(R.drawable.gift_card_placeholder)
+                .placeholder(R.drawable.gift_card_placeholder)
                 .into(holder.iv_add_gift_image)
         } else {
             Glide.with(context)
                 .load(cinemaItem.newImageUrl)
-                .error(R.drawable.gift_card_default)
-                .placeholder(R.drawable.gift_card_default)
+                .error(R.drawable.gift_card_placeholder)
+                .placeholder(R.drawable.gift_card_placeholder)
                 .into(holder.iv_add_gift_image)
         }
         if (cinemaItem.count == 0) {

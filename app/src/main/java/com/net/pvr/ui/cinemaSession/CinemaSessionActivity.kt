@@ -182,6 +182,25 @@ class CinemaSessionActivity : AppCompatActivity(),
                             )
                         }
 
+                    }else{
+                        authViewModel.cinemaSession(
+                            preferences.getCityName(),
+                            cinemaId,
+                            lat,
+                            lng,
+                            preferences.getUserId(),
+                            sessionDate,
+                            lang,
+                            format,
+                            price1,
+                            price1,
+                            hc,
+                            cc,
+                            ad,
+                            "no",
+                            cinema_type,
+                            ""
+                        )
                     }
 
                 } catch (e: IOException) {
@@ -242,7 +261,6 @@ class CinemaSessionActivity : AppCompatActivity(),
     }
 
     private fun manageFunctions() {
-        getLocation()
 
         cinemaSessionDataLoad()
         cinemaNearTheaterLoad()
@@ -258,6 +276,8 @@ class CinemaSessionActivity : AppCompatActivity(),
         broadcastReceiver = NetworkReceiver()
         broadcastIntent()
         getShimmerData()
+        getLocation()
+
 
     }
 

@@ -2,6 +2,7 @@ package com.net.pvr.ui.giftCard.activateGiftCard
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
@@ -11,6 +12,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.SystemClock
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.view.View
@@ -34,6 +36,7 @@ import java.io.File
 import java.net.URISyntaxException
 import javax.inject.Inject
 
+
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
 class CreateGiftCardActivity : AppCompatActivity(), View.OnClickListener {
@@ -55,8 +58,10 @@ class CreateGiftCardActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityCreateGiftcardBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        binding?.tvTitle?.text = "Expired Gift Card"
-
+        binding?.llTop?.titleCommonToolbar?.text = "Create Gift Card"
+        binding?.llTop?.btnBack?.setOnClickListener {
+            onBackPressed()
+        }
         //Screen Width
 
         if (intent != null) {
@@ -126,8 +131,17 @@ class CreateGiftCardActivity : AppCompatActivity(), View.OnClickListener {
                     val body = MultipartBody.Part.createFormData("fileImage", file.name, requestFile)
 
                     val fullName: RequestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), preferences.getUserName().toString())
-                    authViewModel.uploadGiftCard(body,fullName)
-                    uploadGiftCard()
+                    val time = SystemClock.uptimeMillis()
+                    val userID: String = preferences.getUserId()
+                    val userNum: String = preferences.getString(Constant.SharedPreference.USER_TOKEN)
+                    try {
+                        val token = Constant.getHash("$userID|$userNum|$time")
+                        authViewModel.uploadGiftCard(body,fullName,RequestBody.create("multipart/form-data".toMediaTypeOrNull(), time.toString()),RequestBody.create("multipart/form-data".toMediaTypeOrNull(), userID),RequestBody.create("multipart/form-data".toMediaTypeOrNull(), userNum),token)
+                        uploadGiftCard()
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
+                    }
+
                 }
             }
             R.id.ll_cancel_gift -> onBackPressed()
@@ -254,6 +268,7 @@ class CreateGiftCardActivity : AppCompatActivity(), View.OnClickListener {
         if (data != null) {
             selectedImageUri = data.data
             binding?.ivUploadImage?.setImageURI(selectedImageUri)
+            CropImage()
             binding?.llRemoveImage?.show()
             binding?.llProceedGift?.show()
             binding?.llProceedGiftUnselect?.hide()
@@ -276,6 +291,22 @@ class CreateGiftCardActivity : AppCompatActivity(), View.OnClickListener {
                 } else {
                 }
             }
+        }
+    }
+
+    private fun CropImage() {
+        try {
+            val CropIntent = Intent("com.android.camera.action.CROP")
+            CropIntent.setDataAndType(selectedImageUri, "image/*")
+            CropIntent.putExtra("crop", "true")
+            CropIntent.putExtra("outputX", 920)
+            CropIntent.putExtra("outputY", 420)
+            CropIntent.putExtra("aspectX", 3)
+            CropIntent.putExtra("aspectY", 4)
+            CropIntent.putExtra("scaleUpIfNeeded", true)
+            CropIntent.putExtra("return-data", true)
+            startActivityForResult(CropIntent, 1)
+        } catch (ex: ActivityNotFoundException) {
         }
     }
 

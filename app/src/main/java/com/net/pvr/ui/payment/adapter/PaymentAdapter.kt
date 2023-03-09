@@ -89,7 +89,7 @@ class PaymentAdapter(
                     } else if (Constant.OXYGEN == this.id) {
                         binding.imageView81.setImageResource(R.drawable.oxigen)
                     } else if (Constant.GEIFT_CARD == this.id) {
-                        binding.imageView81.setImageResource(R.drawable.gift_card_default)
+                        binding.imageView81.setImageResource(R.drawable.gift_card_placeholder)
                     } else if (Constant.DC_CARD == this.id) {
                         binding.imageView81.setImageResource(R.drawable.payment_director)
                     } else if (Constant.DEBIT_CARD == this.id) {

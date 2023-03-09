@@ -48,9 +48,10 @@ class GiftCardSummaryActivity : AppCompatActivity() {
         binding = ActivityGiftcardSummaryBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        binding?.ivBack?.setOnClickListener {
+        binding?.llTop?.btnBack?.setOnClickListener {
             onBackPressed()
         }
+        binding?.llTop?.titleCommonToolbar?.text = "Your Order"
         //Screen Width
 
         initData()
@@ -332,8 +333,8 @@ class GiftCardSummaryActivity : AppCompatActivity() {
 
             Glide.with(this)
                 .load(output.img)
-                .error(R.drawable.gift_card_default)
-                .placeholder(R.drawable.gift_card_default)
+                .error(R.drawable.gift_card_placeholder)
+                .placeholder(R.drawable.gift_card_placeholder)
                 .into(binding?.imageLandingScreen!!)
         }
 
@@ -347,8 +348,8 @@ class GiftCardSummaryActivity : AppCompatActivity() {
             R.mipmap.ic_launcher,
             R.string.app_name,
             getString(R.string.confirm_msz),
-            positiveBtnText = R.string.ok,
-            negativeBtnText = R.string.no,
+            positiveBtnText = R.string.yes,
+            negativeBtnText = R.string.cancel,
             positiveClick = {
                 launchActivity(
                     GiftCardActivity::class.java,

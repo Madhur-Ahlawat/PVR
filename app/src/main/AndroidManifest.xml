@@ -265,6 +265,16 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <activity
+            android:name="com.net.pvr.ui.giftCard.activateGiftCard.GiftCardDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
         <activity
             android:name="com.net.pvr.ui.giftCard.activateGiftCard.RejectedGiftCardActivity"
             android:exported="false"

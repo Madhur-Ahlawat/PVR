@@ -233,6 +233,9 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
                             preferences.saveLatitudeData(lat.toString())
                             preferences.saveLongitudeData(lng.toString())
                             authViewModel.cinema(preferences.getCityName(), lat, lng, preferences.getUserId(), "")
+                        }else{
+                            authViewModel.cinema(preferences.getCityName(), lat, lng, preferences.getUserId(), "")
+
                         }
 
                     } catch (e: IOException) {

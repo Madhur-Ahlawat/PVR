@@ -18,53 +18,18 @@
         android:background="@color/gray" />
 
     <!--//top view-->
-    <LinearLayout
-        android:id="@+id/ll_top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/view_top"
-        android:layout_marginTop="@dimen/padding_10"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="@dimen/padding_10">
 
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="@dimen/dimen_30dp"
-            android:layout_height="@dimen/dimen_15dp"
-            android:layout_gravity="center"
-            android:src="@drawable/back_new"
-            android:visibility="gone" />
+    <include layout="@layout/common_toolbar"
+        android:id="@+id/ll_top"/>
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/padding_10"
-            android:gravity="center"
-            android:text="Create Gift card"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="@dimen/dimen_16sp"
-            android:textStyle="bold" />
 
-    </LinearLayout>
-
-    <View
-        android:id="@+id/view_top_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/ll_top"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/padding_10"
         android:background="@color/gray" />
 
     <RelativeLayout
         android:id="@+id/networkError"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/view_top_bottom"
+        android:layout_below="@+id/ll_top"
         android:visibility="gone" />
 
     <ScrollView
@@ -90,16 +55,30 @@
                 android:background="@drawable/bg_grey_booking"
                 android:backgroundTint="#66000000">
 
-                <com.joooonho.SelectableRoundedImageView
-                    android:id="@+id/iv_upload_image"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_centerInParent="true"
-                    android:scaleType="centerCrop"
-                    app:sriv_left_bottom_corner_radius="@dimen/padding_10"
-                    app:sriv_left_top_corner_radius="@dimen/padding_10"
-                    app:sriv_right_bottom_corner_radius="@dimen/padding_10"
-                    app:sriv_right_top_corner_radius="@dimen/padding_10" />
+                    android:layout_height="wrap_content"
+                    android:id="@+id/uploadView">
+
+
+                    <com.joooonho.SelectableRoundedImageView
+                        android:id="@+id/iv_upload_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="165dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:adjustViewBounds="true"
+                        app:layout_constraintDimensionRatio="H,1:1.94"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:sriv_left_bottom_corner_radius="@dimen/padding_10"
+                        app:sriv_left_top_corner_radius="@dimen/padding_10"
+                        app:sriv_right_bottom_corner_radius="@dimen/padding_10"
+                        app:sriv_right_top_corner_radius="@dimen/padding_10" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -194,7 +173,7 @@
                         android:layout_width="@dimen/dimen_15dp"
                         android:layout_height="@dimen/dimen_15dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/gift_card_default"
+                        android:src="@drawable/gift_card_placeholder"
                         android:visibility="gone" />
 
                     <TextView
@@ -221,6 +200,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginBottom="@dimen/dimen_20dp"
         android:layout_alignParentBottom="true">
 
         <TextView
@@ -262,7 +242,7 @@
                     android:layout_height="@dimen/dimen_15dp"
                     android:layout_gravity="center"
                     android:visibility="gone"
-                    android:src="@drawable/gift_card_default" />
+                    android:src="@drawable/gift_card_placeholder" />
 
                 <TextView
                     style="@style/text_black_bold"
@@ -339,6 +319,7 @@
         <View
             android:layout_width="200dp"
             android:layout_height="5dp"
+            android:visibility="gone"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/padding_10"
             android:layout_marginBottom="@dimen/dimen_5dp"

@@ -19,55 +19,16 @@
         android:background="@color/gray" />
 
     <!--//top view-->
-    <LinearLayout
-        android:id="@+id/ll_top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/view_top"
-        android:layout_marginTop="@dimen/padding_10"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="@dimen/padding_10">
+    <include layout="@layout/common_toolbar"
+        android:id="@+id/ll_top"/>
 
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="@dimen/dimen_30dp"
-            android:layout_height="@dimen/dimen_15dp"
-            android:layout_gravity="center"
-            android:src="@drawable/back_new"
-            android:visibility="visible" />
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/padding_10"
-            android:layout_marginEnd="@dimen/dimen_40dp"
-            android:gravity="start"
-            android:text="Add Amount"
-            android:fontFamily="@font/montserrat_bold"
-            android:textAlignment="textStart"
-            android:textColor="@color/black"
-            android:textSize="@dimen/dimen_16sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <View
-        android:id="@+id/view_top_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/ll_top"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/padding_10"
-        android:background="@color/gray" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/ll_bottom"
-        android:layout_below="@+id/view_top_bottom"
+        android:layout_below="@+id/ll_top"
         android:scrollIndicators="none">
 
         <LinearLayout
@@ -95,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/gift_card_default"
+                    android:src="@drawable/gift_card_placeholder"
                     android:scaleType="fitXY"
                     app:layout_constraintDimensionRatio="H,1:1.94"
                     app:layout_constraintTop_toTopOf="parent"
@@ -163,7 +124,7 @@
                 android:layout_marginStart="@dimen/dimen_20dp"
                 android:layout_marginTop="@dimen/dimen_15dp"
                 android:layout_marginEnd="@dimen/dimen_20dp"
-                android:background="@color/gray" />
+                android:background="@color/grayEd" />
 
             <LinearLayout
                 android:id="@+id/ll_custom"
@@ -294,7 +255,7 @@
                     android:layout_marginStart="@dimen/dimen_20dp"
                     android:layout_marginTop="@dimen/dimen_15dp"
                     android:layout_marginEnd="@dimen/dimen_20dp"
-                    android:background="@color/gray" />
+                    android:background="@color/grayEd" />
 
             </LinearLayout>
 
@@ -387,7 +348,7 @@
                     android:layout_width="@dimen/dimen_15dp"
                     android:layout_height="@dimen/dimen_15dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/gift_card_default"
+                    android:src="@drawable/gift_card_placeholder"
                     android:visibility="gone" />
 
                 <TextView

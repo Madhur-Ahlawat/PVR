@@ -10,8 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dimen_15dp"
-        android:layout_marginStart="@dimen/padding_10"
-        android:layout_marginEnd="@dimen/padding_10"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,10 +33,10 @@
 
             <ImageView
                 android:id="@+id/iv_image_generic"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/gift_card_default"
+                android:src="@drawable/gift_card_placeholder"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="H,1:1.94"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -37,7 +37,7 @@ class GiftFilterAdapter(
                 }else {
                     Glide.with(context)
                         .load(this.imageValue)
-                        .error(R.drawable.gift_card_default)
+                        .error(R.drawable.gift_card_placeholder)
                         .into(binding.imageView8)
                 }
 

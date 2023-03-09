@@ -56,7 +56,7 @@ class RejectedGiftCardActivity : AppCompatActivity(){
             binding?.llGiftMsg?.hide()
         }
         Glide.with(this)
-            .load(R.drawable.gift_card_default)
+            .load(R.drawable.gift_card_placeholder)
             .into(binding?.imageLandingScreen!!)
         binding?.tvProceedDetail?.setOnClickListener(View.OnClickListener {
             showDialogLoyalty(

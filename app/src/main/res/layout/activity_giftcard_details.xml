@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.giftCard.activateGiftCard.GiftCardDetailsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll_bottom"
+        android:orientation="vertical">
+
+        <!--//top view-->
+
+        <include layout="@layout/common_toolbar"
+            android:id="@+id/include12"/>
+
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollIndicators="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/view_top_bottom"
+                        android:layout_marginStart="@dimen/dimen_25dp"
+                        android:layout_marginTop="@dimen/dimen_20dp"
+                        android:layout_marginEnd="@dimen/dimen_25dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_grey_booking"
+                        android:backgroundTint="@color/grayEd">
+
+                        <ImageView
+                            android:id="@+id/iv_image_generic"
+                            android:layout_width="match_parent"
+                            android:layout_height="160dp"
+                            android:layout_centerHorizontal="true"
+                            android:adjustViewBounds="true"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/gift_card_placeholder"
+                            />
+
+                        <LinearLayout
+                            android:id="@+id/ll_pvr_logo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:visibility="gone"
+                            android:layout_marginStart="@dimen/padding_10"
+                            android:layout_marginTop="@dimen/padding_10"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="@dimen/dimen_50dp"
+                                android:layout_height="@dimen/dimen_20dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/pvr_logo" />
+
+                            <View
+                                android:layout_width="@dimen/dimen_2dp"
+                                android:layout_height="@dimen/dimen_15dp"
+                                android:layout_gravity="center"
+                                android:background="@color/grayEd" />
+
+                            <TextView
+                                android:id="@+id/tv_gift_card_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="@dimen/padding_10"
+                                android:text="Gift Card"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/dimen_14sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dimen_50dp"
+                            android:layout_below="@+id/iv_image_generic"
+                            android:backgroundTint="#D9ECDE"
+                            android:background="@drawable/bottom_loyalty_corner_8">
+                            <TextView
+                                android:fontFamily="@font/sf_pro_text_regular"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="start"
+                                android:layout_marginStart="@dimen/dimen_15dp"
+                                android:layout_centerVertical="true"
+                                android:layout_weight="1"
+                                android:text="Available Balance"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:fontFamily="@font/sf_pro_text_regular"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="start"
+                                android:id="@+id/availBal"
+                                android:layout_marginEnd="@dimen/dimen_15dp"
+                                android:layout_centerVertical="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_weight="1"
+                                tools:text="₹4250.00"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/dimen_25dp"
+                        android:layout_marginEnd="@dimen/dimen_25dp"
+                        android:layout_marginTop="@dimen/dimen_15dp"
+                        android:background="@drawable/round_corner_8"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dimen_15dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:fontFamily="@font/sf_pro_text_regular"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="start"
+                                android:layout_weight="1"
+                                android:text="Card No."
+                                android:textColor="#908E8E"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:id="@+id/cardNo"
+                                android:fontFamily="@font/sf_pro_text_regular"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:layout_weight="1"
+                                tools:text="25 Oct, 2022"
+                                android:textAllCaps="true"
+                                android:textColor="@color/black"
+                                android:textSize="13sp" />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/padding_10"
+                            android:layout_gravity="center_horizontal"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:fontFamily="@font/sf_pro_text_regular"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="start"
+                                android:layout_weight="1"
+                                android:text="Card ID"
+                                android:textColor="#908E8E"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:id="@+id/cardId"
+                                android:fontFamily="@font/sf_pro_text_regular"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:layout_weight="1"
+                                tools:text="25 Oct, 2022"
+                                android:textAllCaps="true"
+                                android:textColor="@color/black"
+                                android:textSize="13sp" />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/padding_10"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:fontFamily="@font/sf_pro_text_regular"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="start"
+                                android:layout_weight="1"
+                                android:text="Gifted to"
+                                android:textColor="#908E8E"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:id="@+id/giftedTo"
+                                android:fontFamily="@font/sf_pro_text_regular"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:layout_weight="1"
+                                tools:text="Anoop Singh"
+                                android:textAllCaps="true"
+                                android:textColor="@color/black"
+                                android:textSize="13sp" />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/padding_10"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:fontFamily="@font/sf_pro_text_regular"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="start"
+                                android:layout_weight="1"
+                                android:text="Gifted on"
+                                android:textColor="#908E8E"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:id="@+id/giftedOn"
+                                android:fontFamily="@font/sf_pro_text_regular"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:layout_weight="1"
+                                tools:text="25 Oct, 2022"
+                                android:textAllCaps="true"
+                                android:textColor="@color/black"
+                                android:textSize="13sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="@dimen/dimen_20dp"
+                    android:background="@color/background_color"/>
+
+                <TextView
+                    android:fontFamily="@font/sf_pro_text_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:layout_marginTop="@dimen/dimen_15dp"
+                    android:layout_marginStart="@dimen/dimen_25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_weight="1"
+                    android:text="Transaction History"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:fontFamily="@font/sf_pro_text_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:layout_marginStart="@dimen/dimen_25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_weight="1"
+                    android:text="Showing only online redemption history"
+                    android:textColor="@color/grayEd"
+                    android:textSize="12sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_gift_history"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_25dp"
+                    android:layout_marginStart="@dimen/dimen_25dp"
+                    android:layout_marginTop="@dimen/padding_10"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_expired_gift"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Show all"
+                    android:paddingTop="@dimen/padding_10"
+                    android:paddingBottom="@dimen/padding_10"
+                    android:paddingStart="@dimen/dimen_20dp"
+                    android:paddingEnd="@dimen/dimen_20dp"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_above="@+id/view_bottom"
+                    android:layout_margin="@dimen/dimen_20dp"
+                    android:background="@drawable/bg_circle_see_all"/>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/dimen_5dp"
+        android:layout_marginBottom="@dimen/dimen_5dp"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/view_bottom"
+            android:layout_width="200dp"
+            android:layout_height="5dp"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:background="@color/black"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

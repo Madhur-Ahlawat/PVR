@@ -132,7 +132,6 @@ class MovieSessionActivity : AppCompatActivity(),
     private fun manageFunctions() {
         //Poster
         binding?.include43?.editTextTextPersonName?.hint = "Search cinema"
-        getLocation()
 
 
         binding?.textView103?.isSelected = true
@@ -144,7 +143,7 @@ class MovieSessionActivity : AppCompatActivity(),
             Constant.onShareClick(this, su, sm)
         }
 
-        if (intent.hasExtra("mid")) movieId = intent.getStringExtra("mid").toString()
+
         val intent = intent
         val action = intent.action
         val data = intent.data
@@ -161,6 +160,10 @@ class MovieSessionActivity : AppCompatActivity(),
                 movieId = parts[3]
             }
         }
+
+        if (intent.hasExtra("mid"))
+            movieId = intent.getStringExtra("mid").toString()
+        getLocation()
 
         movedNext()
         broadcastIntent()
@@ -227,6 +230,24 @@ class MovieSessionActivity : AppCompatActivity(),
                             special
                         )
 
+                    }else{
+                        authViewModel.bookingTicket(
+                            preferences.getCityName(),
+                            movieId,
+                            lat,
+                            lng,
+                            "NA",
+                            "no",
+                            "no",
+                            preferences.getUserId(),
+                            lang,
+                            format,
+                            price1,
+                            hc,
+                            show1,
+                            cinemaType,
+                            special
+                        )
                     }
 
                 } catch (e: IOException) {

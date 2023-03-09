@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr.repository.UserRepository
-import com.net.pvr.ui.giftCard.response.ActiveGCResponse
-import com.net.pvr.ui.giftCard.response.GiftCardDetailResponse
-import com.net.pvr.ui.giftCard.response.GiftCardListResponse
-import com.net.pvr.ui.giftCard.response.UploadImageGC
+import com.net.pvr.ui.giftCard.response.*
 import com.net.pvr.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -39,7 +36,7 @@ class ActivateGiftCardViewModel @Inject constructor(private val userRepository: 
     }
 
     //Redeem GiftCard
-    val redeemGCResponseLiveData: LiveData<NetworkResult<ActiveGCResponse>>
+    val redeemGCResponseLiveData: LiveData<NetworkResult<GiftcardDetailsResponse>>
         get() = userRepository.redeemGiftCardResponseLiveData
 
     fun redeemGC(userId: String,giftcardid:String,pin:String) {
@@ -62,9 +59,9 @@ class ActivateGiftCardViewModel @Inject constructor(private val userRepository: 
     val uploadGCResponseLiveData: LiveData<NetworkResult<UploadImageGC>>
         get() = userRepository.uploadGiftCardResponseLiveData
 
-    fun uploadGiftCard(image: MultipartBody.Part, name: RequestBody) {
+    fun uploadGiftCard(image: MultipartBody.Part, name: RequestBody, time: RequestBody, userId: RequestBody, userNo: RequestBody,token:String) {
         viewModelScope.launch {
-            userRepository.uploadGiftCard(image, name)
+            userRepository.uploadGiftCard(image, name,time,userId,userNo,token)
         }
     }
 

@@ -7,6 +7,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.CertificatePinner
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -38,6 +39,11 @@ class NetworkModule {
     @Provides
     fun providesUserAPI(retrofitBuilder: Retrofit.Builder): UserAPI {
         val client = OkHttpClient.Builder()
+//            client.certificatePinner(
+//                CertificatePinner.Builder()
+//                    .add("publicobject.com", "sha256/afwiKY3RxoMmLkuRW1l7QsPZTJPwDS2pdDROQjXw8ig=")
+//                    .build())
+//            .build()
         client.readTimeout(600, TimeUnit.SECONDS)
         client.connectTimeout(600, TimeUnit.SECONDS)
         client.addInterceptor(Interceptor { chain ->

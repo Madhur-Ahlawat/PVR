@@ -35,6 +35,7 @@ import com.net.pvr.ui.giftCard.response.GiftCardsFilter
 import com.net.pvr.ui.giftCard.viewModel.GiftCardViewModel
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.NetworkResult
+import com.net.pvr.utils.hide
 import com.net.pvr.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -52,6 +53,7 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
     private var giftCardListFilter = ArrayList<GiftCardListResponse.Output.GiftCard>()
     private var genricFound = false
     private var limit = 0
+    private var customImage = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,6 +92,8 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
         }
         binding?.include37?.textView5?.setOnClickListener {
             val createIntent = Intent(this@GiftCardActivity, CreateGiftCardActivity::class.java)
+            createIntent.putExtra("custom", customImage)
+            createIntent.putExtra("from", "upload")
             giftCardListFilter = ArrayList<GiftCardListResponse.Output.GiftCard>()
             for (i in giftCartList.indices) {
                 println("amtval....>"+(giftCartList[i].giftValue/100).toString())
@@ -154,16 +158,22 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
     private fun retrieveData(output: GiftCardListResponse.Output) {
         if (output.limit!=null && output.limit!="")
         limit = output.limit.toInt()
+        customImage = output.customCardFlag
+        if (output.imageUpload) {
+            binding?.include37?.constraintLayout10?.show()
+        } else {
+            binding?.include37?.constraintLayout10?.hide()
+        }
         giftCartList = output.giftCards
         gcFilterList = ArrayList<GiftCardsFilter>()
         gcFilterList.add(GiftCardsFilter("ALL OCCASIONS","",true))
         for (data in output.giftCards){
             if (!checkExist(gcFilterList,data.type) && data.type != "GENERIC")
             gcFilterList.add(GiftCardsFilter(data.type,data.newImageUrl?:"",false))
-            if (data.type == "GENERIC" && !genricFound){
+            if (data.type == "GENERIC"){
                 Glide.with(this)
                     .load(data.newImageUrl)
-                    .error(R.drawable.gift_card_default)
+                    .error(R.drawable.gift_card_placeholder)
                     .into(binding?.ivImageGeneric!!)
                 genricFound = true
                // break
@@ -198,6 +208,7 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
             if (giftCardListFilter.size > 0) {
                 val intent = Intent(this, AddGiftCardActivity::class.java)
                 intent.putExtra("genericList", giftCardListFilter)
+                intent.putExtra("custom", customImage)
                 intent.putExtra("imageValue", giftCardListFilter[0].newImageUrl)
                 intent.putExtra("key", giftCardListFilter[0].channel)
                 intent.putExtra("limit", limit)
@@ -256,6 +267,7 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
         if (giftCardListFilter.size > 0) {
             val intent = Intent(this, AddGiftCardActivity::class.java)
             intent.putExtra("genericList", giftCardListFilter)
+            intent.putExtra("custom", customImage)
             intent.putExtra("imageValue", giftCardListFilter[0].newImageUrl)
             intent.putExtra("key", giftCardListFilter[0].channel)
             intent.putExtra("limit", limit)

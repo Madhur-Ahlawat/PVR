@@ -1,4 +1,4 @@
-package com.net.pvr.ui.myBookings.adapter
+package com.net.pvr.ui.giftCard.activateGiftCard.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr.R
+import com.net.pvr.ui.giftCard.response.GiftcardDetailsResponse
+import com.net.pvr.ui.myBookings.adapter.FoodTicketFoodAdapter
 import com.net.pvr.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr.ui.ticketConfirmation.TicketConfirmationActivity
 import com.net.pvr.utils.Constant
@@ -21,11 +23,10 @@ import com.net.pvr.utils.hide
 import com.net.pvr.utils.show
 
 
-class FoodTicketChildAdapter(
-    private var nowShowingList: ArrayList<FoodTicketResponse.Output.C>,
-    private var context: Context,private var past:Boolean,private var listener: RecycleViewItemClickListener
-) :
-    RecyclerView.Adapter<FoodTicketChildAdapter.MyViewHolderNowShowing>() {
+class GCTicketAdapter(
+    private var nowShowingList: List<GiftcardDetailsResponse.Tcklist>,
+    private var context: Context) :
+    RecyclerView.Adapter<GCTicketAdapter.MyViewHolderNowShowing>() {
 
     private var type=""
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderNowShowing {
@@ -43,12 +44,6 @@ class FoodTicketChildAdapter(
             .error(R.drawable.placeholder_vertical)
             .into(holder.image)
 
-        if(past){
-            holder.linearLayout2.hide()
-        }else{
-            holder.linearLayout2.show()
-        }
-
         if (cinemaItem.fa){
             holder.addFood.show()
         }else{
@@ -60,18 +55,11 @@ class FoodTicketChildAdapter(
         }else{
             holder.parking.hide()
         }
+        holder.direction.hide()
+        holder.linearLayout2.hide()
+        holder.giftCardViewFood.show()
+        holder.orderId.hide()
 
-        holder.parking.setOnClickListener {
-            listener.onParkingClick(cinemaItem)
-        }
-
-        holder.addFood.setOnClickListener {
-            listener.addFood(cinemaItem)
-        }
-
-        holder.direction.setOnClickListener {
-            listener.onDirectionClick(cinemaItem)
-        }
 
         //title
         holder.title.text = cinemaItem.m
@@ -83,10 +71,14 @@ class FoodTicketChildAdapter(
         holder.location.text = cinemaItem.c
         //OrderId
         holder.orderId.text = context.getString(R.string.orderId) + cinemaItem.bi
+        holder.orderId.text = context.getString(R.string.orderId) + cinemaItem.bi
+        holder.orderId.text = context.getString(R.string.orderId) + cinemaItem.bi
+        holder.gc_order_idFood.text = context.getString(R.string.orderId) + cinemaItem.bi
+        holder.gc_billFood.text = context.getString(R.string.currency) + cinemaItem.amount
 
         if (cinemaItem.ca_d == "true")
-            holder.ivCancelimage.setVisibility(View.VISIBLE)
-        else holder.ivCancelimage.setVisibility(View.GONE)
+            holder.ivCancelimage.show()
+        else holder.ivCancelimage.hide()
 
         //OnlyFood
         //Time
@@ -98,10 +90,25 @@ class FoodTicketChildAdapter(
             holder.cinemaWithFood.hide()
             holder.onlyFood.show()
 //Food Item
-            val gridLayout2 = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
-            val foodTicketFoodAdapter = FoodTicketFoodAdapter(cinemaItem.f,"food",cinemaItem.f.size)
-            holder.recyclerView.layoutManager = gridLayout2
-            holder.recyclerView.adapter = foodTicketFoodAdapter
+            if (cinemaItem.f.size>2){
+                holder.moreItemFood.show()
+                val gridLayout2 = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
+                val foodTicketFoodAdapter = FoodTicketFoodAdapter(cinemaItem.f,"food",2)
+                holder.recyclerView.layoutManager = gridLayout2
+                holder.recyclerView.adapter = foodTicketFoodAdapter
+            }else{
+                holder.moreItemFood.hide()
+                val gridLayout2 = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
+                val foodTicketFoodAdapter = FoodTicketFoodAdapter(cinemaItem.f,"food",cinemaItem.f.size)
+                holder.recyclerView.layoutManager = gridLayout2
+                holder.recyclerView.adapter = foodTicketFoodAdapter
+            }
+            holder.moreItemFood.setOnClickListener {
+                val gridLayout2 = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
+                val foodTicketFoodAdapter = FoodTicketFoodAdapter(cinemaItem.f,"food",cinemaItem.f.size)
+                holder.recyclerView.layoutManager = gridLayout2
+                holder.recyclerView.adapter = foodTicketFoodAdapter
+            }
         } else {
             holder.onlyFood.hide()
             holder.cinemaWithFood.show()
@@ -137,12 +144,16 @@ class FoodTicketChildAdapter(
         var parking: TextView = view.findViewById(R.id.textView20)
         var addFood: TextView = view.findViewById(R.id.textView21)
         var linearLayout2: LinearLayout = view.findViewById(R.id.linearLayout2)
+        var giftCardViewFood: LinearLayout = view.findViewById(R.id.giftCardViewFood)
         var title: TextView = view.findViewById(R.id.textView16)
         var language: TextView = view.findViewById(R.id.textView17)
         var timeDate: TextView = view.findViewById(R.id.textView18)
         var location: TextView = view.findViewById(R.id.textView19)
         var orderId: TextView = view.findViewById(R.id.orderId)
+        var gc_order_idFood: TextView = view.findViewById(R.id.gc_order_idFood)
+        var gc_billFood: TextView = view.findViewById(R.id.gc_billFood)
         var time: TextView = view.findViewById(R.id.time)
+        var moreItemFood: TextView = view.findViewById(R.id.moreItemFood)
         var locationFood: TextView = view.findViewById(R.id.textView23)
         var cinemaWithFood: ConstraintLayout = view.findViewById(R.id.movieWithFood)
         var onlyFood: ConstraintLayout = view.findViewById(R.id.onlyFood)

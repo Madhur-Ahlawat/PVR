@@ -13,7 +13,7 @@ import com.net.pvr.utils.show
 
 class FoodTicketFoodAdapter(
     private var nowShowingList: List<FoodTicketResponse.Output.P.F>,
-    private val type: String
+    private val type: String,private val count:Int
 ) :
     RecyclerView.Adapter<FoodTicketFoodAdapter.MyViewHolderNowShowing>() {
 
@@ -34,7 +34,7 @@ class FoodTicketFoodAdapter(
     }
 
     override fun getItemCount(): Int {
-        return if (nowShowingList.isNotEmpty()) nowShowingList.size else 0
+        return if (nowShowingList.isNotEmpty()) count else 0
     }
 
     class MyViewHolderNowShowing(view: View) : RecyclerView.ViewHolder(view) {

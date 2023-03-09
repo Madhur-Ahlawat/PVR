@@ -18,7 +18,7 @@
             android:layout_width="@dimen/dimen_100dp"
             android:layout_height="@dimen/dimen_50dp"
             android:scaleType="fitXY"
-            android:src="@drawable/gift_card_default" />
+            android:src="@drawable/gift_card_placeholder" />
 
         <ImageView
             android:layout_width="@dimen/dimen_100dp"

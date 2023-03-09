@@ -33,7 +33,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include12"
         tools:itemCount="5"
-        android:layout_marginBottom="@dimen/dimen_15dp"
         tools:listitem="@layout/gift_card_item" />
 
     <LinearLayout
@@ -57,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/view_bottom"
             android:layout_margin="@dimen/dimen_20dp"
-            android:background="@drawable/gray_border"
+            android:background="@drawable/bg_grey_booking"
             android:drawableRight="@drawable/ic_arrow_right_white"
             android:drawableTint="@color/black"
             android:paddingStart="@dimen/dimen_20dp"

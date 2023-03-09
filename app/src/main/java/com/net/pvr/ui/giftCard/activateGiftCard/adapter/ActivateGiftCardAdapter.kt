@@ -37,14 +37,14 @@ class ActivateGiftCardAdapter(
         if (cinemaItem.ci != null && cinemaItem.ci != ""){
             Glide.with(context)
                 .load(cinemaItem.ci)
-                .error(R.drawable.gift_card_default)
-                .placeholder(R.drawable.gift_card_default)
+                .error(R.drawable.gift_card_placeholder)
+                .placeholder(R.drawable.gift_card_placeholder)
                 .into(holder.image)
         }else {
             Glide.with(context)
                 .load(cinemaItem.gi)
-                .error(R.drawable.gift_card_default)
-                .placeholder(R.drawable.gift_card_default)
+                .error(R.drawable.gift_card_placeholder)
+                .placeholder(R.drawable.gift_card_placeholder)
                 .into(holder.image)
         }
 

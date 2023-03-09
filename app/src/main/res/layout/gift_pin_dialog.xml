@@ -36,13 +36,16 @@
         android:layout_marginTop="@dimen/padding_10"
         android:background="@color/gray"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/view_top_bottom"
-        android:layout_marginStart="@dimen/dimen_20dp"
+        android:layout_marginStart="@dimen/dimen_15dp"
         android:layout_marginTop="@dimen/dimen_20dp"
-        android:layout_marginEnd="@dimen/dimen_20dp"
+        android:layout_marginEnd="@dimen/dimen_15dp"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="@dimen/dimen_5dp"
+        app:cardCornerRadius="@dimen/dimen_8dp"
         android:layout_gravity="center"
         android:background="@drawable/bg_grey_booking"
         android:backgroundTint="@color/gray">
@@ -54,48 +57,14 @@
             android:layout_centerInParent="true"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
-            android:src="@drawable/gift_card_default"
+            android:src="@drawable/gift_card_placeholder"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/ll_pvr_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="@dimen/padding_10"
-            android:layout_marginTop="@dimen/padding_10"
-            android:visibility="gone"
-            android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="@dimen/dimen_50dp"
-                android:layout_height="@dimen/dimen_20dp"
-                android:layout_gravity="center"
-                android:src="@drawable/pvr_logo" />
-
-            <View
-                android:layout_width="@dimen/dimen_2dp"
-                android:layout_height="@dimen/dimen_15dp"
-                android:layout_gravity="center"
-                android:background="@color/gray" />
-
-            <TextView
-                android:id="@+id/tv_gift_card_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/padding_10"
-                android:text="Gift Card"
-                android:textColor="@color/white"
-                android:textSize="@dimen/dimen_14sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:layout_width="match_parent"

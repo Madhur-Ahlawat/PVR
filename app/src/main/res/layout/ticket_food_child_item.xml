@@ -198,12 +198,26 @@
                     android:id="@+id/recyclerFoodChild"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/moreItemFood"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:itemCount="2"
                     tools:listitem="@layout/ticket_food_food_item" />
+
+                <TextView
+                    android:id="@+id/moreItemFood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_16dp"
+                    android:layout_marginBottom="@dimen/dimen_20dp"
+                    android:fontFamily="@font/helvetica_neu"
+                    android:text="+2 more"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14sp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -244,6 +258,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/textView23"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/time"
@@ -279,6 +294,69 @@
                 android:textColor="#7D7D7D"
                 tools:ignore="TextContrastCheck"
                 tools:text="Order ID: BAT446883XV" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/giftCardViewFood">
+                <include layout="@layout/horizontal_line"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/background_color">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/padding_10"
+                        android:paddingStart="15dp"
+                        android:text="Order ID : "
+                        android:textSize="@dimen/dimen_12sp"
+                        android:textColor="#7D7D7D" />
+                    <TextView
+                        android:id="@+id/gc_order_idFood"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/padding_10"
+                        android:layout_alignParentEnd="true"
+                        android:paddingStart="15dp"
+                        android:text="Order ID : "
+                        android:textSize="@dimen/dimen_12sp"
+                        android:textColor="#7D7D7D" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#EDE8E9">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/padding_10"
+                        android:paddingStart="15dp"
+                        android:text="Total Bill : "
+                        android:fontFamily="@font/helvetica_neu_bold"
+                        android:textSize="@dimen/dimen_12sp"
+                        android:textColor="@color/black" />
+                    <TextView
+                        android:id="@+id/gc_billFood"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/padding_10"
+                        android:layout_alignParentEnd="true"
+                        android:paddingStart="15dp"
+                        android:fontFamily="@font/helvetica_neu_bold"
+                        android:text="820.00"
+                        android:textSize="@dimen/dimen_12sp"
+                        android:textColor="@color/black" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

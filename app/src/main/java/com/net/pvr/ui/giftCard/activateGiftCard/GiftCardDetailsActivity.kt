@@ -1,33 +1,37 @@
 package com.net.pvr.ui.giftCard.activateGiftCard
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.net.pvr.R
-import com.net.pvr.databinding.ActivityActivateGiftCardBinding
+import com.net.pvr.databinding.ActivityGiftcardDetailsBinding
 import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.dailogs.LoaderDialog
-import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.giftCard.activateGiftCard.adapter.ActivateGiftCardAdapter
+import com.net.pvr.ui.giftCard.activateGiftCard.adapter.GCTicketAdapter
 import com.net.pvr.ui.giftCard.activateGiftCard.viewModel.ActivateGiftCardViewModel
-import com.net.pvr.ui.giftCard.response.ActiveGCResponse
+import com.net.pvr.ui.giftCard.response.GiftCardDetailResponse
+import com.net.pvr.ui.giftCard.response.GiftcardDetailsResponse
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
-class GiftCardDetailsActivity : AppCompatActivity(),
-    ActivateGiftCardAdapter.RecycleViewItemClickListener {
-    private var binding: ActivityActivateGiftCardBinding? = null
+class GiftCardDetailsActivity : AppCompatActivity(){
+    private var binding: ActivityGiftcardDetailsBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: ActivateGiftCardViewModel by viewModels()
 
     @Inject
     lateinit var preferences: PreferenceManager
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityActivateGiftCardBinding.inflate(layoutInflater, null, false)
+        binding = ActivityGiftcardDetailsBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
         binding?.include12?.titleCommonToolbar?.text = "Expired Gift Card"
@@ -36,56 +40,27 @@ class GiftCardDetailsActivity : AppCompatActivity(),
         }
         //Screen Width
 
-        var inActiveGiftList = ArrayList<ActiveGCResponse.Gca>()
+        Glide.with(this)
+            .load(intent.getStringExtra("image"))
+            .error(R.drawable.gift_card_placeholder)
+            .placeholder(R.drawable.gift_card_placeholder)
+            .into(binding?.ivImageGeneric!!)
 
-        if (intent != null) {
-            if (intent.getSerializableExtra("expiredList") != null) {
-                inActiveGiftList =
-                    intent.getSerializableExtra("expiredList") as ArrayList<ActiveGCResponse.Gca>
-                if (inActiveGiftList.size > 0) {
-                    retrieveData(inActiveGiftList)
-                }
-            } else {
-                val dialog = OptionDialog(this,
-                    R.mipmap.ic_launcher,
-                    R.string.app_name,
-                    "No Data Found",
-                    positiveBtnText = R.string.ok,
-                    negativeBtnText = R.string.no,
-                    positiveClick = {
-                        onBackPressed()
-                    },
-                    negativeClick = {
-                    })
-                dialog.show()
+        if (intent.getSerializableExtra("cardDetails") != null) {
+            val giftCardDetailResponse = intent.getSerializableExtra("cardDetails") as GiftcardDetailsResponse.Output
+            binding?.availBal?.text = getString(R.string.currency) + giftCardDetailResponse.b
+            if (giftCardDetailResponse.tcklist.isNotEmpty()) {
+                val tcklist = giftCardDetailResponse.tcklist
+                val ticketAdapter = GCTicketAdapter(tcklist, this@GiftCardDetailsActivity)
+                binding?.rvGiftHistory?.layoutManager = LinearLayoutManager(this)
+                binding?.rvGiftHistory?.adapter = ticketAdapter
             }
-        } else {
-
-            val dialog = OptionDialog(this,
-                R.mipmap.ic_launcher,
-                R.string.app_name,
-                "No Data Found",
-                positiveBtnText = R.string.ok,
-                negativeBtnText = R.string.no,
-                positiveClick = {
-                    onBackPressed()
-                },
-                negativeClick = {
-                })
-            dialog.show()
         }
 
-    }
-
-    private fun retrieveData(output: ArrayList<ActiveGCResponse.Gca>) {
-        val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        val giftCardMainAdapter2 = ActivateGiftCardAdapter(output, this, this)
-        binding?.recyclerView30?.layoutManager = gridLayout2
-        binding?.recyclerView30?.adapter = giftCardMainAdapter2
-
-    }
-
-    override fun activateGiftCard(comingSoonItem: ActiveGCResponse.Gca) {
+        binding?.cardId?.text = intent.getStringExtra("cardId")!!.replace("ID:".toRegex(), "")
+        binding?.cardNo?.text = intent.getStringExtra("cardNo")
+        binding?.giftedTo?.text = intent.getStringExtra("giftedTo")
+        binding?.giftedOn?.text = intent.getStringExtra("giftedOn")
 
     }
 

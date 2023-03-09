@@ -55,8 +55,8 @@ class GiftCardPlaceOrderActivity : AppCompatActivity(){
         binding = ActivityPlaceGcOrderBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        binding?.tvTitle?.text = "Expired Gift Card"
-        binding?.ivBack?.setOnClickListener {
+        binding?.llTop?.titleCommonToolbar?.text = "Place Order"
+        binding?.llTop?.btnBack?.setOnClickListener {
             onBackPressed()
         }
         //Screen Width
@@ -199,7 +199,7 @@ class GiftCardPlaceOrderActivity : AppCompatActivity(){
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
                 val Textlen = s.toString().length
-                if (100 - Textlen >= 0) binding?.TvCounter?.text = "" + (100 - Textlen)
+                if (100 - Textlen >= 0) binding?.TvCounter?.text = "" + (100 - Textlen)+"/100"
             }
         })
     }

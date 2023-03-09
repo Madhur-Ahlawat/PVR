@@ -11,10 +11,7 @@ import com.net.pvr.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr.ui.food.old.reponse.OldFoodResponse
 import com.net.pvr.ui.food.response.CancelTransResponse
 import com.net.pvr.ui.food.response.FoodResponse
-import com.net.pvr.ui.giftCard.response.ActiveGCResponse
-import com.net.pvr.ui.giftCard.response.GiftCardDetailResponse
-import com.net.pvr.ui.giftCard.response.GiftCardListResponse
-import com.net.pvr.ui.giftCard.response.UploadImageGC
+import com.net.pvr.ui.giftCard.response.*
 import com.net.pvr.ui.home.formats.response.FormatResponse
 import com.net.pvr.ui.home.fragment.cinema.response.CinemaPreferenceResponse
 import com.net.pvr.ui.home.fragment.cinema.response.CinemaResponse
@@ -572,8 +569,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
     //Redeem GiftCard
-    private val redeemGiftCardLiveData = MutableLiveData<NetworkResult<ActiveGCResponse>>()
-    val redeemGiftCardResponseLiveData: LiveData<NetworkResult<ActiveGCResponse>>
+    private val redeemGiftCardLiveData = MutableLiveData<NetworkResult<GiftcardDetailsResponse>>()
+    val redeemGiftCardResponseLiveData: LiveData<NetworkResult<GiftcardDetailsResponse>>
         get() = redeemGiftCardLiveData
 
     suspend fun redeemGiftCard(userId: String,giftcardid: String,pin: String) {
@@ -584,7 +581,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         redeemGiftCardResponse(response)
     }
 
-    private fun redeemGiftCardResponse(response: Response<ActiveGCResponse>) {
+    private fun redeemGiftCardResponse(response: Response<GiftcardDetailsResponse>) {
         if (response.isSuccessful && response.body() != null) {
             redeemGiftCardLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
@@ -648,9 +645,9 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     val uploadGiftCardResponseLiveData: LiveData<NetworkResult<UploadImageGC>>
         get() = uploadGiftCardLiveData
 
-    suspend fun uploadGiftCard(image: MultipartBody.Part,name: RequestBody) {
+    suspend fun uploadGiftCard(image: MultipartBody.Part,name: RequestBody, time: RequestBody, userId: RequestBody, userNo: RequestBody,token:String) {
         giftCardLiveData.postValue(NetworkResult.Loading())
-        val response = userAPI.uploadGCImage(image,name)
+        val response = userAPI.uploadGCImage(image,name,time,userId,userNo,token)
         uploadGiftCardResponse(response)
     }
 
