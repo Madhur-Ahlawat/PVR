@@ -18,6 +18,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.FragmentPrivilegeBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -31,6 +32,7 @@ import com.net.pvr.ui.login.LoginActivity
 import com.net.pvr.ui.webView.WebViewActivity
 import com.net.pvr.utils.*
 import com.net.pvr.utils.Constant.Companion.onShareClick
+import com.net.pvr.utils.ga.GoogleAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -130,14 +132,33 @@ class NonMemberFragment : Fragment() {
 //
 //                        startActivity(intent4)
                     } else if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(reviewPosition)?.ptype == ("PP")) {
+                        // Hit Event
+                        try {
+                            val bundle = Bundle()
+                            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Privilege")
+
+                            GoogleAnalytics.hitEvent(requireActivity(), "passport_join_button", bundle)
+                        }catch (e:Exception) {
+                            e.printStackTrace()
+                        }
                         val intent = Intent(requireContext(), EnrollInPassportActivity::class.java)
                         intent.putExtra("scheme_id", NonMemberActivity.scheme_id)
                         intent.putExtra("scheme_price", NonMemberActivity.scheme_price)
                         startActivity(intent)
                     } else {
+                        // Hit Event
+                        try {
+                            val bundle = Bundle()
+                            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Privilege")
+                            bundle.putString("var_passport_apply_now", "")
+
+                            GoogleAnalytics.hitEvent(requireActivity(), "kotak_apply_now", bundle)
+                        }catch (e:Exception) {
+                            e.printStackTrace()
+                        }
 
                         val intent = Intent(requireContext(), WebViewActivity::class.java)
-                        intent.putExtra("from", "passFaq")
+                        intent.putExtra("from", "kotakApply")
                         intent.putExtra("title", "Privilege+")
                         intent.putExtra("getUrl", "https://www.kotak.com/en/personal-banking/cards/debit-cards/pvr-debit-card-redirection-pvr-website.html")
                         startActivity(intent)

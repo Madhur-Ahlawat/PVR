@@ -187,6 +187,16 @@ class CinemaSearchActivity : AppCompatActivity(),
         }
 
     override fun onSearchMovie(selectCityList: HomeSearchResponse.Output.M) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Coming Soon Search")
+            bundle.putString("var_coming_soon_search_movie", selectCityList.n)
+            GoogleAnalytics.hitEvent(this, "coming_soon_search_movie", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
         val intent = Intent(this, ComingSoonDetailsActivity::class.java)
         intent.putExtra("mid", selectCityList.id)
         startActivity(intent)
@@ -205,47 +215,11 @@ class CinemaSearchActivity : AppCompatActivity(),
         }
         if (filtered.isEmpty()) {
 
-// Hit Event
-            try {
-                val bundle = Bundle()
-                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Coming Soon Search")
-                bundle.putString("var_coming_soon_search_movie", "")
-                GoogleAnalytics.hitEvent(this, "coming_soon_search_movie", bundle)
-            }catch (e:Exception){
-                e.printStackTrace()
-            }
 
-// Hit Event
-            try {
-                val bundle = Bundle()
-                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Coming Soon Search")
-//                bundle.putString("var_coming_soon_search_movie", "")
-                GoogleAnalytics.hitEvent(this, "coming_soon_search_movie_keywords", bundle)
-            }catch (e:Exception){
-                e.printStackTrace()
-            }
 
             searchHomeMovieAdapter?.filterMovieList(filtered1)
         } else {
-            // Hit Event
-            try {
-                val bundle = Bundle()
-                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Coming Soon Search")
-                bundle.putString("var_coming_soon_search_movie", "")
-                GoogleAnalytics.hitEvent(this, "coming_soon_search_movie", bundle)
-            }catch (e:Exception){
-                e.printStackTrace()
-            }
 
-            // Hit Event
-            try {
-                val bundle = Bundle()
-                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Coming Soon Search")
-//                bundle.putString("var_coming_soon_search_movie", "")
-                GoogleAnalytics.hitEvent(this, "coming_soon_search_movie_keywords", bundle)
-            }catch (e:Exception){
-                e.printStackTrace()
-            }
 
             searchHomeMovieAdapter?.filterMovieList(filtered)
         }

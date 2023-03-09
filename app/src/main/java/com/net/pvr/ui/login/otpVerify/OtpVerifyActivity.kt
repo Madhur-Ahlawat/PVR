@@ -320,6 +320,7 @@ class OtpVerifyActivity : AppCompatActivity() {
             try {
                 val bundle = Bundle()
                 bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
+                bundle.putString("user_id", output?.token)
                 GoogleAnalytics.hitEvent(this, "login_success_existing", bundle)
             }catch (e:Exception){
                 e.printStackTrace()

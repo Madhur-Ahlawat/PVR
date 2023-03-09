@@ -27,6 +27,7 @@ import com.net.pvr.ui.search.searchHome.viewModel.HomeSearchViewModel
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.NetworkResult
 import com.net.pvr.utils.ga.GoogleAnalytics
+import com.net.pvr.utils.printLog
 import com.net.pvr.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -250,6 +251,17 @@ class SearchHomeActivity : AppCompatActivity(),
     }
 
     override fun onSearchCinema(selectCityItemList: HomeSearchResponse.Output.T) {
+
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Search Home Screen")
+            bundle.putString("header_cinema_name", selectCityItemList.n)
+            GoogleAnalytics.hitEvent(this, "header_cinema_name", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
         val intent = Intent(this, CinemaSessionActivity::class.java)
         intent.putExtra("cid", selectCityItemList.id)
         intent.putExtra("lat", selectCityItemList.lat)
@@ -263,6 +275,15 @@ class SearchHomeActivity : AppCompatActivity(),
     }
 
     override fun onSearchMovie(selectCityList: HomeSearchResponse.Output.M) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Search Home Screen")
+            bundle.putString("header_movie_name", selectCityList.n)
+            GoogleAnalytics.hitEvent(this, "header_movie_name", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
         if (selectCityList.t=="C"){
             val intent = Intent(this, ComingSoonDetailsActivity::class.java)
             HomeFragment.mcId = selectCityList.id
@@ -286,8 +307,11 @@ class SearchHomeActivity : AppCompatActivity(),
             }
         }
         if (filtered.isEmpty()) {
+
+
             searchHomeMovieAdapter?.filterMovieList(filtered1)
         } else {
+
             searchHomeMovieAdapter?.filterMovieList(filtered)
         }
     }
@@ -304,27 +328,9 @@ class SearchHomeActivity : AppCompatActivity(),
         }
         if (filtered.isEmpty()) {
 
-            // Hit Event
-            try {
-                val bundle = Bundle()
-                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Search Home Screen")
-                bundle.putString("header_movie_name", filtered1.toString())
-                GoogleAnalytics.hitEvent(this, "header_movie_name", bundle)
-            }catch (e:Exception){
-                e.printStackTrace()
-            }
-
             searchHomeCinemaAdapter?.filterCinemaList(filtered1)
         } else {
-            // Hit Event
-            try {
-                val bundle = Bundle()
-                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Search Home Screen")
-                bundle.putString("header_cinema_name", filtered1.toString())
-                GoogleAnalytics.hitEvent(this, "header_cinema_name", bundle)
-            }catch (e:Exception){
-                e.printStackTrace()
-            }
+
             searchHomeCinemaAdapter?.filterCinemaList(filtered)
         }
     }
