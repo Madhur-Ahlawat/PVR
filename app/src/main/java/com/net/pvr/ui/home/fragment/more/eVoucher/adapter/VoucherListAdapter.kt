@@ -51,12 +51,16 @@ class VoucherListAdapter(
                 binding.textView405.text= Html.fromHtml(data)
 
                 //discount
-                val percentage=  (this.sellAllowedCPValue.toInt() - this.sellAllowedValue) * 100 / 20000
-                binding.textView406.text= "$percentage %"
+                if (this.sellAllowedCPValue.isNotEmpty() && this.sellAllowedValue.toString().isNotEmpty()){
+                    val percentage=  (this.sellAllowedCPValue.toInt() - this.sellAllowedValue) * 100 / 20000
+                    binding.textView406.text= "$percentage %"
+                }
 
                 //total Price
-                binding.textView412.text =context.getString(R.string.currency)+
-                        Constant.DECIFORMAT.format(this.sellAllowedCPValue.toInt() / 100.0)
+                if (this.sellAllowedCPValue.isNotEmpty()){
+                    binding.textView412.text =context.getString(R.string.currency)+
+                            Constant.DECIFORMAT.format(this.sellAllowedCPValue.toInt() / 100.0)
+                }
 
                 //Image
                 Glide.with(context)

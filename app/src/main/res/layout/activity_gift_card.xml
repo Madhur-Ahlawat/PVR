@@ -184,7 +184,8 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:ignore="ContentDescription" />
 
                             <LinearLayout
                                 android:id="@+id/ll_pvr_logo"
@@ -200,7 +201,8 @@
                                     android:layout_width="@dimen/dimen_50dp"
                                     android:layout_height="@dimen/dimen_20dp"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/pvr_logo" />
+                                    android:src="@drawable/pvr_logo"
+                                    tools:ignore="ContentDescription" />
 
                                 <View
                                     android:layout_width="@dimen/dimen_2dp"

@@ -16,6 +16,7 @@ import android.widget.LinearLayout
 import android.widget.RadioGroup
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityPlaceGcOrderBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -25,6 +26,7 @@ import com.net.pvr.ui.giftCard.GiftCardSummaryActivity
 import com.net.pvr.ui.giftCard.activateGiftCard.viewModel.ActivateGiftCardViewModel
 import com.net.pvr.ui.giftCard.response.SaveGiftCardCount
 import com.net.pvr.utils.*
+import com.net.pvr.utils.ga.GoogleAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
 import java.text.NumberFormat
@@ -55,10 +57,16 @@ class GiftCardPlaceOrderActivity : AppCompatActivity(){
         binding = ActivityPlaceGcOrderBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
+        manageFunctions()
+    }
+
+    private fun manageFunctions() {
         binding?.llTop?.titleCommonToolbar?.text = "Place Order"
         binding?.llTop?.btnBack?.setOnClickListener {
             onBackPressed()
         }
+
         //Screen Width
         if (intent.getSerializableExtra(Constant.SharedPreference.GIFT_CARD_DETAILS) != null) {
             saveGiftCardCount = intent.getSerializableExtra(Constant.SharedPreference.GIFT_CARD_DETAILS) as SaveGiftCardCount
@@ -153,15 +161,26 @@ class GiftCardPlaceOrderActivity : AppCompatActivity(){
             onBackPressed()
         }
 
-        binding?.llProceedGift?.setOnClickListener(View.OnClickListener {
-            if (validateInputFields())
-                setData()
-        })
+        binding?.llProceedGift?.setOnClickListener {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Gift Card Place Order")
+//                bundle.putString("var_gift_card_add_popup","")
+                GoogleAnalytics.hitEvent(this, "gift_card_place_order_continue", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
 
-        binding?.btncontinue?.setOnClickListener(View.OnClickListener { //                Toast.makeText(context, String.valueOf(validateInputFields()), Toast.LENGTH_SHORT).show();
             if (validateInputFields())
                 setData()
-        })
+
+        }
+
+        binding?.btncontinue?.setOnClickListener { //                Toast.makeText(context, String.valueOf(validateInputFields()), Toast.LENGTH_SHORT).show();
+            if (validateInputFields())
+                setData()
+        }
 
         if (intent != null) {
             if (intent.getStringExtra("imageValueUri") != null) {
@@ -406,7 +425,6 @@ class GiftCardPlaceOrderActivity : AppCompatActivity(){
 
                         val nf: NumberFormat = DecimalFormat("#.########")
                         val s1: String = nf.format(sum.toDouble())
-
                         intent.putExtra("totalAmount", s1)
                         intent.putExtra("quantity", quantit)
                         intent.putExtra("ifSelf", java.lang.Boolean.getBoolean(isSelf))

@@ -153,6 +153,7 @@
                         android:id="@+id/imageView179"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:padding="@dimen/dimen_5dp"
                         app:layout_constraintBottom_toBottomOf="@+id/textView29"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/textView29"
@@ -247,6 +248,7 @@
                         android:id="@+id/imageView181"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:padding="@dimen/dimen_5dp"
                         app:layout_constraintBottom_toBottomOf="@+id/textView415"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/textView415"
@@ -264,6 +266,17 @@
                         android:textSize="@dimen/dimen_12sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/textView415"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView181" />
+
+                    <ImageView
+                        android:id="@+id/imageView182"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_marginTop="8dp"
+                        android:src="@drawable/howwork"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/imageView181" />
 
 

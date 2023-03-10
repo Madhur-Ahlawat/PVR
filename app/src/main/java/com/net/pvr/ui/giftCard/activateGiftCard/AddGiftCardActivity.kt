@@ -16,6 +16,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityAddGiftcardBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -27,7 +28,10 @@ import com.net.pvr.ui.giftCard.activateGiftCard.viewModel.ActivateGiftCardViewMo
 import com.net.pvr.ui.giftCard.response.GiftCardListResponse
 import com.net.pvr.ui.giftCard.response.GiftCards
 import com.net.pvr.ui.giftCard.response.SaveGiftCardCount
+import com.net.pvr.ui.home.fragment.home.HomeFragment
 import com.net.pvr.utils.*
+import com.net.pvr.utils.Constant.Companion.GC_COUNT
+import com.net.pvr.utils.ga.GoogleAnalytics
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -46,8 +50,6 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
     private var customGiftCardAdapter: CustomGiftCardAdapter? = null
     private var giftAddAmountAdapter: GiftCardAddAmtAdapter? = null
     private val authViewModel: ActivateGiftCardViewModel by viewModels()
-    private var permsRequestCode = 202
-    private val REQUEST_SELECT_FILE = 2222
     private var custom_amount = 0
     private var limit = 0
     private var total_amount = 0
@@ -68,8 +70,25 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
         val view = binding?.root
         setContentView(view)
 
-        //Screen Width
+        manageFunctions()
+    }
 
+    @SuppressLint("SetTextI18n")
+    private fun manageFunctions() {
+//        GoogleAnalytics.hitViewItemEvent(this,"GiftCard",item.type,item.d)
+
+
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Gift Card Details")
+            bundle.putString("var_gift_card_add_popup","")
+            GoogleAnalytics.hitEvent(this, "gift_card_add_popup", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
+        //Screen Width
         binding?.llTop?.btnBack?.setOnClickListener(this)
         binding?.llTop?.titleCommonToolbar?.text = "Add Amount"
         binding?.llCancelGift?.setOnClickListener(this)
@@ -78,7 +97,7 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
         binding?.tvAddAmountCustom?.setOnClickListener(this)
 
         binding?.tvTotal?.text = resources.getString(R.string.currency) + " " + total_amount
-        giftCardListFilter = ArrayList<GiftCardListResponse.Output.GiftCard>()
+        giftCardListFilter = ArrayList()
         if (intent != null) {
             if (intent.hasExtra("genericList")) {
                 giftCardListFilter = intent.getSerializableExtra("genericList") as ArrayList<GiftCardListResponse.Output.GiftCard>
@@ -91,9 +110,9 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
                 imageValue = intent.getStringExtra("imageValue").toString()
                 if (imageValue != null) {
                     Picasso.get()
-                            .load(imageValue)
-                            .placeholder(resources.getDrawable(R.drawable.gift_card_placeholder))
-                            .into(binding?.ivUploadedImage);
+                        .load(imageValue)
+                        .placeholder(resources.getDrawable(R.drawable.gift_card_placeholder))
+                        .into(binding?.ivUploadedImage);
                 }
             }
             if (intent.hasExtra("imageValueUri")) {
@@ -382,18 +401,10 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
         return "com.android.externalstorage.documents" == uri.authority
     }
 
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is DownloadsProvider.
-     */
     private fun isDownloadsDocument(uri: Uri): Boolean {
         return "com.android.providers.downloads.documents" == uri.authority
     }
 
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is MediaProvider.
-     */
     private fun isMediaDocument(uri: Uri): Boolean {
         return "com.android.providers.media.documents" == uri.authority
     }
@@ -426,6 +437,8 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
             }
             val saveGiftCardCount = SaveGiftCardCount("","","","","","","","",newList)
             if (saveGiftCardCount.gift_cards.size > 0) {
+                GC_COUNT = saveGiftCardCount.gift_cards.size
+                GoogleAnalytics.hitAddCartEvent(this, HomeFragment.mcId,total_amount.toString(),"Gift Card",saveGiftCardCount.gift_cards.size)
                 val intent = Intent(this, GiftCardPlaceOrderActivity::class.java)
                 try {
                     if (imageValueUri != null) {
@@ -435,10 +448,11 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
                             url
                         )
                     }
+
                 } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
                 }
                 intent.putExtra("key", card_type)
-                println("saveGiftCardCount---$saveGiftCardCount")
                 intent.putExtra(Constant.SharedPreference.GIFT_CARD_DETAILS, saveGiftCardCount)
                 startActivity(intent)
             }

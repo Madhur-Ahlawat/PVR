@@ -291,7 +291,6 @@
                                         app:layout_constraintStart_toStartOf="parent"
                                         app:layout_constraintTop_toTopOf="@+id/qr_img_vw" />
 
-
                                 </LinearLayout>
 
                                 <View
@@ -1066,8 +1065,8 @@
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen_12sp" />
 
-
                     </androidx.cardview.widget.CardView>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -1346,7 +1345,6 @@
                             app:layout_constraintTop_toBottomOf="@+id/imageView159" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
@@ -1370,10 +1368,11 @@
                     <ImageView
                         android:layout_width="@dimen/dimen_30dp"
                         android:layout_height="@dimen/dimen_30dp"
-                        android:src="@drawable/ic_correct_green" />
+                        android:src="@drawable/ic_correct_green"
+                        tools:ignore="ContentDescription" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/padding_10"
                         android:layout_weight="1"
@@ -1383,7 +1382,7 @@
                             android:id="@+id/tv_refund_txt_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Discount Text"
+                            android:text="@string/discount_text"
                             android:textColor="@color/green_color"
                             android:textSize="@dimen/dimen_14sp"
                             android:textStyle="bold" />
@@ -1392,7 +1391,7 @@
                             android:id="@+id/tv_refund_txt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Discount Text"
+                            android:text="@string/discount_text"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen_12sp" />
 
@@ -1525,20 +1524,6 @@ ididunt ut labore et dolore magna aliqua." />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--&lt;!&ndash;            // Gift Card Ticket&ndash;&gt;-->
-<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                android:id="@+id/GCView"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:visibility="visible"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="@+id/ticketView"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent">-->
-
-
-<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

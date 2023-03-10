@@ -10,9 +10,9 @@ import com.net.pvr.R
 import com.net.pvr.databinding.ActivityEvoucherDetailsBinding
 import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.dailogs.LoaderDialog
-import com.net.pvr.ui.home.fragment.more.eVoucher.model.HowItWorkModel
+import com.net.pvr.ui.home.fragment.more.eVoucher.model.HowItWorkChildModel
+import com.net.pvr.ui.home.fragment.more.eVoucher.model.HowItWorkParentModel
 import com.net.pvr.ui.home.fragment.more.eVoucher.viewModel.EVoucherViewModel
-import com.net.pvr.ui.home.fragment.more.model.ProfileModel
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.hide
 import com.net.pvr.utils.show
@@ -33,7 +33,8 @@ class EVoucherDetailsActivity : AppCompatActivity() {
    private var voucherDetShow=0
    private var howWorkShow=0
 
-    private val howItWorkModel: ArrayList<HowItWorkModel> = ArrayList()
+    private val howItWorkModel: ArrayList<HowItWorkParentModel> = ArrayList()
+    private val howItWorkChildModel: ArrayList<HowItWorkChildModel> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,9 +83,14 @@ class EVoucherDetailsActivity : AppCompatActivity() {
             if (howWorkShow==0){
                 howWorkShow=1
                 binding?.imageView181?.setImageResource(R.drawable.arrow_down)
+                binding?.textView416?.show()
+                binding?.imageView182?.hide()
+
             }else{
                 howWorkShow=0
                 binding?.imageView181?.setImageResource(R.drawable.arrow_up)
+                binding?.textView416?.hide()
+                binding?.imageView182?.show()
 
             }
         }
@@ -94,10 +100,6 @@ class EVoucherDetailsActivity : AppCompatActivity() {
     }
 
     private fun categoryData() {
-
-//        howItWorkModel.add(
-//            HowItWorkModel("How to buy:",HowItWorkModel.Category
-//        )
 
     }
 

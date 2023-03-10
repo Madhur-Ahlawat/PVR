@@ -167,7 +167,51 @@ class PaymentActivity : AppCompatActivity(),
         manageFunction()
 
         try {
-            GoogleAnalytics.hitBeginCheckOutEvent(this, BOOKING_ID,paidAmount,"Ticket",Constant.SELECTED_SEAT)
+            when (BOOK_TYPE) {
+                "BOOKING" -> {
+                    GoogleAnalytics.hitBeginCheckOutEvent(
+                        this,
+                        BOOKING_ID,
+                        paidAmount,
+                        "Ticket",
+                        Constant.SELECTED_SEAT
+                    )
+                }
+                "FOOD" -> {
+                    GoogleAnalytics.hitBeginCheckOutEvent(
+                        this,
+                        BOOKING_ID,
+                        paidAmount,
+                        "Food",
+                        Constant.SELECTED_SEAT
+                    )
+                }
+                "GIFTCARD" -> {
+                    GoogleAnalytics.hitBeginCheckOutEvent(
+                        this,
+                        BOOKING_ID,
+                        paidAmount,
+                        "Gift Card",
+                        Constant.GC_COUNT
+                    )
+                }"RECURRING" -> {
+                    GoogleAnalytics.hitBeginCheckOutEvent(
+                        this,
+                        BOOKING_ID,
+                        paidAmount,
+                        "Passport",
+                        1
+                    )
+                }"LOYALTYUNLIMITED" -> {
+                    GoogleAnalytics.hitBeginCheckOutEvent(
+                        this,
+                        BOOKING_ID,
+                        paidAmount,
+                        "Passport",
+                        1
+                    )
+                }
+            }
         }catch (e:java.lang.Exception){
 
         }
@@ -567,7 +611,46 @@ class PaymentActivity : AppCompatActivity(),
     //Payment Option Clicks
     override fun paymentClick(paymentItem: PaymentResponse.Output.Gateway) {
         try {
-            GoogleAnalytics.hitPaymentInfo(this, BOOKING_ID,paidAmount,"Ticket",paymentItem.name)
+            when (BOOK_TYPE) {
+                "BOOKING" -> {
+                    GoogleAnalytics.hitPaymentInfo(this, BOOKING_ID,paidAmount,"Ticket",paymentItem.name)
+
+                }
+                "FOOD" -> {
+                    GoogleAnalytics.hitPaymentInfo(
+                        this,
+                        BOOKING_ID,
+                        paidAmount,
+                        "Food",
+                        paymentItem.name
+                    )
+                }
+                "GIFTCARD" -> {
+                    GoogleAnalytics.hitPaymentInfo(
+                        this,
+                        BOOKING_ID,
+                        paidAmount,
+                        "Gift Card",
+                        paymentItem.name
+                    )
+                }"RECURRING" -> {
+                GoogleAnalytics.hitPaymentInfo(
+                    this,
+                    BOOKING_ID,
+                    paidAmount,
+                    "Passport",
+                    paymentItem.name
+                )
+            }"LOYALTYUNLIMITED" -> {
+                GoogleAnalytics.hitPaymentInfo(
+                    this,
+                    BOOKING_ID,
+                    paidAmount,
+                    "Passport",
+                    paymentItem.name
+                )
+            }
+            }
         }catch (e:java.lang.Exception){
         }
         when (paymentItem.id.uppercase(Locale.getDefault())) {

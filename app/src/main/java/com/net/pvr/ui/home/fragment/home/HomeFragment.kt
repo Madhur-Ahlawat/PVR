@@ -85,11 +85,14 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickListener,
+class HomeFragment : Fragment(),
+    HomeCinemaCategoryAdapter.RecycleViewItemClickListener,
     HomeSliderAdapter.RecycleViewItemClickListener,
     HomePromotionAdapter.RecycleViewItemClickListener,
-    HomeMoviesAdapter.RecycleViewItemClickListener, HomeOfferAdapter.RecycleViewItemClickListener,
-    GenericFilterHome.onButtonSelected, StoriesProgressView.StoriesListener,
+    HomeMoviesAdapter.RecycleViewItemClickListener,
+    HomeOfferAdapter.RecycleViewItemClickListener,
+    GenericFilterHome.onButtonSelected,
+    StoriesProgressView.StoriesListener,
     MusicVideoTrsAdapter.RecycleViewItemClickListener,
     TrailerTrsAdapter.RecycleViewItemClickListener {
 

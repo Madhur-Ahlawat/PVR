@@ -770,12 +770,11 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             binding?.constraintLayout170?.hide()
         }
     }
-
     private fun setDonationData(output: SummeryResponse.Output) {
         // Hit Event
         try {
             val bundle = Bundle()
-            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Summery")
             bundle.putString("var_add_donation", "")
             GoogleAnalytics.hitEvent(this, "book_add_donation", bundle)
         }catch (e:Exception){
@@ -833,7 +832,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 // Hit Event
         try {
             val bundle = Bundle()
-            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Summery")
             bundle.putString("var_book_remove_donation", "")
             GoogleAnalytics.hitEvent(this, "book_remove_donation", bundle)
         }catch (e:Exception){

@@ -535,6 +535,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
 
 // Hit Event
                 try {
+
                     ISEvents().confirmationOrder(this,Constant.BOOKING_ID,output.f,HomeFragment.mcId,output.amount,output.food)
                     GoogleAnalytics.hitPurchaseEvent(this,
                         Constant.BOOKING_ID,output.amount,"Ticket",Constant.SELECTED_SEAT)
@@ -565,7 +566,8 @@ class TicketConfirmationActivity : AppCompatActivity() {
             binding?.foodView?.show()
             binding?.ticketView?.hide()
             binding?.bottomView?.hide()
-
+            GoogleAnalytics.hitPurchaseEvent(this,
+                Constant.BOOKING_ID,output.amount,"Food",output.food.size)
             Glide.with(this)
                 .load(output.im)
                 .error(R.drawable.placeholder_vertical)

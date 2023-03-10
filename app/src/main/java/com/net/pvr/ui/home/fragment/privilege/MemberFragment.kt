@@ -920,6 +920,8 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
             bundle.putString("ecommerce values will be pass", "")
 
             GoogleAnalytics.hitEvent(requireActivity(), "passport_purchase", bundle)
+            GoogleAnalytics.hitPurchaseEvent(requireContext(),
+                id,price1,"Passport", 1)
         }catch (e:Exception) {
             e.printStackTrace()
         }

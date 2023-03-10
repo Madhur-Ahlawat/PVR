@@ -6,8 +6,6 @@
     android:background="@color/white">
 
 
-
-
     <!--//top view-->
 
     <include layout="@layout/common_toolbar"
