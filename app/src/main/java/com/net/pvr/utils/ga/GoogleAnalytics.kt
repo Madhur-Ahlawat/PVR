@@ -3,6 +3,7 @@ package com.net.pvr.utils.ga
 import android.content.Context
 import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.net.pvr.ui.giftCard.response.GiftCardListResponse
 import com.net.pvr.ui.home.fragment.home.response.HomeResponse
 
 
@@ -20,7 +21,7 @@ class GoogleAnalytics {
             }
 
         }
-        // Ecommerce Event
+        // Ecommerce Event Booking
         fun hitItemListEvent(context: Context, product: String, mv: List<HomeResponse.Mv>) {
            val itemArray = ArrayList<Bundle>()
             for (data in mv.indices) {
@@ -35,6 +36,30 @@ class GoogleAnalytics {
                 }
                 itemArray.add(itemMovieWithIndex)
             }
+            mFirebaseAnalytics = FirebaseAnalytics.getInstance(context)
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.ITEM_LIST_ID,"")
+            bundle.putString(FirebaseAnalytics.Param.ITEM_LIST_NAME,product)
+            bundle.putParcelableArrayList(FirebaseAnalytics.Param.ITEMS,itemArray)
+            mFirebaseAnalytics?.logEvent(FirebaseAnalytics.Event.VIEW_ITEM_LIST,bundle)
+
+        }
+        //GiftCard
+        fun hitItemListEventGC(context: Context, product: String, giftCards: ArrayList<GiftCardListResponse.Output.GiftCard>) {
+           val itemArray = ArrayList<Bundle>()
+            for (data in giftCards.indices) {
+                val itemMovie = Bundle().apply {
+                    putString(FirebaseAnalytics.Param.ITEM_ID, giftCards[data].pkGiftId.toString())
+                    putString(FirebaseAnalytics.Param.ITEM_NAME, giftCards[data].alias)
+                    putString(FirebaseAnalytics.Param.ITEM_CATEGORY,product)
+                    putString(FirebaseAnalytics.Param.ITEM_BRAND, "PVR Cinema")
+                }
+                val itemMovieWithIndex = Bundle(itemMovie).apply {
+                    putLong(FirebaseAnalytics.Param.INDEX, data.toLong())
+                }
+                itemArray.add(itemMovieWithIndex)
+            }
+
             mFirebaseAnalytics = FirebaseAnalytics.getInstance(context)
             val bundle = Bundle()
             bundle.putString(FirebaseAnalytics.Param.ITEM_LIST_ID,"")

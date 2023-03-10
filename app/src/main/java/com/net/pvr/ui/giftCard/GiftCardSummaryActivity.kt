@@ -15,6 +15,7 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityGiftcardSummaryBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -25,6 +26,7 @@ import com.net.pvr.ui.giftCard.response.GiftCardDetailResponse
 import com.net.pvr.ui.login.LoginActivity
 import com.net.pvr.ui.payment.PaymentActivity
 import com.net.pvr.utils.*
+import com.net.pvr.utils.ga.GoogleAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
 import javax.inject.Inject
@@ -48,6 +50,20 @@ class GiftCardSummaryActivity : AppCompatActivity() {
         binding = ActivityGiftcardSummaryBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
+        manageFunction()
+    }
+
+    private fun manageFunction() {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Gift Card Summery")
+            GoogleAnalytics.hitEvent(this, "gift_card_purchase", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
         binding?.llTop?.btnBack?.setOnClickListener {
             onBackPressed()
         }
@@ -86,10 +102,9 @@ class GiftCardSummaryActivity : AppCompatActivity() {
             }
 
         }
-
     }
 
-   @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n")
    private fun addData(f: List<GiftCardDetailResponse.Fn>, dc: String) {
         binding?.llTotal?.removeAllViews()
         for (i in f.indices) {
@@ -194,6 +209,7 @@ class GiftCardSummaryActivity : AppCompatActivity() {
         }
 
         binding?.llProceedGiftUnselect?.setOnClickListener{
+
             val dialog = OptionDialog(this,
                 R.mipmap.ic_launcher,
                 R.string.app_name,
@@ -206,13 +222,18 @@ class GiftCardSummaryActivity : AppCompatActivity() {
         }
 
         binding?.btnPay?.setOnClickListener{
-
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Gift Card Summery")
+                GoogleAnalytics.hitEvent(this, "gift_card_your_order_pay", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
             //PP Work to do
             val intent = Intent(this, PaymentActivity::class.java)
             intent.putExtra("paidAmount",paidAmount)
-
             startActivity(intent)
-
         }
     }
 

@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityGiftCardBinding
 import com.net.pvr.ui.dailogs.LoaderDialog
@@ -35,6 +36,7 @@ import com.net.pvr.ui.giftCard.response.GiftCardsFilter
 import com.net.pvr.ui.giftCard.viewModel.GiftCardViewModel
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.NetworkResult
+import com.net.pvr.utils.ga.GoogleAnalytics
 import com.net.pvr.utils.hide
 import com.net.pvr.utils.show
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,23 +57,16 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
     private var limit = 0
     private var customImage = false
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGiftCardBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        binding?.include6?.titleCommonToolbar?.text = "Gift Cards"
 
-        //Screen Width
-        val displayMetrics = DisplayMetrics()
-        windowManager.defaultDisplay.getMetrics(displayMetrics)
-        val width = displayMetrics.widthPixels
-        val height = displayMetrics.heightPixels
-        authViewModel.giftCards(width.toString(), "")
-        binding?.include37?.textView5?.text = "Make your own Gift Card"
-        giftCard()
-        movedNext()
+        manageFunction()
+    }
+
+    private fun manageFunction() {
         if (intent.hasExtra("from")){
             showDialogLoyalty(
                 this,
@@ -80,6 +75,22 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
                 intent.getStringExtra("date").toString()
             )
         }
+
+        //title
+        binding?.include6?.titleCommonToolbar?.text = "Gift Cards"
+
+        //Screen Width
+        val displayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        val width = displayMetrics.widthPixels
+        val height = displayMetrics.heightPixels
+
+        authViewModel.giftCards(width.toString(), "")
+        //button title
+        binding?.include37?.textView5?.text = "Make your own Gift Card"
+
+        giftCard()
+        movedNext()
     }
 
     private fun movedNext() {
@@ -90,6 +101,7 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
         binding?.include6?.btnBack?.setOnClickListener {
             finish()
         }
+
         binding?.include37?.textView5?.setOnClickListener {
             val createIntent = Intent(this@GiftCardActivity, CreateGiftCardActivity::class.java)
             createIntent.putExtra("custom", customImage)
@@ -156,6 +168,8 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
     }
 
     private fun retrieveData(output: GiftCardListResponse.Output) {
+        GoogleAnalytics.hitItemListEventGC(this,"GIFTCARD",output.giftCards)
+
         if (output.limit!=null && output.limit!="")
         limit = output.limit.toInt()
         customImage = output.customCardFlag
@@ -164,6 +178,7 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
         } else {
             binding?.include37?.constraintLayout10?.hide()
         }
+
         giftCartList = output.giftCards
         gcFilterList = ArrayList<GiftCardsFilter>()
         gcFilterList.add(GiftCardsFilter("ALL OCCASIONS","",true))
@@ -196,6 +211,16 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
         binding?.rvGiftCards?.adapter = giftCardMainAdapter2
 
         binding?.ivImageGeneric?.setOnClickListener {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Gift Card")
+                 bundle.putString("var_gift_card_banner","")
+                GoogleAnalytics.hitEvent(this, "gift_card_banner", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
             giftCardListFilter = ArrayList()
             for (i in giftCartList.indices) {
                 if (giftCartList[i].type == ("GENERIC")
@@ -252,6 +277,16 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
     }
 
     override fun giftCardClick(comingSoonItem: GiftCardListResponse.Output.GiftCard) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Gift Card")
+            bundle.putString("var_gift_card_banner","")
+            GoogleAnalytics.hitEvent(this, "gift_card_banner", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
         giftCardListFilter = ArrayList()
         for (i in gcFilterList.indices) {
             if (gcFilterList[i].filterText == comingSoonItem.type) {
@@ -304,6 +339,16 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
     }
 
     private fun showDialogLoyalty(mContext: Context?, price1: String, id: String, date: String?) {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Gift Card")
+//            bundle.putString("var_gift_card_add_popup","")
+            GoogleAnalytics.hitEvent(this, "gift_card_place_order", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
         val dialog = BottomSheetDialog(mContext!!, R.style.NoBackgroundDialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.payment_success_gc_pp)

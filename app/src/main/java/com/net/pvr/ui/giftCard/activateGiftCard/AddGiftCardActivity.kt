@@ -16,6 +16,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityAddGiftcardBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -28,6 +29,7 @@ import com.net.pvr.ui.giftCard.response.GiftCardListResponse
 import com.net.pvr.ui.giftCard.response.GiftCards
 import com.net.pvr.ui.giftCard.response.SaveGiftCardCount
 import com.net.pvr.utils.*
+import com.net.pvr.utils.ga.GoogleAnalytics
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -46,8 +48,6 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
     private var customGiftCardAdapter: CustomGiftCardAdapter? = null
     private var giftAddAmountAdapter: GiftCardAddAmtAdapter? = null
     private val authViewModel: ActivateGiftCardViewModel by viewModels()
-    private var permsRequestCode = 202
-    private val REQUEST_SELECT_FILE = 2222
     private var custom_amount = 0
     private var limit = 0
     private var total_amount = 0
@@ -68,8 +68,21 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
         val view = binding?.root
         setContentView(view)
 
-        //Screen Width
+        manageFunctions()
+    }
 
+    private fun manageFunctions() {
+        // Hit Event
+        try {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Gift Card Details")
+            bundle.putString("var_gift_card_add_popup","")
+            GoogleAnalytics.hitEvent(this, "gift_card_add_popup", bundle)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
+        //Screen Width
         binding?.llTop?.btnBack?.setOnClickListener(this)
         binding?.llTop?.titleCommonToolbar?.text = "Add Amount"
         binding?.llCancelGift?.setOnClickListener(this)
@@ -78,7 +91,7 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
         binding?.tvAddAmountCustom?.setOnClickListener(this)
 
         binding?.tvTotal?.text = resources.getString(R.string.currency) + " " + total_amount
-        giftCardListFilter = ArrayList<GiftCardListResponse.Output.GiftCard>()
+        giftCardListFilter = ArrayList()
         if (intent != null) {
             if (intent.hasExtra("genericList")) {
                 giftCardListFilter = intent.getSerializableExtra("genericList") as ArrayList<GiftCardListResponse.Output.GiftCard>
@@ -91,9 +104,9 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
                 imageValue = intent.getStringExtra("imageValue").toString()
                 if (imageValue != null) {
                     Picasso.get()
-                            .load(imageValue)
-                            .placeholder(resources.getDrawable(R.drawable.gift_card_placeholder))
-                            .into(binding?.ivUploadedImage);
+                        .load(imageValue)
+                        .placeholder(resources.getDrawable(R.drawable.gift_card_placeholder))
+                        .into(binding?.ivUploadedImage);
                 }
             }
             if (intent.hasExtra("imageValueUri")) {
@@ -255,6 +268,7 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
 
 
     private fun setCustomAmountAdapter() {
+//        GoogleAnalytics.hitViewItemEvent(this,"Gift Card",rm.mcc,rm.n)
         binding?.rvCustomAmountList?.layoutManager = LinearLayoutManager(this)
         customGiftCardAdapter = CustomGiftCardAdapter( customizedGiftList, this,Uri.parse(imageValue))
         binding?.rvCustomAmountList?.adapter = customGiftCardAdapter
