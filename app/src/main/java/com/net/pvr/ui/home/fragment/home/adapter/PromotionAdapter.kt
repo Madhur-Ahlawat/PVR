@@ -3,6 +3,7 @@ package com.net.pvr.ui.home.fragment.home.adapter
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ItemHomePromotionBinding
 import com.net.pvr.ui.home.HomeActivity
@@ -19,6 +21,7 @@ import com.net.pvr.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr.ui.player.PlayerActivity
 import com.net.pvr.ui.webView.WebViewActivity
 import com.net.pvr.utils.Constant
+import com.net.pvr.utils.ga.GoogleAnalytics
 import com.net.pvr.utils.hide
 import com.net.pvr.utils.show
 import java.util.*
@@ -106,6 +109,17 @@ class PromotionAdapter(
 
                 //Manage Functions
                 holder.itemView.setOnClickListener {
+                    // Hit Event
+                    try {
+                        val bundle = Bundle()
+                        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Home Page")
+                        bundle.putString("var_promotional_banner_Name", this.name)
+                        bundle.putString("var_promotional_banner_from","Home")
+                        GoogleAnalytics.hitEvent(context, "promotional_banner", bundle)
+                    }catch (e:Exception){
+                        e.printStackTrace()
+                    }
+
                     if (this.type == "IMAGE" && this.redirectView == "DEEPLINK") {
                         binding.tvPlay.hide()
                         if (this.redirect_url.equals("", ignoreCase = true)) {

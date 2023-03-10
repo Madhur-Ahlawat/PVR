@@ -61,31 +61,31 @@ class GiftCardAddAmtAdapter(
             holder.tv_add_amount.hide()
             holder.ll_plus_minus.show()
         }
-        holder.tv_add_amount.setOnClickListener(View.OnClickListener {
+        holder.tv_add_amount.setOnClickListener {
             (context as AddGiftCardActivity).plusClick(
                 position,
-                (cinemaItem.giftValue/100)
+                (cinemaItem.giftValue / 100)
             )
-        })
-        holder.tv_plus_amount.setOnClickListener(View.OnClickListener {
+        }
+        holder.tv_plus_amount.setOnClickListener {
             (context as AddGiftCardActivity).plusClick(
                 position,
-                (cinemaItem.giftValue/100)
+                (cinemaItem.giftValue / 100)
             )
-        })
-        holder.view_minus.setOnClickListener(View.OnClickListener {
+        }
+        holder.view_minus.setOnClickListener {
             (context as AddGiftCardActivity).minusClick(
                 position,
-                (cinemaItem.giftValue/100)
+                (cinemaItem.giftValue / 100)
             )
-        })
+        }
 
-        holder.view_plus.setOnClickListener(View.OnClickListener {
+        holder.view_plus.setOnClickListener {
             (context as AddGiftCardActivity).plusClick(
                 position,
-                (cinemaItem.giftValue/100)
+                (cinemaItem.giftValue / 100)
             )
-        })
+        }
 
     }
 

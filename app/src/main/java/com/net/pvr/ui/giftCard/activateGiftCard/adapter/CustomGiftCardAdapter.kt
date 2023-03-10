@@ -37,13 +37,13 @@ class CustomGiftCardAdapter(
         holder.tv_gift_value.text =
             context.resources.getString(R.string.currency) + cinemaItem.d.replace("xCUSTOMISED", "")
         holder.tv_count.text = "x " + String.valueOf(cinemaItem.c)
+
         if (imageUri != null) {
             holder.iv_add_gift_image.setImageURI(imageUri)
         }
+
         holder.iv_close.setOnClickListener {
-            (context as AddGiftCardActivity).customCloseClick(
-                position,
-                cinemaItem.d.replace("xCUSTOMISED", "")
+            (context as AddGiftCardActivity).customCloseClick(position, cinemaItem.d.replace("xCUSTOMISED", "")
             )
         }
 

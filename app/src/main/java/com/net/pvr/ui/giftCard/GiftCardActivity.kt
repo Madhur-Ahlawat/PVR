@@ -34,11 +34,8 @@ import com.net.pvr.ui.giftCard.adapter.GiftFilterAdapter
 import com.net.pvr.ui.giftCard.response.GiftCardListResponse
 import com.net.pvr.ui.giftCard.response.GiftCardsFilter
 import com.net.pvr.ui.giftCard.viewModel.GiftCardViewModel
-import com.net.pvr.utils.Constant
-import com.net.pvr.utils.NetworkResult
+import com.net.pvr.utils.*
 import com.net.pvr.utils.ga.GoogleAnalytics
-import com.net.pvr.utils.hide
-import com.net.pvr.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
@@ -231,6 +228,8 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
             }
 
             if (giftCardListFilter.size > 0) {
+                GoogleAnalytics.hitViewItemEvent(this,"GiftCard",giftCardListFilter[0].pkGiftId.toString(),"${giftCardListFilter[0].display}")
+
                 val intent = Intent(this, AddGiftCardActivity::class.java)
                 intent.putExtra("genericList", giftCardListFilter)
                 intent.putExtra("custom", customImage)
@@ -277,6 +276,7 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
     }
 
     override fun giftCardClick(comingSoonItem: GiftCardListResponse.Output.GiftCard) {
+        printLog("ticket---->${comingSoonItem}")
         // Hit Event
         try {
             val bundle = Bundle()
@@ -286,6 +286,8 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
         }catch (e:Exception){
             e.printStackTrace()
         }
+
+        GoogleAnalytics.hitViewItemEvent(this,"GiftCard",comingSoonItem.pkGiftId.toString(),"${comingSoonItem.display}")
 
         giftCardListFilter = ArrayList()
         for (i in gcFilterList.indices) {
@@ -344,7 +346,9 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
             val bundle = Bundle()
             bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Gift Card")
 //            bundle.putString("var_gift_card_add_popup","")
-            GoogleAnalytics.hitEvent(this, "gift_card_place_order", bundle)
+            GoogleAnalytics.hitEvent(this, "gift_card_purchase", bundle)
+            GoogleAnalytics.hitPurchaseEvent(this,
+                id,price1,"Gift Card", Constant.GC_COUNT)
         }catch (e:Exception){
             e.printStackTrace()
         }

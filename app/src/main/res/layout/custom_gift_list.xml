@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/item_custom_gift_card"
@@ -19,13 +20,15 @@
             android:layout_width="@dimen/dimen_100dp"
             android:layout_height="@dimen/dimen_50dp"
             android:scaleType="fitXY"
-            android:src="@drawable/gift_card_placeholder" />
+            android:src="@drawable/gift_card_placeholder"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:layout_width="@dimen/dimen_100dp"
             android:layout_height="@dimen/dimen_50dp"
             android:visibility="gone"
-            android:src="@color/black_75" />
+            android:src="@color/black_75"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/tv_gift_value"
@@ -85,6 +88,7 @@
         android:src="@drawable/close"
         android:padding="@dimen/padding_10"
         android:layout_gravity="center_vertical"
-        app:tint="@color/red" />
+        app:tint="@color/red"
+        tools:ignore="ContentDescription" />
 
 </LinearLayout>

@@ -714,5 +714,6 @@ IMAX Corporation is one of the world\'s leading entertainment technology compani
     <string name="how_it_works">How it Works?</string>
     <string name="know_how_to_avail_this_voucher">Know how to avail this voucher</string>
     <string name="about_pvr_privilege_program">About PVR Privilege program</string>
+    <string name="discount_text">Discount Text</string>
 
 </resources>

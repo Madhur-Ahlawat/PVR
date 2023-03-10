@@ -1,7 +1,10 @@
 package com.net.pvr.utils.ga
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import com.google.android.gms.analytics.HitBuilders.EventBuilder
+import com.google.android.gms.analytics.Tracker
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.ui.giftCard.response.GiftCardListResponse
 import com.net.pvr.ui.home.fragment.home.response.HomeResponse
@@ -154,6 +157,7 @@ class GoogleAnalytics {
             }
 
         }
+
     }
 
 }

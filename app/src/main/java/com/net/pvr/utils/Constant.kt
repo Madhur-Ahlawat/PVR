@@ -103,6 +103,7 @@ class Constant {
         var DONATION = "false"
         var OfferDialogImage = "0"
         var SELECTED_SEAT = 0
+        var GC_COUNT = 0
         var SESSION_ID = "0"
         var PRIVILEGEPOINT = "0"
         var PRIVILEGEVOUCHER = "0"

@@ -59,7 +59,7 @@ class GiftCardSummaryActivity : AppCompatActivity() {
         try {
             val bundle = Bundle()
             bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Gift Card Summery")
-            GoogleAnalytics.hitEvent(this, "gift_card_purchase", bundle)
+            GoogleAnalytics.hitEvent(this, "gift_card_place_order", bundle)
         }catch (e:Exception){
             e.printStackTrace()
         }

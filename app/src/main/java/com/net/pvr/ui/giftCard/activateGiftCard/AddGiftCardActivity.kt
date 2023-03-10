@@ -28,7 +28,9 @@ import com.net.pvr.ui.giftCard.activateGiftCard.viewModel.ActivateGiftCardViewMo
 import com.net.pvr.ui.giftCard.response.GiftCardListResponse
 import com.net.pvr.ui.giftCard.response.GiftCards
 import com.net.pvr.ui.giftCard.response.SaveGiftCardCount
+import com.net.pvr.ui.home.fragment.home.HomeFragment
 import com.net.pvr.utils.*
+import com.net.pvr.utils.Constant.Companion.GC_COUNT
 import com.net.pvr.utils.ga.GoogleAnalytics
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -71,7 +73,11 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
         manageFunctions()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun manageFunctions() {
+//        GoogleAnalytics.hitViewItemEvent(this,"GiftCard",item.type,item.d)
+
+
         // Hit Event
         try {
             val bundle = Bundle()
@@ -268,7 +274,6 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
 
 
     private fun setCustomAmountAdapter() {
-//        GoogleAnalytics.hitViewItemEvent(this,"Gift Card",rm.mcc,rm.n)
         binding?.rvCustomAmountList?.layoutManager = LinearLayoutManager(this)
         customGiftCardAdapter = CustomGiftCardAdapter( customizedGiftList, this,Uri.parse(imageValue))
         binding?.rvCustomAmountList?.adapter = customGiftCardAdapter
@@ -396,18 +401,10 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
         return "com.android.externalstorage.documents" == uri.authority
     }
 
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is DownloadsProvider.
-     */
     private fun isDownloadsDocument(uri: Uri): Boolean {
         return "com.android.providers.downloads.documents" == uri.authority
     }
 
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is MediaProvider.
-     */
     private fun isMediaDocument(uri: Uri): Boolean {
         return "com.android.providers.media.documents" == uri.authority
     }
@@ -440,6 +437,8 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
             }
             val saveGiftCardCount = SaveGiftCardCount("","","","","","","","",newList)
             if (saveGiftCardCount.gift_cards.size > 0) {
+                GC_COUNT = saveGiftCardCount.gift_cards.size
+                GoogleAnalytics.hitAddCartEvent(this, HomeFragment.mcId,total_amount.toString(),"Gift Card",saveGiftCardCount.gift_cards.size)
                 val intent = Intent(this, GiftCardPlaceOrderActivity::class.java)
                 try {
                     if (imageValueUri != null) {
@@ -449,10 +448,11 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
                             url
                         )
                     }
+
                 } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
                 }
                 intent.putExtra("key", card_type)
-                println("saveGiftCardCount---$saveGiftCardCount")
                 intent.putExtra(Constant.SharedPreference.GIFT_CARD_DETAILS, saveGiftCardCount)
                 startActivity(intent)
             }
