@@ -5,8 +5,13 @@ import android.app.Application
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.verify.domain.DomainVerificationManager
+import android.content.pm.verify.domain.DomainVerificationUserState
 import android.net.Uri
+import android.os.Build
+import android.provider.Settings
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.evergage.android.ClientConfiguration
 import com.evergage.android.Evergage
@@ -30,11 +35,31 @@ import com.net.pvr.R
 
 @HiltAndroidApp
 class MainApplication : Application() {
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate() {
         super.onCreate()
         FirebaseApp.initializeApp(this)
         PhonePe.init(this)
         setUpEvegageSdk()
+
+        val manager = this.getSystemService(DomainVerificationManager::class.java)
+        val userState = manager.getDomainVerificationUserState(this.packageName)
+
+// Domains that have passed Android App Links verification.
+        val verifiedDomains = userState?.hostToStateMap
+            ?.filterValues { it == DomainVerificationUserState.DOMAIN_STATE_VERIFIED }
+
+// Domains that haven't passed Android App Links verification but that the user
+// has associated with an app.
+        val selectedDomains = userState?.hostToStateMap
+            ?.filterValues { it == DomainVerificationUserState.DOMAIN_STATE_SELECTED }
+
+// All other domains.
+        val unapprovedDomains = userState?.hostToStateMap
+            ?.filterValues { it == DomainVerificationUserState.DOMAIN_STATE_NONE }
+
+        println("verifiedDomains--->$verifiedDomains---$selectedDomains---$unapprovedDomains")
+
 
         // Loging SFMC
         if (BuildConfig.DEBUG) {

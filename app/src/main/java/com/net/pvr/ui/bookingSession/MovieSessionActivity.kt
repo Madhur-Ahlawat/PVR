@@ -124,8 +124,6 @@ class MovieSessionActivity : AppCompatActivity(),
         val view = binding?.root
         setContentView(view)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
-
         manageFunctions()
     }
 

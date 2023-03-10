@@ -11,6 +11,7 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.provider.Settings
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextUtils
@@ -1488,5 +1489,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             binding?.includeAppBar?.profileBtn?.hide()
             binding?.includeAppBar?.textView2?.text = "Hello!"
         }
+
+
     }
 }

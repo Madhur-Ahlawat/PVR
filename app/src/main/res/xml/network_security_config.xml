@@ -1,0 +1,27 @@
+<network-security-config xmlns:tools="http://schemas.android.com/tools">
+<!--    <base-config>-->
+<!--        <trust-anchors>-->
+<!--            <certificates src="system" />-->
+<!--            <certificates src="user"-->
+<!--                tools:ignore="AcceptsUserCertificates" />-->
+<!--        </trust-anchors>-->
+<!--    </base-config>-->
+    <domain-config cleartextTrafficPermitted="true">
+<!--        &lt;!&ndash;DEMO&ndash;&gt;-->
+<!--                <domain includeSubdomains="true">demoapi.pvrcinemas.com</domain>-->
+<!--        &lt;!&ndash;PREPROD&ndash;&gt;-->
+<!--                <domain includeSubdomains="true">preprodapi.pvrcinemas.com</domain>-->
+<!--        &lt;!&ndash;DEV&ndash;&gt;-->
+<!--                <domain includeSubdomains="true">devapi.pvrcinemas.com</domain>-->
+        <!--PROD-->
+                <domain includeSubdomains="true">api1.pvrcinemas.com</domain>
+
+        <pin-set>
+            <pin digest="SHA-256">rQjRp0mriYSUK7kVkn0aOCohyPDXo4sfmDBHbJ7iz1s=</pin>
+            <pin digest="SHA-256">RRM1dGqnDFsCJXBTHky16vi1obOlCgFFn/yOhI/y+ho=</pin>
+            <pin digest="SHA-256">RxAK5fJLXK+k8LB97BPVwSghONcvBmN7C0v3Qa6mOgs=</pin>
+            <pin digest="SHA-256">WOINGBsGlG95B7s/6U7XB/KM7U73y+sXgtLqZpn3G88=</pin>
+        </pin-set>
+
+    </domain-config>
+</network-security-config>
