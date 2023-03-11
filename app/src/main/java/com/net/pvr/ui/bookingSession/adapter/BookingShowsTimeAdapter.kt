@@ -74,7 +74,7 @@ class BookingShowsTimeAdapter(
         with(holder) {
             with(nowShowingList[position]) {
 
-                val itemWidth = (((screenWidth) / (3.6))).roundToInt()
+                val itemWidth = (((screenWidth) / (4)))
                 val layoutParams = ConstraintLayout.LayoutParams(
                     itemWidth,
                     ConstraintLayout.LayoutParams.WRAP_CONTENT

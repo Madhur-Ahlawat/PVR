@@ -336,12 +336,12 @@ class GiftCardRedeemActivity : AppCompatActivity() {
                 paymentType,paymentIntentData.getBookingID());
 
     }*/
-    fun hitcap(cardNo: String?, pin: String?) {
+    private fun hitcap(cardNo: String?, pin: String?) {
         SafetyNet.getClient(this).verifyWithRecaptcha("6Lf3E7oUAAAAAJZv7YHA4gqrflJcVurkxr7ZevCc")
             .addOnSuccessListener(
                 this
             ) { response ->
-                if (!response.tokenResult!!.isEmpty()) {
+                if (response.tokenResult?.isNotEmpty() == true) {
                     // Received captcha token
                     // This token still needs to be validated on the server
                     // using the SECRET key
@@ -350,12 +350,15 @@ class GiftCardRedeemActivity : AppCompatActivity() {
                 }
             }
             .addOnFailureListener(this) { e ->
-//                val alertDailog = PCOkDialog(context, context.getString(R.string.something_wrong),
-//                    context.getResources().getString(R.string.ok),
-//                    object : OnPositiveButtonClick() {
-//                        fun onPressed() {}
-//                    })
-//                alertDailog.show()
+                val dialog = OptionDialog(this,
+                    R.mipmap.ic_launcher,
+                    R.string.app_name,
+                    "Something Went Wrong",
+                    positiveBtnText = R.string.ok,
+                    negativeBtnText = R.string.no,
+                    positiveClick = {},
+                    negativeClick = {})
+                dialog.show()
                 if (e is ApiException) {
                     val apiException = e
                     /*System.out.println("Error================1" + CommonStatusCodes
@@ -371,6 +374,7 @@ class GiftCardRedeemActivity : AppCompatActivity() {
         //you can place your server url
         val url = "https://www.google.com/recaptcha/api/siteverify"
 
+        println("tokenResult-->$tokenResult")
         giftcardRedeemViewModel.verifyResponse("6Lf3E7oUAAAAAJoHUCYDAUP0FJvmISWsBWvh8k-j",
             tokenResult.toString()
         )

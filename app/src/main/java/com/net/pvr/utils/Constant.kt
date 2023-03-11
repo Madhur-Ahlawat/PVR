@@ -462,7 +462,7 @@ class Constant {
                     )
                 } else {
                     val lineEndIndex = tv.layout.getLineEnd(tv.layout.lineCount - 1)
-                    val text = tv.text.subSequence(0, lineEndIndex).toString() + "" + expandText
+                    val text = tv.text.subSequence(0, lineEndIndex).toString() + text
                     tv.text = text
                     tv.movementMethod = LinkMovementMethod.getInstance()
                     tv.setText(
