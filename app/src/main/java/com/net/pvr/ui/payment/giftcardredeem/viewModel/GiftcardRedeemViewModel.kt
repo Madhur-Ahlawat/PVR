@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr.repository.UserRepository
+import com.net.pvr.ui.payment.response.CaptchaResponse
 import com.net.pvr.ui.payment.response.PaytmHmacResponse
 import com.net.pvr.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -48,7 +49,7 @@ class GiftcardRedeemViewModel @Inject constructor(private val userRepository: Us
         }
     }
   //POST PAID PAY
-    val capGiftCardRedeemScope: LiveData<NetworkResult<String>> get() = userRepository.capResponseLiveData
+    val capGiftCardRedeemScope: LiveData<NetworkResult<CaptchaResponse>> get() = userRepository.capResponseLiveData
 
     fun verifyResponse(
         secret: String,response: String

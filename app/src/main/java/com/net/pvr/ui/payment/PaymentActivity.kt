@@ -143,7 +143,7 @@ class PaymentActivity : AppCompatActivity(),
             val price = dialog.findViewById<View>(R.id.price) as TextView?
             val priceText = dialog.findViewById<View>(R.id.priceText) as TextView?
             val promCode = dialog.findViewById<View>(R.id.promcode) as TextView?
-            price?.text = "₹ $priceTextV"
+            price?.text = "₹$priceTextV"
             priceText?.text = "\nsaved with this\ncoupon code"
             if (code != "") {
                 promCode?.text = "'$code' Applied!"
@@ -343,7 +343,7 @@ class PaymentActivity : AppCompatActivity(),
         if (discount_val != "0.0") {
             binding?.discountVocher?.show()
             binding?.discountVocher?.text =
-                "total saving ₹ $discount_val "
+                "total saving ₹$discount_val "
             binding?.cutPrice?.show()
             actualAmt = (paidAmount
                 ?.toDouble()!! - discount_val.toDouble()).toString()

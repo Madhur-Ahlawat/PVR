@@ -47,7 +47,7 @@ class BottomFoodAdapter(
                 binding.textView147.text = this.h
 
                 //price
-                binding.textView153.text =context.getString(R.string.currency)+" " + Constant.DECIFORMAT.format(this.dp / 100.0)
+                binding.textView153.text =context.getString(R.string.currency)+Constant.DECIFORMAT.format(this.dp / 100.0)
 
                 if (this.wt != null && this.wt !="" && this.en != null && this.en != "") {
                     binding.cal.text = this.wt + "  •  " + this.en

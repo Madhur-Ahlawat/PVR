@@ -50,7 +50,7 @@ class AllFoodAdapter(
                 //title
                 binding.textView132.text = this.nm
                 //price
-                binding.textView133.text = "₹ " + Constant.DECIFORMAT.format(this.dp / 100.0)
+                binding.textView133.text = "₹" + Constant.DECIFORMAT.format(this.dp / 100.0)
 
                 if (this.r[0].wt != null && this.r[0].wt !="" && this.r[0].en != null && this.r[0].en != "") {
                     binding.cal.text = this.r[0].wt + "  •  " + this.r[0].en

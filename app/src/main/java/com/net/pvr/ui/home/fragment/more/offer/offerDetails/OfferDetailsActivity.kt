@@ -129,10 +129,10 @@ class OfferDetailsActivity : AppCompatActivity() {
         }
 
         //title
-        binding?.textView186?.text= intent.getStringExtra("title")
+        binding?.textView186?.text= output.t
 
         // desc
-        binding?.textView187?.text= "Valid till "+intent.getStringExtra("disc")
+        binding?.textView187?.text= "Valid till "+output.vt
 
         //Image
         Glide.with(this)

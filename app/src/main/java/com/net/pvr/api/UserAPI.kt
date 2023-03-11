@@ -1579,7 +1579,7 @@ interface UserAPI {
 
     @Headers("Content-Type: application/x-www-form-urlencoded; charset=utf-8")
     @POST("https://www.google.com/recaptcha/api/siteverify")
-    suspend fun verifyResponse(@Query ("secret")secret:String,@Query ("response")response:String): Response<String>
+    suspend fun verifyResponse(@Query ("secret")secret:String,@Query ("response")response:String): Response<CaptchaResponse>
 
 /****************** JUS PAY ****************/
     @POST("api/trans/extendtrans")

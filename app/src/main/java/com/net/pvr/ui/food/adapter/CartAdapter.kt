@@ -44,9 +44,9 @@ class CartAdapter(
                 calculateQt= this.quantity
                 totalPrice= calculateQt*this.price
                 //total price
-                binding.textView153.text = context.getString(R.string.currency)+" "+ Constant.DECIFORMAT.format(this.price / 100.0)
+                binding.textView153.text = context.getString(R.string.currency)+ Constant.DECIFORMAT.format(this.price / 100.0)
 
-//                binding.textView152.text = "₹ " + Constant.DECIFORMAT.format(this.price / 100.0)
+//                binding.textView152.text = "₹" + Constant.DECIFORMAT.format(this.price / 100.0)
                 Glide.with(context).load(this.image).into(binding.imageView146);
 
                 //quantity

@@ -136,22 +136,46 @@ class MoreFragment : Fragment() {
                     if (isHl.equals("true", ignoreCase = true)) {
                         binding?.privilegeLoginUi?.show()
                         binding?.privilegeLogOutUi?.hide()
-                        if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == Constant.SharedPreference.ACTIVE){
+                        if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == Constant.SharedPreference.ACTIVE && preferences.getString(Constant.SharedPreference.SUBS_OPEN) == "true"){
                             binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.subs_back_b)
                         }else{
                             binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.privilege_home_back)
                         }
                     } else {
-                        binding?.privilegeLogOutUi?.show()
-                        binding?.privilegeLoginUi?.hide()
+                        if (ls != null && !ls.equals("", ignoreCase = true)) {
+                            binding?.privilegeLogOutUi?.hide()
+                            binding?.privilegeLoginUi?.show()
+                            if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == Constant.SharedPreference.ACTIVE && preferences.getString(
+                                    Constant.SharedPreference.SUBS_OPEN
+                                ) == "true"){
+                                binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.subs_back_b)
+                            }else{
+                                binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.privilege_home_back)
+                            }
+                        }else{
+                            binding?.privilegeLogOutUi?.show()
+                            binding?.privilegeLoginUi?.hide()
+                        }
                     }
                 } else {
                     binding?.privilegeLogOutUi?.show()
                     binding?.privilegeLoginUi?.hide()
                 }
             } else {
-                binding?.privilegeLogOutUi?.show()
-                binding?.privilegeLoginUi?.hide()
+                if (ls != null && !ls.equals("", ignoreCase = true)) {
+                    binding?.privilegeLogOutUi?.hide()
+                    binding?.privilegeLoginUi?.show()
+                    if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == Constant.SharedPreference.ACTIVE && preferences.getString(
+                            Constant.SharedPreference.SUBS_OPEN
+                        ) == "true"){
+                        binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.subs_back_b)
+                    }else{
+                        binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.privilege_home_back)
+                    }
+                }else{
+                    binding?.privilegeLogOutUi?.show()
+                    binding?.privilegeLoginUi?.hide()
+                }
             }
             binding?.llBookingSection?.show()
             binding?.profileLinear?.show()

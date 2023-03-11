@@ -3377,8 +3377,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
 
-    private val capLiveData = MutableLiveData<NetworkResult<String>>()
-    val capResponseLiveData: LiveData<NetworkResult<String>>
+    private val capLiveData = MutableLiveData<NetworkResult<CaptchaResponse>>()
+    val capResponseLiveData: LiveData<NetworkResult<CaptchaResponse>>
         get() = capLiveData
 
     suspend fun verifyResponse(secret: String,response: String) {
@@ -3387,7 +3387,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         capOfferResponse(response)
     }
 
-    private fun capOfferResponse(response: Response<String>) {
+    private fun capOfferResponse(response: Response<CaptchaResponse>) {
         if (response.isSuccessful && response.body() != null) {
             capLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {

@@ -329,6 +329,53 @@ class GiftCardRedeemActivity : AppCompatActivity() {
         }
 
     }
+    private fun callCaptha() {
+        giftcardRedeemViewModel.capGiftCardRedeemScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (it.data?.success == true) {
+                        giftcardRedeemViewModel.giftCardRedeem(
+                            preferences.getUserId(),
+                            Constant.BOOKING_ID,
+                            Constant.TRANSACTION_ID,
+                            Constant.BOOK_TYPE,
+                            binding?.ccEditText?.text.toString(),
+                            binding?.pinEditText?.text.toString(),
+                            paymentOptionMode
+                        )
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            "Something Went Wrong",
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        "Something Went Wrong",
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+//                    loader = LoaderDialog(R.string.pleaseWait)
+//                    loader?.show(this.supportFragmentManager, null)
+                }
+            }
+        }
+
+    }
 
     /*@Override
     public void onBackPressed() {
@@ -378,15 +425,8 @@ class GiftCardRedeemActivity : AppCompatActivity() {
         giftcardRedeemViewModel.verifyResponse("6Lf3E7oUAAAAAJoHUCYDAUP0FJvmISWsBWvh8k-j",
             tokenResult.toString()
         )
-//        giftcardRedeemViewModel.giftCardRedeem(
-//            preferences.getUserId(),
-//            Constant.BOOKING_ID,
-//            Constant.TRANSACTION_ID,
-//            Constant.BOOK_TYPE,
-//            binding?.ccEditText?.text.toString(),
-//            binding?.pinEditText?.text.toString(),
-//            paymentOptionMode
-//        )
+        callCaptha()
+
     }
 
 

@@ -75,7 +75,7 @@ class PreviousFoodAdapter(
                 //title
                 binding.textView132.text = this.nm
                 //price
-                binding.textView133.text = "₹ " + Constant.DECIFORMAT.format(this.dp / 100.0)
+                binding.textView133.text = "₹" + Constant.DECIFORMAT.format(this.dp / 100.0)
 
                 if (this.r.size > 1) {
                     binding.textView134.show()

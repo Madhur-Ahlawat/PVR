@@ -72,7 +72,7 @@ class CinemaSessionTimeAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
-                val itemWidth = (((screenWidth) / (3.6))).roundToInt()
+                val itemWidth = (((screenWidth) / (4)))
                 val layoutParams = ConstraintLayout.LayoutParams(
                     itemWidth,
                     ConstraintLayout.LayoutParams.WRAP_CONTENT
@@ -101,9 +101,9 @@ class CinemaSessionTimeAdapter(
                 binding.cardView10.setBackgroundDrawable(gd)
 
                 //handicap
-                if (this.hc){
+                if (this.hc) {
                     binding.imageView48.show()
-                }else{
+                } else {
                     binding.imageView48.hide()
                 }
 
@@ -120,19 +120,23 @@ class CinemaSessionTimeAdapter(
                             binding.imageView49.setImageResource(R.drawable.ic_audio_icon_gray)
                         }
                         else -> {
-                            binding.imageView49.invisible()
+                            binding.imageView49.hide()
                         }
                     }
                 }else{
-                    binding.imageView49.invisible()
+                    binding.imageView49.hide()
                 }
 
                 if (!TextUtils.isEmpty(this.txt) && this.txt == ("sens")) {
                     binding.imageView50.show()
                     binding.imageView50.setImageResource(R.drawable.ic_sens_icon_gray)
                 }else{
-                    binding.imageView50.invisible()
+                    binding.imageView50.hide()
                 }
+
+                binding.imageView48.setColorFilter(Color.parseColor(colorCode))
+                binding.imageView49.setColorFilter(Color.parseColor(colorCode))
+                binding.imageView50.setColorFilter(Color.parseColor(colorCode))
 
                 Constant.SESSION_ID = this.sid.toString()
                 Constant.CINEMA_ID = cinemaId.toString()
@@ -387,7 +391,7 @@ class CinemaSessionTimeAdapter(
             value.layoutParams = params5
             value.setTextAppearance(context, R.style.text_gray_gift)
             // value.setTypeface(value.getTypeface(), Typeface.BOLD);
-            value.text = "₹ " + priceDao.p + ".0"
+            value.text = "₹" + priceDao.p + ".0"
             layout.addView(value)
             linearLayout.addView(layout)
         }

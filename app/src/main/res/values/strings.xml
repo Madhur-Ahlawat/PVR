@@ -480,7 +480,7 @@
     <string name="no_refund_post_paid">Paytm Postpaid will not be refuded for cancellation</string>
     <string name="post_paid_otp_enter">You need to enter the OTP received</string>
     <string name="confirm_msz">Do you want to end the session?</string>
-    <string name="payable_amnt_rs">"Payable amount ₹ "</string>
+    <string name="payable_amnt_rs">"Payable amount ₹"</string>
     <string name="promo_code_msg">We promise to keep your promocode safe</string>
 
     <string name="card_number_msg_required">Card Number is required</string>

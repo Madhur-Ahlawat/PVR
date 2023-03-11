@@ -413,7 +413,7 @@ class BookingShowsTimeAdapter(
             value.layoutParams = params5
             value.setTextAppearance(context, R.style.text_gray_gift)
             // value.setTypeface(value.getTypeface(), Typeface.BOLD);
-            value.text = "₹ " + priceDao.p + ".0"
+            value.text = "₹" + priceDao.p + ".0"
             layout.addView(value)
             linearLayout.addView(layout)
         }
