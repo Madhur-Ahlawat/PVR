@@ -16,72 +16,97 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView50"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:ellipsize="end"
-            android:fontFamily="@font/sf_pro_text_medium"
-            android:gravity="center_vertical"
-            android:includeFontPadding="false"
-            android:singleLine="true"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="@dimen/dimen_14sp"
+            android:layout_marginEnd="@dimen/dimen_15dp"
+            app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_max="250dp"
-            tools:text="Pvr Gurgaoefdfddffdfdfdfd fffddfdffdfdfdfddffdfdfdn" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/cinemaLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_15dp"
-            android:background="@drawable/yellow_curve_four"
-            android:fontFamily="@font/sf_pro_text_semi_bold"
-            android:paddingStart="@dimen/dimen_8dp"
-            android:paddingTop="@dimen/dimen_2dp"
-            android:paddingEnd="@dimen/dimen_8dp"
-            android:paddingBottom="@dimen/dimen_2dp"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            android:visibility="visible"
-            app:layout_constraintStart_toEndOf="@+id/textView50"
-            app:layout_constraintTop_toTopOf="@+id/textView50"
-            tools:text="NEW" />
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_10"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView50"
+                app:srcCompat="@drawable/ic_vector_loc"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/textView50"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="24dp"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:fontFamily="@font/sf_pro_text_medium"
+                android:gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
+                app:layout_constraintEnd_toStartOf="@+id/cinemaLocation"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_max="250dp"
+                tools:text="Pvr Gurgaoefdfddffdfdfdfd fffddfdffdfdfdfddffdfdfdn" />
+
+            <TextView
+                android:id="@+id/cinemaLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_15dp"
+                android:background="@drawable/yellow_curve_four"
+                android:fontFamily="@font/sf_pro_text_semi_bold"
+                android:paddingStart="@dimen/dimen_8dp"
+                android:paddingTop="@dimen/dimen_2dp"
+                android:paddingEnd="@dimen/dimen_8dp"
+                android:paddingBottom="@dimen/dimen_2dp"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:visibility="visible"
+                app:layout_constraintStart_toEndOf="@+id/textView50"
+                app:layout_constraintTop_toTopOf="@+id/textView50"
+                tools:text="NEW" />
 
 
-        <TextView
-            android:id="@+id/textView51"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView50"
-            android:layout_marginTop="@dimen/dimen_6dp"
-            android:gravity="top"
-            android:textAllCaps="false"
-            android:textColor="#959595"
-            android:textSize="@dimen/dimen_12sp"
-            android:includeFontPadding="false"
-            android:fontFamily="@font/sf_pro_text_regular"
-            app:layout_constraintEnd_toEndOf="@+id/textView50"
-            app:layout_constraintStart_toStartOf="@+id/textView50"
-            app:layout_constraintTop_toBottomOf="@+id/textView50"
-            tools:text="Pvr" />
+            <TextView
+                android:id="@+id/textView51"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView50"
+                android:layout_marginTop="@dimen/dimen_6dp"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:gravity="top"
+                android:includeFontPadding="false"
+                android:textAllCaps="false"
+                android:textColor="#959595"
+                android:textSize="@dimen/dimen_12sp"
+                app:layout_constraintEnd_toEndOf="@+id/textView50"
+                app:layout_constraintStart_toStartOf="@+id/textView50"
+                app:layout_constraintTop_toBottomOf="@+id/textView50"
+                tools:text="Pvr" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/textView51"
-            android:layout_gravity="bottom"
-            android:layout_marginTop="@dimen/padding_10"
-            android:background="#e6e6e6"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView51" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/textView51"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="@dimen/padding_10"
+                android:background="#e6e6e6"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView51" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -117,15 +142,5 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_10"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView50"
-            app:srcCompat="@drawable/ic_vector_loc"
-            tools:ignore="ContentDescription" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

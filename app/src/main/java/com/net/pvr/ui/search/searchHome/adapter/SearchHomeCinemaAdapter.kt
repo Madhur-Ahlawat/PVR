@@ -31,6 +31,7 @@ class SearchHomeCinemaAdapter(
         holder.title.text = selectCityItemList.n
         holder.address.text = selectCityItemList.ad
         holder.distance.text = selectCityItemList.length
+        holder.title.isSelected = true
 
         if (selectCityItemList.desc!= null && selectCityItemList.desc!= ""){
             holder.cinemaLocation.show()

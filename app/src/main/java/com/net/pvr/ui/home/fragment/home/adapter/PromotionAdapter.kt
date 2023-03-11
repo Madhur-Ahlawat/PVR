@@ -114,7 +114,7 @@ class PromotionAdapter(
                         val bundle = Bundle()
                         bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Home Page")
                         bundle.putString("var_promotional_banner_Name", this.name)
-                        bundle.putString("var_promotional_banner_from","Home")
+                        bundle.putString("var_promotional_banner_from",this.screen)
                         GoogleAnalytics.hitEvent(context, "promotional_banner", bundle)
                     }catch (e:Exception){
                         e.printStackTrace()

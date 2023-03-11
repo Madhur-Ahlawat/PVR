@@ -25,6 +25,7 @@ import com.net.pvr.utils.Constant
 import com.net.pvr.utils.Constant.Companion.ProfileResponseConst
 import com.net.pvr.utils.NetworkResult
 import com.net.pvr.utils.ga.GoogleAnalytics
+import com.net.pvr.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.internal.and
 import java.security.MessageDigest
@@ -197,6 +198,9 @@ class ProfileActivity : AppCompatActivity() {
         //email
         bindingProfile.email.setText(profileResponse?.em)
 
+        //anniversary
+        bindingProfile.anniversary.setText(profileResponse?.doa)
+
         if (profileResponse?.gd!=null && profileResponse?.gd != ""){
             if (profileResponse?.gd == "Male"){
                 bindingProfile.gender.setSelection(1)
@@ -273,8 +277,7 @@ class ProfileActivity : AppCompatActivity() {
         bindingProfile.save.setOnClickListener {
             val dob = Constant().changeDateFormat(bindingProfile.dob.text.toString())
             val anniversary = Constant().changeDateFormat(bindingProfile.anniversary.text.toString())
-
-            println("anniversary--->$dob---$anniversary")
+            printLog("dob----->${dob}")
 
             if (selectedMarital=="Married"){
                 if (bindingProfile.name.text.toString()==""){
@@ -328,11 +331,7 @@ class ProfileActivity : AppCompatActivity() {
                         positiveClick = {},
                         negativeClick = {})
                     dialog.show()
-//<<<<<<< HEAD
-                }else if (selectedGender=="" || selectedGender=="Select"){
-//=======
-                }else if ( Data(dob.toString()) < 13){
-//>>>>>>> 0564f926 (fixes)
+                }else if (Data(bindingProfile.dob.text.toString()) < 13){
                     val dialog = OptionDialog(this,
                         R.mipmap.ic_launcher,
                         R.string.app_name,
@@ -417,21 +416,23 @@ class ProfileActivity : AppCompatActivity() {
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
-            if (parsedDate != null && Date != null) return getDiffYears(Date, parsedDate)
+            if (parsedDate != null && Date != null) return getDiffYears(
+                Date,
+                parsedDate
+            )
         }
         return 0
     }
 
-    private fun getDiffYears(first: Date?, last: Date?): Int {
+    fun getDiffYears(first: Date?, last: Date?): Int {
         val a: Calendar = getCalendar(first)
         val b: Calendar = getCalendar(last)
         var diff = b[Calendar.YEAR] - a[Calendar.YEAR]
-        if ((a[Calendar.MONTH] > b[Calendar.MONTH] || a[Calendar.MONTH] == b[Calendar.MONTH]) && a[Calendar.DATE] > b[Calendar.DATE]) {
+        if (a[Calendar.MONTH] > b[Calendar.MONTH] || a[Calendar.MONTH] == b[Calendar.MONTH] && a[Calendar.DATE] > b[Calendar.DATE]) {
             diff--
         }
         return diff
     }
-
     private fun getCalendar(date: Date?): Calendar {
         val cal = Calendar.getInstance(Locale.US)
         cal.time = date

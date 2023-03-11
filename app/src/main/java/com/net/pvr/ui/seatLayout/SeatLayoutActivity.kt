@@ -71,7 +71,8 @@ import javax.inject.Inject
 
 @Suppress("DEPRECATION", "NAME_SHADOWING")
 @AndroidEntryPoint
-class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClickListenerCity,
+class SeatLayoutActivity : AppCompatActivity(),
+    ShowsAdapter.RecycleViewItemClickListenerCity,
     CinemaShowsAdapter.RecycleViewItemClickListener {
 
     @Inject
@@ -168,9 +169,7 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         // manage offer
         if (intent.getStringExtra("skip").toString() == "false") {
             binding?.constraintLayout60?.show()
-            binding?.textView202?.text = "(You’ll save ${getString(R.string.currency)}  ${
-                intent.getStringExtra("discountPrice").toString()
-            })"
+            binding?.textView202?.text = "(You’ll save ${getString(R.string.currency)}${intent.getStringExtra("discountPrice").toString().trim()})"
             offerEnable = true
         } else {
             binding?.constraintLayout60?.hide()
@@ -189,7 +188,6 @@ class SeatLayoutActivity : AppCompatActivity(), ShowsAdapter.RecycleViewItemClic
         } else {
             binding?.textView393?.text = showsArray[position.toInt()].et
         }
-
 
         seatLayout()
         reserveSeat()

@@ -119,7 +119,6 @@
             android:textColor="@color/yellow"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/dimen_20dp"
-            app:textAllCaps="true"
             android:textSize="@dimen/dimen_16sp"
             android:text="@string/try_latter"
             />

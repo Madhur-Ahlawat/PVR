@@ -6,7 +6,6 @@
         <item name="colorPrimaryVariant">@color/black</item>
         <item name="colorOnPrimary">@color/white</item>
 
-
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/black</item>
         <item name="colorSecondaryVariant">@color/black</item>
@@ -16,7 +15,6 @@
 
         <!-- Customize your theme here. -->
         <item name="android:editTextStyle">@style/myEditText</item>
-
 
     </style>
 
@@ -30,6 +28,7 @@
     </style>
 
     <style name="NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowDisablePreview">true</item>
         <item name="colorPrimaryDark">@color/login_color</item>
         <item name="colorAccent">@color/black</item>
@@ -40,10 +39,9 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowTranslucentStatus">false</item>
-
     </style>
-    //Dialog Theme
 
+    //Dialog Theme
     <style name="AppTheme.Dialog" parent="Theme.MaterialComponents.Light.Dialog">
         <item name="android:windowMinWidthMajor">70%</item>
         <item name="android:windowMinWidthMinor">70%</item>

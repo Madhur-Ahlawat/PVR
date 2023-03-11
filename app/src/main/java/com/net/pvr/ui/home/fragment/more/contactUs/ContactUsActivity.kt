@@ -3,6 +3,7 @@ package com.net.pvr.ui.home.fragment.more.contactUs
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -14,8 +15,10 @@ import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.home.fragment.more.contactUs.adapter.ContactUsItemAdapter
 import com.net.pvr.ui.home.fragment.more.contactUs.viewModel.ContactUsViewModel
 import com.net.pvr.utils.Constant
+import com.net.pvr.utils.InputTextValidator
 import com.net.pvr.utils.NetworkResult
 import com.net.pvr.utils.ga.GoogleAnalytics
+import com.net.pvr.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -52,7 +55,6 @@ class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewI
         listData.add("Feedback")
         listData.add("Advertising/Corporate")
         listData.add("Bulk Booking")
-
         type=listData[0]
 
         //Set Data
@@ -114,6 +116,11 @@ class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewI
                     negativeClick = {
                     })
                 dialog.show()
+            }else if (binding?.notes?.length()!! < 15) {
+                binding?.perosnalNotesLayout?.background = ContextCompat.getDrawable(
+                    this,
+                    R.drawable.edit_text_invalid_input_selector
+                )
             } else {
                 when (type) {
                     "Feedback" -> {
@@ -169,6 +176,11 @@ class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewI
                 }catch (e:Exception){
                     e.printStackTrace()
                 }
+
+                binding?.perosnalNotesLayout?.background = ContextCompat.getDrawable(
+                    this,
+                    R.drawable.text_curve
+                )
 
                 authViewModel.contactUs(
                     notes,

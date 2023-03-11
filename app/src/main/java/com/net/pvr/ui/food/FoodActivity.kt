@@ -40,6 +40,7 @@ import com.net.pvr.utils.*
 import com.net.pvr.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr.utils.Constant.Companion.BOOK_TYPE
 import com.net.pvr.utils.Constant.Companion.CINEMA_ID
+import com.net.pvr.utils.Constant.Companion.FOOD_COUNT
 import com.net.pvr.utils.Constant.Companion.QR
 import com.net.pvr.utils.Constant.Companion.SUMMERYBACK
 import com.net.pvr.utils.Constant.Companion.TRANSACTION_ID
@@ -230,6 +231,9 @@ class FoodActivity : AppCompatActivity(),
                         BOOKING_ID = it.data.output.bi
                         TRANSACTION_ID = it.data.output.tid
                         loader?.dismiss()
+
+                        FOOD_COUNT=cartModel.size
+
                         val intent = Intent(this@FoodActivity, SummeryActivity::class.java)
                         intent.putExtra(BOOK_TYPE, "FOOD")
                         intent.putExtra("food", cartModel)
@@ -273,11 +277,12 @@ class FoodActivity : AppCompatActivity(),
     }
 
     private fun retrieveData(output: FoodResponse.Output) {
+
         //shimmer
         binding?.constraintLayout145?.hide()
 
         //ui Data Load
-        binding?.constraintLayout154?.show()
+        binding?.nestedScrollView?.show()
 
         // Past Food
         if (output.pastfoods.isNotEmpty()) {
@@ -408,7 +413,6 @@ class FoodActivity : AppCompatActivity(),
                 }else{
                       ""
                 }
-                println("itemDescription-->$itemDescription")
                 authViewModel.saveFood(preferences.getUserId(),CINEMA_ID,totalPrice.toString(),itemDescription,
                     readFormat.format(
                         Calendar.getInstance().time

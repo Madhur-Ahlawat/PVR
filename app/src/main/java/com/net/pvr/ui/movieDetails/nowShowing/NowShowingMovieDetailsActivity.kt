@@ -117,11 +117,15 @@ class NowShowingMovieDetailsActivity : AppCompatActivity(), MusicVideoAdapter.Re
     }
 
     private fun retrieveData(output: MovieDetailsResponse.Output) {
-
+        //Design
+        binding?.constraintLayout177?.show()
         ISEvents().movieDetail(this, HomeFragment.mcId)
 
         //Image
-        Glide.with(this).load(output.wit).error(R.drawable.app_icon).into(binding?.imageView26!!)
+        Glide.with(this)
+            .load(output.wit)
+            .error(R.drawable.app_icon)
+            .into(binding?.imageView26!!)
 
         //Trailer
         if (output.t.isEmpty()) {
@@ -281,14 +285,15 @@ class NowShowingMovieDetailsActivity : AppCompatActivity(), MusicVideoAdapter.Re
         val trailerList: ArrayList<MovieDetailsResponse.Trs> = ArrayList()
         val musicVideoList: ArrayList<MovieDetailsResponse.Trs> = ArrayList()
 
-        for (item in output.trs) {
-            if (item.ty == "MUSIC") {
-                musicVideoList.addAll(output.trs)
-            } else {
-                trailerList.addAll(output.trs)
+        if (output.trs != null){
+            for (item in output.trs) {
+                if (item.ty == "MUSIC") {
+                    musicVideoList.addAll(output.trs)
+                } else {
+                    trailerList.addAll(output.trs)
+                }
             }
         }
-
 
         //trailer
         if (trailerList.size != 0) {

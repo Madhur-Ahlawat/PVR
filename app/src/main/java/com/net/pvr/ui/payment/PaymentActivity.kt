@@ -183,7 +183,7 @@ class PaymentActivity : AppCompatActivity(),
                         BOOKING_ID,
                         paidAmount,
                         "Food",
-                        Constant.SELECTED_SEAT
+                        Constant.FOOD_COUNT
                     )
                 }
                 "GIFTCARD" -> {
@@ -213,7 +213,7 @@ class PaymentActivity : AppCompatActivity(),
                 }
             }
         }catch (e:java.lang.Exception){
-
+            e.printStackTrace()
         }
     }
 
@@ -622,7 +622,7 @@ class PaymentActivity : AppCompatActivity(),
                         BOOKING_ID,
                         paidAmount,
                         "Food",
-                        paymentItem.name
+                        Constant.FOOD_COUNT.toString()
                     )
                 }
                 "GIFTCARD" -> {
@@ -1575,6 +1575,7 @@ class PaymentActivity : AppCompatActivity(),
             when (it) {
                 is NetworkResult.Success -> {
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        loader?.dismiss()
                         val isP: String = it.data.output.p
                         vocCount += 1
                         DISCOUNT += it.data.output.di.toDouble()

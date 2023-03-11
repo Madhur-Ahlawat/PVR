@@ -251,14 +251,14 @@ class SplashActivity : AppCompatActivity() {
         preferences.saveString(Constant.SharedPreference.IS_HL, output.hl)
         preferences.saveString(Constant.SharedPreference.IS_LY, output.ly)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val intent = Intent(
-                Settings.ACTION_APP_OPEN_BY_DEFAULT_SETTINGS,
-                Uri.parse("package:${this.packageName}"))
-            startActivity(intent)
-
-        }
-        //movedNext()
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+//            val intent = Intent(
+//                Settings.ACTION_APP_OPEN_BY_DEFAULT_SETTINGS,
+//                Uri.parse("package:${this.packageName}"))
+//            startActivity(intent)
+//
+//        }
+        movedNext()
     }
 
 }

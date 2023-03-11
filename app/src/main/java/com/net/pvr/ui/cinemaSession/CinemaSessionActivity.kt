@@ -102,6 +102,9 @@ class CinemaSessionActivity : AppCompatActivity(),
         binding = ActivityCinemaSessionBinding.inflate(layoutInflater, null, false)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         val view = binding?.root
+        setContentView(view)
+        printLog("cid---->${intent.getStringExtra("cid").toString()}")
+
         if (intent.hasExtra("cid"))
         cinemaId = intent.getStringExtra("cid").toString()
         manageFunctions()
@@ -118,7 +121,6 @@ class CinemaSessionActivity : AppCompatActivity(),
             cinemaId = parts[4]
             cinemaName = parts[3].replace("-".toRegex(), " ")
         }
-        setContentView(view)
 
     }
 
@@ -375,6 +377,8 @@ class CinemaSessionActivity : AppCompatActivity(),
         binding?.nestedScrollView5?.show()
         //shimmer
         binding?.constraintLayout145?.hide()
+        //Filter
+        binding?.filterFab?.hide()
 
         cinemaLat = output.lat
         cinemaLng = output.lang

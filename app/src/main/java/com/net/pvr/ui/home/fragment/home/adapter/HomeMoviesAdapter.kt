@@ -14,6 +14,7 @@ import com.net.pvr.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.hide
 import com.net.pvr.utils.show
+import com.net.pvr.utils.toast
 
 class HomeMoviesAdapter(
     private var context: Context,
@@ -61,8 +62,13 @@ class HomeMoviesAdapter(
                 //title
                 binding.textView42.text = this.n
 
-                //Movie Click
+                //Movie Click  2 Items
                 binding.imageView16.setOnClickListener {
+                    listener.onMoviesClick(this)
+                }
+
+                //Movie Click  1 Items
+                binding.imageHori.setOnClickListener {
                     listener.onMoviesClick(this)
                 }
 

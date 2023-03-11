@@ -217,6 +217,9 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
     }
 
     private fun retrieveData(output: MovieDetailsResponse.Output) {
+        //release in
+        binding?.textView62?.text= output.rtt
+
         //shimmer
         binding?.constraintLayout148?.hide()
         //uiShow

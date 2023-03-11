@@ -127,12 +127,11 @@ class TicketPlaceHolderAdapter(
                 val bundle = Bundle()
                 bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Ticket Confirmation")
                 bundle.putString("var_promotional_banner_Name", obj.name)
-                bundle.putString("var_promotional_banner_from","Ticket Confirmation")
+                bundle.putString("var_promotional_banner_from",obj.screen)
                 GoogleAnalytics.hitEvent(context, "promotional_banner", bundle)
             }catch (e:Exception){
                 e.printStackTrace()
             }
-
 
             // Hit Event
             try {

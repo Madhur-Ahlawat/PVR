@@ -402,12 +402,13 @@ class HomeFragment : Fragment(),
     @SuppressLint("SuspiciousIndentation")
     private fun retrieveData(output: HomeResponse.Output) {
         //layout
-        binding?.constraintLayout144?.show()
+        binding?.nestedScrollView4?.show()
+        //filter
+        binding?.filterFab?.show()
         //shimmer
         binding?.constraintLayout145?.hide()
 
         PlaceHolder = output
-
         if (isAdded) {
             //Category
             val gridLayout =
@@ -727,6 +728,7 @@ class HomeFragment : Fragment(),
     }
 
     override fun onMoviesClick(comingSoonItem: HomeResponse.Mv) {
+
         mcId = comingSoonItem.mcc
         val intent = Intent(requireActivity(), NowShowingMovieDetailsActivity::class.java)
         intent.putExtra("mid", comingSoonItem.id)
