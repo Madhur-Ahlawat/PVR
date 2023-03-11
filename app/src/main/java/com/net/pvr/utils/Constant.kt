@@ -431,6 +431,8 @@ class Constant {
             tv.tag = tv.text
         }
         val vto = tv.viewTreeObserver
+        val text = "<font color=#000000><b>... Read More</b></font>"
+
         vto.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 val obs = tv.viewTreeObserver
@@ -438,7 +440,7 @@ class Constant {
                 if (maxLine == 0) {
                     val lineEndIndex = tv.layout.getLineEnd(0)
                     val text = tv.text.subSequence(0, lineEndIndex - expandText.length + 1)
-                        .toString() + "... " + expandText
+                        .toString() + text
                     tv.text = text
                     tv.movementMethod = LinkMovementMethod.getInstance()
                     tv.setText(
@@ -448,8 +450,9 @@ class Constant {
                     )
                 } else if (maxLine > 0 && tv.lineCount >= maxLine) {
                     val lineEndIndex = tv.layout.getLineEnd(maxLine - 1)
+
                     val text = tv.text.subSequence(0, lineEndIndex - expandText.length - 15)
-                        .toString() + "... " + expandText
+                        .toString() + text
                     tv.text = text
                     tv.movementMethod = LinkMovementMethod.getInstance()
                     tv.setText(
@@ -487,6 +490,7 @@ class Constant {
     ): SpannableStringBuilder? {
         val str = strSpanned.toString()
         val ssb = SpannableStringBuilder(strSpanned)
+        println("str---$str---$ssb")
         if (str.contains(spanableText)) {
             ssb.setSpan(object : MySpannable(false) {
                 override fun onClick(widget: View) {
@@ -500,7 +504,8 @@ class Constant {
                         tv.layoutParams = tv.layoutParams
                         tv.setText(tv.tag.toString(), TextView.BufferType.SPANNABLE)
                         tv.invalidate()
-                        makeTextViewResizable(tv, 5, ".. Read More", true)
+                        val text = "<font color=#000000><b>.. Read More</b></font>"
+                        makeTextViewResizable(tv, 5, text, true)
                     }
                 }
 

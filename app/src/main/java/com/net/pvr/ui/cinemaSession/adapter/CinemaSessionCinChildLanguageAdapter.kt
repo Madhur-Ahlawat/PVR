@@ -1,5 +1,6 @@
 package com.net.pvr.ui.cinemaSession.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -23,7 +24,7 @@ import com.net.pvr.R
 @Suppress("NAME_SHADOWING")
 class CinemaSessionCinChildLanguageAdapter(
     private var nowShowingList: ArrayList<CinemaSessionResponse.Child.Mv.Ml>,
-    private var context: Context,
+    private var context: Activity,
     private var cinemaId: String?,
     private var showType: Int?,
     private var ccn: String,

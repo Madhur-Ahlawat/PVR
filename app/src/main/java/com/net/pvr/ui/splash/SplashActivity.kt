@@ -19,6 +19,7 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.net.pvr.MainApplication
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivitySplashBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -244,6 +245,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun retrieveData(output: SplashResponse.Output) {
+        MainApplication.homeLoadBanner = false
         newTag= output.ntb
         DONATION = output.donation
         preferences.saveString(Constant.SharedPreference.NT, output.nt)

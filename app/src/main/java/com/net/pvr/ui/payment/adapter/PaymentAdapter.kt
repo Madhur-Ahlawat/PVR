@@ -68,7 +68,7 @@ class PaymentAdapter(
                             holder.itemView.visibility = View.VISIBLE
                             binding.imageView81.setImageResource(R.drawable.p_phonepe)
                         } else {
-                            holder.itemView.visibility = View.GONE
+                            holder.itemView.layoutParams.height = 0
                         }
                     } catch (e: PhonePeInitException) {
                         e.printStackTrace()

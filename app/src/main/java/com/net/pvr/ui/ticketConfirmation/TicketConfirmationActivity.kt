@@ -34,6 +34,8 @@ import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.home.HomeActivity
 import com.net.pvr.ui.home.fragment.home.HomeFragment
 import com.net.pvr.ui.home.fragment.home.response.FeedbackDataResponse
+import com.net.pvr.ui.payment.PaymentActivity
+import com.net.pvr.ui.payment.response.PaymentResponse
 import com.net.pvr.ui.ticketConfirmation.adapter.TicketFoodAdapter
 import com.net.pvr.ui.ticketConfirmation.adapter.TicketPlaceHolderAdapter
 import com.net.pvr.ui.ticketConfirmation.adapter.TicketSeatAdapter
@@ -44,6 +46,7 @@ import com.net.pvr.utils.*
 import com.net.pvr.utils.ga.GoogleAnalytics
 import com.net.pvr.utils.isevent.ISEvents
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.ArrayList
 import javax.inject.Inject
 
 
@@ -60,7 +63,12 @@ class TicketConfirmationActivity : AppCompatActivity() {
         binding = ActivityTicketConfirmatonBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-
+        Constant.discount_val = "0.0"
+         PaymentActivity.subsId = ""
+        PaymentActivity.subsToken = ""
+        PaymentActivity.createdAt = ""
+        PaymentActivity.isPromoCodeApplied = false
+        PaymentActivity.offerList = ArrayList()
 
         manageFunction()
     }

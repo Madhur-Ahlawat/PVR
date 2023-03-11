@@ -501,15 +501,27 @@ class MyBookingsActivity : AppCompatActivity(),
         }
 
         ticketPastList = output.p
-        val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        val foodTicketAdapter = FoodTicketChildAdapter(output.c, this, false, this)
-        binding?.recyclerMyBooking?.layoutManager = gridLayout2
-        binding?.recyclerMyBooking?.adapter = foodTicketAdapter
+        if (output.c.size>0) {
+            binding?.textView3?.show()
+            binding?.recyclerMyBooking?.show()
+            val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+            val foodTicketAdapter = FoodTicketChildAdapter(output.c, this, false, this)
+            binding?.recyclerMyBooking?.layoutManager = gridLayout2
+            binding?.recyclerMyBooking?.adapter = foodTicketAdapter
+        }else{
+            binding?.textView3?.hide()
+            binding?.recyclerMyBooking?.hide()
+        }
 
-        val gridLayoutPast = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        val pastTicketAdapter = FoodTicketChildAdapter(output.p, this, true, this)
-        binding?.pastTicketListView?.layoutManager = gridLayoutPast
-        binding?.pastTicketListView?.adapter = pastTicketAdapter
+        if (output.p.size>0) {
+            binding?.llPastBooking?.show()
+            val gridLayoutPast = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+            val pastTicketAdapter = FoodTicketChildAdapter(output.p, this, true, this)
+            binding?.pastTicketListView?.layoutManager = gridLayoutPast
+            binding?.pastTicketListView?.adapter = pastTicketAdapter
+        }else{
+            binding?.llPastBooking?.hide()
+        }
     }
 
     //GiftCard
@@ -526,7 +538,7 @@ class MyBookingsActivity : AppCompatActivity(),
 
     override fun resend(comingSoonItem: GiftCardResponse.Output.Gc) {
         authViewModel.resendMail(
-            preferences.getUserId(), comingSoonItem.id, "GIFTCARD"
+            preferences.getUserId(), comingSoonItem.id.replace("ID: ",""), "GIFTCARD"
         )
     }
 

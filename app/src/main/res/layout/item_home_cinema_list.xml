@@ -79,6 +79,7 @@
                     android:textColor="@color/pvr_dark_black"
                     android:textSize="11sp"
                     android:visibility="visible"
+                    android:includeFontPadding="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +97,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ellipsize="end"
-        android:fontFamily="@font/sf_pro_text_bold"
+        android:fontFamily="@font/montserrat_bold"
         android:includeFontPadding="false"
         android:maxLines="1"
         android:textColor="@color/black"
@@ -166,9 +167,10 @@
         android:paddingTop="@dimen/dimen_8dp"
         android:paddingEnd="@dimen/dimen_22dp"
         android:paddingBottom="@dimen/dimen_8dp"
+        android:includeFontPadding="false"
         android:text="@string/book"
         android:textColor="@color/black"
-        android:textSize="@dimen/dimen_14sp"
+        android:textSize="@dimen/dimen_15sp"
         app:layout_constraintStart_toStartOf="@+id/cardView3"
         app:layout_constraintTop_toBottomOf="@+id/textView45" />
 

@@ -4,8 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.Html
+import android.text.TextUtils
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.VolleyError
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.safetynet.SafetyNet
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityGiftcardRedeemBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -15,7 +19,9 @@ import com.net.pvr.ui.payment.PaymentActivity
 import com.net.pvr.ui.payment.giftcardredeem.viewModel.GiftcardRedeemViewModel
 import com.net.pvr.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import org.json.JSONObject
 import java.util.*
+import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -97,15 +103,8 @@ class GiftCardRedeemActivity : AppCompatActivity() {
                 paymentOptionMode
             )
         } else {
-            giftcardRedeemViewModel.giftCardRedeem(
-                preferences.getUserId(),
-                Constant.BOOKING_ID,
-                Constant.TRANSACTION_ID,
-                Constant.BOOK_TYPE,
-                binding?.ccEditText?.text.toString(),
-                binding?.pinEditText?.text.toString(),
-                paymentOptionMode
-            )
+            hitcap(binding?.ccEditText?.text.toString(),binding?.pinEditText?.text.toString())
+
         }
     }
 
@@ -329,6 +328,61 @@ class GiftCardRedeemActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    /*@Override
+    public void onBackPressed() {
+        Util.confirmDialog(context, paymentIntentData.getCinemaID(), paymentIntentData.getTransactionID(),
+                paymentType,paymentIntentData.getBookingID());
+
+    }*/
+    fun hitcap(cardNo: String?, pin: String?) {
+        SafetyNet.getClient(this).verifyWithRecaptcha("6Lf3E7oUAAAAAJZv7YHA4gqrflJcVurkxr7ZevCc")
+            .addOnSuccessListener(
+                this
+            ) { response ->
+                if (!response.tokenResult!!.isEmpty()) {
+                    // Received captcha token
+                    // This token still needs to be validated on the server
+                    // using the SECRET key
+                    //  verifyTokenOnServer(response.getTokenResult());
+                    handleSiteVerify(response.tokenResult, cardNo, pin)
+                }
+            }
+            .addOnFailureListener(this) { e ->
+//                val alertDailog = PCOkDialog(context, context.getString(R.string.something_wrong),
+//                    context.getResources().getString(R.string.ok),
+//                    object : OnPositiveButtonClick() {
+//                        fun onPressed() {}
+//                    })
+//                alertDailog.show()
+                if (e is ApiException) {
+                    val apiException = e
+                    /*System.out.println("Error================1" + CommonStatusCodes
+                                        .getStatusCodeString(apiException.getStatusCode()));*/
+                } else {
+                    /*System.out.println("Error================2" + e.getMessage());*/
+                }
+            }
+    }
+
+    private fun handleSiteVerify(tokenResult: String?, cardNo: String?, pin: String?) {
+        //it is google recaptcha siteverify server
+        //you can place your server url
+        val url = "https://www.google.com/recaptcha/api/siteverify"
+
+        giftcardRedeemViewModel.verifyResponse("6Lf3E7oUAAAAAJoHUCYDAUP0FJvmISWsBWvh8k-j",
+            tokenResult.toString()
+        )
+//        giftcardRedeemViewModel.giftCardRedeem(
+//            preferences.getUserId(),
+//            Constant.BOOKING_ID,
+//            Constant.TRANSACTION_ID,
+//            Constant.BOOK_TYPE,
+//            binding?.ccEditText?.text.toString(),
+//            binding?.pinEditText?.text.toString(),
+//            paymentOptionMode
+//        )
     }
 
 

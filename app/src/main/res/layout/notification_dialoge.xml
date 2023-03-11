@@ -97,14 +97,15 @@
 
         <TextView
             android:id="@+id/turnOn"
-            android:fontFamily="@font/sfprodisplay_bold"
+            android:fontFamily="@font/sf_pro_text_bold"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_40dp"
             android:layout_weight="1"
+            android:includeFontPadding="false"
+            android:textColor="@color/black"
             android:backgroundTint="@color/pvr_yellow"
             android:background="@drawable/yellow_book_curve"
             android:gravity="center"
-            app:textAllCaps="true"
             android:textSize="18sp"
             android:text="Turn On"
             />

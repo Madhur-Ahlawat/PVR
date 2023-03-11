@@ -1,6 +1,7 @@
 package com.net.pvr.ui.cinemaSession.adapter
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
@@ -10,11 +11,13 @@ import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
 import android.text.TextUtils
+import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.*
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -38,7 +41,7 @@ import kotlin.math.roundToInt
 @Suppress("DEPRECATION")
 class CinemaSessionTimeAdapter(
     private var nowShowingList: ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>,
-    private var context: Context,
+    private var context: Activity,
     private var cinemaId: String?,
     private var ccn: String,
     private var adlt: Boolean,
@@ -49,6 +52,8 @@ class CinemaSessionTimeAdapter(
 
     private var sidText: String = ""
     private var ccText: String = ""
+    private var displayMetrics = DisplayMetrics()
+    private var screenWidth = 0
     inner class ViewHolder(val binding: ItemCinemaDetailsShowTimeBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -58,6 +63,8 @@ class CinemaSessionTimeAdapter(
             parent,
             false
         )
+        context.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        screenWidth = displayMetrics.widthPixels
         return ViewHolder(binding)
     }
 
@@ -65,6 +72,16 @@ class CinemaSessionTimeAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
+                val itemWidth = (((screenWidth) / (3.6))).roundToInt()
+                val layoutParams = ConstraintLayout.LayoutParams(
+                    itemWidth,
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT
+                )
+//                layoutParams.marginEnd = Constant().convertDpToPixel(13f, context)
+//                layoutParams.bottomMargin = Constant().convertDpToPixel(13f, context)
+//                holder.itemView.layoutParams = layoutParams
+
+                binding.mainView.layoutParams = layoutParams
                 //Language
                 binding.textView96.text = this.st
                 val colorCode = "#" + this.cc

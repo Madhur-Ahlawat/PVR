@@ -56,8 +56,10 @@ import com.net.pvr.ui.ticketConfirmation.response.TicketBookedResponse
 import com.net.pvr.ui.watchList.response.WatchListResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
+
 
 interface UserAPI {
     @POST("api/v2/user/login")
@@ -1573,6 +1575,11 @@ interface UserAPI {
         @Query("pt") platform: String,
         @Query("did") did: String
     ): Response<PaytmHmacResponse>
+
+
+    @Headers("Content-Type: application/x-www-form-urlencoded; charset=utf-8")
+    @POST("https://www.google.com/recaptcha/api/siteverify")
+    suspend fun verifyResponse(@Query ("secret")secret:String,@Query ("response")response:String): Response<String>
 
 /****************** JUS PAY ****************/
     @POST("api/trans/extendtrans")

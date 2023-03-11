@@ -35,35 +35,16 @@ import com.net.pvr.R
 
 @HiltAndroidApp
 class MainApplication : Application() {
+    companion object {
+         var homeLoadBanner = false
+    }
+
     @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate() {
         super.onCreate()
         FirebaseApp.initializeApp(this)
         PhonePe.init(this)
         setUpEvegageSdk()
-
-        try {
-            val manager = this.getSystemService(DomainVerificationManager::class.java)
-            val userState = manager.getDomainVerificationUserState(this.packageName)
-
-// Domains that have passed Android App Links verification.
-            val verifiedDomains = userState?.hostToStateMap
-                ?.filterValues { it == DomainVerificationUserState.DOMAIN_STATE_VERIFIED }
-
-// Domains that haven't passed Android App Links verification but that the user
-// has associated with an app.
-            val selectedDomains = userState?.hostToStateMap
-                ?.filterValues { it == DomainVerificationUserState.DOMAIN_STATE_SELECTED }
-
-// All other domains.
-            val unapprovedDomains = userState?.hostToStateMap
-                ?.filterValues { it == DomainVerificationUserState.DOMAIN_STATE_NONE }
-
-            println("verifiedDomains--->$verifiedDomains---$selectedDomains---$unapprovedDomains")
-
-        }catch (e:java.lang.Exception){
-            e.printStackTrace()
-        }
 
 
         // Loging SFMC

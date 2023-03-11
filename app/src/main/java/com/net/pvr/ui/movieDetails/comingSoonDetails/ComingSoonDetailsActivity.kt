@@ -363,7 +363,7 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
 
         //Share
         binding?.imageView28?.setOnClickListener {
-            Constant().shareData(this,"","")
+            Constant().shareData(this, "Check out this movie at PVR!",output.su)
         }
 
         //Back

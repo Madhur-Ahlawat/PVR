@@ -36,9 +36,9 @@ class GiftCardAdapter(
                 //Price
                 binding.tvValue.text = cinemaItem.ta
                 //DateTime
-                binding.tvDate.text = cinemaItem.d
+                binding.tvDate.text = cinemaItem.d.replace("Date:","")
                 //OrderId
-                binding.orderId.text =context.getString(R.string.order)+ cinemaItem.id
+                binding.orderId.text =context.getString(R.string.orderId)+ cinemaItem.id.replace("ID: ","")
                 //resend
                 binding.tvresend.setOnClickListener {
                     listener.resend(this)

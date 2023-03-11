@@ -146,9 +146,9 @@ class PromotionAdapter(
                         val intent = Intent(context, WebViewActivity::class.java)
                         intent.putExtra("from", "more")
                         intent.putExtra(
-                            "title", context.getString(R.string.terms_condition_text)
+                            "title",this.name
                         )
-                        intent.putExtra("getUrl", Constant.termsCondition)
+                        intent.putExtra("getUrl", this.redirect_url)
                         context.startActivity(intent)
 
                     } else if (this.type == "VIDEO" && this.redirectView != "") {

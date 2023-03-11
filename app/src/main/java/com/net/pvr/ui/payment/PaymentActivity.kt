@@ -259,6 +259,7 @@ class PaymentActivity : AppCompatActivity(),
 
         if (BOOK_TYPE == "BOOKING" || BOOK_TYPE == "FOOD") {
             binding?.constraintLayout110?.show()
+            binding?.promoView?.show()
             //voucher
             val time = SystemClock.uptimeMillis()
             authViewModel.voucher(
@@ -270,6 +271,8 @@ class PaymentActivity : AppCompatActivity(),
             )
         } else {
             binding?.constraintLayout110?.hide()
+            binding?.promoView?.hide()
+
         }
 
 

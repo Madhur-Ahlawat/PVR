@@ -216,19 +216,19 @@
     <string name="max_seat_msz1">You can only book 10 tickets at a time.</string>
     <string name="currency">₹</string>
     <string name="bullet">\u25CF</string>
-    <string name="screen_this_way">SCREEN</string>
+    <string name="screen_this_way">Screen</string>
     <string name="your_seats">Selected</string>
     <string name="vacant">Vacant</string>
     <string name="occupied">Occupied</string>
     <string name="disable">Wheelchair</string>
     <string name="buddy">Buddy</string>
-    <string name="retry">RETRY</string>
+    <string name="retry">Retry</string>
     <string name="your_session_expired_message">Your session has expired.</string>
-    <string name="selected_seats">SELECTED SEATS</string>
+    <string name="selected_seats">Selected Seats</string>
     <string name="social_distance">Social\nDistance</string>
 
     //Food
-    <string name="add">ADD</string>
+    <string name="add">Add</string>
     <string name="customize">Customizable</string>
     <string name="max_item_msz">You can only order </string>
     <string name="items_a_time">items at a time.</string>
@@ -334,7 +334,7 @@
     <string name="book_using_pvr_mobile_app_or_website">Book using PVR mobile\napp or website</string>
     <string name="pvr_privilege_join">Join PVR Privilege</string>
     <string name="unlock_card">Unlock Card</string>
-    <string name="signIn">SIGN IN</string>
+    <string name="signIn">Sign In</string>
     <string name="pvr_passport">PVR Passport</string>
     <string name="book_movie">Book Movie</string>
     <string name="how_work"><u>How it works?</u></string>
@@ -374,8 +374,8 @@
     <string name="your_message_should_have_at_least_15_characters">Your message should have at least 15 characters</string>
 
     //ContactUs
-    <string name="enterMobile">Please Enter Your Phone</string>
-    <string name="enterComment">Please Enter Your Comment</string>
+    <string name="enterMobile">Please enter your phone</string>
+    <string name="enterComment">Please enter your comment</string>
     <string name="trending_movies">trending movies</string>
     <string name="cinema_near_your">Cinemas near you</string>
     <string name="ticket_cancellation">Ticket Cancellation</string>
@@ -413,8 +413,7 @@
     <string name="payment">Payment</string>
     <string name="other_payment_method">Other Payment Method</string>
     <string name="pvr_exclusives">PVR EXCLUSIVES</string>
-    Redeem
-    <string name="redeem">Reedem</string>
+    <string name="redeem">Redeem</string>
     <string name="card_number">Card Number</string>
     <string name="valid_through_mm_yy">MM/YY</string>
     <string name="cvv">CVV</string>
@@ -424,8 +423,8 @@
     <string name="pay_via_card">Pay Via </string>
     <string name="time">Show time (Approx)</string>
     <string name="seats_info">Seats INFO</string>
-    <string name="order_id">oRDER ID</string>
-    <string name="kiosk_code">KIOSK CODE</string>
+    <string name="order_id">Order ID</string>
+    <string name="kiosk_code">Kiosk code</string>
     <string name="know_when_to_leave_for_your_movie">Know when to leave for your movie</string>
     <string name="add_location">Add Location</string>
     <string name="total">Total</string>
@@ -481,7 +480,7 @@
     <string name="no_refund_post_paid">Paytm Postpaid will not be refuded for cancellation</string>
     <string name="post_paid_otp_enter">You need to enter the OTP received</string>
     <string name="confirm_msz">Do you want to end the session?</string>
-    <string name="payable_amnt_rs">"PAYABLE AMOUNT ₹ "</string>
+    <string name="payable_amnt_rs">"Payable amount ₹ "</string>
     <string name="promo_code_msg">We promise to keep your promocode safe</string>
 
     <string name="card_number_msg_required">Card Number is required</string>
@@ -493,7 +492,7 @@
     <string name="error_msg_mobile">enter mobile number separated by comma</string>
     <string name="error_msg_email">enter email address separated by comma</string>
     <string name="shared_successfully">Shared successfully</string>
-    <string name="apply_name">APPLY</string>
+    <string name="apply_name">Apply</string>
 
     <string name="promo_code_msg_required">promocode is required</string>
     <string name="promo_code_msg_invalid">invalid promocode</string>
@@ -517,7 +516,7 @@
     <string name="otp_sent">OTP Sent</string>
     <string name="terms_amp_condition"><![CDATA[Terms & Condition]]></string>
     <string name="terms_amp_condition_gc">I agree to the terms &amp; conditions</string>
-    <string name="avail_offers">AVAIL OFFERS</string>
+    <string name="avail_offers">Avail Offers</string>
 
     <string name="languages">Languages</string>
     <string name="filters">Filters</string>
@@ -529,11 +528,11 @@
     <string name="_8_00">8:00</string>
     <string name="_24_00">24:00</string>
     <string name="trending">Trending</string>
-    <string name="open_m_ticket">OPEN M-TICKET</string>
+    <string name="open_m_ticket">Open M-Ticket</string>
     <string name="clear_all">Clear All</string>
     <string name="privacy">Privacy</string>
     <string name="see_all">See All</string>
-    <string name="watchlist">WATCHLIST</string>
+    <string name="watchlist">Watchlist</string>
 
     <!--    terms-->
     <string-array name="terms_condition_items">
@@ -562,7 +561,7 @@
     <string name="please_select_your_booking">Please select your booking</string>
     <string name="complete_your_profile">Complete Your Profile</string>
     <string name="get_500_voucher_on_100_profile_completion">Get ₹500 voucher on 100% profile completion</string>
-    <string name="try_latter">Try Latter</string>
+    <string name="try_latter">Try Later</string>
     <string name="sorry_we_could_not_find_what_you_were_looking_for">Sorry! We could not find what you were \nlooking for</string>
 
     //Cinema Details
@@ -616,12 +615,12 @@
     <string name="name_text">Name</string>
     <string name="mobile_number_new">Recipient Mobile Number</string>
     <string name="email_id_">Email Id</string>
-    <string name="your_card_">YOUR CARD</string>
+    <string name="your_card_">Your Card</string>
     <string name="delivery_address_">Delivery Address</string>
     <string name="Delivery_data">Delivery Charges</string>
     <string name="recipient_details_">Recipient Details</string>
 
-    <string name="gift_card_place_order">PLACE ORDER</string>
+    <string name="gift_card_place_order">Place Order</string>
     <string name="gift_card_total">Gift Card Total</string>
     <string name="gift_card_name_msg_required">Recipient name is required.</string>
 
@@ -637,7 +636,7 @@
     <string name="gift_card_city_msg">please ensure your city name is correct.</string>
     <string name="gift_card_pincode_msg">please ensure correct pincode for faster delievery.</string>
     <string name="title_activity_gift_card_order_summary">GiftCardOrderSummary</string>
-    <string name="gift_card_header_order_summary">ORDER SUMMARY</string>
+    <string name="gift_card_header_order_summary">Order Summary</string>
     <string name="country_code">91</string>
     <string name="email_msg_invalid">You entered an invalid email address</string>
     <string name="details">Details</string>
@@ -701,10 +700,10 @@ IMAX Corporation is one of the world\'s leading entertainment technology compani
     <string name="past_bookings">Past Bookings</string>
     <string name="show_all">Show All</string>
 
-    <string name="seat_arrangement">SEAT ARRANGEMENT</string>
+    <string name="seat_arrangement">Seat Arrangement</string>
     <string name="screen_way">screen this way</string>
     <string name="evening_time_filter">5:01PM - 8:00PM</string>
-    <string name="all_theatres">ALL THEATRES</string>
+    <string name="all_theatres">All Theatre</string>
     <string name="amount">Amount:</string>
     <string name="valid_till">Valid till</string>
     <string name="all_vouchers">All Vouchers</string>

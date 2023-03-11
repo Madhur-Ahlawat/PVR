@@ -3376,6 +3376,28 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
     }
 
+
+    private val capLiveData = MutableLiveData<NetworkResult<String>>()
+    val capResponseLiveData: LiveData<NetworkResult<String>>
+        get() = capLiveData
+
+    suspend fun verifyResponse(secret: String,response: String) {
+        capLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.verifyResponse(secret,response)
+        capOfferResponse(response)
+    }
+
+    private fun capOfferResponse(response: Response<String>) {
+        if (response.isSuccessful && response.body() != null) {
+            capLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            capLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            capLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
     /***************     MOBIKWIK API   ***************/
 
     private val mobikwikOTPLiveData = MutableLiveData<NetworkResult<MobikwikOTPResponse>>()

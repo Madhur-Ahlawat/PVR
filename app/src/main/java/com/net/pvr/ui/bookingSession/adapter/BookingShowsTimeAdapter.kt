@@ -74,15 +74,16 @@ class BookingShowsTimeAdapter(
         with(holder) {
             with(nowShowingList[position]) {
 
-                val itemWidth = ((screenWidth - 0) / 4)
+                val itemWidth = (((screenWidth) / (3.6))).roundToInt()
                 val layoutParams = ConstraintLayout.LayoutParams(
                     itemWidth,
                     ConstraintLayout.LayoutParams.WRAP_CONTENT
                 )
-                layoutParams.rightMargin = Constant().convertDpToPixel(13f, context)
+//                layoutParams.marginEnd = Constant().convertDpToPixel(13f, context)
+//                layoutParams.bottomMargin = Constant().convertDpToPixel(13f, context)
 //                holder.itemView.layoutParams = layoutParams
 
-                binding.cardView10.layoutParams = layoutParams
+                binding.mainView.layoutParams = layoutParams
 
                 val colorCode = "#" + this.cc
 

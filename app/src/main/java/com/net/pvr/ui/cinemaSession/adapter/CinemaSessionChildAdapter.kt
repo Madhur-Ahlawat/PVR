@@ -1,6 +1,7 @@
 package com.net.pvr.ui.cinemaSession.adapter
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -18,7 +19,7 @@ import com.net.pvr.R
 @Suppress("NAME_SHADOWING")
 class CinemaSessionChildAdapter(
     private var nowShowingList: ArrayList<CinemaSessionResponse.Child.Mv>,
-    private var context: Context,
+    private var context: Activity,
     private var cinemaId: String?,
     private var ccn: String,
     private var at: String

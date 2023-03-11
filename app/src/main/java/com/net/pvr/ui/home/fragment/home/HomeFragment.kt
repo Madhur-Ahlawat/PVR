@@ -11,7 +11,6 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.provider.Settings
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextUtils
@@ -39,6 +38,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 import com.google.gson.internal.LinkedTreeMap
+import com.net.pvr.MainApplication
+import com.net.pvr.MainApplication.Companion.homeLoadBanner
 import com.net.pvr.R
 import com.net.pvr.databinding.FragmentHomeBinding
 import com.net.pvr.databinding.TrailersDialogBinding
@@ -72,6 +73,7 @@ import com.net.pvr.utils.Constant.Companion.PRIVILEGEPOINT
 import com.net.pvr.utils.Constant.Companion.PRIVILEGEVOUCHER
 import com.net.pvr.utils.Constant.Companion.PlaceHolder
 import com.net.pvr.utils.Constant.SharedPreference.Companion.ACTIVE
+import com.net.pvr.utils.Constant.SharedPreference.Companion.SUBS_OPEN
 import com.net.pvr.utils.ga.GoogleAnalytics
 import com.net.pvr.utils.isevent.ISEvents
 import com.squareup.picasso.Callback
@@ -399,7 +401,7 @@ class HomeFragment : Fragment(),
 
     }
 
-    @SuppressLint("SuspiciousIndentation")
+    @SuppressLint("SuspiciousIndentation", "ClickableViewAccessibility")
     private fun retrieveData(output: HomeResponse.Output) {
         //layout
         binding?.nestedScrollView4?.show()
@@ -421,17 +423,17 @@ class HomeFragment : Fragment(),
         }
 
         //Slider
-        if (isAdded) {
-            binding?.recyclerViewSlider?.onFlingListener = null
-            val snapHelper = PagerSnapHelper()
-            snapHelper.attachToRecyclerView(binding?.recyclerViewSlider)
-            val gridLayoutSlider =
-                GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
-            binding?.recyclerViewSlider?.layoutManager = LinearLayoutManager(context)
-            val adapterSlider = HomeSliderAdapter(requireActivity(), output.mv, this)
-            binding?.recyclerViewSlider?.layoutManager = gridLayoutSlider
-            binding?.recyclerViewSlider?.adapter = adapterSlider
-        }
+//        if (isAdded) {
+//            binding?.recyclerViewSlider?.onFlingListener = null
+//            val snapHelper = PagerSnapHelper()
+//            snapHelper.attachToRecyclerView(binding?.recyclerViewSlider)
+//            val gridLayoutSlider =
+//                GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
+//            binding?.recyclerViewSlider?.layoutManager = LinearLayoutManager(context)
+//            val adapterSlider = HomeSliderAdapter(requireActivity(), output.mv, this)
+//            binding?.recyclerViewSlider?.layoutManager = gridLayoutSlider
+//            binding?.recyclerViewSlider?.adapter = adapterSlider
+//        }
 
         //Promotion
         if (output.ph.isNotEmpty()) updatePH(output.ph)
@@ -475,8 +477,8 @@ class HomeFragment : Fragment(),
         binding?.recyclerOffer?.layoutManager = layoutManager
         binding?.recyclerOffer?.onFlingListener = null
         snapHelper.attachToRecyclerView(binding?.recyclerOffer!!)
-        val adapterTrailer = HomeOfferAdapter(requireActivity(), output.cp, this)
         binding?.recyclerOffer?.layoutManager = layoutManager
+        val adapterTrailer = HomeOfferAdapter(requireActivity(), output.cp, this)
         binding?.recyclerOffer?.adapter = adapterTrailer
 
         if (output.cp.size > 1) {
@@ -503,6 +505,7 @@ class HomeFragment : Fragment(),
             handler.postDelayed(runnable, speedScroll.toLong())
         }
 
+
 //        binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
 
         binding?.filterFab?.setOnClickListener {
@@ -526,7 +529,17 @@ class HomeFragment : Fragment(),
             )
         }
 
-        if (bannerShow == 0 && output.pu.isNotEmpty()) {
+//        binding?.filterFab?.setOnTouchListener{ v, event ->
+//            if (event.action == MotionEvent.ACTION_DOWN) {
+//                binding?.swipeHome?.isRefreshing = false
+//                // Do what you want
+//                true
+//            } else {
+//                binding?.swipeHome?.isRefreshing = true
+//                false
+//            }
+//        }
+        if (!homeLoadBanner && output.pu.isNotEmpty()) {
             initBanner(output.pu)
         }
 
@@ -892,6 +905,11 @@ class HomeFragment : Fragment(),
             mcId = mv.mcc
             startActivity(intent)
         }
+        if (videoData.size>0){
+            bindingTrailer.textView69.show()
+        }else{
+            bindingTrailer.textView69.hide()
+        }
 
 //trailer
         val gridLayoutManager1 =
@@ -901,11 +919,18 @@ class HomeFragment : Fragment(),
         bindingTrailer.recyclerView5.adapter = trailerAdapter
 
 //music
-        val gridLayoutManager =
-            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
-        val musicVideoTrsAdapter = MusicVideoTrsAdapter(musicData, requireContext(), this)
-        bindingTrailer.recyclerMusic.layoutManager = gridLayoutManager
-        bindingTrailer.recyclerMusic.adapter = musicVideoTrsAdapter
+        if (musicData.size>0) {
+            bindingTrailer.textView70.show()
+            bindingTrailer.recyclerMusic.show()
+            val gridLayoutManager =
+                GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+            val musicVideoTrsAdapter = MusicVideoTrsAdapter(musicData, requireContext(), this)
+            bindingTrailer.recyclerMusic.layoutManager = gridLayoutManager
+            bindingTrailer.recyclerMusic.adapter = musicVideoTrsAdapter
+        }else{
+            bindingTrailer.textView70.hide()
+            bindingTrailer.recyclerMusic.hide()
+        }
     }
 
     private fun nextBooking() {
@@ -1171,27 +1196,48 @@ class HomeFragment : Fragment(),
             val ls = preferences.getString(Constant.SharedPreference.LOYALITY_STATUS)
             val isHl: String = preferences.getString(Constant.SharedPreference.IS_HL)
             val isLy: String = preferences.getString(Constant.SharedPreference.IS_LY)
+            println("LS---$ls--$isHl--$isLy")
             if (isLy.equals("true", ignoreCase = true)) {
                 if (ls != null && !ls.equals("", ignoreCase = true)) {
                     if (isHl.equals("true", ignoreCase = true)) {
                         binding?.privilegeLoginUi?.show()
                         binding?.privilegeLogOutUi?.hide()
-                        if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == ACTIVE){
+                        if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == ACTIVE && preferences.getString(SUBS_OPEN) == "true"){
                             binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.subs_back_b)
                         }else{
                             binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.privilege_home_back)
                         }
                     } else {
-                        binding?.privilegeLogOutUi?.show()
-                        binding?.privilegeLoginUi?.hide()
+                        if (ls != null && !ls.equals("", ignoreCase = true)) {
+                            binding?.privilegeLogOutUi?.hide()
+                            binding?.privilegeLoginUi?.show()
+                            if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == ACTIVE && preferences.getString(SUBS_OPEN) == "true"){
+                                binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.subs_back_b)
+                            }else{
+                                binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.privilege_home_back)
+                            }
+                        }else{
+                            binding?.privilegeLogOutUi?.show()
+                            binding?.privilegeLoginUi?.hide()
+                        }
                     }
                 } else {
                     binding?.privilegeLogOutUi?.show()
                     binding?.privilegeLoginUi?.hide()
                 }
             } else {
-                binding?.privilegeLogOutUi?.show()
-                binding?.privilegeLoginUi?.hide()
+                if (ls != null && !ls.equals("", ignoreCase = true)) {
+                    binding?.privilegeLogOutUi?.hide()
+                    binding?.privilegeLoginUi?.show()
+                    if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == ACTIVE && preferences.getString(SUBS_OPEN) == "true"){
+                        binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.subs_back_b)
+                    }else{
+                        binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.privilege_home_back)
+                    }
+                }else{
+                    binding?.privilegeLogOutUi?.show()
+                    binding?.privilegeLoginUi?.hide()
+                }
             }
 
             printLog("pt---->${PRIVILEGEPOINT}")
@@ -1210,6 +1256,7 @@ class HomeFragment : Fragment(),
 
     @SuppressLint("CutPasteId", "ClickableViewAccessibility")
     private fun initBanner(bannerModels: ArrayList<HomeResponse.Pu>) {
+        homeLoadBanner = true
         bannerShow += 1
         bannerModelsMain = bannerModels
         if (bannerModels.isNotEmpty()) {
@@ -1488,7 +1535,7 @@ class HomeFragment : Fragment(),
         super.onResume()
         binding?.includeAppBar?.txtCity?.text = preferences.getCityName()
         if (preferences.getIsLogin()) {
-            binding?.includeAppBar?.profileBtn?.show()
+            binding?.includeAppBar?.profileBtn?.hide()
             binding?.includeAppBar?.textView2?.text = "Hello, " + preferences.getUserName()
         } else {
             binding?.includeAppBar?.profileBtn?.hide()

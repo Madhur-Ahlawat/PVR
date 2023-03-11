@@ -1,6 +1,7 @@
 package com.net.pvr.ui.cinemaSession.adapter
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,7 +14,7 @@ import com.net.pvr.utils.show
 
 class CinemaSessionCinParentAdapter(
     private var nowShowingList: List<CinemaSessionResponse.Child>,
-    private var context: Context,
+    private var context: Activity,
     private var cinemaId: String) : RecyclerView.Adapter<CinemaSessionCinParentAdapter.ViewHolder>() {
     private var check = 1
     private var rowIndex = 0

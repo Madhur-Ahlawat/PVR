@@ -8,6 +8,8 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
+import com.net.pvr.ui.payment.PaymentActivity
+import java.util.ArrayList
 
 fun Context?.toast(@SuppressLint("SupportAnnotationUsage") @StringRes resId: String?) {
     resId ?: return
@@ -35,7 +37,12 @@ fun Context.launchActivity(cls: Class<*>, flags: Int) {
         addFlags(flags)
     }
     this.startActivity(intent)
-
+    Constant.discount_val = "0.0"
+    PaymentActivity.subsId = ""
+    PaymentActivity.subsToken = ""
+    PaymentActivity.createdAt = ""
+    PaymentActivity.isPromoCodeApplied = false
+    PaymentActivity.offerList = ArrayList()
 }
 fun Context.launchGiftActivity(cls: Class<*>, flags: Int) {
     val intent = Intent(this, cls).apply {
@@ -53,6 +60,7 @@ fun Context.launchPaymentActivity(cls: Class<*>, flags: Int,amt:String,from:Stri
     }
     this.startActivity(intent)
 
+
 }
 
 fun Context.launchPrivilegeActivity(cls: Class<*>, flags: Int,date:String,amt:String,id:String,from:String) {
@@ -62,6 +70,12 @@ fun Context.launchPrivilegeActivity(cls: Class<*>, flags: Int,date:String,amt:St
         putExtra("amt",amt)
         putExtra("from",from)
         addFlags(flags)
+        Constant.discount_val = "0.0"
+        PaymentActivity.subsId = ""
+        PaymentActivity.subsToken = ""
+        PaymentActivity.createdAt = ""
+        PaymentActivity.isPromoCodeApplied = false
+        PaymentActivity.offerList = ArrayList()
     }
     this.startActivity(intent)
 

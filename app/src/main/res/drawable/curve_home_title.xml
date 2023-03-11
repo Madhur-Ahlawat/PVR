@@ -6,14 +6,14 @@
 
     <corners
         android:bottomLeftRadius="0dp"
-        android:bottomRightRadius="6dp"
-        android:topLeftRadius="0dp"
-        android:topRightRadius="6dp" />
+        android:bottomRightRadius="10dp"
+        android:topLeftRadius="3dp"
+        android:topRightRadius="10dp" />
 
     <padding
-        android:top="@dimen/dimen_3dp"
-        android:bottom="@dimen/dimen_3dp"
-        android:left="@dimen/dimen_12dp"
-        android:right="@dimen/dimen_6dp"/>
+        android:top="@dimen/dimen_5dp"
+        android:bottom="@dimen/dimen_5dp"
+        android:left="@dimen/dimen_8dp"
+        android:right="@dimen/dimen_8dp"/>
 
 </shape>

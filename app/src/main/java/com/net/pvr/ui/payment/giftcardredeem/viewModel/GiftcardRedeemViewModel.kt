@@ -47,6 +47,16 @@ class GiftcardRedeemViewModel @Inject constructor(private val userRepository: Us
             userRepository.giftCardRedeem(userid, bookingid, booktype, transid,cardNo,pin,type)
         }
     }
+  //POST PAID PAY
+    val capGiftCardRedeemScope: LiveData<NetworkResult<String>> get() = userRepository.capResponseLiveData
+
+    fun verifyResponse(
+        secret: String,response: String
+    ) {
+        viewModelScope.launch {
+            userRepository.verifyResponse(secret, response)
+        }
+    }
 
     //POST PAID SEND OTP
     val liveDatasendOTPScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.postpaidSendOTPResponseLiveData
