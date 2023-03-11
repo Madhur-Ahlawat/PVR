@@ -10,6 +10,7 @@ import android.view.*
 import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -99,6 +100,12 @@ class ProfileActivity : AppCompatActivity() {
         binding?.textView223?.text = profileResponse?.ms
         //anniversary
         binding?.textView225?.text = profileResponse?.doa
+
+        Glide.with(this)
+            .load(profileResponse?.im)
+            .placeholder(R.drawable.user)
+            .into(binding?.circularImageView!!)
+
     }
 
     private fun movedNext() {
@@ -188,7 +195,11 @@ class ProfileActivity : AppCompatActivity() {
 
             }
         }
-
+        //image
+        Glide.with(this)
+            .load(profileResponse?.im)
+            .placeholder(R.drawable.user)
+            .into(bindingProfile.circularImageView)
         //name
         bindingProfile.name.setText(preferences.getUserName())
 
@@ -489,10 +500,12 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun retrieveDataProfile(output: ProfileResponse.Output) {
+
         profileResponse = output
         ProfileResponseConst = output
         preferences.saveUserName(output.un)
         binding?.textView212?.text = output.un
+
 
         //member
         binding?.textView213?.text = output.cd
@@ -508,7 +521,11 @@ class ProfileActivity : AppCompatActivity() {
         binding?.textView223?.text = output.ms
         //anniversary
         binding?.textView225?.text = output.doa
-
+        //image
+        Glide.with(this)
+            .load(output.im)
+            .placeholder(R.drawable.user)
+            .into(binding?.circularImageView!!)
     }
 
     private fun profileUpdate() {

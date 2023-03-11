@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:text="@string/get_500_voucher_on_100_profile_completion"
+            tools:text="@string/get_500_voucher_on_100_profile_completion"
             android:textColor="#000000"
             android:textSize="12sp" />
 

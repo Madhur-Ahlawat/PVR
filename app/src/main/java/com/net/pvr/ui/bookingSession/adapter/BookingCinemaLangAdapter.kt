@@ -1,6 +1,7 @@
 package com.net.pvr.ui.bookingSession.adapter
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -23,7 +24,7 @@ import com.net.pvr.R
 
 class BookingCinemaLangAdapter(
     private var nowShowingList: List<BookingResponse.Output.Cinema.Child.Sw>,
-    private var context: Context,
+    private var context: Activity,
     private val ccid: String,
     private val ccn: String,
     private val at: String,
@@ -94,8 +95,8 @@ class BookingCinemaLangAdapter(
         logot.hide()
         dboxview?.hide()
         dboxmessage.hide()
-        cross.setOnClickListener(View.OnClickListener { dialog.dismiss() })
-        close.setOnClickListener(View.OnClickListener { dialog.dismiss() })
+        cross.setOnClickListener { dialog.dismiss() }
+        close.setOnClickListener { dialog.dismiss() }
         dialog.show()
 
         if (format.contains("Atmos")) {

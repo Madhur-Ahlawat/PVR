@@ -42,23 +42,28 @@ class MainApplication : Application() {
         PhonePe.init(this)
         setUpEvegageSdk()
 
-        val manager = this.getSystemService(DomainVerificationManager::class.java)
-        val userState = manager.getDomainVerificationUserState(this.packageName)
+        try {
+            val manager = this.getSystemService(DomainVerificationManager::class.java)
+            val userState = manager.getDomainVerificationUserState(this.packageName)
 
 // Domains that have passed Android App Links verification.
-        val verifiedDomains = userState?.hostToStateMap
-            ?.filterValues { it == DomainVerificationUserState.DOMAIN_STATE_VERIFIED }
+            val verifiedDomains = userState?.hostToStateMap
+                ?.filterValues { it == DomainVerificationUserState.DOMAIN_STATE_VERIFIED }
 
 // Domains that haven't passed Android App Links verification but that the user
 // has associated with an app.
-        val selectedDomains = userState?.hostToStateMap
-            ?.filterValues { it == DomainVerificationUserState.DOMAIN_STATE_SELECTED }
+            val selectedDomains = userState?.hostToStateMap
+                ?.filterValues { it == DomainVerificationUserState.DOMAIN_STATE_SELECTED }
 
 // All other domains.
-        val unapprovedDomains = userState?.hostToStateMap
-            ?.filterValues { it == DomainVerificationUserState.DOMAIN_STATE_NONE }
+            val unapprovedDomains = userState?.hostToStateMap
+                ?.filterValues { it == DomainVerificationUserState.DOMAIN_STATE_NONE }
 
-        println("verifiedDomains--->$verifiedDomains---$selectedDomains---$unapprovedDomains")
+            println("verifiedDomains--->$verifiedDomains---$selectedDomains---$unapprovedDomains")
+
+        }catch (e:java.lang.Exception){
+            e.printStackTrace()
+        }
 
 
         // Loging SFMC

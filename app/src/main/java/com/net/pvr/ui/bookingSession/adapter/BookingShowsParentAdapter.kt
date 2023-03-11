@@ -1,6 +1,7 @@
 package com.net.pvr.ui.bookingSession.adapter
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -18,7 +19,7 @@ import com.net.pvr.utils.view.RightDrawableOnTouchListener
 
 class BookingShowsParentAdapter(
     private var nowShowingList: ArrayList<BookingResponse.Output.Cinema>,
-    private var context: Context,
+    private var context: Activity,
     private var listener: RecycleViewItemClickListener,
     private var adlt: Boolean
 ) : RecyclerView.Adapter<BookingShowsParentAdapter.ViewHolder>() {

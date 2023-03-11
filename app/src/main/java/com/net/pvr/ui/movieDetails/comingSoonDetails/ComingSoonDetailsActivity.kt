@@ -73,7 +73,7 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
         broadcastReceiver = NetworkReceiver()
         broadcastIntent()
 
-        Constant().appBarHide(this)
+//        Constant().appBarHide(this)
         movieDetails()
         movieAlert()
     }

@@ -1,6 +1,7 @@
 package com.net.pvr.ui.bookingSession.adapter
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
@@ -11,11 +12,13 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.*
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -26,6 +29,7 @@ import com.net.pvr.ui.bookingSession.MovieSessionActivity.Companion.btnc
 import com.net.pvr.ui.bookingSession.response.BookingResponse
 import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.seatLayout.SeatLayoutActivity
+import com.net.pvr.utils.Constant
 import com.net.pvr.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr.utils.Constant.Companion.OfferDialogImage
 import com.net.pvr.utils.Constant.Companion.SESSION_ID
@@ -38,31 +42,48 @@ import kotlin.math.roundToInt
 @Suppress("DEPRECATION")
 class BookingShowsTimeAdapter(
     private var nowShowingList: ArrayList<BookingResponse.Output.Cinema.Child.Sw.S>,
-    private var context: Context,
+    private var context: Activity,
     private var ccid: String,
     private var ccn: String,
     private val at: String,
     private val adlt: Boolean
 ) :
     RecyclerView.Adapter<BookingShowsTimeAdapter.ViewHolder>() {
-    inner class ViewHolder(val binding: ItemCinemaDetailsShowTimeBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(val binding: ItemCinemaDetailsShowTimeBinding) : RecyclerView.ViewHolder(binding.root)
 
     private var rowIndex: Int = 0
     private var sidText: String = ""
     private var ccText: String = ""
+
+    private var displayMetrics = DisplayMetrics()
+    private var screenWidth = 0
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemCinemaDetailsShowTimeBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
+        // create ViewHolder
+        context.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        screenWidth = displayMetrics.widthPixels
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
+
+                val itemWidth = ((screenWidth - 0) / 4)
+                val layoutParams = ConstraintLayout.LayoutParams(
+                    itemWidth,
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT
+                )
+                layoutParams.rightMargin = Constant().convertDpToPixel(13f, context)
+//                holder.itemView.layoutParams = layoutParams
+
+                binding.cardView10.layoutParams = layoutParams
+
                 val colorCode = "#" + this.cc
 
                 binding.textView96.setTextColor(Color.parseColor(colorCode))
@@ -274,6 +295,9 @@ class BookingShowsTimeAdapter(
                     )
                     return@setOnLongClickListener true
                 }
+
+
+
             }
         }
 

@@ -8,7 +8,7 @@
     tools:context=".ui.bookingSession.MovieSessionActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/constraintLayout152"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -53,40 +53,42 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="center_vertical"
                     android:orientation="vertical"
-                    android:layout_marginStart="@dimen/padding_10"
-                    android:gravity="center_vertical">
-                <TextView
-                    android:id="@+id/textView103"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_alternates_bold"
-                    android:textColor="@color/black"
-                    android:singleLine="true"
-                    android:ellipsize="marquee"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:scrollHorizontally="true"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:freezesText="true"
-                    android:textSize="20sp"
-                    app:layout_constraintEnd_toEndOf="@+id/view70"
-                    app:layout_constraintStart_toStartOf="@+id/view70"
-                    app:layout_constraintTop_toTopOf="@+id/view70"
-                    tools:text="The Batman wjjhshjsw ddhshdh djjdj " />
+                    app:layout_constraintEnd_toEndOf="parent">
 
-                <TextView
-                    android:id="@+id/textView104"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sf_pro_text_medium"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dimen_12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/view70"
-                    app:layout_constraintStart_toStartOf="@+id/view70"
-                    app:layout_constraintTop_toBottomOf="@+id/textView103"
-                    tools:text="DRAMA" />
+                    <TextView
+                        android:id="@+id/textView103"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:fontFamily="@font/montserrat_alternates_bold"
+                        android:freezesText="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        app:layout_constraintEnd_toEndOf="@+id/view70"
+                        app:layout_constraintStart_toStartOf="@+id/view70"
+                        app:layout_constraintTop_toTopOf="@+id/view70"
+                        tools:text="The Batman wjjhshjsw ddhshdh djjdj " />
+
+                    <TextView
+                        android:id="@+id/textView104"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sf_pro_text_medium"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/view70"
+                        app:layout_constraintStart_toStartOf="@+id/view70"
+                        app:layout_constraintTop_toBottomOf="@+id/textView103"
+                        tools:text="DRAMA" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 

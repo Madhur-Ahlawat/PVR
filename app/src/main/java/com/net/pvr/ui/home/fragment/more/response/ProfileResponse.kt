@@ -18,6 +18,7 @@ data class ProfileResponse(
         val im: String,
         val lang: Lang,
         val ms: String,
+        val msg: String,
         val gd: String,
         val params: List<String>,
         val percentage: Int,

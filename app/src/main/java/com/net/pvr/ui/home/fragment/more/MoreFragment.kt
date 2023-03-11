@@ -539,6 +539,8 @@ class MoreFragment : Fragment() {
         ProfileResponseConst = output
         binding?.profileDetails?.textView206?.text = output.cd
         binding?.profileDetails?.textView208?.text = output.percentage.toString() + "%"
+
+        binding?.profileDetails?.textView209?.text = output.msg
         binding?.profileDetails?.progressBar?.progress = output.percentage
 
         //profile Complete
@@ -563,6 +565,10 @@ class MoreFragment : Fragment() {
         mainView?.maxHeight = (displayRectangle.height() * 0.6f).toInt()
         val progressBar2 = dialog.findViewById<ProgressBar>(R.id.progressBar2)
         val profileRecycler = dialog.findViewById<RecyclerView>(R.id.profileList)
+
+        val title = dialog.findViewById<TextView>(R.id.voucherText)
+        //title
+        title?.text=output.msg
         progressBar2?.progress = output.percentage
         val layoutManager = LinearLayoutManager(context)
         profileRecycler?.layoutManager = layoutManager
