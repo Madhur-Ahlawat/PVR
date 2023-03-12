@@ -32,6 +32,7 @@ import com.net.pvr.ui.home.fragment.more.response.DeleteAlertResponse
 import com.net.pvr.ui.home.fragment.more.response.ProfileResponse
 import com.net.pvr.ui.home.fragment.more.response.WhatsAppOptStatus
 import com.net.pvr.ui.home.fragment.privilege.response.LoyaltyDataResponse
+import com.net.pvr.ui.home.fragment.privilege.response.PassportHistory
 import com.net.pvr.ui.home.fragment.privilege.response.PassportPlanResponse
 import com.net.pvr.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr.ui.location.selectCity.response.SelectCityResponse
@@ -781,6 +782,28 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
     }
 
+    //Hide Offer
+    private val hideOfferLiveData = MutableLiveData<NetworkResult<OfferResponse>>()
+    val hideOfferResponseLiveData: LiveData<NetworkResult<OfferResponse>>
+        get() = hideOfferLiveData
+
+    suspend fun hideOffer(city: String, userId: String, did: String, isSpi: String) {
+        hideOfferLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.hideOffer(city,userId,did,isSpi, Constant.version, Constant.platform)
+        hideOfferResponse(response)
+    }
+
+    private fun hideOfferResponse(response: Response<OfferResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            hideOfferLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            hideOfferLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            hideOfferLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
     //EditProfile
 
     private val editProfileLiveData = MutableLiveData<NetworkResult<ProfileResponse>>()
@@ -1020,6 +1043,63 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             }
         } else {
             passportPlanLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    // Passport History
+    private val passportHistoryLiveData = MutableLiveData<NetworkResult<PassportHistory>>()
+    val passportHistoryResponseLiveData: LiveData<NetworkResult<PassportHistory>>
+        get() = passportHistoryLiveData
+
+    suspend fun passportHistory(userId: String, mobile: String) {
+        passportHistoryLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.passportHistory(
+            userId, mobile, Constant.version, Constant.platform, Constant.getDid()
+        )
+        passportHistoryResponse(response)
+    }
+
+    private fun passportHistoryResponse(response: Response<PassportHistory>) {
+        if (response.isSuccessful && response.body() != null) {
+            passportHistoryLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            try {
+                val errorObj = JSONObject(response.errorBody()?.charStream()?.readText())
+                passportHistoryLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            }catch (e:Exception){
+                passportHistoryLiveData.postValue(NetworkResult.Error(response.errorBody()?.charStream()?.readText().toString()))
+            }
+        } else {
+            passportHistoryLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    // Passport Cancel
+    private val passportCancelLiveData = MutableLiveData<NetworkResult<PassportHistory>>()
+    val passportCancelResponseLiveData: LiveData<NetworkResult<PassportHistory>>
+        get() = passportCancelLiveData
+
+    suspend fun passportCancel(userId: String, reason: String,voucher: String) {
+        passportCancelLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.passportCancel(
+            userId, reason,voucher, Constant.version, Constant.platform, Constant.getDid()
+        )
+        passportCancelResponse(response)
+    }
+
+    private fun passportCancelResponse(response: Response<PassportHistory>) {
+        if (response.isSuccessful && response.body() != null) {
+            passportCancelLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            try {
+                val errorObj = JSONObject(response.errorBody()?.charStream()?.readText())
+                passportCancelLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            }catch (e:Exception){
+                passportCancelLiveData.postValue(NetworkResult.Error(response.errorBody()?.charStream()?.readText().toString()))
+            }
+        } else {
+            passportCancelLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 

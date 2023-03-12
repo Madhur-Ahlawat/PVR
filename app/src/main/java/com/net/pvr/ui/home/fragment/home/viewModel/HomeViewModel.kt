@@ -38,6 +38,16 @@ class HomeViewModel @Inject constructor(private val userRepository: UserReposito
         }
     }
 
+    //hideOffer
+    val hideOfferLiveData: LiveData<NetworkResult<OfferResponse>>
+        get() = userRepository.hideOfferResponseLiveData
+
+    fun hideOffer(city:String,userId:String,did:String,isSpi:String) {
+        viewModelScope.launch {
+            userRepository.hideOffer(city,userId,did,isSpi)
+        }
+    }
+
     //Privilege
     val privilegeHomeResponseLiveData: LiveData<NetworkResult<PrivilegeHomeResponse>>
         get() = userRepository.privilegeHomeResponseLiveData

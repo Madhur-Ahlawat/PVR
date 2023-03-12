@@ -1,0 +1,734 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.home.fragment.privilege.PrivilegeDetailsActivity">
+
+    <RelativeLayout
+        android:id="@+id/includeHeader"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:elevation="5dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/back_btn_width"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_centerInParent="true"
+            android:paddingLeft="@dimen/toolbar_left_right_padding"
+            android:paddingRight="@dimen/toolbar_left_right_padding"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:id="@+id/title"
+            android:fontFamily="@font/montserrat_alternates_semi_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/btnBack"
+            android:gravity="left"
+            app:textAllCaps="true"
+            android:textAllCaps="true"
+            android:text="PVR Passport Transactions"
+            tools:text="Header Name"
+            android:singleLine="true"
+             />
+
+
+    </RelativeLayout>
+
+
+    <!--    <RelativeLayout-->
+    <!--        android:id="@+id/rlsubs_main"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:background="@drawable/subs_back_full"-->
+    <!--        android:layout_below="@id/includeHeader"-->
+    <!--        android:visibility="gone"-->
+    <!--        android:layout_height="wrap_content">-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/tvfirst"-->
+    <!--            style="@style/H7point2Style"-->
+    <!--            android:textColor="@color/pvr_yellow"-->
+    <!--            android:textSize="14sp"-->
+    <!--            android:layout_marginTop="@dimen/dimen_16dp"-->
+    <!--            android:layout_marginLeft="@dimen/dimen_12dp"-->
+    <!--            android:text="@string/subscription_nvoucher"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content" />-->
+
+
+    <!--&lt;!&ndash;-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/tvVouchertext"-->
+    <!--            style="@style/H10Point3Style"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_below="@id/tvfirst"-->
+    <!--            android:layout_marginLeft="@dimen/dimen_12dp"-->
+    <!--            android:layout_marginTop="6dp"-->
+    <!--            android:textColor="@color/white"-->
+    <!--            android:textSize="14sp"-->
+    <!--            tools:text="6 vouchers available" />-->
+    <!--&ndash;&gt;-->
+
+
+    <!--&lt;!&ndash;-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/tvVoucherCode"-->
+    <!--            style="@style/H81Style"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_below="@id/tvVouchertext"-->
+    <!--            android:layout_marginLeft="@dimen/dimen_12dp"-->
+    <!--            android:layout_marginTop="@dimen/dimen_20dp"-->
+    <!--            android:textColor="@color/white"-->
+    <!--            android:textSize="12sp"-->
+    <!--            tools:text="pu43wx" />-->
+    <!--&ndash;&gt;-->
+
+
+    <!--&lt;!&ndash;-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/tvDate"-->
+    <!--            style="@style/H81Style"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_below="@id/tvVoucherCode"-->
+    <!--            android:layout_marginLeft="@dimen/dimen_12dp"-->
+    <!--            android:layout_marginTop="@dimen/dimen_4dp"-->
+    <!--            android:layout_marginBottom="@dimen/dimen_16dp"-->
+    <!--            android:textColor="@color/white"-->
+    <!--            android:textSize="12sp"-->
+    <!--            tools:text="Valid till 31 May, 2021" />-->
+    <!--&ndash;&gt;-->
+
+
+
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:orientation="vertical"-->
+    <!--            android:layout_alignParentRight="true"-->
+    <!--            android:layout_marginTop="@dimen/dimen_12dp"-->
+    <!--            android:layout_marginRight="@dimen/dimen_12dp"-->
+    <!--            android:layout_height="wrap_content">-->
+
+    <!--            <ImageView-->
+    <!--                android:id="@+id/ivsubs"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:src="@drawable/subs_privilrge"-->
+    <!--                android:layout_height="wrap_content"/>-->
+
+
+    <!--&lt;!&ndash;-->
+    <!--            <ImageView-->
+    <!--                android:id="@+id/ivsubsqr"-->
+    <!--                android:layout_width="56dp"-->
+    <!--                android:layout_gravity="center"-->
+    <!--                android:layout_marginTop="@dimen/dimen_12dp"-->
+    <!--                android:src="@drawable/ic_subsqr"-->
+    <!--                android:layout_height="56dp"/>-->
+    <!--&ndash;&gt;-->
+
+    <!--        </LinearLayout>-->
+    <!--    </RelativeLayout>-->
+
+
+
+
+    <LinearLayout
+        android:id="@+id/llBOOK"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:textColor="@color/pvr_dark_black"
+            android:textSize="14sp"
+            android:layout_below="@id/tvfirst"
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="@dimen/dimen_16dp"
+            android:layout_marginRight="@dimen/dimen_16dp"
+            android:text="You haven’t done any transaction using this loyalty subscription."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:id="@+id/tvBOOK"
+            android:fontFamily="@font/montserrat_bold"
+            android:layout_width="match_parent"
+            android:textColor="@color/pvr_dark_black"
+            android:layout_height="40dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="@dimen/dimen_16dp"
+            android:layout_marginRight="@dimen/dimen_16dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/yellow"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Book Now"
+            android:textSize="14sp" />
+
+
+    </LinearLayout>
+
+
+
+    <TextView
+        android:id="@+id/tvHis"
+        android:fontFamily="@font/sf_pro_text_regular"
+        android:textColor="@color/gray_"
+        android:textSize="14sp"
+        android:visibility="gone"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="@dimen/dimen_16dp"
+        android:layout_marginRight="@dimen/dimen_16dp"
+        android:text=" Transaction History (4)"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+
+
+
+    <!--
+        <androidx.recyclerview.widget.RecyclerView
+            android:paddingBottom="10dp"
+            android:id="@+id/recycler_view"
+            android:layout_below="@id/tvHis"
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/dimen_16dp"
+            android:layout_marginRight="@dimen/dimen_16dp"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+    -->
+
+
+
+
+
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/networkError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/includeHeader"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:id="@+id/header"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:gravity="left" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@id/btnBack"
+                android:gravity="center"
+                android:paddingLeft="@dimen/padding_10"
+                android:paddingRight="@dimen/toolbar_left_right_padding">
+
+                <TextView
+                    android:id="@id/title"
+                    style="@style/text_black_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:text="PVR Passport Transactions"
+                    android:textSize="@dimen/dimen_16sp" />
+
+                <TextView
+                    android:id="@id/subTitle"
+                    android:fontFamily="@font/sf_pro_text_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/title"
+                    android:layout_marginTop="@dimen/common_hear_subtitle_margin"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:visibility="gone"
+                     />
+            </RelativeLayout>
+
+            <requestFocus />
+
+            <include layout="@layout/horizontal_line"/>
+
+        </RelativeLayout>
+
+
+        <ImageView
+            android:id="@+id/logo_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/dimen_80dp"
+            android:src="@drawable/passport_logo"
+            android:visibility="gone" />
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_below="@+id/logo_pass"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:src="@drawable/ic_subsqr"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_45dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/header"
+            android:id="@+id/tabs"
+            android:background="@drawable/line_separator"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:layout_marginStart="@dimen/landing_page_list_padding_"
+            android:layout_marginEnd="@dimen/landing_page_list_padding_"
+            android:paddingEnd="@dimen/dimen_5dp"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="@dimen/dimen_16sp"
+                android:background="@drawable/bottom_bar_yellow"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:id="@+id/details"
+                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:text="Details"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/history"
+                android:drawablePadding="@dimen/dimen_5dp"
+                android:gravity="center"
+                android:textSize="@dimen/dimen_14sp"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:textColor="@color/black"
+                android:text="History"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/topView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tabs"
+            android:layout_marginTop="@dimen/dimen_30dp"
+            android:orientation="vertical"
+            android:visibility="visible"
+            >
+
+            <RelativeLayout
+                android:id="@+id/rlsubs_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_marginStart="@dimen/dimen_24dp"
+                android:layout_marginEnd="@dimen/dimen_24dp">
+
+
+
+                <RelativeLayout
+                    android:id="@+id/inside_mainNew"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:background="@drawable/bannerprivv">
+
+                    <TextView
+                        android:id="@+id/tvfirst"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_12dp"
+                        android:layout_marginTop="@dimen/dimen_16dp"
+                        android:text="@string/subscription_nvoucher"
+                        android:textColor="@color/pvr_yellow"
+                        android:textSize="14sp"
+                        android:visibility="invisible" />
+
+
+                    <TextView
+                        android:id="@+id/tvVoucherCodeNew"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_below="@id/tvfirst"
+                        android:layout_marginLeft="@dimen/dimen_12dp"
+                        android:layout_marginTop="@dimen/dimen_50dp"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        tools:text="pu43wx" />
+
+
+                    <TextView
+                        android:id="@+id/tvDateNew"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvVoucherCodeNew"
+                        android:layout_marginLeft="@dimen/dimen_12dp"
+                        android:layout_marginBottom="@dimen/dimen_16dp"
+                        android:layout_marginTop="@dimen/dimen_5dp"
+                        android:textColor="@color/yellow"
+                        android:textSize="14sp"
+                        tools:text="Valid till 31 May, 2021" />
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="@dimen/dimen_12dp"
+                        android:layout_marginRight="@dimen/dimen_12dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ivsubs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/subs_privilrge"
+                            android:visibility="invisible" />
+
+
+                        <ImageView
+                            android:id="@+id/ivsubsqr"
+                            android:layout_width="@dimen/dimen_100dp"
+                            android:layout_height="@dimen/dimen_100dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/dimen_12dp"
+                            android:src="@drawable/ic_subsqr" />
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/passportViewB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="-7dp"
+                    android:layout_below="@+id/inside_mainNew"
+                    android:background="@drawable/corner_yellow"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/dimen_8dp"
+                    android:paddingBottom="@dimen/dimen_8dp"
+                    android:visibility="visible">
+
+                    <TextView
+                       android:fontFamily="@font/montserrat_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dimen_15dp"
+                        android:text="Available Visits:"
+                        android:textColor="#B3000000"
+                        android:textSize="15sp"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/totalVisits"
+                        android:fontFamily="@font/sf_pro_text_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical|end"
+                        android:layout_marginStart="@dimen/dimen_15dp"
+                        android:layout_marginEnd="@dimen/dimen_15dp"
+                        android:text="8/20"
+                        android:textColor="#B3000000"
+                        android:textSize="14sp"
+
+                        />
+
+
+                </RelativeLayout>
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/cancelSubscription"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_alignParentEnd="true"-->
+                <!--                    android:layout_below="@id/inside_mainNew"-->
+                <!--                    android:layout_marginTop="@dimen/dimen_8dp"-->
+                <!--                    android:layout_marginBottom="@dimen/dimen_8dp"-->
+                <!--                    android:textColor="@color/gray_"-->
+                <!--                    android:visibility="visible"-->
+                <!--                    android:textSize="14sp"-->
+                <!--                    android:text="Cancel Subscription" />-->
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/dimen_24dp"
+                android:layout_marginEnd="@dimen/dimen_24dp"
+                android:layout_marginTop="@dimen/dimen_15dp"
+                android:background="@drawable/round_corner_8"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_15dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:layout_weight="1"
+                        android:text="Validity"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tvDate"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:layout_weight="1"
+                        android:text="25 Oct, 2022"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_visit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvDate"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:id="@+id/purchaseView"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/pass_qr"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:text="Purchase Date  "
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvVoucherCode"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/pass_qr"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            tools:text="5" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:id="@+id/subsAmtView"
+                        android:layout_marginTop="@dimen/padding_10"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/pass_qr"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:text="Subscription Amount  "
+                            android:textColor="@color/black"
+                            android:textSize="14sp">
+
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/tvVouchertext1"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/pass_qr"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="7"
+                            android:textColor="@color/black"
+                            android:textSize="15sp">
+
+
+                        </TextView>
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:id="@+id/renewDataView"
+                        android:layout_marginTop="@dimen/padding_10"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/pass_qr"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:text="Renewable Date  "
+                            android:textColor="@color/black"
+                            android:textSize="14sp">
+
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/renewData"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/pass_qr"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="25 Oct, 2022"
+                            android:textColor="@color/black"
+                            android:textSize="15sp">
+
+
+                        </TextView>
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/cancelSubs"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="150dp"
+                android:text="@string/cancel_subscription"
+                android:textColor="#7A7A7A"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <!--        <TextView-->
+        <!--            style="@style/H40Style"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@+id/topView"-->
+        <!--            android:layout_centerInParent="true"-->
+        <!--            android:layout_marginTop="@dimen/dimen_30dp"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:visibility="gone"-->
+        <!--            android:background="#3B2800"-->
+        <!--            android:elevation="@dimen/dimen_4dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:padding="@dimen/dimen_5dp"-->
+        <!--            android:paddingLeft="@dimen/padding_10"-->
+        <!--            android:text="Subscription History"-->
+        <!--            android:textAllCaps="true"-->
+        <!--            android:textColor="@color/white"-->
+        <!--            android:textSize="12sp"></TextView>-->
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/topView"
+            android:id="@+id/historyList"
+            android:visibility="gone"
+            android:layout_marginStart="@dimen/dimen_24dp"
+            android:layout_marginTop="@dimen/dimen_40dp"
+            android:layout_marginEnd="@dimen/dimen_24dp"
+            android:layout_marginBottom="@dimen/dimen_40dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/padding_10"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>
+

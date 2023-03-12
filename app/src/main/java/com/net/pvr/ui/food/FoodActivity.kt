@@ -358,6 +358,7 @@ class FoodActivity : AppCompatActivity(),
     private fun movedNext() {
         //OnBack
         binding?.imageView58?.setOnClickListener {
+            Constant.SeatBack = 1
             onBackPressedDispatcher.onBackPressed()
         }
         //without food
@@ -1263,7 +1264,10 @@ class FoodActivity : AppCompatActivity(),
                     }
                 }
             }else{
-                item.qt = recyclerData.quantity
+                if (recyclerData.id == item.r[0].id) {
+                    item.qt = recyclerData.quantity
+                    break
+                }
             }
         }
         cartData()
@@ -1881,8 +1885,7 @@ class FoodActivity : AppCompatActivity(),
             cartModel = foodCartModel
             //cart
             for (item in cartModel){
-                updateCartFoodCartList(item)
-                updateMainList(catFilterBestSeller)
+                updateCartMainList(item)
             }
         }
 

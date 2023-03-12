@@ -714,5 +714,8 @@ IMAX Corporation is one of the world\'s leading entertainment technology compani
     <string name="know_how_to_avail_this_voucher">Know how to avail this voucher</string>
     <string name="about_pvr_privilege_program">About PVR Privilege program</string>
     <string name="discount_text">Discount Text</string>
+    <string name="cancel_subscription"><u>Unsubscribe</u></string>
+    <string name="subscription_nvoucher">Subscription\nVoucher</string>
+    <string name="cancellation1">Cancellation will be effective at the end of your current billing cycle.</string>
 
 </resources>

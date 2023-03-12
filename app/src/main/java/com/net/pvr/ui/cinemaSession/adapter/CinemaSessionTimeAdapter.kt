@@ -81,7 +81,7 @@ class CinemaSessionTimeAdapter(
 //                layoutParams.bottomMargin = Constant().convertDpToPixel(13f, context)
 //                holder.itemView.layoutParams = layoutParams
 
-                binding.mainView.layoutParams = layoutParams
+               // binding.mainView.layoutParams = layoutParams
                 //Language
                 binding.textView96.text = this.st
                 val colorCode = "#" + this.cc

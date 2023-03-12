@@ -83,7 +83,7 @@ class BookingShowsTimeAdapter(
 //                layoutParams.bottomMargin = Constant().convertDpToPixel(13f, context)
 //                holder.itemView.layoutParams = layoutParams
 
-                binding.mainView.layoutParams = layoutParams
+               // binding.mainView.layoutParams = layoutParams
 
                 val colorCode = "#" + this.cc
 

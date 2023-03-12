@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr.repository.UserRepository
 import com.net.pvr.ui.home.fragment.privilege.response.LoyaltyDataResponse
+import com.net.pvr.ui.home.fragment.privilege.response.PassportHistory
 import com.net.pvr.ui.home.fragment.privilege.response.PassportPlanResponse
 import com.net.pvr.ui.login.response.LoginResponse
 import com.net.pvr.utils.NetworkResult
@@ -50,6 +51,27 @@ class PrivilegeLoginViewModel @Inject constructor(private val userRepository: Us
     fun loyaltyData(userId: String, city: String,mobile: String,timestamp:String,token:String) {
         viewModelScope.launch {
             userRepository.loyaltyData(userId,city,mobile, timestamp,token)
+        }
+    }
+
+    // Passport History
+    val passportHistoryDataLiveData: LiveData<NetworkResult<PassportHistory>>
+    get() = userRepository.passportHistoryResponseLiveData
+
+    fun passportHistory(userId: String,mobile: String) {
+        viewModelScope.launch {
+            userRepository.passportHistory(userId,mobile)
+        }
+    }
+
+
+    // Passport Cancel
+    val passportCancelDataLiveData: LiveData<NetworkResult<PassportHistory>>
+    get() = userRepository.passportCancelResponseLiveData
+
+    fun passportCancel(userId: String,reason: String,voucher:String) {
+        viewModelScope.launch {
+            userRepository.passportCancel(userId,reason,voucher)
         }
     }
 

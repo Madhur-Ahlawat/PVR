@@ -187,13 +187,12 @@
 
     </RelativeLayout>
 
-
     <RelativeLayout
         android:id="@+id/rlsubs_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dimen_180dp"
         android:layout_marginTop="@dimen/dimen_15dp"
-        android:background="@drawable/back_gray_subs"
+        android:background="@drawable/bannerprivv"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -217,6 +216,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen_12dp"
             android:layout_marginTop="@dimen/dimen_16dp"
+            android:visibility="invisible"
             android:text="Subscription\nVoucher"
             android:textColor="@color/gray_data"
             android:textSize="14sp" />
@@ -244,7 +244,7 @@
             android:layout_below="@id/tvVouchertext"
             android:layout_marginLeft="@dimen/dimen_12dp"
             android:layout_marginTop="@dimen/dimen_20dp"
-            android:textColor="@color/gray_data"
+            android:textColor="@color/white"
             android:textSize="12sp"
             tools:text="pu43wx" />
 
@@ -258,7 +258,7 @@
             android:layout_marginLeft="@dimen/dimen_12dp"
             android:layout_marginTop="@dimen/dimen_4dp"
             android:layout_marginBottom="@dimen/dimen_16dp"
-            android:textColor="@color/gray_data"
+            android:textColor="@color/yellow"
             android:textSize="12sp"
             tools:text="Valid till 31 May, 2021" />
 
@@ -274,9 +274,10 @@
 
             <ImageView
                 android:id="@+id/ivsubs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/subs_privilrge" />
+                android:layout_width="@dimen/dimen_100dp"
+                android:layout_height="@dimen/dimen_100dp"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                android:src="@drawable/ic_subsqr" />
 
 
         </LinearLayout>

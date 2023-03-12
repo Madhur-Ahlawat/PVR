@@ -183,6 +183,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
         }
         val sdf = SimpleDateFormat("MMM dd, yyyyy")
         voucherList.sortByDescending { sdf.parse(it.exf) }
+        voucherList.sortBy { it.usd }
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding?.privilegeList?.layoutManager = layoutManager
         val cardAdapter =
@@ -681,8 +682,23 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
 
     override fun onItemClick(nowShowingList: ArrayList<LoyaltyDataResponse.Voucher>, position: Int) {
 
-        if (nowShowingList[position].st == "V")
-            openDialog(nowShowingList,position)
+        if (nowShowingList[position].type == "SUBSCRIPTION"){
+            val intent = Intent(context, PrivilegeDetailsActivity::class.java)
+            startActivity(intent)
+        }else {
+            if (nowShowingList[position].st == "V")
+                openDialog(getValidList(nowShowingList), position)
+        }
+    }
+
+    private fun getValidList(nowShowingList: ArrayList<LoyaltyDataResponse.Voucher>): ArrayList<LoyaltyDataResponse.Voucher> {
+        val list = ArrayList<LoyaltyDataResponse.Voucher>()
+        for (item in nowShowingList){
+            if (item.st == "V"){
+                list.add(item)
+            }
+        }
+        return list
     }
 
     override fun onItemTermsClick(info: String) {

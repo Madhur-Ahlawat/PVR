@@ -155,6 +155,10 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
 
     }
 
+    fun getBoolean(key:String):Boolean {
+        return prefs.getBoolean(key, false)
+    }
+
     //Lang
     fun saveLongitudeData(lang: String) {
         editor = prefs.edit()

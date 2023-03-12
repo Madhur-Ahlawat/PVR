@@ -29,6 +29,7 @@ import com.net.pvr.ui.home.fragment.more.response.DeleteAlertResponse
 import com.net.pvr.ui.home.fragment.more.response.ProfileResponse
 import com.net.pvr.ui.home.fragment.more.response.WhatsAppOptStatus
 import com.net.pvr.ui.home.fragment.privilege.response.LoyaltyDataResponse
+import com.net.pvr.ui.home.fragment.privilege.response.PassportHistory
 import com.net.pvr.ui.home.fragment.privilege.response.PassportPlanResponse
 import com.net.pvr.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr.ui.location.selectCity.response.SelectCityResponse
@@ -273,6 +274,16 @@ interface UserAPI {
         @Query("pt") platform: String,
     ): Response<OfferResponse>
 
+    @POST("api/content/homepage/offer/discovery/hide/all")
+    suspend fun hideOffer(
+        @Query("city") city: String,
+        @Query("userid") userid: String,
+        @Query("did") did: String,
+        @Query("isSpi") isSpi: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+    ): Response<OfferResponse>
+
     @POST("api/user/editprofile")
     suspend fun editProfile(
         @Query("userid") userid: String,
@@ -450,6 +461,25 @@ interface UserAPI {
         @Query("pt") pt: String,
         @Query("did") did: String
     ): Response<PassportPlanResponse>
+
+    @POST("api/loyalty/unlimited/transhistory")
+    suspend fun passportHistory(
+        @Query("userid") userid: String,
+        @Query("mobile") mobile: String,
+        @Query("av") av: String,
+        @Query("pt") pt: String,
+        @Query("did") did: String
+    ): Response<PassportHistory>
+
+    @POST("api/payment/recurring/passport/cancel")
+    suspend fun passportCancel(
+        @Query("userid") userid: String,
+        @Query("reason") reason: String,
+        @Query("voucher") voucher: String,
+        @Query("av") av: String,
+        @Query("pt") pt: String,
+        @Query("did") did: String
+    ): Response<PassportHistory>
 
 
     // Passport Save

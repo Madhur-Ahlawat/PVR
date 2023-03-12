@@ -18,7 +18,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/offer_curve"
+        android:background="@drawable/top_curve_bottomsheet"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout49"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/view192">
@@ -56,6 +56,7 @@
             android:text="@string/notify"
             android:textColor="#3A3A3A"
             android:textSize="@dimen/dimen_14sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/view129"
             app:layout_constraintTop_toBottomOf="@+id/textView192" />
@@ -63,8 +64,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView26"
             android:layout_width="0dp"
-            android:layout_height="300dp"
-            android:layout_marginTop="17dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="@dimen/padding_10"
+            android:layout_marginStart="@dimen/padding_10"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView193" />
@@ -110,7 +113,6 @@
        android:textSize="@dimen/dimen_14sp"
        android:textColor="@color/h8Point1Color"
        android:text="@string/ignore"
-       android:textAllCaps="true"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"/>
     </androidx.constraintlayout.widget.ConstraintLayout>

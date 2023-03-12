@@ -76,7 +76,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     private var offerShow = 0
     var back_flag = 0
 
-    private var offerResponse: ArrayList<OfferResponse.Output>? = null
+    private var offerResponse: ArrayList<OfferResponse.Offer>? = null
 
     private val firstFragment = HomeFragment()
     private val secondFragment = CinemasFragment()
@@ -123,7 +123,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 
         //offer
         if (preferences.getIsLogin()) {
-//            authViewModel.offer(preferences.getCityName(),preferences.getUserId(),Constant().getDeviceId(this),"no")
+            authViewModel.offer(preferences.getCityName(),preferences.getUserId(),Constant().getDeviceId(this),"NO")
         }
 
         if (intent.hasExtra("from"))
@@ -209,6 +209,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 //      Close Offer Alert
         binding?.imageView78?.setOnClickListener {
             binding?.constraintLayout55?.hide()
+            authViewModel.hideOffer(preferences.getCityName(),preferences.getUserId(),Constant().getDeviceId(this),"NO")
         }
 
 //        Dialogs
@@ -244,31 +245,46 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         )
         dialog.show()
 
-//        val dialog = Dialog(this)
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//        dialog.setContentView(R.layout.offer_dialog)
-//        dialog.window?.setLayout(
-//            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
-//        )
-//        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//        dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
-//        dialog.window?.setGravity(Gravity.BOTTOM)
-//        dialog.show()
-
         val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerView26)
         val ignore = dialog.findViewById<TextView>(R.id.textView194)
-
+        val textView5 = dialog.findViewById<TextView>(R.id.textView5)
+        val textView192 = dialog.findViewById<TextView>(R.id.textView192)
+        textView5?.text = getString(R.string.explore_offers)
         val gridLayout =
             GridLayoutManager(this@HomeActivity, 1, GridLayoutManager.HORIZONTAL, false)
         recyclerView?.layoutManager = LinearLayoutManager(this@HomeActivity)
         val adapter = offerResponse?.let { HomeOfferAdapter(it, this, this) }
         recyclerView?.layoutManager = gridLayout
         recyclerView?.adapter = adapter
-
+        recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    val position = getCurrentItem(recyclerView)
+                    textView192?.text = offerResponse?.get(position)?.offerName
+                    textView5?.setOnClickListener {
+                        val intent = Intent(
+                            Intent.ACTION_VIEW, Uri.parse(
+                                offerResponse?.get(position)?.otherLinkRedirectUrl?.replace(
+                                    "https", "app"
+                                )
+                            )
+                        )
+                        startActivity(intent)
+                        dialog.dismiss()
+                    }
+                }
+            }
+        })
+        val snapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(recyclerView)
 
         ignore?.setOnClickListener {
             dialog.dismiss()
+            authViewModel.hideOffer(preferences.getCityName(),preferences.getUserId(),Constant().getDeviceId(this),"NO")
         }
+
+
     }
 
     //    privilegeDialogs
@@ -519,9 +535,13 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
             when (it) {
                 is NetworkResult.Success -> {
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        if (it.data.output != null && it.data.output.size != 0) {
-                            binding?.constraintLayout55?.show()
-                            retrieveOffer(it.data.output)
+                        try {
+                            if (it.data.output != null && it.data.output.offer.size != 0) {
+                                binding?.constraintLayout55?.show()
+                                retrieveOffer(it.data.output.offer)
+                            }
+                        }catch (e:Exception){
+                            
                         }
                     }
                 }
@@ -536,7 +556,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         }
     }
 
-    private fun retrieveOffer(output: ArrayList<OfferResponse.Output>) {
+    private fun retrieveOffer(output: ArrayList<OfferResponse.Offer>) {
 //        Set Data
         offerResponse = output
 
@@ -549,7 +569,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 
     }
 
-    override fun offerClick(comingSoonItem: OfferResponse.Output) {
+    override fun offerClick(comingSoonItem: OfferResponse.Offer) {
 
     }
 

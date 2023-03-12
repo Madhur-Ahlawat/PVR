@@ -45,6 +45,7 @@ class PromoCodeActivity : AppCompatActivity() {
             onBackPressed()
         }
         type = intent.extras?.getString("type").toString();
+        println("type--->$type")
         if (type == "PROMO" || type == "ACCENTIVE") {
             binding?.ccInputLayout?.hint = "Enter Promo code"
             binding?.ccLayout?.show()
@@ -59,13 +60,14 @@ class PromoCodeActivity : AppCompatActivity() {
             binding?.ccLayout?.hide()
             binding?.hayattView?.show()
             binding?.include30?.textView5?.text = "SEND OTP"
+            binding?.phonelIdEditText?.setText(preferences.geMobileNumber())
         }
-        if (intent.extras?.getBoolean("ca_a") === false)
+        if (intent.extras?.getBoolean("ca_a") == false)
             binding?.textView371?.text = intent.extras?.getString("ca_t")
 
 
         binding?.include30?.constraintLayout10?.setOnClickListener(View.OnClickListener {
-            if (validateInputFields())
+
                 setDataToApi()
             Constant().hideKeyboard(this)
         })
@@ -104,6 +106,7 @@ class PromoCodeActivity : AppCompatActivity() {
 
     private fun usePromoCode(){
         if (type == "PROMO") {
+            if (validateInputFields())
             promoCodeViewModel.promoCode(
                 preferences.getUserId(),
                 Constant.BOOKING_ID,
@@ -112,6 +115,7 @@ class PromoCodeActivity : AppCompatActivity() {
                 binding?.ccEditText?.text.toString()
             )
         }else if (type == "GYFTR"){
+            if (validateInputFields())
             promoCodeViewModel.promoGyft(
                 preferences.getUserId(),
                 Constant.BOOKING_ID,
@@ -120,6 +124,7 @@ class PromoCodeActivity : AppCompatActivity() {
                 binding?.ccEditText?.text.toString()
             )
         }else if (type == "ACCENTIVE"){
+            if (validateInputFields())
             promoCodeViewModel.accentivePromo(
                 preferences.getUserId(),
                 Constant.BOOKING_ID,
@@ -137,6 +142,7 @@ class PromoCodeActivity : AppCompatActivity() {
                         Constant.BOOK_TYPE,
                         binding?.phonelIdEditText?.text.toString()
                     )
+                    sendHyattOTP()
                 }
             }else{
                 if (validateInputOTP()) {
@@ -148,6 +154,7 @@ class PromoCodeActivity : AppCompatActivity() {
                         binding?.phonelIdEditText?.text.toString(),
                         binding?.otpEditText?.getStringFromFields().toString()
                     )
+                    verifyHayat()
                 }
             }
         }
@@ -551,16 +558,16 @@ class PromoCodeActivity : AppCompatActivity() {
 
     private fun validatePhone(): Boolean {
         if (!InputTextValidator.hasText(binding?.phonelIdEditText!!)) {
-            binding?.phoneLayout?.error = getString(R.string.mobile_msg_required)
+            binding?.errorText?.text = getString(R.string.mobile_msg_required)
         } else {
-            binding?.phoneLayout?.error = getString(R.string.mobile_msg)
+            binding?.errorText?.text =""
         }
         if (!InputTextValidator.validateNumber(binding?.phonelIdEditText!!)) {
             if (binding?.phonelIdEditText?.text.toString().trim { it <= ' ' }.isEmpty()) {
-                binding?.phoneLayout?.error = getString(R.string.mobile_msg_required)
-            } else binding?.phoneLayout?.error = getString(R.string.mobile_msg_invalid)
+                binding?.errorText?.text = getString(R.string.mobile_msg_required)
+            } else binding?.errorText?.text= getString(R.string.mobile_msg_invalid)
         } else {
-            binding?.phoneLayout?.error = getString(R.string.mobile_msg)
+            binding?.errorText?.text = ""
         }
         return  (InputTextValidator.hasText(binding?.phonelIdEditText!!) && InputTextValidator.validateNumber(
                 binding?.phonelIdEditText!!
