@@ -396,7 +396,7 @@ class FoodActivity : AppCompatActivity(),
 
 
             cartShow = false
-            binding?.constraintLayout30?.hide()
+            binding?.constraintLayout112?.hide()
             binding?.textView374?.show()
             var totalPrice = 0;
             if (BOOK_TYPE == "FOOD"){

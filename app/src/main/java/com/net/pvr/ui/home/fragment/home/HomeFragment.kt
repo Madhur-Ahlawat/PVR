@@ -878,7 +878,7 @@ class HomeFragment : Fragment(),
 
 
         bindingTrailer.subTitleLandingScreen.text =
-            mv.otherlanguages + " " + getString(R.string.dots) + " " + java.lang.String.join(
+            mv.lng + " " + getString(R.string.dots) + " " + java.lang.String.join(
                 ",",
                 mv.mfs
             )

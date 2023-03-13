@@ -270,7 +270,7 @@ class SelectCityActivity : AppCompatActivity(),
 
     private fun retrieveData(output: SelectCityResponse.Output) {
 //        if (preferences.getIsLogin()){
-        preferences.saveCityName(output.cc.name)
+//        preferences.saveCityName(output.cc.name)
 //        }
 
         if (enableLocation == 1) {
@@ -296,7 +296,7 @@ class SelectCityActivity : AppCompatActivity(),
             binding?.recyclerViewOtherCity?.adapter = otherCityAdapter
 
             val gridLayout = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
-            val selectCityAdapter = SelectCityAdapter(output.pc, output, this, this)
+            val selectCityAdapter = SelectCityAdapter(output.pc, preferences.getCityName(), this, this)
             binding?.recyclerCity?.layoutManager = gridLayout
             binding?.recyclerCity?.adapter = selectCityAdapter
 

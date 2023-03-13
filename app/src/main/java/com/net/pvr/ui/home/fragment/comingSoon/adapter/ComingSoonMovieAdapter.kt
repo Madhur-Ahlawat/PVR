@@ -69,14 +69,12 @@ class ComingSoonMovieAdapter(
             //Manage Bookmark
             if (!checkLogin) {
                 if (comingSoonItem.ul) {
-                    holder.wishlist.show()
-                    holder.wishlist.background =
-                        ContextCompat.getDrawable(context, R.drawable.ic_wishlist_yellow)
+                    holder.wishlist.setImageResource(R.drawable.ic_wishlist_yellow)
                 } else {
-                    holder.wishlist.invisible()
-                    holder.wishlist.background =
-                        ContextCompat.getDrawable(context, R.drawable.ic_wishlist_white)
+                    holder.wishlist.setImageResource(R.drawable.ic_wishlist_white)
                 }
+            }else{
+                holder.wishlist.hide()
             }
 
 //        //Release Manage
@@ -153,12 +151,12 @@ class ComingSoonMovieAdapter(
     ) {
         val stringBuilder = StringBuilder()
         var isChange = false
-        if (censor.replace("\\(".toRegex(), "").replace("\\)".toRegex(), "")
-                .equals("A", ignoreCase = true)
-        ) isChange = true
-        stringBuilder.append(
-            censor.replace("\\(".toRegex(), "").replace("\\)".toRegex(), "") + " • "
-        )
+//        if (censor.replace("\\(".toRegex(), "").replace("\\)".toRegex(), "")
+//                .equals("A", ignoreCase = true)
+//        ) isChange = true
+//        stringBuilder.append(
+//            censor.replace("\\(".toRegex(), "").replace("\\)".toRegex(), "") + " • "
+//        )
         if (otherLang != null && otherLang != "") {
             if (otherLang.split(",").toTypedArray().size > 2) {
                 stringBuilder.append(

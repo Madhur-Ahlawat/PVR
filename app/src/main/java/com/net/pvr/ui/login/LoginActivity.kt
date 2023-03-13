@@ -170,7 +170,10 @@ class LoginActivity : AppCompatActivity() {
                     positiveBtnText = R.string.accept,
                     negativeBtnText = R.string.cancel,
                     positiveClick = {
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        launchActivity(
+                            HomeActivity::class.java,
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        )
                         finish()
                     },
                     negativeClick = {})

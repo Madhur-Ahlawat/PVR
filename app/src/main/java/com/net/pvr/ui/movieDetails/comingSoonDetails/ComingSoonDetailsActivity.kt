@@ -66,7 +66,7 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
             intent.getStringExtra("mid").toString()
         )
 
-        cinemaId= intent.getStringExtra("mid").toString()
+        cinemaId = intent.getStringExtra("mid").toString()
 
 
         //internet Check
@@ -374,7 +374,7 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
         //Title
         binding?.textView55?.text = output.n
         //Genre
-        binding?.textView56?.text = output.othergenres
+        binding?.textView56?.text = output.othergenres.replace(",".toRegex(),", ")
         //Release Data
         binding?.textView58?.text = output.mopeningdate
         //Language

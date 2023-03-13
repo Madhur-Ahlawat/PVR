@@ -590,7 +590,7 @@ class ComingSoonFragment : Fragment(),
         bindingTrailer.titleLandingScreen.text = comingSoonItem.name
 
         val censor =
-            comingSoonItem.censor + " " + getString(R.string.dots) + " " + java.lang.String.join(",", comingSoonItem.language)
+             java.lang.String.join(",", comingSoonItem.language)+" "+getString(R.string.dots)+" "+comingSoonItem.date_caption
 
         bindingTrailer.tvCensorLang.text =
             censor.replace("[", "").replace("]", "").replace("(", "").replace(")", "")

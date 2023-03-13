@@ -19,7 +19,7 @@ import com.net.pvr.utils.show
 @Suppress("DEPRECATION", "SENSELESS_COMPARISON")
 class SelectCityAdapter(
     private var selectCityList: ArrayList<SelectCityResponse.Output.Pc>,
-    private var selectCityListCC: SelectCityResponse.Output,
+    private var selectCityListCC: String,
     private var context: Activity,
     var listner: RecycleViewItemClickListenerSelectCity
 ) :
@@ -51,9 +51,11 @@ class SelectCityAdapter(
             .load(selectCityItemList.imageR)
             .error(R.drawable.app_icon)
             .into(holder.imageSelectCity)
+        println("selectCityListCC---$selectCityListCC--->${selectCityItemList.name}")
 
-        if (selectCityListCC.cc != null){
-            if (selectCityListCC.cc.name == selectCityItemList.name){
+        if (selectCityListCC != null && selectCityListCC != ""){
+
+            if (selectCityListCC == selectCityItemList.name){
                 holder.clickOhk.show()
             }else{
                 holder.clickOhk.hide()

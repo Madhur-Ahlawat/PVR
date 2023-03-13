@@ -259,7 +259,7 @@ class SeatLayoutActivity : AppCompatActivity(),
             ) {
                 val bitmap: Bitmap? = getBitmapFromView(binding?.outerScroll!!, (binding?.outerScroll?.getChildAt(0)?.height ?: 0), (binding?.outerScroll?.getChildAt(0)?.width ?: 0))
                 //                Bitmap bitmap = getBitmapFromView(llHorizontalScroll, llHorizontalScroll.getChildAt(0).getHeight(), llHorizontalScroll.getChildAt(0).getWidth());
-                shareDialog(this@SeatLayoutActivity, bitmap!!,binding?.outerScroll!!)
+                shareDialog(this@SeatLayoutActivity, bitmap!!,binding?.outerScroll!!, position)
             }
            // Constant().shareData(this, "", "")
         }
@@ -2251,7 +2251,7 @@ class SeatLayoutActivity : AppCompatActivity(),
         return bitmap
     }
 
-    private fun shareDialog(mContext: Context, bitmap: Bitmap, outerScroll: NestedScrollView) {
+    private fun shareDialog(mContext: Context, bitmap: Bitmap, outerScroll: NestedScrollView,position: String) {
         val dialog = Dialog(mContext)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.share_dialogue)
