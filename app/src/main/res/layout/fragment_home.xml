@@ -2,417 +2,492 @@
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeHome"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/swipeHome"
     tools:context=".ui.home.fragment.home.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <!--Design-->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout144"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <!--Top Bar-->
+        <!--Design-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout162"
+            android:id="@+id/constraintLayout144"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <include
-                android:id="@+id/includeAppBar"
-                layout="@layout/toolbar_main"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/dimen_60dp"
+            <!--Top Bar-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout162"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <include
+                    android:id="@+id/includeAppBar"
+                    layout="@layout/toolbar_main"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimen_60dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout162">
+
+                <androidx.core.widget.NestedScrollView
+                    android:id="@+id/nestedScrollView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0">
+
+                            <View
+                                android:id="@+id/vwMain1s"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginEnd="16dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="1.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.0" />
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/constraintLayout135"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <include
+                                    android:id="@+id/homeRecommend"
+                                    layout="@layout/home_recommended"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerCinemaCat"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="@dimen/padding_10"
+                                android:orientation="horizontal"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                app:layout_constraintBottom_toTopOf="@+id/recyclerMovies"
+                                app:layout_constraintEnd_toEndOf="@+id/vwMain1s"
+                                app:layout_constraintHorizontal_bias="0.448"
+                                app:layout_constraintStart_toStartOf="@+id/vwMain1s"
+                                app:layout_constraintTop_toBottomOf="@+id/includePlaceHolder"
+                                tools:ignore="SpeakableTextPresentCheck"
+                                tools:itemCount="3"
+                                tools:listitem="@layout/item_home_image" />
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/quickBook"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/dimen_60dp"
+                                android:layout_marginTop="@dimen/dimen_15dp"
+                                android:background="@drawable/bg_quick_book"
+                                android:visibility="gone"
+                                app:layout_constraintEnd_toEndOf="@+id/vwMain1s"
+                                app:layout_constraintStart_toStartOf="@+id/vwMain1s"
+                                app:layout_constraintTop_toBottomOf="@+id/recyclerCinemaCat">
+
+                                <TextView
+                                    android:id="@+id/txtHateToWait"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/dimen_16dp"
+                                    android:text="@string/hate_to_wait"
+                                    android:textSize="@dimen/dimen_16sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:ignore="TextContrastCheck" />
+
+                                <TextView
+                                    android:id="@+id/btnQuickBook"
+                                    android:layout_width="120dp"
+                                    android:layout_height="@dimen/dimen_35dp"
+                                    android:layout_marginEnd="@dimen/dimen_16dp"
+                                    android:background="@drawable/bg_button"
+                                    android:fontFamily="@font/helvetica_neu_bold"
+                                    android:gravity="center"
+                                    android:text="@string/quick_book"
+                                    android:textSize="@dimen/dimen_14sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerViewSlider"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_15dp"
+                                android:orientation="horizontal"
+                                android:visibility="gone"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/quickBook"
+                                tools:itemCount="3"
+                                tools:listitem="@layout/item_home_slider" />
+
+                            <LinearLayout
+                                android:id="@+id/privilege"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                app:layout_constraintEnd_toEndOf="@+id/recyclerCinemaCat"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="@+id/recyclerCinemaCat"
+                                app:layout_constraintTop_toBottomOf="@+id/constraintLayout135">
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/privilegeLoginUi"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <include
+                                        android:id="@+id/privilegeLogin"
+                                        layout="@layout/loyalty_paid_member"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content" />
+
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/privilegeLogOutUi"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <include
+                                        android:id="@+id/privilegeLogOut"
+                                        layout="@layout/ph_slider_item_new"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content" />
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            </LinearLayout>
+
+                            <include
+                                android:id="@+id/includePlaceHolder"
+                                layout="@layout/placeholder_layout"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/padding_10"
+                                android:layout_marginBottom="@dimen/padding_10"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/privilege" />
+
+
+                            <com.google.android.material.tabs.TabLayout
+                                android:id="@+id/promotionPosition"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:visibility="gone"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/includePlaceHolder"
+                                app:tabBackground="@drawable/indicator_selector"
+                                app:tabGravity="center"
+                                app:tabIndicatorHeight="0dp" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerMovies"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                                app:layout_constraintEnd_toEndOf="@+id/vwMain1s"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="@+id/vwMain1s"
+                                app:layout_constraintTop_toBottomOf="@+id/recyclerCinemaCat"
+                                app:spanCount="2"
+                                tools:itemCount="5"
+                                tools:listitem="@layout/item_home_cinema_list" />
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/constraintTrailerMusic"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="@dimen/dimen_12dp"
+                                android:visibility="visible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/recyclerMovies">
+
+                                <TextView
+                                    android:id="@+id/txtTrailerMusic"
+                                    style="@style/H3SizeBold"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dimen_8dp"
+                                    android:fontFamily="@font/helvetica_neu_bold"
+                                    android:text="@string/trailer_amp_music"
+                                    android:textSize="@dimen/dimen_20sp"
+                                    android:visibility="gone"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/txtTrailers"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dimen_16dp"
+                                    android:layout_marginEnd="@dimen/dimen_2dp"
+                                    android:drawablePadding="@dimen/dimen_8dp"
+                                    android:fontFamily="@font/sf_pro_text_bold"
+                                    android:gravity="center_vertical"
+                                    android:paddingStart="@dimen/dimen_50dp"
+                                    android:text="@string/trailers"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/dimen_12sp"
+                                    android:visibility="gone"
+                                    app:drawableStartCompat="@drawable/ic_delete"
+                                    app:layout_constraintEnd_toStartOf="@+id/txtMusic"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/txtTrailerMusic"
+                                    tools:ignore="RtlSymmetry" />
+
+                                <TextView
+                                    android:id="@+id/txtMusic"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="@dimen/dimen_20dp"
+                                    android:drawablePadding="@dimen/dimen_8dp"
+                                    android:fontFamily="@font/sf_pro_text_bold"
+                                    android:gravity="center_vertical"
+                                    android:paddingStart="@dimen/dimen_50dp"
+                                    android:text="@string/music"
+                                    android:textColor="@color/textColorGray"
+                                    android:textSize="@dimen/dimen_12sp"
+                                    android:visibility="gone"
+                                    app:drawableStartCompat="@drawable/ic_delete"
+                                    app:layout_constraintBottom_toBottomOf="@+id/txtTrailers"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/txtTrailers"
+                                    app:layout_constraintTop_toTopOf="@+id/txtTrailers"
+                                    tools:ignore="RtlSymmetry" />
+
+                                <View
+                                    android:id="@+id/view33"
+                                    android:layout_width="0dp"
+                                    android:layout_height="1dp"
+                                    android:background="@color/gray"
+                                    android:visibility="gone"
+                                    app:layout_constraintBottom_toTopOf="@+id/recyclerOffer"
+                                    app:layout_constraintEnd_toEndOf="@+id/txtTrailers"
+                                    app:layout_constraintStart_toStartOf="@+id/txtTrailers"
+                                    app:layout_constraintTop_toBottomOf="@+id/txtTrailers" />
+
+                                <View
+                                    android:id="@+id/view34"
+                                    android:layout_width="0dp"
+                                    android:layout_height="1dp"
+                                    android:background="@color/yellow"
+                                    android:visibility="gone"
+                                    app:layout_constraintBottom_toTopOf="@+id/recyclerOffer"
+                                    app:layout_constraintEnd_toEndOf="@+id/txtMusic"
+                                    app:layout_constraintStart_toEndOf="@+id/txtTrailers"
+                                    app:layout_constraintTop_toBottomOf="@+id/txtMusic" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/recyclerOffer"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintHorizontal_bias="1.0"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/txtTrailers"
+                                    tools:itemCount="3"
+                                    tools:listitem="@layout/item_home_offer" />
+
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.core.widget.NestedScrollView>
+
+                <com.net.pvr.utils.view.MovableFloatingActionButton
+                    android:id="@+id/filter_fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_15sp"
+                    android:layout_marginBottom="@dimen/dimen_30dp"
+                    android:src="@drawable/filter_unselect"
+                    android:visibility="gone"
+                    app:layout_anchorGravity="bottom|right|end"
+                    app:layout_constraintBottom_toTopOf="@+id/constraintLayout55"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:tint="@null"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <!--Offers v-->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout55"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimen_50dp"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginEnd="18dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@drawable/transparent_curve"
+                    android:backgroundTint="#CC000000"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <View
+                        android:id="@+id/view103"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageView
+                        android:id="@+id/imageView78"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/view103"
+                        app:layout_constraintEnd_toEndOf="@+id/view103"
+                        app:layout_constraintTop_toTopOf="@+id/view103"
+                        app:srcCompat="@drawable/cross_white"
+                        app:tint="@color/white"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:id="@+id/imageView79"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15.67dp"
+                        android:src="@drawable/offer_arrow"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/textView155"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:fontFamily="@font/sf_pro_text_medium"
+                        android:text="@string/new_offers_are_live"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dimen_12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/view103"
+                        app:layout_constraintStart_toEndOf="@+id/imageView79"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/textView185"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="25dp"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="@string/view"
+                        android:textColor="@color/yellow"
+                        android:textSize="@dimen/dimen_12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/view103"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView78"
+                        app:layout_constraintTop_toTopOf="@+id/view103" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <!--Shimmer-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout162">
-
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nestedScrollView4"
+            android:id="@+id/constraintLayout145"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <include
+                android:id="@+id/include38"
+                layout="@layout/shimmer_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0">
-
-                    <View
-                        android:id="@+id/vwMain1s"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout135"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <include
-                            android:id="@+id/homeRecommend"
-                            layout="@layout/home_recommended"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerCinemaCat"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="@dimen/padding_10"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintBottom_toTopOf="@+id/recyclerMovies"
-                        app:layout_constraintEnd_toEndOf="@+id/vwMain1s"
-                        app:layout_constraintHorizontal_bias="0.448"
-                        app:layout_constraintStart_toStartOf="@+id/vwMain1s"
-                        app:layout_constraintTop_toBottomOf="@+id/includePlaceHolder"
-                        tools:ignore="SpeakableTextPresentCheck"
-                        tools:itemCount="3"
-                        tools:listitem="@layout/item_home_image" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/quickBook"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/dimen_60dp"
-                        android:layout_marginTop="@dimen/dimen_15dp"
-                        android:background="@drawable/bg_quick_book"
-                        android:visibility="gone"
-                        app:layout_constraintEnd_toEndOf="@+id/vwMain1s"
-                        app:layout_constraintStart_toStartOf="@+id/vwMain1s"
-                        app:layout_constraintTop_toBottomOf="@+id/recyclerCinemaCat">
-
-                        <TextView
-                            android:id="@+id/txtHateToWait"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/dimen_16dp"
-                            android:text="@string/hate_to_wait"
-                            android:textSize="@dimen/dimen_16sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:ignore="TextContrastCheck" />
-
-                        <TextView
-                            android:id="@+id/btnQuickBook"
-                            android:layout_width="120dp"
-                            android:layout_height="@dimen/dimen_35dp"
-                            android:layout_marginEnd="@dimen/dimen_16dp"
-                            android:background="@drawable/bg_button"
-                            android:fontFamily="@font/helvetica_neu_bold"
-                            android:gravity="center"
-                            android:text="@string/quick_book"
-                            android:textSize="@dimen/dimen_14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerViewSlider"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_15dp"
-                        android:orientation="horizontal"
-                        android:visibility="gone"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/quickBook"
-                        tools:itemCount="3"
-                        tools:listitem="@layout/item_home_slider" />
-
-                    <LinearLayout
-                        android:id="@+id/privilege"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintEnd_toEndOf="@+id/recyclerCinemaCat"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="@+id/recyclerCinemaCat"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout135">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/privilegeLoginUi"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <include
-                                android:id="@+id/privilegeLogin"
-                                layout="@layout/loyalty_paid_member"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/privilegeLogOutUi"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <include
-                                android:id="@+id/privilegeLogOut"
-                                layout="@layout/ph_slider_item_new"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    </LinearLayout>
-
-                    <include
-                        android:id="@+id/includePlaceHolder"
-                        layout="@layout/placeholder_layout"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/padding_10"
-                        android:layout_marginBottom="@dimen/padding_10"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/privilege" />
-
-
-                    <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/promotionPosition"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/transparent"
-                        android:visibility="gone"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/includePlaceHolder"
-                        app:tabBackground="@drawable/indicator_selector"
-                        app:tabGravity="center"
-                        app:tabIndicatorHeight="0dp" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerMovies"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                        app:layout_constraintEnd_toEndOf="@+id/vwMain1s"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="@+id/vwMain1s"
-                        app:layout_constraintTop_toBottomOf="@+id/recyclerCinemaCat"
-                        app:spanCount="2"
-                        tools:itemCount="5"
-                        tools:listitem="@layout/item_home_cinema_list" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintTrailerMusic"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="@dimen/dimen_12dp"
-                        android:visibility="visible"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/recyclerMovies">
-
-                        <TextView
-                            android:id="@+id/txtTrailerMusic"
-                            style="@style/H3SizeBold"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dimen_8dp"
-                            android:fontFamily="@font/helvetica_neu_bold"
-                            android:text="@string/trailer_amp_music"
-                            android:textSize="@dimen/dimen_20sp"
-                            android:visibility="gone"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/txtTrailers"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dimen_16dp"
-                            android:layout_marginEnd="@dimen/dimen_2dp"
-                            android:drawablePadding="@dimen/dimen_8dp"
-                            android:fontFamily="@font/sf_pro_text_bold"
-                            android:gravity="center_vertical"
-                            android:paddingStart="@dimen/dimen_50dp"
-                            android:text="@string/trailers"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/dimen_12sp"
-                            android:visibility="gone"
-                            app:drawableStartCompat="@drawable/ic_delete"
-                            app:layout_constraintEnd_toStartOf="@+id/txtMusic"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/txtTrailerMusic"
-                            tools:ignore="RtlSymmetry" />
-
-                        <TextView
-                            android:id="@+id/txtMusic"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/dimen_20dp"
-                            android:drawablePadding="@dimen/dimen_8dp"
-                            android:fontFamily="@font/sf_pro_text_bold"
-                            android:gravity="center_vertical"
-                            android:paddingStart="@dimen/dimen_50dp"
-                            android:text="@string/music"
-                            android:textColor="@color/textColorGray"
-                            android:textSize="@dimen/dimen_12sp"
-                            android:visibility="gone"
-                            app:drawableStartCompat="@drawable/ic_delete"
-                            app:layout_constraintBottom_toBottomOf="@+id/txtTrailers"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/txtTrailers"
-                            app:layout_constraintTop_toTopOf="@+id/txtTrailers"
-                            tools:ignore="RtlSymmetry" />
-
-                        <View
-                            android:id="@+id/view33"
-                            android:layout_width="0dp"
-                            android:layout_height="1dp"
-                            android:background="@color/gray"
-                            android:visibility="gone"
-                            app:layout_constraintBottom_toTopOf="@+id/recyclerOffer"
-                            app:layout_constraintEnd_toEndOf="@+id/txtTrailers"
-                            app:layout_constraintStart_toStartOf="@+id/txtTrailers"
-                            app:layout_constraintTop_toBottomOf="@+id/txtTrailers" />
-
-                        <View
-                            android:id="@+id/view34"
-                            android:layout_width="0dp"
-                            android:layout_height="1dp"
-                            android:background="@color/yellow"
-                            android:visibility="gone"
-                            app:layout_constraintBottom_toTopOf="@+id/recyclerOffer"
-                            app:layout_constraintEnd_toEndOf="@+id/txtMusic"
-                            app:layout_constraintStart_toEndOf="@+id/txtTrailers"
-                            app:layout_constraintTop_toBottomOf="@+id/txtMusic" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyclerOffer"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="1.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/txtTrailers"
-                            tools:itemCount="3"
-                            tools:listitem="@layout/item_home_offer" />
-
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-        </androidx.core.widget.NestedScrollView>
-            <com.net.pvr.utils.view.MovableFloatingActionButton
-                android:id="@+id/filter_fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dimen_15sp"
-                android:layout_marginBottom="@dimen/dimen_30dp"
-                android:src="@drawable/filter_unselect"
-                android:visibility="gone"
-                app:layout_anchorGravity="bottom|right|end"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:tint="@null"
-                tools:ignore="SpeakableTextPresentCheck" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!--Shimmer-->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout145"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <include
-            android:id="@+id/include38"
-            layout="@layout/shimmer_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

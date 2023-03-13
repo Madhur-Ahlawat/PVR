@@ -58,7 +58,6 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
     }
 
     private fun manageFunction() {
-
         authViewModel.movieDetails(
             "UP",
             preferences.getUserId(),
@@ -189,8 +188,6 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
             }catch (e:Exception){
                 e.printStackTrace()
             }
-
-
 
             val intent = Intent(this@ComingSoonDetailsActivity, SetAlertActivity::class.java)
             intent.putExtra("cid",cinemaId)
