@@ -12,6 +12,8 @@ import com.net.pvr.R
 import com.net.pvr.databinding.SetAlertItemBinding
 import com.net.pvr.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
 import com.net.pvr.ui.movieDetails.comingSoonDetails.setAlert.SetAlertActivity
+import com.net.pvr.utils.printLog
+import com.net.pvr.utils.toast
 import java.util.*
 
 
@@ -28,7 +30,7 @@ class AlertTheaterAdapter(
 
     private var theatreList: List<BookingRetrievalResponse.Output.C> = nowShowingList
 
-     inner class ViewHolder(val binding: SetAlertItemBinding) :
+    inner class ViewHolder(val binding: SetAlertItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -50,7 +52,6 @@ class AlertTheaterAdapter(
                 binding.distanceTv.text = this.d
                 binding.detailTV.text = this.ad
 
-
                 unableDisable.observe(context as SetAlertActivity) {
                     if (it) {
                         binding.imageView134.setImageResource(R.drawable.curve_select)
@@ -64,38 +65,58 @@ class AlertTheaterAdapter(
                             R.drawable.alert_curve_ui
                         )
                         holder.itemView.isClickable = true
+
                         holder.itemView.setOnClickListener {
                             if (this.itemSelectedOrNot) {
-                                this.itemSelectedOrNot = false
-                                selectedItemCount--
                                 onItemClick(this, false)
+
                                 if (this.itemSelectedOrNot) {
+                                    context.toast("1")
+
                                     binding.imageView134.setImageResource(R.drawable.curve_select)
                                     binding.constraintLayout92.setBackgroundResource(
                                         R.drawable.alert_curve_ui_select
                                     )
                                 } else {
+                                    context.toast("2")
+
                                     binding.imageView134.setImageResource(R.drawable.curve_unselect)
                                     binding.constraintLayout92.setBackgroundResource(
                                         R.drawable.alert_curve_ui
                                     )
                                 }
+
+                                this.itemSelectedOrNot = false
+                                selectedItemCount--
+
                             } else {
+
                                 if (selectedItemCount < 5) {
                                     this.itemSelectedOrNot = true
                                     selectedItemCount++
                                     onItemClick(this, true)
                                 }
+
                                 if (this.itemSelectedOrNot) {
-                                    binding.imageView134.setImageResource(R.drawable.curve_select)
-                                    binding.constraintLayout92.setBackgroundResource(
-                                        R.drawable.alert_curve_ui_select
-                                    )
+                                    context.toast("4")
+
+                                    try {
+                                        binding.imageView134.setImageResource(R.drawable.curve_select)
+                                        binding.constraintLayout92.setBackgroundResource(R.drawable.alert_curve_ui_select)
+                                    }catch (e:Exception){
+                                        e.printStackTrace()
+                                    }
                                 } else {
-                                    binding.imageView134.setImageResource(R.drawable.curve_unselect)
-                                    binding.constraintLayout92.setBackgroundResource(
-                                        R.drawable.alert_curve_ui
-                                    )
+                                    context.toast("5")
+
+                                    try {
+                                        binding.imageView134.setImageResource(R.drawable.curve_unselect)
+                                        binding.constraintLayout92.setBackgroundResource(
+                                            R.drawable.alert_curve_ui
+                                        )
+                                    }catch (e:java.lang.Exception){
+                                        e.printStackTrace()
+                                    }
                                 }
                             }
                             notifyDataSetChanged()
@@ -139,8 +160,5 @@ class AlertTheaterAdapter(
             filteredData = results!!.values as ArrayList<BookingRetrievalResponse.Output.C>
             notifyDataSetChanged()
         }
-
     }
-
-
 }

@@ -23,20 +23,23 @@
 
         <TextView
             android:id="@+id/textView50"
-            style="@style/H12Size"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/sf_pro_text_medium"
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="@dimen/dimen_8dp"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:ellipsize="marquee"
             android:singleLine="true"
+            android:focusable="true"
+            android:maxLines="1"
+            android:gravity="center_vertical"
             android:textAllCaps="false"
             android:textColor="@color/black"
-            android:textSize="@dimen/dimen_16sp"
+            android:textSize="@dimen/dimen_14sp"
             app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
             app:layout_constraintStart_toEndOf="@+id/imageView68"
             app:layout_constraintTop_toTopOf="parent"
@@ -109,7 +112,7 @@
             android:layout_height="@dimen/dimen_25dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/unlike"
+            android:src="@drawable/unlike"
             tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

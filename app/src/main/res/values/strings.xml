@@ -544,9 +544,10 @@
     <string-array name="genres">
         <item>Genre</item>
         <item>Theaters</item>
-        <item>Payments</item>
         <item>Languages</item>
     </string-array>
+<!--    <item>Payments</item>-->
+
 
     <string name="version">"Version"</string>
     <string name="terms_condition_text"><![CDATA[T&C | PRIVACY]]></string>

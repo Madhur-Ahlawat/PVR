@@ -618,7 +618,6 @@ class FoodActivity : AppCompatActivity(),
     }
 
     private fun updateBestSellerCartList(comingSoonItem: FoodResponse.Output.Bestseller) {
-        println("updateBestSellerCartList--->${cartModel.size}")
         if (cartModel.size == 0) {
             cartModel.add(
                 CartModel(
@@ -663,6 +662,7 @@ class FoodActivity : AppCompatActivity(),
     }
 
     private fun itemExist(foodItem: FoodResponse.Output.Bestseller): Boolean {
+
         for (item in cartModel) {
             if (item.id == foodItem.r[0].id) {
                 return true
@@ -1332,9 +1332,7 @@ class FoodActivity : AppCompatActivity(),
     }
 
     //Mfl All Food
-    private fun getFilterAllMfl(
-        category: Boolean, menuType: Int, name: String
-    ): ArrayList<FoodResponse.Output.Mfl> {
+    private fun getFilterAllMfl(category: Boolean, menuType: Int, name: String): ArrayList<FoodResponse.Output.Mfl> {
         val categoryFilterNew = ArrayList<FoodResponse.Output.Mfl>()
         when (menuType) {
             0 -> {

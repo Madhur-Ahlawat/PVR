@@ -30,25 +30,27 @@ data class PreferenceResponse(
         val wl: ArrayList<Any>
     ):java.io.Serializable{
         data class Genre(
-            val liked: ArrayList<Liked>,
+            val liked: ArrayList<Other>,
             val other: ArrayList<Other>
         ):java.io.Serializable{
-            data class Liked(
+            data class Other(
                 val id: String,
                 val na: String,
                 val txt: String
             ):java.io.Serializable
+        }
+
+        data class Lang(
+            val liked: ArrayList<Other>,
+            val other: ArrayList<Other>
+        ):java.io.Serializable{
             data class Other(
                 val id: String,
                 val na: String,
-                val txt: String,
-                var liked: Boolean,
+                val txt: String
             ):java.io.Serializable
+
         }
-        data class Lang(
-            val liked: ArrayList<Genre.Liked>,
-            val other: ArrayList<Genre.Other>
-        ):java.io.Serializable
 
         data class Pon(
             val Other: ArrayList<Genre.Other>,
@@ -57,15 +59,22 @@ data class PreferenceResponse(
         ):java.io.Serializable
 
         data class Schedule(
-            val liked: ArrayList<Any>,
+            val liked: ArrayList<Genre.Other>,
             val other: ArrayList<Genre.Other>
         ):java.io.Serializable
 
 
         data class Theater(
-            val liked: ArrayList<Genre.Liked>,
-            val other: ArrayList<Genre.Other>
+            val liked: ArrayList<Other>,
+            val other: ArrayList<Other>
         ):java.io.Serializable
+        {
+            data class Other(
+                val id: String,
+                val na: String,
+                val txt: String
+            ):java.io.Serializable
+        }
 
         data class Wallet(
             val id: String,

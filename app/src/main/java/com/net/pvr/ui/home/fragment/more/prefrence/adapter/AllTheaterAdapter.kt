@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr.R
 import com.net.pvr.databinding.PreferenceTheatersItemBinding
@@ -13,7 +14,7 @@ import com.net.pvr.utils.hide
 
 class AllTheaterAdapter(
     private var context: Context,
-    private var nowShowingList: List<PreferenceResponse.Output.Genre.Other>,
+    private var nowShowingList: List<PreferenceResponse.Output.Theater.Other>,
     private var listener: RecycleViewItemClickListener
 ) :
     RecyclerView.Adapter<AllTheaterAdapter.ViewHolder>() {
@@ -29,26 +30,22 @@ class AllTheaterAdapter(
         with(holder){
             with(nowShowingList[position]){
                 binding.textView50.text=this.na
-//                binding.textView53.text=this.na
-//                binding.textView51.text=this.na
+
                 binding.textView53.hide()
                 binding.textView51.hide()
 
-                if (rowIndex==position){
-                    binding.imageView68.setImageResource(R.drawable.like)
-                    binding.constraintLayout142.setBackgroundResource(R.drawable.ui_item_select)
-                }else{
-                    binding.constraintLayout142.setBackgroundResource(R.drawable.ui_item_unselect)
-                    binding.imageView68.setImageResource(R.drawable.unlike)
-                }
+                binding.textView50.isSelected = true
 
+                binding.imageView68.setColorFilter(ContextCompat.getColor(context, R.color.textColor))
                 //click
                 holder.itemView.setOnClickListener {
                     rowIndex=position
+                    binding.imageView68.setImageResource(R.drawable.like)
+                    binding.imageView68.setColorFilter(ContextCompat.getColor(context, R.color.yellow))
+                    binding.constraintLayout142.setBackgroundResource(R.drawable.ui_item_select)
                     listener.allTheaterClick(this)
                     notifyDataSetChanged()
                 }
-
             }
         }
 
@@ -60,7 +57,7 @@ class AllTheaterAdapter(
 
 
     interface RecycleViewItemClickListener {
-        fun allTheaterClick(comingSoonItem: PreferenceResponse.Output.Genre.Other)
+        fun allTheaterClick(comingSoonItem: PreferenceResponse.Output.Theater.Other)
     }
 
 }
