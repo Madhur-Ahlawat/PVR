@@ -29,6 +29,8 @@ import com.net.pvr.utils.Constant
 import com.net.pvr.utils.NetworkResult
 import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.utils.ga.GoogleAnalytics
+import com.net.pvr.utils.printLog
+import com.net.pvr.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 import javax.inject.Inject
@@ -122,7 +124,17 @@ class SetAlertActivity : AppCompatActivity() {
                 }
             }
             val listString: String = java.lang.String.join(", ", cinemaList)
-            authViewModel.setAlert(preferences.getUserId(), preferences.getCityName(), listString,intent.getStringExtra("cid").toString(), "YES","YES","YES","YES",Constant().getDeviceId(this))
+
+            authViewModel.setAlert(
+                preferences.getUserId(),
+                preferences.getCityName(),
+                intent.getStringExtra("cid").toString(),
+                listString,
+                "YES",
+                "YES",
+                "YES",
+                "YES",
+                Constant().getDeviceId(this))
 
         }
     }
@@ -242,6 +254,7 @@ class SetAlertActivity : AppCompatActivity() {
 
     @SuppressLint("UseCompatLoadingForDrawables", "SetTextI18n")
     private fun retrieveData(output: LinkedTreeMap<*, *>) {
+        _binding?.constraintLayout178?.show()
         val gson = Gson()
         val data = gson.fromJson(JSONObject(output).toString(), BookingRetrievalResponse.Output::class.java)
         theaterAdapter = AlertTheaterAdapter(
@@ -254,6 +267,7 @@ class SetAlertActivity : AppCompatActivity() {
             } else {
                 selectedItemList.remove(item)
             }
+
             binding.apply {
                 textView280.text = "${selectedItemList.size}/5 Selected"
                 if (selectedItemList.size == 0) {
@@ -268,5 +282,4 @@ class SetAlertActivity : AppCompatActivity() {
         }
         binding.theaterRv.adapter = theaterAdapter
     }
-
 }

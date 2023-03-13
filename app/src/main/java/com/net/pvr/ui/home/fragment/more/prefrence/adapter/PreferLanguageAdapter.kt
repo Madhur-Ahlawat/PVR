@@ -12,7 +12,7 @@ import com.net.pvr.ui.home.fragment.more.prefrence.response.PreferenceResponse
 
 class PreferLanguageAdapter(
     private var context: Context,
-    private var nowShowingList: List<PreferenceResponse.Output.Genre.Liked>,
+    private var nowShowingList: List<PreferenceResponse.Output.Lang.Other>,
     private var listener: RecycleViewItemClickListener
 ) :
     RecyclerView.Adapter<PreferLanguageAdapter.ViewHolder>() {
@@ -29,6 +29,7 @@ class PreferLanguageAdapter(
             with(nowShowingList[position]){
                 binding.textView242.text=this.na
                 binding.imageView169.setImageResource(R.drawable.curve_select)
+
                 //click
                 holder.itemView.setOnClickListener {
                     rowIndex=position
@@ -47,7 +48,7 @@ class PreferLanguageAdapter(
 
 
     interface RecycleViewItemClickListener {
-        fun languageLikeClick(comingSoonItem: PreferenceResponse.Output.Genre.Liked)
+        fun languageLikeClick(comingSoonItem: PreferenceResponse.Output.Lang.Other)
     }
 
 }

@@ -13,36 +13,38 @@ import com.net.pvr.utils.hide
 
 class FavouriteTheaterAdapter(
     private var context: Context,
-    private var nowShowingList: List<PreferenceResponse.Output.Genre.Liked>,
+    private var nowShowingList: List<PreferenceResponse.Output.Theater.Other>,
     private var listener: RecycleViewItemClickListener
-) :
-    RecyclerView.Adapter<FavouriteTheaterAdapter.ViewHolder>() {
-    private var rowIndex=-1
+) : RecyclerView.Adapter<FavouriteTheaterAdapter.ViewHolder>() {
+    private var rowIndex = -1
 
-    inner class ViewHolder(val binding: PreferenceTheatersItemBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(val binding: PreferenceTheatersItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = PreferenceTheatersItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = PreferenceTheatersItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return ViewHolder(binding)
     }
+
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
-        with(holder){
-            with(nowShowingList[position]){
-                binding.textView50.text=this.na
-//                binding.textView53.text=this.na
-//                binding.textView51.text=this.na
+        with(holder) {
+            with(nowShowingList[position]) {
+                binding.textView50.text = this.na
+
+                binding.textView50.isSelected = true
+
                 binding.textView53.hide()
                 binding.textView51.hide()
                 binding.imageView68.setImageResource(R.drawable.like)
 
                 //click
                 holder.itemView.setOnClickListener {
-                    rowIndex=position
-//                    if (rowIndex==position){
-//                        binding.imageView68.setImageResource(R.drawable.like)
-//                    }else{
-//                        binding.imageView68.setImageResource(R.drawable.unlike)
-//                    }
+                    rowIndex = position
+
                     listener.favouriteTheaterClick(this)
                     notifyDataSetChanged()
                 }
@@ -58,7 +60,7 @@ class FavouriteTheaterAdapter(
 
 
     interface RecycleViewItemClickListener {
-        fun favouriteTheaterClick(comingSoonItem: PreferenceResponse.Output.Genre.Liked)
+        fun favouriteTheaterClick(comingSoonItem: PreferenceResponse.Output.Theater.Other)
     }
 
 }

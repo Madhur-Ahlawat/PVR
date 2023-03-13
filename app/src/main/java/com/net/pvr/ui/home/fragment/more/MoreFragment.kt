@@ -166,8 +166,7 @@ class MoreFragment : Fragment() {
                     binding?.privilegeLogOutUi?.hide()
                     binding?.privilegeLoginUi?.show()
                     if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == Constant.SharedPreference.ACTIVE && preferences.getString(
-                            Constant.SharedPreference.SUBS_OPEN
-                        ) == "true"){
+                            Constant.SharedPreference.SUBS_OPEN) == "true"){
                         binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.subs_back_b)
                     }else{
                         binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.privilege_home_back)
