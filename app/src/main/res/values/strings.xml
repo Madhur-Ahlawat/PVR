@@ -550,7 +550,7 @@
 
 
     <string name="version">"Version"</string>
-    <string name="terms_condition_text"><![CDATA[T&C | PRIVACY]]></string>
+    <string name="terms_condition_text"><![CDATA[T&C | Privacy]]></string>
     <string name="favouriteTheaters">Favourite Theaters</string>
     <string name="noTheatersSelected">No theaters selected</string>
     <string name="preferredPaymentMethod">Preferred Payment Method</string>

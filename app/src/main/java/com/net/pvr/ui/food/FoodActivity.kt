@@ -1875,15 +1875,34 @@ class FoodActivity : AppCompatActivity(),
 
     override fun onResume() {
         super.onResume()
+
         updateList()
     }
 
     private fun updateList() {
+        println("SUMMERYBACK--->${foodCartModel.size}")
+
         if (SUMMERYBACK==1){
             cartModel = foodCartModel
             //cart
-            for (item in cartModel){
-                updateCartMainList(item)
+            if (cartModel.size==0){
+                for (item in foodResponse!!.bestsellers) {
+                    if (item.r.size>1) {
+                        for (data in item.r) {
+                            data.qt = 0
+                        }
+
+                    }else{
+                        item.qt = 0
+                    }
+                }
+                cartData()
+                updateMainList(catFilterBestSeller)
+                bestSellerFoodAdapter?.notifyDataSetChanged()
+            }else {
+                for (item in cartModel) {
+                    updateCartMainList(item)
+                }
             }
         }
 

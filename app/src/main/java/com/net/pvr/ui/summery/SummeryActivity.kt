@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.text.Html
 import android.text.TextUtils
+import android.text.method.LinkMovementMethod
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -950,7 +951,8 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         dialog?.show()
 
         bindingCarvery.textView154.text = Html.fromHtml(donText, Html.FROM_HTML_MODE_LEGACY)
-
+        bindingCarvery.textView154.movementMethod = LinkMovementMethod.getInstance();
+        bindingCarvery.textView154.isClickable = true
         bindingCarvery.textView310.paintFlags =
             bindingCarvery.textView310.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
@@ -959,7 +961,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
             dialog?.dismiss()
             val intent = Intent(this, WebViewActivity::class.java)
             intent.putExtra("from", "CheckOut")
-            intent.putExtra("title", this.getString(R.string.terms_condition_text))
+            intent.putExtra("title", "Donation Terms & Condition")
             intent.putExtra("getUrl", Constant.donation)
             startActivity(intent)
         }
@@ -1016,6 +1018,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                     }
                 }
             }
+//            foodCartModel = cartModel
         } catch (e: Exception) {
             e.printStackTrace()
         }

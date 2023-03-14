@@ -197,10 +197,16 @@ class PrivilegeVochersAdapter(
                     holder.binding.rlsubsMain.show()
                     holder.binding.relativeLayoutGray.hide()
                     holder.binding.relativeLayout.hide()
-
                     if (cardData.st == "E") {
+                        println("cardData.type--->${cardData.type}--->${cardData.st}")
+
                         holder.binding.ivRedeemedSubs.show()
+                        holder.binding.ivsubs.hide()
                         holder.binding.ivRedeemedSubs.setImageResource(R.drawable.expired)
+                        holder.binding.rlsubsMain.setBackgroundResource(R.drawable.back_gray_subs)
+                    }else{
+                        holder.binding.ivsubs.show()
+                        holder.binding.rlsubsMain.setBackgroundResource(R.drawable.bannerprivv)
                     }
                     holder.binding.tvVoucherCode.text = "" + cardData.cd
                     println("cardData.st--->"+cardData.expDate)

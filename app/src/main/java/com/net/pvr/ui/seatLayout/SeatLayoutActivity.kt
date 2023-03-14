@@ -2174,12 +2174,17 @@ class SeatLayoutActivity : AppCompatActivity(),
         dialog.show()
     }
 
-    override fun showsClick(comingSoonItem: Int, itemView: View, position: Int) {
+    override fun showsClick(comingSoonItem: Int, itemView: View, pos: Int) {
         //Show  end time
+        for (data in showsArray.indices){
+            if (showsArray[data].sid  == comingSoonItem){
+                position = data.toString()
+            }
+        }
         if (intent.getStringExtra("from") == "cinema") {
-            binding?.textView393?.text = cinemaSessionShows[position].et
+            binding?.textView393?.text = cinemaSessionShows[pos].et
         } else {
-            binding?.textView393?.text = showsArray[position].et
+            binding?.textView393?.text = showsArray[pos].et
         }
 
         sessionId = comingSoonItem.toString()
@@ -2195,12 +2200,17 @@ class SeatLayoutActivity : AppCompatActivity(),
         )
     }
 
-    override fun cinemaShowsClick(comingSoonItem: Int, itemView: View, position: Int) {
+    override fun cinemaShowsClick(comingSoonItem: Int, itemView: View, pos: Int) {
         //Show  end time
+        for (data in cinemaSessionShows.indices){
+            if (cinemaSessionShows[data].sid  == comingSoonItem){
+                position = data.toString()
+            }
+        }
         if (intent.getStringExtra("from") == "cinema") {
-            binding?.textView393?.text = cinemaSessionShows[position].et
+            binding?.textView393?.text = cinemaSessionShows[pos].et
         } else {
-            binding?.textView393?.text = showsArray[position].et
+            binding?.textView393?.text = showsArray[pos].et
         }
 
         sessionId = comingSoonItem.toString()

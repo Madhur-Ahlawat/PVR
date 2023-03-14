@@ -10,6 +10,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
+import android.os.Bundle
 import android.text.TextUtils
 import android.util.DisplayMetrics
 import android.util.TypedValue
@@ -21,6 +22,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ItemCinemaDetailsShowTimeBinding
 import com.net.pvr.ui.bookingSession.MovieSessionActivity
@@ -30,6 +32,7 @@ import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.home.fragment.home.HomeFragment
 import com.net.pvr.ui.seatLayout.SeatLayoutActivity
 import com.net.pvr.utils.Constant
+import com.net.pvr.utils.ga.GoogleAnalytics
 import com.net.pvr.utils.hide
 import com.net.pvr.utils.invisible
 import com.net.pvr.utils.show
@@ -506,28 +509,50 @@ class CinemaSessionTimeAdapter(
             }
         }
 
-        offerPrice.paintFlags = offerPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+//        offerPrice.paintFlags = offerPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+        var discountPrice = 0
+        try {
+            offerPrice.paintFlags = offerPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            for (data in progressDialog) {
+                ticket.text = context.getString(R.string.currency) + data.p
+                food.text = context.getString(R.string.currency) + data.bv
+                totalPrice.text = context.getString(R.string.currency) + data.bp
 
-        val offerPriceText =
-            (progressDialog[0].p.toDouble().roundToInt() + progressDialog[0].bv.toDouble()
-                .roundToInt())
-        ticket.text = context.getString(R.string.currency) + progressDialog[0].p
-        food.text = context.getString(R.string.currency) + progressDialog[0].bv
-        offerPrice.text = context.getString(R.string.currency) + offerPriceText
-        totalPrice.text = context.getString(R.string.currency) + progressDialog[0].bp
-        val discountPrice = offerPriceText - progressDialog[0].bp.toInt()
+                val offerPriceText =
+                    (data.p.toDouble().roundToInt() + data.bv.toDouble().roundToInt())
+
+                offerPrice.text = context.getString(R.string.currency) + offerPriceText
+                discountPrice = offerPriceText - data.bp.toInt()
+                break
+            }
+        }catch (e:java.lang.Exception){
+            e.printStackTrace()
+            discountPrice = 0
+        }
+
 
 
         skip.setOnClickListener {
             dialog.dismiss()
             sidText = sid.toString()
             ccText = cc
-            HomeFragment.mcId = nowShowingList[position].mc
+
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+//                                bundle.putString("var_FnB_food_type","veg")
+                GoogleAnalytics.hitEvent(context, "book_apply_offer_skip", bundle)
+                GoogleAnalytics.hitEvent(context, "movie_show_time", bundle)
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+
             val intent = Intent(context, SeatLayoutActivity::class.java)
             intent.putExtra("clickPosition", position.toString())
             intent.putExtra("shows", nowShowingList)
-            intent.putExtra("from", "cinema")
             intent.putExtra("skip", "true")
+            intent.putExtra("from", "movie")
             if (adlt) {
                 val dialog = OptionDialog(context,
                     R.mipmap.ic_launcher,
@@ -552,6 +577,15 @@ class CinemaSessionTimeAdapter(
                                             positiveBtnText = R.string.accept,
                                             negativeBtnText = R.string.cancel,
                                             positiveClick = {
+                                                // Hit Event
+                                                try {
+                                                    val bundle = Bundle()
+                                                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                                                    bundle.putString("var_book_movie_disclaimer","accept")
+                                                    GoogleAnalytics.hitEvent(context, "book_movie_disclaimer", bundle)
+                                                }catch (e:Exception){
+                                                    e.printStackTrace()
+                                                }
                                                 context.startActivity(intent)
                                             },
                                             negativeClick = {})
@@ -560,7 +594,17 @@ class CinemaSessionTimeAdapter(
                                         context.startActivity(intent)
                                     }
                                 },
-                                negativeClick = {})
+                                negativeClick = {
+                                    // Hit Event
+                                    try {
+                                        val bundle = Bundle()
+                                        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                                        bundle.putString("var_book_movie_disclaimer","cancel")
+                                        GoogleAnalytics.hitEvent(context, "book_movie_disclaimer", bundle)
+                                    }catch (e:Exception){
+                                        e.printStackTrace()
+                                    }
+                                })
                             dialog.show()
                         } else {
                             if (newAt != "") {
@@ -571,16 +615,46 @@ class CinemaSessionTimeAdapter(
                                     positiveBtnText = R.string.accept,
                                     negativeBtnText = R.string.cancel,
                                     positiveClick = {
+                                        // Hit Event
+                                        try {
+                                            val bundle = Bundle()
+                                            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                                            bundle.putString("var_book_movie_disclaimer","accept")
+                                            GoogleAnalytics.hitEvent(context, "book_movie_disclaimer", bundle)
+                                        }catch (e:Exception){
+                                            e.printStackTrace()
+                                        }
                                         context.startActivity(intent)
                                     },
-                                    negativeClick = {})
+                                    negativeClick = {
+                                        // Hit Event
+                                        try {
+                                            val bundle = Bundle()
+                                            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                                            bundle.putString("var_book_movie_disclaimer","cancel")
+                                            GoogleAnalytics.hitEvent(context, "book_movie_disclaimer", bundle)
+                                        }catch (e:Exception){
+                                            e.printStackTrace()
+                                        }
+                                    })
                                 dialog.show()
                             } else {
                                 context.startActivity(intent)
                             }
                         }
                     },
-                    negativeClick = {})
+                    negativeClick = {
+                        // Hit Event
+                        try {
+                            val bundle = Bundle()
+                            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                            bundle.putString("var_book_movie_disclaimer","cancel")
+                            GoogleAnalytics.hitEvent(context, "book_movie_disclaimer", bundle)
+                        }catch (e:Exception){
+                            e.printStackTrace()
+                        }
+
+                    })
                 dialog.show()
 
             } else {
@@ -600,17 +674,48 @@ class CinemaSessionTimeAdapter(
                                     positiveBtnText = R.string.accept,
                                     negativeBtnText = R.string.cancel,
                                     positiveClick = {
+                                        // Hit Event
+                                        try {
+                                            val bundle = Bundle()
+                                            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                                            bundle.putString("var_book_movie_disclaimer","accept")
+                                            GoogleAnalytics.hitEvent(context, "book_movie_disclaimer", bundle)
+                                        }catch (e:Exception){
+                                            e.printStackTrace()
+                                        }
                                         context.startActivity(intent)
                                     },
-                                    negativeClick = {})
+                                    negativeClick = {
+                                        // Hit Event
+                                        try {
+                                            val bundle = Bundle()
+                                            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                                            bundle.putString("var_book_movie_disclaimer","cancel")
+                                            GoogleAnalytics.hitEvent(context, "book_movie_disclaimer", bundle)
+                                        }catch (e:Exception){
+                                            e.printStackTrace()
+                                        }
+                                    })
                                 dialog.show()
                             } else {
                                 context.startActivity(intent)
                             }
                         },
-                        negativeClick = {})
+                        negativeClick = {
+                            // Hit Event
+                            try {
+                                val bundle = Bundle()
+                                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                                bundle.putString("var_book_movie_disclaimer","cancel")
+                                GoogleAnalytics.hitEvent(context, "book_movie_disclaimer", bundle)
+                            }catch (e:Exception){
+                                e.printStackTrace()
+                            }
+                        })
                     dialog.show()
                 } else {
+
+
                     if (newAt != "") {
                         val dialog = OptionDialog(context,
                             R.mipmap.ic_launcher,
@@ -619,9 +724,28 @@ class CinemaSessionTimeAdapter(
                             positiveBtnText = R.string.accept,
                             negativeBtnText = R.string.cancel,
                             positiveClick = {
+                                // Hit Event
+                                try {
+                                    val bundle = Bundle()
+                                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                                    bundle.putString("var_book_movie_disclaimer","accept")
+                                    GoogleAnalytics.hitEvent(context, "book_movie_disclaimer", bundle)
+                                }catch (e:Exception){
+                                    e.printStackTrace()
+                                }
                                 context.startActivity(intent)
                             },
-                            negativeClick = {})
+                            negativeClick = {
+                                // Hit Event
+                                try {
+                                    val bundle = Bundle()
+                                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+                                    bundle.putString("var_book_movie_disclaimer","cancel")
+                                    GoogleAnalytics.hitEvent(context, "book_movie_disclaimer", bundle)
+                                }catch (e:Exception){
+                                    e.printStackTrace()
+                                }
+                            })
                         dialog.show()
                     } else {
                         context.startActivity(intent)
@@ -632,114 +756,127 @@ class CinemaSessionTimeAdapter(
         }
 
         applyOffer.setOnClickListener {
-            dialog.dismiss()
-            sidText = sid.toString()
-            ccText = cc
-            HomeFragment.mcId = nowShowingList[position].mc
-            val intent = Intent(context, SeatLayoutActivity::class.java)
-            intent.putExtra("clickPosition", position.toString())
-            intent.putExtra("shows", nowShowingList)
-            intent.putExtra("skip", "false")
-            intent.putExtra("from", "cinema")
-            intent.putExtra("discountPrice", discountPrice.toString())
+            if (discountPrice > 0){
+                dialog.dismiss()
+                sidText = sid.toString()
+                ccText = cc
 
-            if (adlt) {
-                val dialog = OptionDialog(context,
-                    R.mipmap.ic_launcher,
-                    R.string.app_name,
-                    context.getString(R.string.adult_msz),
-                    positiveBtnText = R.string.accept,
-                    negativeBtnText = R.string.cancel,
-                    positiveClick = {
-                        if (at != "") {
-                            val dialog = OptionDialog(context,
-                                R.mipmap.ic_launcher,
-                                R.string.app_name,
-                                at,
-                                positiveBtnText = R.string.accept,
-                                negativeBtnText = R.string.cancel,
-                                positiveClick = {
-                                    if (newAt != "") {
-                                        val dialog = OptionDialog(context,
-                                            R.mipmap.ic_launcher,
-                                            R.string.app_name,
-                                            newAt,
-                                            positiveBtnText = R.string.accept,
-                                            negativeBtnText = R.string.cancel,
-                                            positiveClick = {
-                                                context.startActivity(intent)
-                                            },
-                                            negativeClick = {})
-                                        dialog.show()
-                                    } else {
-                                        context.startActivity(intent)
-                                    }
-                                },
-                                negativeClick = {})
-                            dialog.show()
-                        } else {
-                            if (newAt != "") {
-                                val dialog = OptionDialog(context,
-                                    R.mipmap.ic_launcher,
-                                    R.string.app_name,
-                                    newAt,
-                                    positiveBtnText = R.string.accept,
-                                    negativeBtnText = R.string.cancel,
-                                    positiveClick = {
-                                        context.startActivity(intent)
-                                    },
-                                    negativeClick = {})
-                                dialog.show()
-                            } else {
-                                context.startActivity(intent)
-                            }
-                        }
-                    },
-                    negativeClick = {})
-                dialog.show()
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
+//                                bundle.putString("var_FnB_food_type","veg")
+                    GoogleAnalytics.hitEvent(context, "movie_show_time", bundle)
+                    GoogleAnalytics.hitEvent(context, "book_apply_offer", bundle)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
 
-            } else {
-                if (at != "") {
+
+                val intent = Intent(context, SeatLayoutActivity::class.java)
+                intent.putExtra("clickPosition", position.toString())
+                intent.putExtra("shows", nowShowingList)
+                intent.putExtra("skip", "false")
+                intent.putExtra("from", "movie")
+                intent.putExtra("discountPrice", discountPrice.toString())
+                if (adlt) {
                     val dialog = OptionDialog(context,
                         R.mipmap.ic_launcher,
                         R.string.app_name,
-                        at,
+                        context.getString(R.string.adult_msz),
                         positiveBtnText = R.string.accept,
                         negativeBtnText = R.string.cancel,
                         positiveClick = {
-                            if (newAt != "") {
+                            if (at != "") {
                                 val dialog = OptionDialog(context,
                                     R.mipmap.ic_launcher,
                                     R.string.app_name,
-                                    newAt,
+                                    at,
                                     positiveBtnText = R.string.accept,
                                     negativeBtnText = R.string.cancel,
                                     positiveClick = {
-                                        context.startActivity(intent)
+                                        if (newAt != "") {
+                                            val dialog = OptionDialog(context,
+                                                R.mipmap.ic_launcher,
+                                                R.string.app_name,
+                                                newAt,
+                                                positiveBtnText = R.string.accept,
+                                                negativeBtnText = R.string.cancel,
+                                                positiveClick = {
+                                                    context.startActivity(intent)
+                                                },
+                                                negativeClick = {})
+                                            dialog.show()
+                                        } else {
+                                            context.startActivity(intent)
+                                        }
                                     },
                                     negativeClick = {})
                                 dialog.show()
                             } else {
-                                context.startActivity(intent)
+                                if (newAt != "") {
+                                    val dialog = OptionDialog(context,
+                                        R.mipmap.ic_launcher,
+                                        R.string.app_name,
+                                        newAt,
+                                        positiveBtnText = R.string.accept,
+                                        negativeBtnText = R.string.cancel,
+                                        positiveClick = {
+                                            context.startActivity(intent)
+                                        },
+                                        negativeClick = {})
+                                    dialog.show()
+                                } else {
+                                    context.startActivity(intent)
+                                }
                             }
                         },
                         negativeClick = {})
                     dialog.show()
+
                 } else {
-                    if (newAt != "") {
+                    if (at != "") {
                         val dialog = OptionDialog(context,
                             R.mipmap.ic_launcher,
                             R.string.app_name,
-                            newAt,
+                            at,
                             positiveBtnText = R.string.accept,
                             negativeBtnText = R.string.cancel,
                             positiveClick = {
-                                context.startActivity(intent)
+                                if (newAt != "") {
+                                    val dialog = OptionDialog(context,
+                                        R.mipmap.ic_launcher,
+                                        R.string.app_name,
+                                        newAt,
+                                        positiveBtnText = R.string.accept,
+                                        negativeBtnText = R.string.cancel,
+                                        positiveClick = {
+                                            context.startActivity(intent)
+                                        },
+                                        negativeClick = {})
+                                    dialog.show()
+                                } else {
+                                    context.startActivity(intent)
+                                }
                             },
                             negativeClick = {})
                         dialog.show()
                     } else {
-                        context.startActivity(intent)
+                        if (newAt != "") {
+                            val dialog = OptionDialog(context,
+                                R.mipmap.ic_launcher,
+                                R.string.app_name,
+                                newAt,
+                                positiveBtnText = R.string.accept,
+                                negativeBtnText = R.string.cancel,
+                                positiveClick = {
+                                    context.startActivity(intent)
+                                },
+                                negativeClick = {})
+                            dialog.show()
+                        } else {
+                            context.startActivity(intent)
+                        }
                     }
                 }
             }

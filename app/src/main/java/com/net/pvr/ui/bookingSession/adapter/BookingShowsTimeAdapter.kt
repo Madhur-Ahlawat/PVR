@@ -525,20 +525,26 @@ class BookingShowsTimeAdapter(
                 tncData.addView(view)
             }
         }
-
-        offerPrice.paintFlags = offerPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
         var discountPrice = 0
-        for (data in progressDialog) {
-            ticket.text = context.getString(R.string.currency) + data.p
-            food.text = context.getString(R.string.currency) + data.bv
-            totalPrice.text = context.getString(R.string.currency) + data.bp
+        try {
+            offerPrice.paintFlags = offerPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            for (data in progressDialog) {
+                ticket.text = context.getString(R.string.currency) + data.p
+                food.text = context.getString(R.string.currency) + data.bv
+                totalPrice.text = context.getString(R.string.currency) + data.bp
 
-            val offerPriceText = (data.p.toDouble().roundToInt() + data.bv.toDouble().roundToInt())
+                val offerPriceText =
+                    (data.p.toDouble().roundToInt() + data.bv.toDouble().roundToInt())
 
-            offerPrice.text = context.getString(R.string.currency) + offerPriceText
-            discountPrice = offerPriceText - data.bp.toInt()
-            break
+                offerPrice.text = context.getString(R.string.currency) + offerPriceText
+                discountPrice = offerPriceText - data.bp.toInt()
+                break
+            }
+        }catch (e:java.lang.Exception){
+            e.printStackTrace()
+            discountPrice = 0
         }
+
 
 
         skip.setOnClickListener {
@@ -765,7 +771,8 @@ class BookingShowsTimeAdapter(
         }
 
         applyOffer.setOnClickListener {
-            dialog.dismiss()
+            if (discountPrice > 0){
+                dialog.dismiss()
             sidText = sid.toString()
             ccText = cc
 
@@ -776,7 +783,7 @@ class BookingShowsTimeAdapter(
 //                                bundle.putString("var_FnB_food_type","veg")
                 GoogleAnalytics.hitEvent(context, "movie_show_time", bundle)
                 GoogleAnalytics.hitEvent(context, "book_apply_offer", bundle)
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
 
@@ -888,6 +895,8 @@ class BookingShowsTimeAdapter(
                 }
             }
         }
+        }
+
     }
 
     override fun getItemCount(): Int {

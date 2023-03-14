@@ -33,6 +33,7 @@ class WebViewActivity : AppCompatActivity() {
         title = intent.getStringExtra("title").toString()
         get = intent.getStringExtra("getUrl").toString()
         movedNext()
+        binding?.webView?.settings?.builtInZoomControls = true
 
              if (from == "Experience") {
                  requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
