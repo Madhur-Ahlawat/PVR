@@ -25,14 +25,13 @@ import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
 import com.net.pvr.ui.movieDetails.comingSoonDetails.setAlert.adapter.AlertTheaterAdapter
 import com.net.pvr.ui.movieDetails.comingSoonDetails.setAlert.viewModel.SetAlertViewModel
-import com.net.pvr.utils.Constant
-import com.net.pvr.utils.NetworkResult
 import com.net.pvr.di.preference.PreferenceManager
+import com.net.pvr.utils.*
 import com.net.pvr.utils.ga.GoogleAnalytics
-import com.net.pvr.utils.printLog
-import com.net.pvr.utils.show
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.internal.and
 import org.json.JSONObject
+import java.security.MessageDigest
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -48,6 +47,10 @@ class SetAlertActivity : AppCompatActivity() {
     private val selectedItemList: MutableList<BookingRetrievalResponse.Output.C> = mutableListOf()
     private val cinemaList: ArrayList<String> = arrayListOf()
 
+    private var timeStamp = ""
+    private var whatsappStatusCheck:Boolean = false
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivitySetAlertBinding.inflate(layoutInflater, null, false)
@@ -58,11 +61,53 @@ class SetAlertActivity : AppCompatActivity() {
 
     private fun manageFunction() {
         authViewModel.allTheater(preferences.getCityName(), preferences.getLatitudeData(), preferences.getLongitudeData(), preferences.getUserId(), "")
+        timeStamp = (System.currentTimeMillis() / 1000).toString()
+
+
+        if (preferences.getIsLogin()){
+            authViewModel.whatsappOpt(
+                preferences.getUserId(),
+                preferences.getToken().toString(),
+                timeStamp,
+                getHash(preferences.getUserId() + "|" + preferences.getToken() + "|" + "optin-info" + "|" + timeStamp)
+            )
+        }
 
         allTheater()
         movedNext()
         setUiValue()
         setAlert()
+        whatsappOptStatus()
+    }
+
+    @Throws(Exception::class)
+    fun getHash(text: String): String {
+        val mdText = MessageDigest.getInstance("SHA-512")
+        val byteData = mdText.digest(text.toByteArray())
+        val sb = StringBuffer()
+        for (i in byteData.indices) {
+            sb.append(((byteData[i] and 0xff) + 0x100).toString(16).substring(1))
+        }
+        return sb.toString()
+    }
+
+    private fun whatsappOptStatus() {
+        authViewModel.optResponseLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        retrieveWhatsappData(it.data.output)
+                    }
+                }
+                is NetworkResult.Error -> {}
+                is NetworkResult.Loading -> {}
+            }
+        }
+
+    }
+
+    private fun retrieveWhatsappData(output: Boolean) {
+        whatsappStatusCheck= output
     }
 
     @SuppressLint("UseCompatLoadingForDrawables", "SetTextI18n")
@@ -70,6 +115,7 @@ class SetAlertActivity : AppCompatActivity() {
 
         binding.toggleButton.setOnCheckedChangeListener { buttonView, isChecked ->
             unableDisable.value = isChecked
+            theaterAdapter?.notifyDataSetChanged()
         }
 
         binding.apply {
@@ -208,6 +254,36 @@ class SetAlertActivity : AppCompatActivity() {
         dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
         dialog.window?.setGravity(Gravity.BOTTOM)
         dialog.show()
+
+        if (whatsappStatusCheck){
+            bindingBottom.textView295.hide()
+            bindingBottom.cardView12.hide()
+        }else{
+            bindingBottom.textView295.show()
+            bindingBottom.cardView12.show()
+        }
+
+
+        bindingBottom.switch1.isChecked = whatsappStatusCheck
+        bindingBottom.switch1.setOnCheckedChangeListener { _, isChecked ->
+            timeStamp = (System.currentTimeMillis() / 1000).toString()
+            if (isChecked) {
+                authViewModel.whatsappOptIn(
+                    preferences.getUserId(),
+                    preferences.getToken().toString(),
+                    timeStamp,
+                    getHash(preferences.getUserId() + "|" + preferences.getToken() + "|" + "opt-in" + "|" + timeStamp)
+                )
+            } else {
+                authViewModel.whatsappOptOut(
+                    preferences.getUserId(),
+                    preferences.getToken().toString(),
+                    timeStamp,
+                    getHash(preferences.getUserId() + "|" + preferences.getToken() + "|" + "opt-out" + "|" + timeStamp)
+                )
+            }
+        }
+
         bindingBottom.include21.textView5.setOnClickListener {
             finish()
         }
@@ -261,6 +337,7 @@ class SetAlertActivity : AppCompatActivity() {
             context = this@SetAlertActivity,
             nowShowingList = data.c,
             unableDisable = unableDisable
+        ,binding?.toggleButton!!
         ) { item, addToList ->
             if (addToList) {
                 selectedItemList.add(item)

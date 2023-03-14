@@ -5,7 +5,6 @@ import android.app.NotificationManager
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -38,7 +37,6 @@ import com.net.pvr.databinding.FeedbackThanksBinding
 import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
-import com.net.pvr.ui.home.adapter.HomeOfferAdapter
 import com.net.pvr.ui.home.fragment.cinema.CinemasFragment
 import com.net.pvr.ui.home.fragment.comingSoon.ComingSoonFragment
 import com.net.pvr.ui.home.fragment.home.HomeFragment
@@ -66,8 +64,8 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickListenerCity,
-    PrivilegeHomeDialogAdapter.RecycleViewItemClickListener, PlayPopup {
+class HomeActivity : AppCompatActivity(), PrivilegeHomeDialogAdapter.RecycleViewItemClickListener,
+    PlayPopup {
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityHomeBinding? = null
@@ -90,7 +88,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 
     companion object {
         var reviewPosition = 0
-        var backToTop:ConstraintLayout? = null
+        var backToTop: ConstraintLayout? = null
         var pCheck = "0"
         var pDays = "0"
         fun getCurrentItem(recyclerView: RecyclerView): Int {
@@ -114,30 +112,22 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 
     @SuppressLint("SuspiciousIndentation")
     private fun manageFunction() {
-        privilegeDataLoad()
-        offerDataLoad()
-        movedNext()
-//        experienceDialog()
         // Call Loyalty Home Api
         authViewModel.privilegeHome(preferences.geMobileNumber(), preferences.getCityName())
 
-        //offer
-        if (preferences.getIsLogin()) {
-            authViewModel.offer(preferences.getCityName(),preferences.getUserId(),Constant().getDeviceId(this),"NO")
-        }
+        if (intent.hasExtra("from")) from = intent.getStringExtra("from").toString()
 
-        if (intent.hasExtra("from"))
-        from= intent.getStringExtra("from").toString()
-        printLog("from---->${from}")
-
+        manageDeepLinks()
+        privilegeDataLoad()
+        movedNext()
     }
 
     private fun switchFragment() {
-        if (from=="cinema"){
+        if (from == "cinema") {
             setCurrentFragment(secondFragment)
             binding?.bottomNavigationView?.selectedItemId = R.id.cinemaFragment
 
-        }else{
+        } else {
             binding?.bottomNavigationView?.selectedItemId = R.id.homeFragment
             setCurrentFragment(firstFragment)
         }
@@ -147,11 +137,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
             when (item.itemId) {
                 R.id.homeFragment -> {
                     setCurrentFragment(firstFragment)
-                    if (offerShow == 1) {
-                        binding?.constraintLayout55?.show()
-                    } else {
-                        binding?.constraintLayout55?.hide()
-                    }
+
                     // Hit Event
                     try {
                         val bundle = Bundle()
@@ -166,7 +152,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                 R.id.cinemaFragment -> {
                     setCurrentFragment(secondFragment)
                 }
-                R.id.privilegeFragment ->{
+                R.id.privilegeFragment -> {
                     // Hit Event
                     try {
                         val bundle = Bundle()
@@ -188,10 +174,8 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                     managePrivilege("")
                 }
 
-                R.id.comingSoonFragment ->
-                    setCurrentFragment(fourthFragment)
-                R.id.moreFragment ->
-                    setCurrentFragment(fifthFragment)
+                R.id.comingSoonFragment -> setCurrentFragment(fourthFragment)
+                R.id.moreFragment -> setCurrentFragment(fifthFragment)
             }
             true
         }
@@ -205,16 +189,6 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 
     //ClickMovedNext
     private fun movedNext() {
-//      Close Offer Alert
-        binding?.imageView78?.setOnClickListener {
-            binding?.constraintLayout55?.hide()
-            authViewModel.hideOffer(preferences.getCityName(),preferences.getUserId(),Constant().getDeviceId(this),"NO")
-        }
-
-//        Dialogs
-        binding?.textView185?.setOnClickListener {
-            showOfferDialog()
-        }
 
     }
 
@@ -232,59 +206,6 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 
     }
 
-    //  offers Dialog
-    private fun showOfferDialog() {
-        val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.offer_dialog)
-        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window!!.setLayout(
-            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        dialog.show()
-
-        val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerView26)
-        val ignore = dialog.findViewById<TextView>(R.id.textView194)
-        val textView5 = dialog.findViewById<TextView>(R.id.textView5)
-        val textView192 = dialog.findViewById<TextView>(R.id.textView192)
-        textView5?.text = getString(R.string.explore_offers)
-        val gridLayout =
-            GridLayoutManager(this@HomeActivity, 1, GridLayoutManager.HORIZONTAL, false)
-        recyclerView?.layoutManager = LinearLayoutManager(this@HomeActivity)
-        val adapter = offerResponse?.let { HomeOfferAdapter(it, this, this) }
-        recyclerView?.layoutManager = gridLayout
-        recyclerView?.adapter = adapter
-        recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    val position = getCurrentItem(recyclerView)
-                    textView192?.text = offerResponse?.get(position)?.offerName
-                    textView5?.setOnClickListener {
-                        val intent = Intent(
-                            Intent.ACTION_VIEW, Uri.parse(
-                                offerResponse?.get(position)?.otherLinkRedirectUrl?.replace(
-                                    "https", "app"
-                                )
-                            )
-                        )
-                        startActivity(intent)
-                        dialog.dismiss()
-                    }
-                }
-            }
-        })
-        val snapHelper = PagerSnapHelper()
-        snapHelper.attachToRecyclerView(recyclerView)
-
-        ignore?.setOnClickListener {
-            dialog.dismiss()
-            authViewModel.hideOffer(preferences.getCityName(),preferences.getUserId(),Constant().getDeviceId(this),"NO")
-        }
-
-
-    }
 
     //    privilegeDialogs
     private fun privilegeDialog() {
@@ -312,15 +233,11 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
             val gridLayout =
                 GridLayoutManager(this@HomeActivity, 1, GridLayoutManager.HORIZONTAL, false)
             recyclerView?.layoutManager = LinearLayoutManager(this@HomeActivity)
-            val adapter =
-                PrivilegeHomeResponseConst?.pinfo?.let {
-                    PrivilegeHomeDialogAdapter(
-                        it,
-                        this,
-                        0,
-                        this
-                    )
-                }
+            val adapter = PrivilegeHomeResponseConst?.pinfo?.let {
+                PrivilegeHomeDialogAdapter(
+                    it, this, 0, this
+                )
+            }
             recyclerView?.layoutManager = gridLayout
             recyclerView?.adapter = adapter
             val mSnapHelper = PagerSnapHelper()
@@ -361,7 +278,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     }
 
     private fun hasDaysPassed(days: Int): Boolean {
-        return if (preferences.getLong("SHOW_LOYALTY")>0) {
+        return if (preferences.getLong("SHOW_LOYALTY") > 0) {
             val lastTimestamp: Long = preferences.getLong("SHOW_LOYALTY")
             val currentTimestamp = System.currentTimeMillis()
             val result = currentTimestamp - lastTimestamp >= TimeUnit.DAYS.toMillis(days.toLong())
@@ -419,7 +336,6 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                         PRIVILEGEVOUCHER = it.data.output.vou
                         privilegeRetrieveData(it.data.output)
                         switchFragment()
-                        manageDeepLinks()
 
                     } else {
                         if (it.data?.output != null) it.data.output.let { it1 ->
@@ -429,7 +345,6 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                         }
                     }
                     switchFragment()
-                    manageDeepLinks()
 
                 }
                 is NetworkResult.Error -> {
@@ -468,7 +383,10 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
             preferences.saveString(Constant.SharedPreference.SUBS_OPEN, output.passport.toString())
             preferences.saveString(Constant.SharedPreference.LOYALITY_STATUS, output.ls)
             preferences.saveString(Constant.SharedPreference.SUBSCRIPTION_STATUS, output.ulm)
-            if (intent.hasExtra("from") && (intent.getStringExtra("from") == "PP" || intent.getStringExtra("from") == "PP")) {
+            if (intent.hasExtra("from") && (intent.getStringExtra("from") == "PP" || intent.getStringExtra(
+                    "from"
+                ) == "PP")
+            ) {
                 managePrivilege(intent.getStringExtra("from").toString())
             }
         } catch (e: Exception) {
@@ -516,7 +434,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         try {
             val bundle = Bundle()
             bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Home")
-                    bundle.putString("var_home_passport_banner", "")
+            bundle.putString("var_home_passport_banner", "")
             GoogleAnalytics.hitEvent(this, "home_passport_banner", bundle)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -526,52 +444,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 
     @SuppressLint("SuspiciousIndentation")
     override fun onShowPrivilege() {
-        if (PrivilegeHomeResponseConst?.pcheck == "true")
-        privilegeDialog()
-    }
-
-    //Offer Api
-    private fun offerDataLoad() {
-        authViewModel.offerLiveData.observe(this) {
-            when (it) {
-                is NetworkResult.Success -> {
-                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        try {
-                            if (it.data.output != null && it.data.output.offer.size != 0) {
-                                binding?.constraintLayout55?.show()
-                                retrieveOffer(it.data.output.offer)
-                            }
-                        }catch (e:Exception){
-                            
-                        }
-                    }
-                }
-                is NetworkResult.Error -> {
-
-                }
-
-                is NetworkResult.Loading -> {
-
-                }
-            }
-        }
-    }
-
-    private fun retrieveOffer(output: ArrayList<OfferResponse.Offer>) {
-//        Set Data
-        offerResponse = output
-
-        //Manage Show Hide
-        offerShow = if (output.isNotEmpty()) {
-            1
-        } else {
-            0
-        }
-
-    }
-
-    override fun offerClick(comingSoonItem: OfferResponse.Offer) {
-
+        if (PrivilegeHomeResponseConst?.pcheck == "true") privilegeDialog()
     }
 
     override fun onShowNotification() {
@@ -589,16 +462,22 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     }
 
     override fun onFeedbackOffers() {
-        if (preferences.getString(Constant.SharedPreference.FEEDBACK) == ("true") && preferences.getString("CINEMADATA") != ("")) {
+        if (preferences.getString(Constant.SharedPreference.FEEDBACK) == ("true") && preferences.getString(
+                "CINEMADATA"
+            ) != ("")
+        ) {
             if (preferences.getString(Constant.SharedPreference.CINEMA_FEEDBACK) == ("")) {
                 val gson = Gson()
-                val output: TicketBookedResponse.Output = gson.fromJson(preferences.getString("CINEMADATA"), TicketBookedResponse.Output::class.java)
+                val output: TicketBookedResponse.Output = gson.fromJson(
+                    preferences.getString("CINEMADATA"),
+                    TicketBookedResponse.Output::class.java
+                )
                 if (getTimeBond(output.stgs.split("to")[1], output.md)) {
                     val handler = Handler()
                     handler.postDelayed({
-                        authViewModel.getFeedBackData(preferences.getUserId(),"CINEMA")
+                        authViewModel.getFeedBackData(preferences.getUserId(), "CINEMA")
                         getFeedBackData()
-                                        }, 2000)
+                    }, 2000)
                 }
             }
         }
@@ -637,19 +516,19 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     override fun onBackPressed() {
         if (binding?.bottomNavigationView?.selectedItemId == R.id.homeFragment) {
             //if (back_flag==0) {
-                val dialog = OptionDialog(this,
-                    R.mipmap.ic_launcher,
-                    R.string.app_name,
-                    getString(R.string.exitApp),
-                    positiveBtnText = R.string.yes,
-                    negativeBtnText = R.string.no,
-                    positiveClick = {
-                        back_flag = 1
-                        finish()
-                    },
-                    negativeClick = {})
-                dialog.show()
-                back_flag = 1
+            val dialog = OptionDialog(this,
+                R.mipmap.ic_launcher,
+                R.string.app_name,
+                getString(R.string.exitApp),
+                positiveBtnText = R.string.yes,
+                negativeBtnText = R.string.no,
+                positiveClick = {
+                    back_flag = 1
+                    finish()
+                },
+                negativeClick = {})
+            dialog.show()
+            back_flag = 1
 //            } else {
 //                finish()
 //            }
@@ -659,45 +538,42 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         }
     }
 
-    private fun manageDeepLinks(){
+    private fun manageDeepLinks() {
         try {
             val data = intent.data
             if (data != null) {
                 var path = data.path
-                if (path?.contains("utm") == true)
-                    sendGACampaign(path, "Home")
+                if (path?.contains("utm") == true) sendGACampaign(path, "Home")
                 if (path?.contains("loyaltys/home") == true || path?.contains("loyalty/home") == true) {
                     val isLy: String = preferences.getString(Constant.SharedPreference.IS_LY)
                     if (isLy.equals("true", ignoreCase = true)) {
-                        val ls: String = preferences.getString(Constant.SharedPreference.LOYALITY_STATUS)
+                        val ls: String =
+                            preferences.getString(Constant.SharedPreference.LOYALITY_STATUS)
                         val isHl: String = preferences.getString(Constant.SharedPreference.IS_HL)
                         if (!ls.equals("", ignoreCase = true) && ls != null) {
                             if (isHl.equals("true", ignoreCase = true)) {
                                 managePrivilege("C")
                             } else {
                                 val intent1 = Intent(
-                                    this@HomeActivity,
-                                    NonMemberActivity::class.java
+                                    this@HomeActivity, NonMemberActivity::class.java
                                 )
-                                intent1.putExtra("type","P")
+                                intent1.putExtra("type", "P")
                                 startActivity(intent1)
                                 finish()
                             }
                         } else {
                             val intent1 = Intent(
-                                this@HomeActivity,
-                                NonMemberActivity::class.java
+                                this@HomeActivity, NonMemberActivity::class.java
                             )
-                            intent1.putExtra("type","P")
+                            intent1.putExtra("type", "P")
                             startActivity(intent1)
                             finish()
                         }
                     } else {
                         val intent1 = Intent(
-                            this@HomeActivity,
-                            NonMemberActivity::class.java
+                            this@HomeActivity, NonMemberActivity::class.java
                         )
-                        intent1.putExtra("type","P")
+                        intent1.putExtra("type", "P")
                         startActivity(intent1)
                         finish()
                     }
@@ -706,25 +582,24 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                 } else if (path?.contains("/PSPT") == true) {
                     managePrivilege("C")
                 } else if (path?.contains("/comingsoontrailer") == true) {
-                    val trailerPathUrl = path.split("/".toRegex()).dropLastWhile { it.isEmpty() }
-                        .toTypedArray()
+                    val trailerPathUrl =
+                        path.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                     val intent = Intent(this, NowShowingMovieDetailsActivity::class.java)
                     intent.putExtra("mid", trailerPathUrl[2])
                     startActivity(intent)
                 } else if (path?.contains("/comingsoon") == true) {
                     if (path.contains("NHO")) {
-                        val pathUrl = path.split("/".toRegex()).dropLastWhile { it.isEmpty() }
-                            .toTypedArray()
+                        val pathUrl =
+                            path.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                         val intent = Intent(this, NowShowingMovieDetailsActivity::class.java)
                         intent.putExtra("mid", pathUrl[4])
                         startActivity(intent)
                     } else setCurrentFragment(fourthFragment)
                 } else if (path?.contains("/playtrailer") == true) {
                     path = data.toString()
-                    if (path.contains("utm"))
-                        sendGACampaign(path, "Trailer")
-                    val pathNew = path.split("Url".toRegex()).dropLastWhile { it.isEmpty() }
-                        .toTypedArray()[1]
+                    if (path.contains("utm")) sendGACampaign(path, "Trailer")
+                    val pathNew =
+                        path.split("Url".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]
                     val url = pathNew.substring(1, pathNew.length)
                     if (url != null) {
                         val intent = Intent(this@HomeActivity, PlayerActivity::class.java)
@@ -751,7 +626,13 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
 
     private fun getTimeBond(et: String, md: String): Boolean {
         val endDate = md + " " + et.trim { it <= ' ' } + " 2023"
-        return Date().after(Constant.getUpdatedDate("EEE, MMM dd HH:mm a yyyy", "yyyy/dd/MM HH:mm:ss", endDate))
+        return Date().after(
+            Constant.getUpdatedDate(
+                "EEE, MMM dd HH:mm a yyyy",
+                "yyyy/dd/MM HH:mm:ss",
+                endDate
+            )
+        )
     }
 
     private fun getFeedBackData() {
@@ -774,8 +655,10 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
     private fun retrieveFeedbackData(output: FeedbackDataResponse.Output) {
         var rateVal = "5"
         val gson = Gson()
-        val ticketData: TicketBookedResponse.Output =
-            gson.fromJson(preferences.getString("CINEMADATA"), TicketBookedResponse.Output::class.java)
+        val ticketData: TicketBookedResponse.Output = gson.fromJson(
+            preferences.getString("CINEMADATA"),
+            TicketBookedResponse.Output::class.java
+        )
         val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         val inflater = LayoutInflater.from(this)
@@ -847,7 +730,14 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         })
 
         bindingProfile.doneBtn.setOnClickListener(View.OnClickListener {
-            authViewModel.setFeedBackData(preferences.getUserId(),"CINEMA",ticketData.cid,bindingProfile.feedbackText.text.toString(),"",bindingProfile.commentBox.text.toString())
+            authViewModel.setFeedBackData(
+                preferences.getUserId(),
+                "CINEMA",
+                ticketData.cid,
+                bindingProfile.feedbackText.text.toString(),
+                "",
+                bindingProfile.commentBox.text.toString()
+            )
             setFeedBackData()
             dialog.dismiss()
         })

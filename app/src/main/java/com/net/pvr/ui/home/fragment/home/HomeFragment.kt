@@ -26,19 +26,17 @@ import androidx.core.view.ViewCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.*
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.PagerSnapHelper
-import androidx.recyclerview.widget.SnapHelper
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 import com.google.gson.internal.LinkedTreeMap
-import com.net.pvr.MainApplication
 import com.net.pvr.MainApplication.Companion.homeLoadBanner
 import com.net.pvr.R
 import com.net.pvr.databinding.FragmentHomeBinding
@@ -49,13 +47,16 @@ import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.filter.GenericFilterHome
 import com.net.pvr.ui.giftCard.GiftCardActivity
+import com.net.pvr.ui.home.HomeActivity
 import com.net.pvr.ui.home.HomeActivity.Companion.backToTop
+import com.net.pvr.ui.home.fragment.home.adapter.HomeOfferAdapter
 import com.net.pvr.ui.home.formats.FormatsActivity
 import com.net.pvr.ui.home.fragment.home.adapter.*
 import com.net.pvr.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr.ui.home.fragment.home.response.NextBookingResponse
 import com.net.pvr.ui.home.fragment.home.viewModel.HomeViewModel
 import com.net.pvr.ui.home.fragment.more.offer.offerDetails.OfferDetailsActivity
+import com.net.pvr.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr.ui.home.fragment.more.profile.userDetails.ProfileActivity
 import com.net.pvr.ui.home.interfaces.PlayPopup
 import com.net.pvr.ui.location.selectCity.SelectCityActivity
@@ -87,16 +88,15 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(),
-    HomeCinemaCategoryAdapter.RecycleViewItemClickListener,
+class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickListener,
     HomeSliderAdapter.RecycleViewItemClickListener,
     HomePromotionAdapter.RecycleViewItemClickListener,
     HomeMoviesAdapter.RecycleViewItemClickListener,
-    HomeOfferAdapter.RecycleViewItemClickListener,
-    GenericFilterHome.onButtonSelected,
-    StoriesProgressView.StoriesListener,
+    HomeOfferListAdapter.RecycleViewItemClickListener,
+    GenericFilterHome.onButtonSelected, StoriesProgressView.StoriesListener,
     MusicVideoTrsAdapter.RecycleViewItemClickListener,
-    TrailerTrsAdapter.RecycleViewItemClickListener {
+    TrailerTrsAdapter.RecycleViewItemClickListener,
+    HomeOfferAdapter.RecycleViewItemClickListenerCity {
 
     private var binding: FragmentHomeBinding? = null
 
@@ -113,6 +113,11 @@ class HomeFragment : Fragment(),
     private var upcomingBooking = false
     private var buttonPressed = ArrayList<String>()
     private var generaSelected: ArrayList<String?>? = ArrayList<String?>()
+
+    //offer
+    private var offerResponse: ArrayList<OfferResponse.Offer>? = null
+    private var offerShow = 0
+
 
     // story board
     private var bannerShow = 0
@@ -133,7 +138,7 @@ class HomeFragment : Fragment(),
     private var rlBanner: RelativeLayout? = null
     private var stories: StoriesProgressView? = null
     private var listener: PlayPopup? = null
-    var gFilter:GenericFilterHome? = null
+    var gFilter: GenericFilterHome? = null
 
     //internet Check
     private var broadcastReceiver: BroadcastReceiver? = null
@@ -144,8 +149,8 @@ class HomeFragment : Fragment(),
     private var videoData: ArrayList<MovieDetailsResponse.Trs> =
         ArrayList<MovieDetailsResponse.Trs>()
 
-    companion object{
-       var mcId = ""
+    companion object {
+        var mcId = ""
     }
 
     override fun onCreateView(
@@ -167,11 +172,11 @@ class HomeFragment : Fragment(),
         appliedFilterItem = HashMap<String, String>()
 
         lang = "ALL"
-         format = "ALL"
-         special = "ALL"
-         cinemaType = "ALL"
+        format = "ALL"
+        special = "ALL"
+        cinemaType = "ALL"
 
-        backToTop=requireActivity().findViewById(R.id.backToTop)
+        backToTop = requireActivity().findViewById(R.id.backToTop)
         //Poster
         listener = activity as PlayPopup?
         tvButton = (requireActivity().findViewById<RelativeLayout?>(R.id.bannerLayout)
@@ -206,6 +211,9 @@ class HomeFragment : Fragment(),
             binding?.includeAppBar?.profileBtn?.show()
             binding?.constraintLayout135?.show()
 
+            //offer
+            authViewModel.offer(preferences.getCityName(),preferences.getUserId(),Constant().getDeviceId(requireActivity()),"NO")
+
 //            nextBooking
             authViewModel.nextBooking(
                 preferences.getUserId(), Constant().getDeviceId(requireActivity())
@@ -217,10 +225,10 @@ class HomeFragment : Fragment(),
         }
 
 
-
         //internet Check
         broadcastReceiver = NetworkReceiver()
         broadcastIntent()
+
         binding?.privilege?.setOnClickListener {
             val navigationView =
                 requireActivity().findViewById(R.id.bottomNavigationView) as BottomNavigationView
@@ -238,6 +246,7 @@ class HomeFragment : Fragment(),
         createQr()
         getMovieFormatFromApi()
         makeToTop()
+        offerDataLoad()
     }
 
     private fun makeToTop() {
@@ -250,7 +259,8 @@ class HomeFragment : Fragment(),
 
             }
             backToTop?.setOnClickListener {
-                binding?.nestedScrollView4?.postDelayed({ binding?.nestedScrollView4?.fullScroll(View.FOCUS_UP) }, 0
+                binding?.nestedScrollView4?.postDelayed(
+                    { binding?.nestedScrollView4?.fullScroll(View.FOCUS_UP) }, 0
                 )
             }
         })
@@ -263,6 +273,25 @@ class HomeFragment : Fragment(),
     }
 
     private fun movedNext() {
+        //      Close Offer Alert
+        binding?.imageView78?.setOnClickListener {
+
+            binding?.constraintLayout55?.hide()
+
+            authViewModel.hideOffer(
+                preferences.getCityName(),
+                preferences.getUserId(),
+                Constant().getDeviceId(requireActivity()),
+                "NO"
+            )
+
+        }
+
+//        Dialogs
+        binding?.textView185?.setOnClickListener {
+            showOfferDialog()
+        }
+
         // manage top bar ui
         binding?.includeAppBar?.searchBtn?.setOnClickListener {
             // Hit Event
@@ -271,7 +300,7 @@ class HomeFragment : Fragment(),
                 bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Home Screen")
                 bundle.putString("var_header_search", "")
                 GoogleAnalytics.hitEvent(requireActivity(), "header_search_bar_click", bundle)
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
             val intent = Intent(requireActivity(), SearchHomeActivity::class.java)
@@ -285,12 +314,12 @@ class HomeFragment : Fragment(),
                 val bundle = Bundle()
                 bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Homepage")
                 GoogleAnalytics.hitEvent(requireActivity(), "home_location", bundle)
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
 
             val intent = Intent(requireActivity(), SelectCityActivity::class.java)
-            intent.putExtra("from","Homepage")
+            intent.putExtra("from", "Homepage")
             startActivity(intent)
         }
         // Qr COde
@@ -301,7 +330,7 @@ class HomeFragment : Fragment(),
                 bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Home Screen")
 //                bundle.putString("var_header_search", "")
                 GoogleAnalytics.hitEvent(requireActivity(), "hearder_qr_code", bundle)
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
 
@@ -337,6 +366,115 @@ class HomeFragment : Fragment(),
         binding?.swipeHome?.setOnRefreshListener {
             binding?.swipeHome?.isRefreshing = false
             getMovieFormatFromApi()
+        }
+    }
+
+
+    //Offer Api
+    private fun offerDataLoad() {
+        authViewModel.offerLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        try {
+                            if (it.data.output != null && it.data.output.offer.size != 0) {
+                                binding?.constraintLayout55?.show()
+                                retrieveOffer(it.data.output.offer)
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+                is NetworkResult.Error -> {
+
+                }
+
+                is NetworkResult.Loading -> {
+
+                }
+            }
+        }
+    }
+
+    private fun retrieveOffer(output: ArrayList<OfferResponse.Offer>) {
+        printLog("offerResponse--->${output}")
+//        Set Data
+        offerResponse = output
+
+        //Manage Show Hide
+        offerShow = if (output.isNotEmpty()) {
+            1
+        } else {
+            0
+        }
+
+        if (offerShow == 1) {
+            binding?.constraintLayout55?.show()
+        } else {
+            binding?.constraintLayout55?.hide()
+        }
+
+    }
+
+
+    //  offers Dialog
+    private fun showOfferDialog() {
+        val dialog = BottomSheetDialog(requireActivity(), R.style.NoBackgroundDialogTheme)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.offer_dialog)
+        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window!!.setLayout(
+            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.show()
+
+        val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerView26)
+        val ignore = dialog.findViewById<TextView>(R.id.textView194)
+        val textView5 = dialog.findViewById<TextView>(R.id.textView5)
+        val textView192 = dialog.findViewById<TextView>(R.id.textView192)
+        textView5?.text = getString(R.string.explore_offers)
+        val gridLayout = GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
+        recyclerView?.layoutManager = LinearLayoutManager(requireActivity())
+        val adapter = offerResponse?.let {
+            HomeOfferAdapter(
+                it, requireActivity(), this
+            )
+        }
+        recyclerView?.layoutManager = gridLayout
+        recyclerView?.adapter = adapter
+        recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    val position = HomeActivity.getCurrentItem(recyclerView)
+                    textView192?.text = offerResponse?.get(position)?.offerName
+                    textView5?.setOnClickListener {
+                        val intent = Intent(
+                            Intent.ACTION_VIEW, Uri.parse(
+                                offerResponse?.get(position)?.otherLinkRedirectUrl?.replace(
+                                    "https", "app"
+                                )
+                            )
+                        )
+                        startActivity(intent)
+                        dialog.dismiss()
+                    }
+                }
+            }
+        })
+        val snapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(recyclerView)
+
+        ignore?.setOnClickListener {
+            dialog.dismiss()
+            authViewModel.hideOffer(
+                preferences.getCityName(),
+                preferences.getUserId(),
+                Constant().getDeviceId(requireActivity()),
+                "NO"
+            )
         }
     }
 
@@ -478,7 +616,7 @@ class HomeFragment : Fragment(),
         binding?.recyclerOffer?.onFlingListener = null
         snapHelper.attachToRecyclerView(binding?.recyclerOffer!!)
         binding?.recyclerOffer?.layoutManager = layoutManager
-        val adapterTrailer = HomeOfferAdapter(requireActivity(), output.cp, this)
+        val adapterTrailer = HomeOfferListAdapter(requireActivity(), output.cp, this)
         binding?.recyclerOffer?.adapter = adapterTrailer
 
         if (output.cp.size > 1) {
@@ -545,7 +683,7 @@ class HomeFragment : Fragment(),
 
         recommend(output.rm)
 
-        GoogleAnalytics.hitItemListEvent(requireContext(),"Ticket",output.mv)
+        GoogleAnalytics.hitItemListEvent(requireContext(), "Ticket", output.mv)
     }
 
     @SuppressLint("SetTextI18n")
@@ -583,9 +721,9 @@ class HomeFragment : Fragment(),
                 try {
                     val bundle = Bundle()
                     bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "HomePage")
-                    bundle.putString("var_book_now_screenname","HomePage")
+                    bundle.putString("var_book_now_screenname", "HomePage")
                     GoogleAnalytics.hitEvent(requireActivity(), "book_now", bundle)
-                }catch (e:Exception){
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
 
@@ -598,8 +736,8 @@ class HomeFragment : Fragment(),
             binding?.homeRecommend?.tvBook?.setOnClickListener {
                 val intent = Intent(requireActivity(), MovieSessionActivity::class.java)
                 intent.putExtra("mid", rm.id)
-                ISEvents().bookBtn(requireActivity(),rm.mcc)
-                GoogleAnalytics.hitViewItemEvent(requireActivity(),"Ticket",rm.mcc,rm.n)
+                ISEvents().bookBtn(requireActivity(), rm.mcc)
+                GoogleAnalytics.hitViewItemEvent(requireActivity(), "Ticket", rm.mcc, rm.n)
                 mcId = rm.mcc
                 startActivity(intent)
             }
@@ -705,9 +843,9 @@ class HomeFragment : Fragment(),
         try {
             val bundle = Bundle()
             bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Book ticket")
-                                bundle.putString("var_cinema_format","veg")
+            bundle.putString("var_cinema_format", "veg")
             GoogleAnalytics.hitEvent(requireActivity(), "book_cinema_format", bundle)
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
@@ -753,23 +891,22 @@ class HomeFragment : Fragment(),
         try {
             val bundle = Bundle()
             bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "HomePage")
-            bundle.putString("var_book_now_screenname","HomePage")
+            bundle.putString("var_book_now_screenname", "HomePage")
             GoogleAnalytics.hitEvent(requireActivity(), "book_now", bundle)
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
         val intent = Intent(requireActivity(), MovieSessionActivity::class.java)
         intent.putExtra("mid", comingSoonItem.id)
         mcId = comingSoonItem.mcc
-        ISEvents().bookBtn(requireActivity(),comingSoonItem.mcc)
+        ISEvents().bookBtn(requireActivity(), comingSoonItem.mcc)
         startActivity(intent)
     }
 
     override fun onOfferClick(comingSoonItem: HomeResponse.Cp) {
         if (comingSoonItem.t != null && comingSoonItem.t.equals(
-                "campaign-VIDEO",
-                ignoreCase = true
+                "campaign-VIDEO", ignoreCase = true
             )
         ) {
             val intent = Intent(requireActivity(), PlayerActivity::class.java)
@@ -879,8 +1016,7 @@ class HomeFragment : Fragment(),
 
         bindingTrailer.subTitleLandingScreen.text =
             mv.lng + " " + getString(R.string.dots) + " " + java.lang.String.join(
-                ",",
-                mv.mfs
+                ",", mv.mfs
             )
 
         //image
@@ -901,13 +1037,13 @@ class HomeFragment : Fragment(),
         bindingTrailer.include50.textView5.setOnClickListener {
             val intent = Intent(requireActivity(), MovieSessionActivity::class.java)
             intent.putExtra("mid", mv.id)
-            ISEvents().bookBtn(requireActivity(),mv.mcc)
+            ISEvents().bookBtn(requireActivity(), mv.mcc)
             mcId = mv.mcc
             startActivity(intent)
         }
-        if (videoData.size>0){
+        if (videoData.size > 0) {
             bindingTrailer.textView69.show()
-        }else{
+        } else {
             bindingTrailer.textView69.hide()
         }
 
@@ -919,7 +1055,7 @@ class HomeFragment : Fragment(),
         bindingTrailer.recyclerView5.adapter = trailerAdapter
 
 //music
-        if (musicData.size>0) {
+        if (musicData.size > 0) {
             bindingTrailer.textView70.show()
             bindingTrailer.recyclerMusic.show()
             val gridLayoutManager =
@@ -927,7 +1063,7 @@ class HomeFragment : Fragment(),
             val musicVideoTrsAdapter = MusicVideoTrsAdapter(musicData, requireContext(), this)
             bindingTrailer.recyclerMusic.layoutManager = gridLayoutManager
             bindingTrailer.recyclerMusic.adapter = musicVideoTrsAdapter
-        }else{
+        } else {
             bindingTrailer.textView70.hide()
             bindingTrailer.recyclerMusic.hide()
         }
@@ -1030,8 +1166,7 @@ class HomeFragment : Fragment(),
                     value = value.uppercase(Locale.getDefault())
                     val valuesString = value.split(",").toTypedArray()
                     for (s in valuesString) {
-                        if (!buttonPressed.contains(s))
-                            buttonPressed.add("$s-language")
+                        if (!buttonPressed.contains(s)) buttonPressed.add("$s-language")
                     }
                     binding?.filterFab?.setImageResource(R.drawable.filter_selected)
 
@@ -1042,7 +1177,7 @@ class HomeFragment : Fragment(),
                         bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Homepage")
                         bundle.putString("home_filter_genre", value)
                         GoogleAnalytics.hitEvent(requireActivity(), "home_filter_genre", bundle)
-                    }catch (e:Exception){
+                    } catch (e: Exception) {
                         e.printStackTrace()
                     }
 
@@ -1052,7 +1187,7 @@ class HomeFragment : Fragment(),
                     println("value---->$value----$buttonPressed")
 
                 }
-            }else{
+            } else {
                 buttonPressed = ArrayList()
             }
 
@@ -1076,14 +1211,14 @@ class HomeFragment : Fragment(),
                         bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Homepage")
                         bundle.putString("var_home_filter", valuesString.toString())
                         GoogleAnalytics.hitEvent(requireActivity(), "home_filter_genre", bundle)
-                    }catch (e:Exception){
+                    } catch (e: Exception) {
                         e.printStackTrace()
                     }
                 } else {
                     binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
                     generaSelected = ArrayList()
                 }
-            }else{
+            } else {
                 generaSelected = ArrayList()
             }
 
@@ -1091,7 +1226,7 @@ class HomeFragment : Fragment(),
             if (containAccessibility) {
                 val index = type.indexOf("accessability")
                 val value: String = filterItemSelected[type[index]]!!
-                if (value!=""){
+                if (value != "") {
                     special = "English Subtitle"
                     binding?.filterFab?.setImageResource(R.drawable.filter_selected)
                 }
@@ -1102,10 +1237,10 @@ class HomeFragment : Fragment(),
                     bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Homepage")
                     bundle.putString("home_filter_subtiltel", value)
                     GoogleAnalytics.hitEvent(requireActivity(), "home_filter_genre", bundle)
-                }catch (e:Exception){
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
-            }else{
+            } else {
                 special = "ALL"
             }
 
@@ -1141,24 +1276,24 @@ class HomeFragment : Fragment(),
 
     @SuppressLint("SuspiciousIndentation")
     private fun getMoviesForUNowShowingHit() {
-        upcomingBooking  = false
+        upcomingBooking = false
         var specialText = "ALL"
-        if (!special.equals("ALL", ignoreCase = true)){
+        if (!special.equals("ALL", ignoreCase = true)) {
             specialText = special
         }
 
         if (buttonPressed.isNotEmpty()) {
-                lang = buttonPressed[0].split("-").toTypedArray()[0].trim { it <= ' ' }
-                for (i in 1 until buttonPressed.size) lang =
-                    lang + "," + buttonPressed[i].split("-").toTypedArray()[0].trim { it <= ' ' }
-            }else{
-              lang = "ALL"
+            lang = buttonPressed[0].split("-").toTypedArray()[0].trim { it <= ' ' }
+            for (i in 1 until buttonPressed.size) lang =
+                lang + "," + buttonPressed[i].split("-").toTypedArray()[0].trim { it <= ' ' }
+        } else {
+            lang = "ALL"
         }
         if (generaSelected!!.isNotEmpty()) {
             format = generaSelected!![0]!!.split("-").toTypedArray()[0].trim { it <= ' ' }
             for (i in 1 until generaSelected!!.size) format =
                 format + "," + generaSelected!![i]!!.split("-").toTypedArray()[0].trim { it <= ' ' }
-        }else{
+        } else {
             format = "ALL"
         }
 
@@ -1202,21 +1337,27 @@ class HomeFragment : Fragment(),
                     if (isHl.equals("true", ignoreCase = true)) {
                         binding?.privilegeLoginUi?.show()
                         binding?.privilegeLogOutUi?.hide()
-                        if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == ACTIVE && preferences.getString(SUBS_OPEN) == "true"){
+                        if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == ACTIVE && preferences.getString(
+                                SUBS_OPEN
+                            ) == "true"
+                        ) {
                             binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.subs_back_b)
-                        }else{
+                        } else {
                             binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.privilege_home_back)
                         }
                     } else {
                         if (ls != null && !ls.equals("", ignoreCase = true)) {
                             binding?.privilegeLogOutUi?.hide()
                             binding?.privilegeLoginUi?.show()
-                            if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == ACTIVE && preferences.getString(SUBS_OPEN) == "true"){
+                            if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == ACTIVE && preferences.getString(
+                                    SUBS_OPEN
+                                ) == "true"
+                            ) {
                                 binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.subs_back_b)
-                            }else{
+                            } else {
                                 binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.privilege_home_back)
                             }
-                        }else{
+                        } else {
                             binding?.privilegeLogOutUi?.show()
                             binding?.privilegeLoginUi?.hide()
                         }
@@ -1229,12 +1370,15 @@ class HomeFragment : Fragment(),
                 if (ls != null && !ls.equals("", ignoreCase = true)) {
                     binding?.privilegeLogOutUi?.hide()
                     binding?.privilegeLoginUi?.show()
-                    if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == ACTIVE && preferences.getString(SUBS_OPEN) == "true"){
+                    if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == ACTIVE && preferences.getString(
+                            SUBS_OPEN
+                        ) == "true"
+                    ) {
                         binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.subs_back_b)
-                    }else{
+                    } else {
                         binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.privilege_home_back)
                     }
-                }else{
+                } else {
                     binding?.privilegeLogOutUi?.show()
                     binding?.privilegeLoginUi?.hide()
                 }
@@ -1294,7 +1438,7 @@ class HomeFragment : Fragment(),
                     bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Home Screen")
                     bundle.putString("var_popup_name", bannerModels[counterStory].name.toString())
                     GoogleAnalytics.hitEvent(requireContext(), "app_popups", bundle)
-                }catch (e:Exception){
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
 
@@ -1302,16 +1446,17 @@ class HomeFragment : Fragment(),
                 listener?.onShowNotification()
                 listener?.onShowPrivilege()
                 if (bannerModels.size > 0 && bannerModels[counterStory].type.equals(
-                        "image",
-                        ignoreCase = true
+                        "image", ignoreCase = true
                     )
                 ) {
                     if (bannerModels[counterStory].redirectView.equals(
-                            "DEEPLINK",
-                            ignoreCase = true
+                            "DEEPLINK", ignoreCase = true
                         )
                     ) {
-                        if (!bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)) {
+                        if (!bannerModels[counterStory].redirect_url.equals(
+                                "", ignoreCase = true
+                            )
+                        ) {
                             if (bannerModels[counterStory].redirect_url.lowercase(Locale.ROOT)
                                     .contains("/loyalty/home")
                             ) {
@@ -1342,11 +1487,13 @@ class HomeFragment : Fragment(),
                             startActivity(intent)
                         }
                     } else if (bannerModels[counterStory].redirectView.equals(
-                            "WEB",
-                            ignoreCase = true
+                            "WEB", ignoreCase = true
                         )
                     ) {
-                        if (!bannerModels[counterStory].redirect_url.equals("", ignoreCase = true)) {
+                        if (!bannerModels[counterStory].redirect_url.equals(
+                                "", ignoreCase = true
+                            )
+                        ) {
                             val intent = Intent(
                                 Intent.ACTION_VIEW,
                                 Uri.parse(bannerModels[counterStory].redirect_url)
@@ -1366,7 +1513,7 @@ class HomeFragment : Fragment(),
                     bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Home Screen")
                     bundle.putString("var_popup_name", bannerModels[counterStory].name.toString())
                     GoogleAnalytics.hitEvent(requireContext(), "app_popups", bundle)
-                }catch (e:Exception){
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
 
@@ -1374,8 +1521,7 @@ class HomeFragment : Fragment(),
                 listener?.onShowNotification()
                 listener?.onShowPrivilege()
                 if (bannerModels.size > 0 && bannerModels[counterStory].type.equals(
-                        "video",
-                        ignoreCase = true
+                        "video", ignoreCase = true
                     )
                 ) {
                     val intent = Intent(requireActivity(), PlayerActivity::class.java)
@@ -1398,8 +1544,7 @@ class HomeFragment : Fragment(),
         } else if (bannerModel.type.uppercase(Locale.getDefault()) == "IMAGE" && bannerModel.redirect_url != "") {
             ivPlay?.hide()
             tvButton?.text = bannerModel.buttonText
-            if (bannerModel.buttonText.isNotEmpty())
-                tvButton?.show()
+            if (bannerModel.buttonText.isNotEmpty()) tvButton?.show()
         } else {
             ivPlay?.hide()
             tvButton?.hide()
@@ -1544,4 +1689,9 @@ class HomeFragment : Fragment(),
 
 
     }
+
+    override fun offerClick(comingSoonItem: OfferResponse.Offer) {
+
+    }
+
 }

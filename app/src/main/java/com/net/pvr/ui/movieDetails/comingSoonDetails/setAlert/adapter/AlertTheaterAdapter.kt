@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import androidx.appcompat.widget.SwitchCompat
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr.R
@@ -21,6 +22,7 @@ class AlertTheaterAdapter(
     private val context: Context,
     private var nowShowingList: ArrayList<BookingRetrievalResponse.Output.C>,
     private var unableDisable: LiveData<Boolean>,
+    private var toggle : SwitchCompat,
     private var onItemClick: (item: BookingRetrievalResponse.Output.C, addToList: Boolean) -> Unit
 ) : RecyclerView.Adapter<AlertTheaterAdapter.ViewHolder>(), Filterable {
 
@@ -52,77 +54,80 @@ class AlertTheaterAdapter(
                 binding.distanceTv.text = this.d
                 binding.detailTV.text = this.ad
 
-                unableDisable.observe(context as SetAlertActivity) {
-                    if (it) {
-                        binding.imageView134.setImageResource(R.drawable.curve_select)
-                        binding.constraintLayout92.setBackgroundResource(
-                            R.drawable.alert_curve_ui_select
-                        )
-                        holder.itemView.isClickable = false
-                    } else {
-                        binding.imageView134.setImageResource(R.drawable.curve_unselect)
-                        binding.constraintLayout92.setBackgroundResource(
-                            R.drawable.alert_curve_ui
-                        )
-                        holder.itemView.isClickable = true
+                if (toggle.isChecked) {
+                    unableDisable.observe(context as SetAlertActivity) {
+                        println("SetAlertActivity--->$it")
+                        if (it) {
+                            binding.imageView134.setImageResource(R.drawable.curve_select)
+                            binding.constraintLayout92.setBackgroundResource(
+                                R.drawable.alert_curve_ui_select
+                            )
+                            holder.itemView.isClickable = false
+                        } else {
+                            binding.imageView134.setImageResource(R.drawable.curve_unselect)
+                            binding.constraintLayout92.setBackgroundResource(
+                                R.drawable.alert_curve_ui
+                            )
+                            holder.itemView.isClickable = true
 
-                        holder.itemView.setOnClickListener {
-                            if (this.itemSelectedOrNot) {
-                                onItemClick(this, false)
-
-                                if (this.itemSelectedOrNot) {
-                                    context.toast("1")
-
-                                    binding.imageView134.setImageResource(R.drawable.curve_select)
-                                    binding.constraintLayout92.setBackgroundResource(
-                                        R.drawable.alert_curve_ui_select
-                                    )
-                                } else {
-                                    context.toast("2")
-
-                                    binding.imageView134.setImageResource(R.drawable.curve_unselect)
-                                    binding.constraintLayout92.setBackgroundResource(
-                                        R.drawable.alert_curve_ui
-                                    )
-                                }
-
-                                this.itemSelectedOrNot = false
-                                selectedItemCount--
-
-                            } else {
-
-                                if (selectedItemCount < 5) {
-                                    this.itemSelectedOrNot = true
-                                    selectedItemCount++
-                                    onItemClick(this, true)
-                                }
-
-                                if (this.itemSelectedOrNot) {
-                                    context.toast("4")
-
-                                    try {
-                                        binding.imageView134.setImageResource(R.drawable.curve_select)
-                                        binding.constraintLayout92.setBackgroundResource(R.drawable.alert_curve_ui_select)
-                                    }catch (e:Exception){
-                                        e.printStackTrace()
-                                    }
-                                } else {
-                                    context.toast("5")
-
-                                    try {
-                                        binding.imageView134.setImageResource(R.drawable.curve_unselect)
-                                        binding.constraintLayout92.setBackgroundResource(
-                                            R.drawable.alert_curve_ui
-                                        )
-                                    }catch (e:java.lang.Exception){
-                                        e.printStackTrace()
-                                    }
-                                }
-                            }
-                            notifyDataSetChanged()
                         }
                     }
                 }
+
+                holder.itemView.setOnClickListener {
+                    if (this.itemSelectedOrNot) {
+                        onItemClick(this, false)
+
+                        if (this.itemSelectedOrNot) {
+
+                            binding.imageView134.setImageResource(R.drawable.curve_select)
+                            binding.constraintLayout92.setBackgroundResource(
+                                R.drawable.alert_curve_ui_select
+                            )
+                        } else {
+
+                            binding.imageView134.setImageResource(R.drawable.curve_unselect)
+                            binding.constraintLayout92.setBackgroundResource(
+                                R.drawable.alert_curve_ui
+                            )
+                        }
+
+                        this.itemSelectedOrNot = false
+                        selectedItemCount--
+
+                    } else {
+
+                        if (selectedItemCount < 5) {
+                            this.itemSelectedOrNot = true
+                            selectedItemCount++
+                            onItemClick(this, true)
+                        }
+
+                        if (this.itemSelectedOrNot) {
+                            try {
+                                binding.imageView134.setImageResource(R.drawable.curve_select)
+                                binding.constraintLayout92.setBackgroundResource(R.drawable.alert_curve_ui_select)
+                            }catch (e:Exception){
+                                e.printStackTrace()
+                            }
+
+                        } else {
+
+                            try {
+                                binding.imageView134.setImageResource(R.drawable.curve_unselect)
+                                binding.constraintLayout92.setBackgroundResource(
+                                    R.drawable.alert_curve_ui
+                                )
+                            }catch (e:java.lang.Exception){
+                                e.printStackTrace()
+                            }
+
+                        }
+                    }
+                    notifyDataSetChanged()
+                }
+
+
             }
         }
 
