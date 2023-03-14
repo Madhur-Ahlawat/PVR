@@ -415,7 +415,6 @@
                             android:fontFamily="@font/sf_pro_text_bold"
                             android:gravity="center"
                             android:text="Book Movie"
-                            android:textAllCaps="true"
                             android:textColor="@color/black"
                             android:textSize="18sp"
                            />

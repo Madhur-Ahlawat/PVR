@@ -192,13 +192,13 @@ class PrivilegeVochersAdapter(
                 holder.binding.qrCodeImg.show()
                 generateQrcode(holder.binding.qrCodeImg)
                     .execute(cardData.cd)
-
+                println("cardData.type--->${cardData.type}--->${cardData.st}")
                 if (cardData.type == "SUBSCRIPTION"){
                     holder.binding.rlsubsMain.show()
                     holder.binding.relativeLayoutGray.hide()
                     holder.binding.relativeLayout.hide()
+
                     if (cardData.st == "E") {
-                        println("cardData.type--->${cardData.type}--->${cardData.st}")
 
                         holder.binding.ivRedeemedSubs.show()
                         holder.binding.ivsubs.hide()
@@ -265,10 +265,15 @@ class PrivilegeVochersAdapter(
 
                 holder.binding.ivRedeemedGray.show()
 
-                if (cardData.st == "E") {
-                    holder.binding.ivRedeemedGray.show()
-                    holder.binding.ivRedeemedGray.setImageResource(R.drawable.expired)
-                }
+            if (cardData.st == "E") {
+                holder.binding.ivRedeemedSubs.show()
+                holder.binding.ivsubs.hide()
+                holder.binding.ivRedeemedSubs.setImageResource(R.drawable.expired)
+                holder.binding.rlsubsMain.setBackgroundResource(R.drawable.back_gray_subs)
+            }else{
+                holder.binding.ivsubs.show()
+                holder.binding.rlsubsMain.setBackgroundResource(R.drawable.bannerprivv)
+            }
 
                 holder.binding.qrCodeImgGray.hide()
                 holder.binding.textLabelGray.setTextColor(context.resources.getColor(R.color.white))

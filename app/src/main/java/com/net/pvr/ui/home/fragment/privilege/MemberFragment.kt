@@ -682,7 +682,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
 
     override fun onItemClick(nowShowingList: ArrayList<LoyaltyDataResponse.Voucher>, position: Int) {
 
-        if (nowShowingList[position].type == "SUBSCRIPTION"){
+        if (nowShowingList[position].type == "SUBSCRIPTION" && nowShowingList[position].st == "V"){
             val intent = Intent(context, PrivilegeDetailsActivity::class.java)
             startActivity(intent)
         }else {
@@ -694,7 +694,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
     private fun getValidList(nowShowingList: ArrayList<LoyaltyDataResponse.Voucher>): ArrayList<LoyaltyDataResponse.Voucher> {
         val list = ArrayList<LoyaltyDataResponse.Voucher>()
         for (item in nowShowingList){
-            if (item.st == "V"){
+            if (item.st == "V" && item.type != "SUBSCRIPTION"){
                 list.add(item)
             }
         }
@@ -805,11 +805,17 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
             ).toString() + " " + voucherNewCombineLists[position].itn
             // subDetailsTextView.setText(voucherNewCombineLists.get(position).getVoucherVo().getItn());
             if (getDays( voucherNewCombineLists[position].ex) > 1) {
-                exPcTextView.text = getDays( voucherNewCombineLists[position].ex).toString() + " days left"
+                exPcTextView.text = getDays(voucherNewCombineLists[position].ex).toString() + " days left"
             } else {
-                exPcTextView.text = getDays( voucherNewCombineLists[position].ex).toString() + " day left"
+                exPcTextView.text = getDays(voucherNewCombineLists[position].ex).toString() + " day left"
             }
-            textValid.text = voucherNewCombineLists[position].ex
+            textValid.text =
+                "Valid till " + Constant.getDate(
+                    "MMM dd yyyy hh:mma",
+                    "MMM dd, yyyy",
+                    voucherNewCombineLists[position].ex.replace("  ".toRegex(), " ")
+                )
+
             container.addView(itemView)
             return itemView
         }
@@ -819,15 +825,16 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
         fun getDays(ex:String):Int{
                 var vocEx: Date? = null
                 val today = Calendar.getInstance().time
-                val simpleDateFormat = SimpleDateFormat("MMM dd yyyy hh:mma", Locale.US)
-                try {
+            val simpleDateFormat = SimpleDateFormat("MMM dd yyyy hh:mma", Locale.US)
+            try {
                     vocEx = simpleDateFormat.parse(ex)
                 } catch (e: ParseException) {
                     e.printStackTrace()
                 }
             return if (today.time <= (vocEx?.time ?: 0)) {
-                val l = vocEx?.time ?: (0 - today.time)
+                val l = vocEx!!.time - today.time
                 val days = (l / (1000 * 60 * 60 * 24)).toInt()
+                println("days--->$days")
                 days
             } else {
                 0

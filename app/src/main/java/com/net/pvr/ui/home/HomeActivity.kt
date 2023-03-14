@@ -130,7 +130,6 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
         from= intent.getStringExtra("from").toString()
         printLog("from---->${from}")
 
-        manageDeepLinks()
     }
 
     private fun switchFragment() {
@@ -420,6 +419,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                         PRIVILEGEVOUCHER = it.data.output.vou
                         privilegeRetrieveData(it.data.output)
                         switchFragment()
+                        manageDeepLinks()
 
                     } else {
                         if (it.data?.output != null) it.data.output.let { it1 ->
@@ -429,6 +429,7 @@ class HomeActivity : AppCompatActivity(), HomeOfferAdapter.RecycleViewItemClickL
                         }
                     }
                     switchFragment()
+                    manageDeepLinks()
 
                 }
                 is NetworkResult.Error -> {
