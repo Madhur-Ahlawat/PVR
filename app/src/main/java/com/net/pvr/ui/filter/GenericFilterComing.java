@@ -409,18 +409,21 @@ public class GenericFilterComing implements GenericFilterAdapter.onFilterItemSel
             dialog.dismiss();
             if (!type.contains("time")) type.add("time");
             selectedFilters.put("time", show1 + "-" + show2);
+            System.out.println("buttonPressed123--->"+type+"---"+selectedFilters+"---"+filterItemSelected);
+
             try {
+
                 onSelection.onApply(type, selectedFilters, isSelected, filterItemSelected);
-//                System.out.println("buttonPressed123--->"+filterItemSelected);
 
             } catch (Exception e) {
-//                System.out.println("buttonPressed1234--->"+filterItemSelected);
+                e.printStackTrace();
 
             }
         });
 
         btnReset.setOnClickListener(v -> {
             dialog.dismiss();
+            selectedFilters = new HashMap<>();
             onSelection.onReset();
         });
 

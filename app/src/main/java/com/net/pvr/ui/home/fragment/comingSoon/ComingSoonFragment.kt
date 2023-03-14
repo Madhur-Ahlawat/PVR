@@ -329,6 +329,8 @@ class ComingSoonFragment : Fragment(),
         isSelected: Boolean,
         name: String
     ) {
+        println("buttonPressed--->$type---$filterItemSelected")
+
         if (type.size > 1) {
             binding?.filterFab?.setImageResource(R.drawable.filter_selected)
             appliedFilterItem = filterItemSelected
@@ -344,7 +346,6 @@ class ComingSoonFragment : Fragment(),
                     for (s in valuesString) {
                         if (!buttonPressed.contains(s)) buttonPressed.add(s.trim { it <= ' ' } + "-language")
                     }
-                    println("buttonPressed--->$value")
                     binding?.filterFab?.setImageResource(R.drawable.filter_selected)
                 } else {
                     binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
@@ -352,6 +353,7 @@ class ComingSoonFragment : Fragment(),
                 }
             }
             val containGeners = type.contains("geners")
+
             if (containGeners) {
                 val index = type.indexOf("geners")
                 var value: String = filterItemSelected[type[index]].toString()
