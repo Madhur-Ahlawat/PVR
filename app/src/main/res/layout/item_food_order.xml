@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:id="@+id/root_order"
+        android:layout_height="wrap_content"
+        android:background="@color/black_111111">
+
+        <ImageView
+            android:id="@+id/imageview_food_order"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_food_order"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_order_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8.58dp"
+            android:fontFamily="@font/sf_pro_text_semi_bold"
+            android:gravity="center"
+            android:text="DD457HHFGSKHJGK"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen_14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageview_food_order"
+            app:layout_constraintStart_toEndOf="@id/imageview_food_order"
+            app:layout_constraintTop_toTopOf="@+id/imageview_food_order" />
+
+        <TextView
+            android:id="@+id/textview_currency_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:gravity="center"
+            android:text="@string/rupee"
+            android:textAlignment="center"
+            android:textColor="@color/dark_gray_7A7A7A"
+            android:textSize="@dimen/dimen_14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageview_food_order"
+            app:layout_constraintEnd_toStartOf="@+id/textview_order_value"
+            app:layout_constraintTop_toTopOf="@+id/imageview_food_order" />
+
+        <TextView
+            android:id="@+id/textview_order_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimen_7.5dp"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:gravity="center"
+            android:text="400"
+            android:textAlignment="center"
+            android:textColor="@color/dark_gray_7A7A7A"
+            android:textSize="@dimen/dimen_14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageview_food_order"
+            app:layout_constraintEnd_toStartOf="@+id/imageview_expand_order"
+            app:layout_constraintTop_toTopOf="@+id/imageview_food_order" />
+
+        <ImageView
+            android:id="@+id/imageview_expand_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="17.5dp"
+            android:src="@drawable/ic_arrow_up_white"
+            app:layout_constraintBottom_toBottomOf="@+id/imageview_food_order"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageview_food_order" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_orders_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageview_food_order"
+            tools:itemCount="3"
+            app:layout_constraintBottom_toTopOf="@+id/view_seperator"
+            tools:listitem="@layout/item_ordered_food"/>
+        <View
+            android:layout_marginEnd="17.5dp"
+            android:layout_marginTop="@dimen/dimen_15dp"
+            android:id="@+id/view_seperator"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/bg_dark_movies_card"
+            app:layout_constraintTop_toBottomOf="@+id/rv_orders_list"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_1dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

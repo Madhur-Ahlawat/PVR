@@ -57,6 +57,7 @@ import com.net.pvr.ui.home.fragment.home.viewModel.HomeViewModel
 import com.net.pvr.ui.home.fragment.more.offer.offerDetails.OfferDetailsActivity
 import com.net.pvr.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr.ui.home.fragment.more.profile.userDetails.ProfileActivity
+import com.net.pvr.ui.home.inCinemaMode.InCinemaModeActivity
 import com.net.pvr.ui.home.interfaces.PlayPopup
 import com.net.pvr.ui.location.selectCity.SelectCityActivity
 import com.net.pvr.ui.movieDetails.nowShowing.NowShowingMovieDetailsActivity
@@ -238,6 +239,9 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             val newView = bottomMenuView.getChildAt(2)
             val itemView = newView as BottomNavigationItemView
             itemView.performClick()
+        }
+        binding!!.constraintLayoutInCinemaMode.setOnClickListener {
+            Util.reorderActivityToFront(requireContext(),InCinemaModeActivity::class.java)
         }
 
 

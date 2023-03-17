@@ -546,7 +546,7 @@
         <item>Theaters</item>
         <item>Languages</item>
     </string-array>
-<!--    <item>Payments</item>-->
+    <!--    <item>Payments</item>-->
 
 
     <string name="version">"Version"</string>
@@ -712,11 +712,24 @@ IMAX Corporation is one of the world\'s leading entertainment technology compani
     <string name="voucher_details">Voucher Details</string>
     <string name="know_details_about_this_voucher">Know details about this voucher</string>
     <string name="how_it_works">How it Works?</string>
+    <string name="how_it_works_underlined"><u>How it Works?</u></string>
     <string name="know_how_to_avail_this_voucher">Know how to avail this voucher</string>
     <string name="about_pvr_privilege_program">About PVR Privilege program</string>
     <string name="discount_text">Discount Text</string>
     <string name="cancel_subscription"><u>Unsubscribe</u></string>
     <string name="subscription_nvoucher">Subscription\nVoucher</string>
     <string name="cancellation1">Cancellation will be effective at the end of your current billing cycle.</string>
+    <string name="in_cinema_mode">In Cinema Mode</string>
+    <string name="one_tickets_booked">1 Tickets Booked</string>
+    <string name="show_details">SHOW DETAILS</string>
+    <string name="two_d">2D</string>
+    <string name="your_f_and_b_orders"><![CDATA[Your F&B Orders]]></string>
+    <string name="rupee">₹</string>
+    <string name="food_and_beverages"><![CDATA[Food & Beverages]]></string>
+    <string name="ready_to_leave">Ready to leave?</string>
+    <string name="feedback">Feedback</string>
+    <string name="uber">Uber</string>
+    <string name="select_cab_provider">Select Cab Provider</string>
+    <string name="please_rate_your_experience">Please rate your experience</string>
 
 </resources>

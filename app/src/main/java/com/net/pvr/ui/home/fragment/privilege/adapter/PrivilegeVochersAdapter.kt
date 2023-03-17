@@ -332,7 +332,6 @@ class PrivilegeVochersAdapter(
             if (holder.binding.qrCodeImg.visibility == View.VISIBLE) {
                 listener.onItemClick(nowShowingList,position)
             }
-
         }
 
         holder.binding.vocTermsDummy.setOnClickListener {

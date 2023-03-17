@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+<corners android:topRightRadius="@dimen/dimen_45dp"
+    android:topLeftRadius="@dimen/dimen_45dp"
+    android:bottomRightRadius="@dimen/dimen_0dp"
+    android:bottomLeftRadius="@dimen/dimen_0dp"/>
+    <padding android:right="@dimen/dimen_2dp" android:left="@dimen/dimen_2dp" android:top="@dimen/dimen_2dp" android:bottom="@dimen/dimen_2dp"/>
+    <stroke android:width="2dp" android:color="@color/bg_dark_movies_card"/>
+    <solid android:color="@color/black_111111"/>
+
+</shape>

@@ -21,7 +21,7 @@ import com.squareup.picasso.Picasso
 
 @Suppress("DEPRECATION")
 class PrivilegeCardAdapter(
-    private var nowShowingList: ArrayList<PrivilegeCardData>,
+    private var nowShowingList: ArrayList<PrivilegeCardData> = arrayListOf(),
     private var context: Activity,
     private val preferences: PreferenceManager,
     private val listener: RecycleViewItemClickListener

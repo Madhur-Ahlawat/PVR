@@ -32,26 +32,26 @@
         android:theme="@style/NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.home.inCinemaMode.InCinemaModeActivity"
+            android:exported="false">
+
+        </activity>
+        <activity
             android:name="com.net.pvr.ui.home.fragment.more.eVoucher.details.EVoucherDetailsActivity"
             android:exported="false" />
-
         <activity
             android:name="com.net.pvr.ui.home.fragment.more.eVoucher.EVoucherActivity"
             android:exported="false" />
-
         <activity
             android:name="com.net.pvr.ui.home.fragment.more.experience.ExperienceActivity"
             android:exported="false" />
-
         <activity
             android:name="com.net.pvr.ui.cinemaSession.cinemaDetails.CinemaDetailsActivity"
             android:exported="false">
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name="com.net.pvr.ui.home.fragment.more.offer.OfferActivity"
             android:exported="true">
@@ -70,7 +70,6 @@
                     android:host="www.pvrcinemas.com"
                     android:path="/offers" />
             </intent-filter>
-
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -93,9 +92,7 @@
                     android:host="www.pvrcinemas.com"
                     android:path="/offers" />
             </intent-filter>
-
         </activity>
-
         <activity
             android:name="com.net.pvr.ui.food.old.OldFoodActivity"
             android:exported="false">
@@ -103,7 +100,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name="com.net.pvr.ui.scanner.bookings.SelectBookingsActivity"
             android:exported="false"
@@ -112,7 +108,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name="com.net.pvr.ui.home.fragment.more.offer.list.OfferListActivity"
             android:exported="false">
@@ -218,6 +213,7 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
+
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -233,7 +229,6 @@
                     android:pathPrefix="/pvr/format"
                     android:scheme="app" />
             </intent-filter>
-
         </activity>
         <activity
             android:name="com.net.pvr.ui.summery.coupons.CouponsActivity"
@@ -304,7 +299,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name="com.net.pvr.ui.giftCard.activateGiftCard.GiftCardDetailsActivity"
             android:exported="false"
@@ -313,7 +307,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name="com.net.pvr.ui.giftCard.activateGiftCard.RejectedGiftCardActivity"
             android:exported="false"
@@ -404,7 +397,6 @@
                     android:host="www.pvrcinemas.com"
                     android:pathPrefix="/offers/offersdetails" />
             </intent-filter>
-
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -415,9 +407,7 @@
                 <data
                     android:host="www.pvrcinemas.com"
                     android:pathPrefix="/offers/offersdetails" />
-
             </intent-filter>
-
         </activity>
         <activity
             android:name="com.net.pvr.ui.payment.PaymentActivity"
@@ -443,7 +433,6 @@
             android:name="com.net.pvr.ui.bookingSession.MovieSessionActivity"
             android:exported="true"
             android:screenOrientation="portrait">
-
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -451,19 +440,14 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="https" />
-
                 <data
                     android:host="www.pvrcinemas.com"
                     android:pathPrefix="/moviesessions" />
-
                 <data android:scheme="app" />
-
                 <data
                     android:host="www.pvrcinemas.com"
                     android:pathPrefix="/moviesessions" />
             </intent-filter>
-
-
         </activity>
         <activity
             android:name="com.net.pvr.ui.cinemaSession.CinemaSessionActivity"
@@ -502,7 +486,6 @@
                     android:host="www.pvrcinemas.com"
                     android:pathPrefix="/cinemasessions" />
             </intent-filter>
-
         </activity>
         <activity
             android:name="com.net.pvr.ui.scanner.ScannerActivity"
@@ -632,11 +615,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="https"/>
+                <data android:scheme="https" />
                 <data
                     android:host="www.pvrcinemas.com"
-                    android:pathPrefix="/comingsoon"
-                     />
+                    android:pathPrefix="/comingsoon" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -644,11 +626,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="https"/>
+                <data android:scheme="https" />
                 <data
                     android:host="www.pvrcinemas.com"
-                    android:pathPrefix="/comingsoon"
-                     />
+                    android:pathPrefix="/comingsoon" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -656,11 +637,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="app"/>
+                <data android:scheme="app" />
                 <data
                     android:host="www.pvrcinemas.com"
-                    android:pathPrefix="/comingsoon"
-                     />
+                    android:pathPrefix="/comingsoon" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -668,11 +648,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="app"/>
+                <data android:scheme="app" />
                 <data
                     android:host="www.pvrcinemas.com"
-                    android:pathPrefix="/comingsoon"
-                     />
+                    android:pathPrefix="/comingsoon" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -680,11 +659,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="https"/>
+                <data android:scheme="https" />
                 <data
                     android:host="www.pvrcinemas.com"
-                    android:pathPrefix="/cinemasd"
-                     />
+                    android:pathPrefix="/cinemasd" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -692,11 +670,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="https"/>
+                <data android:scheme="https" />
                 <data
                     android:host="www.pvrcinemas.com"
-                    android:pathPrefix="/cinemasd"
-                     />
+                    android:pathPrefix="/cinemasd" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -704,11 +681,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="app"/>
+                <data android:scheme="app" />
                 <data
                     android:host="www.pvrcinemas.com"
-                    android:pathPrefix="/cinemasd"
-                     />
+                    android:pathPrefix="/cinemasd" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -716,11 +692,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="app"/>
+                <data android:scheme="app" />
                 <data
                     android:host="www.pvrcinemas.com"
-                    android:pathPrefix="/cinemasd"
-                     />
+                    android:pathPrefix="/cinemasd" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -728,11 +703,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="https"/>
+                <data android:scheme="https" />
                 <data
                     android:host="www.pvrcinemas.com"
-                    android:pathPrefix="/comingsoontrailer"
-                     />
+                    android:pathPrefix="/comingsoontrailer" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -740,11 +714,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="https"/>
+                <data android:scheme="https" />
                 <data
                     android:host="www.pvrcinemas.com"
-                    android:pathPrefix="/comingsoontrailer"
-                     />
+                    android:pathPrefix="/comingsoontrailer" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -752,11 +725,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data  android:scheme="app"/>
+                <data android:scheme="app" />
                 <data
                     android:host="www.pvrcinemas.com"
-                    android:pathPrefix="/comingsoontrailer"
-                   />
+                    android:pathPrefix="/comingsoontrailer" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -764,11 +736,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="app"/>
+                <data android:scheme="app" />
                 <data
                     android:host="www.pvrcinemas.com"
-                    android:pathPrefix="/comingsoontrailer"
-                     />
+                    android:pathPrefix="/comingsoontrailer" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -780,12 +751,10 @@
                 <data
                     android:host="www.pvrcinemas.com"
                     android:pathPrefix="/loyalty/home" />
-
                 <data android:scheme="http" />
                 <data
                     android:host="www.pvrcinemas.com"
                     android:pathPrefix="/loyalty/home" />
-
                 <data android:scheme="app" />
                 <data
                     android:host="www.pvrcinemas.com"
@@ -819,11 +788,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="app"/>
+                <data android:scheme="app" />
                 <data
                     android:host="www.pvrcinemas.com"
-                    android:pathPrefix="/loyalty/home"
-                     />
+                    android:pathPrefix="/loyalty/home" />
             </intent-filter>
         </activity>
         <activity
@@ -851,19 +819,16 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="https"/>
+                <data android:scheme="https" />
                 <data
                     android:host="www.pvrcinemas.com"
-                    android:pathPrefix="/food"
-                     />
+                    android:pathPrefix="/food" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -871,11 +836,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="https"/>
+                <data android:scheme="https" />
                 <data
                     android:host="www.pvrcinemas.com"
-                    android:pathPrefix="/food"
-                     />
+                    android:pathPrefix="/food" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -883,11 +847,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="app"/>
+                <data android:scheme="app" />
                 <data
                     android:host="www.pvrcinemas.com"
-                    android:pathPrefix="/food"
-                    />
+                    android:pathPrefix="/food" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -895,11 +858,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="https"/>
+                <data android:scheme="https" />
                 <data
                     android:host="www.pvrcinemas.com"
-                    android:pathPrefix="/booking"
-                    />
+                    android:pathPrefix="/booking" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -907,11 +869,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="http"/>
+                <data android:scheme="http" />
                 <data
                     android:host="www.pvrcinemas.com"
-                    android:pathPrefix="/booking"
-                     />
+                    android:pathPrefix="/booking" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -919,11 +880,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="app"/>
+                <data android:scheme="app" />
                 <data
                     android:host="www.pvrcinemas.com"
-                    android:pathPrefix="/booking"
-                     />
+                    android:pathPrefix="/booking" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -931,11 +891,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="app"/>
+                <data android:scheme="app" />
                 <data
                     android:host="www.pvrcinemas.com"
-                    android:pathPrefix="/booking"
-                     />
+                    android:pathPrefix="/booking" />
             </intent-filter>
         </activity> <!-- Location Service -->
         <service android:name="com.net.pvr.utils.FetchAddressIntentServices" /> <!-- Network Service -->
@@ -957,18 +916,15 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/app_id" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key_new" />
-
         <meta-data
             android:name="com.google.android.gms.games.APP_ID"
             android:value="@string/app_id" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" /> <!-- // Phone Pe Cred -->

@@ -63,6 +63,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickListener,PrivilegeVochersAdapter.RecycleViewItemClickListener,
     StoriesListener,HowItWorkAdapter.RecycleViewItemClickListener {
+    private var cardAdapter: PrivilegeVochersAdapter?=null
     private var storiesProgressView: StoriesProgressView? = null
     private var storyDialog: Dialog? = null
     private var ivBanner: RecyclerView? = null
@@ -186,7 +187,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
         voucherList.sortBy { it.usd }
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding?.privilegeList?.layoutManager = layoutManager
-        val cardAdapter =
+        cardAdapter =
             PrivilegeVochersAdapter(voucherList, requireActivity(), preferences, this)
         binding?.privilegeList?.adapter = cardAdapter
 //        MMM dd yyyy hh:mma
@@ -934,7 +935,6 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
 
     }
 
-
     private fun showDialogLoyalty(mContext: Context?, price1: String, id: String) {
         // Hit Event
         try {
@@ -982,7 +982,4 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
         }
         dialog.show()
     }
-
-
-
 }
