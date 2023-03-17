@@ -783,17 +783,17 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
     //Hide Offer
-    private val hideOfferLiveData = MutableLiveData<NetworkResult<OfferResponse>>()
-    val hideOfferResponseLiveData: LiveData<NetworkResult<OfferResponse>>
+    private val hideOfferLiveData = MutableLiveData<NetworkResult<String>>()
+    val hideOfferResponseLiveData: LiveData<NetworkResult<String>>
         get() = hideOfferLiveData
 
     suspend fun hideOffer(city: String, userId: String, did: String, isSpi: String) {
         hideOfferLiveData.postValue(NetworkResult.Loading())
-        val response = userAPI.hideOffer(city,userId,did,isSpi, Constant.version, Constant.platform)
+        val response = userAPI.hideOffer(city,userId,Constant.getDid(),isSpi, Constant.version, Constant.platform)
         hideOfferResponse(response)
     }
 
-    private fun hideOfferResponse(response: Response<OfferResponse>) {
+    private fun hideOfferResponse(response: Response<String>) {
         if (response.isSuccessful && response.body() != null) {
             hideOfferLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
@@ -3259,7 +3259,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
 
     suspend fun recurringBinCheck(userid: String, bookingid: String, token: String, bin: String, vpa: String) {
         preferenceLiveData.postValue(NetworkResult.Loading())
-        val response = userAPI.recurringBinCheck(userid, bookingid,token,bin,vpa ,Constant.version, Constant.platform,Constant.getDid())
+        val response = userAPI.recurringBinCheck(userid, bookingid,token,bin.trim().replace(" ".toRegex(),""),vpa ,Constant.version, Constant.platform,Constant.getDid())
         recurringBinData(response)
     }
 

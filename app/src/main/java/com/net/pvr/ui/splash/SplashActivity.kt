@@ -66,6 +66,7 @@ class SplashActivity : AppCompatActivity() {
         val intent = intent
         val data = intent.data
 
+        preferences.saveString(Constant.SharedPreference.PROMOCODE,"")
 
         if (data != null) {
             if (data.toString().contains("/food") || data.toString().contains("/booking") || data.toString().contains("/getqrcode")) {

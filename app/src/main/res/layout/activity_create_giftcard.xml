@@ -42,7 +42,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_gravity="bottom"
+            >
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -64,7 +66,7 @@
                     <com.joooonho.SelectableRoundedImageView
                         android:id="@+id/iv_upload_image"
                         android:layout_width="match_parent"
-                        android:layout_height="165dp"
+                        android:layout_height="180dp"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:adjustViewBounds="true"
@@ -98,6 +100,7 @@
                         android:layout_width="@dimen/dimen_2dp"
                         android:layout_height="@dimen/dimen_15dp"
                         android:layout_gravity="center"
+                        android:visibility="gone"
                         android:background="#7D7D7D" />
 
                     <TextView
@@ -105,6 +108,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:visibility="gone"
                         android:layout_marginStart="@dimen/padding_10"
                         android:text="Gift Card"
                         android:textColor="@color/white"
@@ -120,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/ll_upload_image"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/dimen_30dp"
+                android:layout_marginTop="@dimen/dimen_50dp"
                 android:layout_marginEnd="@dimen/dimen_20dp"
                 android:layout_marginStart="@dimen/dimen_20dp"
                 android:layout_marginBottom="@dimen/padding_10"

@@ -69,11 +69,11 @@ class CinemaSessionCinChildLanguageAdapter(
     }
 
     override fun getItemCount(): Int {
-        return if (showType==0){
-            1
-        }else{
-            nowShowingList.size
-        }
+//        return if (showType==0){
+//            1
+//        }else{
+        return nowShowingList.size
+       // }
     }
 
     private fun showATDialog(mContext: Context?, format: String) {
@@ -91,7 +91,7 @@ class CinemaSessionCinChildLanguageAdapter(
         val close: TextView = dialog.findViewById<View>(R.id.close) as TextView
         val dboxmessage: TextView = dialog.findViewById<View>(R.id.dboxmessage) as TextView
         val logot = dialog.findViewById<View>(R.id.logot) as ImageView
-        close.text = "CLOSE"
+        close.text = "Close"
         val dboxview = dialog.findViewById<View>(R.id.dboxview)
         logot.hide()
         dboxview?.hide()

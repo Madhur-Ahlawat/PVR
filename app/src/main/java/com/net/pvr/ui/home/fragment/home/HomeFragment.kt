@@ -49,7 +49,6 @@ import com.net.pvr.ui.filter.GenericFilterHome
 import com.net.pvr.ui.giftCard.GiftCardActivity
 import com.net.pvr.ui.home.HomeActivity
 import com.net.pvr.ui.home.HomeActivity.Companion.backToTop
-import com.net.pvr.ui.home.fragment.home.adapter.HomeOfferAdapter
 import com.net.pvr.ui.home.formats.FormatsActivity
 import com.net.pvr.ui.home.fragment.home.adapter.*
 import com.net.pvr.ui.home.fragment.home.response.HomeResponse
@@ -138,6 +137,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     private var rlBanner: RelativeLayout? = null
     private var stories: StoriesProgressView? = null
     private var listener: PlayPopup? = null
+
     var gFilter: GenericFilterHome? = null
 
     //internet Check
@@ -150,6 +150,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         ArrayList<MovieDetailsResponse.Trs>()
 
     companion object {
+        var dialogTrailer: Dialog? = null
+
         var mcId = ""
     }
 
@@ -272,18 +274,29 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         Constant().getData(binding?.include38?.tvSecondText, null)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun movedNext() {
         //      Close Offer Alert
+        binding?.constraintLayout55?.setOnClickListener {
+
+        }
         binding?.imageView78?.setOnClickListener {
 
-            binding?.constraintLayout55?.hide()
+            try {
 
-            authViewModel.hideOffer(
-                preferences.getCityName(),
-                preferences.getUserId(),
-                Constant().getDeviceId(requireActivity()),
-                "NO"
-            )
+                binding?.constraintLayout55?.hide()
+
+                authViewModel.hideOffer(
+                    preferences.getCityName(),
+                    preferences.getUserId(),
+                    "",
+                    "no"
+                )
+
+                hideDataLoad()
+            }catch (e:java.lang.Exception){
+
+            }
 
         }
 
@@ -396,6 +409,28 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             }
         }
     }
+    private fun hideDataLoad() {
+        authViewModel.offerHideLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    //if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        try {
+                            binding?.constraintLayout55?.hide()
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                   // }
+                }
+                is NetworkResult.Error -> {
+                    binding?.constraintLayout55?.hide()
+                }
+
+                is NetworkResult.Loading -> {
+
+                }
+            }
+        }
+    }
 
     private fun retrieveOffer(output: ArrayList<OfferResponse.Offer>) {
         printLog("offerResponse--->${output}")
@@ -433,6 +468,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerView26)
         val ignore = dialog.findViewById<TextView>(R.id.textView194)
         val textView5 = dialog.findViewById<TextView>(R.id.textView5)
+        val indicators = dialog.findViewById<LinearLayout>(R.id.indicators)
         val textView192 = dialog.findViewById<TextView>(R.id.textView192)
         textView5?.text = getString(R.string.explore_offers)
         val gridLayout = GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
@@ -444,6 +480,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         }
         recyclerView?.layoutManager = gridLayout
         recyclerView?.adapter = adapter
+        textView192?.text = offerResponse?.get(0)?.offerName
+
         recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
@@ -469,12 +507,51 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
         ignore?.setOnClickListener {
             dialog.dismiss()
-            authViewModel.hideOffer(
-                preferences.getCityName(),
-                preferences.getUserId(),
-                Constant().getDeviceId(requireActivity()),
-                "NO"
-            )
+            try {
+                binding?.constraintLayout55?.hide()
+                authViewModel.hideOffer(
+                    preferences.getCityName(),
+                    preferences.getUserId(),
+                    "",
+                    "no"
+                )
+                hideDataLoad()
+            }catch (e:java.lang.Exception){
+
+            }
+        }
+        if (offerResponse?.size!! >1){
+            indicators?.show()
+            recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    val pos =
+                        (recyclerView.layoutManager as LinearLayoutManager?)!!.findFirstCompletelyVisibleItemPosition()
+                    indicators?.let { btnAction(pos, offerResponse?.size!!, it) }
+                }
+            })
+            indicators?.let { btnAction(0, offerResponse?.size!!, it) }
+        }else{
+            indicators?.hide()
+        }
+
+    }
+
+    private fun btnAction(position: Int, bannerListSize: Int, indicators: LinearLayout) {
+        indicators.removeAllViews()
+        println("position--->$position")
+        for (i in 0 until bannerListSize) {
+            val imageView = View(context)
+            indicators.addView(imageView)
+            val layoutParams = LinearLayout.LayoutParams(30, 5)
+            layoutParams.leftMargin = 5
+            layoutParams.rightMargin = 5
+            imageView.layoutParams = layoutParams
+            if (i == position) {
+                imageView.setBackgroundResource(R.drawable.rectangle_select)
+            } else {
+                imageView.setBackgroundResource(R.drawable.rectangle_disable)
+            }
         }
     }
 
@@ -991,18 +1068,20 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             }
         }
 
-        val dialogTrailer = Dialog(requireActivity())
-        dialogTrailer.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialogTrailer.setCancelable(false)
+        dialogTrailer = Dialog(requireActivity())
+        dialogTrailer?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogTrailer?.setCancelable(true)
         val inflater = LayoutInflater.from(requireContext())
         val bindingTrailer = TrailersDialogBinding.inflate(inflater)
-        dialogTrailer.setContentView(bindingTrailer.root)
-        dialogTrailer.window?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
-        dialogTrailer.window?.setLayout(
+        dialogTrailer?.setContentView(bindingTrailer.root)
+        dialogTrailer?.window?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+        dialogTrailer?.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
         )
-        dialogTrailer.window?.setGravity(Gravity.CENTER)
-        dialogTrailer.show()
+        dialogTrailer?.window?.setGravity(Gravity.CENTER)
+        dialogTrailer?.show()
+
+
 
         //title
         bindingTrailer.titleLandingScreen.text = mv.n
@@ -1025,7 +1104,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
         //dialog Dismiss
         bindingTrailer.include49.imageView58.setOnClickListener {
-            dialogTrailer.dismiss()
+            dialogTrailer?.dismiss()
         }
 
         //title
@@ -1398,6 +1477,77 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     }
 
+    public fun updatedData(){
+        if (preferences.getIsLogin()) {
+            val ls = preferences.getString(Constant.SharedPreference.LOYALITY_STATUS)
+            val isHl: String = preferences.getString(Constant.SharedPreference.IS_HL)
+            val isLy: String = preferences.getString(Constant.SharedPreference.IS_LY)
+            println("LS---$ls--$isHl--$isLy")
+            if (isLy.equals("true", ignoreCase = true)) {
+                if (ls != null && !ls.equals("", ignoreCase = true)) {
+                    if (isHl.equals("true", ignoreCase = true)) {
+                        binding?.privilegeLoginUi?.show()
+                        binding?.privilegeLogOutUi?.hide()
+                        if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == ACTIVE && preferences.getString(
+                                SUBS_OPEN
+                            ) == "true"
+                        ) {
+                            binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.subs_back_b)
+                        } else {
+                            binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.privilege_home_back)
+                        }
+                    } else {
+                        if (ls != null && !ls.equals("", ignoreCase = true)) {
+                            binding?.privilegeLogOutUi?.hide()
+                            binding?.privilegeLoginUi?.show()
+                            if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == ACTIVE && preferences.getString(
+                                    SUBS_OPEN
+                                ) == "true"
+                            ) {
+                                binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.subs_back_b)
+                            } else {
+                                binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.privilege_home_back)
+                            }
+                        } else {
+                            binding?.privilegeLogOutUi?.show()
+                            binding?.privilegeLoginUi?.hide()
+                        }
+                    }
+                } else {
+                    binding?.privilegeLogOutUi?.show()
+                    binding?.privilegeLoginUi?.hide()
+                }
+            } else {
+                if (ls != null && !ls.equals("", ignoreCase = true)) {
+                    binding?.privilegeLogOutUi?.hide()
+                    binding?.privilegeLoginUi?.show()
+                    if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == ACTIVE && preferences.getString(
+                            SUBS_OPEN
+                        ) == "true"
+                    ) {
+                        binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.subs_back_b)
+                    } else {
+                        binding?.privilegeLogin?.paidMemberBack?.setBackgroundResource(R.drawable.privilege_home_back)
+                    }
+                } else {
+                    binding?.privilegeLogOutUi?.show()
+                    binding?.privilegeLoginUi?.hide()
+                }
+            }
+
+            printLog("pt---->${PRIVILEGEPOINT}")
+            binding?.privilegeLogin?.pt?.text = PRIVILEGEPOINT
+            binding?.privilegeLogin?.numVou?.text = PRIVILEGEVOUCHER
+            binding?.privilegeLogin?.qrImgMainPage?.setOnClickListener {
+                oPenDialogQR()
+            }
+
+        } else {
+            binding?.privilegeLoginUi?.hide()
+            binding?.privilegeLogOutUi?.show()
+        }
+    }
+
     @SuppressLint("CutPasteId", "ClickableViewAccessibility")
     private fun initBanner(bannerModels: ArrayList<HomeResponse.Pu>) {
         homeLoadBanner = true
@@ -1693,5 +1843,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     override fun offerClick(comingSoonItem: OfferResponse.Offer) {
 
     }
+
 
 }

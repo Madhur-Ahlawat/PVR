@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr.databinding.ItemCinemaDetailsMoviesBinding
+import com.net.pvr.ui.bookingSession.response.BookingResponse
 import com.net.pvr.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr.utils.hide
 import com.net.pvr.utils.show
@@ -67,6 +68,12 @@ class CinemaSessionCinParentAdapter(
 
     override fun getItemCount(): Int {
         return if (nowShowingList.isNotEmpty()) nowShowingList.size else 0
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun filterList(filterdNames: List<CinemaSessionResponse.Child>) {
+        this.nowShowingList = filterdNames
+        notifyDataSetChanged()
     }
 
 

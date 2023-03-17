@@ -342,7 +342,7 @@ class SeatLayoutActivity : AppCompatActivity(),
         var st = showsArray[position.toInt()].sid
 
         for (data in showsArray.indices){
-            if (showsArray[data].ss != 0){
+            if (showsArray[data].ss != 3){
                 list.add(showsArray[data])
             }
         }
@@ -373,7 +373,7 @@ class SeatLayoutActivity : AppCompatActivity(),
         var list = ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>()
         var st = cinemaSessionShows[position.toInt()].sid
         for (data in cinemaSessionShows.indices){
-            if (cinemaSessionShows[data].ss != 0){
+            if (cinemaSessionShows[data].ss != 3){
                 list.add(cinemaSessionShows[data])
             }
         }

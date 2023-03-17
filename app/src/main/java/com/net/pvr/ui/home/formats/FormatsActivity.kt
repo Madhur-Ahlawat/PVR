@@ -36,6 +36,7 @@ class FormatsActivity : AppCompatActivity() , FormatCategoryAdapter.RecycleViewI
     private val authViewModel: FormatsViewModel by viewModels()
     @Inject
     lateinit var preferences: PreferenceManager
+    private var format = ""
 
     //internet Check
     private var broadcastReceiver: BroadcastReceiver? = null
@@ -45,17 +46,38 @@ class FormatsActivity : AppCompatActivity() , FormatCategoryAdapter.RecycleViewI
         binding = ActivityFormatsBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
+        // dx_app_home onyx_app_home imax_app_home gold_app_home playhouse_app_home
+        //  format=
+
+
+        // IMAX 4DX PLAYHOUSE GOLD ONYX PXL
+        val intent = intent
+        val action = intent.action
+        val data = intent.data
+
+        //    [PLAYHOUSE, GOLD, PXL, ONYX, 4DX, IMAX]
+
+        //    [PLAYHOUSE, GOLD, PXL, ONYX, 4DX, IMAX]
+        if (data != null) {
+            val path = data.path
+            val parts = path!!.split("/".toRegex()).dropLastWhile { it.isEmpty() }
+                .toTypedArray()
+            format = parts[3]
+        }
+
         manageFunctions()
     }
 
     private fun manageFunctions() {
+        format = intent.getStringExtra("format").toString()
         //title
-        binding?.toolbar?.textView108?.text=intent.getStringExtra("format").toString()
+        binding?.toolbar?.textView108?.text= format
         //back
         binding?.toolbar?.imageView58?.setOnClickListener {
             finish()
         }
-        authViewModel.formats(intent.getStringExtra("format").toString(), preferences.getCityName(), "no")
+        authViewModel.formats(format, preferences.getCityName(), "no")
         formats()
         getShimmerData()
 

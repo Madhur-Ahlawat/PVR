@@ -2,6 +2,7 @@ package com.net.pvr.ui.cinemaSession
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -12,7 +13,11 @@ import android.location.Location
 import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.speech.RecognizerIntent
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -26,6 +31,7 @@ import com.net.pvr.R
 import com.net.pvr.databinding.ActivityCinemaSessionBinding
 import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.bookingSession.MovieSessionActivity.Companion.btnc
+import com.net.pvr.ui.bookingSession.response.BookingResponse
 import com.net.pvr.ui.cinemaSession.adapter.CinemaSessionCinParentAdapter
 import com.net.pvr.ui.cinemaSession.adapter.CinemaSessionDaysAdapter
 import com.net.pvr.ui.cinemaSession.adapter.CinemaSessionLanguageAdapter
@@ -47,6 +53,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @Suppress("DEPRECATION", "NAME_SHADOWING")
 @AndroidEntryPoint
@@ -60,11 +67,14 @@ class CinemaSessionActivity : AppCompatActivity(),
     private var binding: ActivityCinemaSessionBinding? = null
     private val authViewModel: CinemaSessionViewModel by viewModels()
     private var loader: LoaderDialog? = null
+    private var cinemaSessionCinParentAdapter:CinemaSessionCinParentAdapter? = null
 
     private var cinemaId = "0"
     private var cinemaName = "0"
     private var openTime = 0
     private var rowIndex = false
+
+    private var cinemaSessionData : CinemaSessionResponse.Output? = null
 
     private var appliedFilterItem = HashMap<String, String>()
     private var appliedFilterType = ""
@@ -307,6 +317,7 @@ class CinemaSessionActivity : AppCompatActivity(),
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        cinemaSessionData = it.data.output
                         retrieveData(it.data.output)
                         btnc = it.data.output.btnc
                     } else {
@@ -408,9 +419,67 @@ class CinemaSessionActivity : AppCompatActivity(),
                 Constant().openMap(this, output.lat, output.lang)
             }
             //Share
-            binding?.imageView42?.setOnClickListener {
-                Constant().shareData(this, "", "")
+            binding?.imageView43?.setOnClickListener {
+                binding?.constraintLayout151?.show()
+                binding?.imageView43?.hide()
+                binding?.imageView42?.hide()
+                //Constant().shareData(this, "", "")
             }
+            binding?.include43?.editTextTextPersonName?.hint = "Search cinema"
+
+            // Search
+            // search Cancel
+            binding?.include43?.cancelBtn?.setOnClickListener {
+                binding?.imageView43?.show()
+                binding?.imageView42?.show()
+                binding?.constraintLayout151?.hide()
+
+            }
+
+            // search Click
+
+
+            //search
+            binding?.include43?.editTextTextPersonName?.addTextChangedListener(object :
+                TextWatcher {
+                override fun afterTextChanged(s: Editable) {}
+                override fun beforeTextChanged(
+                    s: CharSequence, start: Int, count: Int, after: Int
+                ) {
+                }
+
+                override fun onTextChanged(
+                    s: CharSequence, start: Int, before: Int, count: Int
+                ) {
+
+                    if (cinemaSessionData != null) {
+                        try {
+                            filter(s.toString())
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+            })
+
+
+            binding?.include43?.voiceBtn?.setOnClickListener {
+                val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+                intent.putExtra(
+                    RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+                )
+                intent.putExtra(
+                    RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault()
+                )
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to text")
+
+                try {
+                    resultLauncher.launch(intent)
+                } catch (e: Exception) {
+                    toast(e.message)
+                }
+            }
+
             //Distance
             binding?.textView86?.text = output.d
             //Shows
@@ -418,7 +487,7 @@ class CinemaSessionActivity : AppCompatActivity(),
 
             //recycler Cinemas
             val gridLayout3 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-            val cinemaSessionCinParentAdapter =
+             cinemaSessionCinParentAdapter =
                 CinemaSessionCinParentAdapter(output.childs, this, cinemaId)
             binding?.recyclerView15?.layoutManager = gridLayout3
             binding?.recyclerView15?.adapter = cinemaSessionCinParentAdapter
@@ -433,17 +502,17 @@ class CinemaSessionActivity : AppCompatActivity(),
 
             if (output.like) {
                 rowIndex = true
-                binding?.imageView43?.setImageResource(R.drawable.like)
+                binding?.imageView42?.setImageResource(R.drawable.like)
             } else {
                 rowIndex = false
-                binding?.imageView43?.setImageResource(R.drawable.unlike)
+                binding?.imageView42?.setImageResource(R.drawable.unlike)
             }
 
-            binding?.imageView43?.setOnClickListener {
+            binding?.imageView42?.setOnClickListener {
                 if (preferences.getIsLogin()) {
                     if (rowIndex) {
                         rowIndex = false
-                        binding?.imageView43?.setImageResource(R.drawable.unlike)
+                        binding?.imageView42?.setImageResource(R.drawable.unlike)
                         authViewModel.cinemaPreference(
                             preferences.getUserId(),
                             cinemaId,
@@ -453,7 +522,7 @@ class CinemaSessionActivity : AppCompatActivity(),
                         )
                     } else {
                         rowIndex = true
-                        binding?.imageView43?.setImageResource(R.drawable.like)
+                        binding?.imageView42?.setImageResource(R.drawable.like)
                         authViewModel.cinemaPreference(
                             preferences.getUserId(),
                             cinemaId,
@@ -501,7 +570,7 @@ class CinemaSessionActivity : AppCompatActivity(),
         } else {
             //recycler Cinemas
             val gridLayout3 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-            val cinemaSessionCinParentAdapter =
+             cinemaSessionCinParentAdapter =
                 CinemaSessionCinParentAdapter(output.childs, this, cinemaId)
             binding?.recyclerView15?.layoutManager = gridLayout3
             binding?.recyclerView15?.adapter = cinemaSessionCinParentAdapter
@@ -594,6 +663,48 @@ class CinemaSessionActivity : AppCompatActivity(),
     override fun languageClick(comingSoonItem: String) {
 
     }
+
+    private fun filter(text: String) {
+        //new array list that will hold the filtered data
+        val filteredNames: ArrayList<CinemaSessionResponse.Child> = ArrayList()
+
+        //looping through existing elements
+        for (list in cinemaSessionData?.childs!!) {
+
+            //if the existing elements contains the search input
+            if (list.ccn.lowercase(Locale.getDefault())
+                    .contains(text.lowercase(Locale.getDefault()))
+            ) {
+
+                //adding the element to filtered list
+                filteredNames.add(list)
+            }
+        }
+
+        //calling a method of the adapter class and passing the filtered list
+        if (filteredNames.size > 0) {
+            cinemaSessionCinParentAdapter?.filterList(
+                filteredNames
+            )
+        } else {
+            cinemaSessionCinParentAdapter?.filterList(
+                filteredNames
+            )
+        }
+
+
+        //calling a method of the adapter class and passing the filtered list
+        if (filteredNames.size > 0) {
+            cinemaSessionCinParentAdapter?.filterList(
+                filteredNames
+            )
+        } else {
+            cinemaSessionCinParentAdapter?.filterList(
+                filteredNames
+            )
+        }
+    }
+
 
     //    Theater Shows
     override fun showsClick(comingSoonItem: CinemaNearTheaterResponse.Output.C) {
@@ -796,4 +907,21 @@ class CinemaSessionActivity : AppCompatActivity(),
             ""
         )
     }
+
+    //Voice search
+    private var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                if (result.resultCode == RESULT_OK) {
+                    val data: Intent? = result.data
+                    val result: ArrayList<String>? = data?.getStringArrayListExtra(
+                        RecognizerIntent.EXTRA_RESULTS
+                    )
+                    binding?.include43?.editTextTextPersonName?.setText(
+                        Objects.requireNonNull(result)?.get(0)
+                    )
+                }
+            }
+        }
 }

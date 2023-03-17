@@ -40,7 +40,7 @@ class HomeOfferAdapter(
 
         if (nowShowingList.size > 1) {
             if (nowShowingList.size == 2) {
-                val itemWidth = ((screenWidth - 0) / 1.10f).toInt()
+                val itemWidth = ((screenWidth - 0) / 1.18f).toInt()
                 val layoutParams = ConstraintLayout.LayoutParams(
                     itemWidth, ConstraintLayout.LayoutParams.WRAP_CONTENT
                 )
@@ -48,31 +48,31 @@ class HomeOfferAdapter(
                     layoutParams.leftMargin = Constant().convertDpToPixel(13f, context)
                     layoutParams.rightMargin = Constant().convertDpToPixel(1f, context)
                 } else {
-                    layoutParams.leftMargin = Constant().convertDpToPixel(1f, context)
+                    layoutParams.leftMargin = Constant().convertDpToPixel(8f, context)
                     layoutParams.rightMargin = Constant().convertDpToPixel(13f, context)
                 }
                 holder.itemView.layoutParams = layoutParams
             } else if (position == 0) {
-                val itemWidth = ((screenWidth - 0) / 1.10f).toInt()
+                val itemWidth = ((screenWidth - 0) / 1.18f).toInt()
                 val layoutParams = ConstraintLayout.LayoutParams(
                     itemWidth, ConstraintLayout.LayoutParams.WRAP_CONTENT
                 )
                 layoutParams.leftMargin = Constant().convertDpToPixel(13f, context)
                 holder.itemView.layoutParams = layoutParams
             } else if (position == nowShowingList.size - 1) {
-                val itemWidth = ((screenWidth - 0) / 1.10f).toInt()
+                val itemWidth = ((screenWidth - 0) / 1.18f).toInt()
                 val layoutParams = ConstraintLayout.LayoutParams(
                     itemWidth, ConstraintLayout.LayoutParams.WRAP_CONTENT
                 )
                 layoutParams.rightMargin = Constant().convertDpToPixel(13f, context)
                 holder.itemView.layoutParams = layoutParams
             } else {
-                val itemWidth = ((screenWidth - 0) / 1.1f).toInt()
+                val itemWidth = ((screenWidth - 0) / 1.18f).toInt()
                 val layoutParams = ConstraintLayout.LayoutParams(
                     itemWidth, ConstraintLayout.LayoutParams.WRAP_CONTENT
                 )
-                layoutParams.rightMargin = Constant().convertDpToPixel(1f, context)
-                layoutParams.leftMargin = Constant().convertDpToPixel(1f, context)
+                layoutParams.rightMargin = Constant().convertDpToPixel(13f, context)
+                layoutParams.leftMargin = Constant().convertDpToPixel(13f, context)
                 holder.itemView.layoutParams = layoutParams
             }
         } else {

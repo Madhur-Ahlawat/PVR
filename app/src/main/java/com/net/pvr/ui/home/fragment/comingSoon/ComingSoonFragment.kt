@@ -35,6 +35,7 @@ import com.net.pvr.ui.home.fragment.comingSoon.response.CommingSoonResponse
 import com.net.pvr.ui.home.fragment.comingSoon.search.CinemaSearchActivity
 import com.net.pvr.ui.home.fragment.comingSoon.viewModel.ComingSoonViewModel
 import com.net.pvr.ui.home.fragment.home.HomeFragment
+import com.net.pvr.ui.home.fragment.home.HomeFragment.Companion.dialogTrailer
 import com.net.pvr.ui.movieDetails.comingSoonDetails.ComingSoonDetailsActivity
 import com.net.pvr.ui.movieDetails.comingSoonDetails.adapter.ComDetailsHomePhAdapter
 import com.net.pvr.ui.movieDetails.comingSoonDetails.setAlert.SetAlertActivity
@@ -575,18 +576,18 @@ class ComingSoonFragment : Fragment(),
             }
         }
 
-        val dialogTrailer = Dialog(requireActivity())
-        dialogTrailer.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialogTrailer.setCancelable(false)
+        dialogTrailer = Dialog(requireActivity())
+        dialogTrailer?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogTrailer?.setCancelable(true)
         val inflater = LayoutInflater.from(requireContext())
         val bindingTrailer = TrailersDialogBinding.inflate(inflater)
-        dialogTrailer.setContentView(bindingTrailer.root)
-        dialogTrailer.window?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
-        dialogTrailer.window?.setLayout(
+        dialogTrailer?.setContentView(bindingTrailer.root)
+        dialogTrailer?.window?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+        dialogTrailer?.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
         )
-        dialogTrailer.window?.setGravity(Gravity.CENTER)
-        dialogTrailer.show()
+        dialogTrailer?.window?.setGravity(Gravity.CENTER)
+        dialogTrailer?.show()
 
         //title
         bindingTrailer.titleLandingScreen.text = comingSoonItem.name
@@ -612,7 +613,7 @@ class ComingSoonFragment : Fragment(),
 
         //dialog Dismiss
         bindingTrailer.include49.imageView58.setOnClickListener {
-            dialogTrailer.dismiss()
+            dialogTrailer?.dismiss()
         }
 
         //title
@@ -650,6 +651,7 @@ class ComingSoonFragment : Fragment(),
         val musicVideoTrsAdapter = MusicVideoTrsAdapter(musicData, requireContext(), this)
         bindingTrailer.recyclerMusic.layoutManager = gridLayoutManager
         bindingTrailer.recyclerMusic.adapter = musicVideoTrsAdapter
+
     }
 
     override fun musicVideoTrsClick(comingSoonItem: MovieDetailsResponse.Trs) {

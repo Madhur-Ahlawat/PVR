@@ -18,6 +18,8 @@ data class GiftCardResponse(
             val d: String,
             val dn: String,
             val id: String,
+            val ci: String,
+            val gi: String,
             val r: String,
             val t: Any,
             val ta: String,

@@ -552,7 +552,7 @@ class CinemaSessionTimeAdapter(
             intent.putExtra("clickPosition", position.toString())
             intent.putExtra("shows", nowShowingList)
             intent.putExtra("skip", "true")
-            intent.putExtra("from", "movie")
+            intent.putExtra("from", "cinema")
             if (adlt) {
                 val dialog = OptionDialog(context,
                     R.mipmap.ic_launcher,
@@ -777,7 +777,7 @@ class CinemaSessionTimeAdapter(
                 intent.putExtra("clickPosition", position.toString())
                 intent.putExtra("shows", nowShowingList)
                 intent.putExtra("skip", "false")
-                intent.putExtra("from", "movie")
+                intent.putExtra("from", "cinema")
                 intent.putExtra("discountPrice", discountPrice.toString())
                 if (adlt) {
                     val dialog = OptionDialog(context,

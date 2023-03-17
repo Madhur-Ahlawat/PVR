@@ -308,10 +308,10 @@ class PaymentStatusActivity : AppCompatActivity() {
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    if (!upiLoader) {
-                        loader = LoaderDialog(R.string.pleaseWait)
-                        loader?.show(this.supportFragmentManager, null)
-                    }
+//                    if (!upiLoader) {
+//                        loader = LoaderDialog(R.string.pleaseWait)
+//                        loader?.show(this.supportFragmentManager, null)
+//                    }
                 }
             }
         }

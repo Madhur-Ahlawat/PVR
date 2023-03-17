@@ -21,6 +21,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import com.net.pvr.R
 import com.net.pvr.ui.login.LoginActivity
+import kotlin.reflect.jvm.internal.impl.load.java.Constant
 
 class PreferenceManager @Inject constructor(@ApplicationContext context: Context) {
     var editor: SharedPreferences.Editor? = null
@@ -200,6 +201,11 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
         editor = prefs.edit()
         editor?.putBoolean(IS_LOGIN, false)
         editor?.putString(USER_ID, "")
+        editor?.putString(USER_MO_NUMBER, "")
+        editor?.putString(USER_NAME, "")
+        editor?.putString(com.net.pvr.utils.Constant.SharedPreference.USER_NUMBER, "")
+        editor?.putString(com.net.pvr.utils.Constant.SharedPreference.USER_NAME, "")
+        editor?.putString(com.net.pvr.utils.Constant.SharedPreference.USER_ID, "")
         editor?.apply()
         editor?.commit()
         val intent = Intent(requireActivity, LoginActivity::class.java)

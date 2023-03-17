@@ -20,6 +20,8 @@ import com.net.pvr.ui.bookingSession.response.BookingTheatreResponse
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.food.FoodActivity
+import com.net.pvr.ui.giftCard.GiftCardActivity
+import com.net.pvr.ui.home.HomeActivity
 import com.net.pvr.ui.myBookings.adapter.FoodTicketChildAdapter
 import com.net.pvr.ui.myBookings.adapter.GiftCardAdapter
 import com.net.pvr.ui.myBookings.response.FoodTicketResponse
@@ -522,6 +524,23 @@ class MyBookingsActivity : AppCompatActivity(),
         }else{
             binding?.llPastBooking?.hide()
         }
+
+        if (output.c.size == 0 && output.p.size ==0){
+            binding?.noData?.show()
+            binding?.ticketView?.hide()
+        }else{
+            binding?.noData?.hide()
+            binding?.ticketView?.show()
+        }
+        binding?.noTitle?.text = "No Bookings Available"
+        binding?.noSubTitle?.text = "Movie bookings and F&B order will appear here"
+        binding?.buttonProceed?.text = "Book Movie"
+        binding?.noDataImg?.setImageResource(R.drawable.cinema_no_data)
+
+        binding?.buttonProceed?.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     //GiftCard
@@ -534,6 +553,22 @@ class MyBookingsActivity : AppCompatActivity(),
         binding?.recyclerMyGift?.layoutManager = gridLayout2
         binding?.recyclerMyGift?.adapter = giftCardAdapter
         println("GiftCardResponse--->"+output.gc.size)
+        if (output.gc.isEmpty()){
+            binding?.noData?.show()
+            binding?.giftView?.hide()
+        }else{
+            binding?.noData?.hide()
+            binding?.giftView?.show()
+        }
+        binding?.noTitle?.text = "No Gift Cards Available"
+        binding?.buttonProceed?.text = "Buy Gift Cards"
+        binding?.noSubTitle?.text = "Your Gift Cards will appear here"
+        binding?.noDataImg?.setImageResource(R.drawable.gift_card_no_data)
+
+        binding?.buttonProceed?.setOnClickListener {
+            val intent = Intent(this, GiftCardActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun resend(comingSoonItem: GiftCardResponse.Output.Gc) {

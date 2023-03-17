@@ -56,9 +56,11 @@ class EnrollInPassportActivity : AppCompatActivity() {
                     preferences.getUserId(),
                     preferences.getCityName(),
                     binding?.etFname?.text.toString().split(" ").toTypedArray()[0],binding?.etFname?.text.toString().split(" ").toTypedArray()[1],
-                    NonMemberFragment.subPlans,dob,preferences.getString(Constant.SharedPreference.USER_GENDER),NonMemberFragment.scheme_id,NonMemberFragment.scheme_price,preferences.getString(Constant.SharedPreference.USER_NUMBER),
+                    NonMemberFragment.subPlans,dob,"",NonMemberFragment.scheme_id,NonMemberFragment.scheme_price,preferences.getString(Constant.SharedPreference.USER_NUMBER),
                     preferences.getString(Constant.SharedPreference.USER_EMAIL)
                 )
+                passportSave()
+
             }
         })
 
@@ -147,7 +149,6 @@ class EnrollInPassportActivity : AppCompatActivity() {
             override fun afterTextChanged(editable: Editable) {}
         })
 
-        passportSave()
     }
 
 

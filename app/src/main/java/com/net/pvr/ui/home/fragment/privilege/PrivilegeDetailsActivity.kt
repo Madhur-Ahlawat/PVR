@@ -36,6 +36,7 @@ class PrivilegeDetailsActivity : AppCompatActivity() {
     private var binding: ActivityPassportTransBinding? = null
     private val authViewModel: PrivilegeLoginViewModel by viewModels()
     private var loader: LoaderDialog? = null
+    private var newHisList:ArrayList<PassportHistory.History> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,8 +66,15 @@ class PrivilegeDetailsActivity : AppCompatActivity() {
             binding?.details?.setBackgroundResource(0)
             binding?.details?.setTextColor(Color.parseColor("#7A7A7A"))
             binding?.history?.setTextColor(Color.parseColor("#000000"))
-            binding?.historyList?.show()
-            binding?.topView?.hide()
+            if (newHisList.isEmpty()){
+                binding?.noData?.show()
+                binding?.historyList?.hide()
+                binding?.topView?.hide()
+            }else {
+                binding?.historyList?.show()
+                binding?.topView?.hide()
+                binding?.noData?.hide()
+            }
         })
         binding?.details?.setOnClickListener(View.OnClickListener {
             binding?.details?.setBackgroundResource(R.drawable.bottom_bar_yellow)
@@ -75,6 +83,7 @@ class PrivilegeDetailsActivity : AppCompatActivity() {
             binding?.details?.setTextColor(Color.parseColor("#000000"))
             binding?.historyList?.hide()
             binding?.topView?.show()
+            binding?.noData?.hide()
         })
     }
 

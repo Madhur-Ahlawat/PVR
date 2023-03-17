@@ -29,6 +29,7 @@ import com.net.pvr.ui.giftCard.response.GiftCardListResponse
 import com.net.pvr.ui.giftCard.response.GiftCards
 import com.net.pvr.ui.giftCard.response.SaveGiftCardCount
 import com.net.pvr.ui.home.fragment.home.HomeFragment
+import com.net.pvr.ui.myBookings.response.GiftCardResponse
 import com.net.pvr.utils.*
 import com.net.pvr.utils.Constant.Companion.GC_COUNT
 import com.net.pvr.utils.ga.GoogleAnalytics
@@ -127,7 +128,7 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
             }
             binding?.llCustom?.hide()
             if (intent.hasExtra("custom")) {
-                isCustom = intent.getStringExtra("custom").toString()
+                isCustom = intent.getBooleanExtra("custom",false).toString()
                 if (isCustom.equals("true", ignoreCase = true)) {
                     binding?.llCustom?.show()
                 } else {
@@ -305,8 +306,7 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
             giftCardListFilter[pos].count = (giftCardListFilter[pos].count + 1)
             total_amount += amount
             binding?.tvTotal?.text = resources.getString(R.string.currency) + " " + total_amount
-            binding?.llProceedGift?.show()
-            binding?.llProceedGiftUnselect?.hide()
+            updateCount(giftCardListFilter)
         }else{
             val dialog = OptionDialog(this,
                 R.mipmap.ic_launcher,
@@ -323,6 +323,21 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
         giftAddAmountAdapter?.notifyDataSetChanged()
     }
 
+    private fun updateCount(giftCardListFilter: ArrayList<GiftCardListResponse.Output.GiftCard>) {
+        var count = 0
+        for (data in giftCardListFilter) {
+            count += data.count
+        }
+        if (count > 0) {
+            binding?.llProceedGift?.show()
+            binding?.llProceedGiftUnselect?.hide()
+        } else {
+            binding?.llProceedGift?.hide()
+            binding?.llProceedGiftUnselect?.show()
+        }
+    }
+
+
     @SuppressLint("SetTextI18n")
     fun minusClick(pos: Int, amount: Int) {
         if (giftCardListFilter[pos].count > 0) {
@@ -337,6 +352,7 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
                 }
             }
         }
+        updateCount(giftCardListFilter)
         giftAddAmountAdapter?.notifyDataSetChanged()
     }
 
@@ -410,7 +426,7 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
     }
 
     private fun sendData(url: String) {
-        if (limit >= total_amount) {
+       // if (limit >= total_amount) {
             val newList = java.util.ArrayList<GiftCards>()
             if (customizedGiftList.size > 0) {
                 newList.addAll(customizedGiftList)
@@ -456,20 +472,21 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
                 intent.putExtra(Constant.SharedPreference.GIFT_CARD_DETAILS, saveGiftCardCount)
                 startActivity(intent)
             }
-        } else {
-            val dialog = OptionDialog(this,
-                R.mipmap.ic_launcher,
-                R.string.app_name,
-                "Total gift limit is : $limit",
-                positiveBtnText = R.string.ok,
-                negativeBtnText = R.string.no,
-                positiveClick = {
-                },
-                negativeClick = {
-                })
-            dialog.show()
-
-        }
+      //  }
+//    else {
+//            val dialog = OptionDialog(this,
+//                R.mipmap.ic_launcher,
+//                R.string.app_name,
+//                "Total gift limit is : $limit",
+//                positiveBtnText = R.string.ok,
+//                negativeBtnText = R.string.no,
+//                positiveClick = {
+//                },
+//                negativeClick = {
+//                })
+//            dialog.show()
+//
+//        }
     }
 
     private fun uploadGiftCard() {

@@ -8,6 +8,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -20,6 +22,13 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
+import com.lyrebirdstudio.aspectratiorecyclerviewlib.aspectratio.model.AspectRatio
+import com.lyrebirdstudio.croppylib.Croppy
+import com.lyrebirdstudio.croppylib.main.CropRequest
+import com.lyrebirdstudio.croppylib.main.CroppyTheme
+import com.lyrebirdstudio.croppylib.util.file.FileCreator
+import com.lyrebirdstudio.croppylib.util.file.FileOperationRequest
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityCreateGiftcardBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -33,6 +42,8 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.net.URISyntaxException
 import javax.inject.Inject
 
@@ -265,13 +276,23 @@ class CreateGiftCardActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (data != null) {
-            selectedImageUri = data.data
-            binding?.ivUploadImage?.setImageURI(selectedImageUri)
-            CropImage()
+        if (requestCode == 101){
+            selectedImageUri = data?.data
+            val file = selectedImageUri?.path?.let { File(it) }
+
+            binding?.ivUploadImage?.setImageURI(file?.let { saveBitmapToFile(it)?.toUri() })
             binding?.llRemoveImage?.show()
             binding?.llProceedGift?.show()
             binding?.llProceedGiftUnselect?.hide()
+        }else {
+            if (data != null) {
+                selectedImageUri = data.data
+                binding?.ivUploadImage?.setImageURI(selectedImageUri)
+                CropImage()
+                binding?.llRemoveImage?.show()
+                binding?.llProceedGift?.show()
+                binding?.llProceedGiftUnselect?.hide()
+            }
         }
     }
 
@@ -296,16 +317,35 @@ class CreateGiftCardActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun CropImage() {
         try {
-            val CropIntent = Intent("com.android.camera.action.CROP")
-            CropIntent.setDataAndType(selectedImageUri, "image/*")
-            CropIntent.putExtra("crop", "true")
-            CropIntent.putExtra("outputX", 920)
-            CropIntent.putExtra("outputY", 420)
-            CropIntent.putExtra("aspectX", 3)
-            CropIntent.putExtra("aspectY", 4)
-            CropIntent.putExtra("scaleUpIfNeeded", true)
-            CropIntent.putExtra("return-data", true)
-            startActivityForResult(CropIntent, 1)
+//            val CropIntent = Intent("com.android.camera.action.CROP")
+//            CropIntent.setDataAndType(selectedImageUri, "image/*")
+//            CropIntent.putExtra("crop", "true")
+//            CropIntent.putExtra("outputX", 920)
+//            CropIntent.putExtra("outputY", 420)
+//            CropIntent.putExtra("scaleUpIfNeeded", true)
+//            CropIntent.putExtra("return-data", true)
+//            startActivityForResult(CropIntent, 1)
+            val destinationUri =
+                FileCreator
+                    .createFile(FileOperationRequest.createRandom(), application.applicationContext)
+                    .toUri()
+            val cropRequest = selectedImageUri?.let { CropRequest.Auto(sourceUri = it, requestCode = 101) }
+            val excludeAspectRatiosCropRequest = selectedImageUri?.let {
+                CropRequest.Manual(
+                    sourceUri = it,
+                    destinationUri,
+                    requestCode = 101,
+                    excludedAspectRatios = arrayListOf(AspectRatio.ASPECT_FREE),
+                            croppyTheme = CroppyTheme(R.color.yellow)
+                )
+            }
+            println("cropRequest--->"+cropRequest?.croppyTheme)
+            println("cropRequest123--->"+cropRequest?.excludedAspectRatios)
+            excludeAspectRatiosCropRequest
+
+            //            CropIntent.putExtra("outputX", 920)
+//            CropIntent.putExtra("outputY", 420)
+            excludeAspectRatiosCropRequest?.let { Croppy.start(this, it) }
         } catch (ex: ActivityNotFoundException) {
         }
     }
@@ -401,6 +441,45 @@ class CreateGiftCardActivity : AppCompatActivity(), View.OnClickListener {
                     loader?.show(supportFragmentManager, null)
                 }
             }
+        }
+    }
+
+    private fun saveBitmapToFile(file: File): File? {
+        return try {
+
+            // BitmapFactory options to downsize the image
+            val o = BitmapFactory.Options()
+            o.inJustDecodeBounds = true
+            o.inSampleSize = 6
+            // factor of downsizing the image
+            var inputStream = FileInputStream(file)
+            //Bitmap selectedBitmap = null;
+            BitmapFactory.decodeStream(inputStream, null, o)
+            inputStream.close()
+
+            // The new size we want to scale to
+            val REQUIRED_SIZE = 75
+
+            // Find the correct scale value. It should be the power of 2.
+            var scale = 1
+            while (o.outWidth / scale / 2 >= REQUIRED_SIZE &&
+                o.outHeight / scale / 2 >= REQUIRED_SIZE
+            ) {
+                scale *= 2
+            }
+            val o2 = BitmapFactory.Options()
+            o2.inSampleSize = scale
+            inputStream = FileInputStream(file)
+            val selectedBitmap = BitmapFactory.decodeStream(inputStream, null, o2)
+            inputStream.close()
+
+            // here i override the original image file
+            file.createNewFile()
+            val outputStream = FileOutputStream(file)
+            selectedBitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            file
+        } catch (e: java.lang.Exception) {
+            null
         }
     }
 

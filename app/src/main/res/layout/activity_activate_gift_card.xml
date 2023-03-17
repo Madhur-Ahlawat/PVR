@@ -28,6 +28,8 @@
         android:id="@+id/recyclerView30"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:paddingEnd="@dimen/dimen_15dp"
+        android:paddingStart="@dimen/dimen_15dp"
         app:layout_constraintBottom_toTopOf="@+id/ll_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

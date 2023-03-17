@@ -24,6 +24,7 @@ import com.net.pvr.ui.home.fragment.privilege.EnrollInPrivilegeActivity
 import com.net.pvr.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr.ui.location.enableLocation.EnableLocationActivity
 import com.net.pvr.ui.location.selectCity.SelectCityActivity
+import com.net.pvr.ui.login.LoginActivity
 import com.net.pvr.ui.login.otpVerify.response.ResisterResponse
 import com.net.pvr.ui.login.otpVerify.viewModel.OtpVerifyViewModel
 import com.net.pvr.ui.summery.SummeryActivity
@@ -423,6 +424,7 @@ class OtpVerifyActivity : AppCompatActivity() {
             if (from=="summery"){
                 val intent = Intent(this@OtpVerifyActivity, SummeryActivity::class.java)
                 intent.putExtra("from",from)
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
                 finish()
             }else if (from == "GC"){
@@ -635,6 +637,12 @@ class OtpVerifyActivity : AppCompatActivity() {
         Constant.AVAILABETIME = Constant().convertTime(output.at)
 
         timerManage()
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this@OtpVerifyActivity, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
 }

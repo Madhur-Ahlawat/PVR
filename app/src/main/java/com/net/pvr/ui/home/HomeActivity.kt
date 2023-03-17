@@ -40,6 +40,7 @@ import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.home.fragment.cinema.CinemasFragment
 import com.net.pvr.ui.home.fragment.comingSoon.ComingSoonFragment
 import com.net.pvr.ui.home.fragment.home.HomeFragment
+import com.net.pvr.ui.home.fragment.home.HomeFragment.Companion.dialogTrailer
 import com.net.pvr.ui.home.fragment.home.response.FeedbackDataResponse
 import com.net.pvr.ui.home.fragment.home.viewModel.HomeViewModel
 import com.net.pvr.ui.home.fragment.more.MoreFragment
@@ -117,7 +118,6 @@ class HomeActivity : AppCompatActivity(), PrivilegeHomeDialogAdapter.RecycleView
 
         if (intent.hasExtra("from")) from = intent.getStringExtra("from").toString()
 
-        manageDeepLinks()
         privilegeDataLoad()
         movedNext()
     }
@@ -189,7 +189,11 @@ class HomeActivity : AppCompatActivity(), PrivilegeHomeDialogAdapter.RecycleView
 
     //ClickMovedNext
     private fun movedNext() {
-
+        if (intent.data!=null){
+            manageDeepLinks()
+        }else{
+            switchFragment()
+        }
     }
 
 //    experience Dialog
@@ -332,19 +336,32 @@ class HomeActivity : AppCompatActivity(), PrivilegeHomeDialogAdapter.RecycleView
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        Constant.PRIVILEGEPOINT = it.data.output.pt
-                        PRIVILEGEVOUCHER = it.data.output.vou
+                        Constant.PRIVILEGEPOINT = it.data.output.pt?:"0"
+                        PRIVILEGEVOUCHER = it.data.output.vou?:"0"
                         privilegeRetrieveData(it.data.output)
-                        switchFragment()
+//                        if (intent.data!=null){
+//                            manageDeepLinks()
+//                        }else{
+//                            switchFragment()
+//                        }
+                        try {
+                            firstFragment.updatedData()
+                        }catch (e:java.lang.Exception){
 
+                        }
                     } else {
                         if (it.data?.output != null) it.data.output.let { it1 ->
                             privilegeRetrieveData(
                                 it1
                             )
+                            firstFragment.updatedData()
                         }
                     }
-                    switchFragment()
+//                    if (intent.data!=null){
+//                        manageDeepLinks()
+//                    }else{
+//                        switchFragment()
+//                    }
 
                 }
                 is NetworkResult.Error -> {
@@ -514,27 +531,35 @@ class HomeActivity : AppCompatActivity(), PrivilegeHomeDialogAdapter.RecycleView
     }
 
     override fun onBackPressed() {
-        if (binding?.bottomNavigationView?.selectedItemId == R.id.homeFragment) {
-            //if (back_flag==0) {
-            val dialog = OptionDialog(this,
-                R.mipmap.ic_launcher,
-                R.string.app_name,
-                getString(R.string.exitApp),
-                positiveBtnText = R.string.yes,
-                negativeBtnText = R.string.no,
-                positiveClick = {
-                    back_flag = 1
-                    finish()
-                },
-                negativeClick = {})
-            dialog.show()
-            back_flag = 1
+        if (dialogTrailer?.isShowing == true){
+            dialogTrailer?.dismiss()
+        }else {
+            if (binding?.bottomNavigationView?.selectedItemId == R.id.homeFragment) {
+                //if (back_flag==0) {
+                val dialog = OptionDialog(this,
+                    R.mipmap.ic_launcher,
+                    R.string.app_name,
+                    getString(R.string.exitApp),
+                    positiveBtnText = R.string.yes,
+                    negativeBtnText = R.string.no,
+                    positiveClick = {
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        back_flag = 1
+                        val a = Intent(Intent.ACTION_MAIN)
+                        a.addCategory(Intent.CATEGORY_HOME)
+                        a.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        startActivity(a)
+                    },
+                    negativeClick = {})
+                dialog.show()
+                back_flag = 1
 //            } else {
 //                finish()
 //            }
 
-        } else {
-            binding?.bottomNavigationView?.selectedItemId = R.id.homeFragment
+            } else {
+                binding?.bottomNavigationView?.selectedItemId = R.id.homeFragment
+            }
         }
     }
 

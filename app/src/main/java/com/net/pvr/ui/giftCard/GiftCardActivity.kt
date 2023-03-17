@@ -8,10 +8,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Html
 import android.util.DisplayMetrics
-import android.view.Gravity
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
+import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -24,6 +21,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityGiftCardBinding
+import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.giftCard.activateGiftCard.ActivateGiftCardActivity
@@ -39,6 +37,7 @@ import com.net.pvr.utils.ga.GoogleAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 
 @Suppress("DEPRECATION")
@@ -53,6 +52,8 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
     private var genricFound = false
     private var limit = 0
     private var customImage = false
+    @Inject
+    lateinit var preferences: PreferenceManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,10 +61,17 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
         val view = binding?.root
         setContentView(view)
 
+
         manageFunction()
     }
 
     private fun manageFunction() {
+        if (preferences.getIsLogin()){
+            binding?.llActiveCard?.show()
+        }else{
+            binding?.llActiveCard?.hide()
+
+        }
         if (intent.hasExtra("from")){
             showDialogLoyalty(
                 this,
@@ -188,7 +196,13 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
                     .error(R.drawable.gift_card_placeholder)
                     .into(binding?.ivImageGeneric!!)
                 genricFound = true
-               // break
+                val vto: ViewTreeObserver = binding?.ivImageGeneric?.viewTreeObserver!!
+                vto.addOnPreDrawListener {
+                    println("binding?.ivImageGeneric?.measuredHeight-->" + binding?.ivImageGeneric?.measuredHeight)
+                    println("binding?.ivImageGeneric?.measuredHeight123-->" + binding?.ivImageGeneric?.measuredWidth)
+                    true
+                }
+                // break
             }
         }
 

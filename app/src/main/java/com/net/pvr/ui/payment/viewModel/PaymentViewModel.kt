@@ -244,4 +244,22 @@ class PaymentViewModel @Inject constructor(private val userRepository: UserRepos
         }
     }
 
+    val liveDataRScope: LiveData<NetworkResult<PaytmHmacResponse>> get() = userRepository.paytmRHmacResponseLiveData
+
+    fun paytmRHMAC(
+        userid: String,
+        bookingid: String,
+        transid: String,
+        unpaid: Boolean,
+        cardNo: String,
+        booktype: String,
+        ptype: String,
+        isSpi: String,
+        binOffer: String
+    ) {
+        viewModelScope.launch {
+            userRepository.paytmRHMAC(userid, bookingid, transid, unpaid, cardNo,booktype,ptype,isSpi,binOffer)
+        }
+    }
+
 }

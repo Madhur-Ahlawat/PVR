@@ -81,6 +81,7 @@ class MovieSessionActivity : AppCompatActivity(),
     private var cinemaId: ArrayList<String> = ArrayList()
 
     private var lang = "ALL"
+    private var dateText = "NA"
     private var format = "ALL"
     private var price1 = "ALL"
     private var price2 = "ALL"
@@ -215,7 +216,7 @@ class MovieSessionActivity : AppCompatActivity(),
                             movieId,
                             lat,
                             lng,
-                            "NA",
+                            dateText,
                             "no",
                             "no",
                             preferences.getUserId(),
@@ -259,7 +260,7 @@ class MovieSessionActivity : AppCompatActivity(),
                 movieId,
                 lat,
                 lng,
-                "NA",
+                dateText,
                 "no",
                 "no",
                 preferences.getUserId(),
@@ -615,13 +616,15 @@ class MovieSessionActivity : AppCompatActivity(),
 
 
     override fun showsDaysClick(comingSoonItem: BookingResponse.Output.Dy, itemView: View) {
+        onReset()
         daysClick = true
+        dateText = comingSoonItem.dt
         authViewModel.bookingTicket(
             preferences.getCityName(),
             movieId,
             lat,
             lng,
-            comingSoonItem.dt,
+            dateText,
             "no",
             "no",
             preferences.getUserId(),
@@ -671,7 +674,6 @@ class MovieSessionActivity : AppCompatActivity(),
         var selected = false
         if (filterItemSelected != null) {
             for (key: Map.Entry<String?, String?> in filterItemSelected) {
-                println("selectedFilters---->" + key.value + "----")
                 if (!key.value.equals("", ignoreCase = true) && !key.value!!.contains("ALL")) {
                     selected = true
                 }
@@ -688,12 +690,13 @@ class MovieSessionActivity : AppCompatActivity(),
         itemSelected: String?
     ) {
         if (type?.size!! > 0) {
+
             binding?.filterFab?.setImageResource(R.drawable.filter_selected)
             if (filterItemSelected != null) {
                 appliedFilterItem = filterItemSelected
             }
             val containLanguage = type.contains("language")
-            if (containLanguage == true) {
+            if (containLanguage) {
                 val index = type.indexOf("language")
                 val value = filterItemSelected?.get(type[index])
                 if (value != null && !value.equals("", ignoreCase = true)) {
@@ -705,7 +708,7 @@ class MovieSessionActivity : AppCompatActivity(),
             }
 
             val containTime = type.contains("time")
-            if (containTime == true) {
+            if (containTime) {
                 val index = type.indexOf("time")
                 var value = filterItemSelected?.get(type[index])
                 if (value != null && !value.equals("", ignoreCase = true)) {
@@ -743,7 +746,7 @@ class MovieSessionActivity : AppCompatActivity(),
                 }
             }
             val containFormat = type.contains("format")
-            if (containFormat == true) {
+            if (containFormat) {
                 val index = type.indexOf("format")
                 val value = filterItemSelected?.get(type[index])
                 format = if (value != null && !value.equals(
@@ -753,9 +756,11 @@ class MovieSessionActivity : AppCompatActivity(),
             }
 
             val containCinemaFormat = type.contains("cinema")
-            if (containCinemaFormat == true) {
+            if (containCinemaFormat) {
                 val index = type.indexOf("cinema")
                 val value = filterItemSelected?.get(type[index])
+                println("selectedFilters---->$value----$filterItemSelected")
+
                 cinemaType = if (value != null && !value.equals(
                         "", ignoreCase = true
                     )
@@ -772,7 +777,7 @@ class MovieSessionActivity : AppCompatActivity(),
                 }
             }
             val containSpecialFormat = type.contains("special")
-            if (containSpecialFormat == true) {
+            if (containSpecialFormat) {
                 val index = type.indexOf("special")
                 val value = filterItemSelected?.get(type[index])
                 special = if (value != null && !value.equals(
@@ -782,7 +787,7 @@ class MovieSessionActivity : AppCompatActivity(),
             }
 
             val containPrice = type.contains("price")
-            if (containPrice == true) {
+            if (containPrice) {
                 val index = type.indexOf("price")
                 var value = filterItemSelected?.get(type[index])
                 if (value != null && !value.equals("", ignoreCase = true)) {
@@ -815,7 +820,7 @@ class MovieSessionActivity : AppCompatActivity(),
                 }
             }
             val containAccessibility = type.contains("accessability")
-            if (containAccessibility == true) {
+            if (containAccessibility) {
                 val index = type.indexOf("accessability")
                 val value = filterItemSelected?.get(type[index])
                 if (value != null && !value.equals("", ignoreCase = true)) {
@@ -834,40 +839,42 @@ class MovieSessionActivity : AppCompatActivity(),
                 } catch (e: Exception) {
 
                 }
-                var show = "ALL"
-                var price = "ALL"
-                price = if (price1 != "ALL") {
-                    "$price1-$price2"
-                } else {
-                    "ALL"
-                }
 
-                if (show1 != "ALL") {
-                    show = "$show1-$show2"
-                }
 
-                authViewModel.bookingTicket(
-                    preferences.getCityName(),
-                    movieId,
-                    lat,
-                    lng,
-                    "NA",
-                    "no",
-                    "no",
-                    preferences.getUserId(),
-                    lang,
-                    format,
-                    price,
-                    hc,
-                    show,
-                    cinemaType,
-                    special
-                )
+            }
 
-                if (!selectedFilter(filterItemSelected)) {
-                    binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
-                }
+            var show = "ALL"
+            var price = "ALL"
+            price = if (price1 != "ALL") {
+                "$price1-$price2"
+            } else {
+                "ALL"
+            }
 
+            if (show1 != "ALL") {
+                show = "$show1-$show2"
+            }
+
+            authViewModel.bookingTicket(
+                preferences.getCityName(),
+                movieId,
+                lat,
+                lng,
+                dateText,
+                "no",
+                "no",
+                preferences.getUserId(),
+                lang,
+                format,
+                price,
+                hc,
+                show,
+                cinemaType,
+                special
+            )
+
+            if (!selectedFilter(filterItemSelected)) {
+                binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
             }
         }
 
@@ -901,7 +908,7 @@ class MovieSessionActivity : AppCompatActivity(),
             movieId,
             lat,
             lng,
-            "NA",
+            dateText,
             "no",
             "no",
             preferences.getUserId(),

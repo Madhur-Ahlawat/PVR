@@ -22,8 +22,9 @@ android {
     buildTypes {
         debug {
 //            buildConfigField "String", "API_URL", "\"https://devapi.pvrcinemas.com/PVRCinemasCMS/\""//dev
-            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/\""//Prod
+//            buildConfigField "String", "API_URL", "\"https://api1.pvrcinemas.com/PVRCinemasCMS/\""//Prod
 //            buildConfigField "String", "API_URL", "\"https://preprodapi.pvrcinemas.com/PVRCinemasCMS/\""//PreProd
+            buildConfigField "String", "API_URL", "\"https://beta.pvrcinemas.com/PVRCinemasCMS/\""//Beta
 //            buildConfigField "String", "API_URL", "\"https://demoapi.pvrcinemas.com/PVRCinemasCMS/\""//stage
 
             minifyEnabled false
@@ -56,6 +57,10 @@ android {
         correctErrorTypes true
     }
     namespace 'com.net.pvr'
+
+    dataBinding {
+        enabled = true
+    }
 
 }
 
@@ -195,5 +200,6 @@ dependencies {
 
     implementation 'com.scottyab:rootbeer-lib:0.1.0'
 
-    implementation 'com.theartofdev.edmodo:android-image-cropper:2.3.+'
+    implementation 'com.github.lyrebirdstudio:Croppy:0.2'
+
 }

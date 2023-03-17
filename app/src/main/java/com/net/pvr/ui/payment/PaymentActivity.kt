@@ -118,6 +118,7 @@ class PaymentActivity : AppCompatActivity(),
     private var upiLoader = false
     private var showPopup = true
     private var actualAmt = "0.0"
+    private var discountAmt = "0.0"
 
     //internet Check
     private var broadcastReceiver: BroadcastReceiver? = null
@@ -151,7 +152,9 @@ class PaymentActivity : AppCompatActivity(),
                 promCode?.text = ""
             }
 
-            done?.setOnClickListener { dialog.dismiss() }
+            done?.setOnClickListener { dialog.dismiss()
+                discount_val = "0.0"
+            }
             dialog.show()
         }
 
@@ -219,6 +222,7 @@ class PaymentActivity : AppCompatActivity(),
 
     @SuppressLint("SetTextI18n")
     private fun manageFunction() {
+        binding?.promoCode?.setText(preferences.getString(Constant.SharedPreference.PROMOCODE))
         binding?.name?.text = preferences.getString(Constant.SharedPreference.USER_NAME)
         binding?.mobile?.text = "+91 "+preferences.getString(Constant.SharedPreference.USER_NUMBER)
 
@@ -236,7 +240,6 @@ class PaymentActivity : AppCompatActivity(),
         actualAmt = paidAmount
 
 
-        authViewModel.promoList()
 
 //        //payMode
         authViewModel.payMode(
@@ -260,6 +263,9 @@ class PaymentActivity : AppCompatActivity(),
         if (BOOK_TYPE == "BOOKING" || BOOK_TYPE == "FOOD") {
             binding?.constraintLayout110?.show()
             binding?.promoView?.show()
+            binding?.offerParrent?.show()
+            authViewModel.promoList()
+
             //voucher
             val time = SystemClock.uptimeMillis()
             authViewModel.voucher(
@@ -270,8 +276,10 @@ class PaymentActivity : AppCompatActivity(),
                 time.toString()
             )
         } else {
+            println("BOOK_TYPE---->$BOOK_TYPE")
             binding?.constraintLayout110?.hide()
             binding?.promoView?.hide()
+            binding?.offerParrent?.hide()
 
         }
 
@@ -322,6 +330,7 @@ class PaymentActivity : AppCompatActivity(),
 
 
             if (validateInputFields()) {
+                preferences.saveString(Constant.SharedPreference.PROMOCODE,"")
                 authViewModel.promoCode(
                     preferences.getUserId(),
                     BOOKING_ID,
@@ -341,15 +350,8 @@ class PaymentActivity : AppCompatActivity(),
         registerReceiver(br, IntentFilter(BroadcastService.COUNTDOWN_BR))
         println("discount_val--->$discount_val")
         if (discount_val != "0.0") {
-            binding?.discountVocher?.show()
-            binding?.discountVocher?.text =
-                "total saving ₹$discount_val "
-            binding?.cutPrice?.show()
-            actualAmt = (paidAmount
-                ?.toDouble()!! - discount_val.toDouble()).toString()
-            binding?.textView178?.text = getString(R.string.currency) + Constant.DECIFORMAT.format(actualAmt.toDouble())
-            binding?.cutPrice?.text =
-                getString(R.string.currency) + paidAmount.toString()
+            discountAmt = discount_val
+
             if (isPromoCode != "") {
                 binding?.promoCode?.setText(isPromoCode)
                 binding?.cutPrice?.paintFlags =
@@ -368,12 +370,21 @@ class PaymentActivity : AppCompatActivity(),
                     )
                 }
                 actualAmt =
-                    (paidAmount?.toDouble()!! - DISCOUNT).toString()
+                    (paidAmount?.toDouble()!! - discount_val.toDouble()).toString()
                 binding?.textView178?.text = getString(R.string.currency) + Constant.DECIFORMAT.format(actualAmt.toDouble())
                 binding?.cutPrice?.text =
                     getString(R.string.currency) + paidAmount.toString()
                 showTncDialog(this, discount_val, isPromoCode)
             } else {
+                binding?.discountVocher?.show()
+                binding?.discountVocher?.text =
+                    "total saving ₹$discount_val "
+                binding?.cutPrice?.show()
+                actualAmt = (paidAmount
+                    ?.toDouble()!! - discount_val.toDouble()).toString()
+                binding?.textView178?.text = getString(R.string.currency) + Constant.DECIFORMAT.format(actualAmt.toDouble())
+                binding?.cutPrice?.text =
+                    getString(R.string.currency) + paidAmount.toString()
                 showTncDialog(this, discount_val, intent.getStringExtra("from").toString())
             }
         }
@@ -466,6 +477,7 @@ class PaymentActivity : AppCompatActivity(),
 
                 }
                 is NetworkResult.Loading -> {
+
                 }
             }
         }
@@ -478,10 +490,16 @@ class PaymentActivity : AppCompatActivity(),
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         binding?.couponView?.show()
                         binding?.applyCou?.hide()
+                        binding?.discountVocher?.hide()
                         binding?.promoCode?.setText("")
-                        actualAmt = ((actualAmt.toDouble() + discount_val.toDouble()).toString())
+                        DISCOUNT -= discountAmt.toDouble()
+                        actualAmt = ((actualAmt.toDouble() + discountAmt.toDouble()).toString())
+                        println("actualAmt--->$actualAmt")
                         binding?.textView178?.text = getString(R.string.currency) + Constant.DECIFORMAT.format(actualAmt.toDouble())
                         binding?.cutPrice?.hide()
+                        discount_val = "0.0"
+                        discountAmt = "0.0"
+                        Constant.isPromoCode = ""
                     }
                 }
                 is NetworkResult.Error -> {
@@ -580,7 +598,7 @@ class PaymentActivity : AppCompatActivity(),
         }
 
         //Wallets
-        if (output.gateway.isNotEmpty()) {
+        if (output.gateway.isNotEmpty() && payMethodFilter("WALLET").isNotEmpty()) {
             binding?.walletView?.show()
             val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
             val foodBestSellerAdapter = PaymentAdapter(payMethodFilter("WALLET"), this, this)
@@ -658,17 +676,32 @@ class PaymentActivity : AppCompatActivity(),
         }
         when (paymentItem.id.uppercase(Locale.getDefault())) {
             UPI -> {
-                authViewModel.paytmHMAC(
-                    preferences.getUserId(),
-                    BOOKING_ID,
-                    TRANSACTION_ID,
-                    false,
-                    "",
-                    BOOK_TYPE,
-                    paymentItem.name,
-                    "no",
-                    "NO"
-                )
+                if (BOOK_TYPE == "RECURRING"){
+                    authViewModel.paytmRHMAC(
+                        preferences.getUserId(),
+                        BOOKING_ID,
+                        TRANSACTION_ID,
+                        false,
+                        "",
+                        BOOK_TYPE,
+                        paymentItem.name,
+                        "no",
+                        "NO"
+                    )
+                    paytmRHMAC()
+                }else {
+                    authViewModel.paytmHMAC(
+                        preferences.getUserId(),
+                        BOOKING_ID,
+                        TRANSACTION_ID,
+                        false,
+                        "",
+                        BOOK_TYPE,
+                        paymentItem.name,
+                        "no",
+                        "NO"
+                    )
+                }
             }
             CREDIT_CARD -> {
                 // Hit Event
@@ -1047,6 +1080,45 @@ class PaymentActivity : AppCompatActivity(),
         }
 
     }
+    private fun paytmRHMAC() {
+        authViewModel.liveDataRScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        retrieveDataUpi(it.data.output)
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(this.supportFragmentManager, null)
+                }
+            }
+        }
+
+    }
 
     private fun recurringInit() {
         authViewModel.recurringInitLiveDataScope.observe(this) {
@@ -1178,13 +1250,23 @@ class PaymentActivity : AppCompatActivity(),
             bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
                 bundle.putString("var_add_payment_info","")
             GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(output.deepLink)
+            startActivityForResult(intent, 120)
         }catch (e:Exception){
             e.printStackTrace()
+            val dialog = OptionDialog(this,
+                R.mipmap.ic_launcher,
+                R.string.app_name,
+                "You do not have any UPI app installed in your device.",
+                positiveBtnText = R.string.ok,
+                negativeBtnText = R.string.no,
+                positiveClick = {},
+                negativeClick = {})
+            dialog.show()
         }
 
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(output.deepLink)
-        startActivityForResult(intent, 120)
+
     }
 
 
@@ -1878,6 +1960,7 @@ class PaymentActivity : AppCompatActivity(),
                                 binding?.cutPrice?.show()
                                 binding?.couponView?.hide()
                                 DISCOUNT += it.data.output.di.toDouble()
+                                discountAmt = DISCOUNT.toString()
                                 binding?.promoCodetxt?.text =
                                     "'${binding?.promoCode?.text}' Applied!"
                                 binding?.applyco?.text =
@@ -1970,6 +2053,7 @@ class PaymentActivity : AppCompatActivity(),
     override fun onDestroy() {
         if (BOOK_TYPE == "BOOKING")
         stopService(Intent(this, BroadcastService::class.java))
+        preferences.saveString(Constant.SharedPreference.PROMOCODE,"")
         super.onDestroy()
     }
 

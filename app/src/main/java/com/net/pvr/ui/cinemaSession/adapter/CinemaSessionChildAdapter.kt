@@ -3,8 +3,10 @@ package com.net.pvr.ui.cinemaSession.adapter
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -14,6 +16,7 @@ import com.net.pvr.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr.utils.hide
 import com.net.pvr.utils.show
 import com.net.pvr.R
+import com.net.pvr.ui.movieDetails.nowShowing.NowShowingMovieDetailsActivity
 
 
 @Suppress("NAME_SHADOWING")
@@ -56,8 +59,21 @@ class CinemaSessionChildAdapter(
                     .error(R.drawable.app_icon)
                     .into(binding.imageView47)
 
+                binding?.imageView47?.setOnClickListener {
+                    val intent = Intent(context, NowShowingMovieDetailsActivity::class.java)
+                    intent.putExtra("mid", this.amcode)
+                    context.startActivity(intent)
+                }
+
+                binding?.textView91?.setOnClickListener {
+                    val intent = Intent(context, NowShowingMovieDetailsActivity::class.java)
+                    intent.putExtra("mid", this.amcode)
+                    context.startActivity(intent)
+                }
+
                 //RecyclerView
                 val layoutManager = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
+                println("this.ml--->"+this.ml.size)
                 val cinemaSessionLanguageAdapter =
                     CinemaSessionCinChildLanguageAdapter(this.ml, context, cinemaId,0,ccn,this.adlt,at,this.mih)
                 binding.recyclerView17.layoutManager = layoutManager

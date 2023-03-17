@@ -282,7 +282,7 @@ interface UserAPI {
         @Query("isSpi") isSpi: String,
         @Query("av") version: String,
         @Query("pt") platform: String,
-    ): Response<OfferResponse>
+    ): Response<String>
 
     @POST("api/user/editprofile")
     suspend fun editProfile(

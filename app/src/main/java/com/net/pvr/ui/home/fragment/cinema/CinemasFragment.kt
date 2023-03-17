@@ -217,43 +217,65 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
 
     @SuppressLint("MissingPermission", "SetTextI18n")
     private fun getLocation() {
-        if (checkPermissions()) {
-            if (isLocationEnabled()) {
-                mFusedLocationClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
-                    val location: Location? = task.result
-                    val geocoder = Geocoder(requireActivity(), Locale.getDefault())
-                    try {
-                        val addresses = location?.longitude?.let {
-                            location.latitude.let { it1 ->
-                                geocoder.getFromLocation(
-                                    it1, it, 1
-                                )
+        try {
+            if (checkPermissions()) {
+                if (isLocationEnabled()) {
+                    mFusedLocationClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
+                        val location: Location? = task.result
+                        val geocoder = context?.let { Geocoder(it, Locale.getDefault()) }
+                        try {
+                            val addresses = location?.longitude?.let {
+                                location.latitude.let { it1 ->
+                                    geocoder?.getFromLocation(
+                                        it1, it, 1
+                                    )
+                                }
                             }
-                        }
-                        if (addresses?.isNotEmpty() == true) {
+                            if (addresses?.isNotEmpty() == true) {
 //                            val currentAddress: String = addresses[0].locality
 //                            preferences.cityNameCinema(currentAddress)
-                            lat = location.latitude.toString()
-                            lng = location.longitude.toString()
-                            preferences.saveLatitudeData(lat.toString())
-                            preferences.saveLongitudeData(lng.toString())
-                            authViewModel.cinema(preferences.getCityName(), lat, lng, preferences.getUserId(), "")
-                        }else{
-                            authViewModel.cinema(preferences.getCityName(), lat, lng, preferences.getUserId(), "")
+                                lat = location.latitude.toString()
+                                lng = location.longitude.toString()
+                                preferences.saveLatitudeData(lat.toString())
+                                preferences.saveLongitudeData(lng.toString())
+                                authViewModel.cinema(
+                                    preferences.getCityName(),
+                                    lat,
+                                    lng,
+                                    preferences.getUserId(),
+                                    ""
+                                )
+                            } else {
+                                authViewModel.cinema(
+                                    preferences.getCityName(),
+                                    lat,
+                                    lng,
+                                    preferences.getUserId(),
+                                    ""
+                                )
 
+                            }
+
+                        } catch (e: IOException) {
+                            e.printStackTrace()
                         }
 
-                    } catch (e: IOException) {
-                        e.printStackTrace()
                     }
-
+                } else {
+                    val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                    startActivity(intent)
                 }
             } else {
-                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                startActivity(intent)
+                requestPermissions()
             }
-        } else {
-            requestPermissions()
+        }catch (e:Exception){
+            authViewModel.cinema(
+                preferences.getCityName(),
+                lat,
+                lng,
+                preferences.getUserId(),
+                ""
+            )
         }
     }
 

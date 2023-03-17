@@ -143,6 +143,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:visibility="gone"
             android:id="@+id/ticketView">
 
     <TextView
@@ -339,6 +340,73 @@
                 tools:listitem="@layout/ticket_food_item" />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:id="@+id/noData">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/noDataImg"/>
+
+            <TextView
+                android:id="@+id/noTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dimen_14sp"
+                android:fontFamily="@font/sf_pro_text_medium"
+                android:textColor="@color/black"
+                android:drawablePadding="@dimen/dimen_8dp"
+                android:gravity="center"
+                android:text="No Bookings Available"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/view15"
+                app:layout_constraintStart_toStartOf="@+id/view15"
+                app:layout_constraintTop_toTopOf="@+id/view15" />
+
+            <TextView
+                android:id="@+id/noSubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dimen_14sp"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:textColor="#7A7A7A"
+                android:drawablePadding="@dimen/dimen_8dp"
+                android:gravity="center"
+                android:text="Movie bookings and F&amp;B order will appear here"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/view15"
+                app:layout_constraintStart_toStartOf="@+id/view15"
+                app:layout_constraintTop_toTopOf="@+id/view15" />
+
+            <TextView
+                android:id="@+id/buttonProceed"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen_40dp"
+                android:textSize="@dimen/dimen_14sp"
+                android:fontFamily="@font/sf_pro_text_semi_bold"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:text="@string/book_movie"
+                android:layout_marginTop="@dimen/padding_10"
+                android:background="@drawable/curve_25"
+                android:backgroundTint="@color/yellow"
+                android:backgroundTintMode="src_in"
+                android:paddingStart="@dimen/dimen_20dp"
+                android:paddingEnd="@dimen/dimen_20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/view15"
+                app:layout_constraintStart_toStartOf="@+id/view15"
+                app:layout_constraintTop_toTopOf="@+id/view15" />
+
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
     </androidx.core.widget.NestedScrollView>

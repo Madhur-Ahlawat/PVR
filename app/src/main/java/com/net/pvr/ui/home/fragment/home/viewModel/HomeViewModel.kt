@@ -8,6 +8,7 @@ import com.net.pvr.ui.home.fragment.home.response.FeedbackDataResponse
 import com.net.pvr.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr.ui.home.fragment.home.response.NextBookingResponse
 import com.net.pvr.ui.home.fragment.more.offer.response.OfferResponse
+import com.net.pvr.ui.home.fragment.more.response.WhatsAppOptStatus
 import com.net.pvr.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,6 +38,11 @@ class HomeViewModel @Inject constructor(private val userRepository: UserReposito
             userRepository.offer(city,userId,did,isSpi)
         }
     }
+
+    //offer
+    val offerHideLiveData: LiveData<NetworkResult<String>>
+        get() = userRepository.hideOfferResponseLiveData
+
 
     fun hideOffer(city:String,userId:String,did:String,isSpi:String) {
         viewModelScope.launch {

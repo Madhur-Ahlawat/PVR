@@ -92,9 +92,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout130"
-        android:visibility="visible"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/view94"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/view94"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout95">
@@ -157,13 +158,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
+                        android:digits="01234 56789"
                         android:fontFamily="@font/sf_pro_text_bold"
                         android:gravity="bottom"
-                        android:digits="01234 56789"
-                        android:maxLength="19"
                         android:imeOptions="actionNext"
                         android:importantForAutofill="no"
                         android:inputType="phone"
+                        android:maxLength="19"
                         android:textColor="@color/black"
                         android:textColorHint="@color/textColor"
                         android:textSize="12sp"
@@ -171,37 +172,6 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/subs_valid_rect"
-                    android:layout_margin="@dimen/padding_10"
-                    android:padding="@dimen/dimen_15dp"
-                    android:id="@+id/subsView"
-                    android:visibility="gone"
-                    android:layout_below="@+id/textInputLayout">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/msg1"
-                        android:fontFamily="@font/sf_pro_text_medium"
-                        android:textSize="@dimen/dimen_14sp"
-                        android:textColor="#007D23"
-                        android:text="Card is valid for Automatic renewal"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sf_pro_text_regular"
-                        android:layout_marginTop="@dimen/dimen_5dp"
-                        android:id="@+id/msg2"
-                        android:textSize="@dimen/dimen_12sp"
-                        android:textColor="#000000"
-                        android:text="Card is valid for Automatic renewal"/>
-
-                </LinearLayout>
 
             </RelativeLayout>
 
@@ -398,6 +368,7 @@
                 android:paddingTop="@dimen/dimen_8dp"
                 android:paddingEnd="@dimen/dimen_5dp"
                 android:paddingBottom="@dimen/dimen_5dp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/view221"
                 app:layout_constraintStart_toStartOf="@+id/view221"
                 app:layout_constraintTop_toBottomOf="@+id/relativeLayout5">
@@ -445,15 +416,16 @@
                 android:id="@+id/checkBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="-5dp"
                 android:layout_marginTop="26dp"
+                android:buttonTint="@color/yellow"
                 android:fontFamily="@font/sf_pro_text_regular"
                 android:paddingStart="@dimen/dimen_15dp"
                 android:paddingEnd="2dp"
-                android:layout_marginStart="-5dp"
                 android:text="@string/securely_save_this_card_for_future_use"
                 android:textColor="@color/black"
-                android:buttonTint="@color/yellow"
                 android:textSize="@dimen/dimen_14sp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/view221"
                 app:layout_constraintStart_toStartOf="@+id/relativeLayout5"
                 app:layout_constraintTop_toBottomOf="@+id/relativeLayout6" />
@@ -461,14 +433,52 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <LinearLayout
+            android:id="@+id/subsView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_24dp"
+            android:layout_marginEnd="@dimen/dimen_24dp"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:background="@drawable/subs_valid_rect"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_15dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayout130"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout130"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout120">
+
+            <TextView
+                android:id="@+id/msg1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sf_pro_text_medium"
+                android:text="Card is valid for Automatic renewal"
+                android:textColor="#007D23"
+                android:textSize="@dimen/dimen_14sp" />
+
+            <TextView
+                android:id="@+id/msg2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_5dp"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:text="Card is valid for Automatic renewal"
+                android:textColor="#000000"
+                android:textSize="@dimen/dimen_12sp" />
+
+        </LinearLayout>
+
+
         <include
             android:id="@+id/include28"
             layout="@layout/button_next"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen_15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout120" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

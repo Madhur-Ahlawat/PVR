@@ -83,7 +83,7 @@
             android:layout_height="0dp"
             android:gravity="center"
             android:padding="@dimen/dimen_12dp"
-            android:src="@drawable/cross_search"
+            android:src="@drawable/ic_cross_pri"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/constraintLayout7"

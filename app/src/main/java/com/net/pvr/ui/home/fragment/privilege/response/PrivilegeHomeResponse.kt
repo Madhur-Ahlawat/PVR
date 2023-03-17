@@ -10,7 +10,7 @@ data class PrivilegeHomeResponse(
 ):java.io.Serializable{
     data class Output(
         val faq: String,
-        val ls: String,
+        val ls: String= "",
         val passcancel: Boolean,
         val passport: Boolean,
         var passportbuy: Boolean = false,
@@ -20,10 +20,10 @@ data class PrivilegeHomeResponse(
         val pdays: String,
         val pinfo: ArrayList<Pinfo>,
         val pkotakurl: String,
-        val pt: String,
+        val pt: String = "0",
         val st: ArrayList<St>,
-        val ulm: String,
-        val vou: String,
+        val ulm: String= "",
+        val vou: String = "",
         val wt: ArrayList<Wt>
     ):java.io.Serializable{
         data class Pinfo(

@@ -46,7 +46,7 @@ class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.Re
         binding = ActivityActivateGiftCardBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-        binding?.include12?.titleCommonToolbar?.text = "Active Gift Card"
+        binding?.include12?.titleCommonToolbar?.text = "Active Gift Cards"
         binding?.include12?.btnBack?.setOnClickListener {
             onBackPressed()
         }

@@ -198,13 +198,11 @@ class SearchCinemaActivity : AppCompatActivity(),
         val filtered: ArrayList<HomeSearchResponse.Output.T> = ArrayList()
         val filtered1: ArrayList<HomeSearchResponse.Output.T> = ArrayList()
         for (item in filterCinemaList!!) {
-            if (item.n.lowercase(Locale.getDefault())
-                    .contains(text.lowercase(Locale.getDefault()))
-            ) {
+            if (item.n.lowercase(Locale.getDefault()).contains(text.lowercase(Locale.getDefault()))) {
                 filtered.add(item)
             }
         }
-        searchHomeCinemaAdapter?.filterCinemaList(filtered1)
+        searchHomeCinemaAdapter?.filterCinemaList(filtered)
 
     }
 

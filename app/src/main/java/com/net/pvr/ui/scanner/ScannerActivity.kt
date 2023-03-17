@@ -336,6 +336,9 @@ class ScannerActivity : AppCompatActivity(), DecoratedBarcodeView.TorchListener 
         } else {
             couponCode = cpn
             bindingProfile.tvCoupon.text = couponCode
+            preferences.saveString(Constant.SharedPreference.PROMOCODE,couponCode)
+
+
         }
         if (cmsg != null && cmsg.isNotEmpty()) {
             bindingProfile.tvMsg.text = cmsg

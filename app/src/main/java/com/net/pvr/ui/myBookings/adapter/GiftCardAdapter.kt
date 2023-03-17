@@ -5,9 +5,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.net.pvr.R
 import com.net.pvr.databinding.GiftCardItemBinding
 import com.net.pvr.ui.myBookings.response.GiftCardResponse
+import com.net.pvr.utils.show
 
 
 class GiftCardAdapter(
@@ -32,7 +34,11 @@ class GiftCardAdapter(
             with(nowShowingList[position]) {
 
                 //giftedTo
-                binding.tvGift.text = cinemaItem.r
+                if (cinemaItem.r!=null && cinemaItem.r != "") {
+                    binding.tvGift.text = cinemaItem.r
+                    binding.tvGift.show()
+                    binding.tvGiTxt.show()
+                }
                 //Price
                 binding.tvValue.text = cinemaItem.ta
                 //DateTime
@@ -43,6 +49,20 @@ class GiftCardAdapter(
                 binding.tvresend.setOnClickListener {
                     listener.resend(this)
                 }
+                if (cinemaItem.ci != null && cinemaItem.ci != ""){
+                    Glide.with(context)
+                        .load(cinemaItem.ci)
+                        .error(R.drawable.gift_card_placeholder)
+                        .placeholder(R.drawable.gift_card_placeholder)
+                        .into(binding.giftCardImage)
+                }else {
+                    Glide.with(context)
+                        .load(cinemaItem.gi)
+                        .error(R.drawable.gift_card_placeholder)
+                        .placeholder(R.drawable.gift_card_placeholder)
+                        .into(binding.giftCardImage)
+                }
+
             }
         }
     }

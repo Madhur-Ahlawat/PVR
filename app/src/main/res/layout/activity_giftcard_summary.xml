@@ -461,6 +461,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
                     style="@style/text_black"
+                    android:buttonTint="@color/yellow"
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"/>
 
@@ -488,6 +489,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/ll_bottom"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <include

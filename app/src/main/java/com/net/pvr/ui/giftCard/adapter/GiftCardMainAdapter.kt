@@ -34,6 +34,9 @@ class GiftCardMainAdapter(
                         .error(R.drawable.gift_card_placeholder)
                         .placeholder(R.drawable.gift_card_placeholder)
                         .into(binding.ivImageGeneric)
+//                    binding.ivImageGeneric.layoutParams.height = 577
+//                    binding.ivImageGeneric.layoutParams.width = 1350
+                    println("binding?.ivImageGeneric?.measuredHeight-->" + binding.ivImageGeneric.layoutParams.height)
 
                     holder.itemView.setOnClickListener {
                         listner.giftCardClick(this)
@@ -47,6 +50,9 @@ class GiftCardMainAdapter(
                         .error(R.drawable.gift_card_placeholder)
                         .placeholder(R.drawable.gift_card_placeholder)
                         .into(binding.ivImageGeneric)
+//                    binding.ivImageGeneric.layoutParams.height = 577
+//                    binding.ivImageGeneric.layoutParams.width = 1350
+
 
                     holder.itemView.setOnClickListener {
                         listner.giftCardClick(this)

@@ -341,7 +341,7 @@ lateinit var preferences: PreferenceManager
             when (it) {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
-                    if (Constant.status == it.data?.result) {
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         if (it.data.output.p != null) {
                             if (it.data.output.bin != null) {
                                 val binSeries: String = it.data.output.bin

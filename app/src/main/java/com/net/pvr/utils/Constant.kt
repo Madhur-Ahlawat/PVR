@@ -228,6 +228,7 @@ class Constant {
             return try {
                 val newDateString: String
                 val sdf = SimpleDateFormat(oldformat)
+                val sdf2 = SimpleDateFormat("dd/MM/yyyy")
                 val sdf1 = SimpleDateFormat(newformat)
                 var d: Date? = null
                 val d1: Date? = null
@@ -236,6 +237,9 @@ class Constant {
                 } catch (e: ParseException) {
                     e.printStackTrace()
                     sdf1.parse(olddate)
+                }catch (e: ParseException) {
+                    e.printStackTrace()
+                    sdf2.parse(olddate)
                 }
                 sdf.applyPattern(newformat)
                 newDateString = sdf.format(d)
@@ -308,7 +312,6 @@ class Constant {
                     val registrationManager: RegistrationManager = it.registrationManager
                     val check = registrationManager.edit().setContactKey("VM$phoneNo").commit()
                     val splited = preference.getString(SharedPreference.USER_NAME).split(" ")
-                    println("splited--->${splited[0]}---->${splited[1]}")
                     if (splited.size == 2) {
                         registrationManager.edit().setAttribute("FirstName", splited[0]).commit()
                         registrationManager.edit().setAttribute("LastName", splited[1]).commit()
