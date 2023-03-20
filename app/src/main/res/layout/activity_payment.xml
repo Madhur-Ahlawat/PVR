@@ -213,9 +213,9 @@
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout52"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toTopOf="@+id/ll_sectoken"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout46">
@@ -717,9 +717,9 @@
                     android:paddingTop="10dp"
                     android:paddingBottom="5dp"
                     android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout52">
 
 
                     <TextView
@@ -760,6 +760,47 @@
 
                     </LinearLayout>
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/reccurMsg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#F3F3F3"
+                    android:orientation="vertical"
+                    android:paddingEnd="@dimen/dimen_24dp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_sectoken">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/sf_pro_text_medium"
+                        android:text="This is a recurring payment.
+The amount will be auto-debited every month."
+                        android:textColor="@color/black"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toTopOf="@+id/view180"
+                        app:layout_constraintStart_toStartOf="@+id/view178"
+                        app:layout_constraintTop_toBottomOf="@+id/view179" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:text="You can cancel the subscription anytime"
+                        android:textColor="@color/black"
+                        android:textSize="11sp"
+                        app:layout_constraintBottom_toTopOf="@+id/view180"
+                        app:layout_constraintStart_toStartOf="@+id/view178"
+                        app:layout_constraintTop_toBottomOf="@+id/view179" />
+
+                </LinearLayout>
+
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -597,13 +597,7 @@ class MyBookingsActivity : AppCompatActivity(),
     }
 
     override fun onDirectionClick(data: FoodTicketResponse.Output.C) {
-        var lat = "0.0"
-        var lng = "0.0"
-        if (data.ltd != "") lat = data.ltd
-        if (data.lngt != "") lng = data.lngt
-        val uri: kotlin.String = String.format(Locale.ENGLISH, "geo:%f,%f", lat, lng)
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
-        startActivity(intent)
+        Constant().openMap(this,data.ltd,data.lngt)
     }
 
     override fun theatreClick(comingSoonItem: BookingTheatreResponse.Output.M) {

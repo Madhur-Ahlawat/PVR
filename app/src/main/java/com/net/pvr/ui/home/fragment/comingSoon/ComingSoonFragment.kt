@@ -168,6 +168,12 @@ class ComingSoonFragment : Fragment(),
                 tempGenera + "," + generseleced[i].split("-").toTypedArray()[0].trim { it <= ' ' }
             genre=tempGenera
         }
+        if (genre == "NULL"){
+            genre = "ALL"
+        }
+        if (language == "NULL"){
+            language = "ALL"
+        }
         authViewModel.comingSoon(preferences.getCityName(), genre, language, preferences.getUserId())
 
     }
@@ -197,8 +203,10 @@ class ComingSoonFragment : Fragment(),
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        binding?.recComSoonMovie?.show()
                         retrieveData(it.data.output)
                     } else {
+                        binding?.recComSoonMovie?.hide()
                         val dialog = OptionDialog(requireActivity(),
                             R.mipmap.ic_launcher,
                             R.string.app_name,
@@ -227,6 +235,14 @@ class ComingSoonFragment : Fragment(),
                     loader?.show(requireActivity().supportFragmentManager, null)
                 }
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (SetAlertActivity.alert){
+            SetAlertActivity.alert = false
+            authViewModel.comingSoon(preferences.getCityName(), genre, language, preferences.getUserId())
         }
     }
 
@@ -333,50 +349,56 @@ class ComingSoonFragment : Fragment(),
         println("buttonPressed--->$type---$filterItemSelected")
 
         if (type.size > 1) {
-            binding?.filterFab?.setImageResource(R.drawable.filter_selected)
-            appliedFilterItem = filterItemSelected
-            binding?.appliedFilter?.visibility = View.VISIBLE
-            val containLanguage = type.contains("language")
-            if (containLanguage) {
-                val index = type.indexOf("language")
-                var value: String = filterItemSelected[type[index]]!!
-                if (!value.equals("", ignoreCase = true)) {
-                    buttonPressed.clear()
-                    value = value.uppercase(Locale.getDefault())
-                    val valuesString = value.split(",").toTypedArray()
-                    for (s in valuesString) {
-                        if (!buttonPressed.contains(s)) buttonPressed.add(s.trim { it <= ' ' } + "-language")
+            try {
+                binding?.filterFab?.setImageResource(R.drawable.filter_selected)
+                appliedFilterItem = filterItemSelected
+                binding?.appliedFilter?.visibility = View.VISIBLE
+                val containLanguage = type.contains("language")
+                if (containLanguage) {
+                    val index = type.indexOf("language")
+                    var value: String = filterItemSelected[type[index]]!!
+                    if (!value.equals("", ignoreCase = true)) {
+                        buttonPressed.clear()
+                        value = value.uppercase(Locale.getDefault())
+                        val valuesString = value.split(",").toTypedArray()
+                        for (s in valuesString) {
+                            if (!buttonPressed.contains(s)) buttonPressed.add(s.trim { it <= ' ' } + "-language")
+                        }
+                        binding?.filterFab?.setImageResource(R.drawable.filter_selected)
+                    } else {
+                        binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
+                        buttonPressed.clear()
                     }
-                    binding?.filterFab?.setImageResource(R.drawable.filter_selected)
-                } else {
-                    binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
-                    buttonPressed.clear()
                 }
-            }
-            val containGeners = type.contains("geners")
+                val containGeners = type.contains("geners")
 
-            if (containGeners) {
-                val index = type.indexOf("geners")
-                var value: String = filterItemSelected[type[index]].toString()
-                if (!value.equals("", ignoreCase = true)) {
-                    generseleced.clear()
-                    value = value.uppercase(Locale.getDefault())
-                    val valuesString = value.split(",").toTypedArray()
-                    for (s in valuesString) {
-                        if (!generseleced.contains(s)) generseleced.add(s.trim { it <= ' ' } + "-geners")
+                if (containGeners) {
+                    val index = type.indexOf("geners")
+                    var value: String = filterItemSelected[type[index]].toString()
+                    if (!value.equals("", ignoreCase = true)) {
+                        generseleced.clear()
+                        value = value.uppercase(Locale.getDefault())
+                        val valuesString = value.split(",").toTypedArray()
+                        for (s in valuesString) {
+                            if (!generseleced.contains(s)) generseleced.add(s.trim { it <= ' ' } + "-geners")
+                        }
+                        binding?.filterFab?.setImageResource(R.drawable.filter_selected)
+                    } else {
+                        binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
+                        generseleced.clear()
                     }
-                    binding?.filterFab?.setImageResource(R.drawable.filter_selected)
-                } else {
-                    binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
-                    generseleced.clear()
                 }
+                comingSoonAPICall()
+            }catch (e:Exception){
+                e.printStackTrace()
             }
-            comingSoonAPICall()
         } else binding?.appliedFilter?.visibility = View.GONE
     }
 
 
     override fun onReset() {
+         language="ALL"
+         genre="ALL"
         binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
         buttonPressed = ArrayList<String>()
         generseleced = ArrayList<String>()

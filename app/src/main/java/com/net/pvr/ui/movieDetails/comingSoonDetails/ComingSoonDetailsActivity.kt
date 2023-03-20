@@ -77,6 +77,18 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
         movieAlert()
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (SetAlertActivity.alert) {
+            authViewModel.movieDetails(
+                "UP",
+                preferences.getUserId(),
+                preferences.getCityName(),
+                intent.getStringExtra("mid").toString()
+            )
+        }
+    }
+
 
     private fun movieDetails() {
         authViewModel.movieDetailsLiveData.observe(this) {
@@ -225,6 +237,7 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
 
         //Promotion
         val snapHelper = PagerSnapHelper()
+        binding?.include40?.recyclerPromotion?.onFlingListener = null
         snapHelper.attachToRecyclerView(binding?.include40?.recyclerPromotion)
         val gridLayoutSlider =
             GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)

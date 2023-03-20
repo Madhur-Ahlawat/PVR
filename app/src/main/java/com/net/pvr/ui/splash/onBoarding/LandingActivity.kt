@@ -92,21 +92,21 @@ class LandingActivity : AppCompatActivity() {
                     0 -> {
                         binding?.tvPrev?.hide()
                         binding?.tvNext?.show()
-                        binding?.movedToNext?.text = getString(R.string.skip)
+                        binding?.movedToNext?.text = getString(R.string.get_started)
                         binding?.changeText?.text = getString(R.string.onboard_txt1)
                     }
 
                     1 -> {
                         binding?.tvPrev?.show()
                         binding?.tvNext?.show()
-                        binding?.movedToNext?.text = getString(R.string.skip)
+                        binding?.movedToNext?.text = getString(R.string.get_started)
                         binding?.changeText?.text = getString(R.string.onboard_txt3)
                     }
 
                     2 -> {
                         binding?.tvPrev?.show()
                         binding?.tvNext?.show()
-                        binding?.movedToNext?.text = getString(R.string.skip)
+                        binding?.movedToNext?.text = getString(R.string.get_started)
                         binding?.changeText?.text = getString(R.string.onboard_txt2)
                     }
 

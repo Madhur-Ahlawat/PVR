@@ -313,7 +313,7 @@ class FoodActivity : AppCompatActivity(),
         binding?.recyclerView20?.setHasFixedSize(true)
 
         //All Food
-        val layoutManagerCrew2 = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
+        val layoutManagerCrew2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
         allFoodAdapter = AllFoodAdapter(getFilterAllMfl(true, menuType, "ALL"), this, this, "")
         binding?.recyclerView21?.adapter = allFoodAdapter
         binding?.recyclerView21?.setHasFixedSize(true)
@@ -444,7 +444,7 @@ class FoodActivity : AppCompatActivity(),
                 binding?.switch3?.isChecked = false
                 bestSellerType = "Veg"
                 val layoutManagerCrew2 =
-                    GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
+                    GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
                 allFoodAdapter = AllFoodAdapter(
                     getFilterAllMfl(true, menuType, categoryName), this, this, ""
                 )
@@ -467,7 +467,7 @@ class FoodActivity : AppCompatActivity(),
                     bestSellerType = "ALL"
                     menuType = 0
                     val layoutManagerCrew2 =
-                        GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
+                        GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
                     allFoodAdapter = AllFoodAdapter(
                         getFilterAllMfl(true, menuType, categoryName), this, this, ""
                     )
@@ -508,7 +508,7 @@ class FoodActivity : AppCompatActivity(),
                 bestSellerType = "Veg"
 
                 val layoutManagerCrew2 =
-                    GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
+                    GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
                 allFoodAdapter = AllFoodAdapter(
                     getFilterAllMfl(true, menuType, categoryName), this, this, ""
                 )
@@ -533,7 +533,7 @@ class FoodActivity : AppCompatActivity(),
 
                     menuType = 0
                     val layoutManagerCrew2 =
-                        GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
+                        GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
                     allFoodAdapter = AllFoodAdapter(
                         getFilterAllMfl(true, menuType, categoryName), this, this, ""
                     )
@@ -573,7 +573,7 @@ class FoodActivity : AppCompatActivity(),
 
         categoryName = comingSoonItem.name
         if (comingSoonItem.name == "ALL") {
-            val layoutManagerCrew = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
+            val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
             allFoodAdapter = AllFoodAdapter(
                 getFilterAllMfl(true, menuType, comingSoonItem.name), this, this, ""
             )
@@ -581,7 +581,7 @@ class FoodActivity : AppCompatActivity(),
             binding?.recyclerView21?.setHasFixedSize(true)
             binding?.recyclerView21?.layoutManager = layoutManagerCrew
         } else {
-            val layoutManagerCrew = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
+            val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
             allFoodAdapter = AllFoodAdapter(
                 getFilterAllMfl(true, menuType, comingSoonItem.name), this, this, ""
             )

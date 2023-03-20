@@ -32,7 +32,7 @@ class NetBankingAdapter(
         with(holder) {
             with(nowShowingList[position]) {
                 //title
-                binding.textView375.text = this.key+ " "+this.value
+                binding.textView375.text =this.value
                 holder.itemView.setOnClickListener {
                     listener.netBankingClick(this)
                 }

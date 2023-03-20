@@ -81,7 +81,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
         paymentType = intent.getStringExtra("pTypeId").toString()
         //PaidAmount
         binding?.textView287?.text =
-            getString(R.string.pay) + " " + getString(R.string.currency) + intent.getStringExtra("paidAmount")
+            getString(R.string.pay) + " " + getString(R.string.currency) + Constant.DECIFORMAT.format(intent.getStringExtra("paidAmount")?.toDouble())
         movedNext()
         paytmHMAC()
         bankList()
@@ -93,8 +93,12 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
             binding?.cardNumber?.isFocusable =false
             binding?.cardNumber?.isFocusableInTouchMode =false
         }
-        if (BOOK_TYPE == "RECURRING")
+        if (BOOK_TYPE == "RECURRING") {
             checkBinForRecurring()
+            binding?.reccurMsg?.show()
+        }else{
+            binding?.reccurMsg?.hide()
+        }
         if (paymentType.equals("116", ignoreCase = true)) {
             paymentType = getString(R.string.mobikwik_addmoney_payment_type_credit_card)
             binding?.constraintLayout130?.show()

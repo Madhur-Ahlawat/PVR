@@ -160,7 +160,6 @@ class PreferenceActivity : AppCompatActivity(),
 
     //    Preference type Click
     override fun prefrenceTypeClick(comingSoonItem: String, position: Int) {
-        toast("234356789")
         when (position) {
             0 -> {
                 selectedPos = 0

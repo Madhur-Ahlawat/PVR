@@ -1036,10 +1036,17 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
     override fun onBackPressed() {
         SeatBack= 1
-        if (FOODENABLE == 0) {
-            showDialog("1")
-        } else {
-            showDialog("0")
+        if (BOOK_TYPE == "BOOKING") {
+            if (FOODENABLE == 0) {
+                showDialog("1")
+            } else {
+                showDialog("0")
+            }
+        }else{
+            val intent = Intent(this@SummeryActivity, HomeActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+            finish()
         }
     }
 
@@ -1054,6 +1061,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         }
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onResume() {
         super.onResume()
         if (BOOK_TYPE == "BOOKING")
@@ -1129,11 +1137,18 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     }
 
     private fun retrieveExtendData(output: ExtendTimeResponse.Output) {
-        //extandTime
-        Constant.EXTANDTIME = Constant().convertTime(output.et)
-
-        //AVAIL TIME
-        Constant.AVAILABETIME = Constant().convertTime(output.at)
+        Constant.AVAILABETIME = Constant().convertTime(output.et.toInt()) - Constant().convertTime(output.at.toInt())
+        Constant.EXTANDTIME = Constant().convertTime(output.at.toInt())
+        PCTimer.startTimer(
+            Constant.EXTANDTIME,
+            Constant.AVAILABETIME,
+            Constant.CINEMA_ID,
+            Constant.TRANSACTION_ID,
+            Constant.BOOK_TYPE,
+            null,
+            false,
+            authViewModel
+        )
         if (BOOK_TYPE == "BOOKING")
         timerManage()
     }

@@ -128,6 +128,7 @@ class OtpVerifyActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
             authViewModel.loginMobileUser(mobile, preferences.getCityName(), "INDIA")
+            otpResend()
         }
 
         binding?.otpEditText?.setOnCharacterUpdatedListener {
@@ -247,6 +248,51 @@ class OtpVerifyActivity : AppCompatActivity() {
             }
         }
     }
+    private fun otpResend() {
+        authViewModel.resendResponseLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.data?.msg.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
 
     private fun registerUser() {
         authViewModel.userResponseResLiveData.observe(this) {
@@ -289,16 +335,16 @@ class OtpVerifyActivity : AppCompatActivity() {
     private fun retrieveResisterData(output: ResisterResponse.Output) {
         Constant.setAverageUserIdSCM(preferences)
         Constant.setUPSFMCSDK(preferences)
+        preferences.saveIsLogin(true)
+
         // Hit Event
         try {
+
             val bundle = Bundle()
             bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
             bundle.putString("user_id", output.id)
             GoogleAnalytics.hitEvent(this, "login_success_new", bundle)
-        }catch (e:Exception){
-            e.printStackTrace()
-        }
-        preferences.saveIsLogin(true)
+
         output.id.let { preferences.saveUserId(it) }
         output.un.let { preferences.saveUserName(it) }
         output.ph.let { preferences.saveMobileNumber(it) }
@@ -306,6 +352,9 @@ class OtpVerifyActivity : AppCompatActivity() {
         output.token.let { preferences.saveToken(it) }
         if (output.dob!=null){
             output.dob.let { preferences.saveDob(it) }
+        }
+        }catch (e:Exception){
+            e.printStackTrace()
         }
         authViewModel.privilegeHome(preferences.geMobileNumber(), preferences.getCityName())
         privilegeDataLoad()
@@ -386,6 +435,7 @@ class OtpVerifyActivity : AppCompatActivity() {
     private fun privilegeRetrieveData(output: PrivilegeHomeResponse.Output) {
         try {
 //            toast("hello1")
+
             Constant.PrivilegeHomeResponseConst = output
             preferences.saveString("FAQ", output.faq)
             preferences.saveString(Constant.SharedPreference.pcities, output.pcities)
@@ -396,14 +446,14 @@ class OtpVerifyActivity : AppCompatActivity() {
             preferences.saveString(Constant.SharedPreference.LOYALITY_POINT, jsonObject1.toString())
             preferences.saveString(Constant.SharedPreference.LOYALITY_CARD, output.passportbuy.toString())
             preferences.saveString(Constant.SharedPreference.SUBS_OPEN, output.passport.toString())
-            preferences.saveString(Constant.SharedPreference.LOYALITY_STATUS, output.ls)
-            preferences.saveString(Constant.SharedPreference.SUBSCRIPTION_STATUS, output.ulm)
-
-            checkMoved()
+            preferences.saveString(Constant.SharedPreference.LOYALITY_STATUS, output.ls?:"")
+            preferences.saveString(Constant.SharedPreference.SUBSCRIPTION_STATUS, output.ulm?:"")
 
         } catch (e: Exception) {
             e.printStackTrace()
         }
+        checkMoved()
+
     }
 
 
@@ -630,12 +680,21 @@ class OtpVerifyActivity : AppCompatActivity() {
     }
 
     private fun retrieveExtendData(output: ExtendTimeResponse.Output) {
-        //extandTime
-        Constant.EXTANDTIME = Constant().convertTime(output.et)
+        Constant.AVAILABETIME = Constant().convertTime(output.et.toInt()) -  Constant().convertTime(output.at.toInt())
+        Constant.EXTANDTIME = Constant().convertTime(output.at.toInt())
+        PCTimer.stopTimer()
 
-        //AVAIL TIME
-        Constant.AVAILABETIME = Constant().convertTime(output.at)
-
+        Constant.timerCounter = 0
+        PCTimer.startTimer(
+            Constant.EXTANDTIME,
+            Constant.AVAILABETIME,
+            Constant.CINEMA_ID,
+            Constant.TRANSACTION_ID,
+            Constant.BOOK_TYPE,
+            null,
+            false,
+            authViewModel
+        )
         timerManage()
     }
 

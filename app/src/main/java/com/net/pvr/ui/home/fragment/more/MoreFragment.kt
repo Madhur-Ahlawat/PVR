@@ -59,6 +59,7 @@ import okhttp3.internal.and
 import java.security.MessageDigest
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class MoreFragment : Fragment() {
@@ -67,10 +68,14 @@ class MoreFragment : Fragment() {
     private var binding: FragmentMoreBinding? = null
     private val authViewModel by activityViewModels<MoreViewModel>()
     private var loader: LoaderDialog? = null
-    private val profileList: ArrayList<ProfileModel> = ArrayList()
+    private var profileList: ArrayList<ProfileModel> = ArrayList()
 
     @Inject
     lateinit var preferences: PreferenceManager
+
+    companion object{
+        var clickRefresh = false
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -80,6 +85,17 @@ class MoreFragment : Fragment() {
         return binding?.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (clickRefresh){
+            authViewModel.userProfile(
+                preferences.getCityName(), preferences.getUserId(), timeStamp, getHashProfile(
+                    preferences.getUserId() + "|" + timeStamp
+                )
+            )
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         HomeActivity.backToTop?.hide()
@@ -87,12 +103,7 @@ class MoreFragment : Fragment() {
         timeStamp = (System.currentTimeMillis() / 1000).toString()
 
         //add List
-        profileList.add(ProfileModel("Provide your contact number", "MOBILE"))
-        profileList.add(ProfileModel("Your email", "EMAIL"))
-        profileList.add(ProfileModel("Gender information", "GENDER"))
-        profileList.add(ProfileModel("Date of birth", "DOB"))
-        profileList.add(ProfileModel("Anniversary", "DOA"))
-        profileList.add(ProfileModel("Save movie preferences", "MOVIE"))
+
 
         //SetName
         binding?.profileDetails?.textView205?.text = preferences.getUserName()
@@ -563,7 +574,7 @@ class MoreFragment : Fragment() {
         binding?.profileDetails?.textView206?.text = output.cd
         binding?.profileDetails?.textView208?.text = output.percentage.toString() + "%"
 
-        binding?.profileDetails?.textView209?.text = output.msg
+        binding?.profileDetails?.textView209?.text = Html.fromHtml(output.msg)
         binding?.profileDetails?.progressBar?.progress = output.percentage
 
         //profile Complete
@@ -574,6 +585,7 @@ class MoreFragment : Fragment() {
 
 
     private fun openProfilePopup(output: ProfileResponse.Output) {
+        profileList = ArrayList()
         val dialog = BottomSheetDialog(requireActivity(), R.style.NoBackgroundDialogTheme)
         val behavior: BottomSheetBehavior<*> = dialog.behavior
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
@@ -588,10 +600,16 @@ class MoreFragment : Fragment() {
         mainView?.maxHeight = (displayRectangle.height() * 0.6f).toInt()
         val progressBar2 = dialog.findViewById<ProgressBar>(R.id.progressBar2)
         val profileRecycler = dialog.findViewById<RecyclerView>(R.id.profileList)
+        profileList.add(ProfileModel("Provide your contact number", "MOBILE"))
+        profileList.add(ProfileModel("Your email", "EMAIL"))
+        profileList.add(ProfileModel("Gender information", "GENDER"))
+        profileList.add(ProfileModel("Date of birth", "DOB"))
+        profileList.add(ProfileModel("Anniversary", "DOA"))
+        profileList.add(ProfileModel("Save movie preferences", "PREFERENCES"))
 
         val title = dialog.findViewById<TextView>(R.id.voucherText)
         //title
-        title?.text=output.msg
+        title?.text= Html.fromHtml(output.msg)
         progressBar2?.progress = output.percentage
         val layoutManager = LinearLayoutManager(context)
         profileRecycler?.layoutManager = layoutManager

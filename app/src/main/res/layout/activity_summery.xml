@@ -180,7 +180,7 @@
                             android:id="@+id/textView113"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="4dp"
                             android:fontFamily="@font/sf_pro_text_regular"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen_12sp"
@@ -195,6 +195,7 @@
                             android:layout_height="wrap_content"
                             app:layout_constraintBottom_toBottomOf="@+id/textView113"
                             app:layout_constraintEnd_toEndOf="@+id/view78"
+                            android:visibility="gone"
                             app:layout_constraintTop_toBottomOf="@+id/textView112"
                             app:srcCompat="@drawable/ic_direction_new"
                             tools:ignore="ContentDescription" />

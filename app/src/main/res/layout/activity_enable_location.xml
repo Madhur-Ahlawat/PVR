@@ -15,71 +15,61 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView19"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="60dp"
-        android:adjustViewBounds="true"
-        android:src="@drawable/enable_location"
-        app:layout_constraintEnd_toEndOf="@+id/view35"
-        app:layout_constraintStart_toStartOf="@+id/view35"
-        app:layout_constraintTop_toBottomOf="@+id/include32"
-        tools:ignore="ContentDescription,ImageContrastCheck" />
 
-
-    <TextView
-        android:id="@+id/recommendationTextView"
-        style="@style/H2SizeDark"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="24dp"
-        android:fontFamily="@font/sf_pro_text_semi_bold"
-        android:gravity="center"
-        android:text="@string/location_recommendation"
-        android:textColor="@color/black"
-        android:textSize="@dimen/dimen_16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView19" />
+        app:layout_constraintBottom_toTopOf="@+id/include39"
+        app:layout_constraintTop_toBottomOf="@+id/include32">
+
+        <ImageView
+            android:id="@+id/imageView19"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/enable_location"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription,ImageContrastCheck" />
+
+        <TextView
+            android:id="@+id/recommendationTextView"
+            style="@style/H2SizeDark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="@dimen/dimen_25dp"
+            android:fontFamily="@font/sf_pro_text_semi_bold"
+            android:gravity="center"
+            android:text="@string/location_recommendation"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView19" />
 
 
-    <TextView
-        android:id="@+id/textView386"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/sf_pro_text_regular"
-        android:gravity="center"
-        android:singleLine="true"
-        android:text="@string/battery_usage"
-        android:textColor="@color/h8Point1Color"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recommendationTextView" />
+        <TextView
+            android:id="@+id/textView386"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/battery_usage"
+            android:textColor="@color/h8Point1Color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recommendationTextView" />
 
-    <TextView
-        android:id="@+id/noThanksTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="25dp"
-        android:textSize="@dimen/dimen_12sp"
-        android:fontFamily="@font/sf_pro_text_bold"
-        android:gravity="center"
-        android:padding="@dimen/enable_location_margin_default"
-        android:text="@string/recommendation"
-        android:textAllCaps="true"
-        android:textColor="@color/h8Point1Color"
-        app:layout_constraintBottom_toBottomOf="@+id/view35"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/view35"
-        tools:ignore="AllCaps" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
     <include
         android:id="@+id/include32"
@@ -94,9 +84,32 @@
         android:id="@+id/include39"
         layout="@layout/button_next"
         android:layout_width="0dp"
+        android:layout_marginBottom="-10dp"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/noThanksTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView386" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
+        android:id="@+id/noThanksTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:fontFamily="@font/sf_pro_text_bold"
+        android:layout_marginBottom="@dimen/dimen_25dp"
+        android:gravity="center"
+        android:padding="@dimen/enable_location_margin_default"
+        android:text="@string/recommendation"
+        android:textColor="@color/h8Point1Color"
+        android:textSize="@dimen/dimen_12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/view35"
+        tools:ignore="AllCaps" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

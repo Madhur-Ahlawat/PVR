@@ -117,7 +117,7 @@ class BankOfferDetailsActivity : AppCompatActivity(){
                         val intent = Intent(this@BankOfferDetailsActivity, CardDetailsActivity::class.java)
                         intent.putExtra("pTypeId", "BIN")
                         intent.putExtra("ptype", paymentType)
-                        val actualAmt = (paidAmount.toDouble()-(it.data.output.TICKET_DISCOUNT+it.data.output.FOOD_DISCOUNT))
+                        val actualAmt = (paidAmount.toDouble()-(it.data.output.TICKET_DISCOUNT+it.data.output.FOOD_DISCOUNT)/100)
                         intent.putExtra("paidAmount", actualAmt.toString())
                         intent.putExtra("title", title)
                         intent.putExtra("scheem", scheem)

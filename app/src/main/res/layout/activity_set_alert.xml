@@ -214,6 +214,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="22dp"
                                 android:layout_marginEnd="14dp"
+                                android:thumb="@drawable/thumb_selector"
+                                app:track="@drawable/track_selector"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="@+id/view170"
                                 app:layout_constraintTop_toTopOf="@+id/view170"

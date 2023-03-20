@@ -297,7 +297,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                     "no"
                 )
 
-                hideDataLoad()
+               // hideDataLoad()
             }catch (e:java.lang.Exception){
 
             }
@@ -519,7 +519,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                     "",
                     "no"
                 )
-                hideDataLoad()
+               // hideDataLoad()
             }catch (e:java.lang.Exception){
 
             }

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/addUi"
     android:layout_width="wrap_content"
-    android:layout_height="30dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/food_yellow_curve"
     android:orientation="vertical">
 
@@ -17,27 +17,27 @@
 
         <TextView
             android:id="@+id/minus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dimen_25dp"
+            android:layout_height="@dimen/dimen_25dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/minus_ic"
             android:gravity="center_vertical" />
 
         <TextView
             android:id="@+id/foodCount"
-            android:layout_width="32dp"
+            android:layout_width="@dimen/dimen_25dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:includeFontPadding="false"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="14sp"
             tools:text="0" />
 
         <TextView
             android:id="@+id/plus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dimen_25dp"
+            android:layout_height="@dimen/dimen_25dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/add_ic"
             android:gravity="center" />

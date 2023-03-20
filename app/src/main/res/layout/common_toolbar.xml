@@ -9,28 +9,28 @@
 
     <ImageView
         android:id="@+id/btnBack"
-        android:layout_width="@dimen/back_btn_width"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_centerInParent="true"
-        android:paddingLeft="@dimen/toolbar_left_right_padding"
-        android:paddingRight="@dimen/toolbar_left_right_padding"
-        android:src="@drawable/back_new"
+        android:layout_marginStart="24dp"
+        android:src="@drawable/back"
         app:tint="@color/black"
         tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/titleCommonToolbar"
-        style="@style/H4SizeBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_toStartOf="@+id/subTitle"
         android:layout_toEndOf="@+id/btnBack"
         android:ellipsize="marquee"
+        android:layout_marginStart="24dp"
         android:fontFamily="@font/montserrat_bold"
         android:textAlignment="textStart"
-        android:textSize="@dimen/dimen_16sp" />
+        android:textColor="@color/black"
+        android:textSize="@dimen/dimen_20sp" />
 
     <TextView
         android:id="@+id/subTitle"

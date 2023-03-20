@@ -98,7 +98,7 @@ class BestSellerFoodAdapter(
 
                 } else {
                     binding.uiPlusMinus.foodCount.text = this.qt.toString()
-                    binding.textView134.invisible()
+                    binding.textView134.hide()
                     binding.textView135.setOnClickListener {
                         listener.addFood(this, position)
                         binding.consAddUi.show()

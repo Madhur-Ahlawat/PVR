@@ -48,11 +48,31 @@ import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.Boolean
+import kotlin.Double
+import kotlin.Exception
+import kotlin.Float
+import kotlin.Int
+import kotlin.String
+import kotlin.Suppress
+import kotlin.Throws
+import kotlin.apply
+import kotlin.arrayOf
+import kotlin.let
+import kotlin.toString
 
 @Suppress("DEPRECATION")
 class Constant {
 
+
+    public interface IntentKey {
+        companion object {
+            var IS_SESSION_EXPIRE = "is_session_expire"
+            var REMAING_TIME = "remaing_time"
+        }
+    }
     companion object {
+        var timerCounter = 0
         const val platform = "ANDROID"
         const val version = "11.3"
         const val status = "success"
@@ -349,6 +369,12 @@ class Constant {
         tvCensorLang.movementMethod = LinkMovementMethod.getInstance()
     }
 
+    interface BroadCast {
+        companion object {
+            const val ACTIVE_BROADCAST = "com.net.pvr.TimerBroadCast"
+        }
+    }
+
 
     fun extractYoutubeId(s: String): String? {
         return try {
@@ -417,6 +443,7 @@ class Constant {
         val intent = Intent(
             activity, TicketConfirmationActivity::class.java
         )
+        intent.putExtra("type","HOME")
         activity.startActivity(intent)
         activity.finish()
     }
@@ -466,14 +493,16 @@ class Constant {
                 } else {
                     val lineEndIndex = tv.layout.getLineEnd(tv.layout.lineCount - 1)
                     val text = tv.text.subSequence(0, lineEndIndex).toString() + text
+                    println("text123--->$text")
+
                     tv.text = text
                     tv.movementMethod = LinkMovementMethod.getInstance()
                     tv.setText(
                         addClickablePartTextViewResizable(
-                            Html.fromHtml(tv.text.toString()),
+                            Html.fromHtml(tv.text.toString().replace("... Read More","")),
                             tv,
                             lineEndIndex,
-                            expandText,
+                            "",
                             viewMore
                         ), TextView.BufferType.SPANNABLE
                     )
@@ -493,22 +522,25 @@ class Constant {
     ): SpannableStringBuilder? {
         val str = strSpanned.toString()
         val ssb = SpannableStringBuilder(strSpanned)
-        println("str---$str---$ssb")
+//        println("str---$str---$ssb")
         if (str.contains(spanableText)) {
             ssb.setSpan(object : MySpannable(false) {
                 override fun onClick(widget: View) {
                     super.onClick(widget)
                     if (viewMore) {
                         tv.layoutParams = tv.layoutParams
-                        tv.setText(tv.tag.toString(), TextView.BufferType.SPANNABLE)
+                        tv.setText(tv.tag.toString().replace("... Read More".toRegex(),""), TextView.BufferType.SPANNABLE)
                         tv.invalidate()
+                        println("tv1234--->"+tv.text)
                         makeTextViewResizable(tv, -1, "", false)
                     } else {
                         tv.layoutParams = tv.layoutParams
-                        tv.setText(tv.tag.toString(), TextView.BufferType.SPANNABLE)
+                        tv.setText(tv.tag.toString().replace("... Read More".toRegex(),""), TextView.BufferType.SPANNABLE)
                         tv.invalidate()
+                        println("tv123--->"+tv.text)
+
                         val text = "<font color=#000000><b>.. Read More</b></font>"
-                        makeTextViewResizable(tv, 5, text, true)
+                        makeTextViewResizable(tv, 5, "", true)
                     }
                 }
 

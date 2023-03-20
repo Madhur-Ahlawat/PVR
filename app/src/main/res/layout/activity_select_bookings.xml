@@ -99,14 +99,16 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         tools:text="TextView"
-        android:textColor="@color/gray"
+        android:includeFontPadding="false"
+        android:textColor="@color/black"
+        app:drawableEndCompat="@drawable/arrow_down_home"
         android:fontFamily="@font/sf_pro_text_regular"
         android:textSize="@dimen/dim_h4"
-        android:drawablePadding="@dimen/padding_10"
+        android:drawablePadding="@dimen/dimen_5dp"
         app:layout_constraintBottom_toBottomOf="@+id/include33"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/include33"
-        app:drawableStartCompat="@drawable/location_down" />
+         />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

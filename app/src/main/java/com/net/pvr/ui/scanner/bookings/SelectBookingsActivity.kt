@@ -137,11 +137,13 @@ class SelectBookingsActivity : AppCompatActivity() {
                 intent.putExtra("from","qr")
                 intent.putExtra("cid",cinemaId)
                 startActivity(intent)
+                finish()
             }else{
                 val intent = Intent(this, SelectCityActivity::class.java)
                 intent.putExtra("from","qr")
                 intent.putExtra("cid",cinemaId)
                 startActivity(intent)
+                finish()
             }
 
         }

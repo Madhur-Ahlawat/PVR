@@ -53,6 +53,7 @@ class TicketPlaceHolderAdapter(
     class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var promotionImage = view.findViewById<ImageView>(R.id.sliderImg)!!
         var tv_play = view.findViewById<ImageView>(R.id.tv_play)!!
+        var imageView142 = view.findViewById<ImageView>(R.id.imageView142)!!
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -66,6 +67,12 @@ class TicketPlaceHolderAdapter(
             holder.tv_play.show()
         }else{
             holder.tv_play.hide()
+        }
+
+        if (obj.buttonText == "VR"){
+            holder.imageView142.show()
+        }else{
+            holder.imageView142.hide()
         }
 
         if (movies.size > 1) {
@@ -143,6 +150,7 @@ class TicketPlaceHolderAdapter(
                 e.printStackTrace()
             }
 
+
             if (obj.type == "IMAGE" && obj.redirectView == "DEEPLINK") {
                 if (obj.redirect_url.equals("", ignoreCase = true)) {
                     if (obj.redirect_url.lowercase(Locale.ROOT).contains("/loyalty/home")) {
@@ -164,14 +172,23 @@ class TicketPlaceHolderAdapter(
                 }
 
             } else if (obj.type == "IMAGE" && obj.redirectView == "INAPP") {
-                //click
-                val intent = Intent(context, WebViewActivity::class.java)
-                intent.putExtra("from", "more")
-                intent.putExtra(
-                    "title", context.getString(R.string.terms_condition_text)
-                )
-                intent.putExtra("getUrl", obj.redirect_url)
-                context.startActivity(intent)
+
+                if (obj.buttonText == "VR"){
+                    val intent = Intent(context, WebViewActivity::class.java)
+                    intent.putExtra("title", obj.name)
+                    intent.putExtra("from", "Experience")
+                    intent.putExtra("getUrl", obj.redirect_url)
+                    context.startActivity(intent)
+                }else {
+                    //click
+                    val intent = Intent(context, WebViewActivity::class.java)
+                    intent.putExtra("from", "more")
+                    intent.putExtra(
+                        "title", context.getString(R.string.terms_condition_text)
+                    )
+                    intent.putExtra("getUrl", obj.redirect_url)
+                    context.startActivity(intent)
+                }
 
             } else if (obj.type == "VIDEO" && obj.redirectView != "") {
 

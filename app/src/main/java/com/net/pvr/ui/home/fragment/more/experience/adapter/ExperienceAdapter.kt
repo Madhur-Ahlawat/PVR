@@ -33,6 +33,8 @@ class ExperienceAdapter(
 
                 //title
                 binding.textView190.text= this.text
+                binding.textView189.show()
+                binding.textView190.show()
 
 //                image
                 Glide.with(context)

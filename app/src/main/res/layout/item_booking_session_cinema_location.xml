@@ -43,18 +43,17 @@
 
                 <com.net.pvr.utils.view.TextViewDrawable
                     android:id="@+id/textView105"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/alert"
-                    android:drawablePadding="@dimen/dimen_6dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/montserrat_alternates_bold"
                     android:includeFontPadding="false"
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimen_14sp"
-                    app:layout_constraintWidth_max="200dp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/cinemaLocation"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginEnd="@dimen/dimen_5dp"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="TextView gygyyggy dsdsds udyuysduy uhuuu " />
 
@@ -62,7 +61,6 @@
                     android:id="@+id/cinemaLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_15dp"
                     android:background="@drawable/yellow_curve_four"
                     android:fontFamily="@font/sf_pro_text_semi_bold"
                     android:paddingStart="@dimen/dimen_8dp"
@@ -72,7 +70,7 @@
                     android:textColor="@color/black"
                     android:textSize="12sp"
                     android:visibility="gone"
-                    app:layout_constraintStart_toEndOf="@+id/textView105"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/textView105"
                     tools:text="NEW" />
 
