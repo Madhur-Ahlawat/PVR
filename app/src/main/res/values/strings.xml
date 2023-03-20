@@ -718,5 +718,6 @@ IMAX Corporation is one of the world\'s leading entertainment technology compani
     <string name="cancel_subscription"><u>Unsubscribe</u></string>
     <string name="subscription_nvoucher">Subscription\nVoucher</string>
     <string name="cancellation1">Cancellation will be effective at the end of your current billing cycle.</string>
+    <string name="i_agree_to_the_terms_conditions"><![CDATA[I agree to the terms & conditions]]></string>
 
 </resources>

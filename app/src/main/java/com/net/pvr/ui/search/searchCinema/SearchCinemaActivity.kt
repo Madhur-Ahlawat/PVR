@@ -194,7 +194,6 @@ class SearchCinemaActivity : AppCompatActivity(),
     }
 
     private fun filter(text: String) {
-
         val filtered: ArrayList<HomeSearchResponse.Output.T> = ArrayList()
         val filtered1: ArrayList<HomeSearchResponse.Output.T> = ArrayList()
         for (item in filterCinemaList!!) {

@@ -101,11 +101,13 @@
 
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardView22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 app:cardBackgroundColor="#1A8C2D"
                 app:cardCornerRadius="@dimen/dimen_50dp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/textView405"
                 app:layout_constraintStart_toEndOf="@+id/textView412"
                 app:layout_constraintTop_toTopOf="@+id/textView405">

@@ -9,11 +9,11 @@ data class VoucherListResponse(
     val version: Any
 ) : java.io.Serializable {
     data class Output(
-        val ev: ArrayList<Ev>
-        ) : java.io.Serializable {
+        val ev: ArrayList<Ev>) : java.io.Serializable {
         data class Ev(
             val binDiscountId: String,
             val binDiscountName: String,
+            var quantity: Int,
             val descNTnc: String,
             val endDate: Long,
             val imageUrl1: String,
