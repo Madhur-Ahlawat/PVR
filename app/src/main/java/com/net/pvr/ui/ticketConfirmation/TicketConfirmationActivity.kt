@@ -64,7 +64,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
         val view = binding?.root
         setContentView(view)
         Constant.discount_val = "0.0"
-         PaymentActivity.subsId = ""
+        PaymentActivity.subsId = ""
         PaymentActivity.subsToken = ""
         PaymentActivity.createdAt = ""
         PaymentActivity.isPromoCodeApplied = false
@@ -75,13 +75,13 @@ class TicketConfirmationActivity : AppCompatActivity() {
 
     private fun manageFunction() {
         if (Constant.BOOK_TYPE == "BOOKING") {
-            if (Constant.TRANSACTION_ID==""){
+            if (Constant.TRANSACTION_ID == "") {
                 authViewModel.singleTicket(
                     Constant.BOOKING_ID,
                     preferences.getUserId(),
                     Constant.BOOK_TYPE
                 )
-            }else {
+            } else {
                 authViewModel.ticketConfirmation(
                     Constant.BOOK_TYPE,
                     Constant.BOOKING_ID,
@@ -108,9 +108,9 @@ class TicketConfirmationActivity : AppCompatActivity() {
         try {
             val bundle = Bundle()
             bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
-            bundle.putString("all ecommecrce variable","")
+            bundle.putString("all ecommecrce variable", "")
             GoogleAnalytics.hitEvent(this, "purchase", bundle)
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
@@ -125,7 +125,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
 
     private fun movedNext() {
         binding?.include31?.imageView58?.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
+            onBackPressed()
         }
     }
 
@@ -137,7 +137,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        retrieveData(it.data.output,"T")
+                        retrieveData(it.data.output, "T")
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -170,6 +170,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
         }
 
     }
+
     @SuppressLint("SetTextI18n")
     private fun singleTicketPrint() {
         binding?.include31?.textView108?.text = "Your Order"
@@ -178,7 +179,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        retrieveData(it.data.output,"S")
+                        retrieveData(it.data.output, "S")
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -211,6 +212,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
         }
 
     }
+
     @SuppressLint("SetTextI18n")
     private fun fnbTicketPrint() {
         binding?.include31?.textView108?.text = "Your Order"
@@ -220,8 +222,8 @@ class TicketConfirmationActivity : AppCompatActivity() {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         try {
-                            retrieveData(it.data.output,"F")
-                        }catch (e:Exception){
+                            retrieveData(it.data.output, "F")
+                        } catch (e: Exception) {
                             e.printStackTrace()
                         }
                     } else {
@@ -258,33 +260,34 @@ class TicketConfirmationActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun retrieveData(output: TicketBookedResponse.Output,from:String) {
-        printLog(Constant.BOOK_TYPE+output.toString())
+    private fun retrieveData(output: TicketBookedResponse.Output, from: String) {
+        printLog(Constant.BOOK_TYPE + output.toString())
 
         if (Constant.BOOK_TYPE == "BOOKING") {
             binding?.foodView?.hide()
             binding?.ticketView?.show()
             binding?.bottomView?.show()
-            if (output.food.isNotEmpty()){
+            if (output.food.isNotEmpty()) {
                 binding?.imageView153?.show()
                 binding?.textView339?.show()
                 binding?.recyclerView48?.show()
-            }else{
+            } else {
                 binding?.imageView153?.hide()
                 binding?.textView339?.hide()
                 binding?.recyclerView48?.hide()
             }
-            if (output.fa && output.ca_d != "true"){
+            if (output.fa && output.ca_d != "true") {
                 binding?.cardView16?.show()
                 binding?.imageView157?.show()
-            }else{
+            } else {
                 binding?.cardView16?.hide()
                 binding?.imageView157?.hide()
             }
 
-            if (output.ca_d == "true"){
+            if (output.ca_d == "true") {
                 binding?.constraintLayout123?.hide()
                 binding?.cushineView?.hide()
+                binding?.imageView152?.hide()
                 binding?.imageView157?.hide()
                 binding?.textView346?.hide()
                 binding?.ivCancelimage?.show()
@@ -294,10 +297,11 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 binding?.tvRefundTxtTitle?.text = output.ca_r_bot_txtb
                 binding?.tvRefundTxt?.text = output.ca_r_bot_txt
                 binding?.tvDiscountTxt?.text = output.ca_r_txt
-            }else{
+            } else {
                 binding?.constraintLayout123?.show()
                 binding?.cushineView?.show()
                 binding?.imageView157?.show()
+                binding?.imageView152?.show()
                 binding?.textView346?.show()
                 binding?.ivCancelimage?.hide()
                 binding?.tvDiscountTxt?.hide()
@@ -307,12 +311,12 @@ class TicketConfirmationActivity : AppCompatActivity() {
 
             //AddLocation
             binding?.textView347?.setOnClickListener {
-                if (binding?.textView347?.text == "Book Again"){
+                if (binding?.textView347?.text == "Book Again") {
                     launchActivity(
                         HomeActivity::class.java,
                         Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     )
-                }else{
+                } else {
 
                 }
             }
@@ -322,10 +326,13 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 // Hit Event
                 try {
                     val bundle = Bundle()
-                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Ticket Confirmation screen")
-                bundle.putString("FnB_order_snaks", "")
+                    bundle.putString(
+                        FirebaseAnalytics.Param.SCREEN_NAME,
+                        "Ticket Confirmation screen"
+                    )
+                    bundle.putString("FnB_order_snaks", "")
                     GoogleAnalytics.hitEvent(this, "F&B_book_food_pay_success", bundle)
-                }catch (e:Exception){
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
@@ -345,14 +352,14 @@ class TicketConfirmationActivity : AppCompatActivity() {
 //                if (!output.partialCancellationAllowed || output.seat.size == 1){
 //                    cancelBookingDialog(output)
 //                }else{
-                    partialCancelBookingDialog(output)
-              //  }
+                partialCancelBookingDialog(output)
+                //  }
             }
 
             //title
             binding?.textView131?.text = output.m
             //movie Type
-            binding?.textView329?.text = output.cen+" "+output.lg + "(${output.fmt})"
+            binding?.textView329?.text = output.cen + " " + output.lg + "(${output.fmt})"
             //address
             binding?.textView331?.text = output.c
             //load Image
@@ -381,10 +388,10 @@ class TicketConfirmationActivity : AppCompatActivity() {
 
             //order Id
             binding?.textView342?.text = output.bi
-            if (output.qrc.isNullOrEmpty()){
+            if (output.qrc.isNullOrEmpty()) {
                 binding?.textView343?.hide()
                 binding?.textView344?.hide()
-            }else{
+            } else {
                 binding?.textView343?.show()
                 binding?.textView344?.show()
             }
@@ -413,10 +420,10 @@ class TicketConfirmationActivity : AppCompatActivity() {
             binding?.recyclerView48?.adapter = ticketFoodAdapter
 
             //placeholder
-            if (output.ph.isEmpty()){
+            if (output.ph.isEmpty()) {
                 binding?.textView367?.hide()
                 binding?.recyclerView51?.hide()
-            }else{
+            } else {
                 binding?.textView367?.show()
                 binding?.recyclerView51?.show()
             }
@@ -443,19 +450,19 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 if (data.n == "Tickets") {
                     binding?.textView350?.text = output.f[0].it[0].n
                     binding?.textView351?.text = output.f[0].it[0].v
-                }else if (data.n == "Food & Beverages") {
+                } else if (data.n == "Food & Beverages") {
                     if (output.food.isNotEmpty()) {
                         binding?.textView352?.show()
                         binding?.textView353?.show()
                         binding?.textView352?.text = output.f[1].c.toString() + " Food Items"
                         binding?.textView353?.text = output.f[1].v
                     }
-                }else if (data.n == "Taxes & Fees "){
+                } else if (data.n == "Taxes & Fees ") {
                     binding?.textView357?.text = data.it[0].v
                     binding?.textView358?.text = data.it[1].v
                     binding?.textView356?.text = data.it[1].n
 
-                }else if (data.n == "CAUVERY CALLING"){
+                } else if (data.n == "CAUVERY CALLING") {
                     binding?.donTitle?.text = data.n
                     binding?.donVal?.text = data.v
                 }
@@ -465,7 +472,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
 
             val ls = preferences.getString(Constant.SharedPreference.LOYALITY_STATUS)
 
-            if (ls == ""){
+            if (ls == "") {
                 if (output.pe == "") {
                     binding?.ppView?.hide()
                     binding?.view226?.hide()
@@ -475,9 +482,9 @@ class TicketConfirmationActivity : AppCompatActivity() {
                     val text =
                         "<font color=#000000>You will earn </font> <font color=#000000><b>" + output.pe + "</b></font><font color=#000000> PVR Privilege Points </font>"
 
-                    binding?.textView361?.text =Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT)
+                    binding?.textView361?.text = Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT)
                 }
-            }else{
+            } else {
                 binding?.ppView?.show()
                 binding?.view226?.show()
                 binding?.textView361?.text = getString(R.string.you_privilege)
@@ -485,19 +492,25 @@ class TicketConfirmationActivity : AppCompatActivity() {
 
             //Parking
 
-            if (output.parking){
+            if (output.parking) {
                 binding?.textView368?.text = output.ptext
-            }else{
-                binding?.textView368?.text = "Back To Home"
+            } else {
+                if (intent.getStringExtra("type") == "HOME") {
+                    binding?.textView368?.text = "Back To Home"
+                } else {
+                    binding?.textView368?.text = "Back To Bookings"
+                }
             }
 
             binding?.textView368?.setOnClickListener {
-                if (binding?.textView368?.text == "Back To Home"){
+                if (binding?.textView368?.text == "Back To Home") {
                     launchActivity(
                         HomeActivity::class.java,
                         Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     )
-                }else{
+                } else if (binding?.textView368?.text == "Back To Bookings") {
+                    onBackPressed()
+                } else {
                     if (output.parkbooking) {
                         authViewModel.showParking(output.bi)
                     } else {
@@ -515,44 +528,53 @@ class TicketConfirmationActivity : AppCompatActivity() {
                     bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
 //                    bundle.putString("all ecommecrce variable","")
                     GoogleAnalytics.hitEvent(this, "thankyou_share_button", bundle)
-                }catch (e:Exception){
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
 
 
-                try{
+                try {
                     val sendIntent = Intent()
                     sendIntent.action = Intent.ACTION_SEND
                     sendIntent.putExtra(Intent.EXTRA_TEXT, output.ms + " " + output.tu)
                     sendIntent.type = "text/plain"
                     startActivity(sendIntent)
-                }catch (e:Exception){
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
 
             //Download
             binding?.downloadBtn?.setOnClickListener {
-                try{
+                try {
                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(output.tu)))
-                }catch (e:Exception){
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
-            if(from == "T"){
+            if (from == "T") {
 
 // Hit Event
                 try {
 
-                    ISEvents().confirmationOrder(this,Constant.BOOKING_ID,output.f,HomeFragment.mcId,output.amount,output.food)
-                    GoogleAnalytics.hitPurchaseEvent(this,
-                        Constant.BOOKING_ID,output.amount,"Ticket",Constant.SELECTED_SEAT)
+                    ISEvents().confirmationOrder(
+                        this,
+                        Constant.BOOKING_ID,
+                        output.f,
+                        HomeFragment.mcId,
+                        output.amount,
+                        output.food
+                    )
+                    GoogleAnalytics.hitPurchaseEvent(
+                        this,
+                        Constant.BOOKING_ID, output.amount, "Ticket", Constant.SELECTED_SEAT
+                    )
 
 //                    val bundle = Bundle()
 //                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
 //                    bundle.putString("var_login_city", cityNameMAin)
 //                    GoogleAnalytics.hitEvent(this, "login_city", bundle)
-                }catch (e:Exception){
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
 
@@ -574,8 +596,10 @@ class TicketConfirmationActivity : AppCompatActivity() {
             binding?.foodView?.show()
             binding?.ticketView?.hide()
             binding?.bottomView?.hide()
-            GoogleAnalytics.hitPurchaseEvent(this,
-                Constant.BOOKING_ID,output.amount,"Food",output.food.size)
+            GoogleAnalytics.hitPurchaseEvent(
+                this,
+                Constant.BOOKING_ID, output.amount, "Food", output.food.size
+            )
             Glide.with(this)
                 .load(output.im)
                 .error(R.drawable.placeholder_vertical)
@@ -594,11 +618,11 @@ class TicketConfirmationActivity : AppCompatActivity() {
             binding?.foodOrderId?.text = output.bi
             binding?.foodPrice?.text = output.ft
             binding?.foodCount?.text = output.food.size.toString() + " Food Items Ordered"
-            if (output.food.isNotEmpty()){
+            if (output.food.isNotEmpty()) {
                 binding?.foodItems?.show()
                 binding?.imageView153?.show()
 
-            }else{
+            } else {
                 binding?.imageView153?.hide()
                 binding?.foodItems?.hide()
 
@@ -639,7 +663,6 @@ class TicketConfirmationActivity : AppCompatActivity() {
     }
 
 
-
     //Parking api
 
     private fun bookParking() {
@@ -648,7 +671,8 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        val data =it.data.output.url + "?partner_name=" + it.data.output.partner_name + "&booking_id=" + it.data.output.booking_id + "&location_id=" + it.data.output.location_id + "&date=" + it.data.output.date + "&time=" + it.data.output.time + "&duration=" + it.data.output.duration + "&hmac=" + it.data.output.hmac
+                        val data =
+                            it.data.output.url + "?partner_name=" + it.data.output.partner_name + "&booking_id=" + it.data.output.booking_id + "&location_id=" + it.data.output.location_id + "&date=" + it.data.output.date + "&time=" + it.data.output.time + "&duration=" + it.data.output.duration + "&hmac=" + it.data.output.hmac
 
                         val intent = Intent(this, WebViewActivity::class.java)
                         intent.putExtra("title", "View Parking")
@@ -690,6 +714,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun showParking() {
         authViewModel.showParkingResponseLiveData.observe(this) {
             when (it) {
@@ -739,7 +764,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
 
     // Show full qr
 
-    private fun oPenDialogQR(qrCode:String) {
+    private fun oPenDialogQR(qrCode: String) {
         val dialogQR = Dialog(this)
         dialogQR.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialogQR.setCancelable(false)
@@ -854,7 +879,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 minusAdult?.background = getDrawable(R.drawable.ic_minus_grey)
                 plusAdult?.background = getDrawable(R.drawable.ic_add_grey)
             }
-            minusAdult?.setOnClickListener{
+            minusAdult?.setOnClickListener {
                 if (rbSelected?.isChecked == true) {
                     val count: Int = check(tvCounterAdult!!, output.seat.size, true)
                     if (count > 0) changecolor(
@@ -866,7 +891,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
                     )
                 }
             }
-            plusAdult?.setOnClickListener{
+            plusAdult?.setOnClickListener {
                 if (rbSelected?.isChecked == true) {
                     val count: Int = check(
                         tvCounterAdult!!,
@@ -893,21 +918,21 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 minusAdult?.background = getDrawable(R.drawable.ic_minus)
                 plusAdult?.background = getDrawable(R.drawable.ic_add)
             }
-            tvCancel?.setOnClickListener{ dialogQR.dismiss() }
+            tvCancel?.setOnClickListener { dialogQR.dismiss() }
             if (output.seat.size == 1 || !output.partialCancellationAllowed) {
                 tvContinue?.text = "CONFIRM"
                 rbFoodVoucher?.isChecked = true
                 llFull?.visibility = View.VISIBLE
                 llNormal?.visibility = View.GONE
             }
-            tvContinue?.setOnClickListener{
+            tvContinue?.setOnClickListener {
                 if (rbEntireBooking?.isChecked == true || rbSelected?.isChecked == true) {
-                    if (llFull?.visibility == View.VISIBLE && rbFoodVoucher?.isChecked == true && tvContinue.text.toString()==("CONFIRM")) {
+                    if (llFull?.visibility == View.VISIBLE && rbFoodVoucher?.isChecked == true && tvContinue.text.toString() == ("CONFIRM")) {
 
                         dialogQR.dismiss()
                     } else if (llFull?.visibility == View.VISIBLE && rbRefund?.isChecked == true) {
                         dialogQR.dismiss()
-                    } else if (rbEntireBooking?.isChecked == true && tvContinue.text.toString()==("NEXT")) {
+                    } else if (rbEntireBooking?.isChecked == true && tvContinue.text.toString() == ("NEXT")) {
                         tvContinue.text = "CONFIRM"
                         rbFoodVoucher?.isChecked = true
                         dialogQR.dismiss()
@@ -947,16 +972,16 @@ class TicketConfirmationActivity : AppCompatActivity() {
         messagePcTextView.text = output.ca_msg
         //   messagePcTextView.setText("");
         delete.text = "NO"
-        delete.setOnClickListener{ dialog.dismiss() }
+        delete.setOnClickListener { dialog.dismiss() }
         cancel = dialog.findViewById<View>(R.id.yes) as TextView
-        cancel.setOnClickListener{
+        cancel.setOnClickListener {
             dialog.dismiss()
         }
         dialog.show()
     }
 
-   @SuppressLint("SetTextI18n")
-   private fun check(tvCounter_Adult: TextView, seats: Int, isMinus: Boolean): Int {
+    @SuppressLint("SetTextI18n")
+    private fun check(tvCounter_Adult: TextView, seats: Int, isMinus: Boolean): Int {
         var counttext: Int = tvCounter_Adult.text.toString().toInt()
         if (isMinus) {
             if (counttext > 0) {
@@ -984,10 +1009,14 @@ class TicketConfirmationActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        launchActivity(
-            HomeActivity::class.java,
-            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        )
+        if (intent.getStringExtra("type") == "HOME") {
+            launchActivity(
+                HomeActivity::class.java,
+                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            )
+        } else {
+            super.onBackPressed()
+        }
     }
 
     private fun getFeedBackData() {
@@ -1011,7 +1040,10 @@ class TicketConfirmationActivity : AppCompatActivity() {
         var rateVal = "5"
         val gson = Gson()
         val ticketData: TicketBookedResponse.Output =
-            gson.fromJson(preferences.getString("CINEMADATA"), TicketBookedResponse.Output::class.java)
+            gson.fromJson(
+                preferences.getString("CINEMADATA"),
+                TicketBookedResponse.Output::class.java
+            )
         val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         val inflater = LayoutInflater.from(this)
@@ -1081,7 +1113,14 @@ class TicketConfirmationActivity : AppCompatActivity() {
         })
 
         bindingProfile.doneBtn.setOnClickListener(View.OnClickListener {
-            authViewModel.setFeedBackData(preferences.getUserId(),"BOOKING",ticketData.cid,bindingProfile.feedbackText.text.toString(),"",bindingProfile.commentBox.text.toString())
+            authViewModel.setFeedBackData(
+                preferences.getUserId(),
+                "BOOKING",
+                ticketData.cid,
+                bindingProfile.feedbackText.text.toString(),
+                "",
+                bindingProfile.commentBox.text.toString()
+            )
             setFeedBackData()
             dialog.dismiss()
         })

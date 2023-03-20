@@ -44,7 +44,7 @@ class SetAlertActivity : AppCompatActivity() {
     private val unableDisable = MutableLiveData(false)
     private var loader: LoaderDialog? = null
     private val authViewModel: SetAlertViewModel by viewModels()
-    private val selectedItemList: MutableList<BookingRetrievalResponse.Output.C> = mutableListOf()
+    private var selectedItemList: MutableList<BookingRetrievalResponse.Output.C> = mutableListOf()
     private val cinemaList: ArrayList<String> = arrayListOf()
 
     private var timeStamp = ""
@@ -66,8 +66,6 @@ class SetAlertActivity : AppCompatActivity() {
     private fun manageFunction() {
         authViewModel.allTheater(preferences.getCityName(), preferences.getLatitudeData(), preferences.getLongitudeData(), preferences.getUserId(), "")
         timeStamp = (System.currentTimeMillis() / 1000).toString()
-
-
         if (preferences.getIsLogin()){
             authViewModel.whatsappOpt(
                 preferences.getUserId(),
@@ -129,6 +127,7 @@ class SetAlertActivity : AppCompatActivity() {
 
         unableDisable.observe(this) {
             if (it) {
+                selectedItemList = ArrayList()
                 binding.textView280.text = "You have selected all the theaters"
                 binding.include14.textView5.background = getDrawable(R.drawable.yellow_book_curve)
                 binding.include14.textView5.isClickable = true

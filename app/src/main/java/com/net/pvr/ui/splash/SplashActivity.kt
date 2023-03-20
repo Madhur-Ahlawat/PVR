@@ -27,6 +27,7 @@ import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.food.FoodActivity
 import com.net.pvr.ui.home.HomeActivity
+import com.net.pvr.ui.location.enableLocation.EnableLocationActivity
 import com.net.pvr.ui.location.selectCity.SelectCityActivity
 import com.net.pvr.ui.login.LoginActivity
 import com.net.pvr.ui.scanner.ScannerActivity
@@ -142,7 +143,7 @@ class SplashActivity : AppCompatActivity() {
                     }
                 }else {
                     if (preferences.getCityName() == "") {
-                        val intent = Intent(this@SplashActivity, SelectCityActivity::class.java)
+                        val intent = Intent(this@SplashActivity, EnableLocationActivity::class.java)
                         startActivity(intent)
                         finish()
                     } else {

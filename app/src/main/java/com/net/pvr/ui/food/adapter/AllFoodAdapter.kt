@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.net.pvr.R
 import com.net.pvr.databinding.ItemFoodBinding
+import com.net.pvr.databinding.ItemFoodPreviousBinding
 import com.net.pvr.ui.food.response.FoodResponse
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.hide
@@ -24,11 +25,11 @@ class AllFoodAdapter(
     s: String,
 ) :
     RecyclerView.Adapter<AllFoodAdapter.ViewHolder>() {
-    inner class ViewHolder(val binding: ItemFoodBinding) :
+    inner class ViewHolder(val binding: ItemFoodPreviousBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemFoodBinding.inflate(
+        val binding = ItemFoodPreviousBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false

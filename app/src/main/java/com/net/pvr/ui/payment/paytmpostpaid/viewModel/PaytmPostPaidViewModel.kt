@@ -148,10 +148,11 @@ class PaytmPostPaidViewModel @Inject constructor(private val userRepository: Use
         bookingid: String,
         transid: String,
         booktype: String,
-        mobile: String
+        mobile: String,
+        email: String
     ) {
         viewModelScope.launch {
-            userRepository.paytmWalletSendOTP(userid, bookingid, booktype, transid,mobile)
+            userRepository.paytmWalletSendOTP(userid, bookingid, booktype, transid,mobile,email)
         }
     }
 

@@ -443,6 +443,7 @@ class Constant {
         val intent = Intent(
             activity, TicketConfirmationActivity::class.java
         )
+        intent.putExtra("type","HOME")
         activity.startActivity(intent)
         activity.finish()
     }
@@ -492,14 +493,16 @@ class Constant {
                 } else {
                     val lineEndIndex = tv.layout.getLineEnd(tv.layout.lineCount - 1)
                     val text = tv.text.subSequence(0, lineEndIndex).toString() + text
+                    println("text123--->$text")
+
                     tv.text = text
                     tv.movementMethod = LinkMovementMethod.getInstance()
                     tv.setText(
                         addClickablePartTextViewResizable(
-                            Html.fromHtml(tv.text.toString()),
+                            Html.fromHtml(tv.text.toString().replace("... Read More","")),
                             tv,
                             lineEndIndex,
-                            expandText,
+                            "",
                             viewMore
                         ), TextView.BufferType.SPANNABLE
                     )
@@ -519,22 +522,25 @@ class Constant {
     ): SpannableStringBuilder? {
         val str = strSpanned.toString()
         val ssb = SpannableStringBuilder(strSpanned)
-        println("str---$str---$ssb")
+//        println("str---$str---$ssb")
         if (str.contains(spanableText)) {
             ssb.setSpan(object : MySpannable(false) {
                 override fun onClick(widget: View) {
                     super.onClick(widget)
                     if (viewMore) {
                         tv.layoutParams = tv.layoutParams
-                        tv.setText(tv.tag.toString(), TextView.BufferType.SPANNABLE)
+                        tv.setText(tv.tag.toString().replace("... Read More".toRegex(),""), TextView.BufferType.SPANNABLE)
                         tv.invalidate()
+                        println("tv1234--->"+tv.text)
                         makeTextViewResizable(tv, -1, "", false)
                     } else {
                         tv.layoutParams = tv.layoutParams
-                        tv.setText(tv.tag.toString(), TextView.BufferType.SPANNABLE)
+                        tv.setText(tv.tag.toString().replace("... Read More".toRegex(),""), TextView.BufferType.SPANNABLE)
                         tv.invalidate()
+                        println("tv123--->"+tv.text)
+
                         val text = "<font color=#000000><b>.. Read More</b></font>"
-                        makeTextViewResizable(tv, 5, text, true)
+                        makeTextViewResizable(tv, 5, "", true)
                     }
                 }
 

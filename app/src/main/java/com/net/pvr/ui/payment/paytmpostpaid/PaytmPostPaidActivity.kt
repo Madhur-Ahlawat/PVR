@@ -83,6 +83,7 @@ class PaytmPostPaidActivity : AppCompatActivity() {
         }
 
         binding?.subBtn?.setOnClickListener(View.OnClickListener {
+            val text = binding?.etOtp?.getStringFromFields()
             if (title == "epaylater"){
 
             }else if (title == "Paytm"){
@@ -93,7 +94,7 @@ class PaytmPostPaidActivity : AppCompatActivity() {
                         Constant.TRANSACTION_ID,
                         Constant.BOOK_TYPE
                     )
-                else if (binding?.etOtp?.getStringFromFields()?.length!! >= 6) {
+                else if (text?.length==6  && text !="null") {
                     paytmPostPaidViewModel.walletVerifYOTP(
                         preferences.getUserId(),
                         Constant.BOOKING_ID,
@@ -113,7 +114,7 @@ class PaytmPostPaidActivity : AppCompatActivity() {
                         Constant.BOOK_TYPE
                     )
                     freechargePayment()
-                }else if (binding?.fcEtOtp?.getStringFromFields()?.length!! >= 4) {
+                }else if (text?.length==4  && text !="null") {
                     paytmPostPaidViewModel.freechargeLogin(
                         preferences.getUserId(),
                         Constant.BOOKING_ID,
@@ -133,8 +134,8 @@ class PaytmPostPaidActivity : AppCompatActivity() {
                         Constant.TRANSACTION_ID,
                         Constant.BOOK_TYPE
                     )
-                else if (binding?.etOtp?.getStringFromFields()?.length!! >= 6) {
-                    println("binding?.etOtp?.getStringFromFields().toString().length"+binding?.etOtp?.getStringFromFields().toString().length)
+                else if (text?.length==6  && text !="null") {
+                    println("binding?.etOtp?.getStringFromFields().toString().length"+text.length)
                     paytmPostPaidViewModel.postPaidVerifYOTP(
                         preferences.getUserId(),
                         Constant.BOOKING_ID,
@@ -159,7 +160,8 @@ class PaytmPostPaidActivity : AppCompatActivity() {
                     Constant.BOOKING_ID,
                     Constant.TRANSACTION_ID,
                     Constant.BOOK_TYPE,
-                    preferences.getString(Constant.SharedPreference.USER_NUMBER)
+                    preferences.getString(Constant.SharedPreference.USER_NUMBER),
+                    preferences.getString(Constant.SharedPreference.USER_EMAIL)
                 )
             }else if (title == "FreeCharge"){
                 paytmPostPaidViewModel.freechargeResend(
@@ -470,7 +472,7 @@ class PaytmPostPaidActivity : AppCompatActivity() {
                                 e.printStackTrace()
                             }
                     } else {
-                        binding?.otpView?.hide()
+//                        binding?.otpView?.hide()
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
                             R.string.app_name,
@@ -692,7 +694,7 @@ class PaytmPostPaidActivity : AppCompatActivity() {
                                 Constant.BOOK_TYPE
                             )
                     } else {
-                        binding?.otpView?.hide()
+                        //binding?.otpView?.hide()
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
                             R.string.app_name,

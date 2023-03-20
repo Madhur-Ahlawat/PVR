@@ -20,6 +20,7 @@ import com.net.pvr.databinding.EditProfileDialogBinding
 import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
+import com.net.pvr.ui.home.fragment.more.MoreFragment.Companion.clickRefresh
 import com.net.pvr.ui.home.fragment.more.profile.userDetails.viewModel.UserProfileViewModel
 import com.net.pvr.ui.home.fragment.more.response.ProfileResponse
 import com.net.pvr.utils.Constant
@@ -189,6 +190,9 @@ class ProfileActivity : AppCompatActivity() {
                 id: Long
             ) {
                 selectedMarital = maritalStatus[position]
+                if (selectedMarital == "Unmarried"){
+                    bindingProfile.anniversary.text = ""
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -210,10 +214,10 @@ class ProfileActivity : AppCompatActivity() {
         bindingProfile.email.setText(profileResponse?.em)
 
         //anniversary
-        bindingProfile.anniversary.setText(profileResponse?.doa)
+        bindingProfile.anniversary.text = profileResponse?.doa
 
-        if (profileResponse?.gd!=null && profileResponse?.gd != ""){
-            if (profileResponse?.gd == "Male"){
+        if (profileResponse?.g!=null && profileResponse?.g != ""){
+            if (profileResponse?.g == "Male"){
                 bindingProfile.gender.setSelection(1)
             }else{
                 bindingProfile.gender.setSelection(2)
@@ -289,7 +293,7 @@ class ProfileActivity : AppCompatActivity() {
             val dob = Constant().changeDateFormat(bindingProfile.dob.text.toString())
             val anniversary = Constant().changeDateFormat(bindingProfile.anniversary.text.toString())
             printLog("dob----->${dob}")
-
+            clickRefresh = true
             if (selectedMarital=="Married"){
                 if (bindingProfile.name.text.toString()==""){
                     val dialog = OptionDialog(this,
@@ -413,7 +417,7 @@ class ProfileActivity : AppCompatActivity() {
         updateLabel()
     }
 
-    fun Data(date: String?): Int {
+    private fun Data(date: String?): Int {
         if (!TextUtils.isEmpty(date)) {
             val cal = Calendar.getInstance()
             val dateInString = SimpleDateFormat("dd MMM, yyyy")
@@ -435,7 +439,7 @@ class ProfileActivity : AppCompatActivity() {
         return 0
     }
 
-    fun getDiffYears(first: Date?, last: Date?): Int {
+    private fun getDiffYears(first: Date?, last: Date?): Int {
         val a: Calendar = getCalendar(first)
         val b: Calendar = getCalendar(last)
         var diff = b[Calendar.YEAR] - a[Calendar.YEAR]
@@ -453,6 +457,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun updateLabel() {
         val myFormat = "dd MMM, yyyy " //In which you need put here
         val sdf = SimpleDateFormat(myFormat, Locale.ENGLISH)
+        println("sdf.format(myCalendar.time)--->"+sdf.format(myCalendar.time))
         if (dobClick) {
             dob?.text = sdf.format(myCalendar.time)
         } else {
@@ -583,4 +588,6 @@ class ProfileActivity : AppCompatActivity() {
         }
         return sb.toString()
     }
+
+
 }

@@ -62,7 +62,6 @@ class SearchHomeActivity : AppCompatActivity(),
 
     private fun manageFunctions() {
         authViewModel.homeSearch(preferences.getCityName(), "", "", preferences.getLatitudeData(), preferences.getLongitudeData())
-
         movedNext()
         search()
     }
@@ -271,7 +270,7 @@ class SearchHomeActivity : AppCompatActivity(),
     }
 
     override fun onSearchCinemaDirection(selectCityItemList: HomeSearchResponse.Output.T) {
-        Constant().shareData(this,selectCityItemList.lat,selectCityItemList.lng)
+        Constant().openMap(this, selectCityItemList.lat, selectCityItemList.lng)
     }
 
     override fun onSearchMovie(selectCityList: HomeSearchResponse.Output.M) {

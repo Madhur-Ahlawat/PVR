@@ -41,7 +41,7 @@ import com.net.pvr.ui.cinemaSession.response.CinemaSessionResponse
 import com.net.pvr.ui.cinemaSession.viewModel.CinemaSessionViewModel
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
-import com.net.pvr.ui.filter.GenericFilter
+import com.net.pvr.ui.filter.GenericFilterSession
 import com.net.pvr.ui.home.fragment.home.adapter.PromotionAdapter
 import com.net.pvr.ui.login.LoginActivity
 import com.net.pvr.utils.*
@@ -61,7 +61,7 @@ class CinemaSessionActivity : AppCompatActivity(),
     CinemaSessionDaysAdapter.RecycleViewItemClickListenerCity,
     CinemaSessionLanguageAdapter.RecycleViewItemClickListenerCity,
     CinemaSessionNearTheaterAdapter.RecycleViewItemClickListenerCity,
-    GenericFilter.onButtonSelected {
+    GenericFilterSession.onButtonSelected {
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityCinemaSessionBinding? = null
@@ -551,6 +551,7 @@ class CinemaSessionActivity : AppCompatActivity(),
 
 
             //recycler Days
+            sessionDate = output.bd[0].dt
             val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
             val cinemaSessionDaysAdapter = CinemaSessionDaysAdapter(output.bd, this, this)
             binding?.recyclerView13?.layoutManager = gridLayout2
@@ -578,7 +579,7 @@ class CinemaSessionActivity : AppCompatActivity(),
         }
 
         binding?.filterFab?.setOnClickListener {
-            val gFilter = GenericFilter()
+            val gFilter = GenericFilterSession()
             val filterPoints = HashMap<String, ArrayList<String>>()
             if (output.lngs != null && output.lngs.size > 1) filterPoints[Constant.FilterType.LANG_FILTER] =
                 output.lngs

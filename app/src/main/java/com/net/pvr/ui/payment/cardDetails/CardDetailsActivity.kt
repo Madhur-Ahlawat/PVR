@@ -81,7 +81,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
         paymentType = intent.getStringExtra("pTypeId").toString()
         //PaidAmount
         binding?.textView287?.text =
-            getString(R.string.pay) + " " + getString(R.string.currency) + intent.getStringExtra("paidAmount")
+            getString(R.string.pay) + " " + getString(R.string.currency) + Constant.DECIFORMAT.format(intent.getStringExtra("paidAmount")?.toDouble())
         movedNext()
         paytmHMAC()
         bankList()

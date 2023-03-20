@@ -61,6 +61,7 @@ class EnableLocationActivity : AppCompatActivity() {
 
     private fun movedNext() {
         binding?.include39?.textView5?.text = getString(R.string.enable_location)
+        binding?.include32?.textView108?.text = getString(R.string.enable_location)
 
         //not Now
         binding?.noThanksTextView?.setOnClickListener {

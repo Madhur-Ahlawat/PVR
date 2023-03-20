@@ -82,11 +82,11 @@ class FoodTicketChildAdapter(
         //location
         holder.location.text = cinemaItem.c
         //OrderId
-        holder.orderId.text = context.getString(R.string.orderId) + cinemaItem.bi
+        holder.orderId.text = context.getString(R.string.orderId) + " "+cinemaItem.bi
 
         if (cinemaItem.ca_d == "true")
-            holder.ivCancelimage.setVisibility(View.VISIBLE)
-        else holder.ivCancelimage.setVisibility(View.GONE)
+            holder.ivCancelimage.show()
+        else holder.ivCancelimage.hide()
 
         //OnlyFood
         //Time

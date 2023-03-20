@@ -197,10 +197,10 @@ class LoginActivity : AppCompatActivity() {
 
         // OutSide Click
         binding?.loginClick?.setOnClickListener {
-            binding?.textInputLayout?.isSelected = false
-            binding?.mobileNumber?.isFocusableInTouchMode = false
-            binding?.textInputLayout?.isFocusableInTouchMode = false
-            Constant().hideKeyboard(this)
+//            binding?.textInputLayout?.isSelected = false
+//            binding?.mobileNumber?.isFocusableInTouchMode = false
+//            binding?.textInputLayout?.isFocusableInTouchMode = false
+//            Constant().hideKeyboard(this)
         }
 
         //Login

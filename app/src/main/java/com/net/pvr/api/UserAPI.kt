@@ -942,6 +942,7 @@ interface UserAPI {
         @Query("booktype") booktype: String,
         @Query("transid") transid: String,
         @Query("mobile") mobile: String,
+        @Query("email") email: String,
         @Query("spi") spi: String,
         @Query("av") version: String,
         @Query("pt") platform: String

@@ -60,7 +60,7 @@
                     android:id="@+id/imageView58"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/dimen_24dp"
+                    android:paddingStart="@dimen/dimen_15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -85,7 +85,7 @@
                     android:id="@+id/textView374"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/dimen_24dp"
+                    android:layout_marginEnd="@dimen/dimen_15dp"
                     android:background="@drawable/yellow_book_curve"
                     android:fontFamily="@font/sf_pro_text_bold"
                     android:text="@string/continue_txt"
@@ -178,7 +178,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="#F9F9F9"
-                        android:paddingStart="@dimen/dimen_24dp"
+                        android:paddingStart="@dimen/dimen_15dp"
                         android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/view87"
@@ -189,7 +189,7 @@
                             android:id="@+id/textView398"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dimen_24dp"
+                            android:layout_marginTop="@dimen/dimen_15dp"
                             android:fontFamily="@font/montserrat_bold"
                             android:text="@string/want_to_repeat"
                             android:textColor="@color/black"
@@ -201,8 +201,8 @@
                             android:id="@+id/previousFoodList"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dimen_24dp"
-                            android:layout_marginBottom="@dimen/dimen_24dp"
+                            android:layout_marginTop="@dimen/dimen_15dp"
+                            android:layout_marginBottom="@dimen/dimen_15dp"
                             android:orientation="horizontal"
                             android:visibility="visible"
                             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -261,14 +261,59 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/vegView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="@dimen/dimen_15dp"
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout123">
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/switch2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:includeFontPadding="false"
+                            android:text="@string/veg"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_14sp"
+                            android:thumb="@drawable/thumb_selector"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/switch3"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:switchPadding="6dp"
+                            app:track="@drawable/track_selector"
+                            tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/switch3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:includeFontPadding="false"
+                            android:text="@string/non_veg"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/dimen_14sp"
+                            android:thumb="@drawable/thumb_selector"
+                            app:layout_constraintBottom_toBottomOf="@+id/switch2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/switch2"
+                            app:switchPadding="6dp"
+                            app:track="@drawable/track_selector"
+                            tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/constraintLayout28"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/dimen_24dp"
-                        android:paddingEnd="@dimen/dimen_24dp"
+                        android:paddingStart="@dimen/dimen_15dp"
+                        android:paddingEnd="@dimen/dimen_15dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/view87"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout123">
+                        app:layout_constraintTop_toBottomOf="@+id/vegView">
 
                         <View
                             android:id="@+id/view88"
@@ -316,42 +361,7 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
-                            <androidx.appcompat.widget.SwitchCompat
-                                android:id="@+id/switch2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="16dp"
-                                android:fontFamily="@font/sf_pro_text_regular"
-                                android:includeFontPadding="false"
-                                android:text="@string/veg"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/dimen_14sp"
-                                android:thumb="@drawable/thumb_selector"
-                                android:thumbTint="@color/white"
-                                app:layout_constraintBottom_toBottomOf="@+id/textView130"
-                                app:layout_constraintEnd_toStartOf="@+id/switch3"
-                                app:layout_constraintTop_toTopOf="@+id/textView130"
-                                app:switchPadding="6dp"
-                                app:track="@drawable/track_selector"
-                                tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
 
-                            <androidx.appcompat.widget.SwitchCompat
-                                android:id="@+id/switch3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/sf_pro_text_regular"
-                                android:includeFontPadding="false"
-                                android:text="@string/non_veg"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/dimen_14sp"
-                                android:thumb="@drawable/thumb_selector"
-                                android:thumbTint="@color/white"
-                                app:layout_constraintBottom_toBottomOf="@+id/switch2"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="@+id/switch2"
-                                app:switchPadding="6dp"
-                                app:track="@drawable/track_selector"
-                                tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -359,8 +369,8 @@
                         android:id="@+id/constraintLayout29"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/dimen_24dp"
-                        android:paddingEnd="@dimen/dimen_24dp"
+                        android:paddingStart="@dimen/dimen_15dp"
+                        android:paddingEnd="@dimen/dimen_15dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/constraintLayout28"
                         app:layout_constraintTop_toBottomOf="@+id/constraintLayout28">
@@ -381,6 +391,7 @@
                             android:fontFamily="@font/sf_pro_text_bold"
                             android:text="@string/your_happy_place"
                             android:textColor="@color/black"
+                            android:layout_marginTop="@dimen/padding_10"
                             android:textSize="@dimen/dimen_18sp"
                             app:layout_constraintStart_toStartOf="@+id/view89"
                             app:layout_constraintTop_toTopOf="@+id/view89" />
@@ -389,7 +400,7 @@
                             android:id="@+id/recyclerView20"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="@dimen/dimen_5dp"
                             android:orientation="horizontal"
                             android:visibility="visible"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -405,14 +416,14 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:visibility="visible"
-                            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             app:layout_constraintBottom_toBottomOf="@+id/view89"
                             app:layout_constraintEnd_toEndOf="@+id/view89"
                             app:layout_constraintStart_toStartOf="@+id/view89"
                             app:layout_constraintTop_toBottomOf="@+id/recyclerView20"
                             app:spanCount="2"
                             tools:itemCount="2"
-                            tools:listitem="@layout/item_food" />
+                            tools:listitem="@layout/item_food_previous" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -494,8 +505,8 @@
                     android:id="@+id/view205"
                     android:layout_width="100dp"
                     android:layout_height="5dp"
-                    android:layout_marginTop="@dimen/dimen_24dp"
-                    android:layout_marginBottom="@dimen/dimen_24dp"
+                    android:layout_marginTop="@dimen/dimen_15dp"
+                    android:layout_marginBottom="@dimen/dimen_15dp"
                     android:background="@color/unSelectBg"
                     app:layout_constraintEnd_toEndOf="@+id/view129"
                     app:layout_constraintStart_toStartOf="@+id/view129"
@@ -505,9 +516,9 @@
                     android:id="@+id/recyclerView41"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_24dp"
-                    android:layout_marginTop="@dimen/dimen_24dp"
-                    android:layout_marginEnd="@dimen/dimen_24dp"
+                    android:layout_marginStart="@dimen/dimen_15dp"
+                    android:layout_marginTop="@dimen/dimen_15dp"
+                    android:layout_marginEnd="@dimen/dimen_15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/view129"
                     app:layout_constraintHeight_max="400dp"
@@ -530,9 +541,9 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_50dp"
-                    android:layout_marginStart="@dimen/dimen_24dp"
+                    android:layout_marginStart="@dimen/dimen_15dp"
                     android:layout_marginTop="30dp"
-                    android:layout_marginEnd="@dimen/dimen_24dp"
+                    android:layout_marginEnd="@dimen/dimen_15dp"
                     android:background="@drawable/curve_ui"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

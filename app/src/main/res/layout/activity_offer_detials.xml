@@ -52,14 +52,15 @@
 
 
             <ImageView
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/movie_detail_bg"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:rotation="180"
                 android:scaleType="fitXY"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:src="@drawable/details_image_gradient"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView91"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription" />
 
             <ImageView
@@ -67,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="28dp"
                 android:src="@drawable/back"
                 app:layout_constraintStart_toStartOf="@+id/imageView91"
                 app:layout_constraintTop_toTopOf="@+id/view126"

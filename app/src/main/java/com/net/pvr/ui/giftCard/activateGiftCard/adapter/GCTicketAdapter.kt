@@ -116,20 +116,20 @@ class GCTicketAdapter(
         }
 
         holder.itemView.setOnClickListener {
-            if (cinemaItem.is_only_fd){
-                Constant.BOOK_TYPE = "FOOD"
-                type =  "FOOD"
-            }else{
-                Constant.BOOK_TYPE = "BOOKING"
-                type =  "BOOKING"
-            }
-            Constant.BOOKING_ID = cinemaItem.bi
-            Constant.TRANSACTION_ID = ""
-            val intent = Intent( context,TicketConfirmationActivity::class.java)
-            intent.putExtra("bookingId",cinemaItem.bi)
-            intent.putExtra("type","myBooking")
-            intent.putExtra("bookType",type)
-            context.startActivity(intent)
+//            if (cinemaItem.is_only_fd){
+//                Constant.BOOK_TYPE = "FOOD"
+//                type =  "FOOD"
+//            }else{
+//                Constant.BOOK_TYPE = "BOOKING"
+//                type =  "BOOKING"
+//            }
+//            Constant.BOOKING_ID = cinemaItem.bi
+//            Constant.TRANSACTION_ID = ""
+//            val intent = Intent( context,TicketConfirmationActivity::class.java)
+//            intent.putExtra("bookingId",cinemaItem.bi)
+//            intent.putExtra("type","myBooking")
+//            intent.putExtra("bookType",type)
+//            context.startActivity(intent)
         }
     }
 

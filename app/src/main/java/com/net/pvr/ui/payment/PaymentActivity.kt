@@ -1680,6 +1680,8 @@ class PaymentActivity : AppCompatActivity(),
                             getString(R.string.currency) + paidAmount
                                 .toString()
                         newBinding?.parrentView?.isEnabled = false
+                        newBinding?.redeemText?.text = "Redeemed"
+                        newBinding?.redeemText?.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_green,0,0,0)
                         printLog(voucherData?.voucher_type + voucherData?.type)
                         if (voucherData?.type.equals("SUBSCRIPTION", ignoreCase = true)) {
                             newBinding?.ivSubs?.setImageResource(R.drawable.subs_gray)
@@ -1719,11 +1721,11 @@ class PaymentActivity : AppCompatActivity(),
                             val newColor = resources.getColor(R.color.gray)
                             if (voucherData?.type == "SUBSCRIPTION") {
                                 showDialogLoyalty(
-                                    this, "Congratulations!", "YES", true, it.data.output.di
+                                    this, "Congratulations!", "Yes", true, it.data.output.di
                                 )
                             } else {
                                 showDialogLoyalty(
-                                    this, "Congratulations!", "NO", true, it.data.output.di
+                                    this, "Congratulations!", "No", true, it.data.output.di
                                 )
                             }
                         } else if (isP.equals("true", ignoreCase = true)) {
@@ -1987,6 +1989,7 @@ class PaymentActivity : AppCompatActivity(),
                             }
                         }
                     } else {
+                        binding?.promoCode?.setText("")
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
                             R.string.app_name,
