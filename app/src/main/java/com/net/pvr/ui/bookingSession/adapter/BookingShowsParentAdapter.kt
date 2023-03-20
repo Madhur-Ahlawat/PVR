@@ -117,13 +117,13 @@ class BookingShowsParentAdapter(
                 }
 
 
-                binding.textView105.setOnTouchListener(object : RightDrawableOnTouchListener(binding.textView105) {
-                    @SuppressLint("ClickableViewAccessibility")
-                    override fun onDrawableTouch(event: MotionEvent?): Boolean {
-                        listener.alertClick(nowShowingList[position])
-                        return true
-                    }
-                })
+//                binding.textView105.setOnTouchListener(object : RightDrawableOnTouchListener(binding.textView105) {
+//                    @SuppressLint("ClickableViewAccessibility")
+//                    override fun onDrawableTouch(event: MotionEvent?): Boolean {
+//                        listener.alertClick(nowShowingList[position])
+//                        return true
+//                    }
+//                })
             }
         }
 

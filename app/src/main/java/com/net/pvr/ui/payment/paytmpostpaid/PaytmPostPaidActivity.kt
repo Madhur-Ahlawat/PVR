@@ -874,6 +874,7 @@ class PaytmPostPaidActivity : AppCompatActivity() {
                                 binding?.balance?.text = "Rs " + it.data.output.balance
                                 binding?.subBtn?.text = "Make Payment"
                             } else {
+                                binding?.title?.setImageResource(R.drawable.freecharge)
                                 newAmt = (paidAmount.toDouble()-it.data.output.balance.toDouble()).toString()
                                 binding?.subBtn?.text = "Add Money"
                                 binding?.balance?.text = "Rs " + it.data.output.balance

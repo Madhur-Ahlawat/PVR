@@ -389,7 +389,7 @@ class CinemaSessionActivity : AppCompatActivity(),
         //shimmer
         binding?.constraintLayout145?.hide()
         //Filter
-        binding?.filterFab?.hide()
+//        binding?.filterFab?.hide()
 
         cinemaLat = output.lat
         cinemaLng = output.lang

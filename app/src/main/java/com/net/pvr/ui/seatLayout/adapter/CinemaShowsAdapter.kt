@@ -3,9 +3,11 @@ package com.net.pvr.ui.seatLayout.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Typeface
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.net.pvr.R
@@ -21,7 +23,8 @@ class CinemaShowsAdapter(
     private var nowShowingList: ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>,
     private var context: Context,
     private var listener: RecycleViewItemClickListener,
-    private var position: String
+    private var position: String,
+    private val recyclerView27: RecyclerView?
 ) :
     RecyclerView.Adapter<CinemaShowsAdapter.ViewHolder>() {
     private var itemCount =position.toInt()
@@ -37,6 +40,7 @@ class CinemaShowsAdapter(
         return ViewHolder(binding)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
@@ -68,6 +72,8 @@ class CinemaShowsAdapter(
                     val heavy: Typeface = context.resources.getFont(R.font.montserrat_bold)
                     binding.textView199.textSize = 16f
                     binding.textView199.typeface = heavy
+
+                    recyclerView27?.let { Constant.focusOnView(itemView, it) }
 
                 } else {
                     binding.textView199.setTextColor(

@@ -85,8 +85,12 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         if (response.isSuccessful && response.body() != null) {
             _userResponseLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
-            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
-            _userResponseLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            try {
+                val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+                _userResponseLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            }catch (e:Exception){
+                _userResponseLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+            }
         } else {
             _userResponseLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
@@ -111,8 +115,12 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         if (response.isSuccessful && response.body() != null) {
             contactUsLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
-            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
-            contactUsLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            try {
+                val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+                contactUsLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            }catch (e:Exception){
+                contactUsLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+            }
         } else {
             contactUsLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
@@ -134,8 +142,12 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         if (response.isSuccessful && response.body() != null) {
             otpVerifyLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
-            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
-            otpVerifyLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            try {
+                val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+                otpVerifyLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            }catch (e:Exception){
+                otpVerifyLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+            }
         } else {
             otpVerifyLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
@@ -158,8 +170,12 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         if (response.isSuccessful && response.body() != null) {
             couponsLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
-            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
-            couponsLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            try {
+                val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+                couponsLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            }catch (e:Exception){
+                couponsLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+            }
         } else {
             couponsLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
@@ -340,8 +356,13 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         if (response.isSuccessful && response.body() != null) {
             payModeLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
-            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
-            payModeLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            try {
+                val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+                payModeLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            }catch (e:Exception){
+                payModeLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+            }
+
         } else {
             payModeLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
@@ -3662,7 +3683,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         get() = freechargeLoginLiveData
 
     suspend fun freechargeLogin(userId: String, transid: String,booktype:String,bookingid: String,otp: String,otpId: String) {
-        _userResponseLiveData.postValue(NetworkResult.Loading())
+        freechargeLoginLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.freechargeLogin(userId, transid,booktype,bookingid,otp,otpId, Constant.version, Constant.platform,Constant.getDid())
         freechargeLoginResponse(response)
     }
@@ -3671,8 +3692,12 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         if (response.isSuccessful && response.body() != null) {
             freechargeLoginLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
-            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
-            freechargeLoginLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            try {
+                val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+                freechargeLoginLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            }catch (e:Exception){
+                freechargeLoginLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+            }
         } else {
             freechargeLoginLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
@@ -3692,8 +3717,12 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         if (response.isSuccessful && response.body() != null) {
             freechargeResendLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
-            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
-            freechargeResendLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            try {
+                val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+                freechargeResendLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            }catch (e:Exception){
+                freechargeResendLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+            }
         } else {
             freechargeResendLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
@@ -3713,8 +3742,12 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         if (response.isSuccessful && response.body() != null) {
             freechargeDetailLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
-            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
-            freechargeDetailLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            try {
+                val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+                freechargeDetailLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            }catch (e:Exception){
+                freechargeDetailLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+            }
         } else {
             freechargeDetailLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
@@ -3735,8 +3768,12 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         if (response.isSuccessful && response.body() != null) {
             freechargePaymentLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
-            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
-            freechargePaymentLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            try {
+                val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+                freechargePaymentLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            }catch (e:Exception){
+                freechargePaymentLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+            }
         } else {
             freechargePaymentLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
@@ -3756,8 +3793,12 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         if (response.isSuccessful && response.body() != null) {
             freechargeAddMoneyLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
+            try {
             val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
-            freechargeAddMoneyLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+                freechargeAddMoneyLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        }catch (e:Exception){
+                freechargeAddMoneyLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
         } else {
             freechargeAddMoneyLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }

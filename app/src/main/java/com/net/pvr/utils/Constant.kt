@@ -48,11 +48,31 @@ import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.Boolean
+import kotlin.Double
+import kotlin.Exception
+import kotlin.Float
+import kotlin.Int
+import kotlin.String
+import kotlin.Suppress
+import kotlin.Throws
+import kotlin.apply
+import kotlin.arrayOf
+import kotlin.let
+import kotlin.toString
 
 @Suppress("DEPRECATION")
 class Constant {
 
+
+    public interface IntentKey {
+        companion object {
+            var IS_SESSION_EXPIRE = "is_session_expire"
+            var REMAING_TIME = "remaing_time"
+        }
+    }
     companion object {
+        var timerCounter = 0
         const val platform = "ANDROID"
         const val version = "11.3"
         const val status = "success"
@@ -347,6 +367,12 @@ class Constant {
         )
         tvCensorLang.text = ss
         tvCensorLang.movementMethod = LinkMovementMethod.getInstance()
+    }
+
+    interface BroadCast {
+        companion object {
+            const val ACTIVE_BROADCAST = "com.net.pvr.TimerBroadCast"
+        }
     }
 
 

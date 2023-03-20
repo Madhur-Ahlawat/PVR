@@ -38,10 +38,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardUseCompatPadding="false"
+                app:cardBackgroundColor="@color/transparent1"
                 android:layout_marginStart="@dimen/dimen_20dp"
                 android:layout_marginTop="@dimen/dimen_25dp"
                 android:layout_marginEnd="@dimen/dimen_20dp"
-                app:cardCornerRadius="@dimen/dimen_8dp">
+                >
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -258,6 +258,11 @@ class PaymentActivity : AppCompatActivity(),
                 preferences.getUserId(), BOOKING_ID
             )
             recurringInit()
+
+            binding?.reccurMsg?.show()
+
+        }else{
+            binding?.reccurMsg?.hide()
         }
 
         if (BOOK_TYPE == "BOOKING" || BOOK_TYPE == "FOOD") {
@@ -2034,12 +2039,18 @@ class PaymentActivity : AppCompatActivity(),
         }
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onPause() {
         super.onPause()
+        try {
         if (BOOK_TYPE == "BOOKING")
         unregisterReceiver(br)
+        } catch (e: java.lang.Exception) {
+            // Receiver was probably already stopped in onPause()
+        }
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onStop() {
         try {
             if (BOOK_TYPE == "BOOKING")
@@ -2101,12 +2112,18 @@ class PaymentActivity : AppCompatActivity(),
     }
 
     private fun retrieveExtendData(output: ExtendTimeResponse.Output) {
-        //extandTime
-        Constant.EXTANDTIME = Constant().convertTime(output.et)
-
-        //AVAIL TIME
-        Constant.AVAILABETIME = Constant().convertTime(output.at)
-
+        Constant.AVAILABETIME = Constant().convertTime(output.et.toInt()) -  Constant().convertTime(output.at.toInt())
+        Constant.EXTANDTIME = Constant().convertTime(output.at.toInt())
+        PCTimer.startTimer(
+            Constant.EXTANDTIME,
+            Constant.AVAILABETIME,
+            Constant.CINEMA_ID,
+            Constant.TRANSACTION_ID,
+            Constant.BOOK_TYPE,
+            null,
+            false,
+            authViewModel
+        )
         if (BOOK_TYPE == "BOOKING")
         timerManage()
     }

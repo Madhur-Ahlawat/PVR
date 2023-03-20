@@ -50,6 +50,10 @@ class SetAlertActivity : AppCompatActivity() {
     private var timeStamp = ""
     private var whatsappStatusCheck:Boolean = false
 
+    companion object{
+        var alert = false
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -285,6 +289,7 @@ class SetAlertActivity : AppCompatActivity() {
         }
 
         bindingBottom.include21.textView5.setOnClickListener {
+            alert = true
             finish()
         }
     }

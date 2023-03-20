@@ -259,10 +259,10 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
     private fun getNewList(giftCards: ArrayList<GiftCardListResponse.Output.GiftCard>): List<GiftCardListResponse.Output.GiftCard> {
         var newList = ArrayList<GiftCardListResponse.Output.GiftCard>()
         for (data in giftCards){
-            if (newList.size == 0){
+            if (newList.size == 0 && data.type != "GENERIC"){
                 newList.add(data)
             }else{
-                if (!checkGCExist(newList,data.type)){
+                if (!checkGCExist(newList,data.type) && data.type != "GENERIC"){
                     newList.add(data)
                 }
             }
@@ -282,7 +282,7 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
 
     private fun checkGCExist(gcFilterList: ArrayList<GiftCardListResponse.Output.GiftCard>, type: String): Boolean {
         for (data in gcFilterList){
-            if (data.type == (type)){
+            if (data.type == (type) ){
                 return true
             }
         }
@@ -314,6 +314,7 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
                 }
             }
         }
+        println("giftCardListFilter--->"+giftCardListFilter.size)
 
         if (giftCardListFilter.size > 0) {
             val intent = Intent(this, AddGiftCardActivity::class.java)

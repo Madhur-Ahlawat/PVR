@@ -214,7 +214,8 @@
         </activity>
         <activity
             android:name="com.net.pvr.ui.home.formats.FormatsActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

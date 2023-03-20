@@ -413,12 +413,18 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun retrieveExtendData(output: ExtendTimeResponse.Output) {
-        //extandTime
-        EXTANDTIME = Constant().convertTime(output.et)
-
-        //AVAIL TIME
-        AVAILABETIME = Constant().convertTime(output.at)
-
+        AVAILABETIME = Constant().convertTime(output.et.toInt()) -  Constant().convertTime(output.at.toInt())
+        EXTANDTIME = Constant().convertTime(output.at.toInt())
+        PCTimer.startTimer(
+            Constant.EXTANDTIME,
+            Constant.AVAILABETIME,
+            Constant.CINEMA_ID,
+            Constant.TRANSACTION_ID,
+            Constant.BOOK_TYPE,
+            null,
+            false,
+            authViewModel
+        )
         timerManage()
     }
 

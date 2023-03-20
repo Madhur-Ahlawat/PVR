@@ -66,7 +66,7 @@ class PaytmWebActivity : AppCompatActivity() {
                 preferences.getUserId(),
                 Constant.BOOKING_ID,
                 Constant.TRANSACTION_ID,
-                Constant.BOOK_TYPE,intent.getStringExtra("newAmt").toString()
+                Constant.BOOK_TYPE,intent.getStringExtra("paidAmount").toString()
             )
             freechargeAddMoney()
         }else if (intent.getStringExtra("pTypeId") == Constant.MOBIKWIK){

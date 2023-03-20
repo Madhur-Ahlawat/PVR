@@ -56,6 +56,7 @@ import com.net.pvr.ui.webView.WebViewActivity
 import com.net.pvr.utils.*
 import com.net.pvr.utils.Constant.Companion.AVAILABETIME
 import com.net.pvr.utils.Constant.Companion.BOOKING_ID
+import com.net.pvr.utils.Constant.Companion.BOOK_TYPE
 import com.net.pvr.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr.utils.Constant.Companion.EXTANDTIME
 import com.net.pvr.utils.Constant.Companion.FOODENABLE
@@ -342,7 +343,7 @@ class SeatLayoutActivity : AppCompatActivity(),
         var st = showsArray[position.toInt()].sid
 
         for (data in showsArray.indices){
-            if (showsArray[data].ss != 3){
+            if (showsArray[data].ss != 3 && showsArray[data].ss != 0){
                 list.add(showsArray[data])
             }
         }
@@ -363,7 +364,7 @@ class SeatLayoutActivity : AppCompatActivity(),
     private fun cinemaShows() {
         val gridLayout = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
         binding?.recyclerView27?.layoutManager = LinearLayoutManager(this)
-        val adapter = CinemaShowsAdapter(getCinemaShows(cinemaSessionShows), this, this, position)
+        val adapter = CinemaShowsAdapter(getCinemaShows(cinemaSessionShows), this, this, position,binding?.recyclerView27)
         binding?.recyclerView27?.layoutManager = gridLayout
         binding?.recyclerView27?.adapter = adapter
 
@@ -373,7 +374,7 @@ class SeatLayoutActivity : AppCompatActivity(),
         var list = ArrayList<CinemaSessionResponse.Child.Mv.Ml.S>()
         var st = cinemaSessionShows[position.toInt()].sid
         for (data in cinemaSessionShows.indices){
-            if (cinemaSessionShows[data].ss != 3){
+            if (cinemaSessionShows[data].ss != 3 && cinemaSessionShows[data].ss != 0){
                 list.add(cinemaSessionShows[data])
             }
         }
@@ -559,17 +560,8 @@ class SeatLayoutActivity : AppCompatActivity(),
 
     //InitResponse
     private fun retrieverInitData(output: InitResponse.Output) {
-        //extandTime
-        EXTANDTIME = Constant().convertTime(output.et.toInt())
-
-        //AVAIL TIME
-        AVAILABETIME = Constant().convertTime(output.at.toInt())
-
-//        //extandTime
-//        EXTANDTIME = Constant().convertTime(1)
-//
-//        //AVAIL TIME
-//        AVAILABETIME = Constant().convertTime(1)
+        AVAILABETIME = Constant().convertTime(output.et.toInt()) -  Constant().convertTime(output.at.toInt())
+        EXTANDTIME = Constant().convertTime(output.at.toInt())
 
         TRANSACTION_ID = output.transid
         println("SeatTagData--->${selectSeatPriceCode.size}---->${selectedSeats.size}---->${selectedSeatsBox?.size}")
@@ -584,6 +576,21 @@ class SeatLayoutActivity : AppCompatActivity(),
         val gson = Gson()
         val mMineUserEntity = gson.toJson(reserve, ReserveSeatRequest::class.java)
         authViewModel.reserveSeat(mMineUserEntity)
+
+        PCTimer.stopTimer()
+
+        Constant.timerCounter = 0
+        PCTimer.startTimer(
+            EXTANDTIME,
+            AVAILABETIME,
+            CINEMA_ID,
+            TRANSACTION_ID,
+            BOOK_TYPE,
+            null,
+            false,
+            authViewModel
+        )
+
 
     }
 
@@ -2166,7 +2173,7 @@ class SeatLayoutActivity : AppCompatActivity(),
             binding?.constraintLayout60?.hide()
             offerEnable = false
             authViewModel.seatLayout(
-                CINEMA_ID, Constant.SESSION_ID, "", "", "", offerEnable, ""
+                CINEMA_ID, sessionId, "", "", "", offerEnable, ""
             )
 
             dialog.dismiss()

@@ -630,12 +630,21 @@ class OtpVerifyActivity : AppCompatActivity() {
     }
 
     private fun retrieveExtendData(output: ExtendTimeResponse.Output) {
-        //extandTime
-        Constant.EXTANDTIME = Constant().convertTime(output.et)
+        Constant.AVAILABETIME = Constant().convertTime(output.et.toInt()) -  Constant().convertTime(output.at.toInt())
+        Constant.EXTANDTIME = Constant().convertTime(output.at.toInt())
+        PCTimer.stopTimer()
 
-        //AVAIL TIME
-        Constant.AVAILABETIME = Constant().convertTime(output.at)
-
+        Constant.timerCounter = 0
+        PCTimer.startTimer(
+            Constant.EXTANDTIME,
+            Constant.AVAILABETIME,
+            Constant.CINEMA_ID,
+            Constant.TRANSACTION_ID,
+            Constant.BOOK_TYPE,
+            null,
+            false,
+            authViewModel
+        )
         timerManage()
     }
 

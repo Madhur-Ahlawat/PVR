@@ -22,7 +22,7 @@ class AlertTheaterAdapter(
     private val context: Context,
     private var nowShowingList: ArrayList<BookingRetrievalResponse.Output.C>,
     private var unableDisable: LiveData<Boolean>,
-    private var toggle : SwitchCompat,
+    private var toggle: SwitchCompat,
     private var onItemClick: (item: BookingRetrievalResponse.Output.C, addToList: Boolean) -> Unit
 ) : RecyclerView.Adapter<AlertTheaterAdapter.ViewHolder>(), Filterable {
 
@@ -78,19 +78,12 @@ class AlertTheaterAdapter(
                     if (this.itemSelectedOrNot) {
                         onItemClick(this, false)
 
-                        if (this.itemSelectedOrNot) {
 
-                            binding.imageView134.setImageResource(R.drawable.curve_select)
-                            binding.constraintLayout92.setBackgroundResource(
-                                R.drawable.alert_curve_ui_select
-                            )
-                        } else {
+                        binding.imageView134.setImageResource(R.drawable.curve_unselect)
+                        binding.constraintLayout92.setBackgroundResource(
+                            R.drawable.alert_curve_ui
+                        )
 
-                            binding.imageView134.setImageResource(R.drawable.curve_unselect)
-                            binding.constraintLayout92.setBackgroundResource(
-                                R.drawable.alert_curve_ui
-                            )
-                        }
 
                         this.itemSelectedOrNot = false
                         selectedItemCount--
@@ -107,7 +100,7 @@ class AlertTheaterAdapter(
                             try {
                                 binding.imageView134.setImageResource(R.drawable.curve_select)
                                 binding.constraintLayout92.setBackgroundResource(R.drawable.alert_curve_ui_select)
-                            }catch (e:Exception){
+                            } catch (e: Exception) {
                                 e.printStackTrace()
                             }
 
@@ -118,7 +111,7 @@ class AlertTheaterAdapter(
                                 binding.constraintLayout92.setBackgroundResource(
                                     R.drawable.alert_curve_ui
                                 )
-                            }catch (e:java.lang.Exception){
+                            } catch (e: java.lang.Exception) {
                                 e.printStackTrace()
                             }
 
@@ -153,7 +146,7 @@ class AlertTheaterAdapter(
                     filteredItems.add(it)
                 }
             }
-            if (filteredItems.size == 0){
+            if (filteredItems.size == 0) {
                 result.values = nowShowingList
             }
             result.values = filteredItems
