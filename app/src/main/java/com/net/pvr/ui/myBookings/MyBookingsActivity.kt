@@ -2,17 +2,25 @@ package com.net.pvr.ui.myBookings
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.net.Uri
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.View
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.view.Window
+import android.widget.FrameLayout
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityMyBookingBinding
+import com.net.pvr.databinding.ActivityPurchaseEvoucherDetailsBinding
+import com.net.pvr.databinding.ExperienceDialogBinding
 import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.bookingSession.MovieSessionActivity
 import com.net.pvr.ui.bookingSession.adapter.BookingTheatreAdapter
@@ -22,10 +30,14 @@ import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.food.FoodActivity
 import com.net.pvr.ui.giftCard.GiftCardActivity
 import com.net.pvr.ui.home.HomeActivity
+import com.net.pvr.ui.home.fragment.more.eVoucher.EVoucherActivity
+import com.net.pvr.ui.home.fragment.more.eVoucher.purchaseDetails.PurchaseEVoucherDetailsActivity
 import com.net.pvr.ui.myBookings.adapter.FoodTicketChildAdapter
 import com.net.pvr.ui.myBookings.adapter.GiftCardAdapter
+import com.net.pvr.ui.myBookings.adapter.VoucherListAdapter
 import com.net.pvr.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr.ui.myBookings.response.GiftCardResponse
+import com.net.pvr.ui.myBookings.response.MyVoucherList
 import com.net.pvr.ui.myBookings.viewModel.MyBookingViewModel
 import com.net.pvr.ui.webView.WebViewActivity
 import com.net.pvr.utils.Constant
@@ -44,7 +56,8 @@ import kotlin.toString
 class MyBookingsActivity : AppCompatActivity(),
     GiftCardAdapter.RecycleViewItemClickListener,
     FoodTicketChildAdapter.RecycleViewItemClickListener,
-    BookingTheatreAdapter.RecycleViewItemClickListener {
+    BookingTheatreAdapter.RecycleViewItemClickListener ,
+    VoucherListAdapter.RecycleViewItemClickListener{
 
     @Inject
     lateinit var preferences: PreferenceManager
@@ -80,6 +93,7 @@ class MyBookingsActivity : AppCompatActivity(),
         foodTicket()
         movedNext()
         movies()
+        voucher()
 
         binding?.ivPastDrop?.setOnClickListener {
             if (ticketPastList.size > 0) {
@@ -173,6 +187,18 @@ class MyBookingsActivity : AppCompatActivity(),
             //giftCard
             binding?.view18?.backgroundTintList =
                 AppCompatResources.getColorStateList(this, R.color.yellow)
+
+            //  Voucher
+            binding?.textView419?.textSize = 14F
+            binding?.textView419?.typeface = ResourcesCompat.getFont(this, R.font.sf_pro_text_medium)
+            binding?.textView419?.setTextColor(getColor(R.color.black_40))
+
+
+            //view Voucher
+            binding?.view244?.backgroundTintList =
+                AppCompatResources.getColorStateList(this, R.color.gray)
+
+
         }
 
         //Ticket & Food Action
@@ -218,8 +244,55 @@ class MyBookingsActivity : AppCompatActivity(),
             //giftCard
             binding?.view18?.backgroundTintList =
                 AppCompatResources.getColorStateList(this, R.color.gray)
+
+
+
+            //  Voucher
+            binding?.textView419?.textSize = 14F
+            binding?.textView419?.typeface = ResourcesCompat.getFont(this, R.font.sf_pro_text_medium)
+            binding?.textView419?.setTextColor(getColor(R.color.black_40))
+
+
+            //view Voucher
+            binding?.view244?.backgroundTintList =
+                AppCompatResources.getColorStateList(this, R.color.gray)
+
         }
 
+        //Vouchers
+        binding?.voucher?.setOnClickListener {
+            //gift Card
+            binding?.textView52?.textSize = 12F
+            binding?.textView52?.typeface = ResourcesCompat.getFont(this, R.font.sf_pro_text_medium)
+            binding?.textView52?.setTextColor(getColor(R.color.black_40))
+
+            //giftCard
+            binding?.view18?.backgroundTintList =
+                AppCompatResources.getColorStateList(this, R.color.gray)
+
+            //  food
+            binding?.textView4?.textSize = 12F
+            binding?.textView4?.typeface = ResourcesCompat.getFont(this, R.font.sf_pro_text_medium)
+            binding?.textView4?.setTextColor(getColor(R.color.black_40))
+
+            //view ticket food
+            binding?.view17?.backgroundTintList =
+                AppCompatResources.getColorStateList(this, R.color.gray)
+
+
+
+            //  Voucher
+            binding?.textView419?.textSize = 14F
+            binding?.textView419?.typeface = ResourcesCompat.getFont(this, R.font.sf_pro_text_bold)
+            binding?.textView419?.setTextColor(getColor(R.color.black))
+
+
+            //view Voucher
+            binding?.view244?.backgroundTintList =
+                AppCompatResources.getColorStateList(this, R.color.yellow)
+
+            authViewModel.voucher(preferences.getUserId())
+        }
 
     }
 
@@ -605,5 +678,98 @@ class MyBookingsActivity : AppCompatActivity(),
         intent.putExtra("mid", comingSoonItem.m)
         startActivity(intent)
     }
+
+
+
+
+    ////////////////////////////////////  Voucher  //////////////////////////////////////
+
+
+    private fun voucher() {
+        authViewModel.userResponseVoucherLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+
+                        retrieveVoucher(it.data.output)
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+
+    private fun retrieveVoucher(output: MyVoucherList.Output) {
+        if (output.ev.size == 0 && output.ev.size ==0){
+            binding?.noData?.show()
+            binding?.ticketView?.hide()
+        }else{
+            binding?.noData?.hide()
+            binding?.ticketView?.show()
+        }
+        binding?.noTitle?.text = "No Vouchers Available"
+        binding?.noSubTitle?.text = "Your Vouchers will appear here"
+        binding?.buttonProceed?.text = "Get Vouchers"
+        binding?.noDataImg?.setImageResource(R.drawable.no_vouchers)
+
+        binding?.buttonProceed?.setOnClickListener {
+            val intent = Intent(this, EVoucherActivity::class.java)
+            startActivity(intent)
+        }
+
+//        val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+//        val giftCardAdapter = VoucherListAdapter(output.gc, this, this)
+//        binding?.recyclerMyGift?.layoutManager = gridLayout2
+//        binding?.recyclerMyGift?.adapter = giftCardAdapter
+
+    }
+
+    override fun voucherBook(comingSoonItem: GiftCardResponse.Output.Gc) {
+        val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val inflater = LayoutInflater.from(this)
+        val purchaseVoucher = ActivityPurchaseEvoucherDetailsBinding.inflate(inflater)
+        val behavior: BottomSheetBehavior<FrameLayout> = dialog.behavior
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog.setContentView(purchaseVoucher.root)
+        dialog.show()
+
+        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window!!.setLayout(
+            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.show()
+
+//        val intent = Intent(this, PurchaseEVoucherDetailsActivity::class.java)
+//        startActivity(intent)
+    }
+
 
 }

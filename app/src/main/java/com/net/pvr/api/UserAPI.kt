@@ -38,6 +38,7 @@ import com.net.pvr.ui.login.response.LoginResponse
 import com.net.pvr.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr.ui.myBookings.response.GiftCardResponse
+import com.net.pvr.ui.myBookings.response.MyVoucherList
 import com.net.pvr.ui.myBookings.response.ParkingResponse
 import com.net.pvr.ui.payment.mobikwik.response.MobiKwikCheckSumResponse
 import com.net.pvr.ui.payment.mobikwik.response.MobiKwikPayResponse
@@ -622,6 +623,13 @@ interface UserAPI {
         @Query("pt") platform: String,
         @Query("isSpi") isSpi: String
     ): Response<BookingTheatreResponse>
+
+    @POST("api/payment/e-voucher/get/my-voucher")
+    suspend fun myVouchers(
+        @Query("userid") lat: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<MyVoucherList>
 
     @POST("api/content/nearcinetheater")
     suspend fun nearTheatre(
