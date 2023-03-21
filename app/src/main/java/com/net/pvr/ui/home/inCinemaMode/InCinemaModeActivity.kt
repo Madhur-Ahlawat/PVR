@@ -306,7 +306,7 @@ class InCinemaModeActivity : AppCompatActivity(),
         binding!!.rvIntervalTiming.addItemDecoration(RecyclerViewMargin(14, 1))
 //        binding!!.rvSeatNumber.addItemDecoration(GridSpacingItemDecoration(7,20,false))
 
-        binding!!.rvSeatNumber.layoutManager=GridAutoFitLayoutManager(this@InCinemaModeActivity,40,LinearLayoutManager.VERTICAL,false)
+        binding!!.rvSeatNumber.layoutManager=GridAutoFitLayoutManager(this@InCinemaModeActivity,46,LinearLayoutManager.VERTICAL,false)
         binding!!.rvFoodandbevrages.addItemDecoration(RecyclerViewMarginFoodOrder(30, 1))
         binding!!.rvIntervalTiming.adapter = intervalAdadapter
         LinearSnapHelper().attachToRecyclerView(binding!!.rvIntervalTiming)
