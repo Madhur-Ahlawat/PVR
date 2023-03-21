@@ -32,6 +32,7 @@
         android:theme="@style/NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:theme="@style/Theme.ICM"
             android:name=".ui.home.inCinemaMode.InCinemaModeActivity"
             android:exported="false">
 

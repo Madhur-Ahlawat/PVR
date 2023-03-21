@@ -34,6 +34,7 @@ import com.net.pvr.databinding.ActivityInCinemaModeBinding
 import com.net.pvr.databinding.IntervalTimingItemBinding
 import com.net.pvr.databinding.MovieDetailsItemBinding
 import com.net.pvr.di.preference.PreferenceManager
+import com.net.pvr.ui.GridAutoFitLayoutManager
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.home.HomeActivity
 import com.net.pvr.ui.home.fragment.home.viewModel.HomeViewModel
@@ -84,21 +85,6 @@ class InCinemaModeActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mIntent = intent
-        if (Build.VERSION.SDK_INT >= 21) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
-            window.statusBarColor = getColor(R.color.black_111111)
-            window.navigationBarColor = getColor(R.color.black_111111)
-        }
-        if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
-        }
-        if (Build.VERSION.SDK_INT >= 19) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        }
-
         binding = ActivityInCinemaModeBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
         initData()
@@ -318,7 +304,9 @@ class InCinemaModeActivity : AppCompatActivity(),
         binding!!.rvSeatNumber.layoutManager = GridLayoutManager(this, 7)
         binding!!.rvSeatNumber.adapter = movieDetailsAdapter
         binding!!.rvIntervalTiming.addItemDecoration(RecyclerViewMargin(14, 1))
-        binding!!.rvSeatNumber.addItemDecoration(GridSpacingItemDecoration(7, 17, false))
+//        binding!!.rvSeatNumber.addItemDecoration(GridSpacingItemDecoration(7,20,false))
+
+        binding!!.rvSeatNumber.layoutManager=GridAutoFitLayoutManager(this@InCinemaModeActivity,40,LinearLayoutManager.VERTICAL,false)
         binding!!.rvFoodandbevrages.addItemDecoration(RecyclerViewMarginFoodOrder(30, 1))
         binding!!.rvIntervalTiming.adapter = intervalAdadapter
         LinearSnapHelper().attachToRecyclerView(binding!!.rvIntervalTiming)
