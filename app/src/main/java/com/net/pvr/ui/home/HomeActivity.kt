@@ -339,11 +339,7 @@ class HomeActivity : AppCompatActivity(), PrivilegeHomeDialogAdapter.RecycleView
                         Constant.PRIVILEGEPOINT = it.data.output.pt?:"0"
                         PRIVILEGEVOUCHER = it.data.output.vou?:"0"
                         privilegeRetrieveData(it.data.output)
-//                        if (intent.data!=null){
-//                            manageDeepLinks()
-//                        }else{
-//                            switchFragment()
-//                        }
+
                         try {
                             firstFragment.updatedData()
                         }catch (e:java.lang.Exception){
@@ -446,7 +442,6 @@ class HomeActivity : AppCompatActivity(), PrivilegeHomeDialogAdapter.RecycleView
     }
 
     override fun privilegeHomeClick(comingSoonItem: PrivilegeHomeResponse.Output.Pinfo) {
-
         // Hit Event
         try {
             val bundle = Bundle()

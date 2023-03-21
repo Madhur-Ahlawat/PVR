@@ -593,10 +593,8 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
         //coupon
         binding?.textView169?.text = ""
 
-
         for (data in output.f) {
             if (data.n.contains("Taxes & Fees")) {
-
                 //taxes fee
                 binding?.textView170?.text = getString(R.string.currency) + data.v
 
@@ -633,7 +631,6 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
         //caver calling
         binding?.textView171?.text = ""
-
 
         //payedAmount
         payableAmount = output.a.toDouble()
