@@ -145,7 +145,7 @@ class FoodActivity : AppCompatActivity(),
     private fun manageFunction() {
         Constant.viewModel = authViewModel
         authViewModel.food(
-            preferences.getUserId(), CINEMA_ID, BOOKING_ID, "", "", "", "", "", "", "no", "no", "no"
+            preferences.getUserId(), CINEMA_ID, BOOKING_ID, "", "", "", "", "", "", QR, "no", "no"
         )
 
         //internet Check

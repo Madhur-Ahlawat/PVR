@@ -640,6 +640,18 @@
                 android:background="#D3D3D3"
                 tools:ignore="ContentDescription" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/dimen_15dp"
+                android:id="@+id/showCount"
+                android:textSize="@dimen/dimen_16sp"
+                style="@style/text_black_bold"
+                android:text="Movie Count:  20"/>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
@@ -16,6 +17,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -36,6 +38,7 @@ import com.net.pvr.ui.home.fragment.comingSoon.search.CinemaSearchActivity
 import com.net.pvr.ui.home.fragment.comingSoon.viewModel.ComingSoonViewModel
 import com.net.pvr.ui.home.fragment.home.HomeFragment
 import com.net.pvr.ui.home.fragment.home.HomeFragment.Companion.dialogTrailer
+import com.net.pvr.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr.ui.movieDetails.comingSoonDetails.ComingSoonDetailsActivity
 import com.net.pvr.ui.movieDetails.comingSoonDetails.adapter.ComDetailsHomePhAdapter
 import com.net.pvr.ui.movieDetails.comingSoonDetails.setAlert.SetAlertActivity
@@ -51,6 +54,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.shts.android.storiesprogressview.StoriesProgressView
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class ComingSoonFragment : Fragment(),
@@ -92,6 +96,10 @@ class ComingSoonFragment : Fragment(),
 
     //internet Check
     private var broadcastReceiver: BroadcastReceiver? = null
+
+    companion object{
+        var comingMovieData:ArrayList<CommingSoonResponse.Output.Movy> = ArrayList()
+    }
 
 
     private var musicData: ArrayList<MovieDetailsResponse.Trs> =
@@ -251,6 +259,10 @@ class ComingSoonFragment : Fragment(),
         binding?.constraintLayout148?.hide()
         //Ui
         binding?.constraintLayout147?.show()
+
+        comingMovieData = ArrayList()
+
+        comingMovieData.addAll(output.movies)
 
         clickTime+=1
         //Promotion
@@ -686,6 +698,67 @@ class ComingSoonFragment : Fragment(),
         val intent = Intent(requireActivity(), PlayerActivity::class.java)
         intent.putExtra("trailerUrl", comingSoonItem.u)
         startActivity(intent)
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    fun getShowCountHome(filterStrings: Map<String, ArrayList<String?>>): Int {
+        var showCount = 0
+        var languages: List<String?> = ArrayList()
+        var genres: List<String?> = ArrayList()
+        var spShows: List<String?> = ArrayList()
+
+        for (entry in filterStrings) {
+            val type = entry.key
+            if (type.contains("language")) {
+                languages = entry.value
+            } else if (type.contains("geners")) {
+                genres = entry.value
+            } else if (type.contains("accessability")) {
+                spShows = entry.value
+            }
+            //showCount = showCount +getCount(type , entry.getValue());
+        }
+
+        showCount = if (languages.isEmpty() && genres.isEmpty()){
+            0
+        }else {
+            filterMovies(
+                comingMovieData,
+                languages,
+                genres,
+                spShows
+            )
+        }
+        println("showCount--->$showCount---${ComingSoonFragment.comingMovieData.size}")
+        return showCount
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    fun filterMovies(
+        movies:ArrayList<CommingSoonResponse.Output.Movy>,
+        languages: List<String?>,
+        genres: List<String?>,
+        spShows: List<String?>): Int {
+        val filteredMovies: ArrayList<CommingSoonResponse.Output.Movy> = ArrayList()
+        println("languages-->$languages---$genres--->${filteredMovies.size}")
+        for (movie in movies) {
+
+            if (!languages.contains("ALL") && languages.isNotEmpty()) {
+
+                val languagesM = movie.otherlanguages.split(",").toList()
+
+                if (!languagesM.stream().anyMatch { m: String -> languages.contains(m.uppercase()) })
+                    continue
+            }
+            if (!genres.contains("ALL") && genres.isNotEmpty()) {
+                val genresM: List<String> = movie.othergenres.split(",").toList()
+                if (!genresM.stream().anyMatch { m: String -> genres.contains(m.uppercase()) })
+                    continue
+            }
+
+            filteredMovies.add(movie)
+        }
+        return filteredMovies.size
     }
 
 

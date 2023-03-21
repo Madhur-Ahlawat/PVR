@@ -29,11 +29,13 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.net.pvr.R;
 import com.net.pvr.ui.filter.adapter.GenericFilterAdapter;
+import com.net.pvr.ui.home.fragment.home.HomeFragment;
 import com.net.pvr.utils.Constant;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 public class GenericFilterHome implements GenericFilterAdapter.onFilterItemSelected {
@@ -50,6 +52,7 @@ public class GenericFilterHome implements GenericFilterAdapter.onFilterItemSelec
     String specialStr = "";
     String cinemaStr = "";
     String accessabilityStr = "";
+    TextView showCount;
     HashMap<String, ArrayList<String>> allFilterList = new HashMap<>();
     String priceStr = "";
     String timeStr = "";
@@ -57,6 +60,11 @@ public class GenericFilterHome implements GenericFilterAdapter.onFilterItemSelec
     String filterItemSelected = "";
     static ArrayList<String> type = new ArrayList<>();
     static HashMap<String, String> selectedFilters = new HashMap<>();
+
+    static ArrayList<String> filterValue = new ArrayList<>();
+
+    public static Map<String , ArrayList<String>> filterStrings = new HashMap<>();
+
     onButtonSelected onSelection;
 
 
@@ -91,6 +99,7 @@ public class GenericFilterHome implements GenericFilterAdapter.onFilterItemSelec
         dialog.getWindow().getDecorView()
                 .getWindowVisibleDisplayFrame(displayRectangle);
         ConstraintLayout mainView = dialog.findViewById(R.id.mainView);
+        showCount = (TextView) dialog.findViewById(R.id.showCount);
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams((int) (displayRectangle.width() * 1f),(int) (displayRectangle.height() * 0.8f));
 //        mainView.setLayoutParams(params);
@@ -420,8 +429,19 @@ public class GenericFilterHome implements GenericFilterAdapter.onFilterItemSelec
 
         btnReset.setOnClickListener(v -> {
             dialog.dismiss();
+            selectedFilters = new HashMap<>();
+            filterStrings = new HashMap<>();
+            filterValue = new ArrayList<>();
             onSelection.onReset();
         });
+
+        int count = new HomeFragment().getShowCountHome(filterStrings);
+        if (count>0){
+            showCount.setVisibility(View.VISIBLE);
+            showCount.setText("Movie Count:  "+count);
+        }else {
+            showCount.setVisibility(View.GONE);
+        }
 
         dialog.show();
     }
@@ -592,9 +612,41 @@ public class GenericFilterHome implements GenericFilterAdapter.onFilterItemSelec
 
                 selectedFilters.put(typeStr, accessabilityStr);
 
-
                 break;
 
+        }
+
+        if (isSelected) {
+            if (typeStr.equalsIgnoreCase("accessability")){
+                filterValue = new ArrayList<>();
+                filterValue.add(itemSelected.toUpperCase());
+                filterStrings.put(typeStr, filterValue);
+            }else {
+                filterValue.add(itemSelected.toUpperCase());
+                filterStrings.put(typeStr, filterValue);
+            }
+        }else {
+            if (typeStr.equalsIgnoreCase("accessability")){
+                if (filterValue.contains(itemSelected.toUpperCase(Locale.ROOT))) {
+                    filterValue= new ArrayList<>();
+                    filterStrings.put(typeStr, filterValue);
+                }
+            }else {
+                if (filterValue.contains(itemSelected.toUpperCase(Locale.ROOT))) {
+                    filterValue.remove(itemSelected.toUpperCase());
+                    filterStrings.put(typeStr, filterValue);
+                }
+            }
+        }
+
+        System.out.println("filterStrings---"+filterStrings);
+
+        int count = new HomeFragment().getShowCountHome(filterStrings);
+        if (count>0){
+            showCount.setVisibility(View.VISIBLE);
+            showCount.setText("Movie Count:  "+count);
+        }else {
+            showCount.setVisibility(View.GONE);
         }
     }
 

@@ -27,11 +27,14 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.net.pvr.R;
 import com.net.pvr.ui.filter.adapter.GenericFilterAdapter;
+import com.net.pvr.ui.home.fragment.comingSoon.ComingSoonFragment;
+import com.net.pvr.ui.home.fragment.home.HomeFragment;
 import com.net.pvr.utils.Constant;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 public class GenericFilterComing implements GenericFilterAdapter.onFilterItemSelected {
@@ -56,6 +59,13 @@ public class GenericFilterComing implements GenericFilterAdapter.onFilterItemSel
     boolean isSelected = false;
     String filterItemSelected = "";
     onButtonSelected onSelection;
+
+    TextView showCount;
+
+
+    static ArrayList<String> filterValue = new ArrayList<>();
+
+    public static Map<String , ArrayList<String>> filterStrings = new HashMap<>();
 
     private static void updateUI(LinearLayout layout_filter_tabs, ImageView dropImage, Context context) {
 
@@ -103,6 +113,7 @@ public class GenericFilterComing implements GenericFilterAdapter.onFilterItemSel
 //        mainView.setLayoutParams(params);
         GenericFilterAdapter adapterGeners, adapterLanguage, adapterFormat, adapterShowTime, adapterAccessability, adapterPriceRange;
         RecyclerView recyclerGeners, recyclerLanguage, recyclerFormat, recyclerShowTIme, recyclerAccessibility, recyclerPriceRange, cinemaRecyclerFormat, specialRecyclerFormat;
+        showCount = (TextView) dialog.findViewById(R.id.showCount);
 
         cinemaRecyclerFormat = (RecyclerView) dialog.findViewById(R.id.cinemaRecyclerFormat);
         specialRecyclerFormat = (RecyclerView) dialog.findViewById(R.id.specialRecyclerFormat);
@@ -424,10 +435,20 @@ public class GenericFilterComing implements GenericFilterAdapter.onFilterItemSel
         btnReset.setOnClickListener(v -> {
             dialog.dismiss();
             selectedFilters = new HashMap<>();
+            filterStrings = new HashMap<>();
+            filterValue = new ArrayList<>();
             onSelection.onReset();
         });
 
         dialog.show();
+
+        int count = new ComingSoonFragment().getShowCountHome(filterStrings);
+        if (count>0){
+            showCount.setVisibility(View.VISIBLE);
+            showCount.setText("Movie Count:  "+count);
+        }else {
+            showCount.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -582,6 +603,39 @@ public class GenericFilterComing implements GenericFilterAdapter.onFilterItemSel
 
                 break;
 
+        }
+
+        if (isSelected) {
+            if (typeStr.equalsIgnoreCase("accessability")){
+                filterValue = new ArrayList<>();
+                filterValue.add(itemSelected.toUpperCase());
+                filterStrings.put(typeStr, filterValue);
+            }else {
+                filterValue.add(itemSelected.toUpperCase());
+                filterStrings.put(typeStr, filterValue);
+            }
+        }else {
+            if (typeStr.equalsIgnoreCase("accessability")){
+                if (filterValue.contains(itemSelected.toUpperCase(Locale.ROOT))) {
+                    filterValue= new ArrayList<>();
+                    filterStrings.put(typeStr, filterValue);
+                }
+            }else {
+                if (filterValue.contains(itemSelected.toUpperCase(Locale.ROOT))) {
+                    filterValue.remove(itemSelected.toUpperCase());
+                    filterStrings.put(typeStr, filterValue);
+                }
+            }
+        }
+
+        System.out.println("filterStrings---"+filterStrings);
+
+        int count = new ComingSoonFragment().getShowCountHome(filterStrings);
+        if (count>0){
+            showCount.setVisibility(View.VISIBLE);
+            showCount.setText("Movie Count:  "+count);
+        }else {
+            showCount.setVisibility(View.GONE);
         }
     }
 

@@ -29,6 +29,7 @@ import com.net.pvr.ui.myBookings.response.GiftCardResponse
 import com.net.pvr.ui.myBookings.viewModel.MyBookingViewModel
 import com.net.pvr.ui.webView.WebViewActivity
 import com.net.pvr.utils.Constant
+import com.net.pvr.utils.Constant.Companion.QR
 import com.net.pvr.utils.NetworkResult
 import com.net.pvr.utils.ga.GoogleAnalytics
 import com.net.pvr.utils.hide
@@ -578,6 +579,7 @@ class MyBookingsActivity : AppCompatActivity(),
     }
 
     override fun addFood(data: FoodTicketResponse.Output.C) {
+        QR = "NO"
         val intent = Intent(this, FoodActivity::class.java)
         intent.putExtra("from", "pcOrdrsnc")
         intent.putExtra("NF", data.nf)

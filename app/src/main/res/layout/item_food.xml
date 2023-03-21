@@ -139,6 +139,7 @@
             android:fontFamily="@font/sf_pro_text_regular"
             android:textColor="@color/black"
             android:layout_marginTop="@dimen/dimen_4dp"
+            android:layout_marginStart="@dimen/dimen_6dp"
             android:textSize="@dimen/dimen_12sp"
             app:layout_constraintStart_toStartOf="@+id/fa"
             app:layout_constraintTop_toBottomOf="@+id/fa"

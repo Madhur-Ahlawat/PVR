@@ -31,11 +31,11 @@ import com.net.pvr.databinding.FeedbackThanksBinding
 import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
+import com.net.pvr.ui.food.FoodActivity
 import com.net.pvr.ui.home.HomeActivity
 import com.net.pvr.ui.home.fragment.home.HomeFragment
 import com.net.pvr.ui.home.fragment.home.response.FeedbackDataResponse
 import com.net.pvr.ui.payment.PaymentActivity
-import com.net.pvr.ui.payment.response.PaymentResponse
 import com.net.pvr.ui.ticketConfirmation.adapter.TicketFoodAdapter
 import com.net.pvr.ui.ticketConfirmation.adapter.TicketPlaceHolderAdapter
 import com.net.pvr.ui.ticketConfirmation.adapter.TicketSeatAdapter
@@ -57,6 +57,8 @@ class TicketConfirmationActivity : AppCompatActivity() {
     private var binding: ActivityTicketConfirmatonBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: TicketConfirmationViewModel by viewModels()
+
+    private var ticketData:TicketBookedResponse.Output? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -121,12 +123,28 @@ class TicketConfirmationActivity : AppCompatActivity() {
         movedNext()
         bookParking()
         showParking()
+
+        binding?.cardView16?.setOnClickListener {
+            addFood(ticketData)
+        }
     }
 
     private fun movedNext() {
         binding?.include31?.imageView58?.setOnClickListener {
             onBackPressed()
         }
+    }
+
+    private fun addFood(data: TicketBookedResponse.Output?) {
+        Constant.QR = "NO"
+        val intent = Intent(this, FoodActivity::class.java)
+        intent.putExtra("from", "pcOrdrsnc")
+        intent.putExtra("NF", data?.nf)
+        Constant.CINEMA_ID = data?.cid.toString()
+        Constant.BOOKING_ID = data?.bi.toString()
+        Constant.BOOK_TYPE = "FOOD"
+        intent.putExtra("SEATS", java.lang.String.valueOf(data?.seats?.split(",")?.size))
+        startActivity(intent)
     }
 
     @SuppressLint("SetTextI18n")
@@ -262,7 +280,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun retrieveData(output: TicketBookedResponse.Output, from: String) {
         printLog(Constant.BOOK_TYPE + output.toString())
-
+        ticketData = output
         if (Constant.BOOK_TYPE == "BOOKING") {
             binding?.foodView?.hide()
             binding?.ticketView?.show()

@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.text.Spannable
@@ -22,6 +23,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.view.ViewCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -84,6 +86,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 
 @AndroidEntryPoint
@@ -98,6 +101,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     HomeOfferAdapter.RecycleViewItemClickListenerCity {
 
     private var binding: FragmentHomeBinding? = null
+
 
     @Inject
     lateinit var preferences: PreferenceManager
@@ -151,6 +155,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     companion object {
         var dialogTrailer: Dialog? = null
+        private var movieData:ArrayList<HomeResponse.Mv> = ArrayList()
 
         var mcId = ""
     }
@@ -618,6 +623,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     @SuppressLint("SuspiciousIndentation", "ClickableViewAccessibility")
     private fun retrieveData(output: HomeResponse.Output) {
+        movieData = ArrayList()
+        movieData.addAll(output.mv)
         //layout
         binding?.nestedScrollView4?.show()
         //filter
@@ -1842,6 +1849,71 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     override fun offerClick(comingSoonItem: OfferResponse.Offer) {
 
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    fun getShowCountHome(filterStrings: Map<String, ArrayList<String?>>): Int {
+        var showCount = 0
+        var languages: List<String?> = ArrayList()
+        var genres: List<String?> = ArrayList()
+        var spShows: List<String?> = ArrayList()
+
+        for (entry in filterStrings) {
+            val type = entry.key
+            if (type.contains("language")) {
+                languages = entry.value
+            } else if (type.contains("geners")) {
+                genres = entry.value
+            } else if (type.contains("accessability")) {
+                spShows = entry.value
+            }
+            //showCount = showCount +getCount(type , entry.getValue());
+        }
+
+        showCount = if (languages.isEmpty() && genres.isEmpty() && spShows.isEmpty()){
+            0
+        }else {
+            filterMovies(
+                movieData,
+                languages,
+                genres,
+                spShows
+            )
+        }
+        println("showCount--->$showCount---${movieData.size}")
+        return showCount
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    fun filterMovies(
+        movies:ArrayList<HomeResponse.Mv>,
+        languages: List<String?>,
+        genres: List<String?>,
+        spShows: List<String?>
+    ): Int {
+        val filteredMovies: MutableList<HomeResponse.Mv> = ArrayList<HomeResponse.Mv>()
+        for (movie in movies) {
+            if (!languages.contains("ALL") && languages.isNotEmpty()) {
+
+                val languagesM = movie.otherlanguages.split(",").toList()
+
+                if (languagesM.stream().noneMatch { m: String -> languages.contains(m.uppercase()) }) continue
+            }
+            if (!genres.contains("ALL") && genres.isNotEmpty()) {
+                val genresM: List<String> = movie.othergenres.split(",").toList()
+                if (genresM.stream().noneMatch { m: String ->
+                        genres.contains(
+                            m.uppercase()
+                        )
+                    }) continue
+            }
+            if (!spShows.contains("ALL") && spShows.isNotEmpty()) {
+                if (movie.sh != "") continue
+            }
+
+            filteredMovies.add(movie)
+        }
+        return filteredMovies.size
     }
 
 
