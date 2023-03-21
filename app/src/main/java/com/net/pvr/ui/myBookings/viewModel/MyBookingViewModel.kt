@@ -7,6 +7,7 @@ import com.net.pvr.repository.UserRepository
 import com.net.pvr.ui.bookingSession.response.BookingTheatreResponse
 import com.net.pvr.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr.ui.myBookings.response.GiftCardResponse
+import com.net.pvr.ui.myBookings.response.MyVoucherList
 import com.net.pvr.ui.myBookings.response.ParkingResponse
 import com.net.pvr.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -73,5 +74,16 @@ class MyBookingViewModel @Inject constructor(private val userRepository: UserRep
             userRepository.bookingTheatre(city,cid,userid,mid,lng,isSpi)
         }
     }
+
+    // Voucher
+    val userResponseVoucherLiveData: LiveData<NetworkResult<MyVoucherList>>
+        get() = userRepository.vouchersResponseLiveData
+
+    fun voucher(userid:String) {
+        viewModelScope.launch {
+            userRepository.vouchers(userid)
+        }
+    }
+
 
 }

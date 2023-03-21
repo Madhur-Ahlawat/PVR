@@ -29,16 +29,16 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_60dp"
-        android:orientation="horizontal"
         android:layout_marginStart="@dimen/dimen_15dp"
         android:layout_marginEnd="@dimen/dimen_15dp"
-        android:weightSum="2"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:weightSum="3"
         app:layout_constraintEnd_toEndOf="@+id/view14"
         app:layout_constraintStart_toStartOf="@+id/view14"
-        app:layout_constraintTop_toBottomOf="@+id/include2"
-        android:baselineAligned="false">
+        app:layout_constraintTop_toBottomOf="@+id/include2">
 
-
+        <!--        ticket Food-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ticketFood"
             android:layout_width="match_parent"
@@ -58,12 +58,12 @@
                 android:id="@+id/textView4"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:textSize="@dimen/dimen_14sp"
-                android:fontFamily="@font/sf_pro_text_bold"
-                android:textColor="@color/black"
                 android:drawablePadding="@dimen/dimen_8dp"
+                android:fontFamily="@font/sf_pro_text_bold"
                 android:gravity="center"
                 android:text="@string/ticket_food"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/view15"
                 app:layout_constraintStart_toStartOf="@+id/view15"
@@ -79,6 +79,7 @@
                 app:layout_constraintStart_toStartOf="@+id/view15" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <!--        Gift Card-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/giftCard"
             android:layout_width="match_parent"
@@ -99,12 +100,12 @@
                 android:id="@+id/textView52"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:textSize="@dimen/dimen_12sp"
-                android:fontFamily="@font/sf_pro_text_medium"
-                android:textColor="@color/black_40"
                 android:drawablePadding="@dimen/dimen_8dp"
+                android:fontFamily="@font/sf_pro_text_medium"
                 android:gravity="center"
                 android:text="@string/gift_cards"
+                android:textColor="@color/black_40"
+                android:textSize="@dimen/dimen_12sp"
                 app:layout_constraintBottom_toTopOf="@+id/view18"
                 app:layout_constraintEnd_toEndOf="@+id/view16"
                 app:layout_constraintStart_toStartOf="@+id/view16"
@@ -119,296 +120,342 @@
                 app:layout_constraintEnd_toEndOf="@+id/view16"
                 app:layout_constraintStart_toStartOf="@+id/view16" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--        Voucher-->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/voucher"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+
+            <View
+                android:id="@+id/view243"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView419"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:drawablePadding="@dimen/dimen_8dp"
+                android:fontFamily="@font/sf_pro_text_medium"
+                android:gravity="center"
+                android:text="@string/vouchers"
+                android:textColor="@color/black_40"
+                android:textSize="@dimen/dimen_12sp"
+                app:layout_constraintBottom_toTopOf="@+id/view244"
+                app:layout_constraintEnd_toEndOf="@+id/view243"
+                app:layout_constraintStart_toStartOf="@+id/view243"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/view244"
+                android:layout_width="0dp"
+                android:layout_height="4dp"
+                android:background="@color/gray"
+                app:layout_constraintBottom_toBottomOf="@+id/view243"
+                app:layout_constraintEnd_toEndOf="@+id/view243"
+                app:layout_constraintStart_toStartOf="@+id/view243" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
         android:fillViewport="true"
-        android:scrollbars="none"
-        app:layout_constraintEnd_toEndOf="@+id/view14"
-        app:layout_constraintStart_toStartOf="@+id/view14"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintBottom_toBottomOf="@+id/view14">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="@+id/view14"
         app:layout_constraintEnd_toEndOf="@+id/view14"
         app:layout_constraintStart_toStartOf="@+id/view14"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:id="@+id/ticketView">
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/sf_pro_text_bold"
-        android:textColor="@color/black"
-        android:textSize="@dimen/dimen_14sp"
-        tools:text="Akash Mishra " />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerMyBooking"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/view14"
-        app:layout_constraintEnd_toEndOf="@+id/view14"
-        app:layout_constraintStart_toStartOf="@+id/view14"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        tools:itemCount="1"
-        tools:listitem="@layout/ticket_food_item" />
-
-        <View
-            android:id="@+id/view1"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/padding_10"
-            android:layout_marginTop="@dimen/padding_10"
-            android:background="#F9F9F9" />
-
-        <!--    //past tkt new view//-->
-        <LinearLayout
-            android:id="@+id/ll_past_booking"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/dimen_20dp">
+            app:layout_constraintEnd_toEndOf="@+id/view14"
+            app:layout_constraintStart_toStartOf="@+id/view14"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-            <androidx.cardview.widget.CardView
+            <LinearLayout
+                android:id="@+id/ticketView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_20dp"
-                android:layout_marginTop="@dimen/dimen_20dp"
-                android:layout_marginEnd="@dimen/dimen_20dp"
-                android:background="@drawable/bg_genre_yellow"
-                android:backgroundTint="#F9F9F9"
-                android:elevation="@dimen/dimen_2dp"
-                app:cardCornerRadius="@dimen/dimen_6dp">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/sf_pro_text_bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14sp"
+                    tools:text="Akash Mishra " />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerMyBooking"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/padding_10">
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="24dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/view14"
+                    app:layout_constraintEnd_toEndOf="@+id/view14"
+                    app:layout_constraintStart_toStartOf="@+id/view14"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/ticket_food_item" />
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/padding_10"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:background="#F9F9F9" />
+
+                <!--    //past tkt new view//-->
+                <LinearLayout
+                    android:id="@+id/ll_past_booking"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/dimen_20dp">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_20dp"
+                        android:layout_marginTop="@dimen/dimen_20dp"
+                        android:layout_marginEnd="@dimen/dimen_20dp"
+                        android:background="@drawable/bg_genre_yellow"
+                        android:backgroundTint="#F9F9F9"
+                        android:elevation="@dimen/dimen_2dp"
+                        app:cardCornerRadius="@dimen/dimen_6dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/padding_10">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/padding_10"
+                                android:layout_weight="1"
+                                android:text="@string/past_bookings"
+                                android:textAllCaps="true"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/dimen_14sp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/iv_past_drop"
+                                android:layout_width="@dimen/dimen_15dp"
+                                android:layout_height="@dimen/dimen_15dp"
+                                android:layout_marginEnd="@dimen/dimen_20dp"
+                                android:rotation="270"
+                                android:src="@drawable/back_new"
+                                android:visibility="gone"
+                                tools:ignore="ContentDescription" />
+
+                            <ImageView
+                                android:id="@+id/iv_past_drop_up"
+                                android:layout_width="@dimen/dimen_15dp"
+                                android:layout_height="@dimen/dimen_15dp"
+                                android:layout_marginEnd="@dimen/dimen_20dp"
+                                android:rotation="90"
+                                android:src="@drawable/back_new"
+                                android:visibility="visible"
+                                tools:ignore="ContentDescription" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/padding_10"
+                        android:layout_marginStart="@dimen/dimen_25dp"
+                        android:layout_marginTop="-9dp"
+                        android:layout_marginEnd="@dimen/dimen_25dp"
+                        android:layout_marginBottom="@dimen/padding_10"
+                        android:background="@drawable/bg_grey_booking"
+                        android:visibility="visible" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/pastTicketListView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="24dp"
+                        android:background="@color/white"
+                        android:divider="@android:color/transparent"
+                        android:listSelector="@color/listSelectorColor"
+                        android:scrollbars="none"
+                        android:visibility="visible"
+                        tools:itemCount="2" />
 
                     <TextView
-                        android:textStyle="bold"
-                        android:layout_width="0dp"
+                        android:id="@+id/tv_show_all"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/past_bookings"
-                        android:layout_marginStart="@dimen/padding_10"
-                        android:textAllCaps="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/padding_10"
+                        android:layout_marginBottom="@dimen/dimen_20dp"
+                        android:background="@drawable/bg_circle_see_all"
+                        android:elevation="@dimen/dimen_5dp"
+                        android:padding="@dimen/padding_10"
+                        android:paddingStart="@dimen/dimen_30dp"
+                        android:paddingEnd="@dimen/dimen_30dp"
+                        android:text="@string/show_all"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/dimen_14sp" />
-
-                    <ImageView
-                        android:id="@+id/iv_past_drop"
-                        android:layout_width="@dimen/dimen_15dp"
-                        android:layout_height="@dimen/dimen_15dp"
-                        android:layout_marginEnd="@dimen/dimen_20dp"
-                        android:rotation="270"
-                        android:visibility="gone"
-                        android:src="@drawable/back_new"
-                        tools:ignore="ContentDescription" />
-
-                    <ImageView
-                        android:id="@+id/iv_past_drop_up"
-                        android:layout_width="@dimen/dimen_15dp"
-                        android:layout_height="@dimen/dimen_15dp"
-                        android:layout_marginEnd="@dimen/dimen_20dp"
-                        android:rotation="90"
-                        android:src="@drawable/back_new"
-                        android:visibility="visible"
-                        tools:ignore="ContentDescription" />
+                        android:textSize="@dimen/dimen_14sp"
+                        android:visibility="visible" />
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/padding_10"
+                    android:background="#F9F9F9" />
 
-            <View
+                <!--also playing view-->
+                <LinearLayout
+                    android:id="@+id/ll_also_playing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_15dp"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_5dp"
+                        android:layout_marginTop="@dimen/padding_10"
+                        android:text="@string/also_playing"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimen_14sp"
+                        android:textStyle="bold"
+                        android:visibility="visible" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_also_playing"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dimen_15dp"
+                        android:scrollIndicators="none"
+                        android:visibility="visible" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/giftView"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/padding_10"
-                android:layout_marginStart="@dimen/dimen_25dp"
-                android:layout_marginEnd="@dimen/dimen_25dp"
-                android:layout_marginTop="-9dp"
-                android:visibility="visible"
-                android:layout_marginBottom="@dimen/padding_10"
-                android:background="@drawable/bg_grey_booking"
-                />
+                android:layout_height="match_parent"
+                android:visibility="gone">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/pastTicketListView"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerMyGift"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="24dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/view14"
+                    app:layout_constraintEnd_toEndOf="@+id/view14"
+                    app:layout_constraintStart_toStartOf="@+id/view14"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/ticket_food_item" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/noData"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="24dp"
-                tools:itemCount="2"
-                android:divider="@android:color/transparent"
-                android:listSelector="@color/listSelectorColor"
-                android:scrollbars="none"
-                android:visibility="visible" />
-
-            <TextView
-                android:id="@+id/tv_show_all"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/padding_10"
-                android:layout_marginBottom="@dimen/dimen_20dp"
-                android:background="@drawable/bg_circle_see_all"
-                android:padding="@dimen/padding_10"
-                android:elevation="@dimen/dimen_5dp"
-                android:paddingStart="@dimen/dimen_30dp"
-                android:paddingEnd="@dimen/dimen_30dp"
-                android:text="@string/show_all"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimen_14sp"
-                android:visibility="visible" />
-
-        </LinearLayout>
-
-        <View
-            android:id="@+id/view2"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/padding_10"
-            android:background="#F9F9F9" />
-
-        <!--also playing view-->
-        <LinearLayout
-            android:id="@+id/ll_also_playing"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible"
-            android:layout_marginStart="@dimen/dimen_15dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_10"
-                android:layout_marginStart="@dimen/dimen_5dp"
-                android:text="@string/also_playing"
-                android:textAllCaps="true"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimen_14sp"
-                android:visibility="visible" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_also_playing"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dimen_15dp"
-                android:scrollIndicators="none"
-                android:visibility="visible" />
-
-        </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/giftView"
-            android:visibility="gone">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerMyGift"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="24dp"
-                app:layout_constraintBottom_toBottomOf="@+id/view14"
-                app:layout_constraintEnd_toEndOf="@+id/view14"
-                app:layout_constraintStart_toStartOf="@+id/view14"
-                app:layout_constraintTop_toBottomOf="@+id/textView3"
-                tools:itemCount="1"
-                tools:listitem="@layout/ticket_food_item" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:visibility="gone"
-            android:orientation="vertical"
-            android:id="@+id/noData">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/noDataImg"/>
-
-            <TextView
-                android:id="@+id/noTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/dimen_14sp"
-                android:fontFamily="@font/sf_pro_text_medium"
-                android:textColor="@color/black"
-                android:drawablePadding="@dimen/dimen_8dp"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="No Bookings Available"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/view15"
-                app:layout_constraintStart_toStartOf="@+id/view15"
-                app:layout_constraintTop_toTopOf="@+id/view15" />
+                android:orientation="vertical"
+                android:visibility="gone">
 
-            <TextView
-                android:id="@+id/noSubTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/dimen_14sp"
-                android:fontFamily="@font/sf_pro_text_regular"
-                android:textColor="#7A7A7A"
-                android:drawablePadding="@dimen/dimen_8dp"
-                android:gravity="center"
-                android:text="Movie bookings and F&amp;B order will appear here"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/view15"
-                app:layout_constraintStart_toStartOf="@+id/view15"
-                app:layout_constraintTop_toTopOf="@+id/view15" />
+                <ImageView
+                    android:id="@+id/noDataImg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="ContentDescription" />
 
-            <TextView
-                android:id="@+id/buttonProceed"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/dimen_40dp"
-                android:textSize="@dimen/dimen_14sp"
-                android:fontFamily="@font/sf_pro_text_semi_bold"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:text="@string/book_movie"
-                android:layout_marginTop="@dimen/padding_10"
-                android:background="@drawable/curve_25"
-                android:backgroundTint="@color/yellow"
-                android:backgroundTintMode="src_in"
-                android:paddingStart="@dimen/dimen_20dp"
-                android:paddingEnd="@dimen/dimen_20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/view15"
-                app:layout_constraintStart_toStartOf="@+id/view15"
-                app:layout_constraintTop_toTopOf="@+id/view15" />
+                <TextView
+                    android:id="@+id/noTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/dimen_8dp"
+                    android:fontFamily="@font/sf_pro_text_medium"
+                    android:gravity="center"
+                    android:text="No Bookings Available"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/view15"
+                    app:layout_constraintStart_toStartOf="@+id/view15"
+                    app:layout_constraintTop_toTopOf="@+id/view15" />
+
+                <TextView
+                    android:id="@+id/noSubTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/dimen_8dp"
+                    android:fontFamily="@font/sf_pro_text_regular"
+                    android:gravity="center"
+                    android:text="Movie bookings and F&amp;B order will appear here"
+                    android:textColor="#7A7A7A"
+                    android:textSize="@dimen/dimen_14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/view15"
+                    app:layout_constraintStart_toStartOf="@+id/view15"
+                    app:layout_constraintTop_toTopOf="@+id/view15" />
+
+                <TextView
+                    android:id="@+id/buttonProceed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimen_40dp"
+                    android:layout_marginTop="@dimen/padding_10"
+                    android:background="@drawable/curve_25"
+                    android:backgroundTint="@color/yellow"
+                    android:backgroundTintMode="src_in"
+                    android:fontFamily="@font/sf_pro_text_semi_bold"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/dimen_20dp"
+                    android:paddingEnd="@dimen/dimen_20dp"
+                    android:text="@string/book_movie"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimen_14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/view15"
+                    app:layout_constraintStart_toStartOf="@+id/view15"
+                    app:layout_constraintTop_toTopOf="@+id/view15" />
+
+
+            </LinearLayout>
 
 
         </LinearLayout>
-
-
-
-    </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
 

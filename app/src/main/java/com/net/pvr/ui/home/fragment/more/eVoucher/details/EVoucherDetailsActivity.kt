@@ -16,20 +16,17 @@ import com.net.pvr.databinding.ActivityEvoucherDetailsBinding
 import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
-import com.net.pvr.ui.home.fragment.more.eVoucher.adapter.VoucherListAdapter
 import com.net.pvr.ui.home.fragment.more.eVoucher.details.adapter.VoucherAddAdapter
 import com.net.pvr.ui.home.fragment.more.eVoucher.details.model.EVoucherCart
 import com.net.pvr.ui.home.fragment.more.eVoucher.response.VoucherListResponse
 import com.net.pvr.ui.home.fragment.more.eVoucher.viewModel.EVoucherViewModel
-import com.net.pvr.ui.location.selectCity.SelectCityActivity
+import com.net.pvr.ui.payment.PaymentActivity
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.hide
 import com.net.pvr.utils.show
-import com.net.pvr.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 
 @AndroidEntryPoint
@@ -45,7 +42,8 @@ class EVoucherDetailsActivity : AppCompatActivity(),
 
     private var voucherDetShow = 0
     private var howWorkShow = 0
-    private  var category =""
+    private var category = ""
+    private var paidPrice= ""
 
     private var voucherListResponse: ArrayList<VoucherListResponse.Output.Ev> = ArrayList()
     private var cartModel: ArrayList<EVoucherCart> = arrayListOf()
@@ -129,15 +127,12 @@ class EVoucherDetailsActivity : AppCompatActivity(),
     private fun categoryData() {
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding?.recyclerView63?.layoutManager = layoutManager
-        voucherAddAdapter = VoucherAddAdapter(this,filter(category) , this)
+        voucherAddAdapter = VoucherAddAdapter(this, filter(category), this)
         binding?.recyclerView63?.adapter = voucherAddAdapter
-
-
-        println("------------->${filter(category)}")
     }
+
     private fun filter(text: String): ArrayList<VoucherListResponse.Output.Ev> {
-        val filtered: ArrayList<VoucherListResponse.Output.Ev> = java.util.ArrayList()
-        val filtered1: ArrayList<VoucherListResponse.Output.Ev> = java.util.ArrayList()
+        val filtered: ArrayList<VoucherListResponse.Output.Ev> = ArrayList()
         for (item in voucherListResponse) {
             if (item.voucherCategory.lowercase(Locale.getDefault())
                     .contains(text.lowercase(Locale.getDefault()))
@@ -146,9 +141,6 @@ class EVoucherDetailsActivity : AppCompatActivity(),
             }
         }
         return filtered
-//            voucherAddAdapter?.filterVoucherSearchList(filtered1)
-//        voucherListAdapter?.filterCinemaList(filtered1)
-
     }
 
     private fun movedNext() {
@@ -181,7 +173,9 @@ class EVoucherDetailsActivity : AppCompatActivity(),
                 Constant().vibrateDevice(this)
 
             } else {
-                val intent = Intent(this@EVoucherDetailsActivity, SelectCityActivity::class.java)
+                val intent = Intent(this@EVoucherDetailsActivity, PaymentActivity::class.java)
+                Constant.BOOK_TYPE ="EVOUCHER"
+                intent.putExtra("paidAmount",paidPrice)
                 startActivity(intent)
             }
         }
@@ -241,6 +235,8 @@ class EVoucherDetailsActivity : AppCompatActivity(),
             val itemCheckPrice = updatePrice()
             binding?.textView32?.text =
                 getString(R.string.currency) + Constant.DECIFORMAT.format(itemCheckPrice / 100.0)
+            paidPrice= Constant.DECIFORMAT.format(itemCheckPrice / 100.0)
+
         } else {
             binding?.constraintLayout182?.hide()
         }

@@ -546,7 +546,7 @@
         <item>Theaters</item>
         <item>Languages</item>
     </string-array>
-<!--    <item>Payments</item>-->
+    <!--    <item>Payments</item>-->
 
 
     <string name="version">"Version"</string>
@@ -719,5 +719,9 @@ IMAX Corporation is one of the world\'s leading entertainment technology compani
     <string name="subscription_nvoucher">Subscription\nVoucher</string>
     <string name="cancellation1">Cancellation will be effective at the end of your current billing cycle.</string>
     <string name="i_agree_to_the_terms_conditions"><![CDATA[I agree to the terms & conditions]]></string>
+    <string name="scheme_id">Scheme ID</string>
+    <string name="purchased_on">Purchased on</string>
+    <string name="voucher_code">Voucher Code</string>
+    <string name="transaction_history">Transaction History</string>
 
 </resources>

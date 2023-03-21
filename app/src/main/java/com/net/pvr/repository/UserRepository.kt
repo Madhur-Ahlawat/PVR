@@ -41,6 +41,7 @@ import com.net.pvr.ui.login.response.LoginResponse
 import com.net.pvr.ui.movieDetails.nowShowing.response.MovieDetailsResponse
 import com.net.pvr.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr.ui.myBookings.response.GiftCardResponse
+import com.net.pvr.ui.myBookings.response.MyVoucherList
 import com.net.pvr.ui.myBookings.response.ParkingResponse
 import com.net.pvr.ui.payment.mobikwik.response.MobiKwikCheckSumResponse
 import com.net.pvr.ui.payment.mobikwik.response.MobiKwikPayResponse
@@ -1466,6 +1467,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         bookingTheatreResponse(response)
     }
 
+
     private fun bookingTheatreResponse(response: Response<BookingTheatreResponse>) {
         if (response.isSuccessful && response.body() != null) {
             bookingTheatreLiveData.postValue(NetworkResult.Success(response.body()!!))
@@ -1476,6 +1478,37 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             bookingTheatreLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
+
+
+
+
+
+    //Vouchers
+    private val vouchersLiveData = MutableLiveData<NetworkResult<MyVoucherList>>()
+    val vouchersResponseLiveData: LiveData<NetworkResult<MyVoucherList>>
+        get() = vouchersLiveData
+
+    suspend fun vouchers(
+        userid: String
+    ) {
+        vouchersLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.myVouchers(
+            userid, Constant.version, Constant.platform)
+        vouchersResponse(response)
+    }
+
+    private fun vouchersResponse(response: Response<MyVoucherList>) {
+        if (response.isSuccessful && response.body() != null) {
+            vouchersLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            vouchersLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            vouchersLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
 
     //NearbyTheatre
     private val nearTheaterLiveData = MutableLiveData<NetworkResult<CinemaNearTheaterResponse>>()

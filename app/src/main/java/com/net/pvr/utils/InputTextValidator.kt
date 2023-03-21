@@ -9,6 +9,7 @@ object InputTextValidator {
         "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
     private const val PASSWORD_REGEX = "^.(?=.{6,})(?=.*[a-z])(?=.*[\\\\d])(?=.*[\\\\S]).*$"
     private const val NUMBER_REGEX = "^[123456789][0-9]{9}?$"
+
     fun validateEmail(editText: EditText): Boolean {
         val text = editText.text.toString().trim { it <= ' ' }
         return if (text.isEmpty()) false else Pattern.matches(EMAIL_REGEX, text)
@@ -46,10 +47,10 @@ object InputTextValidator {
         return text.matches(regx.toRegex()) && (text.length == 10 || text.length == 11 || text.length == 13)
     }
 
-    fun validateEmail(email: String): Boolean {
-        val text = email.trim { it <= ' ' }
-        return if (text.isEmpty()) false else Pattern.matches(EMAIL_REGEX, text)
-    }
+//    fun validateEmail(email: String): Boolean {
+//        val text = email.trim { it <= ' ' }
+//        return if (text.isEmpty()) false else Pattern.matches(EMAIL_REGEX, text)
+//    }
 
     //    public static boolean validatePassword(EditText editTextPassword,EditText editTextConfirmPassword) {
     //        String password = editTextPassword.getText().toString().trim();

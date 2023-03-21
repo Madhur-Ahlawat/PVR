@@ -25,6 +25,7 @@ import com.net.pvr.ui.home.fragment.more.profile.userDetails.viewModel.UserProfi
 import com.net.pvr.ui.home.fragment.more.response.ProfileResponse
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.Constant.Companion.ProfileResponseConst
+import com.net.pvr.utils.InputTextValidator
 import com.net.pvr.utils.NetworkResult
 import com.net.pvr.utils.ga.GoogleAnalytics
 import com.net.pvr.utils.printLog
@@ -49,12 +50,12 @@ class ProfileActivity : AppCompatActivity() {
     private var dialog: BottomSheetDialog? = null
 
     //gender
-    private var selectedGender=""
-    var gender = arrayOf("Select","Male", "Female")
+    private var selectedGender = ""
+    var gender = arrayOf("Select", "Male", "Female")
 
     //marital Status
-    private var selectedMarital=""
-    var maritalStatus = arrayOf("Select","Married", "Unmarried")
+    private var selectedMarital = ""
+    var maritalStatus = arrayOf("Select", "Married", "Unmarried")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,9 +103,7 @@ class ProfileActivity : AppCompatActivity() {
         //anniversary
         binding?.textView225?.text = profileResponse?.doa
 
-        Glide.with(this)
-            .load(profileResponse?.im)
-            .placeholder(R.drawable.user)
+        Glide.with(this).load(profileResponse?.im).placeholder(R.drawable.user)
             .into(binding?.circularImageView!!)
 
     }
@@ -117,7 +116,7 @@ class ProfileActivity : AppCompatActivity() {
                 bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Profile")
 //                bundle.putString("var_experiences_banner", comingSoonItem.name)
                 GoogleAnalytics.hitEvent(this, "my_pvr_edit_button", bundle)
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
 
@@ -141,7 +140,10 @@ class ProfileActivity : AppCompatActivity() {
         behavior?.state = BottomSheetBehavior.STATE_EXPANDED
         dialog?.setContentView(bindingProfile.root)
 
-        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog?.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.attributes?.windowAnimations = R.style.DialogAnimation
         dialog?.window?.setGravity(Gravity.BOTTOM)
@@ -157,13 +159,9 @@ class ProfileActivity : AppCompatActivity() {
         bindingProfile.gender.adapter = aa
 
 
-        bindingProfile.gender.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
+        bindingProfile.gender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View,
-                position: Int,
-                id: Long
+                parent: AdapterView<*>, view: View, position: Int, id: Long
             ) {
                 selectedGender = gender[position]
             }
@@ -181,28 +179,23 @@ class ProfileActivity : AppCompatActivity() {
         //Setting the ArrayAdapter data on the Spinner
         bindingProfile.martialStatus.adapter = aaa
 
-        bindingProfile.martialStatus.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View,
-                position: Int,
-                id: Long
-            ) {
-                selectedMarital = maritalStatus[position]
-                if (selectedMarital == "Unmarried"){
-                    bindingProfile.anniversary.text = ""
+        bindingProfile.martialStatus.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>, view: View, position: Int, id: Long
+                ) {
+                    selectedMarital = maritalStatus[position]
+                    if (selectedMarital == "Unmarried") {
+                        bindingProfile.anniversary.text = ""
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+
                 }
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-
-            }
-        }
         //image
-        Glide.with(this)
-            .load(profileResponse?.im)
-            .placeholder(R.drawable.user)
+        Glide.with(this).load(profileResponse?.im).placeholder(R.drawable.user)
             .into(bindingProfile.circularImageView)
         //name
         bindingProfile.name.setText(preferences.getUserName())
@@ -216,19 +209,19 @@ class ProfileActivity : AppCompatActivity() {
         //anniversary
         bindingProfile.anniversary.text = profileResponse?.doa
 
-        if (profileResponse?.g!=null && profileResponse?.g != ""){
-            if (profileResponse?.g == "Male"){
+        if (profileResponse?.g != null && profileResponse?.g != "") {
+            if (profileResponse?.g == "Male") {
                 bindingProfile.gender.setSelection(1)
-            }else{
+            } else {
                 bindingProfile.gender.setSelection(2)
             }
         }
 
-        if (profileResponse?.ms!=null && profileResponse?.ms != ""){
-            if (profileResponse?.ms == "Married"){
+        if (profileResponse?.ms != null && profileResponse?.ms != "") {
+            if (profileResponse?.ms == "Married") {
                 anniversary?.text = profileResponse?.doa
                 bindingProfile.martialStatus.setSelection(1)
-            }else{
+            } else {
                 bindingProfile.martialStatus.setSelection(2)
             }
         }
@@ -248,17 +241,21 @@ class ProfileActivity : AppCompatActivity() {
         //Dob DatePicker
         bindingProfile.constraintLayout68.setOnClickListener {
             dobClick = true
-            val year=myCalendar.get(Calendar.YEAR)
-            val newYear= year-13
-            val mDatePickerDialog = DatePickerDialog(    this,R.style.dateDialog,
+            val year = myCalendar.get(Calendar.YEAR)
+            val newYear = year - 13
+            val mDatePickerDialog = DatePickerDialog(
+                this,
+                R.style.dateDialog,
                 dateD,
                 newYear,
                 myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH))
+                myCalendar.get(Calendar.DAY_OF_MONTH)
+            )
 
 
 
-            mDatePickerDialog.datePicker.maxDate = System.currentTimeMillis()  + 0 * 24 * 60 * 60 * 1000
+            mDatePickerDialog.datePicker.maxDate =
+                System.currentTimeMillis() + 0 * 24 * 60 * 60 * 1000
             mDatePickerDialog.show()
             mDatePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK)
             mDatePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK)
@@ -267,18 +264,24 @@ class ProfileActivity : AppCompatActivity() {
 
         //anniversaryClick
         bindingProfile.anniversary.setOnClickListener {
-            if (selectedMarital=="Married"){
-                    dobClick = false
-                val mDatePickerDialog = DatePickerDialog(    this,R.style.dateDialog,
-                        dateD,
-                        myCalendar.get(Calendar.YEAR),
-                        myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH))
+            if (selectedMarital == "Married") {
+                dobClick = false
+                val mDatePickerDialog = DatePickerDialog(
+                    this,
+                    R.style.dateDialog,
+                    dateD,
+                    myCalendar.get(Calendar.YEAR),
+                    myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH)
+                )
 
-                    mDatePickerDialog.datePicker.maxDate = System.currentTimeMillis() + 0 * 24 * 60 * 60 * 1000
-                    mDatePickerDialog.show()
-                mDatePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK)
-                mDatePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK)
+                mDatePickerDialog.datePicker.maxDate =
+                    System.currentTimeMillis() + 0 * 24 * 60 * 60 * 1000
+                mDatePickerDialog.show()
+                mDatePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE)
+                    .setTextColor(Color.BLACK)
+                mDatePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE)
+                    .setTextColor(Color.BLACK)
             }
         }
 
@@ -291,11 +294,12 @@ class ProfileActivity : AppCompatActivity() {
         //save
         bindingProfile.save.setOnClickListener {
             val dob = Constant().changeDateFormat(bindingProfile.dob.text.toString())
-            val anniversary = Constant().changeDateFormat(bindingProfile.anniversary.text.toString())
+            val anniversary =
+                Constant().changeDateFormat(bindingProfile.anniversary.text.toString())
             printLog("dob----->${dob}")
             clickRefresh = true
-            if (selectedMarital=="Married"){
-                if (bindingProfile.name.text.toString()==""){
+            if (selectedMarital == "Married") {
+                if (bindingProfile.name.text.toString() == "") {
                     val dialog = OptionDialog(this,
                         R.mipmap.ic_launcher,
                         R.string.app_name,
@@ -305,7 +309,7 @@ class ProfileActivity : AppCompatActivity() {
                         positiveClick = {},
                         negativeClick = {})
                     dialog.show()
-                }else if (bindingProfile.phone.text.toString()==""){
+                } else if (bindingProfile.phone.text.toString() == "") {
                     val dialog = OptionDialog(this,
                         R.mipmap.ic_launcher,
                         R.string.app_name,
@@ -315,18 +319,30 @@ class ProfileActivity : AppCompatActivity() {
                         positiveClick = {},
                         negativeClick = {})
                     dialog.show()
-                }
-                else if (bindingProfile.email.text.toString()==""){
-                    val dialog = OptionDialog(this,
-                        R.mipmap.ic_launcher,
-                        R.string.app_name,
-                        "Enter Email",
-                        positiveBtnText = R.string.ok,
-                        negativeBtnText = R.string.no,
-                        positiveClick = {},
-                        negativeClick = {})
-                    dialog.show()
-                }else if (selectedGender==""){
+                } else if (!InputTextValidator.validateEmail(bindingProfile.email)) {
+
+                    if (bindingProfile.email.text.toString().trim { it <= ' ' }.isEmpty()) {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            "Enter Email",
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            resources.getString(R.string.email_msg_invalid),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                } else if (selectedGender == "") {
                     val dialog = OptionDialog(this,
                         R.mipmap.ic_launcher,
                         R.string.app_name,
@@ -336,7 +352,7 @@ class ProfileActivity : AppCompatActivity() {
                         positiveClick = {},
                         negativeClick = {})
                     dialog.show()
-                }else if (dob.toString()==""){
+                } else if (dob.toString() == "") {
                     val dialog = OptionDialog(this,
                         R.mipmap.ic_launcher,
                         R.string.app_name,
@@ -346,7 +362,7 @@ class ProfileActivity : AppCompatActivity() {
                         positiveClick = {},
                         negativeClick = {})
                     dialog.show()
-                }else if (Data(bindingProfile.dob.text.toString()) < 13){
+                } else if (Data(bindingProfile.dob.text.toString()) < 13) {
                     val dialog = OptionDialog(this,
                         R.mipmap.ic_launcher,
                         R.string.app_name,
@@ -356,7 +372,7 @@ class ProfileActivity : AppCompatActivity() {
                         positiveClick = {},
                         negativeClick = {})
                     dialog.show()
-                }else if (selectedMarital=="" || selectedMarital=="Select"){
+                } else if (selectedMarital == "" || selectedMarital == "Select") {
                     val dialog = OptionDialog(this,
                         R.mipmap.ic_launcher,
                         R.string.app_name,
@@ -366,7 +382,7 @@ class ProfileActivity : AppCompatActivity() {
                         positiveClick = {},
                         negativeClick = {})
                     dialog.show()
-                }else if (anniversary.toString()==""){
+                } else if (anniversary.toString() == "") {
                     val dialog = OptionDialog(this,
                         R.mipmap.ic_launcher,
                         R.string.app_name,
@@ -376,7 +392,7 @@ class ProfileActivity : AppCompatActivity() {
                         positiveClick = {},
                         negativeClick = {})
                     dialog.show()
-                }else{
+                } else {
                     authViewModel.editProfile(
                         preferences.getUserId(),
                         bindingProfile.email.text.toString(),
@@ -389,7 +405,7 @@ class ProfileActivity : AppCompatActivity() {
                     )
                 }
 
-            }else{
+            } else {
                 authViewModel.editProfile(
                     preferences.getUserId(),
                     bindingProfile.email.text.toString(),
@@ -420,8 +436,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun Data(date: String?): Int {
         if (!TextUtils.isEmpty(date)) {
             val cal = Calendar.getInstance()
-            val dateInString = SimpleDateFormat("dd MMM, yyyy")
-                .format(cal.time)
+            val dateInString = SimpleDateFormat("dd MMM, yyyy").format(cal.time)
             val formatter = SimpleDateFormat("dd MMM, yyyy")
             var parsedDate: Date? = null
             var Date: Date? = null
@@ -432,8 +447,7 @@ class ProfileActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
             if (parsedDate != null && Date != null) return getDiffYears(
-                Date,
-                parsedDate
+                Date, parsedDate
             )
         }
         return 0
@@ -448,6 +462,7 @@ class ProfileActivity : AppCompatActivity() {
         }
         return diff
     }
+
     private fun getCalendar(date: Date?): Calendar {
         val cal = Calendar.getInstance(Locale.US)
         cal.time = date
@@ -457,7 +472,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun updateLabel() {
         val myFormat = "dd MMM, yyyy " //In which you need put here
         val sdf = SimpleDateFormat(myFormat, Locale.ENGLISH)
-        println("sdf.format(myCalendar.time)--->"+sdf.format(myCalendar.time))
+        println("sdf.format(myCalendar.time)--->" + sdf.format(myCalendar.time))
         if (dobClick) {
             dob?.text = sdf.format(myCalendar.time)
         } else {
@@ -527,9 +542,7 @@ class ProfileActivity : AppCompatActivity() {
         //anniversary
         binding?.textView225?.text = output.doa
         //image
-        Glide.with(this)
-            .load(output.im)
-            .placeholder(R.drawable.user)
+        Glide.with(this).load(output.im).placeholder(R.drawable.user)
             .into(binding?.circularImageView!!)
     }
 
