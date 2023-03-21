@@ -82,8 +82,11 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
     private var rlBanner: RelativeLayout? = null
     private var stories: StoriesProgressView? = null
 
-    private var  gridLayout2: GridLayoutManager? = null
+    private var gridLayout2: GridLayoutManager? = null
 
+    companion object {
+        var locationVar = "true"
+    }
 
     //internet Check
     private var broadcastReceiver: BroadcastReceiver? = null
@@ -173,7 +176,7 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
         //Select City
         binding?.txtCity?.setOnClickListener {
             val intent = Intent(requireActivity(), SelectCityActivity::class.java)
-            intent.putExtra("from","cinema")
+            intent.putExtra("from", "cinema")
             startActivity(intent)
         }
 
@@ -183,7 +186,7 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
         }
 
         //pull Down
-        binding?.swipeCinema?.setOnRefreshListener{
+        binding?.swipeCinema?.setOnRefreshListener {
             binding?.swipeCinema?.isRefreshing = false
             authViewModel.cinema(preferences.getCityName(), lat, lng, preferences.getUserId(), "")
         }
@@ -216,7 +219,7 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
 
     private fun requestPermissions() {
         requestPermissions(
-             arrayOf(
+            arrayOf(
                 Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION
             ), permissionId
         )
@@ -231,10 +234,10 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
         if (requestCode == permissionId) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 getLocation()
-            }else{
+            } else {
                 getLocation()
             }
-        }else{
+        } else {
             getLocation()
         }
     }
@@ -286,13 +289,29 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
 
                     }
                 } else {
-                    val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                    startActivity(intent)
+                    locationVar = "GPS"
+                    authViewModel.cinema(
+                        preferences.getCityName(),
+                        lat,
+                        lng,
+                        preferences.getUserId(),
+                        ""
+                    )
+
                 }
             } else {
-                requestPermissions()
+                locationVar = "PERMISSION"
+
+//                requestPermissions()
+                authViewModel.cinema(
+                    preferences.getCityName(),
+                    lat,
+                    lng,
+                    preferences.getUserId(),
+                    ""
+                )
             }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             authViewModel.cinema(
                 preferences.getCityName(),
                 lat,
@@ -352,7 +371,7 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
         binding?.constraintLayout146?.hide()
 
 //        List
-         gridLayout2 = GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
+        gridLayout2 = GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
         val comingSoonMovieAdapter =
             CinemaAdapter(output.c, requireActivity(), this, this, this, preferences.getIsLogin())
         binding?.recyclerCinema?.layoutManager = gridLayout2
@@ -550,8 +569,13 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
     }
 
 
-    override fun onDirectionClick(comingSoonItem: CinemaResponse.Output.C) {
-        Constant().openMap(requireActivity(), comingSoonItem.lat, comingSoonItem.lang)
+    override fun onDirectionClick(type: String) {
+        if (type == "GPS") {
+            val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+            startActivityForResult(intent,100)
+        } else {
+            requestPermissions()
+        }
     }
 
     override fun onCinemaClick(comingSoonItem: CinemaResponse.Output.C) {
@@ -620,5 +644,54 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
         } else {
             binding?.include39?.placeHolderView?.hide()
         }
+    }
+
+    @SuppressLint("MissingPermission")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(checkPermissions()){
+            mFusedLocationClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
+                val location: Location? = task.result
+                val geocoder = context?.let { Geocoder(it, Locale.getDefault()) }
+                try {
+                    val addresses = location?.longitude?.let {
+                        location.latitude.let { it1 ->
+                            geocoder?.getFromLocation(
+                                it1, it, 1
+                            )
+                        }
+                    }
+                    if (addresses?.isNotEmpty() == true) {
+//                            val currentAddress: String = addresses[0].locality
+//                            preferences.cityNameCinema(currentAddress)
+                        lat = location.latitude.toString()
+                        lng = location.longitude.toString()
+                        preferences.saveLatitudeData(lat.toString())
+                        preferences.saveLongitudeData(lng.toString())
+                        authViewModel.cinema(
+                            preferences.getCityName(),
+                            lat,
+                            lng,
+                            preferences.getUserId(),
+                            ""
+                        )
+                    } else {
+                        authViewModel.cinema(
+                            preferences.getCityName(),
+                            lat,
+                            lng,
+                            preferences.getUserId(),
+                            ""
+                        )
+
+                    }
+
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+
+            }
+        }
+
     }
 }
