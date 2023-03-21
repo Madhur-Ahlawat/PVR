@@ -73,7 +73,9 @@ import javax.inject.Inject
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
-class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemClickListenerCity {
+class SummeryActivity : AppCompatActivity(),
+    AddFoodCartAdapter.RecycleViewItemClickListenerCity {
+
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivitySummeryBinding? = null
@@ -100,8 +102,8 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySummeryBinding.inflate(layoutInflater, null, false)
-        val view = binding?.root
-        setContentView(view)
+        setContentView(binding?.root)
+
         manageLogin()
     }
 
@@ -170,7 +172,6 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
 
     //CartFood
     private fun foodCart() {
-        println("cartModel--->"+cartModel.size)
         if (cartModel.isNotEmpty()) {
             binding?.constraintLayout171?.show()
             binding?.recyclerView32?.show()
@@ -709,6 +710,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                     output.seats,
                     output.audi
                 )
+
             } else {
                 // Hit Event
                 try {
@@ -723,6 +725,7 @@ class SummeryActivity : AppCompatActivity(), AddFoodCartAdapter.RecycleViewItemC
                 val intent = Intent(this@SummeryActivity, PaymentActivity::class.java)
                 intent.putExtra("paidAmount", output.a.toString())
                 startActivity(intent)
+
             }
         }
 

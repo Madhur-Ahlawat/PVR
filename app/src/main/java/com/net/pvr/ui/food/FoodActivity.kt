@@ -1288,7 +1288,6 @@ class FoodActivity : AppCompatActivity(),
         bestSellerFoodAdapter?.notifyDataSetChanged()
     }
 
-
     // All  Food Mfl Action Manage
 
     private fun updateCategoryFoodCartList(comingSoonItem: FoodResponse.Output.Mfl) {
@@ -1884,7 +1883,6 @@ class FoodActivity : AppCompatActivity(),
             binding?.include41?.placeHolderView?.hide()
         }
     }
-
 
     override fun onResume() {
         super.onResume()

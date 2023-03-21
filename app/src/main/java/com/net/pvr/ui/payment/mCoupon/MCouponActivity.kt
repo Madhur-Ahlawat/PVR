@@ -90,7 +90,7 @@ lateinit var preferences: PreferenceManager
                 if (couponCodeList != null && couponCodeList.size == getCount()) {
                     redeemCoupon(couponCodeList)
                 } else {
-                    toast("Coupon code required")
+//                    toast("Coupon code required")
                 }
             }
         }
