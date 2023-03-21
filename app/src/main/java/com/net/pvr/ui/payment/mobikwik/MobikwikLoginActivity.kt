@@ -61,12 +61,11 @@ class MobikwikLoginActivity : AppCompatActivity() {
         binding?.mobileNumber?.setText(preferences.getString(Constant.SharedPreference.USER_NUMBER))
         binding?.emailNumber?.setText(preferences.getString(Constant.SharedPreference.USER_EMAIL))
 
-
         // GET OTP
         binding?.sendOtp?.setOnClickListener {
             if (binding?.sendOtp?.text == "Create Wallet") {
                 if (binding?.emailNumber?.text.toString().isNotEmpty()) {
-                    if (InputTextValidator.validateEmail(binding?.emailNumber?.text.toString())) {
+                    if (InputTextValidator.validateEmail(binding?.emailNumber!!)) {
                         binding?.errorText?.text = ""
                         paytmPostPaidViewModel.mobikwikCreateWallet(
                             preferences.getUserId(), BOOKING_ID, TRANSACTION_ID,

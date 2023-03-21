@@ -55,13 +55,11 @@ class OtpVerifyActivity : AppCompatActivity() {
     //Otp Read
     private var smsBroadcastReceiver: SmsBroadcastReceiver? = null
     private  var from = ""
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOtpVerifyBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-
         manageFunction()
     }
 
@@ -335,27 +333,45 @@ class OtpVerifyActivity : AppCompatActivity() {
     private fun retrieveResisterData(output: ResisterResponse.Output) {
         Constant.setAverageUserIdSCM(preferences)
         Constant.setUPSFMCSDK(preferences)
-        preferences.saveIsLogin(true)
 
+
+
+
+
+
+//        preferences.saveIsLogin(true)
         // Hit Event
         try {
 
-            val bundle = Bundle()
-            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
-            bundle.putString("user_id", output.id)
-            GoogleAnalytics.hitEvent(this, "login_success_new", bundle)
 
-        output.id.let { preferences.saveUserId(it) }
-        output.un.let { preferences.saveUserName(it) }
-        output.ph.let { preferences.saveMobileNumber(it) }
-        output.em.let { preferences.saveEmail(it) }
-        output.token.let { preferences.saveToken(it) }
+//        output.id.let { preferences.saveUserId(it) }
+//        output.un.let { preferences.saveUserName(it) }
+//        output.ph.let { preferences.saveMobileNumber(it) }
+//        output.em.let { preferences.saveEmail(it) }
+//        output.token.let { preferences.saveToken(it) }
+
+            preferences.saveIsLogin(true)
+            output.id.let { preferences.saveUserId(it) }
+            output.un.let { preferences.saveUserName(it) }
+            output.ph.let { preferences.saveMobileNumber(it) }
+            output.token.let { preferences.saveToken(it) }
+            output.ph.let { preferences.saveString(Constant.SharedPreference.USER_NUMBER,it) }
+            output.em.let { preferences.saveString(Constant.SharedPreference.USER_EMAIL,it)  }
+            output.gd.let { preferences.saveString(Constant.SharedPreference.USER_GENDER,it)  }
+
         if (output.dob!=null){
             output.dob.let { preferences.saveDob(it) }
         }
         }catch (e:Exception){
             e.printStackTrace()
+            printLog("exception-------->${e.message}")
         }
+
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Login Screen")
+        bundle.putString("user_id", output.id)
+        GoogleAnalytics.hitEvent(this, "login_success_new", bundle)
+
         authViewModel.privilegeHome(preferences.geMobileNumber(), preferences.getCityName())
         privilegeDataLoad()
     }
@@ -366,6 +382,22 @@ class OtpVerifyActivity : AppCompatActivity() {
             Constant.setAverageUserIdSCM(preferences)
             Constant.setUPSFMCSDK(preferences)
 
+
+
+            preferences.saveIsLogin(true)
+            output?.id?.let { preferences.saveUserId(it) }
+            output?.un?.let { preferences.saveUserName(it) }
+            output?.ph?.let { preferences.saveMobileNumber(it) }
+            output?.token?.let { preferences.saveToken(it) }
+//            output?.dob?.let { preferences.saveDob(it) }
+            output?.ph?.let { preferences.saveString(Constant.SharedPreference.USER_NUMBER,it) }
+            output?.em?.let { preferences.saveString(Constant.SharedPreference.USER_EMAIL,it)  }
+            output?.gd?.let { preferences.saveString(Constant.SharedPreference.USER_GENDER,it)  }
+
+            if (output?.dob!=null){
+                output.dob.let { preferences.saveDob(it) }
+            }
+
             // Hit Event
             try {
                 val bundle = Bundle()
@@ -373,18 +405,10 @@ class OtpVerifyActivity : AppCompatActivity() {
                 bundle.putString("user_id", output?.token)
                 GoogleAnalytics.hitEvent(this, "login_success_existing", bundle)
             }catch (e:Exception){
+                printLog("exception----eeded---->${e.message}")
+
                 e.printStackTrace()
             }
-
-            preferences.saveIsLogin(true)
-            output?.id?.let { preferences.saveUserId(it) }
-            output?.un?.let { preferences.saveUserName(it) }
-            output?.ph?.let { preferences.saveMobileNumber(it) }
-            output?.token?.let { preferences.saveToken(it) }
-            output?.dob?.let { preferences.saveDob(it) }
-            output?.ph?.let { preferences.saveString(Constant.SharedPreference.USER_NUMBER,it) }
-            output?.em?.let { preferences.saveString(Constant.SharedPreference.USER_EMAIL,it)  }
-            output?.gd?.let { preferences.saveString(Constant.SharedPreference.USER_GENDER,it)  }
 
             authViewModel.privilegeHome(preferences.geMobileNumber(), preferences.getCityName())
             privilegeDataLoad()
