@@ -119,6 +119,7 @@
                 android:id="@+id/imageView22"
                 android:layout_width="@dimen/dimen_25dp"
                 android:layout_height="@dimen/dimen_25dp"
+                android:visibility="gone"
                 android:layout_marginStart="10dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView"
                 app:layout_constraintStart_toEndOf="@+id/textView"

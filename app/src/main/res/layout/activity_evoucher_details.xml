@@ -18,10 +18,11 @@
 
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView7"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout182"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include52">
@@ -164,7 +165,7 @@
                         android:id="@+id/textView413"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="6dp"
                         android:fontFamily="@font/sf_pro_text_regular"
                         android:text="@string/know_details_about_this_voucher"
                         android:textColor="@color/gray_payment"
@@ -177,7 +178,7 @@
                         android:id="@+id/textView414"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="6dp"
                         android:fontFamily="@font/sf_pro_text_regular"
                         android:text="@string/know_details_about_this_voucher"
                         android:textColor="@color/gray_payment"
@@ -259,7 +260,7 @@
                         android:id="@+id/textView416"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="6dp"
                         android:fontFamily="@font/sf_pro_text_regular"
                         android:text="@string/know_how_to_avail_this_voucher"
                         android:textColor="@color/gray_payment"
@@ -272,12 +273,13 @@
                         android:id="@+id/imageView182"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="6dp"
                         android:src="@drawable/howwork"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView181" />
+                        app:layout_constraintTop_toBottomOf="@+id/imageView181"
+                        tools:ignore="ContentDescription" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -286,18 +288,122 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView63"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/constraintLayout176"
                 app:layout_constraintStart_toStartOf="@+id/constraintLayout176"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout176"
                 tools:itemCount="2"
                 tools:listitem="@layout/voucher_purchase_list" />
 
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout182"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout52"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/textView31"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="29dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="29dp"
+                android:background="@drawable/yellow_book_curve"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:paddingStart="@dimen/dimen_35dp"
+                android:paddingEnd="@dimen/dimen_35dp"
+                android:text="@string/proceed"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView32"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:includeFontPadding="false"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView31"
+                tools:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView33"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:includeFontPadding="false"
+                android:text="@string/grand_total"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
+                app:layout_constraintStart_toStartOf="@+id/textView32"
+                app:layout_constraintTop_toBottomOf="@+id/textView32" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout88"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="#F8F8F8"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout52"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <CheckBox
+                android:id="@+id/checkedTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:checked="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/textView418"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:includeFontPadding="false"
+                android:text="@string/i_agree_to_the_terms_conditions"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/checkedTextView"
+                app:layout_constraintStart_toEndOf="@+id/checkedTextView"
+                app:layout_constraintTop_toTopOf="@+id/checkedTextView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

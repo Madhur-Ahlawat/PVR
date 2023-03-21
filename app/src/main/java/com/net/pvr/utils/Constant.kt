@@ -12,6 +12,7 @@ import android.graphics.Color
 import android.location.*
 import android.net.Uri
 import android.os.Handler
+import android.os.Vibrator
 import android.provider.ContactsContract.Directory.PACKAGE_NAME
 import android.provider.Settings
 import android.text.*
@@ -26,6 +27,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.evergage.android.Evergage
@@ -34,6 +36,7 @@ import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.food.CartModel
 import com.net.pvr.ui.home.fragment.home.response.HomeResponse
+import com.net.pvr.ui.home.fragment.more.eVoucher.details.EVoucherDetailsActivity
 import com.net.pvr.ui.home.fragment.more.response.ProfileResponse
 import com.net.pvr.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr.ui.ticketConfirmation.TicketConfirmationActivity
@@ -929,5 +932,12 @@ class Constant {
 
     fun dateFormatter(milliseconds: String): String {
         return SimpleDateFormat("dd MMM yyyy").format(Date(milliseconds.toLong())).toString()
+    }
+
+
+    // Vibrates the device for 100 milliseconds.
+    fun vibrateDevice(activity: Activity) {
+        val v: Vibrator = activity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        v.vibrate(100)
     }
 }
