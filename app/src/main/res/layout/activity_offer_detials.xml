@@ -56,7 +56,7 @@
                 android:layout_height="0dp"
                 android:rotation="180"
                 android:scaleType="fitXY"
-                android:src="@drawable/details_image_gradient"
+                android:src="@drawable/offer_image_gradient"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView91"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

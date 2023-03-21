@@ -43,7 +43,9 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewItemClickListener {
+class CardDetailsActivity : AppCompatActivity(),
+    NetBankingAdapter.RecycleViewItemClickListener {
+
     private var isNetBaking: Boolean = false
     var hmacSubs = false
 
@@ -81,22 +83,24 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
         paymentType = intent.getStringExtra("pTypeId").toString()
         //PaidAmount
         binding?.textView287?.text =
-            getString(R.string.pay) + " " + getString(R.string.currency) + Constant.DECIFORMAT.format(intent.getStringExtra("paidAmount")?.toDouble())
+            getString(R.string.pay) + " " + getString(R.string.currency) + Constant.DECIFORMAT.format(
+                intent.getStringExtra("paidAmount")?.toDouble()
+            )
         movedNext()
         paytmHMAC()
         bankList()
         paytmRHMAC()
         bankOffer()
-        if (intent.hasExtra("ccnumber")){
+        if (intent.hasExtra("ccnumber")) {
             binding?.cardNumber?.setText(intent.getStringExtra("ccnumber"))
-            binding?.cardNumber?.isEnabled =false
-            binding?.cardNumber?.isFocusable =false
-            binding?.cardNumber?.isFocusableInTouchMode =false
+            binding?.cardNumber?.isEnabled = false
+            binding?.cardNumber?.isFocusable = false
+            binding?.cardNumber?.isFocusableInTouchMode = false
         }
         if (BOOK_TYPE == "RECURRING") {
             checkBinForRecurring()
             binding?.reccurMsg?.show()
-        }else{
+        } else {
             binding?.reccurMsg?.hide()
         }
         if (paymentType.equals("116", ignoreCase = true)) {
@@ -118,7 +122,6 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
         binding?.cardNumber?.addTextChangedListener(FourDigitCardFormatWatcher())
 
 
-
     }
 
     private fun movedNext() {
@@ -128,7 +131,8 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
         }
 
         //Title
-        binding?.include27?.textView108?.text = getString(R.string.pay_via_card)+" "+intent.getStringExtra("title")
+        binding?.include27?.textView108?.text =
+            getString(R.string.pay_via_card) + " " + intent.getStringExtra("title")
         title = intent.getStringExtra("title").toString()
 
         //Proceed Bt
@@ -140,6 +144,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
             val cvv = binding?.cvv?.text.toString()
             val nameOnCard = binding?.nameOnCard?.text.toString()
 
+            printLog("monthYear------>${monthYear}")
             if (cardNumber == "") {
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
@@ -150,7 +155,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                     positiveClick = {},
                     negativeClick = {})
                 dialog.show()
-            } else if (cardNumber.length<16) {
+            } else if (cardNumber.length < 16) {
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
                     R.string.app_name,
@@ -160,7 +165,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                     positiveClick = {},
                     negativeClick = {})
                 dialog.show()
-            }else if (monthYear == "") {
+            } else if (monthYear == "") {
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
                     R.string.app_name,
@@ -170,7 +175,8 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                     positiveClick = {},
                     negativeClick = {})
                 dialog.show()
-            }else if (monthYear.length<5 && !monthYear.contains("/")) {
+            } else if (!monthYear.contains("/")&&  monthYear.length < 5 ) {
+                toast("1")
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
                     R.string.app_name,
@@ -180,7 +186,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                     positiveClick = {},
                     negativeClick = {})
                 dialog.show()
-            } else if (cvv == "" ) {
+            } else if (cvv == "") {
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
                     R.string.app_name,
@@ -190,7 +196,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                     positiveClick = {},
                     negativeClick = {})
                 dialog.show()
-            }else if ((cvv.length<3)) {
+            } else if ((cvv.length < 3)) {
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
                     R.string.app_name,
@@ -200,11 +206,11 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                     positiveClick = {},
                     negativeClick = {})
                 dialog.show()
-            }  else {
+            } else {
                 if (BOOK_TYPE == "RECURRING") {
                     authViewModel.paytmRHMAC(
                         preferences.getUserId(),
-                        Constant.BOOKING_ID,
+                        BOOKING_ID,
                         Constant.TRANSACTION_ID,
                         false,
                         cardNumber,
@@ -213,11 +219,11 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                         "no",
                         "NO"
                     )
-                }else{
-                    if (paymentType == "BIN"){
+                } else {
+                    if (paymentType == "BIN") {
                         authViewModel.bankOffer(
                             preferences.getUserId(),
-                            Constant.BOOKING_ID,
+                            BOOKING_ID,
                             Constant.TRANSACTION_ID,
                             BOOK_TYPE,
                             intent.getStringExtra("scheem").toString(),
@@ -225,10 +231,10 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                             "YES",
                             intent.getStringExtra("ptype").toString()
                         )
-                    }else {
+                    } else {
                         authViewModel.paytmHMAC(
                             preferences.getUserId(),
-                            Constant.BOOKING_ID,
+                            BOOKING_ID,
                             Constant.TRANSACTION_ID,
                             false,
                             cardNumber,
@@ -256,8 +262,9 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
             override fun onTextChanged(
                 p0: CharSequence?, start: Int, removed: Int, added: Int
             ) {
+
                 val input = p0.toString()
-                val formatter = SimpleDateFormat("MM/YY", Locale.GERMANY)
+                val formatter = SimpleDateFormat("MM/YY", Locale.ENGLISH)
                 val expiryDateDate = Calendar.getInstance()
                 try {
                     expiryDateDate.time = formatter.parse(input) as Date
@@ -283,6 +290,9 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                     lastInput = binding?.monthYear?.text.toString()
                     return
                 }
+//
+
+
             }
         })
 
@@ -291,7 +301,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
             if (!hasFocus) {
 //                lCvv = ""
                 saveCardId = ""
-               // binding?.cvv?.setText("")
+                // binding?.cvv?.setText("")
                 isSavedCard = false
             }
         }
@@ -301,13 +311,13 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
 
-                if (s.isNotEmpty() && s.replace(" ".toRegex(),"").length == 6) {
+                if (s.isNotEmpty() && s.replace(" ".toRegex(), "").length == 6) {
                     if (BOOK_TYPE == "RECURRING") {
-                        if (maxtrycount>=callCount) {
+                        if (maxtrycount >= callCount) {
                             if (maxtrycount != (callCount)) {
                                 authViewModel.recurringBinCheck(
                                     preferences.getUserId(),
-                                    Constant.BOOKING_ID,
+                                    BOOKING_ID,
                                     PaymentActivity.subsToken,
                                     s.toString().trim(),
                                     ""
@@ -318,7 +328,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                         } else {
                             authViewModel.recurringBinCheck(
                                 preferences.getUserId(),
-                                Constant.BOOKING_ID,
+                                BOOKING_ID,
                                 PaymentActivity.subsToken,
                                 s.toString().trim(),
                                 ""
@@ -369,6 +379,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
         }
 
     }
+
     private fun bankList() {
         authViewModel.liveBankDataScope.observe(this) {
             when (it) {
@@ -380,7 +391,8 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                             it.data.output.forEach { it1 ->
                                 bankList.add(it1)
                             }
-                            val layoutManagerCrew = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+                            val layoutManagerCrew =
+                                GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
                             val foodBestSellerAdapter = NetBankingAdapter(bankList, this, this)
                             binding?.recyclerView52?.layoutManager = layoutManagerCrew
                             binding?.recyclerView52?.adapter = foodBestSellerAdapter
@@ -418,6 +430,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
         }
 
     }
+
     private fun paytmRHMAC() {
         authViewModel.liveDataRScope.observe(this) {
             when (it) {
@@ -500,6 +513,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
         }
 
     }
+
     private fun generateNewOrder() {
         authViewModel.recurringNewLiveDataScope.observe(this) {
             when (it) {
@@ -545,49 +559,51 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
     }
 
     private fun retrieveData(output: PaytmHmacResponse.Output) {
+        hmackeyNet = output.hmackey
+        amountNet = output.amount
+        midNet = output.mid
+        currencyNet = output.currency
+        callingUrlNet = output.callingurl
 
-
-            hmackeyNet = output.hmackey
-            amountNet = output.amount
-            midNet = output.mid
-            currencyNet = output.currency
-            callingUrlNet = output.callingurl
-
-        if (binding?.monthYear?.text.toString()!="") {
-            expiryMonth = binding?.monthYear?.text.toString().split("/")[0]
-            expiryYear = binding?.monthYear?.text.toString().split("/")[1]
+        if (binding?.monthYear?.text.toString() != "") {
+            try {
+                expiryMonth = binding?.monthYear?.text.toString().split("/")[0]
+                expiryYear = binding?.monthYear?.text.toString().split("/")[1]
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
 
-            val intent = Intent(this@CardDetailsActivity, PaymentWebActivity::class.java)
-            if (subsId != "")
-                intent.putExtra("subscriptionId", subsId)
-            intent.putExtra("token", output.hmackey)
-            intent.putExtra("amount", output.amount)
-            intent.putExtra("mid", output.mid)
-            intent.putExtra("title", title)
-            intent.putExtra("currency", output.currency)
-            intent.putExtra("saveCardId", saveCardId)
-            intent.putExtra("paymentType", paymentType)
+        val intent = Intent(this@CardDetailsActivity, PaymentWebActivity::class.java)
+        if (subsId != "")
+            intent.putExtra("subscriptionId", subsId)
+        intent.putExtra("token", output.hmackey)
+        intent.putExtra("amount", output.amount)
+        intent.putExtra("mid", output.mid)
+        intent.putExtra("title", title)
+        intent.putExtra("currency", output.currency)
+        intent.putExtra("saveCardId", saveCardId)
+        intent.putExtra("paymentType", paymentType)
 
-            if (!isFromNet) {
-                if (binding?.checkBox?.isChecked == true && !isKotak) {
-                    intent.putExtra("saveCard", "1")
-                } else {
-                    intent.putExtra("saveCard", "0")
-                }
-
-                intent.putExtra("cvv", binding?.cvv?.text.toString())
-                intent.putExtra("ccnumber", binding?.cardNumber?.text.toString().trim())
-                intent.putExtra("expmonth", expiryMonth)
-                intent.putExtra("expyear", expiryYear)
+        if (!isFromNet) {
+            if (binding?.checkBox?.isChecked == true && !isKotak) {
+                intent.putExtra("saveCard", "1")
+            } else {
+                intent.putExtra("saveCard", "0")
             }
 
-            intent.putExtra("channelCode", selectedBankCode)
-            intent.putExtra("paymenttype", paymentType)
-            intent.putExtra("checksum", output.callingurl)
-            intent.putExtra("BookType", BOOK_TYPE)
-            intent.putExtra("TICKET_BOOKING_DETAILS", "paymentIntentData")
-            startActivity(intent)
+            intent.putExtra("cvv", binding?.cvv?.text.toString())
+            intent.putExtra("ccnumber", binding?.cardNumber?.text.toString().trim())
+            intent.putExtra("expmonth", expiryMonth)
+            intent.putExtra("expyear", expiryYear)
+        }
+
+        intent.putExtra("channelCode", selectedBankCode)
+        intent.putExtra("paymenttype", paymentType)
+        intent.putExtra("checksum", output.callingurl)
+        intent.putExtra("BookType", BOOK_TYPE)
+        intent.putExtra("TICKET_BOOKING_DETAILS", "paymentIntentData")
+        startActivity(intent)
 
     }
 
@@ -598,7 +614,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
         if (BOOK_TYPE == "RECURRING") {
             authViewModel.paytmRHMAC(
                 preferences.getUserId(),
-                Constant.BOOKING_ID,
+                BOOKING_ID,
                 Constant.TRANSACTION_ID,
                 false,
                 "",
@@ -607,10 +623,10 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                 "no",
                 "NO"
             )
-        }else{
+        } else {
             authViewModel.paytmHMAC(
                 preferences.getUserId(),
-                Constant.BOOKING_ID,
+                BOOKING_ID,
                 Constant.TRANSACTION_ID,
                 false,
                 "",
@@ -647,7 +663,7 @@ class CardDetailsActivity : AppCompatActivity(), NetBankingAdapter.RecycleViewIt
                 preferences.getCityName(),
                 NonMemberFragment.scheme_id,
                 BOOKING_ID,
-                maxtrycount.toString(),""
+                maxtrycount.toString(), ""
             )
             generateNewOrder()
             dialog.dismiss()

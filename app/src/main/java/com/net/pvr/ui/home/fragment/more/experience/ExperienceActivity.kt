@@ -165,8 +165,8 @@ class ExperienceActivity : AppCompatActivity(), ExperienceAdapter.RecycleViewIte
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleaseWait)
-                    loader?.show(supportFragmentManager, null)
+//                    loader = LoaderDialog(R.string.pleaseWait)
+//                    loader?.show(supportFragmentManager, null)
                 }
             }
         }
@@ -192,7 +192,6 @@ class ExperienceActivity : AppCompatActivity(), ExperienceAdapter.RecycleViewIte
     }
 
     override fun itemPlayerClick(comingSoonItem: ExperienceResponse.Output.Format) {
-
         val intent = Intent(this, WebViewActivity::class.java)
         intent.putExtra("title", comingSoonItem.name)
         intent.putExtra("from", "Experience")

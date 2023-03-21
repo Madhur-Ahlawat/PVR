@@ -626,7 +626,7 @@ class MyBookingsActivity : AppCompatActivity(),
         val giftCardAdapter = GiftCardAdapter(output.gc, this, this)
         binding?.recyclerMyGift?.layoutManager = gridLayout2
         binding?.recyclerMyGift?.adapter = giftCardAdapter
-        println("GiftCardResponse--->"+output.gc.size)
+
         if (output.gc.isEmpty()){
             binding?.noData?.show()
             binding?.giftView?.hide()

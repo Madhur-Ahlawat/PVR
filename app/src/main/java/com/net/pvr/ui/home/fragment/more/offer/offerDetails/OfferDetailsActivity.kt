@@ -39,6 +39,7 @@ class OfferDetailsActivity : AppCompatActivity() {
         manageFunction()
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun manageFunction() {
 
         if (intent.hasExtra("id"))
@@ -63,7 +64,7 @@ class OfferDetailsActivity : AppCompatActivity() {
         )
         movedNext()
         offerDetailsDataLoad()
-        Constant().appBarHide(this)
+//        Constant().appBarHide(this)
     }
 
     private fun movedNext() {

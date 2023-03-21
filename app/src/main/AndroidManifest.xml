@@ -209,6 +209,7 @@
         <activity
             android:name="com.net.pvr.ui.payment.cardDetails.CardDetailsActivity"
             android:exported="false"
+            android:hardwareAccelerated="true"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"

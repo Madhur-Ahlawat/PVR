@@ -44,15 +44,24 @@ class BankOfferDetailsActivity : AppCompatActivity(){
         binding = ActivityBankofferDetailsBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
+
+        manageFunctions()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun manageFunctions() {
         paymentType = intent.getStringExtra("pTypeId").toString()
         scheem = intent.getStringExtra("scheem").toString()
         paidAmount = intent.getStringExtra("paidAmount").toString()
+
         //PaidAmount
-        binding?.textView287?.text =
-            getString(R.string.pay) + " " + getString(R.string.currency) + paidAmount
+        binding?.textView287?.text = getString(R.string.pay) + " " + getString(R.string.currency) + paidAmount
+
+        binding?.cardNumber?.addTextChangedListener(FourDigitCardFormatWatcher())
         movedNext()
         bankOffer()
-        binding?.cardNumber?.addTextChangedListener(FourDigitCardFormatWatcher())
+
     }
 
     private fun movedNext() {
