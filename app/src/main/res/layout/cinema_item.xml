@@ -445,32 +445,32 @@
 
                 </LinearLayout>
 
-<!--                <LinearLayout-->
-<!--                    android:id="@+id/llLocation"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:gravity="center"-->
-<!--                    android:visibility="gone"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    tools:ignore="UseCompoundDrawables">-->
+                <LinearLayout
+                    android:id="@+id/llLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:orientation="horizontal"
+                    tools:ignore="UseCompoundDrawables">
 
-<!--                    <ImageView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:src="@drawable/ic_direction_new"-->
-<!--                        tools:ignore="ContentDescription" />-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_direction_new"
+                        tools:ignore="ContentDescription" />
 
 
-<!--                    <TextView-->
-<!--                        style="@style/H1Size"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_gravity="center"-->
-<!--                        android:layout_marginStart="7dp"-->
-<!--                        android:text="@string/directions" />-->
+                    <TextView
+                        style="@style/H1Size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="7dp"
+                        android:text="@string/directions" />
 
-<!--                </LinearLayout>-->
+                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/imageView164"

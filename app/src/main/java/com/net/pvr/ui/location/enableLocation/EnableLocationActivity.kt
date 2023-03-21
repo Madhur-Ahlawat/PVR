@@ -1,9 +1,11 @@
 package com.net.pvr.ui.location.enableLocation
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -78,17 +80,23 @@ class EnableLocationActivity : AppCompatActivity() {
 
         //Enable Location
         binding?.include39?.textView5?.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(
-                    applicationContext,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(
-                    this@EnableLocationActivity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    this.LOCATION_PERMISSION_REQUEST_CODE
-                )
-            } else {
-                getCurrentLocation()
+            if (isLocationEnabled()) {
+                if (ContextCompat.checkSelfPermission(
+                        applicationContext,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    ActivityCompat.requestPermissions(
+                        this@EnableLocationActivity,
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                        this.LOCATION_PERMISSION_REQUEST_CODE
+                    )
+                } else {
+                    getCurrentLocation()
+                }
+            }else{
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivityForResult(intent,100)
             }
         }
 
@@ -96,6 +104,18 @@ class EnableLocationActivity : AppCompatActivity() {
         binding?.include32?.imageView58?.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        val locationManager: LocationManager =
+            getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
     }
 
     private fun getCurrentLocation() {
@@ -131,11 +151,13 @@ class EnableLocationActivity : AppCompatActivity() {
                         preferences.saveLongitudeData(long.toString())
 
                         if (preferences.getCityName() == "") {
-                            val intent = Intent(this@EnableLocationActivity, SelectCityActivity::class.java)
+                            val intent =
+                                Intent(this@EnableLocationActivity, SelectCityActivity::class.java)
                             startActivity(intent)
                             finish()
                         } else {
-                            val intent = Intent(this@EnableLocationActivity, HomeActivity::class.java)
+                            val intent =
+                                Intent(this@EnableLocationActivity, HomeActivity::class.java)
                             startActivity(intent)
                             finish()
                         }
@@ -203,4 +225,20 @@ class EnableLocationActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    override fun onActivityReenter(resultCode: Int, data: Intent?) {
+        super.onActivityReenter(resultCode, data)
+        if (ContextCompat.checkSelfPermission(
+                applicationContext,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this@EnableLocationActivity,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                this.LOCATION_PERMISSION_REQUEST_CODE
+            )
+        } else {
+            getCurrentLocation()
+        }
+    }
 }

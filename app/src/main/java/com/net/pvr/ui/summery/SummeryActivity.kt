@@ -594,10 +594,8 @@ class SummeryActivity : AppCompatActivity(),
         //coupon
         binding?.textView169?.text = ""
 
-
         for (data in output.f) {
             if (data.n.contains("Taxes & Fees")) {
-
                 //taxes fee
                 binding?.textView170?.text = getString(R.string.currency) + data.v
 
@@ -634,7 +632,6 @@ class SummeryActivity : AppCompatActivity(),
 
         //caver calling
         binding?.textView171?.text = ""
-
 
         //payedAmount
         payableAmount = output.a.toDouble()
@@ -692,9 +689,9 @@ class SummeryActivity : AppCompatActivity(),
         binding?.textView175?.setOnClickListener {
             cartModel.forEachIndexed { index, food ->
                 itemDescription = if (index == 0) {
-                    food.title + "|" + food.id + "|" + food.quantity + "|" + food.price + "|" + food.ho + "|" + food.mid
+                    food.title + "|" + food.id + "|" + food.quantity + "|" + food.price + "|" + food.ho + "|" + food.mid + "|" + food.veg
                 } else {
-                    itemDescription + "#" + food.title + "|" + food.id + "|" + food.quantity + "|" + food.price + "|" + food.ho + "|" + food.mid
+                    itemDescription + "#" + food.title + "|" + food.id + "|" + food.quantity + "|" + food.price + "|" + food.ho + "|" + food.mid+ "|" + food.veg
                 }
             }
 

@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.net.pvr.R
 import com.net.pvr.databinding.CinemaItemBinding
 import com.net.pvr.ui.dailogs.OptionDialog
+import com.net.pvr.ui.home.fragment.cinema.CinemasFragment
 import com.net.pvr.ui.home.fragment.cinema.response.CinemaResponse
 import com.net.pvr.ui.login.LoginActivity
 import com.net.pvr.utils.hide
@@ -52,7 +53,12 @@ class CinemaAdapter(
                 }
 //                binding.cinemaLocation.text = this.ad
                 //Distance
-                binding.tvDistance.text = this.d
+                if (CinemasFragment.locationVar == "GPS" || CinemasFragment.locationVar == "PERMISSION"){
+                    binding.tvDistance.text = "Enable Location"
+                }else{
+                    binding.tvDistance.text = this.d
+
+                }
                 //Image
                 Glide.with(context)
                     .load(this.imob)
@@ -89,6 +95,20 @@ class CinemaAdapter(
                     }
                 }
 
+                binding.tvDistance.setOnClickListener {
+                    when (CinemasFragment.locationVar) {
+                        "GPS" -> {
+                            listener.onDirectionClick(CinemasFragment.locationVar)
+                        }
+                        "PERMISSION" -> {
+                            listener.onDirectionClick(CinemasFragment.locationVar)
+                        }
+                        else -> {
+
+                        }
+                    }
+                }
+
                 binding.cbFav.setOnClickListener {
                     if (isLogin) {
                         if (rowIndex){
@@ -122,7 +142,7 @@ class CinemaAdapter(
 
                 //Direction
                 binding.imageView166.setOnClickListener {
-                    listener.onDirectionClick(this)
+//                    listener.onDirectionClick(this)
                 }
 
                 //Kilometer
@@ -143,7 +163,7 @@ class CinemaAdapter(
     }
 
     interface Direction {
-        fun onDirectionClick(comingSoonItem: CinemaResponse.Output.C)
+        fun onDirectionClick(type: String)
     }
 
     interface Location {
