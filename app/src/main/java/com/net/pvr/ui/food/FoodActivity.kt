@@ -37,11 +37,13 @@ import com.net.pvr.ui.home.fragment.home.adapter.PromotionAdapter
 import com.net.pvr.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr.ui.summery.SummeryActivity
 import com.net.pvr.utils.*
+import com.net.pvr.utils.Constant.Companion.AUDI
 import com.net.pvr.utils.Constant.Companion.BOOKING_ID
 import com.net.pvr.utils.Constant.Companion.BOOK_TYPE
 import com.net.pvr.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr.utils.Constant.Companion.FOOD_COUNT
 import com.net.pvr.utils.Constant.Companion.QR
+import com.net.pvr.utils.Constant.Companion.SEAT
 import com.net.pvr.utils.Constant.Companion.SUMMERYBACK
 import com.net.pvr.utils.Constant.Companion.TRANSACTION_ID
 import com.net.pvr.utils.Constant.Companion.foodCartModel
@@ -144,8 +146,12 @@ class FoodActivity : AppCompatActivity(),
 
     private fun manageFunction() {
         Constant.viewModel = authViewModel
+        var audi = ""
+        if (AUDI != ""){
+            audi = "AUDI"
+        }
         authViewModel.food(
-            preferences.getUserId(), CINEMA_ID, BOOKING_ID, "", "", "", "", "", "", QR, "no", "no"
+            preferences.getUserId(), CINEMA_ID, BOOKING_ID, "", "", audi, AUDI, SEAT, "", QR, "no", "no"
         )
 
         //internet Check
@@ -397,6 +403,7 @@ class FoodActivity : AppCompatActivity(),
 
             cartShow = false
             binding?.constraintLayout112?.hide()
+            if (BOOK_TYPE != "FOOD")
             binding?.textView374?.show()
             var totalPrice = 0;
             if (BOOK_TYPE == "FOOD"){
@@ -414,10 +421,15 @@ class FoodActivity : AppCompatActivity(),
                 }else{
                       ""
                 }
+                var audi = ""
+                if (AUDI != ""){
+                    audi = "AUDI"
+                }
+
                 authViewModel.saveFood(preferences.getUserId(),CINEMA_ID,totalPrice.toString(),itemDescription,
                     readFormat.format(
                         Calendar.getInstance().time
-                    ), BOOKING_ID,"","",type,"", QR,"","")
+                    ), BOOKING_ID, AUDI, SEAT,audi,"", QR,"","")
             } else {
                 val intent = Intent(this@FoodActivity, SummeryActivity::class.java)
                 intent.putExtra(BOOK_TYPE, "BOOKING")
@@ -1155,6 +1167,7 @@ class FoodActivity : AppCompatActivity(),
         if (cartModel.isEmpty()) {
             cartShow = false
             binding?.constraintLayout30?.hide()
+            if (BOOK_TYPE != "FOOD")
             binding?.textView374?.show()
 
         } else {

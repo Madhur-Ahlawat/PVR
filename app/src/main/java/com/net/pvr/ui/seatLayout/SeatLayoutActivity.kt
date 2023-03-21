@@ -507,6 +507,8 @@ class SeatLayoutActivity : AppCompatActivity(),
 
 
         if (output.fc == "true") {
+            Constant.AUDI= ""
+            Constant.SEAT= ""
             FOODENABLE = 0
             startActivity(Intent(this, FoodActivity::class.java))
         } else {

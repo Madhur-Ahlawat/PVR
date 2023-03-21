@@ -29,6 +29,7 @@ import com.net.pvr.databinding.SacnAugOfferBinding
 import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
+import com.net.pvr.ui.food.FoodActivity
 import com.net.pvr.ui.home.HomeActivity
 import com.net.pvr.ui.scanner.bookings.SelectBookingsActivity
 import com.net.pvr.ui.scanner.bookings.viewModel.SelectBookingViewModel
@@ -153,11 +154,20 @@ class ScannerActivity : AppCompatActivity(), DecoratedBarcodeView.TorchListener 
             val server = uri.authority
             val path = uri.path
             val parts = path?.split("/")?.toTypedArray()
-            if (path?.contains("newpromo") == true) {
+            if (path?.contains("food") == true) {
+                capture?.onPause()
+                Constant.CINEMA_ID= parts?.get(2).toString()
+                Constant.AUDI= parts?.get(3).toString()
+                Constant.SEAT= parts?.get(4).toString()
+                Constant.QR = "YES"
+                Constant.BOOK_TYPE = "FOOD"
+                val intent = Intent(this, FoodActivity::class.java)
+                startActivity(intent)
+                finish()
+            }else if (path?.contains("newpromo") == true) {
                 capture?.onPause()
                 getOfferCode()
-            }
-            else if (path?.contains("food") == true || path?.contains("booking") == true) {
+            } else if (path?.contains("food") == true || path?.contains("booking") == true) {
                 var type = ""
                 if (contents.contains("type")) {
                     var params: List<NameValuePair?>? = null

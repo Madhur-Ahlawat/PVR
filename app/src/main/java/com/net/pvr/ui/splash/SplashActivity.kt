@@ -120,6 +120,9 @@ class SplashActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     } else if (parts.size == 5) {
+                        Constant.QR = "YES"
+                        Constant.AUDI = parts[3]
+                        Constant.SEAT = parts[4]
                         val intent = Intent(this@SplashActivity, FoodActivity::class.java)
                         intent.putExtra("from", "scan")
                         intent.putExtra("SEAT", parts[4])

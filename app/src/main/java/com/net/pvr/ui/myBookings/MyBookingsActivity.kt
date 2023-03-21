@@ -653,6 +653,8 @@ class MyBookingsActivity : AppCompatActivity(),
 
     override fun addFood(data: FoodTicketResponse.Output.C) {
         QR = "NO"
+        Constant.AUDI= ""
+        Constant.SEAT= ""
         val intent = Intent(this, FoodActivity::class.java)
         intent.putExtra("from", "pcOrdrsnc")
         intent.putExtra("NF", data.nf)

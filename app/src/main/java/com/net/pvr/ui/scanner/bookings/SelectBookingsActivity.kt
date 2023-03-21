@@ -507,6 +507,8 @@ class SelectBookingsActivity : AppCompatActivity() {
 
     private fun dataToFood(output: List<GetFoodResponse.Output>) {
         if ((click || clickF) && !TextUtils.isEmpty(childcinemaId)) {
+            Constant.AUDI= ""
+            Constant.SEAT= ""
             Constant.CINEMA_ID=childcinemaId
             Constant.QR = "YES"
             Constant.BOOK_TYPE = "FOOD"

@@ -105,16 +105,35 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintBottom_toBottomOf="@+id/view12"
+            app:layout_constraintBottom_toTopOf="@+id/allCaught"
             app:layout_constraintEnd_toEndOf="@+id/view12"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/view12"
             app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+            android:layout_marginBottom="@dimen/dimen_30dp"
             app:layout_constraintVertical_bias="1.0"
-            android:layout_margin="@dimen/padding_10"
+            android:layout_marginStart="@dimen/padding_10"
+            android:layout_marginEnd="@dimen/padding_10"
+            android:layout_marginTop="@dimen/padding_10"
             app:spanCount="2"
             tools:itemCount="10"
             tools:listitem="@layout/coming_soon_item_layout" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_30dp"
+            android:layout_marginBottom="@dimen/dimen_30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/allCaught"
+            android:visibility="gone"
+            android:fontFamily="@font/helvetica_neu_bold"
+            android:gravity="center"
+            android:text="That’s all we’ve got!"
+            android:textColor="#C5C5C5"
+            android:textSize="16sp" />
 
         <com.net.pvr.utils.view.MovableFloatingActionButton
             android:id="@+id/filter_fab"

@@ -24,10 +24,7 @@ import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.PagerSnapHelper
-import androidx.recyclerview.widget.SnapHelper
+import androidx.recyclerview.widget.*
 import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -85,6 +82,9 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
     private var rlBanner: RelativeLayout? = null
     private var stories: StoriesProgressView? = null
 
+    private var  gridLayout2: GridLayoutManager? = null
+
+
     //internet Check
     private var broadcastReceiver: BroadcastReceiver? = null
     override fun onCreateView(
@@ -121,8 +121,32 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
             stories?.destroy()
         }
 
+        binding?.recyclerCinema?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val visibleItemCount: Int = gridLayout2?.childCount!!
+                val totalItemCount: Int = gridLayout2?.itemCount!!
+                val pastVisibleItems: Int = gridLayout2?.findFirstVisibleItemPosition()!!
+                if (pastVisibleItems + visibleItemCount >= totalItemCount) {
+                    binding?.allCaught?.show()
+                } else {
+                    binding?.allCaught?.hide()
+                }
+            }
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                println("check case--->" + (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && isRecyclerScrollable()))
+            }
+        })
+
+
         // functions
         manageFunction()
+    }
+
+    fun isRecyclerScrollable(): Boolean {
+        return binding?.recyclerCinema?.computeHorizontalScrollRange()!! > binding?.recyclerCinema?.width!! || binding?.recyclerCinema?.computeVerticalScrollRange()!! > binding?.recyclerCinema?.height!!
     }
 
     private fun manageFunction() {
@@ -328,7 +352,7 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
         binding?.constraintLayout146?.hide()
 
 //        List
-        val gridLayout2 = GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
+         gridLayout2 = GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
         val comingSoonMovieAdapter =
             CinemaAdapter(output.c, requireActivity(), this, this, this, preferences.getIsLogin())
         binding?.recyclerCinema?.layoutManager = gridLayout2

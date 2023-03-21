@@ -124,12 +124,30 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
                 android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/allCaught"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginBottom="@dimen/padding_10"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout161"
-                tools:itemCount="3"
+                tools:itemCount="2"
                 tools:listitem="@layout/cinema_item" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_30dp"
+                android:layout_marginBottom="@dimen/dimen_30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/allCaught"
+                android:visibility="visible"
+                android:fontFamily="@font/helvetica_neu_bold"
+                android:gravity="center"
+                android:text="That’s all we’ve got!"
+                android:textColor="#C5C5C5"
+                android:textSize="16sp" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

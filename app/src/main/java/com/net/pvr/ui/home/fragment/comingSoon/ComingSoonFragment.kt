@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
@@ -38,7 +39,6 @@ import com.net.pvr.ui.home.fragment.comingSoon.search.CinemaSearchActivity
 import com.net.pvr.ui.home.fragment.comingSoon.viewModel.ComingSoonViewModel
 import com.net.pvr.ui.home.fragment.home.HomeFragment
 import com.net.pvr.ui.home.fragment.home.HomeFragment.Companion.dialogTrailer
-import com.net.pvr.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr.ui.movieDetails.comingSoonDetails.ComingSoonDetailsActivity
 import com.net.pvr.ui.movieDetails.comingSoonDetails.adapter.ComDetailsHomePhAdapter
 import com.net.pvr.ui.movieDetails.comingSoonDetails.setAlert.SetAlertActivity
@@ -54,7 +54,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.shts.android.storiesprogressview.StoriesProgressView
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class ComingSoonFragment : Fragment(),
@@ -77,6 +76,7 @@ class ComingSoonFragment : Fragment(),
     private var generseleced: ArrayList<String> = ArrayList<String>()
     private var language="ALL"
     private var genre="ALL"
+    private var  gridLayout2: GridLayoutManager? = null
 
     // story board
     private var bannerShow = 0
@@ -203,6 +203,30 @@ class ComingSoonFragment : Fragment(),
         ivCross?.setOnClickListener {
             RlBanner?.hide()
         }
+
+        binding?.recComSoonMovie?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val visibleItemCount: Int = gridLayout2?.childCount!!
+                val totalItemCount: Int = gridLayout2?.itemCount!!
+                val pastVisibleItems: Int = gridLayout2?.findFirstVisibleItemPosition()!!
+                if (pastVisibleItems + visibleItemCount >= totalItemCount) {
+                    binding?.allCaught?.show()
+                } else {
+                    binding?.allCaught?.hide()
+                }
+            }
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                println("check case--->" + (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE && isRecyclerScrollable()))
+            }
+        })
+
+    }
+
+    fun isRecyclerScrollable(): Boolean {
+        return binding?.recComSoonMovie?.computeHorizontalScrollRange()!! > binding?.recComSoonMovie?.width!! || binding?.recComSoonMovie?.computeVerticalScrollRange()!! > binding?.recComSoonMovie?.height!!
     }
 
     private fun comingSoonApi() {
@@ -281,7 +305,7 @@ class ComingSoonFragment : Fragment(),
         //ComingSoon}
         if (output.movies.isNotEmpty()){
             binding?.recComSoonMovie?.show()
-            val gridLayout2 = GridLayoutManager(requireActivity(), 2, GridLayoutManager.VERTICAL, false)
+            gridLayout2 = GridLayoutManager(requireActivity(), 2, GridLayoutManager.VERTICAL, false)
             val comingSoonMovieAdapter =
                 ComingSoonMovieAdapter(output.movies, requireActivity(), this, checkLogin)
             binding?.recComSoonMovie?.layoutManager = gridLayout2

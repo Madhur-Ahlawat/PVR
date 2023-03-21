@@ -55,7 +55,7 @@
                     android:id="@+id/nestedScrollView4"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -69,8 +69,9 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintBottom_toTopOf="@+id/allCaught"
                             app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginBottom="@dimen/dimen_30dp"
                             app:layout_constraintHorizontal_bias="1.0"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -363,6 +364,23 @@
 
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_30dp"
+                            android:layout_marginBottom="@dimen/dimen_30dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:id="@+id/allCaught"
+                            android:visibility="visible"
+                            android:fontFamily="@font/helvetica_neu_bold"
+                            android:gravity="center"
+                            android:text="That’s all we’ve got!"
+                            android:textColor="#C5C5C5"
+                            android:textSize="16sp" />
+
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

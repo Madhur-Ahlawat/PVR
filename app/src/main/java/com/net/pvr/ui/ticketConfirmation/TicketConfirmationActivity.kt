@@ -137,6 +137,8 @@ class TicketConfirmationActivity : AppCompatActivity() {
 
     private fun addFood(data: TicketBookedResponse.Output?) {
         Constant.QR = "NO"
+        Constant.AUDI= ""
+        Constant.SEAT= ""
         val intent = Intent(this, FoodActivity::class.java)
         intent.putExtra("from", "pcOrdrsnc")
         intent.putExtra("NF", data?.nf)
