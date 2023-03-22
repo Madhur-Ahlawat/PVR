@@ -118,6 +118,7 @@ class HomeActivity : AppCompatActivity(), PrivilegeHomeDialogAdapter.RecycleView
         authViewModel.privilegeHome(preferences.geMobileNumber(), preferences.getCityName())
 
         if (intent.hasExtra("from")) from = intent.getStringExtra("from").toString()
+        println("managePrivilege---$from")
 
         privilegeDataLoad()
         movedNext()
@@ -127,8 +128,9 @@ class HomeActivity : AppCompatActivity(), PrivilegeHomeDialogAdapter.RecycleView
         if (from == "cinema") {
             setCurrentFragment(secondFragment)
             binding?.bottomNavigationView?.selectedItemId = R.id.cinemaFragment
-
-        } else {
+        } else if (from == "P" || from == "PP"){
+            managePrivilege(from)
+        }else{
             binding?.bottomNavigationView?.selectedItemId = R.id.homeFragment
             setCurrentFragment(firstFragment)
         }
@@ -409,7 +411,6 @@ class HomeActivity : AppCompatActivity(), PrivilegeHomeDialogAdapter.RecycleView
     }
 
     private fun managePrivilege(s: String) {
-        println("managePrivilege---"+s)
         if (preferences.getIsLogin()) {
             val ls = preferences.getString(Constant.SharedPreference.LOYALITY_STATUS)
             val isHl: String = preferences.getString(Constant.SharedPreference.IS_HL)

@@ -131,8 +131,7 @@ class CardDetailsActivity : AppCompatActivity(),
         }
 
         //Title
-        binding?.include27?.textView108?.text =
-            getString(R.string.pay_via_card) + " " + intent.getStringExtra("title")
+        binding?.include27?.textView108?.text = getString(R.string.pay_via_card) + " " + intent.getStringExtra("title")
         title = intent.getStringExtra("title").toString()
 
         //Proceed Bt
@@ -144,68 +143,9 @@ class CardDetailsActivity : AppCompatActivity(),
             val cvv = binding?.cvv?.text.toString()
             val nameOnCard = binding?.nameOnCard?.text.toString()
 
-            printLog("monthYear------>${monthYear}")
-            if (cardNumber == "") {
-                val dialog = OptionDialog(this,
-                    R.mipmap.ic_launcher,
-                    R.string.app_name,
-                    getString(R.string.cardNumber),
-                    positiveBtnText = R.string.ok,
-                    negativeBtnText = R.string.no,
-                    positiveClick = {},
-                    negativeClick = {})
-                dialog.show()
-            } else if (cardNumber.length < 16) {
-                val dialog = OptionDialog(this,
-                    R.mipmap.ic_launcher,
-                    R.string.app_name,
-                    getString(R.string.cardNumberValid),
-                    positiveBtnText = R.string.ok,
-                    negativeBtnText = R.string.no,
-                    positiveClick = {},
-                    negativeClick = {})
-                dialog.show()
-            } else if (monthYear == "") {
-                val dialog = OptionDialog(this,
-                    R.mipmap.ic_launcher,
-                    R.string.app_name,
-                    getString(R.string.cardMonth),
-                    positiveBtnText = R.string.ok,
-                    negativeBtnText = R.string.no,
-                    positiveClick = {},
-                    negativeClick = {})
-                dialog.show()
-            } else if (binding?.monthYear?.text.toString().trim().contains("/")  &&  monthYear.length < 5 ) {
-                val dialog = OptionDialog(this,
-                    R.mipmap.ic_launcher,
-                    R.string.app_name,
-                    getString(R.string.cardMonthValid),
-                    positiveBtnText = R.string.ok,
-                    negativeBtnText = R.string.no,
-                    positiveClick = {},
-                    negativeClick = {})
-                dialog.show()
-            } else if (cvv == "") {
-                val dialog = OptionDialog(this,
-                    R.mipmap.ic_launcher,
-                    R.string.app_name,
-                    getString(R.string.cardCvv),
-                    positiveBtnText = R.string.ok,
-                    negativeBtnText = R.string.no,
-                    positiveClick = {},
-                    negativeClick = {})
-                dialog.show()
-            } else if ((cvv.length < 3)) {
-                val dialog = OptionDialog(this,
-                    R.mipmap.ic_launcher,
-                    R.string.app_name,
-                    getString(R.string.cardCvvValid),
-                    positiveBtnText = R.string.ok,
-                    negativeBtnText = R.string.no,
-                    positiveClick = {},
-                    negativeClick = {})
-                dialog.show()
-            } else {
+            printLog("monthYear------>${monthYear.contains("/")}")
+            if (validateCards()) {
+
                 if (BOOK_TYPE == "RECURRING") {
                     authViewModel.paytmRHMAC(
                         preferences.getUserId(),
@@ -244,8 +184,8 @@ class CardDetailsActivity : AppCompatActivity(),
                         )
                     }
                 }
-            }
 
+            }
         }
 
         //mm//year
@@ -255,6 +195,7 @@ class CardDetailsActivity : AppCompatActivity(),
             override fun beforeTextChanged(
                 p0: CharSequence?, p1: Int, p2: Int, p3: Int
             ) {
+
             }
 
             @SuppressLint("SetTextI18n")
@@ -277,6 +218,18 @@ class CardDetailsActivity : AppCompatActivity(),
                             binding?.monthYear?.setSelection(
                                 3
                             )
+                        }else{
+                            val dialog = OptionDialog(this@CardDetailsActivity,
+                                R.mipmap.ic_launcher,
+                                R.string.app_name,
+                                getString(R.string.cardMonthValid),
+                                positiveBtnText = R.string.ok,
+                                negativeBtnText = R.string.no,
+                                positiveClick = {
+                                    binding?.monthYear?.setText("")
+                                },
+                                negativeClick = {})
+                            dialog.show()
                         }
                     } else if (p0?.length == 2 && lastInput.endsWith("/")) {
                         val month = Integer.parseInt(input)
@@ -284,6 +237,18 @@ class CardDetailsActivity : AppCompatActivity(),
                             binding?.monthYear?.setText(
                                 binding?.monthYear?.text.toString().substring(0, 1)
                             )
+                        }else{
+                            val dialog = OptionDialog(this@CardDetailsActivity,
+                                R.mipmap.ic_launcher,
+                                R.string.app_name,
+                                getString(R.string.cardMonthValid),
+                                positiveBtnText = R.string.ok,
+                                negativeBtnText = R.string.no,
+                                positiveClick = {
+                                    binding?.monthYear?.setText("")
+                                },
+                                negativeClick = {})
+                            dialog.show()
                         }
                     }
                     lastInput = binding?.monthYear?.text.toString()
@@ -746,6 +711,87 @@ class CardDetailsActivity : AppCompatActivity(),
             }
         }
 
+    }
+
+    private fun validateCards():Boolean{
+        val cardNumber = binding?.cardNumber?.text.toString().trim()
+        val monthYear = binding?.monthYear?.text.toString()
+        val cvv = binding?.cvv?.text.toString()
+        val nameOnCard = binding?.nameOnCard?.text.toString()
+        if (cardNumber == "") {
+            val dialog = OptionDialog(this,
+                R.mipmap.ic_launcher,
+                R.string.app_name,
+                getString(R.string.cardNumber),
+                positiveBtnText = R.string.ok,
+                negativeBtnText = R.string.no,
+                positiveClick = {},
+                negativeClick = {})
+            dialog.show()
+            return false
+        }
+        if (cardNumber.length < 16) {
+            val dialog = OptionDialog(this,
+                R.mipmap.ic_launcher,
+                R.string.app_name,
+                getString(R.string.cardNumberValid),
+                positiveBtnText = R.string.ok,
+                negativeBtnText = R.string.no,
+                positiveClick = {},
+                negativeClick = {})
+            dialog.show()
+            return false
+        }
+        if (monthYear == "") {
+            val dialog = OptionDialog(this,
+                R.mipmap.ic_launcher,
+                R.string.app_name,
+                getString(R.string.cardMonth),
+                positiveBtnText = R.string.ok,
+                negativeBtnText = R.string.no,
+                positiveClick = {},
+                negativeClick = {})
+            dialog.show()
+            return false
+        }
+        if (!monthYear.contains("/") && monthYear.length < 5) {
+            val dialog = OptionDialog(this,
+                R.mipmap.ic_launcher,
+                R.string.app_name,
+                getString(R.string.cardMonthValid),
+                positiveBtnText = R.string.ok,
+                negativeBtnText = R.string.no,
+                positiveClick = {},
+                negativeClick = {})
+            dialog.show()
+            return false
+        }
+        if (cvv == "") {
+            val dialog = OptionDialog(this,
+                R.mipmap.ic_launcher,
+                R.string.app_name,
+                getString(R.string.cardCvv),
+                positiveBtnText = R.string.ok,
+                negativeBtnText = R.string.no,
+                positiveClick = {},
+                negativeClick = {})
+            dialog.show()
+            return false
+        }
+        if ((cvv.length < 3)) {
+            val dialog = OptionDialog(this,
+                R.mipmap.ic_launcher,
+                R.string.app_name,
+                getString(R.string.cardCvvValid),
+                positiveBtnText = R.string.ok,
+                negativeBtnText = R.string.no,
+                positiveClick = {},
+                negativeClick = {})
+            dialog.show()
+            return false
+        }
+
+        return true
     }
 
 
