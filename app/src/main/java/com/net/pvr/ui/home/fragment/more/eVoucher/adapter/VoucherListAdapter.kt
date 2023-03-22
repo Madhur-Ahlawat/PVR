@@ -12,7 +12,9 @@ import com.net.pvr.databinding.EVoucherItemBinding
 import com.net.pvr.ui.home.fragment.more.eVoucher.response.VoucherListResponse
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.hide
+import com.net.pvr.utils.printLog
 import com.net.pvr.utils.show
+import java.text.DecimalFormat
 import java.util.*
 
 
@@ -21,6 +23,7 @@ class VoucherListAdapter(
     private var context: Context,
     private var profileList: ArrayList<VoucherListResponse.Output.Ev>,
     private var listner: RecycleViewItemClickListener
+
 ) : RecyclerView.Adapter<VoucherListAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: EVoucherItemBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -49,34 +52,38 @@ class VoucherListAdapter(
                     }</font>"
 
                 binding.textView405.text = Html.fromHtml(data)
-
+                val format = DecimalFormat()
+                format.isDecimalSeparatorAlwaysShown = false
                 //discount
                 if (this.sellAllowedCPValue != null && this.sellAllowedValue.toString() != null) {
                     if (this.sellAllowedCPValue.isNotEmpty() && this.sellAllowedValue.toString()
-                            .isNotEmpty()) {
+                            .isNotEmpty()
+                    ) {
 
-                        var total = this.sellAllowedCPValue.toInt()
-                        val discount = this.sellAllowedValue.toInt()
+                        val total = this.sellAllowedCPValue.toDouble()
+                        val discount = this.sellAllowedValue.toDouble()
                         try {
-                            if (total==0){
-                                total+=1
-                            }else{
-                                total= this.sellAllowedCPValue.toInt()
-                            }
+//                            if (total == 0.0) {
+//                                total += 1
+//                            } else {
+//                                total = this.sellAllowedCPValue.toDouble()
+//                            }
 
                             println("percent---->${discount}---->${total}")
 //                            val value = total / discount
                             val value = discount / total
                             val percentage = value * 100
 
-                            binding.textView406.text = "$percentage %"
-                            if (percentage > 0) {
+                            printLog("prcent----------->${format.format(percentage)}")
+                            binding.textView406.text = "${format.format(percentage)}%"
+
+                            if (percentage.toString() !="∞%") {
                                 binding.cardView22.show()
                             } else {
                                 binding.cardView22.hide()
                             }
 
-                        }catch (e:Exception){
+                        } catch (e: Exception) {
                             e.printStackTrace()
                         }
 //                        val percentage = (this.sellAllowedCPValue.toInt() - this.sellAllowedValue) * 100 / 20000
@@ -121,4 +128,6 @@ class VoucherListAdapter(
         profileList = filterList
         notifyDataSetChanged()
     }
+
+
 }

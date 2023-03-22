@@ -18,6 +18,7 @@ import com.net.pvr.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr.ui.home.fragment.home.response.NextBookingResponse
 import com.net.pvr.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
 import com.net.pvr.ui.home.fragment.more.contactUs.response.ContactUsResponse
+import com.net.pvr.ui.home.fragment.more.eVoucher.details.response.SaveEVoucherResponse
 import com.net.pvr.ui.home.fragment.more.eVoucher.response.VoucherListResponse
 import com.net.pvr.ui.home.fragment.more.experience.response.ExperienceDetailsResponse
 import com.net.pvr.ui.home.fragment.more.experience.response.ExperienceResponse
@@ -213,6 +214,16 @@ interface UserAPI {
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<VoucherListResponse>
+
+    @POST("api/payment/e-voucher/save")
+    suspend fun saveEVoucher(
+        @Query("userid") userid: String,
+        @Query("quantity") cname: String,
+        @Query("did") cat: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<SaveEVoucherResponse>
+
 
     @POST("api/content/alltheater")
     suspend fun cinema(

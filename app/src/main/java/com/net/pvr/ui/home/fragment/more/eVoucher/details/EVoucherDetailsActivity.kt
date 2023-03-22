@@ -18,10 +18,13 @@ import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.home.fragment.more.eVoucher.details.adapter.VoucherAddAdapter
 import com.net.pvr.ui.home.fragment.more.eVoucher.details.model.EVoucherCart
+import com.net.pvr.ui.home.fragment.more.eVoucher.details.response.SaveEVoucherResponse
+import com.net.pvr.ui.home.fragment.more.eVoucher.details.viewModel.EVoucherDetailsViewModel
 import com.net.pvr.ui.home.fragment.more.eVoucher.response.VoucherListResponse
 import com.net.pvr.ui.home.fragment.more.eVoucher.viewModel.EVoucherViewModel
 import com.net.pvr.ui.payment.PaymentActivity
 import com.net.pvr.utils.Constant
+import com.net.pvr.utils.NetworkResult
 import com.net.pvr.utils.hide
 import com.net.pvr.utils.show
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,12 +41,13 @@ class EVoucherDetailsActivity : AppCompatActivity(),
     private var binding: ActivityEvoucherDetailsBinding? = null
 
     private var loader: LoaderDialog? = null
-    private val authViewModel: EVoucherViewModel by viewModels()
+    private val authViewModel: EVoucherDetailsViewModel by viewModels()
 
     private var voucherDetShow = 0
     private var howWorkShow = 0
     private var category = ""
     private var paidPrice= ""
+    private var eVoucherSave= ""
 
     private var voucherListResponse: ArrayList<VoucherListResponse.Output.Ev> = ArrayList()
     private var cartModel: ArrayList<EVoucherCart> = arrayListOf()
@@ -74,8 +78,10 @@ class EVoucherDetailsActivity : AppCompatActivity(),
             )
 
         //Image
-        Glide.with(this).load(intent.getStringExtra("image"))
-            .error(R.drawable.placeholder_horizental).into(binding?.imageView133!!)
+        Glide.with(this)
+            .load(intent.getStringExtra("image"))
+            .error(R.drawable.placeholder_horizental)
+            .into(binding?.imageView133!!)
 
         //voucherDetails
         binding?.imageView179?.setOnClickListener {
@@ -116,12 +122,7 @@ class EVoucherDetailsActivity : AppCompatActivity(),
 
         movedNext()
         categoryData()
-        addGiftCard()
-    }
-
-    private fun addGiftCard() {
-
-
+        saveEVouchers()
     }
 
     private fun categoryData() {
@@ -173,10 +174,15 @@ class EVoucherDetailsActivity : AppCompatActivity(),
                 Constant().vibrateDevice(this)
 
             } else {
-                val intent = Intent(this@EVoucherDetailsActivity, PaymentActivity::class.java)
-                Constant.BOOK_TYPE ="EVOUCHER"
-                intent.putExtra("paidAmount",paidPrice)
-                startActivity(intent)
+                for (item in cartModel){
+                    eVoucherSave= "${item.id.toString() +"|"+ item.price}"+"#"
+                }
+
+                authViewModel.saveEVouchers(
+                    preferences.getUserId(),
+                    eVoucherSave,
+                    Constant().getDeviceId(this)
+                )
             }
         }
     }
@@ -294,6 +300,61 @@ class EVoucherDetailsActivity : AppCompatActivity(),
             }
         }
         return false
+    }
+
+
+
+    ////////////////////////////        Save E-Voucher      ////////////////////////////////
+
+    private fun saveEVouchers() {
+        authViewModel.userResponseEVoucherLiveData.observe(this@EVoucherDetailsActivity) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result) {
+                        retrieveSaveEVoucher(it.data.output)
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {
+                                finish()
+                            },
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+
+    private fun retrieveSaveEVoucher(output: SaveEVoucherResponse.Output) {
+        Constant.TRANSACTION_ID=output.id
+        val intent = Intent(this@EVoucherDetailsActivity, PaymentActivity::class.java)
+        Constant.BOOK_TYPE ="GIFTCARD"
+//                Constant.BOOK_TYPE ="EVOUCHER"
+        intent.putExtra("paidAmount",paidPrice)
+        startActivity(intent)
     }
 
 }

@@ -42,7 +42,10 @@ import javax.inject.Inject
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
-class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewItemClickListener,GiftFilterAdapter.RecycleViewItemClickListener{
+class GiftCardActivity : AppCompatActivity() ,
+    GiftCardMainAdapter.RecycleViewItemClickListener,
+    GiftFilterAdapter.RecycleViewItemClickListener{
+
     private var binding: ActivityGiftCardBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: GiftCardViewModel by viewModels()

@@ -579,6 +579,7 @@ class PromoCodeActivity : AppCompatActivity() {
         if (binding?.otpEditText?.getStringFromFields().toString().isEmpty()) {
             toast(getString(R.string.otp_msg_required))
         } else {
+
         }
         return (binding?.otpEditText?.getStringFromFields().toString().isNotEmpty())
     }
