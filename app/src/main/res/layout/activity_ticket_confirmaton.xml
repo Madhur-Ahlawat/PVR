@@ -927,6 +927,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
                                 android:layout_marginTop="14dp"
+                                android:layout_marginEnd="16dp"
                                 android:layout_marginBottom="14dp"
                                 android:drawableEnd="@drawable/noti_info"
                                 android:fontFamily="@font/sf_pro_text_medium"
@@ -984,6 +985,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="10dp"
+                        android:visibility="gone"
                         android:fontFamily="@font/montserrat_bold"
                         android:text="@string/offers_for_you"
                         android:textColor="@color/black"
@@ -1248,6 +1250,7 @@
                             tools:text="11.52" />
 
                         <TextView
+                            android:visibility="gone"
                             android:id="@+id/donTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -1260,6 +1263,7 @@
                             app:layout_constraintTop_toBottomOf="@+id/textView356" />
 
                         <TextView
+                            android:visibility="gone"
                             android:id="@+id/donVal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
