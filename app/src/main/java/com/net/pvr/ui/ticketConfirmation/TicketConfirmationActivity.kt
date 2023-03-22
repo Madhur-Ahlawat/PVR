@@ -46,7 +46,6 @@ import com.net.pvr.utils.*
 import com.net.pvr.utils.ga.GoogleAnalytics
 import com.net.pvr.utils.isevent.ISEvents
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.ArrayList
 import javax.inject.Inject
 
 
@@ -58,7 +57,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
     private var loader: LoaderDialog? = null
     private val authViewModel: TicketConfirmationViewModel by viewModels()
 
-    private var ticketData:TicketBookedResponse.Output? = null
+    private var ticketData: TicketBookedResponse.Output? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -124,21 +123,38 @@ class TicketConfirmationActivity : AppCompatActivity() {
         bookParking()
         showParking()
 
-        binding?.cardView16?.setOnClickListener {
-            addFood(ticketData)
-        }
+
     }
 
     private fun movedNext() {
         binding?.include31?.imageView58?.setOnClickListener {
             onBackPressed()
         }
+
+        //AddFood
+        binding?.textView312?.setOnClickListener {
+            // Hit Event
+            try {
+                val bundle = Bundle()
+                bundle.putString(
+                    FirebaseAnalytics.Param.SCREEN_NAME,
+                    "Ticket Confirmation screen"
+                )
+                bundle.putString("FnB_order_snaks", "")
+                GoogleAnalytics.hitEvent(this, "F&B_book_food_pay_success", bundle)
+                addFood(ticketData)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
     }
 
     private fun addFood(data: TicketBookedResponse.Output?) {
         Constant.QR = "NO"
-        Constant.AUDI= ""
-        Constant.SEAT= ""
+        Constant.AUDI = ""
+        Constant.SEAT = ""
         val intent = Intent(this, FoodActivity::class.java)
         intent.putExtra("from", "pcOrdrsnc")
         intent.putExtra("NF", data?.nf)
@@ -151,7 +167,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun ticketDetails() {
-        binding?.include31?.textView108?.text = "Ticket Confirmed"
+        binding?.include31?.textView108?.text = "Booking Details"
         authViewModel.liveDataScope.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
@@ -193,7 +209,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun singleTicketPrint() {
-        binding?.include31?.textView108?.text = "Your Order"
+//        binding?.include31?.textView108?.text = "Your Order"
         authViewModel.singleTicketDataScope.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
@@ -235,7 +251,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun fnbTicketPrint() {
-        binding?.include31?.textView108?.text = "Your Order"
+//        binding?.include31?.textView108?.text = "Your Order"
         authViewModel.fnbTicketDataScope.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
@@ -343,21 +359,6 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 }
             }
 
-            //AddFood
-            binding?.textView312?.setOnClickListener {
-                // Hit Event
-                try {
-                    val bundle = Bundle()
-                    bundle.putString(
-                        FirebaseAnalytics.Param.SCREEN_NAME,
-                        "Ticket Confirmation screen"
-                    )
-                    bundle.putString("FnB_order_snaks", "")
-                    GoogleAnalytics.hitEvent(this, "F&B_book_food_pay_success", bundle)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
 
             // Cancel Ticket
             if (!output.partialCancellationAllowed || output.seat.size == 1)
@@ -472,6 +473,8 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 if (data.n == "Tickets") {
                     binding?.textView350?.text = output.f[0].it[0].n
                     binding?.textView351?.text = output.f[0].it[0].v
+                    binding?.textView352?.hide()
+                    binding?.textView353?.hide()
                 } else if (data.n == "Food & Beverages") {
                     if (output.food.isNotEmpty()) {
                         binding?.textView352?.show()
@@ -614,7 +617,8 @@ class TicketConfirmationActivity : AppCompatActivity() {
                     getFeedBackData()
                 }, 5000)
             }
-        } else if (Constant.BOOK_TYPE == "FOOD") {
+        }
+        else if (Constant.BOOK_TYPE == "FOOD") {
             binding?.foodView?.show()
             binding?.ticketView?.hide()
             binding?.bottomView?.hide()

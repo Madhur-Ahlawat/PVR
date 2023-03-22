@@ -86,7 +86,6 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 
 @AndroidEntryPoint
@@ -156,7 +155,7 @@ class HomeFragment : Fragment(),
 
     companion object {
         var dialogTrailer: Dialog? = null
-        private var movieData:ArrayList<HomeResponse.Mv> = ArrayList()
+        private var movieData: ArrayList<HomeResponse.Mv> = ArrayList()
 
         var mcId = ""
     }
@@ -220,7 +219,12 @@ class HomeFragment : Fragment(),
             binding?.constraintLayout135?.show()
 
             //offer
-            authViewModel.offer(preferences.getCityName(),preferences.getUserId(),Constant().getDeviceId(requireActivity()),"NO")
+            authViewModel.offer(
+                preferences.getCityName(),
+                preferences.getUserId(),
+                Constant().getDeviceId(requireActivity()),
+                "NO"
+            )
 
 //            nextBooking
             authViewModel.nextBooking(
@@ -299,8 +303,8 @@ class HomeFragment : Fragment(),
                     "no"
                 )
 
-               // hideDataLoad()
-            }catch (e:java.lang.Exception){
+                // hideDataLoad()
+            } catch (e: java.lang.Exception) {
 
             }
 
@@ -341,6 +345,7 @@ class HomeFragment : Fragment(),
             intent.putExtra("from", "Homepage")
             startActivity(intent)
         }
+
         // Qr COde
         binding?.includeAppBar?.scanQr?.setOnClickListener {
             // Hit Event
@@ -415,17 +420,18 @@ class HomeFragment : Fragment(),
             }
         }
     }
+
     private fun hideDataLoad() {
         authViewModel.offerHideLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkResult.Success -> {
                     //if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        try {
-                            binding?.constraintLayout55?.hide()
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
-                   // }
+                    try {
+                        binding?.constraintLayout55?.hide()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // }
                 }
                 is NetworkResult.Error -> {
                     binding?.constraintLayout55?.hide()
@@ -460,6 +466,7 @@ class HomeFragment : Fragment(),
 
 
     //  offers Dialog
+    private var positionUpdate = 0
     private fun showOfferDialog() {
         val dialog = BottomSheetDialog(requireActivity(), R.style.NoBackgroundDialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -477,7 +484,8 @@ class HomeFragment : Fragment(),
         val indicators = dialog.findViewById<LinearLayout>(R.id.indicators)
         val textView192 = dialog.findViewById<TextView>(R.id.textView192)
         textView5?.text = getString(R.string.explore_offers)
-        val gridLayout = GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
+        val gridLayout =
+            GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
         recyclerView?.layoutManager = LinearLayoutManager(requireActivity())
         val adapter = offerResponse?.let {
             HomeOfferAdapter(
@@ -488,20 +496,42 @@ class HomeFragment : Fragment(),
         recyclerView?.adapter = adapter
         textView192?.text = offerResponse?.get(0)?.offerName
 
+        if (positionUpdate==0){
+            textView5?.setOnClickListener {
+                val intent = Intent(
+                    Intent.ACTION_VIEW, Uri.parse(
+                        offerResponse?.get(positionUpdate)?.otherLinkRedirectUrl?.replace(
+                            "https",
+                            "app"
+                        )
+                    )
+                )
+                startActivity(intent)
+                dialog.dismiss()
+            }
+        }
+
         recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     val position = HomeActivity.getCurrentItem(recyclerView)
                     textView192?.text = offerResponse?.get(position)?.offerName
+                    printLog("check------->${position}")
+                    positionUpdate=position
                     textView5?.setOnClickListener {
-                        printLog("----------------------->${offerResponse?.get(position)?.otherLinkRedirectUrl?.replace(
-                            "https", "app"
-                        )}")
+                        printLog(
+                            "----------------------->${
+                                offerResponse?.get(position)?.otherLinkRedirectUrl?.replace(
+                                    "https", "app"
+                                )
+                            }"
+                        )
                         val intent = Intent(
                             Intent.ACTION_VIEW, Uri.parse(
                                 offerResponse?.get(position)?.otherLinkRedirectUrl?.replace(
-                                    "https", "app"
+                                    "https",
+                                    "app"
                                 )
                             )
                         )
@@ -511,6 +541,7 @@ class HomeFragment : Fragment(),
                 }
             }
         })
+
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(recyclerView)
 
@@ -524,12 +555,12 @@ class HomeFragment : Fragment(),
                     "",
                     "no"
                 )
-               // hideDataLoad()
-            }catch (e:java.lang.Exception){
+                // hideDataLoad()
+            } catch (e: java.lang.Exception) {
 
             }
         }
-        if (offerResponse?.size!! >1){
+        if (offerResponse?.size!! > 1) {
             indicators?.show()
             recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -540,7 +571,7 @@ class HomeFragment : Fragment(),
                 }
             })
             indicators?.let { btnAction(0, offerResponse?.size!!, it) }
-        }else{
+        } else {
             indicators?.hide()
         }
 
@@ -1093,7 +1124,6 @@ class HomeFragment : Fragment(),
         dialogTrailer?.show()
 
 
-
         //title
         bindingTrailer.titleLandingScreen.text = mv.n
 
@@ -1488,7 +1518,7 @@ class HomeFragment : Fragment(),
 
     }
 
-    public fun updatedData(){
+    fun updatedData() {
         if (preferences.getIsLogin()) {
             val ls = preferences.getString(Constant.SharedPreference.LOYALITY_STATUS)
             val isHl: String = preferences.getString(Constant.SharedPreference.IS_HL)
@@ -1874,9 +1904,9 @@ class HomeFragment : Fragment(),
             //showCount = showCount +getCount(type , entry.getValue());
         }
 
-        showCount = if (languages.isEmpty() && genres.isEmpty() && spShows.isEmpty()){
+        showCount = if (languages.isEmpty() && genres.isEmpty() && spShows.isEmpty()) {
             0
-        }else {
+        } else {
             filterMovies(
                 movieData,
                 languages,
@@ -1890,7 +1920,7 @@ class HomeFragment : Fragment(),
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     fun filterMovies(
-        movies:ArrayList<HomeResponse.Mv>,
+        movies: ArrayList<HomeResponse.Mv>,
         languages: List<String?>,
         genres: List<String?>,
         spShows: List<String?>
@@ -1901,7 +1931,9 @@ class HomeFragment : Fragment(),
 
                 val languagesM = movie.otherlanguages.split(",").toList()
 
-                if (languagesM.stream().noneMatch { m: String -> languages.contains(m.uppercase()) }) continue
+                if (languagesM.stream()
+                        .noneMatch { m: String -> languages.contains(m.uppercase()) }
+                ) continue
             }
             if (!genres.contains("ALL") && genres.isNotEmpty()) {
                 val genresM: List<String> = movie.othergenres.split(",").toList()
