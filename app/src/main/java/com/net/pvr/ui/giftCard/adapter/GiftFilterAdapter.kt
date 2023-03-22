@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.net.pvr.R
 import com.net.pvr.databinding.GiftCardCateogryItemBinding
 import com.net.pvr.ui.giftCard.response.GiftCardsFilter
+import com.net.pvr.utils.Constant
 import com.net.pvr.utils.hide
 import com.net.pvr.utils.show
 
@@ -43,7 +44,7 @@ class GiftFilterAdapter(
 
 
 
-                binding.textView30.text = this.filterText
+                binding.textView30.text =Constant().toCamelCase(this.filterText)
 
                 if (rowIndex==position){
                     binding.textView30.setTextAppearance(R.style.text_black_bold)

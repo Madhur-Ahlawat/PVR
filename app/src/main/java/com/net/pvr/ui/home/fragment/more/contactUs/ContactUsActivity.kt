@@ -2,6 +2,8 @@ package com.net.pvr.ui.home.fragment.more.contactUs
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Patterns
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -78,6 +80,15 @@ class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewI
         binding?.toolbar?.imageView58?.setOnClickListener {
             finish()
         }
+
+        binding?.notes?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                val Textlen = s.toString().length
+                if (100 - Textlen >= 0) binding?.TvCounter?.text = "" + (100 - Textlen) + "/100"
+            }
+        })
 
         //Click Submit
         binding?.include22?.textView5?.setOnClickListener {

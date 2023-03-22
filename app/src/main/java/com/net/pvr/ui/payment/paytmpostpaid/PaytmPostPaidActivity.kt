@@ -49,7 +49,7 @@ class PaytmPostPaidActivity : AppCompatActivity() {
         setContentView(view)
         binding?.header?.textView108?.text = intent.getStringExtra("title")
         title = intent.getStringExtra("title").toString()
-        paidAmount = intent.getStringExtra("paidAmount").toString()
+        paidAmount = Constant.DECIFORMAT.format(intent.getStringExtra("paidAmount")?.toDouble())
         //paidAmount
         binding?.msg?.text = getString(R.string.currency) + paidAmount
 
@@ -433,15 +433,13 @@ class PaytmPostPaidActivity : AppCompatActivity() {
                     loader?.dismiss()
                         if (it.data?.result == ("success")) {
                             try {
-                                if (it.data.output.bal.toDouble() > paidAmount.toDouble()
-                                    || it.data.output.bal.toDouble() == paidAmount.toDouble()
-                                ) {
+                                if (it.data.output.bal.toDouble() >= paidAmount.toDouble()) {
                                     binding?.otpView?.hide()
                                     binding?.balanceView?.show()
                                     binding?.balance?.text = "Rs " + it.data.output.bal
-                                    binding?.subBtn?.text = "Make Payment"
+                                    binding?.addPay?.text = "Make Payment"
                                 } else {
-                                    binding?.subBtn?.text = "Add Money"
+                                    binding?.addPay?.text = "Add Money"
 
                                     binding?.balance?.text = "Rs " + it.data.output.bal
                                     binding?.balance?.setCompoundDrawablesWithIntrinsicBounds(
@@ -569,15 +567,13 @@ class PaytmPostPaidActivity : AppCompatActivity() {
                             state_text = it.data.output.state
                         }else {
                             try {
-                                if (it.data.output.b.toDouble() > paidAmount.toDouble()
-                                    || it.data.output.b.toDouble() == paidAmount.toDouble()
-                                ) {
+                                if (it.data.output.b.toDouble() >= paidAmount.toDouble()) {
                                     binding?.otpView?.hide()
                                     binding?.balanceView?.show()
                                     binding?.balance?.text = "Rs " + it.data.output.b
-                                    binding?.subBtn?.text = "Make Payment"
+                                    binding?.addPay?.text = "Make Payment"
                                 } else {
-                                    binding?.subBtn?.text = "Add Money"
+                                    binding?.addPay?.text = "Add Money"
                                     binding?.balance?.text = "Rs " + it.data.output.b
                                     binding?.balance?.setCompoundDrawablesWithIntrinsicBounds(
                                         0,
@@ -874,11 +870,11 @@ class PaytmPostPaidActivity : AppCompatActivity() {
                                 binding?.otpView?.hide()
                                 binding?.balanceView?.show()
                                 binding?.balance?.text = "Rs " + it.data.output.balance
-                                binding?.subBtn?.text = "Make Payment"
+                                binding?.addPay?.text = "Make Payment"
                             } else {
                                 binding?.title?.setImageResource(R.drawable.freecharge)
                                 newAmt = (paidAmount.toDouble()-it.data.output.balance.toDouble()).toString()
-                                binding?.subBtn?.text = "Add Money"
+                                binding?.addPay?.text = "Add Money"
                                 binding?.balance?.text = "Rs " + it.data.output.balance
                                 binding?.balance?.setCompoundDrawablesWithIntrinsicBounds(
                                     0,
@@ -951,10 +947,10 @@ class PaytmPostPaidActivity : AppCompatActivity() {
                                 binding?.otpView?.hide()
                                 binding?.balanceView?.show()
                                 binding?.balance?.text = "Rs " + it.data.output.balance
-                                binding?.subBtn?.text = "Make Payment"
+                                binding?.addPay?.text = "Make Payment"
                             } else {
                                 newAmt = (paidAmount.toDouble()-it.data.output.balance.toDouble()).toString()
-                                binding?.subBtn?.text = "Add Money"
+                                binding?.addPay?.text = "Add Money"
                                 binding?.balance?.text = "Rs " + it.data.output.balance
                                 binding?.balance?.setCompoundDrawablesWithIntrinsicBounds(
                                     0,

@@ -27,7 +27,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.evergage.android.Evergage
@@ -36,7 +35,6 @@ import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.food.CartModel
 import com.net.pvr.ui.home.fragment.home.response.HomeResponse
-import com.net.pvr.ui.home.fragment.more.eVoucher.details.EVoucherDetailsActivity
 import com.net.pvr.ui.home.fragment.more.response.ProfileResponse
 import com.net.pvr.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr.ui.ticketConfirmation.TicketConfirmationActivity
@@ -941,5 +939,23 @@ class Constant {
     fun vibrateDevice(activity: Activity) {
         val v: Vibrator = activity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         v.vibrate(100)
+    }
+
+    fun toCamelCase(s: String): String? {
+        if (s.length == 0) {
+            return s
+        }
+        val parts = s.split(" ".toRegex()).dropLastWhile { it.isEmpty() }
+            .toTypedArray()
+        var camelCaseString = ""
+        for (part in parts) {
+            camelCaseString = camelCaseString + toProperCase(part) + " "
+        }
+        return camelCaseString
+    }
+
+    fun toProperCase(s: String): String {
+        return s.substring(0, 1).uppercase(Locale.getDefault()) +
+                s.substring(1).lowercase(Locale.getDefault())
     }
 }

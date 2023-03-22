@@ -175,8 +175,8 @@
                         android:textSize="16sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-            </RelativeLayout>
 
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/textView299"
@@ -189,60 +189,74 @@
                 android:textSize="@dimen/dimen_12sp"
                 tools:ignore="TextContrastCheck" />
 
-            <RelativeLayout
+
+            <LinearLayout
                 android:id="@+id/perosnalNotesLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/text_curve"
-                android:gravity="center"
-                android:paddingStart="@dimen/dimen_10dp"
-                android:paddingTop="@dimen/dimen_8dp"
-                android:paddingEnd="@dimen/dimen_5dp"
-                android:paddingBottom="@dimen/dimen_5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView10">
+                android:background="@drawable/bg_grey_booking"
+                android:layout_marginTop="@dimen/dimen_15dp"
+                android:padding="@dimen/dimen_15dp"
+                android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/notesInputLayout"
-                    style="@style/styledBlackTilEditText"
+                <TextView
+                    android:id="@+id/TVPersonal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="-8dp"
-                    android:hint="@string/personal_note"
-                    app:boxBackgroundColor="@color/transparent"
-                    app:boxStrokeColor="@color/transparent"
-                    app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="100"
-                    app:endIconMode="custom"
-                    app:errorEnabled="false"
-                    app:hintTextColor="@color/textColor"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:text="@string/personal_note"
+                    android:textColor="@color/gray_"
+                    android:textSize="12sp">
+
+                </TextView>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="4dp">
 
                     <EditText
                         android:id="@+id/notes"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginEnd="@dimen/dimen_8dp"
+                        android:layout_toStartOf="@id/TvCounter"
+                        tools:text="akash"
                         android:background="@null"
                         android:fontFamily="@font/sf_pro_text_bold"
-                        android:gravity="bottom"
+                        android:gravity="top|start"
                         android:imeOptions="actionDone"
                         android:maxLength="100"
                         android:ems="15"
-                        android:inputType="textMultiLine"
                         android:textColor="@color/black"
                         android:textColorHint="@color/textColor"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:autofillHints=""
+                        tools:ignore="TextFields">
 
-                </com.google.android.material.textfield.TextInputLayout>
-            </RelativeLayout>
+                    </EditText>
+
+                    <TextView
+                        android:id="@+id/TvCounter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginBottom="10dp"
+                        android:backgroundTint="#e4e4e4"
+                        android:gravity="center"
+                        android:text="0/100" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+
 
 
             <TextView
