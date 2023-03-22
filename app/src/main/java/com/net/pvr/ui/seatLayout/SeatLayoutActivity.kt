@@ -478,8 +478,8 @@ class SeatLayoutActivity : AppCompatActivity(),
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleaseWait)
-                    loader?.show(supportFragmentManager, null)
+//                    loader = LoaderDialog(R.string.pleaseWait)
+//                    loader?.show(supportFragmentManager, null)
                 }
             }
         }
@@ -488,7 +488,7 @@ class SeatLayoutActivity : AppCompatActivity(),
     private fun retrieverReserveSeatData(output: ReserveSeatResponse.Output) {
         BOOKING_ID = output.bookingid
         SELECTED_SEAT = selectedSeats.size
-        Constant.BOOK_TYPE = "BOOKING"
+        BOOK_TYPE = "BOOKING"
 
 
         // Hit Event
@@ -523,7 +523,7 @@ class SeatLayoutActivity : AppCompatActivity(),
         authViewModel.initTransResponseLiveData.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
-                    loader?.dismiss()
+//                    loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         retrieverInitData(it.data.output)
                     } else {

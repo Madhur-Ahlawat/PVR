@@ -366,10 +366,10 @@ class HomeFragment : Fragment(),
         //setUserName
         if (preferences.getIsLogin()) {
             binding?.includeAppBar?.profileBtn?.show()
-            binding?.includeAppBar?.textView2?.text = "Hello, " + preferences.getUserName()
+            binding?.includeAppBar?.textView2?.text = "Hey, " + preferences.getUserName()
         } else {
             binding?.includeAppBar?.profileBtn?.hide()
-            binding?.includeAppBar?.textView2?.text = "Hello!"
+            binding?.includeAppBar?.textView2?.text = "Hey!"
         }
 
         binding?.includeAppBar?.txtCity?.text = preferences.getCityName()

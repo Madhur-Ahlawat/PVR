@@ -65,15 +65,17 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity(), PrivilegeHomeDialogAdapter.RecycleViewItemClickListener,
+class HomeActivity : AppCompatActivity(),
+    PrivilegeHomeDialogAdapter.RecycleViewItemClickListener,
     PlayPopup {
+
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityHomeBinding? = null
     private val authViewModel: HomeViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var offerShow = 0
-    var back_flag = 0
+    private var back_flag = 0
 
     private var offerResponse: ArrayList<OfferResponse.Offer>? = null
 
