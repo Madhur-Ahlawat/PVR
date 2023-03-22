@@ -411,7 +411,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     ) {
         resisterLiveData.postValue(NetworkResult.Loading())
         val response = userAPI.resister(
-            hash, email, name, mobile, otp, city, cname, Constant.version, Constant.platform
+            hash, email, name, mobile, otp, city, "", Constant.version, Constant.platform
         )
         resisterResponse(response)
     }
@@ -1158,6 +1158,34 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             }
         } else {
             passportSaveLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
+    // Privilege Save
+    private val enrollPrivilegeLiveData = MutableLiveData<NetworkResult<PassportPlanResponse>>()
+    val enrollPrivilegeResponseLiveData: LiveData<NetworkResult<PassportPlanResponse>>
+        get() = enrollPrivilegeLiveData
+
+    suspend fun enrollPrivilege(userId: String, city: String, fname: String, lname: String,  dob: String, gender: String, email: String) {
+        enrollPrivilegeLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.enrollPrivilege(
+            userId, city,fname,lname,dob,gender,email, Constant.version, Constant.platform, Constant.getDid())
+        enrollPrivilegeResponse(response)
+    }
+
+    private fun enrollPrivilegeResponse(response: Response<PassportPlanResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            enrollPrivilegeLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            try {
+                val errorObj = JSONObject(response.errorBody()?.charStream()?.readText())
+                enrollPrivilegeLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            }catch (e:JSONException){
+                enrollPrivilegeLiveData.postValue(NetworkResult.Error(response.errorBody()?.charStream()?.readText().toString()))
+            }
+        } else {
+            enrollPrivilegeLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 

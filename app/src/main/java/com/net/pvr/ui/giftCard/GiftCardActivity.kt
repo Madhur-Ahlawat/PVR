@@ -234,9 +234,7 @@ class GiftCardActivity : AppCompatActivity() ,GiftCardMainAdapter.RecycleViewIte
 
             giftCardListFilter = ArrayList()
             for (i in giftCartList.indices) {
-                if (giftCartList[i].type == ("GENERIC")
-                    && (giftCartList[i].giftValue/100) % 50 == 0
-                ) {
+                if (giftCartList[i].type == ("GENERIC") && (giftCartList[i].giftValue/100) % 50 == 0) {
                     giftCardListFilter.add(giftCartList[i])
                 }
             }

@@ -14,6 +14,7 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -26,8 +27,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.*
 import com.bumptech.glide.Glide
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.*
 import com.net.pvr.R
 import com.net.pvr.databinding.FragmentCinemasBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -50,6 +50,7 @@ import jp.shts.android.storiesprogressview.StoriesProgressView
 import java.io.IOException
 import java.util.*
 import javax.inject.Inject
+
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
@@ -652,46 +653,96 @@ class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Locat
         if(checkPermissions()){
             mFusedLocationClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
                 val location: Location? = task.result
-                val geocoder = context?.let { Geocoder(it, Locale.getDefault()) }
-                try {
-                    val addresses = location?.longitude?.let {
-                        location.latitude.let { it1 ->
-                            geocoder?.getFromLocation(
-                                it1, it, 1
-                            )
+
+                if (location != null) {
+                    val geocoder = context?.let { Geocoder(it, Locale.getDefault()) }
+
+                    try {
+
+                        val addresses = location?.longitude?.let {
+                            location.latitude.let { it1 ->
+                                println("checkPermissions--->$it1---$it")
+
+                                geocoder?.getFromLocation(
+                                    it1, it, 1
+                                )
+                            }
                         }
-                    }
-                    if (addresses?.isNotEmpty() == true) {
+
+                        if (addresses?.isNotEmpty() == true) {
 //                            val currentAddress: String = addresses[0].locality
 //                            preferences.cityNameCinema(currentAddress)
-                        lat = location.latitude.toString()
-                        lng = location.longitude.toString()
-                        preferences.saveLatitudeData(lat.toString())
-                        preferences.saveLongitudeData(lng.toString())
-                        authViewModel.cinema(
-                            preferences.getCityName(),
-                            lat,
-                            lng,
-                            preferences.getUserId(),
-                            ""
-                        )
-                    } else {
-                        authViewModel.cinema(
-                            preferences.getCityName(),
-                            lat,
-                            lng,
-                            preferences.getUserId(),
-                            ""
-                        )
+                            locationVar = "true"
+                            lat = location.latitude.toString()
+                            lng = location.longitude.toString()
+                            preferences.saveLatitudeData(lat.toString())
+                            preferences.saveLongitudeData(lng.toString())
+                            authViewModel.cinema(
+                                preferences.getCityName(),
+                                lat,
+                                lng,
+                                preferences.getUserId(),
+                                ""
+                            )
+                        } else {
+                            authViewModel.cinema(
+                                preferences.getCityName(),
+                                lat,
+                                lng,
+                                preferences.getUserId(),
+                                ""
+                            )
 
+                        }
+
+                    } catch (e: IOException) {
+                        e.printStackTrace()
                     }
-
-                } catch (e: IOException) {
-                    e.printStackTrace()
+                }else{
+                    requestNewLocationData()
                 }
 
             }
         }
 
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun requestNewLocationData() {
+
+        // Initializing LocationRequest
+        // object with appropriate methods
+        val mLocationRequest = LocationRequest()
+        mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        mLocationRequest.interval = 1
+        mLocationRequest.fastestInterval = 0
+        mLocationRequest.numUpdates = 1
+
+        // setting LocationRequest
+        // on FusedLocationClient
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        mFusedLocationClient.requestLocationUpdates(
+            mLocationRequest,
+            mLocationCallback,
+            Looper.myLooper()
+        )
+    }
+
+    private val mLocationCallback: LocationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult) {
+            val mLastLocation = locationResult.lastLocation
+            lat = mLastLocation?.latitude.toString()
+            lng = mLastLocation?.longitude.toString()
+            preferences.saveLatitudeData(lat.toString())
+            preferences.saveLongitudeData(lng.toString())
+            locationVar = "true"
+            authViewModel.cinema(
+                preferences.getCityName(),
+                lat,
+                lng,
+                preferences.getUserId(),
+                ""
+            )
+        }
     }
 }

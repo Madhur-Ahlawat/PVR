@@ -408,6 +408,7 @@ class HomeActivity : AppCompatActivity(), PrivilegeHomeDialogAdapter.RecycleView
     }
 
     private fun managePrivilege(s: String) {
+        println("managePrivilege---"+s)
         if (preferences.getIsLogin()) {
             val ls = preferences.getString(Constant.SharedPreference.LOYALITY_STATUS)
             val isHl: String = preferences.getString(Constant.SharedPreference.IS_HL)

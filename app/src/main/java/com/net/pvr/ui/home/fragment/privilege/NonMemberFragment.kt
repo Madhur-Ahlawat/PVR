@@ -123,14 +123,14 @@ class NonMemberFragment : Fragment() {
                     startActivity(intent4)
                 } else {
                     if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(reviewPosition)?.ptype == ("P")) {
-//
-//                            intent4 = Intent(this, EnrollmentActivity::class.java)
-//                            intent4.putExtra(
-//                                Constant.PCBackStackActivity.OPEN_ACTIVITY_NAME,
-//                                Constant.PCBackStackActivity.LOYALITY_NONMEMBER_ACTIVITY
-//                            )
-//
-//                        startActivity(intent4)
+
+                            intent4 = Intent(requireActivity(), EnrollInPrivilegeActivity::class.java)
+                            intent4.putExtra(
+                                Constant.PCBackStackActivity.OPEN_ACTIVITY_NAME,
+                                Constant.PCBackStackActivity.LOYALITY_NONMEMBER_ACTIVITY
+                            )
+
+                        startActivity(intent4)
                     } else if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(reviewPosition)?.ptype == ("PP")) {
                         // Hit Event
                         try {

@@ -183,8 +183,9 @@ interface UserAPI {
         @Query("name") name: String,
         @Query("mobile") mobile: String,
         @Query("otp") otp: String,
-        @Query("city") city: String,
-        @Query("cname") cname: Boolean,
+        @Query("cname") city: String,
+        @Query("city") cname: String,
+
         @Query("av") version: String,
         @Query("pt") platform: String
     ): Response<ResisterResponse>
@@ -496,6 +497,22 @@ interface UserAPI {
         @Query("scheme") scheme: String,
         @Query("price") price: String,
         @Query("mobile") mobile: String,
+        @Query("email") email: String,
+        @Query("av") av: String,
+        @Query("pt") pt: String,
+        @Query("did") did: String
+    ): Response<PassportPlanResponse>
+
+
+    // Privilege Save
+    @POST("api/loyalty/enroll")
+    suspend fun enrollPrivilege(
+        @Query("userid") userid: String,
+        @Query("city") city: String,
+        @Query("fname") fname: String,
+        @Query("lname") lname: String,
+        @Query("dob") dob: String,
+        @Query("gender") gender: String,
         @Query("email") email: String,
         @Query("av") av: String,
         @Query("pt") pt: String,
