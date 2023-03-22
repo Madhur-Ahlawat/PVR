@@ -125,6 +125,8 @@ class MovieSessionActivity : AppCompatActivity(),
         val view = binding?.root
         setContentView(view)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        lat = preferences.getLatitudeData()
+        lng = preferences.getLongitudeData()
         manageFunctions()
     }
 
@@ -193,86 +195,23 @@ class MovieSessionActivity : AppCompatActivity(),
 
     @SuppressLint("MissingPermission")
     private fun getLocation() {
-        if (isLocationEnabled() && checkPermissions()) {
-            mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
-                val location: Location? = task.result
-                val geocoder = Geocoder(this, Locale.getDefault())
-                try {
-                    val addresses = location?.longitude?.let {
-                        location.latitude.let { it1 ->
-                            geocoder.getFromLocation(
-                                it1, it, 1
-                            )
-                        }
-                    }
-                    if (addresses?.isNotEmpty() == true) {
-//                            val currentAddress: String = addresses[0].locality
-//                            preferences.cityNameCinema(currentAddress)
-                        lat = location.latitude.toString()
-                        lng = location.longitude.toString()
-
-                        authViewModel.bookingTicket(
-                            preferences.getCityName(),
-                            movieId,
-                            lat,
-                            lng,
-                            dateText,
-                            "no",
-                            "no",
-                            preferences.getUserId(),
-                            lang,
-                            format,
-                            price1,
-                            hc,
-                            show1,
-                            cinemaType,
-                            special
-                        )
-
-                    }else{
-                        authViewModel.bookingTicket(
-                            preferences.getCityName(),
-                            movieId,
-                            lat,
-                            lng,
-                            "NA",
-                            "no",
-                            "no",
-                            preferences.getUserId(),
-                            lang,
-                            format,
-                            price1,
-                            hc,
-                            show1,
-                            cinemaType,
-                            special
-                        )
-                    }
-
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-
-            }
-        } else {
-            authViewModel.bookingTicket(
-                preferences.getCityName(),
-                movieId,
-                lat,
-                lng,
-                dateText,
-                "no",
-                "no",
-                preferences.getUserId(),
-                lang,
-                format,
-                price1,
-                hc,
-                show1,
-                cinemaType,
-                special
-            )
-        }
+        authViewModel.bookingTicket(
+            preferences.getCityName(),
+            movieId,
+            lat,
+            lng,
+            dateText,
+            "no",
+            "no",
+            preferences.getUserId(),
+            lang,
+            format,
+            price1,
+            hc,
+            show1,
+            cinemaType,
+            special
+        )
 
     }
 

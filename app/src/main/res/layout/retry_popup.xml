@@ -80,7 +80,7 @@
 
             <TextView
                 android:id="@+id/ok_btn"
-                android:fontFamily="@font/helvetica_neu_bold"
+                android:fontFamily="@font/sf_pro_text_bold"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_40dp"
                 android:background="@drawable/btn_yellow_curve"
@@ -88,18 +88,16 @@
                 android:gravity="center"
                 android:textSize="@dimen/dimen_15sp"
                 android:text="Yes, Continue"
-                android:textAllCaps="true"
-                android:textColor="#2F2F2F"
+                android:textColor="@color/black"
                 />
 
             <TextView
                 android:id="@+id/cancel"
-                android:fontFamily="@font/sf_pro_text_medium"
+                android:fontFamily="@font/sf_pro_text_semi_bold"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_40dp"
                 android:layout_marginTop="@dimen/dimen_8dp"
                 android:gravity="center"
-                android:textAllCaps="true"
                 android:textSize="@dimen/dimen_12sp"
                 android:text="@string/cancel"
                 android:textColor="#908E8E"/>

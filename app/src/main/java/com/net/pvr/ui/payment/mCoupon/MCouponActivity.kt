@@ -8,8 +8,10 @@ import android.text.InputFilter.LengthFilter
 import android.text.InputType
 import android.text.TextUtils
 import android.util.TypedValue
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -29,13 +31,15 @@ import com.net.pvr.utils.Constant.Companion.SELECTED_SEAT
 import com.net.pvr.utils.view.CouponEditText
 import com.net.pvr.utils.view.CouponEditText.DrawableClickListener
 import com.net.pvr.utils.view.CouponEditText.DrawableClickListener.DrawablePosition
+import com.net.pvr.utils.view.RightDrawableOnTouchListener
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MCouponActivity : AppCompatActivity() { @Inject
-lateinit var preferences: PreferenceManager
+class MCouponActivity : AppCompatActivity() {
+    @Inject
+    lateinit var preferences: PreferenceManager
     private var binding: ActivityMcouponBinding? = null
     private val promoCodeViewModel: PromoCodeViewModel by viewModels()
     private var maxSeatSelected = 0
@@ -62,12 +66,13 @@ lateinit var preferences: PreferenceManager
             binding?.textView373?.text = intent.extras?.getString("tc")
 
         //PaidAmount
-        binding?.textView178?.text = getString(R.string.pay) + " " + getString(R.string.currency) + intent.getStringExtra("paidAmount")
+        binding?.textView178?.text =
+            getString(R.string.pay) + " " + getString(R.string.currency) + intent.getStringExtra("paidAmount")
 
-        if (paymentOptionMode == "O102"){
+        if (paymentOptionMode == "O102") {
             binding?.ccLayout?.show()
             binding?.mobileNoLayout?.show()
-        }else{
+        } else {
             binding?.ccLayout?.hide()
             binding?.mobileNoLayout?.hide()
         }
@@ -96,7 +101,7 @@ lateinit var preferences: PreferenceManager
         }
 
         binding?.plus?.setOnClickListener {
-            println("ll.child1---"+getCount()+"----"+maxSeatSelected)
+            println("ll.child1---" + getCount() + "----" + maxSeatSelected)
 
             if (getCount() < maxSeatSelected) {
                 addCoupon()
@@ -109,17 +114,26 @@ lateinit var preferences: PreferenceManager
     private fun redeemCoupon(couponCodeList: java.util.ArrayList<String>) {
         var json = ""
         if (paymentOptionMode.equals(M_COUPON, ignoreCase = true)) {
-            val mCoupon = McouponRequestModel(couponCodeList,Constant.BOOKING_ID,
+            val mCoupon = McouponRequestModel(
+                couponCodeList, Constant.BOOKING_ID,
                 binding?.mobileEditText?.text.toString(),
                 binding?.ccEditText?.text.toString()
-                )
+            )
             val gson = Gson()
             json = gson.toJson(mCoupon)
             println("jsonm--->$json")
             val string: String = java.lang.String.join(",", couponCodeList)
 
-            promoCodeViewModel.mcoupon(preferences.getUserId(),Constant.BOOKING_ID,Constant.TRANSACTION_ID,Constant.BOOK_TYPE,Constant.CINEMA_ID,binding?.ccEditText?.text.toString()
-            ,binding?.mobileEditText?.text.toString(),string)
+            promoCodeViewModel.mcoupon(
+                preferences.getUserId(),
+                Constant.BOOKING_ID,
+                Constant.TRANSACTION_ID,
+                Constant.BOOK_TYPE,
+                Constant.CINEMA_ID,
+                binding?.ccEditText?.text.toString(),
+                binding?.mobileEditText?.text.toString(),
+                string
+            )
             return
         } else {
             val starPass = StarPasModel(
@@ -131,7 +145,14 @@ lateinit var preferences: PreferenceManager
             println("json--->$json")
             val string: String = java.lang.String.join(",", couponCodeList)
 
-            promoCodeViewModel.starpass(preferences.getUserId(),Constant.BOOKING_ID,Constant.TRANSACTION_ID,Constant.BOOK_TYPE,Constant.CINEMA_ID,string)
+            promoCodeViewModel.starpass(
+                preferences.getUserId(),
+                Constant.BOOKING_ID,
+                Constant.TRANSACTION_ID,
+                Constant.BOOK_TYPE,
+                Constant.CINEMA_ID,
+                string
+            )
             return
         }
     }
@@ -143,9 +164,9 @@ lateinit var preferences: PreferenceManager
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        if (binding?.mobileLayout?.childCount!!>0) {
+        if (binding?.mobileLayout?.childCount!! > 0) {
             layoutParams.setMargins(8, 55, 25, 0)
-        }else{
+        } else {
             layoutParams.setMargins(8, 0, 25, 0)
         }
         val linearLayout = LinearLayout(this)
@@ -169,12 +190,12 @@ lateinit var preferences: PreferenceManager
     private fun addChild(linearLayout: LinearLayout, position: Int, text: String) {
         val params = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            Constant().convertDpToPixel(58f,this), 1f
+            Constant().convertDpToPixel(58f, this), 1f
         )
-        val couponEditText = CouponEditText(this)
+        val couponEditText = EditText(this)
         couponEditText.layoutParams = params
         couponEditText.setBackgroundResource(R.drawable.text_curve)
-        couponEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.close, 0)
+        couponEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.close, 0)
         couponEditText.isSingleLine = true
         couponEditText.isAllCaps = true
         couponEditText.inputType = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
@@ -190,7 +211,7 @@ lateinit var preferences: PreferenceManager
         couponEditText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12F)
         couponEditText.setTextColor(resources.getColor(R.color.black))
         couponEditText.setPadding(
-           28,
+            28,
             0,
             18,
             0
@@ -199,18 +220,33 @@ lateinit var preferences: PreferenceManager
             couponEditText.setText(text)
         }
         couponEditText.tag = couponEditText
-        couponEditText.setDrawableClickListener(object : DrawableClickListener {
-            override fun onClick(target: DrawablePosition?, v: View?) {
-                when (target) {
-                    DrawablePosition.RIGHT -> {
-                        couponEditText.setText("")
-                    }
-                    else -> {
-                        couponEditText.setText("")
-                    }
-                }
+
+        couponEditText.setOnTouchListener(object :
+            RightDrawableOnTouchListener(couponEditText) {
+            @SuppressLint("ClickableViewAccessibility")
+            override fun onDrawableTouch(event: MotionEvent?): Boolean {
+//                toast("gdsgdgdhd....")
+                couponEditText.setText("")
+                return true
             }
         })
+
+
+//        couponEditText.setDrawableClickListener(object : DrawableClickListener {
+//            override fun onClick(target: DrawablePosition?, v: View?) {
+//                println("99889999--->")
+//                toast("djjdfjfdjfjfd....")
+//                val editText = v?.tag as CouponEditText
+//                when (target) {
+//                    DrawablePosition.RIGHT -> {
+//                        editText.setText("")
+//                    }
+//                    else -> {
+//                        editText.setText("")
+//                    }
+//                }
+//            }
+//        })
 //        couponEditText.setDrawableClickListener(object : DrawableClickListener {
 //            override fun onClick(target: DrawableClickListener.DrawablePosition?, v: View?) {
 //                val editText: CouponEditText = v?.tag as CouponEditText
@@ -234,7 +270,10 @@ lateinit var preferences: PreferenceManager
 
     private fun getErrorMessage(): String? {
         var message = ""
-        if (!InputTextValidator.hasText(binding?.ccEditText!!) && !InputTextValidator.hasText(binding?.mobileEditText!!)) {
+        if (!InputTextValidator.hasText(binding?.ccEditText!!) && !InputTextValidator.hasText(
+                binding?.mobileEditText!!
+            )
+        ) {
             message =
                 if (TextUtils.isEmpty(message)) message + "Credit card and mobile number required" else "$message\nCredit card and mobile number required"
         } else {
@@ -294,7 +333,7 @@ lateinit var preferences: PreferenceManager
             }
             binding?.mobileLayout?.invalidate()
             binding?.foodCount?.text = "" + getCount()
-        }catch (e:java.lang.Exception){
+        } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
     }
@@ -302,8 +341,8 @@ lateinit var preferences: PreferenceManager
     private fun getCount(): Int {
         var count = 0
         try {
-             count = binding?.mobileLayout?.childCount!!
-        }catch (e:Exception){
+            count = binding?.mobileLayout?.childCount!!
+        } catch (e: Exception) {
             e.printStackTrace()
         }
         return count
@@ -349,14 +388,24 @@ lateinit var preferences: PreferenceManager
                                     Constant.SharedPreference.Promo_Bin_Series,
                                     binSeries
                                 )
-                                preferences.saveBoolean(Constant.SharedPreference.Has_Bin_Series, true)
+                                preferences.saveBoolean(
+                                    Constant.SharedPreference.Has_Bin_Series,
+                                    true
+                                )
                             } else
-                                preferences.saveBoolean(Constant.SharedPreference.Has_Bin_Series, false)
+                                preferences.saveBoolean(
+                                    Constant.SharedPreference.Has_Bin_Series,
+                                    false
+                                )
                             PaymentActivity.isPromoCodeApplied = it.data.output.creditCardOnly
                             if (it.data.output.p) {
                                 Constant().printTicket(this)
                             } else {
-                                if (Constant.BOOK_TYPE.equals("LOYALTYUNLIMITED", ignoreCase = true)) {
+                                if (Constant.BOOK_TYPE.equals(
+                                        "LOYALTYUNLIMITED",
+                                        ignoreCase = true
+                                    )
+                                ) {
 //                                    val intent =
 //                                        Intent(this, Subscription_Promo_Payment::class.java)
 //                                    intent.putExtra(
@@ -372,9 +421,12 @@ lateinit var preferences: PreferenceManager
                                 } else {
                                     Constant.discount_val = it.data.output.di
                                     Constant.discount_txt = it.data.output.txt
-                                    launchPaymentActivity(PaymentActivity::class.java,
-                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK, intent.getStringExtra("paidAmount").toString()
-                                    ,"MCoupon")
+                                    launchPaymentActivity(
+                                        PaymentActivity::class.java,
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,
+                                        intent.getStringExtra("paidAmount").toString(),
+                                        "MCoupon"
+                                    )
 //                                    PaymentActivity.showTncDialog(this, it.data.output.di, "MCoupon")
 
                                 }
@@ -412,6 +464,7 @@ lateinit var preferences: PreferenceManager
         }
 
     }
+
     private fun callStarPass() {
         promoCodeViewModel.starpassOldScope.observe(this) {
             when (it) {
@@ -425,14 +478,24 @@ lateinit var preferences: PreferenceManager
                                     Constant.SharedPreference.Promo_Bin_Series,
                                     binSeries
                                 )
-                                preferences.saveBoolean(Constant.SharedPreference.Has_Bin_Series, true)
+                                preferences.saveBoolean(
+                                    Constant.SharedPreference.Has_Bin_Series,
+                                    true
+                                )
                             } else
-                                preferences.saveBoolean(Constant.SharedPreference.Has_Bin_Series, false)
+                                preferences.saveBoolean(
+                                    Constant.SharedPreference.Has_Bin_Series,
+                                    false
+                                )
                             PaymentActivity.isPromoCodeApplied = it.data.output.creditCardOnly
                             if (it.data.output.p) {
                                 Constant().printTicket(this)
                             } else {
-                                if (Constant.BOOK_TYPE.equals("LOYALTYUNLIMITED", ignoreCase = true)) {
+                                if (Constant.BOOK_TYPE.equals(
+                                        "LOYALTYUNLIMITED",
+                                        ignoreCase = true
+                                    )
+                                ) {
 //                                    val intent =
 //                                        Intent(this, Subscription_Promo_Payment::class.java)
 //                                    intent.putExtra(
@@ -448,9 +511,12 @@ lateinit var preferences: PreferenceManager
                                 } else {
                                     Constant.discount_val = it.data.output.di
                                     Constant.discount_txt = it.data.output.txt
-                                    launchPaymentActivity(PaymentActivity::class.java,
-                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK, intent.getStringExtra("paidAmount").toString()
-                                    ,"Star Pass")
+                                    launchPaymentActivity(
+                                        PaymentActivity::class.java,
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,
+                                        intent.getStringExtra("paidAmount").toString(),
+                                        "Star Pass"
+                                    )
 //                                    PaymentActivity.showTncDialog(this, it.data.output.di, )
 
                                 }

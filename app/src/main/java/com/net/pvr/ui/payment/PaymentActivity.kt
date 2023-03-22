@@ -61,6 +61,7 @@ import com.net.pvr.utils.Constant.Companion.BOOK_TYPE
 import com.net.pvr.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr.utils.Constant.Companion.CRED
 import com.net.pvr.utils.Constant.Companion.CREDIT_CARD
+import com.net.pvr.utils.Constant.Companion.DC_CARD
 import com.net.pvr.utils.Constant.Companion.DEBIT_CARD
 import com.net.pvr.utils.Constant.Companion.DISCOUNT
 import com.net.pvr.utils.Constant.Companion.FREECHARGE
@@ -921,6 +922,27 @@ class PaymentActivity : AppCompatActivity(),
                 startActivity(intent)
             }
             GEIFT_CARD -> {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "PAYMENT SCREEN")
+                    bundle.putString("add_payment_info","")
+                    GoogleAnalytics.hitEvent(this, "make_payment_options-static", bundle)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+                val intent = Intent(this, GiftCardRedeemActivity::class.java)
+                intent.putExtra("type", "GEIFT_CARD")
+                intent.putExtra("pid", paymentItem.id)
+                intent.putExtra("tc", paymentItem.tc)
+                intent.putExtra("c", paymentItem.c)
+                intent.putExtra("ca_a", paymentItem.ca_a)
+                intent.putExtra("ca_t", paymentItem.ca_t)
+                intent.putExtra("title", paymentItem.name)
+                intent.putExtra("paidAmount", actualAmt)
+                startActivity(intent)
+            }
+            DC_CARD -> {
                 // Hit Event
                 try {
                     val bundle = Bundle()

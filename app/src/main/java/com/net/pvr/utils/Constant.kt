@@ -201,6 +201,7 @@ class Constant {
         var KOTAK_SATURDAY = "o101"
         var KOTAK_WEEKEND = "130"
         var KOTAK_CREDIT_CARD = "125"
+        var KOTAK_CREDIT_CARD = "125"
 
 
         // OFFERS
