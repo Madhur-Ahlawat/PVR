@@ -299,9 +299,11 @@ class TicketConfirmationActivity : AppCompatActivity() {
             if (output.fa && output.ca_d != "true") {
                 binding?.cardView16?.show()
                 binding?.imageView157?.show()
+                binding?.imageView154?.show()
             } else {
                 binding?.cardView16?.hide()
                 binding?.imageView157?.hide()
+                binding?.imageView154?.hide()
             }
 
             if (output.ca_d == "true") {

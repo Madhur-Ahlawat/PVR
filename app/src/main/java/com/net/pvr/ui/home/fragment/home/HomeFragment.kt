@@ -90,12 +90,14 @@ import kotlin.collections.ArrayList
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickListener,
+class HomeFragment : Fragment(),
+    HomeCinemaCategoryAdapter.RecycleViewItemClickListener,
     HomeSliderAdapter.RecycleViewItemClickListener,
     HomePromotionAdapter.RecycleViewItemClickListener,
     HomeMoviesAdapter.RecycleViewItemClickListener,
     HomeOfferListAdapter.RecycleViewItemClickListener,
-    GenericFilterHome.onButtonSelected, StoriesProgressView.StoriesListener,
+    GenericFilterHome.onButtonSelected,
+    StoriesProgressView.StoriesListener,
     MusicVideoTrsAdapter.RecycleViewItemClickListener,
     TrailerTrsAdapter.RecycleViewItemClickListener,
     HomeOfferAdapter.RecycleViewItemClickListenerCity {
@@ -148,10 +150,9 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     private var broadcastReceiver: BroadcastReceiver? = null
 
 
-    private var musicData: ArrayList<MovieDetailsResponse.Trs> =
-        ArrayList<MovieDetailsResponse.Trs>()
-    private var videoData: ArrayList<MovieDetailsResponse.Trs> =
-        ArrayList<MovieDetailsResponse.Trs>()
+    private var musicData: ArrayList<MovieDetailsResponse.Trs> = ArrayList()
+
+    private var videoData: ArrayList<MovieDetailsResponse.Trs> = ArrayList()
 
     companion object {
         var dialogTrailer: Dialog? = null
@@ -494,6 +495,9 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                     val position = HomeActivity.getCurrentItem(recyclerView)
                     textView192?.text = offerResponse?.get(position)?.offerName
                     textView5?.setOnClickListener {
+                        printLog("----------------------->${offerResponse?.get(position)?.otherLinkRedirectUrl?.replace(
+                            "https", "app"
+                        )}")
                         val intent = Intent(
                             Intent.ACTION_VIEW, Uri.parse(
                                 offerResponse?.get(position)?.otherLinkRedirectUrl?.replace(

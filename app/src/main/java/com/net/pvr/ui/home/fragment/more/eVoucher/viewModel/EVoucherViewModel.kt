@@ -12,23 +12,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EVoucherViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
-//my Voucher
-    val userResponseLiveData: LiveData<NetworkResult<VoucherListResponse>>
-        get() = userRepository.myVoucherResponseLiveData
-
-    fun myVouchers(userid: String) {
-        viewModelScope.launch {
-            userRepository.myVoucher(userid)
-        }
-    }
 
     //myE Voucher
     val userResponseEVoucherLiveData: LiveData<NetworkResult<VoucherListResponse>>
         get() = userRepository.myeVoucherResponseLiveData
 
-    fun myEVouchers(cname: String,cat: String) {
+    fun myEVouchers(quantity: String,did: String) {
         viewModelScope.launch {
-            userRepository.myEVoucher(cname,cat)
+            userRepository.myEVoucher(quantity,did)
         }
     }
 

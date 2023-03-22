@@ -1,6 +1,8 @@
 package com.net.pvr.ui.home.fragment.more.contactUs
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Patterns
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -12,8 +14,10 @@ import com.net.pvr.databinding.ActivityContactUsBinding
 import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
+import com.net.pvr.ui.home.HomeActivity
 import com.net.pvr.ui.home.fragment.more.contactUs.adapter.ContactUsItemAdapter
 import com.net.pvr.ui.home.fragment.more.contactUs.viewModel.ContactUsViewModel
+import com.net.pvr.ui.payment.cred.CredActivity
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.InputTextValidator
 import com.net.pvr.utils.NetworkResult
@@ -28,34 +32,35 @@ class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewI
     private var loader: LoaderDialog? = null
     private val authViewModel: ContactUsViewModel by viewModels()
     private var listData: ArrayList<String> = ArrayList()
-    private  var type: String = ""
+    private var type: String = ""
 
     @Inject
     lateinit var preferences: PreferenceManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityContactUsBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
         manageFunction()
     }
 
     private fun manageFunction() {
         binding?.include22?.textView5?.text = getString(R.string.submit)
-        binding?.toolbar?.textView108?.text=getString(R.string.contact_us)
-        if (preferences.getIsLogin()){
+        binding?.toolbar?.textView108?.text = getString(R.string.contact_us)
+        if (preferences.getIsLogin()) {
             //mobile
             binding?.mobileNumber?.setText(preferences.geMobileNumber())
             //email
             binding?.email?.setText(preferences.getEmail())
         }
 
-
 //List
         listData.add("Feedback")
         listData.add("Advertising/Corporate")
         listData.add("Bulk Booking")
-        type=listData[0]
+        type = listData[0]
 
         //Set Data
         val gridLayout =
@@ -79,31 +84,49 @@ class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewI
             val mobile = binding?.mobileNumber?.text.toString()
             val email = binding?.email?.text.toString()
             val notes = binding?.notes?.text.toString()
+
             if (mobile == "") {
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
-                    R.string.app_name,
-                    getString(R.string.enterMobile),
+                    R.string.blank_space,
+                    resources.getString(R.string.enterMobile),
                     positiveBtnText = R.string.ok,
                     negativeBtnText = R.string.no,
-                    positiveClick = {
-                    },
-                    negativeClick = {
-                    })
+                    positiveClick = {},
+                    negativeClick = {})
                 dialog.show()
-            } else if (email == "") {
+            } else if (binding?.mobileNumber?.length()!! < 10) {
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
-                    R.string.app_name,
-                    getString(R.string.enterEmail),
+                    R.string.blank_space,
+                    resources.getString(R.string.invalidPhone),
                     positiveBtnText = R.string.ok,
                     negativeBtnText = R.string.no,
-                    positiveClick = {
-                    },
-                    negativeClick = {
-                    })
+                    positiveClick = {},
+                    negativeClick = {})
                 dialog.show()
-
+            } else if (!InputTextValidator.validateEmail(binding?.email!!)) {
+                if (binding?.email!!.text.toString().trim { it <= ' ' }.isEmpty()) {
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.blank_space,
+                        " Please Enter Email",
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                } else {
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.blank_space,
+                        resources.getString(R.string.email_msg_invalid),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
             } else if (notes == "") {
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
@@ -116,7 +139,7 @@ class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewI
                     negativeClick = {
                     })
                 dialog.show()
-            }else if (binding?.notes?.length()!! < 15) {
+            } else if (binding?.notes?.length()!! < 15) {
                 binding?.perosnalNotesLayout?.background = ContextCompat.getDrawable(
                     this,
                     R.drawable.edit_text_invalid_input_selector
@@ -129,7 +152,7 @@ class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewI
                             val bundle = Bundle()
                             bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Contact Us")
                             GoogleAnalytics.hitEvent(this, "contact_us_feedback", bundle)
-                        }catch (e:Exception){
+                        } catch (e: Exception) {
                             e.printStackTrace()
                         }
 
@@ -140,7 +163,7 @@ class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewI
                             val bundle = Bundle()
                             bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Contact Us")
                             GoogleAnalytics.hitEvent(this, "contact_us_corporate", bundle)
-                        }catch (e:Exception){
+                        } catch (e: Exception) {
                             e.printStackTrace()
                         }
 
@@ -151,7 +174,7 @@ class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewI
                             val bundle = Bundle()
                             bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Contact Us")
                             GoogleAnalytics.hitEvent(this, "contact_us_bulk", bundle)
-                        }catch (e:Exception){
+                        } catch (e: Exception) {
                             e.printStackTrace()
                         }
                     }
@@ -163,7 +186,7 @@ class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewI
                     bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Contact Us")
 //                    bundle.putString("var_experiences_banner", comingSoonItem.name)
                     GoogleAnalytics.hitEvent(this, "contact_us_with_text", bundle)
-                }catch (e:Exception){
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
 
@@ -173,7 +196,7 @@ class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewI
                     bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Contact Us")
 //                    bundle.putString("var_experiences_banner", comingSoonItem.name)
                     GoogleAnalytics.hitEvent(this, "generate_lead", bundle)
-                }catch (e:Exception){
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
 
@@ -194,6 +217,25 @@ class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewI
         }
     }
 
+//    private fun isValidMobile(phone: String): Boolean {
+//        return Patterns.PHONE.matcher(phone).matches()
+//    }
+
+   private fun isValidMobile(target: CharSequence): Boolean {
+        return if (target.length != 10) {
+            toast("2")
+
+            false
+
+        } else{
+            toast("3")
+            true
+        }
+//        else {
+//            Patterns.PHONE.matcher(target).matches()
+//        }
+    }
+
     override fun contactUsClick(comingSoonItem: String) {
         type = comingSoonItem
     }
@@ -212,7 +254,7 @@ class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewI
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
                             positiveClick = {
-                               retrieveData()
+                                retrieveData()
                             },
                             negativeClick = {
                             })
@@ -256,7 +298,9 @@ class ContactUsActivity : AppCompatActivity(), ContactUsItemAdapter.RecycleViewI
     private fun retrieveData() {
 //       binding?.mobileNumber?.text?.clear()
 //       binding?.email?.text?.clear()
-       binding?.notes?.text?.clear()
+        binding?.notes?.text?.clear()
+
+        finish()
     }
 
 }

@@ -175,8 +175,7 @@ class CardDetailsActivity : AppCompatActivity(),
                     positiveClick = {},
                     negativeClick = {})
                 dialog.show()
-            } else if (!monthYear.contains("/")&&  monthYear.length < 5 ) {
-                toast("1")
+            } else if (binding?.monthYear?.text.toString().trim().contains("/")  &&  monthYear.length < 5 ) {
                 val dialog = OptionDialog(this,
                     R.mipmap.ic_launcher,
                     R.string.app_name,

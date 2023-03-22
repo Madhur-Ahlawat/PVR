@@ -104,6 +104,7 @@ class HomeActivity : AppCompatActivity(), PrivilegeHomeDialogAdapter.RecycleView
         binding = ActivityHomeBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
         manageFunction()
         Constant.setAverageUserIdSCM(preferences)
         Constant.setUPSFMCSDK(preferences)

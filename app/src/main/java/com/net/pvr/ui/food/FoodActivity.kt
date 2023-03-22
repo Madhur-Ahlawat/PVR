@@ -176,19 +176,25 @@ class FoodActivity : AppCompatActivity(),
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         foodResponse = it.data.output
-                        foodResponseCategory.add(FoodResponse.Output.Cat("", "ALL", 0))
-                        foodResponseCategory.addAll(it.data.output.cat)
-                        filterResponse = it.data.output.mfl
-                        catFilter = it.data.output.mfl
-                        limitCount = it.data.output.aqt
-                        seatMessage = it.data.output.nams
-                        catFilterBestSeller = it.data.output.bestsellers
-                        if (it.data.output.h1!=null && it.data.output.h1 != ""){
-                            binding?.foodMsg?.show()
-                            binding?.h1Text?.text = it.data.output.h1
-                            binding?.h2Text?.text = it.data.output.h2
+                        try {
+
+                            foodResponseCategory.add(FoodResponse.Output.Cat("", "ALL", 0))
+                            foodResponseCategory.addAll(it.data.output.cat)
+                            filterResponse = it.data.output.mfl
+                            catFilter = it.data.output.mfl
+                            limitCount = it.data.output.aqt
+                            seatMessage = it.data.output.nams
+                            catFilterBestSeller = it.data.output.bestsellers
+
+                            if (it.data.output.h1!=null && it.data.output.h1 != ""){
+                                binding?.foodMsg?.show()
+                                binding?.h1Text?.text = it.data.output.h1
+                                binding?.h2Text?.text = it.data.output.h2
+                            }
+                            retrieveData(it.data.output)
+                        }catch (e:Exception){
+                            e.printStackTrace()
                         }
-                        retrieveData(it.data.output)
                         loader?.dismiss()
 
                     } else {
@@ -1288,7 +1294,6 @@ class FoodActivity : AppCompatActivity(),
         bestSellerFoodAdapter?.notifyDataSetChanged()
     }
 
-
     // All  Food Mfl Action Manage
 
     private fun updateCategoryFoodCartList(comingSoonItem: FoodResponse.Output.Mfl) {
@@ -1884,7 +1889,6 @@ class FoodActivity : AppCompatActivity(),
             binding?.include41?.placeHolderView?.hide()
         }
     }
-
 
     override fun onResume() {
         super.onResume()

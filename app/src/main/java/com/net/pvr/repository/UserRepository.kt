@@ -21,6 +21,7 @@ import com.net.pvr.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr.ui.home.fragment.home.response.NextBookingResponse
 import com.net.pvr.ui.home.fragment.more.bookingRetrieval.response.BookingRetrievalResponse
 import com.net.pvr.ui.home.fragment.more.contactUs.response.ContactUsResponse
+import com.net.pvr.ui.home.fragment.more.eVoucher.details.response.SaveEVoucherResponse
 import com.net.pvr.ui.home.fragment.more.eVoucher.response.VoucherListResponse
 import com.net.pvr.ui.home.fragment.more.experience.response.ExperienceDetailsResponse
 import com.net.pvr.ui.home.fragment.more.experience.response.ExperienceResponse
@@ -67,7 +68,6 @@ import okhttp3.RequestBody
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Response
-import java.time.temporal.TemporalAmount
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(private val userAPI: UserAPI) {
@@ -493,6 +493,30 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             myeVoucherLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
+
+
+    //saveEVoucher
+    private val saveEVoucherLiveData = MutableLiveData<NetworkResult<SaveEVoucherResponse>>()
+    val saveEVoucherResponseLiveData: LiveData<NetworkResult<SaveEVoucherResponse>>
+        get() = saveEVoucherLiveData
+
+    suspend fun saveEVoucher(userid: String,quantity: String, did: String) {
+        saveEVoucherLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.saveEVoucher( userid,quantity,did, Constant.version, Constant.platform)
+        saveEVoucherResponse(response)
+    }
+
+    private fun saveEVoucherResponse(response: Response<SaveEVoucherResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            saveEVoucherLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+            saveEVoucherLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+        } else {
+            saveEVoucherLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
 
     //Cinema
     private val cinemaLiveData = MutableLiveData<NetworkResult<CinemaResponse>>()

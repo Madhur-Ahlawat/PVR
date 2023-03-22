@@ -65,7 +65,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout41"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dimen_38dp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="13dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textView123"
@@ -82,5 +82,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
