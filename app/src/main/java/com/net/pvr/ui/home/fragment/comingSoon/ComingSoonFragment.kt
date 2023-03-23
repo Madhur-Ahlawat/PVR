@@ -651,17 +651,15 @@ class ComingSoonFragment : Fragment(),
         bindingTrailer.titleLandingScreen.text = comingSoonItem.name
 
         val censor =
-             java.lang.String.join(",", comingSoonItem.language)+" "+getString(R.string.dots)+" "+comingSoonItem.date_caption
+            java.lang.String.join(
+                ",",
+                comingSoonItem.othergenres) +" "+ getString(R.string.dots)+" "+comingSoonItem.otherlanguages
 
         bindingTrailer.tvCensorLang.text =
             censor.replace("[", "").replace("]", "").replace("(", "").replace(")", "")
 
-
-        bindingTrailer.subTitleLandingScreen.text =
-            comingSoonItem.otherlanguages + " " + getString(R.string.dots) + " " + java.lang.String.join(
-                ",",
-                comingSoonItem.othergenres
-            )
+        bindingTrailer.subTitleLandingScreen.text = comingSoonItem.date_caption
+            comingSoonItem.otherlanguages + " " + getString(R.string.dots) + " " + java.lang.String.join(",", comingSoonItem.othergenres)
 
         //image
         Glide.with(requireActivity())

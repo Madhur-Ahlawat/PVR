@@ -41,6 +41,7 @@
         android:shape="ring"
         android:thicknessRatio="1.9"
         app:cardCornerRadius="40dp"
+        app:cardBackgroundColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
