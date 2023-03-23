@@ -13,6 +13,7 @@ import com.net.pvr.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,7 +41,7 @@ class HomeViewModel @Inject constructor(private val userRepository: UserReposito
     }
 
     //offer
-    val offerHideLiveData: LiveData<NetworkResult<String>>
+    val offerHideLiveData: LiveData<NetworkResult<ResponseBody>>
         get() = userRepository.hideOfferResponseLiveData
 
 

@@ -95,8 +95,8 @@ class FoodActivity : AppCompatActivity(),
     private var bestSellerType: String = "ALL"
 
     // Food Popup Custom
-    private var amtViewFood:RelativeLayout? = null
-    private var amtFood:TextView? = null
+    private var amtViewFood: RelativeLayout? = null
+    private var amtFood: TextView? = null
 
     //internet Check
     private var broadcastReceiver: BroadcastReceiver? = null
@@ -107,27 +107,28 @@ class FoodActivity : AppCompatActivity(),
     private var limit = 500L
     private var counterStory = 0
     private var currentPage = 1
-    private var bannerModelsMain: ArrayList<BookingResponse.Output.Pu> = ArrayList<BookingResponse.Output.Pu>()
+    private var bannerModelsMain: ArrayList<BookingResponse.Output.Pu> =
+        ArrayList<BookingResponse.Output.Pu>()
 
 
-    companion object{
+    companion object {
         var itemCount = 0
         var limitCount = 0
         var seatMessage = "0"
         fun getFoodQTCount(r: List<FoodResponse.Output.Bestseller.R>): Int {
             var qt = 0
-            for (data in r){
-                if (data.qt>0){
+            for (data in r) {
+                if (data.qt > 0) {
                     qt += data.qt
                 }
             }
             return qt
         }
 
-         fun getItemCount(cartModel: ArrayList<CartModel>): Int {
+        fun getItemCount(cartModel: ArrayList<CartModel>): Int {
             var count = 0
 
-            for (data in cartModel){
+            for (data in cartModel) {
                 count += data.quantity
             }
             return count
@@ -147,11 +148,22 @@ class FoodActivity : AppCompatActivity(),
     private fun manageFunction() {
         Constant.viewModel = authViewModel
         var audi = ""
-        if (AUDI != ""){
+        if (AUDI != "") {
             audi = "AUDI"
         }
         authViewModel.food(
-            preferences.getUserId(), CINEMA_ID, BOOKING_ID, "", "", audi, AUDI, SEAT, "", QR, "no", "no"
+            preferences.getUserId(),
+            CINEMA_ID,
+            BOOKING_ID,
+            "",
+            "",
+            audi,
+            AUDI,
+            SEAT,
+            "",
+            QR,
+            "no",
+            "no"
         )
 
         //internet Check
@@ -160,7 +172,6 @@ class FoodActivity : AppCompatActivity(),
 
         movedNext()
         foodDetails()
-        saveFoodResponseLiveData()
         getShimmerData()
     }
 
@@ -186,13 +197,13 @@ class FoodActivity : AppCompatActivity(),
                             seatMessage = it.data.output.nams
                             catFilterBestSeller = it.data.output.bestsellers
 
-                            if (it.data.output.h1!=null && it.data.output.h1 != ""){
+                            if (it.data.output.h1 != null && it.data.output.h1 != "") {
                                 binding?.foodMsg?.show()
                                 binding?.h1Text?.text = it.data.output.h1
                                 binding?.h2Text?.text = it.data.output.h2
                             }
                             retrieveData(it.data.output)
-                        }catch (e:Exception){
+                        } catch (e: Exception) {
                             e.printStackTrace()
                         }
                         loader?.dismiss()
@@ -235,6 +246,7 @@ class FoodActivity : AppCompatActivity(),
         }
 
     }
+
     private fun saveFoodResponseLiveData() {
         authViewModel.saveFoodResponseLiveData.observe(this) {
             when (it) {
@@ -244,7 +256,7 @@ class FoodActivity : AppCompatActivity(),
                         TRANSACTION_ID = it.data.output.tid
                         loader?.dismiss()
 
-                        FOOD_COUNT=cartModel.size
+                        FOOD_COUNT = cartModel.size
 
                         val intent = Intent(this@FoodActivity, SummeryActivity::class.java)
                         intent.putExtra(BOOK_TYPE, "FOOD")
@@ -281,7 +293,8 @@ class FoodActivity : AppCompatActivity(),
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(this.supportFragmentManager, null)
                 }
             }
         }
@@ -368,6 +381,10 @@ class FoodActivity : AppCompatActivity(),
     }
 
     private fun movedNext() {
+        if (BOOK_TYPE == "BOOKING" && QR == "NO")
+            binding?.textView374?.show()
+        else
+            binding?.textView374?.hide()
         //OnBack
         binding?.imageView58?.setOnClickListener {
             Constant.SeatBack = 1
@@ -381,7 +398,7 @@ class FoodActivity : AppCompatActivity(),
                 bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
 //                bundle.putString("var_add_payment_info","")
                 GoogleAnalytics.hitEvent(this, "FnB_continue", bundle)
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
 
@@ -400,42 +417,44 @@ class FoodActivity : AppCompatActivity(),
             try {
                 val bundle = Bundle()
                 bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
-                bundle.putString("var_FnB_food_type","veg")
+                bundle.putString("var_FnB_food_type", "veg")
                 GoogleAnalytics.hitEvent(this, "FnB_proceed", bundle)
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
 
 
             cartShow = false
             binding?.constraintLayout112?.hide()
-            if (BOOK_TYPE != "FOOD")
-            binding?.textView374?.show()
+
             var totalPrice = 0;
-            if (BOOK_TYPE == "FOOD"){
+            if (BOOK_TYPE == "FOOD") {
                 cartModel.forEachIndexed { index, food ->
                     itemDescription = if (index == 0) {
-                        food.title + "|" + food.id + "|" + food.quantity + "|" + food.price + "|" + food.ho +"|"+food.veg
+                        food.title + "|" + food.id + "|" + food.quantity + "|" + food.price + "|" + food.ho + "|" + food.veg
                     } else {
-                        itemDescription + "#" + food.title + "|" + food.id + "|" + food.quantity + "|" + food.price + "|" + food.ho +"|"+food.veg
+                        itemDescription + "#" + food.title + "|" + food.id + "|" + food.quantity + "|" + food.price + "|" + food.ho + "|" + food.veg
                     }
                     totalPrice += food.price
                 }
                 val readFormat = SimpleDateFormat("MMM dd, yyyy")
-               val type = if (QR == "YES"){
-                   ""
-                }else{
-                      ""
+                val type = if (QR == "YES") {
+                    ""
+                } else {
+                    ""
                 }
                 var audi = ""
-                if (AUDI != ""){
+                if (AUDI != "") {
                     audi = "AUDI"
                 }
 
-                authViewModel.saveFood(preferences.getUserId(),CINEMA_ID,totalPrice.toString(),itemDescription,
+                authViewModel.saveFood(
+                    preferences.getUserId(), CINEMA_ID, totalPrice.toString(), itemDescription,
                     readFormat.format(
                         Calendar.getInstance().time
-                    ), BOOKING_ID, AUDI, SEAT,audi,"", QR,"","")
+                    ), BOOKING_ID, AUDI, SEAT, audi, "", QR, "", ""
+                )
+                saveFoodResponseLiveData()
             } else {
                 val intent = Intent(this@FoodActivity, SummeryActivity::class.java)
                 intent.putExtra(BOOK_TYPE, "BOOKING")
@@ -451,9 +470,9 @@ class FoodActivity : AppCompatActivity(),
                 try {
                     val bundle = Bundle()
                     bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
-                    bundle.putString("var_FnB_food_type","veg")
+                    bundle.putString("var_FnB_food_type", "veg")
                     GoogleAnalytics.hitEvent(this, "FnB_food_type", bundle)
-                }catch (e:Exception){
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
 
@@ -515,9 +534,9 @@ class FoodActivity : AppCompatActivity(),
                 try {
                     val bundle = Bundle()
                     bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
-                    bundle.putString("var_FnB_food_type","non-veg")
+                    bundle.putString("var_FnB_food_type", "non-veg")
                     GoogleAnalytics.hitEvent(this, "FnB_food_type", bundle)
-                }catch (e:Exception){
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
 
@@ -582,9 +601,9 @@ class FoodActivity : AppCompatActivity(),
         try {
             val bundle = Bundle()
             bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Booking")
-                bundle.putString("var_FnB_category",comingSoonItem.name)
+            bundle.putString("var_FnB_category", comingSoonItem.name)
             GoogleAnalytics.hitEvent(this, "FnB_category", bundle)
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
@@ -724,7 +743,7 @@ class FoodActivity : AppCompatActivity(),
         dialog.window?.setGravity(Gravity.BOTTOM)
         dialog.show()
 
-        if (comingSoonItem.r[0].wt != null && comingSoonItem.r[0].wt !="" && comingSoonItem.r[0].en != null && comingSoonItem.r[0].en != "") {
+        if (comingSoonItem.r[0].wt != null && comingSoonItem.r[0].wt != "" && comingSoonItem.r[0].en != null && comingSoonItem.r[0].en != "") {
             bindingBottom.cal.text = comingSoonItem.r[0].wt + "  •  " + comingSoonItem.r[0].en
             bindingBottom.cal.show()
         } else if (comingSoonItem.r[0].wt != null && comingSoonItem.r[0].wt != "") {
@@ -772,7 +791,7 @@ class FoodActivity : AppCompatActivity(),
         bindingBottom.textView309.setOnClickListener {
             if (comingSoonItem.r.size > 1) {
                 dialog.dismiss()
-                bottomDialogCart(comingSoonItem.r, comingSoonItem.nm,comingSoonItem.cid.toString())
+                bottomDialogCart(comingSoonItem.r, comingSoonItem.nm, comingSoonItem.cid.toString())
             } else {
                 masterId = comingSoonItem.mid.toString()
                 var num = comingSoonItem.qt
@@ -917,9 +936,9 @@ class FoodActivity : AppCompatActivity(),
 
 
     override fun bestSellerDialogAddFood(
-        comingSoonItem: List<FoodResponse.Output.Bestseller.R>, position: String,cid:String
+        comingSoonItem: List<FoodResponse.Output.Bestseller.R>, position: String, cid: String
     ) {
-        bottomDialogCart(comingSoonItem, position,cid)
+        bottomDialogCart(comingSoonItem, position, cid)
     }
 
     private fun updateHomeCartList(comingSoonItem: FoodResponse.Output.Bestseller) {
@@ -967,13 +986,16 @@ class FoodActivity : AppCompatActivity(),
     }
 
     override fun categoryFoodDialog(
-        comingSoonItem: List<FoodResponse.Output.Bestseller.R>, title: String,cid:String
+        comingSoonItem: List<FoodResponse.Output.Bestseller.R>, title: String, cid: String
     ) {
-        bottomDialogCart(comingSoonItem, title,cid)
+        bottomDialogCart(comingSoonItem, title, cid)
     }
 
-    override fun filterBtFoodClick(comingSoonItem: FoodResponse.Output.Bestseller.R,list:List<FoodResponse.Output.Bestseller.R>) {
-        if ((itemCount+getPopCount(popupFood))>= limitCount) {
+    override fun filterBtFoodClick(
+        comingSoonItem: FoodResponse.Output.Bestseller.R,
+        list: List<FoodResponse.Output.Bestseller.R>
+    ) {
+        if ((itemCount + getPopCount(popupFood)) >= limitCount) {
             val dialog = OptionDialog(this,
                 R.mipmap.ic_launcher,
                 R.string.app_name,
@@ -993,7 +1015,7 @@ class FoodActivity : AppCompatActivity(),
 
     private fun getPopCount(popupFood: ArrayList<FoodResponse.Output.Bestseller.R>): Int {
         var count = 0
-        if (popupFood!=null) {
+        if (popupFood != null) {
             for (data in popupFood) {
                 count += data.qt
             }
@@ -1002,9 +1024,12 @@ class FoodActivity : AppCompatActivity(),
         return count
     }
 
-    override fun filterBtFoodPlus(comingSoonItem: FoodResponse.Output.Bestseller.R,list:List<FoodResponse.Output.Bestseller.R>) {
+    override fun filterBtFoodPlus(
+        comingSoonItem: FoodResponse.Output.Bestseller.R,
+        list: List<FoodResponse.Output.Bestseller.R>
+    ) {
         var num = comingSoonItem.qt
-        if ((itemCount+getPopCount(popupFood)) >= limitCount) {
+        if ((itemCount + getPopCount(popupFood)) >= limitCount) {
             val dialog = OptionDialog(this,
                 R.mipmap.ic_launcher,
                 R.string.app_name,
@@ -1021,7 +1046,10 @@ class FoodActivity : AppCompatActivity(),
         updateFoodItemAmt(list as ArrayList<FoodResponse.Output.Bestseller.R>)
     }
 
-    override fun filterBtFoodMinus(comingSoonItem: FoodResponse.Output.Bestseller.R,list:List<FoodResponse.Output.Bestseller.R>) {
+    override fun filterBtFoodMinus(
+        comingSoonItem: FoodResponse.Output.Bestseller.R,
+        list: List<FoodResponse.Output.Bestseller.R>
+    ) {
         var num = comingSoonItem.qt
         if (num < 0 || num == 0) {
             val dialog = OptionDialog(this,
@@ -1109,7 +1137,7 @@ class FoodActivity : AppCompatActivity(),
             val dialog = OptionDialog(this,
                 R.mipmap.ic_launcher,
                 R.string.app_name,
-               seatMessage,
+                seatMessage,
                 positiveBtnText = R.string.ok,
                 negativeBtnText = R.string.no,
                 positiveClick = {},
@@ -1120,7 +1148,7 @@ class FoodActivity : AppCompatActivity(),
             comingSoonItem.quantity = num
             updateCartFoodCartList(comingSoonItem)
             cartData()
-           // bestSellerFoodAdapter?.notifyDataSetChanged()
+            // bestSellerFoodAdapter?.notifyDataSetChanged()
         }
     }
 
@@ -1173,8 +1201,9 @@ class FoodActivity : AppCompatActivity(),
         if (cartModel.isEmpty()) {
             cartShow = false
             binding?.constraintLayout30?.hide()
-            if (BOOK_TYPE != "FOOD")
-            binding?.textView374?.show()
+            if (BOOK_TYPE == "BOOKING" && QR == "NO")
+                binding?.textView374?.show()
+            else binding?.textView374?.hide()
 
         } else {
             if (!cartShow) {
@@ -1205,7 +1234,7 @@ class FoodActivity : AppCompatActivity(),
                         0
                     )
                     binding?.constraintLayout112?.hide()
-                    newLayoutParams.height = height/5
+                    newLayoutParams.height = height / 5
 
                     binding?.constraintLayout30?.layoutParams = newLayoutParams
                     binding?.constraintLayout30?.setBackgroundColor(getColor(R.color.transparent1))
@@ -1233,7 +1262,7 @@ class FoodActivity : AppCompatActivity(),
             itemCount = getItemCount(cartModel)
 
             binding?.constraintLayout30?.setOnClickListener {
-                newLayoutParams.height = height/5
+                newLayoutParams.height = height / 5
                 binding?.constraintLayout30?.setBackgroundColor(getColor(R.color.transparent1))
                 binding?.constraintLayout30?.layoutParams = newLayoutParams
                 binding?.constraintLayout112?.hide()
@@ -1248,7 +1277,6 @@ class FoodActivity : AppCompatActivity(),
 
         }
     }
-
 
 
     private fun updateCartFoodCartList(recyclerData: CartModel) {
@@ -1275,14 +1303,14 @@ class FoodActivity : AppCompatActivity(),
     @SuppressLint("NotifyDataSetChanged")
     private fun updateCartMainList(recyclerData: CartModel) {
         for (item in foodResponse!!.bestsellers) {
-            if (item.r.size>1) {
+            if (item.r.size > 1) {
                 for (data in item.r) {
                     if (recyclerData.id == data.id) {
                         data.qt = recyclerData.quantity
                         break
                     }
                 }
-            }else{
+            } else {
                 if (recyclerData.id == item.r[0].id) {
                     item.qt = recyclerData.quantity
                     break
@@ -1350,7 +1378,11 @@ class FoodActivity : AppCompatActivity(),
     }
 
     //Mfl All Food
-    private fun getFilterAllMfl(category: Boolean, menuType: Int, name: String): ArrayList<FoodResponse.Output.Mfl> {
+    private fun getFilterAllMfl(
+        category: Boolean,
+        menuType: Int,
+        name: String
+    ): ArrayList<FoodResponse.Output.Mfl> {
         val categoryFilterNew = ArrayList<FoodResponse.Output.Mfl>()
         when (menuType) {
             0 -> {
@@ -1412,7 +1444,7 @@ class FoodActivity : AppCompatActivity(),
             }
 
         }
-        if (categoryFilterNew.size==0){
+        if (categoryFilterNew.size == 0) {
             toast("There are no non veg food in $name")
         }
         return categoryFilterNew
@@ -1431,7 +1463,7 @@ class FoodActivity : AppCompatActivity(),
                 negativeClick = {})
             dialog.show()
 
-        }else{
+        } else {
             var num = comingSoonItem.qt
             num += 1
             comingSoonItem.qt = num
@@ -1456,7 +1488,7 @@ class FoodActivity : AppCompatActivity(),
                 negativeClick = {})
             dialog.show()
         } else {
-            comingSoonItem.qt = comingSoonItem.qt+1
+            comingSoonItem.qt = comingSoonItem.qt + 1
             updateCategoryFoodCartList(comingSoonItem)
             cartData()
         }
@@ -1512,7 +1544,7 @@ class FoodActivity : AppCompatActivity(),
         bindingBottom.textView150.text =
             getString(R.string.currency) + " " + Constant.DECIFORMAT.format(comingSoonItem.dp / 100.0)
 
-        if (comingSoonItem.r[0].wt != null && comingSoonItem.r[0].wt !="" && comingSoonItem.r[0].en != null && comingSoonItem.r[0].en != "") {
+        if (comingSoonItem.r[0].wt != null && comingSoonItem.r[0].wt != "" && comingSoonItem.r[0].en != null && comingSoonItem.r[0].en != "") {
             bindingBottom.cal.text = comingSoonItem.r[0].wt + "  •  " + comingSoonItem.r[0].en
             bindingBottom.cal.show()
         } else if (comingSoonItem.r[0].wt != null && comingSoonItem.r[0].wt != "") {
@@ -1545,7 +1577,7 @@ class FoodActivity : AppCompatActivity(),
         bindingBottom.textView309.setOnClickListener {
             if (comingSoonItem.r.size > 1) {
                 dialog.dismiss()
-                bottomDialogCart(comingSoonItem.r, comingSoonItem.nm,comingSoonItem.cid.toString())
+                bottomDialogCart(comingSoonItem.r, comingSoonItem.nm, comingSoonItem.cid.toString())
             } else {
                 var num = comingSoonItem.qt
                 num += 1
@@ -1611,7 +1643,7 @@ class FoodActivity : AppCompatActivity(),
     }
 
     private fun bottomDialogCart(
-        comingSoonItem: List<FoodResponse.Output.Bestseller.R>, titleTxt: String,cid:String
+        comingSoonItem: List<FoodResponse.Output.Bestseller.R>, titleTxt: String, cid: String
     ) {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -1629,8 +1661,8 @@ class FoodActivity : AppCompatActivity(),
         val cancel = dialog.findViewById<ImageView>(R.id.imageView71)
         val proceed = dialog.findViewById<TextView>(R.id.textView5)
         val title = dialog.findViewById<TextView>(R.id.textView143)
-         amtViewFood = dialog.findViewById<RelativeLayout>(R.id.amtViewFood)
-         amtFood = dialog.findViewById<TextView>(R.id.amtFood)
+        amtViewFood = dialog.findViewById<RelativeLayout>(R.id.amtViewFood)
+        amtFood = dialog.findViewById<TextView>(R.id.amtFood)
 
         val layoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
         bottomFoodAdapter = BottomFoodAdapter(getCustomFoodList(comingSoonItem), this, this)
@@ -1641,12 +1673,12 @@ class FoodActivity : AppCompatActivity(),
 
         proceed.text = getString(R.string.proceed)
         cancel.setOnClickListener {
-            updateCardFromProceed(comingSoonItem,0,cid)
+            updateCardFromProceed(comingSoonItem, 0, cid)
             dialog.dismiss()
         }
 
         proceed.setOnClickListener {
-            updateCardFromProceed(comingSoonItem,1,cid)
+            updateCardFromProceed(comingSoonItem, 1, cid)
             cartData()
             dialog.dismiss()
             bestSellerFoodAdapter?.notifyDataSetChanged()
@@ -1657,7 +1689,6 @@ class FoodActivity : AppCompatActivity(),
 
         popupFood = comingSoonItem
     }
-
 
 
     override fun onBackPressed() {
@@ -1899,24 +1930,24 @@ class FoodActivity : AppCompatActivity(),
     private fun updateList() {
         println("SUMMERYBACK--->${foodCartModel.size}")
 
-        if (SUMMERYBACK==1){
+        if (SUMMERYBACK == 1) {
             cartModel = foodCartModel
             //cart
-            if (cartModel.size==0){
+            if (cartModel.size == 0) {
                 for (item in foodResponse!!.bestsellers) {
-                    if (item.r.size>1) {
+                    if (item.r.size > 1) {
                         for (data in item.r) {
                             data.qt = 0
                         }
 
-                    }else{
+                    } else {
                         item.qt = 0
                     }
                 }
                 cartData()
                 updateMainList(catFilterBestSeller)
                 bestSellerFoodAdapter?.notifyDataSetChanged()
-            }else {
+            } else {
                 for (item in cartModel) {
                     updateCartMainList(item)
                 }
@@ -1927,10 +1958,10 @@ class FoodActivity : AppCompatActivity(),
 
     private fun updateMainList(catFilterBestSeller2: ArrayList<FoodResponse.Output.Bestseller>) {
         try {
-            for (item in catFilterBestSeller2){
-                for (item2 in cartModel){
-                    for (data in item.r){
-                        if (item2.id == data.id){
+            for (item in catFilterBestSeller2) {
+                for (item2 in cartModel) {
+                    for (data in item.r) {
+                        if (item2.id == data.id) {
                             data.qt = item2.quantity
                             item.qt = getFoodQTCount(item.r)
                             break
@@ -1938,10 +1969,10 @@ class FoodActivity : AppCompatActivity(),
                     }
                 }
             }
-            for (item in foodResponse!!.mfl){
-                for (item2 in cartModel){
-                    for (data in item.r){
-                        if (item2.id == data.id){
+            for (item in foodResponse!!.mfl) {
+                for (item2 in cartModel) {
+                    for (data in item.r) {
+                        if (item2.id == data.id) {
                             data.qt = item2.quantity
                             item.qt = getFoodQTCount(item.r)
                             break
@@ -1951,17 +1982,17 @@ class FoodActivity : AppCompatActivity(),
             }
             cartData()
 
-        }catch (e:java.lang.Exception){
+        } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
     }
 
 
     // Get Updated List From Cart to popup
-    private fun getCustomFoodList(list:List<FoodResponse.Output.Bestseller.R>):List<FoodResponse.Output.Bestseller.R>{
-        for (data in list){
-            for (cartData in cartModel){
-                if (data.id == cartData.id){
+    private fun getCustomFoodList(list: List<FoodResponse.Output.Bestseller.R>): List<FoodResponse.Output.Bestseller.R> {
+        for (data in list) {
+            for (cartData in cartModel) {
+                if (data.id == cartData.id) {
                     data.qt = cartData.quantity
                 }
             }
@@ -1970,8 +2001,12 @@ class FoodActivity : AppCompatActivity(),
     }
 
     // Update Cart from proceed btn
-    private fun updateCardFromProceed(comingSoonItem: List<FoodResponse.Output.Bestseller.R>, type: Int, cid: String) {
-        if (type==1) {
+    private fun updateCardFromProceed(
+        comingSoonItem: List<FoodResponse.Output.Bestseller.R>,
+        type: Int,
+        cid: String
+    ) {
+        if (type == 1) {
             for (data in comingSoonItem) {
                 if (checkInCart(data)) {
                 } else {
@@ -1990,36 +2025,39 @@ class FoodActivity : AppCompatActivity(),
                         )
                 }
             }
-            updateMainListQt(cid,comingSoonItem)
-        }else{
-            for (data in comingSoonItem){
+            updateMainListQt(cid, comingSoonItem)
+        } else {
+            for (data in comingSoonItem) {
                 data.qt = 0
             }
 
         }
     }
 
-    private fun updateMainListQt(cid: String, comingSoonItem: List<FoodResponse.Output.Bestseller.R>) {
-        for (data in foodResponse!!.mfl){
-            if (data.cid == cid.toInt()){
+    private fun updateMainListQt(
+        cid: String,
+        comingSoonItem: List<FoodResponse.Output.Bestseller.R>
+    ) {
+        for (data in foodResponse!!.mfl) {
+            if (data.cid == cid.toInt()) {
                 data.qt = getFoodQTCount(comingSoonItem)
                 break
             }
         }
 
-        for (data in foodResponse!!.bestsellers){
-            if (data.cid == cid.toInt()){
+        for (data in foodResponse!!.bestsellers) {
+            if (data.cid == cid.toInt()) {
                 data.qt = getFoodQTCount(comingSoonItem)
                 break
             }
         }
     }
 
-    private fun checkInCart(food:FoodResponse.Output.Bestseller.R): Boolean {
+    private fun checkInCart(food: FoodResponse.Output.Bestseller.R): Boolean {
         var exist = false
-        for (data in cartModel){
+        for (data in cartModel) {
             println("checkData....>${data.id}----${food.id}----${food.qt}")
-            if (data.id == food.id){
+            if (data.id == food.id) {
                 data.quantity = food.qt
                 exist = true
                 break
@@ -2030,17 +2068,17 @@ class FoodActivity : AppCompatActivity(),
 
     // Update Food Amt in Custom food popup
 
-    private fun updateFoodItemAmt(food:ArrayList<FoodResponse.Output.Bestseller.R>){
+    private fun updateFoodItemAmt(food: ArrayList<FoodResponse.Output.Bestseller.R>) {
         var price = 0.0
-        for (data in food){
-            if (data.qt>0){
+        for (data in food) {
+            if (data.qt > 0) {
                 price += (data.qt.toDouble() * data.dp.toDouble())
             }
         }
-        if (price>0 && amtViewFood!=null){
+        if (price > 0 && amtViewFood != null) {
             amtViewFood?.show()
-            amtFood?.text = (price/100.0).toString()
-        }else{
+            amtFood?.text = (price / 100.0).toString()
+        } else {
             amtViewFood?.hide()
         }
 

@@ -497,7 +497,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
 
             val ls = preferences.getString(Constant.SharedPreference.LOYALITY_STATUS)
 
-            if (ls == "") {
+            if (ls != "") {
                 if (output.pe == "") {
                     binding?.ppView?.hide()
                     binding?.view226?.hide()

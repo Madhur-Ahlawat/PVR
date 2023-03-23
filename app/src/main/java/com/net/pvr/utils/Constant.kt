@@ -122,6 +122,7 @@ class Constant {
         var BOOKING_ID = ""
         var CINEMA_ID = ""
         var AUDI = ""
+        var showHomeOffer = true
         var SEAT = ""
         var DONATION = "false"
         var OfferDialogImage = "0"
@@ -200,7 +201,6 @@ class Constant {
 
         var KOTAK_SATURDAY = "o101"
         var KOTAK_WEEKEND = "130"
-        var KOTAK_CREDIT_CARD = "125"
         var KOTAK_CREDIT_CARD = "125"
 
 

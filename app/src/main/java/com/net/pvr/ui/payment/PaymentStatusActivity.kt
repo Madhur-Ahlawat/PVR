@@ -250,7 +250,32 @@ class PaymentStatusActivity : AppCompatActivity() {
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {},
+                            positiveClick = {
+                                when (BOOK_TYPE) {
+                                    "GIFTCARD" -> {
+                                        launchActivity(
+                                            GiftCardActivity::class.java,
+                                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                        )
+                                    }
+                                    "BOOKING", "FOOD" -> {
+                                        launchActivity(
+                                            HomeActivity::class.java,
+                                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                        )
+                                    }
+                                    else -> {
+                                        launchPrivilegeActivity(
+                                            HomeActivity::class.java,
+                                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,
+                                            "",
+                                            "",
+                                            "",
+                                            "P"
+                                        )
+                                    }
+                                }
+                            },
                             negativeClick = {})
                         dialog.show()
                     }
@@ -262,7 +287,32 @@ class PaymentStatusActivity : AppCompatActivity() {
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {},
+                        positiveClick = {
+                            when (BOOK_TYPE) {
+                                "GIFTCARD" -> {
+                                    launchActivity(
+                                        GiftCardActivity::class.java,
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                    )
+                                }
+                                "BOOKING", "FOOD" -> {
+                                    launchActivity(
+                                        HomeActivity::class.java,
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                    )
+                                }
+                                else -> {
+                                    launchPrivilegeActivity(
+                                        HomeActivity::class.java,
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,
+                                        "",
+                                        "",
+                                        "",
+                                        "P"
+                                    )
+                                }
+                            }
+                        },
                         negativeClick = {})
                     dialog.show()
                 }

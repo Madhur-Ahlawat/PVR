@@ -54,15 +54,15 @@ object PCTimer {
                             sessionID!!,
                             bookingid!!
                         )
-                    }catch (e:java.lang.Exception){
+                    }catch (e:ClassCastException){
                         (viewModel as PaymentViewModel).cancelTrans(cinemaID!!,sessionID!!,bookingid!!)
-                    }catch (e:java.lang.Exception){
+                    }catch (e:ClassCastException){
                         (viewModel as SeatLayoutViewModel).cancelTrans(cinemaID!!,sessionID!!,bookingid!!)
-                    }catch (e:java.lang.Exception){
+                    }catch (e:ClassCastException){
                         (viewModel as FoodViewModel).cancelTrans(cinemaID!!,sessionID!!,bookingid!!)
-                    }catch (e:java.lang.Exception){
+                    }catch (e:ClassCastException){
                         (viewModel as LoginViewModel).cancelTrans(cinemaID!!,sessionID!!,bookingid!!)
-                    }catch (e:java.lang.Exception){
+                    }catch (e:ClassCastException){
                         (viewModel as OtpVerifyViewModel).cancelTrans(cinemaID!!,sessionID!!,bookingid!!)
                     }
                     println("cancelSession==========")

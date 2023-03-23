@@ -61,6 +61,7 @@ import com.net.pvr.utils.Constant.Companion.BOOK_TYPE
 import com.net.pvr.utils.Constant.Companion.CINEMA_ID
 import com.net.pvr.utils.Constant.Companion.DONATION
 import com.net.pvr.utils.Constant.Companion.FOODENABLE
+import com.net.pvr.utils.Constant.Companion.QR
 import com.net.pvr.utils.Constant.Companion.SeatBack
 import com.net.pvr.utils.Constant.Companion.TRANSACTION_ID
 import com.net.pvr.utils.Constant.Companion.foodCartModel
@@ -484,7 +485,9 @@ class SummeryActivity : AppCompatActivity(),
         summeryResponse = output
 
         if (BOOK_TYPE == "FOOD"){
+            if (QR == "YES")
             binding?.cardView7?.hide()
+            binding?.fnbVocherView?.hide()
             binding?.constraintLayout40?.hide()
             binding?.view211?.hide()
             binding?.textView117?.hide()
@@ -800,7 +803,7 @@ class SummeryActivity : AppCompatActivity(),
 
 
 //    payableAmount
-        if (cartModel.isNotEmpty()) {
+        if (cartModel.isNotEmpty() && BOOK_TYPE == "BOOKING") {
             val foodPrice = calculateTotalPrice()
             val foodTotPrice = Constant.DECIFORMAT.format(foodPrice / 100.0)
             binding?.textView168?.text = getString(R.string.currency)+Constant.DECIFORMAT.format(ticketPrice+(foodPrice/100.0))
@@ -855,7 +858,7 @@ class SummeryActivity : AppCompatActivity(),
 //        binding?.textView166?.text = ticketCount.toString() + "/" + getString(R.string.ticket)
 
 //    payableAmount
-        if (cartModel.isNotEmpty()) {
+        if (cartModel.isNotEmpty() && BOOK_TYPE == "BOOKING") {
             val foodPrice = calculateTotalPrice()
             val foodTotPrice = Constant.DECIFORMAT.format(foodPrice / 100.0)
             binding?.textView168?.text = getString(R.string.currency)+Constant.DECIFORMAT.format(ticketPrice+(foodPrice/100.0))
@@ -895,7 +898,7 @@ class SummeryActivity : AppCompatActivity(),
         val ticketCount = donationAmount * output.seat.size
 
         //    payableAmount
-        if (cartModel.isNotEmpty()) {
+        if (cartModel.isNotEmpty() && BOOK_TYPE == "BOOKING") {
             val foodPrice = calculateTotalPrice()
             val foodTotPrice = Constant.DECIFORMAT.format(foodPrice / 100.0)
 

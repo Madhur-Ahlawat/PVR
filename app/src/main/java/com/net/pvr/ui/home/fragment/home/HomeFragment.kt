@@ -74,6 +74,7 @@ import com.net.pvr.utils.*
 import com.net.pvr.utils.Constant.Companion.PRIVILEGEPOINT
 import com.net.pvr.utils.Constant.Companion.PRIVILEGEVOUCHER
 import com.net.pvr.utils.Constant.Companion.PlaceHolder
+import com.net.pvr.utils.Constant.Companion.showHomeOffer
 import com.net.pvr.utils.Constant.SharedPreference.Companion.ACTIVE
 import com.net.pvr.utils.Constant.SharedPreference.Companion.SUBS_OPEN
 import com.net.pvr.utils.ga.GoogleAnalytics
@@ -295,13 +296,13 @@ class HomeFragment : Fragment(),
             try {
 
                 binding?.constraintLayout55?.hide()
-
-                authViewModel.hideOffer(
-                    preferences.getCityName(),
-                    preferences.getUserId(),
-                    "",
-                    "no"
-                )
+                showHomeOffer = false
+//                authViewModel.hideOffer(
+//                    preferences.getCityName(),
+//                    preferences.getUserId(),
+//                    "",
+//                    "no"
+//                )
 
                 // hideDataLoad()
             } catch (e: java.lang.Exception) {
@@ -456,7 +457,7 @@ class HomeFragment : Fragment(),
             0
         }
 
-        if (offerShow == 1) {
+        if (offerShow == 1 && showHomeOffer) {
             binding?.constraintLayout55?.show()
         } else {
             binding?.constraintLayout55?.hide()
@@ -1872,10 +1873,10 @@ class HomeFragment : Fragment(),
         binding?.includeAppBar?.txtCity?.text = preferences.getCityName()
         if (preferences.getIsLogin()) {
             binding?.includeAppBar?.profileBtn?.hide()
-            binding?.includeAppBar?.textView2?.text = "Hello, " + preferences.getUserName()
+            binding?.includeAppBar?.textView2?.text = "Hey, " + preferences.getUserName()
         } else {
             binding?.includeAppBar?.profileBtn?.hide()
-            binding?.includeAppBar?.textView2?.text = "Hello!"
+            binding?.includeAppBar?.textView2?.text = "Hey!"
         }
 
 

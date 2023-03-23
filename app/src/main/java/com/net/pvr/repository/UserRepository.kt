@@ -65,6 +65,7 @@ import com.net.pvr.utils.NetworkResult
 import com.net.pvr.utils.printLog
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Response
@@ -834,8 +835,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
     //Hide Offer
-    private val hideOfferLiveData = MutableLiveData<NetworkResult<String>>()
-    val hideOfferResponseLiveData: LiveData<NetworkResult<String>>
+    private val hideOfferLiveData = MutableLiveData<NetworkResult<ResponseBody>>()
+    val hideOfferResponseLiveData: LiveData<NetworkResult<ResponseBody>>
         get() = hideOfferLiveData
 
     suspend fun hideOffer(city: String, userId: String, did: String, isSpi: String) {
@@ -844,7 +845,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         hideOfferResponse(response)
     }
 
-    private fun hideOfferResponse(response: Response<String>) {
+    private fun hideOfferResponse(response: Response<ResponseBody>) {
         if (response.isSuccessful && response.body() != null) {
             hideOfferLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {

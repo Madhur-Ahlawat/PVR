@@ -1524,6 +1524,7 @@ class PaymentActivity : AppCompatActivity(),
         authViewModel.phonepeLiveDataScope.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
+                    loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         val transactionRequest2 = TransactionRequestBuilder()
                                 .setData(it.data.output.bs)
@@ -1551,6 +1552,7 @@ class PaymentActivity : AppCompatActivity(),
                     }
                 }
                 is NetworkResult.Error -> {
+                    loader?.dismiss()
                     val dialog = OptionDialog(this,
                         R.mipmap.ic_launcher,
                         R.string.app_name,

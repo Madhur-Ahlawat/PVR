@@ -1412,7 +1412,7 @@
                     android:layout_marginEnd="24dp"
                     android:baselineAligned="false"
                     android:orientation="horizontal"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:weightSum="2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -1457,7 +1457,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
