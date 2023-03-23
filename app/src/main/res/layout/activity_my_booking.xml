@@ -33,7 +33,7 @@
         android:layout_marginEnd="@dimen/dimen_15dp"
         android:baselineAligned="false"
         android:orientation="horizontal"
-        android:weightSum="3"
+        android:weightSum="2"
         app:layout_constraintEnd_toEndOf="@+id/view14"
         app:layout_constraintStart_toStartOf="@+id/view14"
         app:layout_constraintTop_toBottomOf="@+id/include2">
@@ -125,6 +125,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/voucher"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">

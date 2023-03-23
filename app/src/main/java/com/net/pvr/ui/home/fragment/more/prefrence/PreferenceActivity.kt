@@ -277,7 +277,6 @@ class PreferenceActivity : AppCompatActivity(),
         binding?.textView240?.show()
         binding?.textView242?.show()
 
-        toast("Language---->${apiResponse?.lang?.liked}")
 
         //liked language
         binding?.textView240?.text = "Preferred Languages"
