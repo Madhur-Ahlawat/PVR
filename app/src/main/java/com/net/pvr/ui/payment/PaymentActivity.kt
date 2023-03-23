@@ -233,7 +233,7 @@ class PaymentActivity : AppCompatActivity(),
         binding?.include26?.textView108?.text = getString(R.string.payment)
 
         //paidAmount
-        paidAmount = Constant.DECIFORMAT.format(intent.getStringExtra("paidAmount")?.toDouble())
+        paidAmount = intent.getStringExtra("paidAmount").toString()
 
         binding?.textView178?.text =
             getString(R.string.currency) + paidAmount
@@ -506,6 +506,16 @@ class PaymentActivity : AppCompatActivity(),
                         discount_val = "0.0"
                         discountAmt = "0.0"
                         Constant.isPromoCode = ""
+                    }else{
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
                     }
                 }
                 is NetworkResult.Error -> {

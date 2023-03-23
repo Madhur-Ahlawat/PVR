@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.net.pvr.R
 import com.net.pvr.ui.myBookings.response.FoodTicketResponse
 import com.net.pvr.ui.ticketConfirmation.TicketConfirmationActivity
+import com.net.pvr.ui.ticketConfirmation.response.TicketBookedResponse
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.hide
 import com.net.pvr.utils.show
@@ -76,9 +77,9 @@ class FoodTicketChildAdapter(
         //title
         holder.title.text = cinemaItem.m
         //Language
-        holder.language.text = cinemaItem.cen + " " + cinemaItem.st + " " + cinemaItem.lg
+        holder.language.text = cinemaItem.cen.replace("[", "").replace("]", "").replace("(", "").replace(")", "") + context.getString(R.string.dots)  + cinemaItem.lg+ context.getString(R.string.dots) + cinemaItem.fmt
         //time
-        holder.timeDate.text = cinemaItem.bd
+        holder.timeDate.text = cinemaItem.md+", "+cinemaItem.t
         //location
         holder.location.text = cinemaItem.c
         //OrderId
@@ -99,12 +100,23 @@ class FoodTicketChildAdapter(
             holder.onlyFood.show()
 //Food Item
             val gridLayout2 = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
-            val foodTicketFoodAdapter = FoodTicketFoodAdapter(cinemaItem.f,"food",cinemaItem.f.size)
+            val foodTicketFoodAdapter = FoodTicketFoodAdapter(getUpdatedList(cinemaItem.f),"food",cinemaItem.f.size)
             holder.recyclerView.layoutManager = gridLayout2
             holder.recyclerView.adapter = foodTicketFoodAdapter
         } else {
-            holder.onlyFood.hide()
-            holder.cinemaWithFood.show()
+            if (cinemaItem.food.isNotEmpty()){
+                holder.cinemaWithFood.show()
+                holder.constraintLayout3.show()
+                holder.onlyFood.hide()
+                val gridLayout2 = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
+                val foodTicketFoodAdapter = FoodTicketFoodAdapter(getUpdatedFood(cinemaItem.food),"food",cinemaItem.f.size)
+                holder.recyclerView.layoutManager = gridLayout2
+                holder.recyclerView.adapter = foodTicketFoodAdapter
+            }else {
+                holder.constraintLayout3.hide()
+                holder.onlyFood.hide()
+                holder.cinemaWithFood.show()
+            }
 
         }
 
@@ -124,6 +136,27 @@ class FoodTicketChildAdapter(
             intent.putExtra("bookType",type)
             context.startActivity(intent)
         }
+    }
+
+    private fun getUpdatedFood(food: List<TicketBookedResponse.Food>): List<FoodTicketResponse.Output.P.F> {
+        var list = ArrayList<FoodTicketResponse.Output.P.F>()
+        for (data in food){
+            list.add(FoodTicketResponse.Output.P.F(data.qt,"",ArrayList(),data.h,data.veg.toString()))
+        }
+
+        return list
+    }
+
+    private fun getUpdatedList(f: List<FoodTicketResponse.Output.P.F>): List<FoodTicketResponse.Output.P.F> {
+        var list = ArrayList<FoodTicketResponse.Output.P.F>()
+        for (data in f){
+            if (data.n != "Discount_FnB"){
+                list.add(data)
+            }
+        }
+
+
+        return list
     }
 
     override fun getItemCount(): Int {
@@ -146,6 +179,7 @@ class FoodTicketChildAdapter(
         var locationFood: TextView = view.findViewById(R.id.textView23)
         var cinemaWithFood: ConstraintLayout = view.findViewById(R.id.movieWithFood)
         var onlyFood: ConstraintLayout = view.findViewById(R.id.onlyFood)
+        var constraintLayout3: ConstraintLayout = view.findViewById(R.id.constraintLayout3)
         var recyclerView: RecyclerView = view.findViewById(R.id.recyclerFoodChild)
     }
 

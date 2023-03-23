@@ -421,7 +421,7 @@
     <string name="name_on_card">Name on Card</string>
     <string name="card_nickname">Card Nickname</string>
     <string name="securely_save_this_card_for_future_use">Securely save this card for future use</string>
-    <string name="pay_via_card">Pay Via </string>
+    <string name="pay_via_card"></string>
     <string name="time">Show time (Approx)</string>
     <string name="seats_info">Seats INFO</string>
     <string name="order_id">Order ID</string>

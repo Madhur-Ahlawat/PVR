@@ -581,7 +581,7 @@ class MyBookingsActivity : AppCompatActivity(),
             binding?.textView3?.show()
             binding?.recyclerMyBooking?.show()
             val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-            val foodTicketAdapter = FoodTicketChildAdapter(output.c, this, false, this)
+            val foodTicketAdapter = FoodTicketChildAdapter(getUpdatedList(output.c), this, false, this)
             binding?.recyclerMyBooking?.layoutManager = gridLayout2
             binding?.recyclerMyBooking?.adapter = foodTicketAdapter
         }else{
@@ -592,11 +592,19 @@ class MyBookingsActivity : AppCompatActivity(),
         if (output.p.size>0) {
             binding?.llPastBooking?.show()
             val gridLayoutPast = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-            val pastTicketAdapter = FoodTicketChildAdapter(output.p, this, true, this)
+            val pastTicketAdapter = FoodTicketChildAdapter(getUpdatedList(output.p), this, true, this)
             binding?.pastTicketListView?.layoutManager = gridLayoutPast
             binding?.pastTicketListView?.adapter = pastTicketAdapter
         }else{
-            binding?.llPastBooking?.hide()
+            if (output.c.size>0){
+                binding?.llPastBooking?.show()
+
+                binding?.pastTicketListView?.hide()
+                binding?.tvShowAll?.show()
+            }else{
+                binding?.llPastBooking?.hide()
+
+            }
         }
 
         if (output.c.size == 0 && output.p.size ==0){
@@ -615,6 +623,35 @@ class MyBookingsActivity : AppCompatActivity(),
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun getUpdatedList(p: ArrayList<FoodTicketResponse.Output.C>): ArrayList<FoodTicketResponse.Output.C> {
+        var newListFood = ArrayList<FoodTicketResponse.Output.C>()
+        var newList = ArrayList<FoodTicketResponse.Output.C>()
+        for (data in p){
+            if (data.is_only_fd){
+                newListFood.add(data)
+            }
+        }
+        if (newListFood.size>0){
+            for (data in newListFood){
+                if (checkId(data,p)){
+                    p.remove(data)
+                }
+            }
+        }
+        return p
+    }
+
+    private fun checkId(data: FoodTicketResponse.Output.C, newList: ArrayList<FoodTicketResponse.Output.C>): Boolean {
+        for (item in newList){
+            if (data.abi != ""){
+                if (data.abi == item.bi){
+                    item.food = data.food
+                }
+            }
+        }
+        return true
     }
 
     //GiftCard

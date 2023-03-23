@@ -356,7 +356,7 @@ class MCouponActivity : AppCompatActivity() {
                 val ll = binding?.mobileLayout?.getChildAt(i) as LinearLayout
                 if (ll != null) {
                     for (j in 0 until ll.childCount) {
-                        val couponEditText: CouponEditText = ll.getChildAt(j) as CouponEditText
+                        val couponEditText: EditText = ll.getChildAt(j) as EditText
                         if (!TextUtils.isEmpty(couponEditText.text.toString())) {
                             couponCode.add(couponEditText.text.toString().toUpperCase())
                             binding?.errorText?.text = ""

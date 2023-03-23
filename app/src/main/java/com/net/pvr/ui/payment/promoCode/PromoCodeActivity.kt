@@ -50,16 +50,16 @@ class PromoCodeActivity : AppCompatActivity() {
             binding?.ccInputLayout?.hint = "Enter Promo code"
             binding?.ccLayout?.show()
             binding?.hayattView?.hide()
-            binding?.include30?.textView5?.text = "APPLY"
+            binding?.include30?.textView5?.text = "Apply"
         } else if (type == "GYFTR") {
             binding?.ccInputLayout?.hint = "Enter Voucher code"
             binding?.ccLayout?.show()
             binding?.hayattView?.hide()
-            binding?.include30?.textView5?.text = "APPLY"
+            binding?.include30?.textView5?.text = "Apply"
         }else{
             binding?.ccLayout?.hide()
             binding?.hayattView?.show()
-            binding?.include30?.textView5?.text = "SEND OTP"
+            binding?.include30?.textView5?.text = "Send OTP"
             binding?.phonelIdEditText?.setText(preferences.geMobileNumber())
         }
         if (intent.extras?.getBoolean("ca_a") == false)
@@ -443,7 +443,7 @@ class PromoCodeActivity : AppCompatActivity() {
                         toast(it.data.msg)
                         hit_count = 1
                         binding?.otpLayout?.show()
-                        binding?.include30?.textView5?.text = "APPLY"
+                        binding?.include30?.textView5?.text = "Apply"
 
                     } else {
                         val dialog = OptionDialog(this,

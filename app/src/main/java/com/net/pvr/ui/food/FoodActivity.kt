@@ -151,20 +151,37 @@ class FoodActivity : AppCompatActivity(),
         if (AUDI != "") {
             audi = "AUDI"
         }
-        authViewModel.food(
-            preferences.getUserId(),
-            CINEMA_ID,
-            BOOKING_ID,
-            "",
-            "",
-            audi,
-            AUDI,
-            SEAT,
-            "",
-            QR,
-            "no",
-            "no"
-        )
+        if (BOOK_TYPE == "BOOKING") {
+            authViewModel.food(
+                preferences.getUserId(),
+                CINEMA_ID,
+                BOOKING_ID,
+                "",
+                "",
+                audi,
+                AUDI,
+                SEAT,
+                "",
+                QR,
+                "no",
+                "no"
+            )
+        }else{
+            authViewModel.food(
+                preferences.getUserId(),
+                CINEMA_ID,
+                "",
+                BOOKING_ID,
+                "",
+                audi,
+                AUDI,
+                SEAT,
+                "",
+                QR,
+                "no",
+                "no"
+            )
+        }
 
         //internet Check
         broadcastReceiver = NetworkReceiver()
@@ -311,12 +328,18 @@ class FoodActivity : AppCompatActivity(),
 
         // Past Food
         if (output.pastfoods.isNotEmpty()) {
-            binding?.previousFoodView?.show()
+
             val list = getPastFoodList(output)
+            if (list.size>0){
+                binding?.previousFoodView?.show()
+            }else{
+                binding?.previousFoodView?.hide()
+
+            }
             val layoutManagerCrew2 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
             previousFoodAdapter = PreviousFoodAdapter(list, this, this, "past")
             binding?.previousFoodList?.adapter = previousFoodAdapter
-            binding?.previousFoodList?.setHasFixedSize(true)
+//            binding?.previousFoodList?.setHasFixedSize(true)
             binding?.previousFoodList?.layoutManager = layoutManagerCrew2
         } else {
             binding?.previousFoodView?.hide()

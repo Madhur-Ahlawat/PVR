@@ -485,8 +485,17 @@ class SummeryActivity : AppCompatActivity(),
         summeryResponse = output
 
         if (BOOK_TYPE == "FOOD"){
-            if (QR == "YES")
-            binding?.cardView7?.hide()
+            if (QR == "YES") {
+                binding?.cardView7?.hide()
+                binding?.textView111?.hide()
+
+            }
+            else{
+                binding?.textView111?.show()
+
+                binding?.textView111?.text =
+                    output.cen + getString(R.string.dots) + output.lg + getString(R.string.dots) + output.fmt
+            }
             binding?.fnbVocherView?.hide()
             binding?.constraintLayout40?.hide()
             binding?.view211?.hide()
@@ -500,11 +509,11 @@ class SummeryActivity : AppCompatActivity(),
             binding?.line?.hide()
             binding?.imageView150?.hide()
             binding?.imageView77?.hide()
-            binding?.textView111?.hide()
             binding?.constraintLayout115?.hide()
             ticketPrice = output.a.toDouble()
-            //shows
             binding?.textView112?.text = output.t
+
+            //shows
 
         }else{
             binding?.textView111?.show()
@@ -644,7 +653,12 @@ class SummeryActivity : AppCompatActivity(),
             .into(binding?.imageView59!!)
 
         //title
-        binding?.textView110?.text = output.m
+        if (BOOK_TYPE == "FOOD" && QR == "NO"){
+            binding?.textView110?.text = output.mn
+
+        }else {
+            binding?.textView110?.text = output.m
+        }
 
         //location
         binding?.textView113?.text = output.c
@@ -723,7 +737,7 @@ class SummeryActivity : AppCompatActivity(),
                 }
 
                 val intent = Intent(this@SummeryActivity, PaymentActivity::class.java)
-                intent.putExtra("paidAmount", output.a.toString())
+                intent.putExtra("paidAmount", paidAmount.toString())
                 startActivity(intent)
 
             }
@@ -768,6 +782,7 @@ class SummeryActivity : AppCompatActivity(),
             binding?.imageView147?.setOnClickListener {
                 carveryDialog(output.don_stext)
             }
+
 
         } else {
             setPrice(output)
@@ -822,7 +837,7 @@ class SummeryActivity : AppCompatActivity(),
                 binding?.cutPriceSub?.text = getString(R.string.currency) + output.f[0].cp
             }
 
-            paidAmount = (payableAmount + ticketCount)
+            paidAmount = (payableAmount + ticketCount.toDouble())
             binding?.textView174?.text =
                 getString(R.string.pay) + " " + getString(R.string.currency) + Constant.DECIFORMAT.format(paidAmount) + " |"
 

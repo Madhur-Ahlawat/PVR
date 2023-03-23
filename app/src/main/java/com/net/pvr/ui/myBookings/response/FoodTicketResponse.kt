@@ -1,5 +1,6 @@
 package com.net.pvr.ui.myBookings.response
 
+import com.net.pvr.ui.ticketConfirmation.response.TicketBookedResponse
 import java.io.Serializable
 
 data class FoodTicketResponse(
@@ -21,6 +22,7 @@ data class FoodTicketResponse(
             val audi: String,
             val bd: String,
             val bi: String,
+            val abi: String,
             val bio: String,
             val bnd: String,
             val bt: Boolean,
@@ -61,7 +63,7 @@ data class FoodTicketResponse(
             val fl: String,
             val fmsg: String,
             val fmt: String,
-            val food: List<Any>,
+            var food: ArrayList<TicketBookedResponse.Food>,
             val fs: String,
             val fst: Int,
             val ft: String,

@@ -21,12 +21,28 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/sf_pro_text_bold"
-        android:textSize="@dimen/dimen_14sp"
         android:textColor="@color/black"
-        tools:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="@dimen/dimen_14sp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:layout_marginEnd="@dimen/dimen_15dp"
+        app:layout_constraintEnd_toStartOf="@+id/quant"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/view19" />
+        app:layout_constraintTop_toBottomOf="@+id/view19"
+        tools:text="TextView" />
+
+    <TextView
+        android:id="@+id/quant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/sf_pro_text_bold"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dimen_14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/dimen_15dp"
+        app:layout_constraintTop_toBottomOf="@+id/view19"
+        tools:text="X1" />
 
 
     <ImageView
