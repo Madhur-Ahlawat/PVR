@@ -110,7 +110,6 @@ class BookingRetrievalActivity : AppCompatActivity(),
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-
         }
 
     }
