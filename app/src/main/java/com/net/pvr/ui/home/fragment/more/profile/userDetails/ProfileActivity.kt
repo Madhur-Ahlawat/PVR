@@ -151,13 +151,11 @@ class ProfileActivity : AppCompatActivity() {
 
 
         //Gender
-
         val aa: ArrayAdapter<*> =
             ArrayAdapter<Any?>(this, android.R.layout.simple_spinner_item, gender)
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         //Setting the ArrayAdapter data on the Spinner
         bindingProfile.gender.adapter = aa
-
 
         bindingProfile.gender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -171,14 +169,11 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
 
-
         //marital Status
-        val aaa: ArrayAdapter<*> =
-            ArrayAdapter<Any?>(this, android.R.layout.simple_spinner_item, maritalStatus)
+        val aaa: ArrayAdapter<*> = ArrayAdapter<Any?>(this, android.R.layout.simple_spinner_item, maritalStatus)
         aaa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         //Setting the ArrayAdapter data on the Spinner
         bindingProfile.martialStatus.adapter = aaa
-
         bindingProfile.martialStatus.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -194,9 +189,13 @@ class ProfileActivity : AppCompatActivity() {
 
                 }
             }
+
         //image
-        Glide.with(this).load(profileResponse?.im).placeholder(R.drawable.user)
+        Glide.with(this)
+            .load(profileResponse?.im)
+            .placeholder(R.drawable.user)
             .into(bindingProfile.circularImageView)
+
         //name
         bindingProfile.name.setText(preferences.getUserName())
 
@@ -217,6 +216,7 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
 
+
         if (profileResponse?.ms != null && profileResponse?.ms != "") {
             if (profileResponse?.ms == "Married") {
                 anniversary?.text = profileResponse?.doa
@@ -232,8 +232,9 @@ class ProfileActivity : AppCompatActivity() {
         //dob
         dob = bindingProfile.dob
         dob?.text = profileResponse?.dob
-        //martial status
-//        bindingProfile.martialStatus.setText(profileResponse?.ms)
+        
+        //  martial status
+        //  bindingProfile.martialStatus.setText(profileResponse?.ms)
 
         //anniversary
         anniversary = bindingProfile.anniversary
@@ -294,9 +295,8 @@ class ProfileActivity : AppCompatActivity() {
         //save
         bindingProfile.save.setOnClickListener {
             val dob = Constant().changeDateFormat(bindingProfile.dob.text.toString())
-            val anniversary =
-                Constant().changeDateFormat(bindingProfile.anniversary.text.toString())
-            printLog("dob----->${dob}")
+            val anniversary = Constant().changeDateFormat(bindingProfile.anniversary.text.toString())
+            printLog("doa----->${anniversary}")
             clickRefresh = true
             if (selectedMarital == "Married") {
                 if (bindingProfile.name.text.toString() == "") {

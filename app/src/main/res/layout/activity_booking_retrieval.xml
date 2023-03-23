@@ -243,7 +243,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout81"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:layout_marginTop="24dp"
             android:background="@drawable/curve_search_reatrival"
             app:layout_constraintEnd_toEndOf="@+id/view162"

@@ -37,7 +37,6 @@ class PreferenceActivity : AppCompatActivity(),
     private val authViewModel: PreferenceViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var apiResponse: PreferenceResponse.Output? = null
-    private var allGenre: ArrayList<PreferenceResponse.Output.Genre>? = null
 
     private var itemClick = 0
     private var selectedPos = 0
@@ -70,6 +69,7 @@ class PreferenceActivity : AppCompatActivity(),
         appBar()
     }
 
+    //////////////////////////////// App Bar ////////////////////////////////////
     private fun appBar() {
         //       TitleBar
         binding?.include11?.textView108?.text = getString(R.string.my_preferences)
@@ -137,24 +137,8 @@ class PreferenceActivity : AppCompatActivity(),
 
     private fun retrieveData() {
         binding?.constraintLayout173?.show()
-        //liked genre
-        when (selectedPos) {
-            0 -> {
-                selectedPos = 0
-                binding?.textView242?.text = "All Genres"
-                genre()
-            }
-            1 -> {
-                binding?.textView242?.text = "All Theaters"
-                selectedPos = 1
-                theater()
-            }
-            2 -> {
-                binding?.textView242?.text = "All Languages"
-                selectedPos = 3
-                language()
-            }
-        }
+        selectedPos = 0
+        genre()
 
     }
 
@@ -170,16 +154,16 @@ class PreferenceActivity : AppCompatActivity(),
                 theater()
             }
             2 -> {
-                language()
                 selectedPos = 3
+                language()
             }
         }
     }
 
-    //Genre
+    ////////////////////     Genre    //////////////////////////////
     @SuppressLint("NotifyDataSetChanged")
     private fun genre() {
-
+        printLog("---------------->genre")
         binding?.textView240?.show()
         binding?.textView242?.show()
         //liked language
@@ -189,7 +173,7 @@ class PreferenceActivity : AppCompatActivity(),
         binding?.textView242?.text = "All Genres"
 
         //liked genre Check Data
-        if (apiResponse?.genre?.liked?.isEmpty() == true) {
+        if (apiResponse?.genre?.liked?.size == 0) {
             binding?.constraintLayout80?.show()
             binding?.recyclerView55?.hide()
             binding?.textView240?.hide()
@@ -202,7 +186,6 @@ class PreferenceActivity : AppCompatActivity(),
             binding?.recyclerView55?.layoutManager = layoutManager
             likedGenreAdapter = LikeGenreAdapter(this, apiResponse?.genre?.liked!!, this)
             binding?.recyclerView55?.adapter = likedGenreAdapter
-
         }
 
         //All genre
@@ -211,16 +194,44 @@ class PreferenceActivity : AppCompatActivity(),
         allGenreAdapter = AllGenreAdapter(checkLikedGenre(), this)
         binding?.recyclerView56?.adapter = allGenreAdapter
 
+
+//         allGenreAdapter?.notifyDataSetChanged()
+//        likedGenreAdapter?.notifyDataSetChanged()
+
+        //language
+        likeLanguageAdapter?.notifyDataSetChanged()
+        allLanguageAdapter?.notifyDataSetChanged()
+
+        // theater
+        likeTheaterAdapter?.notifyDataSetChanged()
+        allTheaterAdapter?.notifyDataSetChanged()
     }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun allGenreClick(comingSoonItem: PreferenceResponse.Output.Genre.Other) {
-
         apiResponse?.genre?.liked?.add(comingSoonItem)
         apiResponse?.genre?.other?.remove(comingSoonItem)
 
-        likedGenreAdapter?.notifyDataSetChanged()
 
+        //manage show Hide
+        //liked language
+        binding?.textView240?.show()
+        binding?.textView240?.text = "Preferred Genres"
+
+        binding?.constraintLayout80?.hide()
+        binding?.recyclerView55?.show()
+
+
+        if (apiResponse?.genre?.liked?.size == 1) {
+            binding?.recyclerView55?.show()
+            binding?.constraintLayout80?.hide()
+            val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            binding?.recyclerView55?.layoutManager = layoutManager
+            likedGenreAdapter = LikeGenreAdapter(this, apiResponse?.genre?.liked!!, this)
+            binding?.recyclerView55?.adapter = likedGenreAdapter
+        }
+
+        likedGenreAdapter?.notifyDataSetChanged()
         allGenreAdapter?.notifyDataSetChanged()
 
         authViewModel.setPreference(
@@ -244,10 +255,23 @@ class PreferenceActivity : AppCompatActivity(),
 
         apiResponse?.genre?.liked?.remove(comingSoonItem)
 
+
+        if (apiResponse?.genre?.liked?.size == 0) {
+            binding?.constraintLayout80?.show()
+            binding?.recyclerView55?.hide()
+            binding?.textView240?.hide()
+            binding?.textView238?.text = getString(R.string.preferred_genres)
+            binding?.textView239?.text = getString(R.string.noGenresSelected)
+        } else {
+            binding?.constraintLayout80?.hide()
+            binding?.recyclerView55?.show()
+        }
+
+
+
         likedGenreAdapter?.notifyDataSetChanged()
 
         allGenreAdapter?.notifyDataSetChanged()
-
 
         authViewModel.setPreference(
             preferences.getUserId(), comingSoonItem.id, false, "g", Constant().getDeviceId(this)
@@ -271,18 +295,35 @@ class PreferenceActivity : AppCompatActivity(),
         return categoryFilterNew!!
     }
 
-    //Language
-    private fun language() {
 
+    ///////////////////////////////            Language      ////////////////////////////////
+    private fun language() {
+        printLog("---------------->language")
         binding?.textView240?.show()
         binding?.textView242?.show()
-
 
         //liked language
         binding?.textView240?.text = "Preferred Languages"
 
         //All Language
         binding?.textView242?.text = "All Languages"
+
+        if (apiResponse?.lang?.liked?.size == 0) {
+            binding?.constraintLayout80?.show()
+            binding?.recyclerView55?.hide()
+            binding?.textView240?.hide()
+            binding?.textView238?.text = getString(R.string.preferredLanguages)
+            binding?.textView239?.text = getString(R.string.noLangaugesSelected)
+        } else {
+            binding?.recyclerView55?.show()
+            binding?.constraintLayout80?.hide()
+            val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            binding?.recyclerView55?.layoutManager = layoutManager
+            likeLanguageAdapter = PreferLanguageAdapter(this, apiResponse?.lang?.liked!!, this)
+            binding?.recyclerView55?.adapter = likeLanguageAdapter
+
+        }
+
 
         //All language
         val layoutManagerAll = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -291,20 +332,17 @@ class PreferenceActivity : AppCompatActivity(),
         binding?.recyclerView56?.adapter = allLanguageAdapter
 
 
-        if (apiResponse?.lang?.liked?.isEmpty() == true) {
-            binding?.constraintLayout80?.show()
-            binding?.recyclerView55?.hide()
-            binding?.textView240?.hide()
-            binding?.textView238?.text = getString(R.string.preferredLanguages)
-            binding?.textView239?.text = getString(R.string.noLangaugesSelected)
-        } else {
-            binding?.constraintLayout80?.hide()
-            val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            binding?.recyclerView55?.layoutManager = layoutManager
-            likeLanguageAdapter = PreferLanguageAdapter(this, apiResponse?.lang?.liked!!, this)
-            binding?.recyclerView55?.adapter = likeLanguageAdapter
 
-        }
+        allGenreAdapter?.notifyDataSetChanged()
+        likedGenreAdapter?.notifyDataSetChanged()
+
+        //language
+//        likeLanguageAdapter?.notifyDataSetChanged()
+//        allLanguageAdapter?.notifyDataSetChanged()
+
+        // theater
+        likeTheaterAdapter?.notifyDataSetChanged()
+        allTheaterAdapter?.notifyDataSetChanged()
     }
 
     private fun checkLikedLanguage(): ArrayList<PreferenceResponse.Output.Lang.Other> {
@@ -316,9 +354,30 @@ class PreferenceActivity : AppCompatActivity(),
 
     @SuppressLint("NotifyDataSetChanged")
     override fun allLanguageClick(comingSoonItem: PreferenceResponse.Output.Lang.Other) {
+
         apiResponse?.lang?.other?.remove(comingSoonItem)
 
         apiResponse?.lang?.liked?.add(comingSoonItem)
+
+
+        binding?.textView240?.show()
+
+        //liked language
+        binding?.textView240?.text = "Preferred Languages"
+
+        binding?.constraintLayout80?.hide()
+        binding?.recyclerView55?.show()
+
+        if (apiResponse?.lang?.liked?.size == 1) {
+
+            binding?.recyclerView55?.show()
+            binding?.constraintLayout80?.hide()
+            val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            binding?.recyclerView55?.layoutManager = layoutManager
+            likeLanguageAdapter = PreferLanguageAdapter(this, apiResponse?.lang?.liked!!, this)
+            binding?.recyclerView55?.adapter = likeLanguageAdapter
+        }
+
 
         allLanguageAdapter?.notifyDataSetChanged()
         likeLanguageAdapter?.notifyDataSetChanged()
@@ -339,12 +398,25 @@ class PreferenceActivity : AppCompatActivity(),
 
     @SuppressLint("NotifyDataSetChanged")
     override fun languageLikeClick(comingSoonItem: PreferenceResponse.Output.Lang.Other) {
-        allLanguageAdapter?.notifyDataSetChanged()
-        likeLanguageAdapter?.notifyDataSetChanged()
 
         apiResponse?.lang?.other?.add(comingSoonItem)
 
         apiResponse?.lang?.liked?.remove(comingSoonItem)
+
+
+        if (apiResponse?.lang?.liked?.size!! == 0) {
+            binding?.constraintLayout80?.show()
+            binding?.recyclerView55?.hide()
+            binding?.textView240?.hide()
+            binding?.textView238?.text = getString(R.string.preferredLanguages)
+            binding?.textView239?.text = getString(R.string.noLangaugesSelected)
+        } else {
+            binding?.constraintLayout80?.hide()
+            binding?.recyclerView55?.show()
+        }
+
+        allLanguageAdapter?.notifyDataSetChanged()
+        likeLanguageAdapter?.notifyDataSetChanged()
 
         // Hit Event
         try {
@@ -364,6 +436,7 @@ class PreferenceActivity : AppCompatActivity(),
 
     //theater
     private fun theater() {
+        printLog("---------------->theater")
         //liked language
         binding?.textView240?.show()
         binding?.textView242?.show()
@@ -372,15 +445,8 @@ class PreferenceActivity : AppCompatActivity(),
         //All Language
         binding?.textView242?.text = "All Theaters"
 
-
-        //All Theater
-        val layoutManagerAll = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding?.recyclerView56?.layoutManager = layoutManagerAll
-        allTheaterAdapter = AllTheaterAdapter(this, checkLikedTheater(), this)
-        binding?.recyclerView56?.adapter = allTheaterAdapter
-
         //liked Theater
-        if (apiResponse?.theater?.liked?.isEmpty() == true) {
+        if (apiResponse?.theater?.liked?.size == 0) {
             binding?.constraintLayout80?.show()
             binding?.recyclerView55?.hide()
             binding?.textView240?.hide()
@@ -388,6 +454,7 @@ class PreferenceActivity : AppCompatActivity(),
             binding?.textView239?.text = getString(R.string.noTheatersSelected)
         } else {
             binding?.constraintLayout80?.hide()
+            binding?.recyclerView55?.show()
             val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
             binding?.recyclerView55?.layoutManager = layoutManager
             likeTheaterAdapter =
@@ -396,6 +463,23 @@ class PreferenceActivity : AppCompatActivity(),
         }
 
 
+        //All Theater
+        val layoutManagerAll = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding?.recyclerView56?.layoutManager = layoutManagerAll
+        allTheaterAdapter = AllTheaterAdapter(this, checkLikedTheater(), this)
+        binding?.recyclerView56?.adapter = allTheaterAdapter
+
+
+        allGenreAdapter?.notifyDataSetChanged()
+        likedGenreAdapter?.notifyDataSetChanged()
+
+        //language
+        likeLanguageAdapter?.notifyDataSetChanged()
+        allLanguageAdapter?.notifyDataSetChanged()
+
+//        // theater
+//        likeTheaterAdapter?.notifyDataSetChanged()
+//        allTheaterAdapter?.notifyDataSetChanged()
     }
 
     private fun checkLikedTheater(): ArrayList<PreferenceResponse.Output.Theater.Other> {
@@ -408,13 +492,18 @@ class PreferenceActivity : AppCompatActivity(),
     //theater
     @SuppressLint("NotifyDataSetChanged")
     override fun allTheaterClick(comingSoonItem: PreferenceResponse.Output.Theater.Other) {
-        allTheaterAdapter?.notifyDataSetChanged()
-        likeTheaterAdapter?.notifyDataSetChanged()
+
 
         apiResponse?.theater?.other?.remove(comingSoonItem)
 
         apiResponse?.theater?.liked?.add(comingSoonItem)
 
+        binding?.textView240?.show()
+        binding?.textView240?.text = getString(R.string.favouriteTheaters)
+
+        binding?.constraintLayout80?.hide()
+
+        binding?.recyclerView55?.show()
         // Hit Event
         try {
             val bundle = Bundle()
@@ -425,6 +514,20 @@ class PreferenceActivity : AppCompatActivity(),
             e.printStackTrace()
         }
 
+
+        if (apiResponse?.theater?.liked?.size == 1) {
+            binding?.constraintLayout80?.hide()
+            binding?.recyclerView55?.show()
+            val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            binding?.recyclerView55?.layoutManager = layoutManager
+            likeTheaterAdapter =
+                apiResponse?.theater?.liked?.let { FavouriteTheaterAdapter(this, it, this) }
+            binding?.recyclerView55?.adapter = likeTheaterAdapter
+        }
+
+        allTheaterAdapter?.notifyDataSetChanged()
+        likeTheaterAdapter?.notifyDataSetChanged()
+
         authViewModel.setPreference(
             preferences.getUserId(), comingSoonItem.id, true, "t", Constant().getDeviceId(this)
         )
@@ -433,12 +536,27 @@ class PreferenceActivity : AppCompatActivity(),
     @SuppressLint("NotifyDataSetChanged")
     override fun favouriteTheaterClick(comingSoonItem: PreferenceResponse.Output.Theater.Other) {
 
-        allTheaterAdapter?.notifyDataSetChanged()
-        likeTheaterAdapter?.notifyDataSetChanged()
-
         apiResponse?.theater?.other?.add(comingSoonItem)
 
         apiResponse?.theater?.liked?.remove(comingSoonItem)
+
+
+        //liked Theater
+        if (apiResponse?.theater?.liked?.size!! == 0) {
+            binding?.constraintLayout80?.show()
+            binding?.recyclerView55?.hide()
+            binding?.textView240?.hide()
+            binding?.textView238?.text = getString(R.string.favouriteTheaters)
+            binding?.textView239?.text = getString(R.string.noTheatersSelected)
+        } else {
+            binding?.constraintLayout80?.hide()
+            binding?.recyclerView55?.show()
+            binding?.textView240?.show()
+
+        }
+
+        allTheaterAdapter?.notifyDataSetChanged()
+        likeTheaterAdapter?.notifyDataSetChanged()
 
         // Hit Event
         try {
