@@ -970,6 +970,7 @@ class HomeFragment : Fragment(),
         }
 
 
+
         val intent = Intent(requireActivity(), FormatsActivity::class.java)
         intent.putExtra("format", comingSoonItem.name)
         startActivity(intent)

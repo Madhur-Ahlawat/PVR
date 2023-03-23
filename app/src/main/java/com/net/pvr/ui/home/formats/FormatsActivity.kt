@@ -45,8 +45,11 @@ import java.util.ArrayList
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class FormatsActivity : AppCompatActivity() , FormatCategoryAdapter.RecycleViewItemClickListener,
-    HomeMoviesAdapter.RecycleViewItemClickListener,TrailerTrsAdapter.RecycleViewItemClickListener,MusicVideoTrsAdapter.RecycleViewItemClickListener{
+class FormatsActivity : AppCompatActivity() ,
+    FormatCategoryAdapter.RecycleViewItemClickListener,
+    HomeMoviesAdapter.RecycleViewItemClickListener,
+    TrailerTrsAdapter.RecycleViewItemClickListener,
+    MusicVideoTrsAdapter.RecycleViewItemClickListener{
     private var binding: ActivityFormatsBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: FormatsViewModel by viewModels()

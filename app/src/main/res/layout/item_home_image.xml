@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:tool="http://schemas.android.com/tools"
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/mainView"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:theme="@style/Theme.PVR"
-    >
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <com.google.android.material.card.MaterialCardView
@@ -21,11 +21,13 @@
         android:visibility="visible"
         app:cardElevation="0.8dp"
         app:cardCornerRadius="@dimen/dimen_6dp"
-        >
+        app:cardBackgroundColor="@color/white">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:background="@color/white">
 
             <ImageView
                 android:id="@+id/ivTag"
@@ -39,7 +41,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -50,5 +53,6 @@
         android:adjustViewBounds="true"
         android:layout_gravity="center"
         android:src="@drawable/multipleformats"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        tools:ignore="ContentDescription" />
 </LinearLayout>

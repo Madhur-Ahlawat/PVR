@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:layout_gravity="start"
     android:id="@+id/parrentView"
+    android:background="@color/white"
     >
 
 

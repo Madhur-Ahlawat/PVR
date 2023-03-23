@@ -13,6 +13,7 @@ import com.net.pvr.R
 import com.net.pvr.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr.utils.hide
 import com.net.pvr.utils.show
+import com.net.pvr.utils.toast
 
 
 class HomeCinemaCategoryAdapter(

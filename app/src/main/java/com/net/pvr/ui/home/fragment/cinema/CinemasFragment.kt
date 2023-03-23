@@ -54,8 +54,10 @@ import javax.inject.Inject
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
-class CinemasFragment : Fragment(), CinemaAdapter.Direction, CinemaAdapter.Location,
-    CinemaAdapter.SetPreference, StoriesProgressView.StoriesListener {
+class CinemasFragment : Fragment(),
+    CinemaAdapter.Direction, CinemaAdapter.Location,
+    CinemaAdapter.SetPreference,
+    StoriesProgressView.StoriesListener {
     private var binding: FragmentCinemasBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel by activityViewModels<CinemaViewModel>()

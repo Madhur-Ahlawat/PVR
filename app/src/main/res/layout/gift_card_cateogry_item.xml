@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:paddingEnd="@dimen/padding_10"
     android:paddingStart="@dimen/padding_10"
-    android:layout_marginEnd="@dimen/dimen_18dp">
+    android:layout_marginEnd="@dimen/dimen_18dp"
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/imageView8"

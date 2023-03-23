@@ -155,20 +155,20 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayout"
-                        style="@style/styledBlackTilEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginTop="-8dp"
                         android:hint="@string/mobile_number"
-                        app:boxBackgroundColor="@color/transparent"
                         app:boxStrokeColor="@color/transparent"
                         app:boxStrokeWidth="0dp"
                         app:boxStrokeWidthFocused="0dp"
                         app:endIconDrawable="@drawable/ic_vector_call"
                         app:endIconMode="custom"
                         app:errorEnabled="false"
+                        app:boxBackgroundColor="@color/white"
                         app:hintTextColor="@color/textColor"
+                        android:background="@color/transparent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -178,7 +178,7 @@
                             android:id="@+id/mobileNumber"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@null"
+                            android:background="@color/white"
                             android:digits="1234567890"
                             android:fontFamily="@font/sf_pro_text_bold"
                             android:gravity="bottom"
@@ -192,8 +192,8 @@
                             tools:ignore="LabelFor,SpeakableTextPresentCheck" />
 
                     </com.google.android.material.textfield.TextInputLayout>
-                </RelativeLayout>
 
+                </RelativeLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"

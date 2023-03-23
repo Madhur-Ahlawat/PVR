@@ -382,8 +382,6 @@ class OtpVerifyActivity : AppCompatActivity() {
             Constant.setAverageUserIdSCM(preferences)
             Constant.setUPSFMCSDK(preferences)
 
-
-
             preferences.saveIsLogin(true)
             output?.id?.let { preferences.saveUserId(it) }
             output?.un?.let { preferences.saveUserName(it) }
@@ -582,6 +580,8 @@ class OtpVerifyActivity : AppCompatActivity() {
         val matcher: Matcher = pattern.matcher(message)
         if (matcher.find()) {
             binding?.otpEditText?.setText(matcher.group(0)!!)
+            binding?.textView15?.setBackgroundResource(R.drawable.yellow_book_curve)
+
             val otp = binding?.otpEditText?.getStringFromFields()
             authViewModel.otpVerify(
                 mobile, getHash(
