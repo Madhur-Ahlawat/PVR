@@ -1099,6 +1099,7 @@ class HomeFragment : Fragment(),
         }
     }
 
+    private var stringBuilder: StringBuilder? = null
 
     @SuppressLint("SetTextI18n")
     private fun trailerList(mv: HomeResponse.Mv) {
@@ -1128,18 +1129,38 @@ class HomeFragment : Fragment(),
 
         //title
         bindingTrailer.titleLandingScreen.text = mv.n
-
+//        category
+        stringBuilder = java.lang.StringBuilder()
+        var data = ""
+        for (k in 0 until mv.fmts.size) {
+            data = if (mv.fmts.contains("D3")) {
+                "3D"
+            } else if (mv.fmts.contains("DATMOS")) {
+                "ATMOS"
+            } else if (mv.fmts.contains("IMAX")) {
+                "IMAX"
+            } else if (mv.fmts.contains("D4")) {
+                "4Dx"
+            } else if (mv.fmts.contains("D2")) {
+                "2D"
+            } else {
+                mv.fmts[k]
+            }
+            if (k == 0) {
+                stringBuilder?.append(data)
+            } else {
+                stringBuilder?.append("  •  $data")
+            }
+        }
         val censor =
-            mv.ce + " " + getString(R.string.dots) + " " + java.lang.String.join(",", mv.grs)
+            mv.ce + " " + getString(R.string.dots) + " " +mv.mlength+" "+getString(R.string.dots)+" "+ java.lang.String.join(",", mv.grs)
 
         bindingTrailer.tvCensorLang.text =
             censor.replace("[", "").replace("]", "").replace("(", "").replace(")", "")
 
 
         bindingTrailer.subTitleLandingScreen.text =
-            mv.lng + " " + getString(R.string.dots) + " " + java.lang.String.join(
-                ",", mv.mfs
-            )
+            mv.lng + " " + getString(R.string.dots) + " " + stringBuilder
 
         //image
         Glide.with(requireActivity()).load(mv.miv).error(R.drawable.placeholder_vertical)

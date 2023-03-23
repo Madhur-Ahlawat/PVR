@@ -55,8 +55,8 @@
                 android:background="#F9F9F9"
                 android:paddingStart="@dimen/dimen_24dp"
                 android:paddingEnd="@dimen/dimen_1dp"
-                android:paddingTop="@dimen/padding_10"
-                android:paddingBottom="@dimen/padding_10"
+                android:paddingTop="@dimen/dimen_15dp"
+                android:paddingBottom="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
@@ -93,15 +93,15 @@
 
                     <TextView
                         android:id="@+id/titleLandingScreen"
-                        tools:text="KAALA (U/A)"
-                        android:fontFamily="@font/helvetica_neu_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        tools:text="KAALA (U/A)"
+                        android:textSize="@dimen/dimen_16sp"
+                        android:fontFamily="@font/montserrat_alternates_semi_bold"
                         android:ellipsize="end"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:scrollHorizontally="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/dimen_16sp" />
+                        android:textColor="@color/black"/>
 
 
                     <TextView
@@ -110,7 +110,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:lineSpacingExtra="@dimen/dimen_6dp"
-                        android:fontFamily="@font/helvetica_neu_reg"
+                        android:fontFamily="@font/sf_pro_text_regular"
                         tools:text="168 Mins  |  Fri, May 06, 2022 "
                         android:textColor="@color/black"
                         android:textSize="12sp" />
@@ -119,11 +119,11 @@
                     <TextView
                         android:layout_marginTop="@dimen/dimen_4dp"
                         android:id="@+id/subTitleLandingScreen"
-                        tools:text="DRAMA, ACTION . 2D . IMAX\nTELUGU, HINDI, KANNADA"
+                        tools:text="TELUGU, HINDI, KANNADA"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lineSpacingExtra="6dp"
-                        android:fontFamily="@font/helvetica_neu_reg"
+                        android:fontFamily="@font/sf_pro_text_regular"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
 
