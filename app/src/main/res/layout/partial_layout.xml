@@ -259,7 +259,6 @@
                         android:layout_marginTop="@dimen/dimen_40dp"
                         android:padding="@dimen/alert_dialog_padding_default"
                         android:text="Proceed"
-                        android:textAllCaps="true"
                         android:textColor="@color/pvr_dark_black" />
                 </LinearLayout>
             </LinearLayout>

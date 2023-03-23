@@ -24,12 +24,13 @@
 
         <TextView
             android:id="@+id/benifit"
-            android:fontFamily="@font/sf_pro_text_medium"
+            android:fontFamily="@font/sf_pro_text_semi_bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="16dp"
+            android:textColor="@color/black"
             android:gravity="center"
             android:visibility="visible"
             android:text="Child-Friendly Seats Available"

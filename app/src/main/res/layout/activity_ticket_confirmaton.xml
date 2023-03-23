@@ -604,7 +604,6 @@
                                     android:id="@+id/textView334"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dimen_4dp"
                                     android:fontFamily="@font/sf_pro_text_semi_bold"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/dimen_14sp"
@@ -632,7 +631,6 @@
                                     android:id="@+id/textView336"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dimen_4dp"
                                     android:fontFamily="@font/sf_pro_text_semi_bold"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/dimen_14sp"
@@ -659,7 +657,6 @@
                             android:id="@+id/textView338"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
                             android:fontFamily="@font/sf_pro_text_semi_bold"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen_14sp"
@@ -674,6 +671,7 @@
                             android:layout_marginStart="24dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="24dp"
+                            android:paddingBottom="@dimen/dimen_8dp"
                             android:orientation="horizontal"
                             android:visibility="visible"
                             app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
@@ -728,7 +726,7 @@
                             android:id="@+id/imageView154"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="24dp"
+                            android:layout_marginTop="15dp"
                             android:src="@drawable/line"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -863,7 +861,6 @@
                                 android:id="@+id/textView342"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
                                 android:fontFamily="@font/sf_pro_text_semi_bold"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/dimen_14sp"
@@ -889,7 +886,6 @@
                                 android:id="@+id/textView344"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
                                 android:fontFamily="@font/sf_pro_text_semi_bold"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/dimen_14sp"
@@ -1072,6 +1068,86 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <LinearLayout
+                    android:id="@+id/offer_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout124"
+                    android:elevation="4dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:padding="8dp"
+                    android:background="@drawable/ticket_conf_curve_white"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/green_arrow" />
+
+                            <TextView
+                                android:fontFamily="@font/sf_pro_text_bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:text="Offer applied"
+                                android:textColor="@color/pvr_dark_black"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:id="@+id/first_data"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="You have 5 food vouchers "
+                            android:textColor="@color/pvr_dark_black"
+                            android:textSize="16sp" />
+
+
+                        <TextView
+                            android:id="@+id/second_data"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="You have 5 food vouchers "
+                            android:textColor="@color/pvr_dark_black"
+                            android:textSize="14sp" />
+
+
+                        <TextView
+                            android:id="@+id/third_data"
+                            android:fontFamily="@font/sf_pro_text_semi_bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="You have 5 food vouchers "
+                            android:textColor="@color/gray_"
+                            android:textSize="12sp" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout126"
                     android:layout_width="0dp"
@@ -1083,7 +1159,7 @@
                     android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout124">
+                    app:layout_constraintTop_toBottomOf="@+id/offer_ll">
 
                     <View
                         android:id="@+id/view225"
@@ -1127,6 +1203,19 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             tools:text="372.00" />
+                        <TextView
+                            android:id="@+id/cutPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:layout_marginEnd="@dimen/dimen_5dp"
+                            android:textColor="@color/red"
+                            android:visibility="gone"
+                            android:textSize="@dimen/dimen_14sp"
+                            app:layout_constraintEnd_toStartOf="@+id/textView349"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="372.00" />
 
                         <TextView
                             android:id="@+id/tv_discount_txt"
@@ -1165,18 +1254,47 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/textView350"
                             tools:text="320.00" />
+                        <TextView
+                            android:id="@+id/cutPriceT"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:textColor="@color/red"
+                            android:visibility="gone"
+                            android:textSize="@dimen/dimen_12sp"
+                            android:layout_marginEnd="@dimen/dimen_5dp"
+                            app:layout_constraintEnd_toStartOf="@+id/textView351"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView350"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/textView350"
+                            tools:text="320.00" />
 
                         <TextView
                             android:id="@+id/textView352"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="5dp"
                             android:fontFamily="@font/sf_pro_text_regular"
                             android:textColor="@color/black_70"
                             android:textSize="@dimen/dimen_12sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/textView350"
                             tools:text="0 x Food Items " />
+                        <TextView
+                            android:id="@+id/cutPriceF"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:textColor="@color/red"
+                            android:visibility="gone"
+                            android:textSize="@dimen/dimen_12sp"
+                            android:layout_marginEnd="@dimen/dimen_5dp"
+                            app:layout_constraintEnd_toStartOf="@+id/textView353"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView352"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/textView352"
+                            tools:text="320.00" />
+
 
                         <TextView
                             android:id="@+id/textView353"
@@ -1191,6 +1309,74 @@
                             tools:text="0.00" />
 
                         <TextView
+                            android:visibility="gone"
+                            android:id="@+id/fnbVTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:text="@string/order_id_semi"
+                            android:textColor="@color/black_70"
+                            android:textSize="@dimen/dimen_12sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView352" />
+
+                        <TextView
+                            android:id="@+id/cutPriceFnb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:textColor="@color/red"
+                            android:visibility="gone"
+                            android:textSize="@dimen/dimen_12sp"
+                            android:layout_marginEnd="@dimen/dimen_5dp"
+                            app:layout_constraintEnd_toStartOf="@+id/fnbVVal"
+                            app:layout_constraintBottom_toBottomOf="@+id/donTitle"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/donTitle"
+                            tools:text="320.00" />
+
+
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/fnbVVal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sf_pro_text_medium"
+                            android:textColor="@color/black_70"
+                            android:textSize="@dimen/dimen_12sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/donTitle"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/donTitle"
+                            tools:text="dnsuywrkjke6774" />
+
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/donTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:text="@string/order_id_semi"
+                            android:textColor="@color/black_70"
+                            android:textSize="@dimen/dimen_12sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/fnbVTitle" />
+
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/donVal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sf_pro_text_medium"
+                            android:textColor="@color/black_70"
+                            android:textSize="@dimen/dimen_12sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/donTitle"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/donTitle"
+                            tools:text="dnsuywrkjke6774" />
+
+                        <TextView
                             android:id="@+id/textView354"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -1200,7 +1386,7 @@
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen_12sp"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView352" />
+                            app:layout_constraintTop_toBottomOf="@+id/donTitle" />
 
                         <TextView
                             android:id="@+id/textView355"
@@ -1218,7 +1404,7 @@
                             android:id="@+id/textView356"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="5dp"
                             android:fontFamily="@font/sf_pro_text_regular"
                             android:textColor="@color/black_70"
                             android:textSize="@dimen/dimen_12sp"
@@ -1252,10 +1438,10 @@
 
                         <TextView
                             android:visibility="gone"
-                            android:id="@+id/donTitle"
+                            android:id="@+id/disTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="5dp"
                             android:fontFamily="@font/sf_pro_text_regular"
                             android:text="@string/order_id_semi"
                             android:textColor="@color/black_70"
@@ -1265,28 +1451,43 @@
 
                         <TextView
                             android:visibility="gone"
-                            android:id="@+id/donVal"
+                            android:id="@+id/disVal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/sf_pro_text_medium"
                             android:textColor="@color/black_70"
                             android:textSize="@dimen/dimen_12sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/donTitle"
+                            app:layout_constraintBottom_toBottomOf="@+id/disTitle"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/donTitle"
+                            app:layout_constraintTop_toTopOf="@+id/disTitle"
                             tools:text="dnsuywrkjke6774" />
+
+                        <TextView
+                            android:id="@+id/refundVoc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/padding_10"
+                            android:gravity="start"
+                            android:text="Discount Text"
+                            android:textColor="@color/green_color"
+                            android:textSize="@dimen/dimen_12sp"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/disTitle" />
+
 
                         <TextView
                             android:id="@+id/textView359"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="5dp"
                             android:fontFamily="@font/sf_pro_text_regular"
                             android:text="@string/order_id_semi"
                             android:textColor="@color/black_70"
                             android:textSize="@dimen/dimen_12sp"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/donTitle" />
+                            app:layout_constraintTop_toBottomOf="@+id/refundVoc" />
 
                         <TextView
                             android:id="@+id/textView360"

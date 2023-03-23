@@ -4,11 +4,13 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.text.Html
+import android.text.TextUtils
 import android.view.*
 import android.widget.*
 import androidx.activity.viewModels
@@ -331,13 +333,16 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 binding?.ivCancelimage?.show()
                 binding?.llRefundCard?.show()
                 binding?.tvDiscountTxt?.show()
+                binding?.refundVoc?.show()
                 binding?.textView347?.text = "Book Again"
                 binding?.tvRefundTxtTitle?.text = output.ca_r_bot_txtb
                 binding?.tvRefundTxt?.text = output.ca_r_bot_txt
-                binding?.tvDiscountTxt?.text = output.ca_r_txt
+                binding?.tvDiscountTxt?.text = output.ca_r.replace("Rs. ","₹ ")+" refunded"
+                binding?.refundVoc?.text = output.ca_r_txt
             } else {
                 binding?.constraintLayout123?.show()
                 binding?.cushineView?.show()
+                binding?.refundVoc?.show()
                 binding?.imageView157?.show()
                 binding?.imageView152?.show()
                 binding?.textView346?.show()
@@ -373,16 +378,18 @@ class TicketConfirmationActivity : AppCompatActivity() {
 
             binding?.cancelTicket?.setOnClickListener {
 //                if (!output.partialCancellationAllowed || output.seat.size == 1){
-//                    cancelBookingDialog(output)
+                    cancelBookingDialog(output)
 //                }else{
-                partialCancelBookingDialog(output)
+                //partialCancelBookingDialog(output)
                 //  }
             }
 
             //title
             binding?.textView131?.text = output.m
             //movie Type
-            binding?.textView329?.text = output.cen + " " + output.lg + "(${output.fmt})"
+            binding?.textView329?.text =
+                output.cen.replace("[", "").replace("]", "").replace("(", "")
+                    .replace(")", "") + " " + output.lg + "(${output.fmt})"
             //address
             binding?.textView331?.text = output.c
             //load Image
@@ -399,7 +406,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
             //time
             binding?.textView336?.text = output.stgs
             //seat
-            binding?.textView338?.text = output.audi + output.st
+            binding?.textView338?.text = output.audi +", "+ output.st
             val layoutManager = FlexboxLayoutManager(this)
             layoutManager.flexDirection = FlexDirection.ROW
             layoutManager.justifyContent = JustifyContent.FLEX_START
@@ -435,6 +442,16 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 showChildDialog()
             }
 
+
+            if (!TextUtils.isEmpty(output.bnd) && output.bnd.toDouble() > 0){
+                binding?.offerLl?.show()
+                binding?.firstData?.text = output.bvt1
+                binding?.secondData?.text = output.bvt2
+                binding?.thirdData?.text = output.bvt3
+            }else{
+                binding?.offerLl?.hide()
+            }
+
             //food
             val layoutManagerFood = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
             val ticketFoodAdapter = TicketFoodAdapter(output.food)
@@ -466,30 +483,83 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 Constant().openMap(this, output.ltd, output.lngt)
             }
             // Total Values
-            binding?.textView349?.text = output.ft
+            binding?.textView349?.text = "₹" + output.ft.replace("Rs. ", "")
+            binding?.cutPrice?.text = "₹" + output.amount
+            binding?.cutPrice?.paintFlags =
+                binding?.cutPrice?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
+
+            binding?.textView349?.text = "₹" + output.ft.replace("Rs. ", "")
             binding?.textView360?.text = output.bi
 
             for (data in output.f) {
                 if (data.n == "Tickets") {
                     binding?.textView350?.text = output.f[0].it[0].n
                     binding?.textView351?.text = output.f[0].it[0].v
+                    binding?.cutPriceT?.text = data.cp
+                    if (data.cp !="" && data.cp !="0")
+                        binding?.cutPriceT?.show()
+                    binding?.cutPriceT?.paintFlags =
+                        binding?.cutPrice?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
                     binding?.textView352?.hide()
                     binding?.textView353?.hide()
                 } else if (data.n == "Food & Beverages") {
                     if (output.food.isNotEmpty()) {
                         binding?.textView352?.show()
                         binding?.textView353?.show()
-                        binding?.textView352?.text = output.f[1].c.toString() + " Food Items"
+                        binding?.textView352?.text =
+                            output.f[1].c.toString()  + " x Food Items"
                         binding?.textView353?.text = output.f[1].v
                     }
+                } else if (data.n == "CAUVERY CALLING") {
+                    binding?.donTitle?.show()
+                    binding?.donVal?.show()
+                    binding?.donTitle?.text = data.n
+                    binding?.donVal?.text = data.v
                 } else if (data.n == "Taxes & Fees ") {
                     binding?.textView357?.text = data.it[0].v
                     binding?.textView358?.text = data.it[1].v
                     binding?.textView356?.text = data.it[1].n
 
-                } else if (data.n == "CAUVERY CALLING") {
-                    binding?.donTitle?.text = data.n
-                    binding?.donVal?.text = data.v
+                }else if (data.n == "Food vouchers") {
+                    binding?.textView352?.show()
+                    binding?.textView353?.show()
+                    binding?.textView352?.text =
+                        data.n
+                    binding?.textView353?.text = data.v
+
+                    binding?.cutPriceF?.text = data.cp
+                    if (data.cp !="" && data.cp !="0")
+                        binding?.cutPriceF?.show()
+                    binding?.cutPriceF?.paintFlags =
+                        binding?.cutPriceF?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
+
+                }else if (data.n == "Total (Tickets + Food voucher)") {
+                    binding?.fnbVTitle?.show()
+                    binding?.fnbVVal?.show()
+                    binding?.fnbVTitle?.text =
+                        data.n
+                    binding?.fnbVVal?.text = data.v
+
+                    binding?.cutPriceFnb?.text = data.cp
+                    if (data.cp !="" && data.cp !="0")
+                        binding?.cutPriceFnb?.show()
+                    binding?.cutPriceFnb?.paintFlags =
+                        binding?.cutPriceFnb?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
+
+
+                } else if (data.n == "Discount" && output.ca_d != "true") {
+                    binding?.disTitle?.show()
+                    binding?.disVal?.show()
+                    binding?.tvDiscountTxt?.show()
+                    binding?.cutPrice?.show()
+                    binding?.tvDiscountTxt?.text =
+                        "You just saved ₹" + data.v + " on this order!"
+                    binding?.disTitle?.text = data.n
+                    binding?.disVal?.text = data.v
+
+                }else if (data.n == "Discount") {
+                    binding?.cutPrice?.show()
+
                 }
             }
 
@@ -603,6 +673,9 @@ class TicketConfirmationActivity : AppCompatActivity() {
                     e.printStackTrace()
                 }
 
+            }else{
+                binding?.textView369?.hide()
+                binding?.textView370?.hide()
             }
 
             if (from == "T" && output.bfeedback == "true") {
@@ -617,8 +690,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
                     getFeedBackData()
                 }, 5000)
             }
-        }
-        else if (Constant.BOOK_TYPE == "FOOD") {
+        } else if (Constant.BOOK_TYPE == "FOOD") {
             binding?.foodView?.show()
             binding?.ticketView?.hide()
             binding?.bottomView?.hide()
@@ -633,7 +705,9 @@ class TicketConfirmationActivity : AppCompatActivity() {
 
             binding?.movieNameFood?.text = output.m
             //movie Type
-            binding?.cencorId?.text = output.cen + " " + output.lg + "(${output.fmt})"
+
+            binding?.cencorId?.text = output.cen.replace("[", "").replace("]", "").replace("(", "")
+                .replace(")", "") + " " + output.lg + "(${output.fmt})"
 
             //address
             binding?.cinemaFood?.text = output.c
@@ -875,7 +949,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
             val rbRefund = dialogQR.findViewById<RadioButton>(R.id.rbRefund)
             val llFull = dialogQR.findViewById<LinearLayout>(R.id.llFull)
             val llNormal = dialogQR.findViewById<LinearLayout>(R.id.llNormal)
-            tvContinue?.text = "NEXT"
+            tvContinue?.text = "Next"
             rbFoodVoucher?.setOnClickListener {
                 rbFoodVoucher.isChecked = true
                 rbRefund?.isChecked = false
@@ -934,7 +1008,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 }
             }
             rbSelected?.setOnClickListener {
-                tvContinue?.text = "CONFIRM"
+                tvContinue?.text = "Confirm"
                 rbEntireBooking?.isChecked = false
                 rbSelected.isChecked = true
                 tvContinue?.isEnabled = true
@@ -946,20 +1020,20 @@ class TicketConfirmationActivity : AppCompatActivity() {
             }
             tvCancel?.setOnClickListener { dialogQR.dismiss() }
             if (output.seat.size == 1 || !output.partialCancellationAllowed) {
-                tvContinue?.text = "CONFIRM"
+                tvContinue?.text = "Confirm"
                 rbFoodVoucher?.isChecked = true
                 llFull?.visibility = View.VISIBLE
                 llNormal?.visibility = View.GONE
             }
             tvContinue?.setOnClickListener {
                 if (rbEntireBooking?.isChecked == true || rbSelected?.isChecked == true) {
-                    if (llFull?.visibility == View.VISIBLE && rbFoodVoucher?.isChecked == true && tvContinue.text.toString() == ("CONFIRM")) {
+                    if (llFull?.visibility == View.VISIBLE && rbFoodVoucher?.isChecked == true && tvContinue.text.toString() == ("Confirm")) {
 
                         dialogQR.dismiss()
                     } else if (llFull?.visibility == View.VISIBLE && rbRefund?.isChecked == true) {
                         dialogQR.dismiss()
-                    } else if (rbEntireBooking?.isChecked == true && tvContinue.text.toString() == ("NEXT")) {
-                        tvContinue.text = "CONFIRM"
+                    } else if (rbEntireBooking?.isChecked == true && tvContinue.text.toString() == ("Next")) {
+                        tvContinue.text = "Confirm"
                         rbFoodVoucher?.isChecked = true
                         dialogQR.dismiss()
                     } else if (rbSelected?.isChecked == true) {
@@ -997,7 +1071,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
         delete = dialog.findViewById<View>(R.id.no) as TextView
         messagePcTextView.text = output.ca_msg
         //   messagePcTextView.setText("");
-        delete.text = "NO"
+        delete.text = "No"
         delete.setOnClickListener { dialog.dismiss() }
         cancel = dialog.findViewById<View>(R.id.yes) as TextView
         cancel.setOnClickListener {
