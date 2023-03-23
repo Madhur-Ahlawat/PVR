@@ -25,6 +25,9 @@ class FoodTicketFoodAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolderNowShowing, position: Int) {
+        try {
+
+
         val cinemaItem = nowShowingList[position]
         println("list.size--->"+nowShowingList.size)
 
@@ -40,6 +43,9 @@ class FoodTicketFoodAdapter(
             holder.imageView2.setImageResource(R.drawable.veg_ic)
         }else{
             holder.imageView2.setImageResource(R.drawable.nonveg_ic)
+        }
+        }catch (e:IndexOutOfBoundsException){
+            e.printStackTrace()
         }
     }
 

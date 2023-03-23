@@ -43,7 +43,7 @@
                 android:id="@+id/foodView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_marginTop="@dimen/padding_10"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -199,6 +199,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:id="@+id/timeView"
+                                android:visibility="gone"
                                 android:orientation="vertical">
 
                                 <TextView
@@ -385,7 +387,7 @@
                 android:id="@+id/ticketView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -120,6 +120,7 @@ class Constant {
 
         var DISCOUNT = 0.0
         var BOOKING_ID = ""
+        var BACK_TO_BOOKING = false
         var CINEMA_ID = ""
         var AUDI = ""
         var showHomeOffer = true

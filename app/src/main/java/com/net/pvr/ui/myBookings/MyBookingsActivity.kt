@@ -644,14 +644,34 @@ class MyBookingsActivity : AppCompatActivity(),
     }
 
     private fun checkId(data: FoodTicketResponse.Output.C, newList: ArrayList<FoodTicketResponse.Output.C>): Boolean {
+        var flag = false
         for (item in newList){
             if (data.abi != ""){
                 if (data.abi == item.bi){
                     item.food = data.food
+                    flag = true
+                }else{
+                    return false
                 }
+            }else {
+                return false
             }
         }
-        return true
+        return flag
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (Constant.BACK_TO_BOOKING){
+            authViewModel.foodTicket(
+                preferences.getUserId(),
+                Constant().getDeviceId(this),
+                "",
+                preferences.getCityName(),
+                "",
+                "NO"
+            )
+        }
     }
 
     //GiftCard

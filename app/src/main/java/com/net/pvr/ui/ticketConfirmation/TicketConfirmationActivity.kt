@@ -45,6 +45,7 @@ import com.net.pvr.ui.ticketConfirmation.response.TicketBookedResponse
 import com.net.pvr.ui.ticketConfirmation.viewModel.TicketConfirmationViewModel
 import com.net.pvr.ui.webView.WebViewActivity
 import com.net.pvr.utils.*
+import com.net.pvr.utils.Constant.Companion.BACK_TO_BOOKING
 import com.net.pvr.utils.ga.GoogleAnalytics
 import com.net.pvr.utils.isevent.ISEvents
 import dagger.hilt.android.AndroidEntryPoint
@@ -469,10 +470,12 @@ class TicketConfirmationActivity : AppCompatActivity() {
             }
 
             val snapHelper = PagerSnapHelper()
+            binding?.recyclerView51?.onFlingListener = null
             snapHelper.attachToRecyclerView(binding?.recyclerView51)
             val layoutManagerPlaceHolder =
                 LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
             val ticketPlaceHolderAdapter = TicketPlaceHolderAdapter(this, output.ph)
+
             binding?.recyclerView51?.setHasFixedSize(true)
             binding?.recyclerView51?.layoutManager = layoutManagerPlaceHolder
             binding?.recyclerView51?.adapter = ticketPlaceHolderAdapter
@@ -676,6 +679,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
             }else{
                 binding?.textView369?.hide()
                 binding?.textView370?.hide()
+
             }
 
             if (from == "T" && output.bfeedback == "true") {
@@ -703,6 +707,16 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 .error(R.drawable.placeholder_vertical)
                 .into(binding?.movieImgFood!!)
 
+            if (output.m == "PICKUP FROM COUNTER"){
+                binding?.movieImgFood?.hide()
+                binding?.cencorId?.hide()
+                binding?.direction?.hide()
+            }else{
+                binding?.movieImgFood?.show()
+                binding?.cencorId?.show()
+                binding?.direction?.show()
+            }
+
             binding?.movieNameFood?.text = output.m
             //movie Type
 
@@ -714,7 +728,12 @@ class TicketConfirmationActivity : AppCompatActivity() {
             //Date
             binding?.dateTxt?.text = output.md
             //time
-            binding?.timeText?.text = output.stgs
+            if (output.stgs!=null && output.stgs!="") {
+                binding?.timeText?.text = output.stgs
+                binding?.timeView?.show()
+            }else{
+                binding?.timeView?.hide()
+            }
             binding?.foodOrderId?.text = output.bi
             binding?.foodPrice?.text = output.ft
             binding?.foodCount?.text = output.food.size.toString() + " Food Items Ordered"
@@ -826,6 +845,61 @@ class TicketConfirmationActivity : AppCompatActivity() {
                         intent.putExtra("from", "parking")
                         intent.putExtra("getUrl", it.data.output.url)
                         startActivity(intent)
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {
+                            },
+                            negativeClick = {
+                            })
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    loader?.dismiss()
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {
+                        },
+                        negativeClick = {
+                        })
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                    loader = LoaderDialog(R.string.pleaseWait)
+                    loader?.show(supportFragmentManager, null)
+                }
+            }
+        }
+    }
+    private fun cancelBooking() {
+        authViewModel.cancelBookingDataScope.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    loader?.dismiss()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {
+                                BACK_TO_BOOKING = true
+                                onBackPressed()
+                            },
+                            negativeClick = {
+                            })
+                        dialog.show()
+
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -1076,6 +1150,11 @@ class TicketConfirmationActivity : AppCompatActivity() {
         cancel = dialog.findViewById<View>(R.id.yes) as TextView
         cancel.setOnClickListener {
             dialog.dismiss()
+            authViewModel.cancelBooking(
+                preferences.getUserId(),
+                Constant.BOOKING_ID
+            )
+            cancelBooking()
         }
         dialog.show()
     }

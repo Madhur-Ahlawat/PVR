@@ -1819,6 +1819,39 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     }
 
 
+ //cancelBooking
+    private val cancelBookingLiveData = MutableLiveData<NetworkResult<CancelTransResponse>>()
+    val  cancelBookingResponseLiveData: LiveData<NetworkResult<CancelTransResponse>>
+        get() = cancelBookingLiveData
+
+    suspend fun cancelBooking(userid: String, bookingid: String) {
+        cancelBookingLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.cancelBooking(
+            userid,
+            bookingid,
+            Constant.version,
+            Constant.platform,
+            Constant.getDid()
+        )
+        cancelBookingResponse(response)
+    }
+
+    private fun  cancelBookingResponse(response: Response<CancelTransResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            cancelBookingLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            try {
+                val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+                cancelBookingLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            }catch (e:JSONException){
+                cancelBookingLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+            }
+        } else {
+            cancelBookingLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+
     //Summery
     private val summerLiveData = MutableLiveData<NetworkResult<SummeryResponse>>()
     val summerResponseLiveData: LiveData<NetworkResult<SummeryResponse>>

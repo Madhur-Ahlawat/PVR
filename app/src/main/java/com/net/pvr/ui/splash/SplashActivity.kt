@@ -92,7 +92,7 @@ class SplashActivity : AppCompatActivity() {
         } else {
             if (isConnected()) {
                 if (preferences.getCityName() == "") {
-                    authViewModel.splash("")
+                    authViewModel.splash("Delhi-NCR")
                 } else {
                     authViewModel.splash(preferences.getCityName())
                 }

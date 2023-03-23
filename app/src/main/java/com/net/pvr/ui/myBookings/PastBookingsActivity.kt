@@ -15,6 +15,7 @@ import com.net.pvr.ui.myBookings.viewModel.MyBookingViewModel
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.ArrayList
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -109,9 +110,45 @@ class PastBookingsActivity : AppCompatActivity(),
     private fun retrieveFoodTicketData(output: FoodTicketResponse.Output) {
         //title
         val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        val foodTicketAdapter = FoodTicketChildAdapter(output.p, this, true, this)
+        val foodTicketAdapter = FoodTicketChildAdapter(getUpdatedList(output.p), this, true, this)
         binding?.recyclerMyBooking?.layoutManager = gridLayout2
         binding?.recyclerMyBooking?.adapter = foodTicketAdapter
+    }
+
+    private fun getUpdatedList(p: ArrayList<FoodTicketResponse.Output.C>): ArrayList<FoodTicketResponse.Output.C> {
+        var newListFood = ArrayList<FoodTicketResponse.Output.C>()
+        var newList = ArrayList<FoodTicketResponse.Output.C>()
+        for (data in p){
+            if (data.is_only_fd){
+                newListFood.add(data)
+            }
+        }
+        if (newListFood.size>0){
+            for (data in newListFood){
+                println("checkId(data,p)--->"+checkId(data,p))
+                if (checkId(data,p)){
+                    p.remove(data)
+                }
+            }
+        }
+        return p
+    }
+
+    private fun checkId(data: FoodTicketResponse.Output.C, newList: ArrayList<FoodTicketResponse.Output.C>): Boolean {
+        var flag = false
+        for (item in newList){
+            if (data.abi != ""){
+                if (data.abi == item.bi){
+                    item.food = data.food
+                    flag = true
+                }else{
+                    return false
+                }
+            }else {
+                return false
+            }
+        }
+        return flag
     }
 
     override fun addFood(data: FoodTicketResponse.Output.C) {

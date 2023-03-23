@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.net.pvr.repository.UserRepository
+import com.net.pvr.ui.food.response.CancelTransResponse
 import com.net.pvr.ui.home.fragment.home.response.FeedbackDataResponse
 import com.net.pvr.ui.myBookings.response.ParkingResponse
 import com.net.pvr.ui.ticketConfirmation.response.TicketBookedResponse
@@ -78,6 +79,23 @@ class TicketConfirmationViewModel @Inject constructor(private val userRepository
                 userid,
                 booktype
             )
+        }
+    }
+
+
+    //Food Ticket Confirmation
+    val cancelBookingDataScope: LiveData<NetworkResult<CancelTransResponse>>
+        get() = userRepository.cancelBookingResponseLiveData
+
+    fun cancelBooking(
+        userid: String,
+        bookingid: String
+
+    ) {
+        viewModelScope.launch {
+            userRepository.cancelBooking(
+                userid,
+                bookingid)
         }
     }
 

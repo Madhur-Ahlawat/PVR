@@ -744,6 +744,15 @@ interface UserAPI {
         @Query("pt") platform: String
     ): Response<CancelTransResponse>
 
+    @POST("api/trans/canceluserbooking")
+    suspend fun cancelBooking(
+        @Query("userid") userid: String,
+        @Query("bookingid") bookingid: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<CancelTransResponse>
+
     @POST("api/food/getfoods")
     suspend fun oldFood(
         @Query("userid") userid: String,
