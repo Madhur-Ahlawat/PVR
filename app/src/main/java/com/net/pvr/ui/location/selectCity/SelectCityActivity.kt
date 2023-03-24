@@ -637,6 +637,7 @@ class SelectCityActivity : AppCompatActivity(),
         )
         dialog.window?.setGravity(Gravity.CENTER)
 
+        locationDialog.include39.textView5.text= getString(R.string.enable_location)
 //        Dismiss Dialog
         locationDialog.noThanksTextView.setOnClickListener {
             dialog.dismiss()
