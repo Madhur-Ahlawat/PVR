@@ -12,6 +12,7 @@ import android.os.Build
 import android.provider.Settings
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.NotificationCompat
 import com.evergage.android.ClientConfiguration
 import com.evergage.android.Evergage
@@ -46,6 +47,8 @@ class MainApplication : Application() {
         PhonePe.init(this)
         setUpEvegageSdk()
 
+        //dark mode disable
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         // Loging SFMC
         if (BuildConfig.DEBUG) {

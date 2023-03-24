@@ -98,6 +98,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView386" />
 
+        <View
+            android:id="@+id/view29"
+            android:layout_width="40dp"
+            android:layout_height="5dp"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:background="@color/unSelectBg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

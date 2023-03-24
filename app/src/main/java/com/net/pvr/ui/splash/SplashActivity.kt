@@ -19,6 +19,7 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.net.pvr.MainApplication
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivitySplashBinding
@@ -63,6 +64,7 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+
 
         val intent = intent
         val data = intent.data

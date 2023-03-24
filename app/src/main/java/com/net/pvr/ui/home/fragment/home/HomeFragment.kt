@@ -17,6 +17,7 @@ import android.text.SpannableString
 import android.text.TextUtils
 import android.text.method.LinkMovementMethod
 import android.text.style.ForegroundColorSpan
+import android.util.DisplayMetrics
 import android.view.*
 import android.view.View.OnTouchListener
 import android.widget.ImageView
@@ -739,23 +740,15 @@ class HomeFragment : Fragment(),
         val adapterTrailer = HomeOfferListAdapter(requireActivity(), output.cp, this)
         binding?.recyclerOffer?.adapter = adapterTrailer
 
-        if (output.cp.size > 1) {
+        if (output.cp.size>1){
             val speedScroll = 5000
             val handler = Handler()
             val runnable: Runnable = object : Runnable {
                 var count = 0
-                var flag = true
                 override fun run() {
+                    if (count == adapterTrailer.itemCount) count = 0
                     if (count < adapterTrailer.itemCount) {
-                        if (count == adapterTrailer.itemCount - 1) {
-                            flag = false
-                        } else if (count == 0) {
-                            flag = true
-                        }
-                        if (flag) count++ else count--
-                        binding?.recyclerOffer?.smoothScrollToPosition(
-                            count
-                        )
+                        binding?.recyclerOffer?.smoothScrollToPosition(++count)
                         handler.postDelayed(this, speedScroll.toLong())
                     }
                 }
@@ -763,8 +756,30 @@ class HomeFragment : Fragment(),
             handler.postDelayed(runnable, speedScroll.toLong())
         }
 
+//        if (output.cp.size > 1) {
+//            val speedScroll = 5000
+//            val handler = Handler()
+//            val runnable: Runnable = object : Runnable {
+//                var count = 0
+//                var flag = true
+//                override fun run() {
+//                    if (count < adapterTrailer.itemCount) {
+//                        if (count == adapterTrailer.itemCount - 1) {
+//                            flag = false
+//                        } else if (count == 0) {
+//                            flag = true
+//                        }
+//                        if (flag) count++ else count--
+//                        binding?.recyclerOffer?.smoothScrollToPosition(
+//                            count
+//                        )
+//                        handler.postDelayed(this, speedScroll.toLong())
+//                    }
+//                }
+//            }
+//            handler.postDelayed(runnable, speedScroll.toLong())
+//        }
 
-//        binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
 
         binding?.filterFab?.setOnClickListener {
             val filterPoints = HashMap<String, ArrayList<String>>()

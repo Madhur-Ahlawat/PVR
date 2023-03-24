@@ -249,10 +249,11 @@ class SetAlertActivity : AppCompatActivity() {
         val inflater = LayoutInflater.from(this)
         val bindingBottom = SetAlertDialogBinding.inflate(inflater)
         dialog.setContentView(bindingBottom.root)
+
         dialog.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
+            ViewGroup.LayoutParams.WRAP_CONTENT)
+
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
         dialog.window?.setGravity(Gravity.BOTTOM)

@@ -302,15 +302,19 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
                 binding?.recyclerView5?.adapter = trailerAdapter
             } else {
                 if (output.mb.videos.isNotEmpty()) {
-                    val snapHelper = PagerSnapHelper()
-                    snapHelper.attachToRecyclerView(binding?.recyclerView5)
-                    binding?.trailer?.show()
-                    binding?.textView69?.show()
-                    val layoutManagerTrailer =
-                        GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-                    val trailerAdapter = TrailerAdapter(output.mb.videos, this, this)
-                    binding?.recyclerView5?.layoutManager = layoutManagerTrailer
-                    binding?.recyclerView5?.adapter = trailerAdapter
+                    try {
+                        val snapHelper = PagerSnapHelper()
+                        snapHelper.attachToRecyclerView(binding?.recyclerView5)
+                        binding?.trailer?.show()
+                        binding?.textView69?.show()
+                        val layoutManagerTrailer =
+                            GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+                        val trailerAdapter = TrailerAdapter(output.mb.videos, this, this)
+                        binding?.recyclerView5?.layoutManager = layoutManagerTrailer
+                        binding?.recyclerView5?.adapter = trailerAdapter
+                    }catch (e:Exception){
+                        e.printStackTrace()
+                    }
                 } else {
                     binding?.trailer?.hide()
                 }
