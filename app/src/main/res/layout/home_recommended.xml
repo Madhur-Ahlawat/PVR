@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tool="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rlRecomm"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -26,7 +26,7 @@
                 app:layout_constraintDimensionRatio="H,1:0.4625"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                tool:ignore="ContentDescription" />
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:id="@+id/playBtn"
@@ -38,7 +38,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:srcCompat="@drawable/ic_group_play"
-                tool:ignore="ContentDescription" />
+                tools:ignore="ContentDescription" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -76,7 +76,7 @@
                     android:visibility="visible"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tool:text="New Release" />
+                    tools:text="New Release" />
 
                 <TextView
                     android:id="@+id/tvRecomm"
@@ -110,7 +110,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@+id/tvBook"
                     app:layout_constraintTop_toBottomOf="@id/tvRecomm"
-                    tool:text="NAME" />
+                    tools:text="NAME" />
 
 
                 <TextView
@@ -125,7 +125,7 @@
                     app:layout_constraintLeft_toLeftOf="@id/tvMovie"
                     app:layout_constraintRight_toLeftOf="@+id/tvBook"
                     app:layout_constraintTop_toBottomOf="@id/tvMovie"
-                    tool:text="A • English, Hindi" />
+                    tools:text="A • English, Hindi" />
 
 
                 <TextView
@@ -142,22 +142,19 @@
                     app:layout_constraintLeft_toLeftOf="@id/tvCensorLang"
                     app:layout_constraintStart_toStartOf="@+id/tvCensorLang"
                     app:layout_constraintTop_toBottomOf="@id/tvCensorLang"
-                    tool:text="Drama" />
+                    tools:text="Drama" />
 
                 <TextView
                     android:id="@+id/genrePlus"
-                    style="@style/SearchText_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_6dp"
-                    android:layout_marginBottom="@dimen/dimen_5dp"
-                    android:background="@drawable/yellow_curve_four"
-                    android:backgroundTint="#B3828282"
-                    android:paddingStart="@dimen/dimen_5dp"
-                    android:paddingEnd="@dimen/dimen_5dp"
-                    android:text="+2"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/curve_three"
+                    android:textSize="@dimen/dimen_12sp"
+                    android:fontFamily="@font/montserrat_alternates_semi_bold"
+                    android:includeFontPadding="false"
                     android:textColor="@color/black"
-                    android:textSize="11sp"
+                    tools:text="+2"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tvGenre"
@@ -225,7 +222,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvRecomm_new"
-                    tool:text="NAME" />
+                    tools:text="NAME" />
 
 
                 <TextView
@@ -241,7 +238,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvMovie_new"
-                    tool:text="Tuesday, Sep 4 • 8:30 PM" />
+                    tools:text="Tuesday, Sep 4 • 8:30 PM" />
 
 
                 <TextView
@@ -257,7 +254,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvTime"
-                    tool:text="PVR Rajnigandha Gold Select City" />
+                    tools:text="PVR Rajnigandha Gold Select City" />
 
 
                 <TextView
@@ -273,7 +270,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvPlace"
-                    tool:text="PVR Rajnigandha Gold Select City" />
+                    tools:text="PVR Rajnigandha Gold Select City" />
 
 
                 <LinearLayout
@@ -333,7 +330,7 @@
                         android:layout_marginTop="4dp"
                         android:scaleType="fitXY"
                         android:src="@drawable/doted_line"
-                        tool:ignore="ContentDescription" />
+                        tools:ignore="ContentDescription" />
 
 
                     <RelativeLayout
@@ -348,7 +345,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/pvr_dark_black"
                             android:textSize="16sp"
-                            tool:text="You have 5 food vouchers" />
+                            tools:text="You have 5 food vouchers" />
 
 
                         <TextView
@@ -359,7 +356,7 @@
                             android:layout_marginTop="8dp"
                             android:textColor="#828282"
                             android:textSize="12sp"
-                            tool:text="Redeem at the cinema food counter" />
+                            tools:text="Redeem at the cinema food counter" />
 
                     </RelativeLayout>
 

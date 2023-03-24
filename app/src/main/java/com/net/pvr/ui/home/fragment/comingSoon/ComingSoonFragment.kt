@@ -182,8 +182,8 @@ class ComingSoonFragment : Fragment(),
         if (language == "NULL"){
             language = "ALL"
         }
-        authViewModel.comingSoon(preferences.getCityName(), genre, language, preferences.getUserId())
 
+        authViewModel.comingSoon(preferences.getCityName(), genre, language, preferences.getUserId())
     }
 
     private fun movedNext() {

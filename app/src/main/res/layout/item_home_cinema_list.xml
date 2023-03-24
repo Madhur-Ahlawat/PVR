@@ -138,21 +138,18 @@
     <TextView
         android:id="@+id/genrePlus"
         android:layout_width="wrap_content"
-        android:layout_height="17dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:background="@drawable/yellow_curve_two"
-        android:backgroundTint="#D9D9D9"
-        android:fontFamily="@font/montserrat_medium"
-        android:includeFontPadding="false"
+        android:background="@drawable/curve_three"
         android:textSize="@dimen/dimen_12sp"
-        android:paddingStart="@dimen/dimen_3dp"
-        android:paddingEnd="@dimen/dimen_3dp"
+        android:fontFamily="@font/montserrat_alternates_semi_bold"
+        android:includeFontPadding="false"
         android:textColor="@color/black"
+        tools:text="+2"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/textView45"
         app:layout_constraintStart_toEndOf="@+id/textView45"
-        app:layout_constraintTop_toBottomOf="@+id/textView43"
-        tools:text="+2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView43" />
 
 
     <TextView
