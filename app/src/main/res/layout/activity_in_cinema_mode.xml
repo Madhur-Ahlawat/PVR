@@ -33,7 +33,6 @@
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
-            android:layout_marginHorizontal="@dimen/dimen_24dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="false"
@@ -50,7 +49,9 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayoutScanQR"
                     android:layout_width="match_parent"
+
                     android:layout_height="@dimen/dimen_70dp"
+                    android:layout_marginHorizontal="@dimen/dimen_24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -69,7 +70,9 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardView_booked_movie_ticket"
                     android:layout_width="match_parent"
+
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dimen_24dp"
 
                     android:backgroundTint="@color/bg_dark_movies_card"
                     android:elevation="0dp"
@@ -131,7 +134,7 @@
                             app:layout_constraintTop_toTopOf="parent">
 
                             <TextView
-                                android:id="@+id/textview_moview_name"
+                                android:id="@+id/textview_movie_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/sf_pro_text_semi_bold"
@@ -238,8 +241,9 @@
 
                 <ImageView
                     android:id="@+id/imageview_next_booked_movie"
-                    android:layout_width="@dimen/dimen_20dp"
-                    android:layout_height="@dimen/dimen_20dp"
+                    android:layout_width="@dimen/dimen_22dp"
+                    android:layout_height="@dimen/dimen_22dp"
+                    android:layout_marginHorizontal="@dimen/dimen_14dp"
                     android:elevation="1dp"
                     android:src="@drawable/ic_circular_arrow_right"
                     app:layout_constraintBottom_toBottomOf="@+id/cardView_booked_movie_ticket"
@@ -248,8 +252,9 @@
 
                 <ImageView
                     android:id="@+id/imageview_previous_booked_movie"
-                    android:layout_width="@dimen/dimen_20dp"
-                    android:layout_height="@dimen/dimen_20dp"
+                    android:layout_width="@dimen/dimen_22dp"
+                    android:layout_height="@dimen/dimen_22dp"
+                    android:layout_marginHorizontal="@dimen/dimen_14dp"
                     android:elevation="1dp"
                     android:src="@drawable/ic_circular_arrow_left"
                     app:layout_constraintBottom_toBottomOf="@+id/cardView_booked_movie_ticket"
@@ -258,8 +263,10 @@
 
                 <TextView
                     android:id="@+id/textView_show_details"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dimen_14dp"
                     android:layout_marginStart="@dimen/dimen_10dp"
                     android:layout_marginTop="@dimen/dimen_20dp"
                     android:layout_marginEnd="@dimen/dimen_10dp"
@@ -272,8 +279,10 @@
 
                 <TextView
                     android:id="@+id/textView_how_it_works"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dimen_14dp"
                     android:layout_marginStart="@dimen/dimen_10dp"
                     android:layout_marginTop="@dimen/dimen_20dp"
                     android:layout_marginEnd="@dimen/dimen_10dp"
@@ -286,8 +295,10 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardview_show_details"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dimen_14dp"
                     android:layout_marginStart="@dimen/dimen_10dp"
                     android:layout_marginTop="@dimen/dimen_14dp"
                     android:layout_marginEnd="@dimen/dimen_10dp"
@@ -351,8 +362,10 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardview_food_orders"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dimen_14dp"
                     android:layout_marginStart="@dimen/dimen_10dp"
                     android:layout_marginTop="@dimen/dimen_15dp"
                     android:layout_marginEnd="@dimen/dimen_10dp"
@@ -402,8 +415,10 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardview_food_and_bevarages"
+
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_50dp"
+                    android:layout_marginHorizontal="@dimen/dimen_14dp"
                     android:layout_marginTop="@dimen/dimen_15dp"
                     android:backgroundTint="@color/bg_dark_seat_indicator"
                     app:cardCornerRadius="@dimen/dimen_10dp"
@@ -452,8 +467,10 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardview_ready_to_leave"
+
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_50dp"
+                    android:layout_marginHorizontal="@dimen/dimen_14dp"
                     android:layout_marginTop="@dimen/dimen_4dp"
                     android:backgroundTint="@color/bg_dark_seat_indicator"
                     app:cardCornerRadius="@dimen/dimen_10dp"
@@ -470,7 +487,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/dimen_14dp"
-
                             android:scaleType="fitXY"
                             android:src="@drawable/ic_ready_to_leave"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -503,8 +519,10 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardview_feedback"
+
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_50dp"
+                    android:layout_marginHorizontal="@dimen/dimen_14dp"
                     android:layout_marginTop="@dimen/dimen_4dp"
                     android:backgroundTint="@color/bg_dark_seat_indicator"
                     app:cardCornerRadius="@dimen/dimen_10dp"
@@ -555,163 +573,25 @@
                     android:id="@+id/rlImgContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dimen_14dp"
                     android:layout_marginTop="@dimen/dimen_15dp"
                     android:background="@drawable/gradient_loyalty"
                     android:visibility="visible"
                     app:layout_collapseMode="parallax"
                     app:layout_constraintTop_toBottomOf="@id/cardview_feedback">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout134"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dimen_60dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <View
-                            android:id="@+id/view91"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-
-                        <TextView
-                            android:id="@+id/shareBtn"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginEnd="@dimen/dimen_15dp"
-                            android:drawableTint="@color/white"
-                            android:fontFamily="@font/sf_pro_text_bold"
-                            android:text="@string/privilege"
-                            android:textColor="@color/white"
-                            android:textSize="24sp"
-                            app:drawableEndCompat="@drawable/share"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <View
-                            android:id="@+id/view206"
-                            android:layout_width="wrap_content"
-                            android:layout_height="1dp"
-                            android:background="@color/grayEd"
-                            android:visibility="gone"
-                            app:layout_constraintBottom_toBottomOf="@+id/view91"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                    <LinearLayout
-                        android:id="@+id/cardview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/llTop"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
-                        android:elevation="1dp"
-                        android:visibility="gone">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:padding="12dp">
-
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0.7"
-                                android:orientation="vertical">
-
-
-                                <TextView
-                                    android:id="@+id/tvMovie"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_gravity="left"
-                                    android:layout_marginLeft="12dp"
-                                    android:fontFamily="@font/sfprodisplay_bold"
-                                    android:gravity="left"
-                                    android:textColor="@color/pvr_dark_black"
-                                    android:textSize="16sp" />
-
-
-                                <TextView
-                                    android:id="@+id/tag_data"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@id/tvMovie"
-                                    android:layout_marginLeft="12dp"
-                                    android:layout_marginTop="5dp"
-                                    android:fontFamily="@font/sf_pro_text_regular"
-                                    android:maxLines="2"
-                                    android:textColor="@color/gray"
-                                    android:textSize="12sp" />
-                            </LinearLayout>
-
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="right"
-                                android:layout_weight="0.3"
-                                android:visibility="gone">
-
-
-                                <ImageView
-                                    android:id="@+id/tvBook_img"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_centerInParent="true"
-                                    android:layout_marginLeft="24dp"
-                                    android:layout_marginTop="6dp"
-                                    android:gravity="center"
-                                    android:src="@drawable/yellow_book_curve"
-                                    android:textColor="@color/pvr_dark_black"
-                                    android:textSize="18sp"
-                                    android:visibility="gone" />
-
-
-                            </LinearLayout>
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
 
                     <LinearLayout
                         android:id="@+id/llTop"
                         android:layout_width="match_parent"
                         android:layout_height="360dp"
-                        android:layout_below="@+id/constraintLayout134"
                         android:fitsSystemWindows="true"
                         android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/back_arrow"
-                            android:layout_width="@dimen/dimen_30dp"
-                            android:layout_height="@dimen/dimen_30dp"
-                            android:layout_marginStart="@dimen/dimen_15dp"
-                            android:layout_marginTop="@dimen/padding_10"
-                            android:src="@drawable/back"
-                            android:visibility="gone" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/privilegeCardList"
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
-                            android:layout_marginTop="@dimen/dimen_15dp"
                             android:orientation="horizontal"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             tools:itemCount="3"

@@ -113,6 +113,7 @@ class Constant {
         const val USER_TOKEN = "user_token"
         const val USER_DOB = "user_dob"
         const val USER_MO_NUMBER = "user_mo"
+        const val IN_CINEMA_MODE_TYPE = "IN_CINEMA_MODE_TYPE"
         const val USER_ID = "user_id"
         const val SEAT_AVAILABEL = 1
         var TRANSACTION_ID = "0"

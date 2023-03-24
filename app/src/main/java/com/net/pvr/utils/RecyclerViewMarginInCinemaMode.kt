@@ -6,7 +6,7 @@ import androidx.annotation.IntRange
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 
-class RecyclerViewMargin
+class RecyclerViewMarginInCinemaMode
 /**
  * constructor
  * @param margin desirable margin size in px between the views in the recyclerView

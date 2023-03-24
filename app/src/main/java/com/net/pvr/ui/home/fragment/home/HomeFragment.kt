@@ -40,6 +40,7 @@ import com.google.gson.internal.LinkedTreeMap
 import com.net.pvr.MainApplication.Companion.homeLoadBanner
 import com.net.pvr.R
 import com.net.pvr.databinding.FragmentHomeBinding
+import com.net.pvr.databinding.InCinemaModeBinding
 import com.net.pvr.databinding.TrailersDialogBinding
 import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.bookingSession.MovieSessionActivity
@@ -58,6 +59,7 @@ import com.net.pvr.ui.home.fragment.more.offer.offerDetails.OfferDetailsActivity
 import com.net.pvr.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr.ui.home.fragment.more.profile.userDetails.ProfileActivity
 import com.net.pvr.ui.home.inCinemaMode.InCinemaModeActivity
+import com.net.pvr.ui.home.inCinemaMode.response.Data
 import com.net.pvr.ui.home.interfaces.PlayPopup
 import com.net.pvr.ui.location.selectCity.SelectCityActivity
 import com.net.pvr.ui.movieDetails.nowShowing.NowShowingMovieDetailsActivity
@@ -134,6 +136,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     private var skip: View? = null
     private var reverse: View? = null
     private var tvButton: TextView? = null
+    private var rvInCinemaHome: RecyclerView? = null
     private var ivPlay: LinearLayout? = null
     private var rlBanner: RelativeLayout? = null
     private var stories: StoriesProgressView? = null
@@ -143,6 +146,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     //internet Check
     private var broadcastReceiver: BroadcastReceiver? = null
+    private val inCinemaModeAdapter: GenericRecyclerViewAdapter<Data> by lazy { createInCinemaHomeAdapter() }
 
 
     private var musicData: ArrayList<MovieDetailsResponse.Trs> =
@@ -201,11 +205,25 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         if (stories == null) {
             stories?.destroy()
         }
-
+        initInCinemaMode()
 
         // functions
 
         manageFunction()
+
+
+    }
+
+    private fun initInCinemaMode() {
+        binding!!.rvInCinemaHome!!.apply {
+            layoutManager = LinearLayoutManager(context).also {
+                it.orientation = LinearLayoutManager.HORIZONTAL
+            }
+            LinearSnapHelper().attachToRecyclerView(this)
+            addItemDecoration(RecyclerViewMarginInCinemaMode(10, 1))
+
+        }
+        binding!!.rvInCinemaHome!!.adapter = inCinemaModeAdapter
     }
 
     private fun manageFunction() {
@@ -215,7 +233,12 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             binding?.constraintLayout135?.show()
 
             //offer
-            authViewModel.offer(preferences.getCityName(),preferences.getUserId(),Constant().getDeviceId(requireActivity()),"NO")
+            authViewModel.offer(
+                preferences.getCityName(),
+                preferences.getUserId(),
+                Constant().getDeviceId(requireActivity()),
+                "NO"
+            )
 
 //            nextBooking
             authViewModel.nextBooking(
@@ -240,9 +263,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             val itemView = newView as BottomNavigationItemView
             itemView.performClick()
         }
-        binding!!.constraintLayoutInCinemaMode.setOnClickListener {
-            Util.reorderActivityToFront(requireContext(),InCinemaModeActivity::class.java)
-        }
 
 
         getShimmerData()
@@ -253,6 +273,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         getMovieFormatFromApi()
         makeToTop()
         offerDataLoad()
+//        inCinemaModeHomeDataLoad()
+        getInCinemaModeWithBookingIDDataLoad()
     }
 
     private fun makeToTop() {
@@ -297,8 +319,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                     "no"
                 )
 
-               // hideDataLoad()
-            }catch (e:java.lang.Exception){
+                // hideDataLoad()
+            } catch (e: java.lang.Exception) {
 
             }
 
@@ -404,29 +426,78 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                     }
                 }
                 is NetworkResult.Error -> {
-
+                    dismissLoader()
                 }
 
                 is NetworkResult.Loading -> {
-
                 }
             }
         }
     }
+
+    private fun showLoader() {
+        if (loader == null) {
+            loader = LoaderDialog(R.string.pleaseWait)
+            loader?.show(requireActivity().supportFragmentManager, null)
+        }
+        else{
+            if(!loader!!.isAdded){
+                loader?.show(requireActivity().supportFragmentManager, null)
+            }
+        }
+    }
+
+    private fun getInCinemaModeWithBookingIDDataLoad() {
+        authViewModel.getInCinema(preferences.getUserId(), "Delhi-NCR")
+        authViewModel.getInCinemaLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    dismissLoader()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        try {
+                            if (it.data.output != null && it.data.output.data.size != 0) {
+                                inCinemaModeAdapter.submitList(it.data.output.data)
+                                binding?.rvInCinemaHome?.show()
+                            } else {
+                                binding?.rvInCinemaHome?.hide()
+                            }
+                        } catch (e: Exception) {
+                            binding?.rvInCinemaHome?.hide()
+                            e.printStackTrace()
+                        }
+                    }
+                }
+                is NetworkResult.Error -> {
+                    binding?.rvInCinemaHome?.hide()
+                    dismissLoader()
+
+                }
+
+                is NetworkResult.Loading -> {
+                }
+            }
+        }
+    }
+
+    private fun dismissLoader() {
+        loader?.dismiss()
+    }
+
     private fun hideDataLoad() {
         authViewModel.offerHideLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkResult.Success -> {
                     //if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        try {
-                            binding?.constraintLayout55?.hide()
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
-                   // }
+                    try {
+                        binding?.constraintLayout55?.hide()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // }
                 }
                 is NetworkResult.Error -> {
                     binding?.constraintLayout55?.hide()
+                    dismissLoader()
                 }
 
                 is NetworkResult.Loading -> {
@@ -475,7 +546,8 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         val indicators = dialog.findViewById<LinearLayout>(R.id.indicators)
         val textView192 = dialog.findViewById<TextView>(R.id.textView192)
         textView5?.text = getString(R.string.explore_offers)
-        val gridLayout = GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
+        val gridLayout =
+            GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
         recyclerView?.layoutManager = LinearLayoutManager(requireActivity())
         val adapter = offerResponse?.let {
             HomeOfferAdapter(
@@ -519,12 +591,12 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                     "",
                     "no"
                 )
-               // hideDataLoad()
-            }catch (e:java.lang.Exception){
+                // hideDataLoad()
+            } catch (e: java.lang.Exception) {
 
             }
         }
-        if (offerResponse?.size!! >1){
+        if (offerResponse?.size!! > 1) {
             indicators?.show()
             recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -535,7 +607,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 }
             })
             indicators?.let { btnAction(0, offerResponse?.size!!, it) }
-        }else{
+        } else {
             indicators?.hide()
         }
 
@@ -600,7 +672,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                     }
                 }
                 is NetworkResult.Error -> {
-                    loader?.dismiss()
+                    dismissLoader()
                     val dialog = OptionDialog(requireContext(),
                         R.mipmap.ic_launcher,
                         R.string.app_name,
@@ -612,8 +684,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleaseWait)
-                    loader?.show(requireActivity().supportFragmentManager, null)
+
                 }
             }
         }
@@ -1086,7 +1157,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         dialogTrailer?.show()
 
 
-
         //title
         bindingTrailer.titleLandingScreen.text = mv.n
 
@@ -1168,7 +1238,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                     }
                 }
                 is NetworkResult.Error -> {
-
+                    dismissLoader()
                 }
                 is NetworkResult.Loading -> {
 
@@ -1481,7 +1551,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     }
 
-    public fun updatedData(){
+    public fun updatedData() {
         if (preferences.getIsLogin()) {
             val ls = preferences.getString(Constant.SharedPreference.LOYALITY_STATUS)
             val isHl: String = preferences.getString(Constant.SharedPreference.IS_HL)
@@ -1848,5 +1918,28 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
 
     }
 
+    var clickedItem: Data? = null
+    private fun createInCinemaHomeAdapter() = GenericRecyclerViewAdapter(
+        getViewLayout = { R.layout.in_cinema_mode },
+        areItemsSame = ::isCinemaModeSame,
+        areItemContentsEqual = ::isCinemaModeSame,
+        onBind = { inCinemaModeItem, viewDataBinding, _ ->
+            with(viewDataBinding as InCinemaModeBinding) {
+                Glide.with(requireActivity()).load(inCinemaModeItem.icon).into(imageViewIcm);
+                bookedTicketsCount.text = inCinemaModeItem.title
+                imageButtonInCinemaMode.text = inCinemaModeItem.btext
+                constraintlayoutRoot.setOnClickListener {
+                    clickedItem = inCinemaModeItem
+                    val intent = Intent(requireContext(), InCinemaModeActivity::class.java)
+                    intent.putExtra(Constant.IN_CINEMA_MODE_TYPE, clickedItem!!.type)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                    requireContext().startActivity(intent)
+                }
+            }
+        }
+    )
 
+    fun isCinemaModeSame(item1: Data, item2: Data): Boolean {
+        return ((item1.title == item2.title) && (item1.type == item2.type) && (item1.btext == item2.type))
+    }
 }

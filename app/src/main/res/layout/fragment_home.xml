@@ -65,15 +65,27 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/white">
-
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvInCinemaHome"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_16dp"
+                            android:layout_marginEnd="@dimen/dimen_16dp"
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:listitem="@layout/in_cinema_mode"
+                            tools:itemCount="3"/>
                         <androidx.constraintlayout.widget.ConstraintLayout
+                            app:layout_constraintTop_toBottomOf="@+id/rvInCinemaHome"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="1.0"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintVertical_bias="0.0">
 
                             <View
@@ -90,37 +102,16 @@
                                 app:layout_constraintVertical_bias="0.0" />
 
                             <androidx.constraintlayout.widget.ConstraintLayout
-                                android:id="@+id/constraintLayoutInCinemaMode"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/dimen_16dp"
-                                android:layout_marginEnd="@dimen/dimen_16dp"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent">
-
-                                <include
-                                    android:id="@+id/inCinemaMode"
-                                    layout="@layout/in_cinema_mode"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-                            <androidx.constraintlayout.widget.ConstraintLayout
                                 android:id="@+id/constraintLayout135"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dimen_13dp"
-                                android:layout_marginBottom="@dimen/dimen_13dp"
                                 android:layout_marginStart="@dimen/dimen_16dp"
+                                android:layout_marginTop="@dimen/dimen_13dp"
                                 android:layout_marginEnd="@dimen/dimen_16dp"
+                                android:layout_marginBottom="@dimen/dimen_13dp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/constraintLayoutInCinemaMode">
+                                app:layout_constraintTop_toTopOf="parent">
 
                                 <include
                                     android:id="@+id/homeRecommend"
@@ -399,8 +390,8 @@
                     android:id="@+id/filter_fab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/dimen_15sp"
                     android:layout_marginStart="@dimen/dimen_15dp"
+                    android:layout_marginEnd="@dimen/dimen_15sp"
                     android:layout_marginBottom="@dimen/dimen_30dp"
                     android:src="@drawable/filter_unselect"
                     android:visibility="gone"

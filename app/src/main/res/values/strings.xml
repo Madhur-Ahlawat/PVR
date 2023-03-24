@@ -731,5 +731,6 @@ IMAX Corporation is one of the world\'s leading entertainment technology compani
     <string name="uber">Uber</string>
     <string name="select_cab_provider">Select Cab Provider</string>
     <string name="please_rate_your_experience">Please rate your experience</string>
+    <string name="dismiss">Dismiss</string>
 
 </resources>

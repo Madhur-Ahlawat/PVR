@@ -377,6 +377,7 @@ class HomeActivity : AppCompatActivity(), PrivilegeHomeDialogAdapter.RecycleView
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
+
                 }
             }
         }
