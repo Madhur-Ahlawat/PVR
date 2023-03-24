@@ -485,12 +485,12 @@ class SummeryActivity : AppCompatActivity(),
         summeryResponse = output
 
         if (BOOK_TYPE == "FOOD"){
+            binding?.cardView7?.hide()
+
             if (QR == "YES") {
-                binding?.cardView7?.hide()
                 binding?.textView111?.hide()
 
-            }
-            else{
+            } else{
                 binding?.textView111?.show()
 
                 binding?.textView111?.text =

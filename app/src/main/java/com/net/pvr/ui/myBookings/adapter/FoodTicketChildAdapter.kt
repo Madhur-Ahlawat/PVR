@@ -100,7 +100,7 @@ class FoodTicketChildAdapter(
             holder.onlyFood.show()
 //Food Item
             val gridLayout2 = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
-            val foodTicketFoodAdapter = FoodTicketFoodAdapter(getUpdatedList(getUpdatedFood(cinemaItem.food)),"food",cinemaItem.f.size)
+            val foodTicketFoodAdapter = FoodTicketFoodAdapter(getUpdatedList(getUpdatedFood(cinemaItem.food)),"food",cinemaItem.food.size)
             holder.recyclerView.layoutManager = gridLayout2
             holder.recyclerView.adapter = foodTicketFoodAdapter
         } else {
@@ -109,7 +109,7 @@ class FoodTicketChildAdapter(
                 holder.constraintLayout3.show()
                 holder.onlyFood.hide()
                 val gridLayout2 = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
-                val foodTicketFoodAdapter = FoodTicketFoodAdapter(getUpdatedFood(cinemaItem.food),"food",cinemaItem.f.size)
+                val foodTicketFoodAdapter = FoodTicketFoodAdapter(getUpdatedFood(cinemaItem.food),"food",cinemaItem.food.size)
                 holder.recyclerView.layoutManager = gridLayout2
                 holder.recyclerView.adapter = foodTicketFoodAdapter
             }else {

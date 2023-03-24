@@ -561,7 +561,6 @@ class MyBookingsActivity : AppCompatActivity(),
         //title
         binding?.ticketView?.show()
         binding?.giftView?.hide()
-        binding?.textView3?.text = getString(R.string.upcomingBooking) + output.c.size
         if (output.c.size > 0) {
             binding?.llAlsoPlaying?.show()
             authViewModel.bookingTheatre(
@@ -581,7 +580,7 @@ class MyBookingsActivity : AppCompatActivity(),
             binding?.textView3?.show()
             binding?.recyclerMyBooking?.show()
             val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-            val foodTicketAdapter = FoodTicketChildAdapter(getUpdatedList(output.c), this, false, this)
+            val foodTicketAdapter = FoodTicketChildAdapter(getUpdatedList(output.c,"c"), this, false, this)
             binding?.recyclerMyBooking?.layoutManager = gridLayout2
             binding?.recyclerMyBooking?.adapter = foodTicketAdapter
         }else{
@@ -592,7 +591,7 @@ class MyBookingsActivity : AppCompatActivity(),
         if (output.p.size>0) {
             binding?.llPastBooking?.show()
             val gridLayoutPast = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-            val pastTicketAdapter = FoodTicketChildAdapter(getUpdatedList(output.p), this, true, this)
+            val pastTicketAdapter = FoodTicketChildAdapter(getUpdatedList(output.p,"p"), this, true, this)
             binding?.pastTicketListView?.layoutManager = gridLayoutPast
             binding?.pastTicketListView?.adapter = pastTicketAdapter
         }else{
@@ -625,29 +624,46 @@ class MyBookingsActivity : AppCompatActivity(),
         }
     }
 
-    private fun getUpdatedList(p: ArrayList<FoodTicketResponse.Output.C>): ArrayList<FoodTicketResponse.Output.C> {
+    private fun getUpdatedList(p: ArrayList<FoodTicketResponse.Output.C>,type:kotlin.String): ArrayList<FoodTicketResponse.Output.C> {
         var newListFood = ArrayList<FoodTicketResponse.Output.C>()
+        var newListFoodUpdated = ArrayList<FoodTicketResponse.Output.C>()
         var newList = ArrayList<FoodTicketResponse.Output.C>()
+        var newListUpdated = ArrayList<FoodTicketResponse.Output.C>()
         for (data in p){
-            if (data.is_only_fd){
+            if (data.is_only_fd && data.food.isNotEmpty()){
                 newListFood.add(data)
+            }else{
+                if (!data.is_only_fd)
+                newList.add(data)
             }
         }
-        if (newListFood.size>0){
-            for (data in newListFood){
-                if (checkId(data,p)){
-                    p.remove(data)
+
+        if (type == "c")
+        binding?.textView3?.text = getString(R.string.upcomingBooking) + newList.size
+
+
+        for (data in newList){
+                newListUpdated.add(data)
+                if (newListFood.size>0){
+                    for (item in newListFood){
+                        if (item.abi!=null && item.abi!="" && item.abi == data.bi){
+                            println("data.abi--->"+data.abi)
+                            newListUpdated.add(item)
+                        }else{
+                            newListFoodUpdated.add(item)
+                        }
+                    }
                 }
             }
-        }
-        return p
+        newListUpdated.addAll(newListFoodUpdated)
+        return newListUpdated
     }
 
     private fun checkId(data: FoodTicketResponse.Output.C, newList: ArrayList<FoodTicketResponse.Output.C>): Boolean {
         var flag = false
         for (item in newList){
-            if (data.abi != ""){
-                if (data.abi == item.bi){
+            if (item.abi != ""){
+                if (item.abi == data.bi){
                     item.food = data.food
                     flag = true
                 }else{

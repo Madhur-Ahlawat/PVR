@@ -343,7 +343,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
             } else {
                 binding?.constraintLayout123?.show()
                 binding?.cushineView?.show()
-                binding?.refundVoc?.show()
+                binding?.refundVoc?.hide()
                 binding?.imageView157?.show()
                 binding?.imageView152?.show()
                 binding?.textView346?.show()
@@ -563,6 +563,11 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 }else if (data.n == "Discount") {
                     binding?.cutPrice?.show()
 
+                }else if (data.n == "Discount_FnB") {
+                    binding?.fnbDis?.show()
+                    binding?.disfTitle?.text = data.n
+                    binding?.disfVal?.text = data.v
+
                 }
             }
 
@@ -706,15 +711,29 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 .load(output.im)
                 .error(R.drawable.placeholder_vertical)
                 .into(binding?.movieImgFood!!)
-
-            if (output.m == "PICKUP FROM COUNTER"){
+            binding?.direction?.hide()
+            if (output.m == "PICKUP FROM COUNTER" && output.audi == ""){
                 binding?.movieImgFood?.hide()
                 binding?.cencorId?.hide()
                 binding?.direction?.hide()
+                binding?.audiFood?.hide()
+                binding?.text?.hide()
             }else{
+                binding?.audiFood?.text = output.audi
+                binding?.audiFood?.show()
+                binding?.text?.show()
                 binding?.movieImgFood?.show()
                 binding?.cencorId?.show()
                 binding?.direction?.show()
+            }
+
+            for (data in output.f) {
+                if (data.n == "Discount_FnB") {
+                    binding?.fnbDis?.show()
+                    binding?.disfTitle?.text = data.n
+                    binding?.disfVal?.text = data.v
+
+                }
             }
 
             binding?.movieNameFood?.text = output.m
