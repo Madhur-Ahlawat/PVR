@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.text.Html
 import android.text.TextUtils
 import android.view.*
+import android.webkit.GeolocationPermissions
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
@@ -25,6 +26,7 @@ import androidx.recyclerview.widget.*
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.card.MaterialCardView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityInCinemaModeBinding
@@ -34,6 +36,7 @@ import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.GridAutoFitLayoutManager
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
+import com.net.pvr.ui.food.FoodActivity
 import com.net.pvr.ui.home.HomeActivity
 import com.net.pvr.ui.home.fragment.home.viewModel.HomeViewModel
 import com.net.pvr.ui.home.fragment.privilege.NonMemberActivity
@@ -41,8 +44,11 @@ import com.net.pvr.ui.home.fragment.privilege.adapter.HowItWorkAdapter
 import com.net.pvr.ui.home.fragment.privilege.adapter.PrivilegeCardAdapter
 import com.net.pvr.ui.home.fragment.privilege.response.LoyaltyDataResponse
 import com.net.pvr.ui.home.fragment.privilege.response.PrivilegeCardData
+import com.net.pvr.ui.home.inCinemaMode.response.BookingItem
+import com.net.pvr.ui.home.inCinemaMode.response.Output
 import com.net.pvr.ui.login.LoginActivity
 import com.net.pvr.ui.webView.WebViewActivity
+import com.net.pvr.ui.webView.WebViewReadyToLeave
 import com.net.pvr.utils.*
 import com.net.pvr.utils.ga.GoogleAnalytics
 import com.xwray.groupie.GroupAdapter
@@ -58,6 +64,12 @@ import javax.inject.Inject
 class InCinemaModeActivity : AppCompatActivity(),
     PrivilegeCardAdapter.RecycleViewItemClickListener, StoriesProgressView.StoriesListener,
     HowItWorkAdapter.RecycleViewItemClickListener {
+    private var bookingData: BookingItem? = null
+    private var mCinemaData: Output? = null
+    private var ivCross: TextView? = null
+    private var tv_button: TextView? = null
+    private var ivplay: LinearLayout? = null
+    private var rlBanner: RelativeLayout? = null
     private var layoutManager: LinearLayoutManager? = null
     private var bookingIdList: MutableList<String>? = mutableListOf()
     private var storyDialog: Dialog? = null
@@ -72,52 +84,63 @@ class InCinemaModeActivity : AppCompatActivity(),
     private var recyclerAdapter: HowItWorkAdapter? = null
     private var limit = 500L
     private var currentBooking: Int = 0
+    var intent_ready_to_leave:Intent? = null
+    private var mGeoLocationCallback: GeolocationPermissions.Callback? = null
+    private var mGeoLocationRequestOrigin: String? = null
+    private val MY_PERMISSIONS_REQUEST_LOCATION: Int = 111
 
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityInCinemaModeBinding? = null
     private val authViewModel: HomeViewModel by viewModels()
     private var loader: LoaderDialog? = null
-    val mSnapHelper = PagerSnapHelper()
+    private val mSnapHelper = PagerSnapHelper()
     private var orderAdapter: GroupAdapter<ViewHolder>? = null
     private val movieDetailsAdapter: GenericRecyclerViewAdapter<String> by lazy { createMovieDetailAdapter() }
     private val intervalAdadapter: GenericRecyclerViewAdapter<String> by lazy { createIntervalTimingAdapter() }
     private var mIntent: Intent? = null
     var dialog: OptionDialog? = null
-    var noDataDialog: OptionDialog? = null
+    private var noDataDialog: OptionDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mIntent = intent
+        intent_ready_to_leave=Intent(this@InCinemaModeActivity, WebViewReadyToLeave::class.java)
         binding = ActivityInCinemaModeBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
         initUI()
         setClickListeners()
         getInCinemaMode()
+        createQr()
     }
 
 
     private fun setStatusBarColor() {
-        val window: Window = getWindow()
+        val window: Window = window
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.setStatusBarColor(ContextCompat.getColor(this, R.color.black_111111))
+        window.statusBarColor = ContextCompat.getColor(this, R.color.black_111111)
     }
-
+    private fun createQr() {
+        qrCode = Constant().getLoyaltyQr(preferences.geMobileNumber(), "180x180")
+    }
     private fun setClickListeners() {
         binding?.apply {
-            bookBtn?.setOnClickListener {
+            constraintLayoutScanQR.setOnClickListener {
+                oPenDialogQR()
+            }
+            bookBtn.setOnClickListener {
                 val intent = Intent(this@InCinemaModeActivity, HomeActivity::class.java)
                 startActivity(intent)
             }
-            howWork?.setOnClickListener { openHowToWork() }
-            faq?.setOnClickListener {
+            howWork.setOnClickListener { openHowToWork() }
+            faq.setOnClickListener {
                 val intent = Intent(this@InCinemaModeActivity, WebViewActivity::class.java)
                 intent.putExtra("from", "privilege")
                 intent.putExtra("title", "Passport FAQ")
                 intent.putExtra("getUrl", Constant.PrivilegeHomeResponseConst?.faq)
                 startActivity(intent)
             }
-            unLockView?.setOnClickListener {
+            unLockView.setOnClickListener {
                 if (Constant.PrivilegeHomeResponseConst?.pinfo?.size == 1) {
                     val intent1 = Intent(this@InCinemaModeActivity, NonMemberActivity::class.java)
                     intent1.putExtra("data", Constant.PrivilegeHomeResponseConst?.pinfo)
@@ -178,6 +201,67 @@ class InCinemaModeActivity : AppCompatActivity(),
                     getBookingInfo(bookingIdList!![currentBooking])
                 }
             }
+            cardviewFoodAndBevarages.setOnClickListener {
+                Constant.CINEMA_ID = ""
+                bookingData?.let {
+                    it?.showData.let {
+                        it?.let {
+                            Constant.CINEMA_ID = it.Cinema_code
+                            Constant.BOOKING_ID = bookingIdList!![currentBooking]
+                        }
+                    }
+                }
+                if (!Constant.CINEMA_ID.isNullOrEmpty() && !Constant.BOOKING_ID.isNullOrEmpty()) {
+                    val intent = Intent(this@InCinemaModeActivity, FoodActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                    startActivity(intent)
+                } else {
+                    dialog = OptionDialog(this@InCinemaModeActivity,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        getString(R.string.error_message),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog!!.show()
+                }
+            }
+            cardviewReadyToLeave.setOnClickListener {
+                val dialog =
+                    BottomSheetDialog(this@InCinemaModeActivity, R.style.NoBackgroundDialogTheme)
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                dialog.setContentView(R.layout.dialog_ready_to_leave)
+                dialog.setCancelable(true)
+                dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                dialog.window!!.setLayout(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+                dialog.window!!.setGravity(Gravity.CENTER)
+                val uber = dialog.findViewById<View>(R.id.cardview_uber) as MaterialCardView?
+                val ola = dialog.findViewById<View>(R.id.cardview_ola) as MaterialCardView?
+                uber!!.setOnClickListener {
+                    intent_ready_to_leave?.apply {
+                        putExtra("getUrl", "https://www.uber.com/in/en/ride/")
+                        putExtra("from", "inCinemaMode")
+                        putExtra("title", "In Cinema Mode")
+                        addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                        startActivity(intent_ready_to_leave)
+                    }
+                }
+                ola!!.setOnClickListener {
+                    intent_ready_to_leave?.apply {
+                        putExtra("getUrl", "https://book.olacabs.com/?")
+                        putExtra("from", "inCinemaMode")
+                        putExtra("title", "In Cinema Mode")
+                        addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                        startActivity(intent_ready_to_leave)
+                    }
+                }
+                dialog.show()
+            }
         }
 
         if (mIntent != null && mIntent!!.hasExtra("from") && !mIntent!!.getStringExtra("from")
@@ -193,57 +277,71 @@ class InCinemaModeActivity : AppCompatActivity(),
 
     private fun openHowToWork() {
         storyDialog = Dialog(this@InCinemaModeActivity)
-        storyDialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        storyDialog?.setCancelable(false)
-        storyDialog?.setContentView(R.layout.how_it_work_layout)
-        storyDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        storyDialog?.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
-        )
-        storyDialog?.window?.setGravity(Gravity.CENTER)
-        storyDialog?.setTitle("")
-        val RlBanner = storyDialog?.findViewById<View>(R.id.RlBannerl) as RelativeLayout
-        RlBanner.visibility = View.VISIBLE
-        storiesProgressView = storyDialog?.findViewById<View>(R.id.storiesl) as StoriesProgressView
-        storiesProgressView?.setStoriesCount(Constant.PrivilegeHomeResponseConst?.st?.size!!) // <- set stories
-        storiesProgressView?.setStoryDuration(5000L) // <- set a story duration
-        storiesProgressView?.setStoriesListener(this@InCinemaModeActivity) // <- set listener
-        storiesProgressView?.startStories() // <- start progress
-        counterStory = 0
-        val ivplay = storyDialog?.findViewById<View>(R.id.iv_play) as LinearLayout
-        val tv_button = storyDialog?.findViewById<View>(R.id.tv_button) as TextView
-        val ivCross: TextView = storyDialog?.findViewById<View>(R.id.crossText) as TextView
-        ivCross.setOnClickListener(View.OnClickListener {
-            storiesProgressView?.destroy()
-            currentPage = 0
-            storyDialog?.dismiss()
-        })
-        ivplay.visibility = View.GONE
-        tv_button.visibility = View.GONE
-        ivBanner = storyDialog?.findViewById<View>(R.id.storyList) as RecyclerView
-        val layoutManager =
-            LinearLayoutManager(this@InCinemaModeActivity, LinearLayoutManager.HORIZONTAL, false)
-        ivBanner?.layoutManager = layoutManager
-        recyclerAdapter = HowItWorkAdapter(
-            Constant.PrivilegeHomeResponseConst?.st!!,
-            this@InCinemaModeActivity,
-            this
-        )
-        ivBanner?.adapter = recyclerAdapter
-        recyclerAdapter?.notifyDataSetChanged()
-        val reverse: View = storyDialog?.findViewById<View>(R.id.reversel) as View
-        reverse.setOnClickListener { storiesProgressView?.reverse() }
-        reverse.setOnTouchListener(onTouchListener)
+        storyDialog?.apply {
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setCancelable(false)
+            setContentView(R.layout.how_it_work_layout)
+            window?.apply {
+                setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+                )
+                setGravity(Gravity.CENTER)
+            }
+            setTitle("")
+            rlBanner = (findViewById<View>(R.id.RlBannerl) as RelativeLayout).also {
+                it.visibility = View.VISIBLE
+            }
+            storiesProgressView = (findViewById<View>(R.id.storiesl) as StoriesProgressView).also {
+                it.apply {
+                    setStoriesCount(Constant.PrivilegeHomeResponseConst?.st?.size!!)
+                    setStoryDuration(5000L)
+                    setStoriesListener(this@InCinemaModeActivity)
+                    startStories()
+                }
+            }
+            counterStory = 0
+            ivplay = findViewById<View>(R.id.iv_play) as LinearLayout
+            tv_button = findViewById<View>(R.id.tv_button) as TextView
+            ivCross = (findViewById<View>(R.id.crossText) as TextView).also {
+                it.setOnClickListener(View.OnClickListener {
+                    storiesProgressView?.destroy()
+                    currentPage = 0
+                    storyDialog?.dismiss()
+                })
+            }
+            ivplay!!.visibility = View.GONE
+            tv_button!!.visibility = View.GONE
+            ivBanner = findViewById<View>(R.id.storyList) as RecyclerView
 
-        // bind skip view
-        val skip: View = storyDialog?.findViewById<View>(R.id.skipl) as View
-        skip.setOnClickListener {
-            // Toast.makeText(context, "called", Toast.LENGTH_SHORT).show();
-            storiesProgressView?.skip()
+            val layoutManager =
+                LinearLayoutManager(
+                    this@InCinemaModeActivity,
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+            ivBanner?.layoutManager = layoutManager
+            recyclerAdapter = HowItWorkAdapter(
+                Constant.PrivilegeHomeResponseConst?.st!!,
+                this@InCinemaModeActivity,
+                this@InCinemaModeActivity
+            )
+            ivBanner?.adapter = recyclerAdapter
+            recyclerAdapter?.notifyDataSetChanged()
+            val reverse: View = findViewById(R.id.reversel) as View
+            reverse.setOnClickListener { storiesProgressView?.reverse() }
+            reverse.setOnTouchListener(onTouchListener)
+
+            // bind skip view
+            val skip: View = findViewById(R.id.skipl)
+            skip.setOnClickListener {
+                // Toast.makeText(context, "called", Toast.LENGTH_SHORT).show();
+                storiesProgressView?.skip()
+            }
+            skip.setOnTouchListener(onTouchListener)
+            show()
         }
-        skip.setOnTouchListener(onTouchListener)
-        storyDialog?.show()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -317,7 +415,7 @@ class InCinemaModeActivity : AppCompatActivity(),
     private fun initUI() {
         orderAdapter = GroupAdapter<ViewHolder>()
         cardAdapter =
-            PrivilegeCardAdapter(cardDataList!!, this@InCinemaModeActivity, preferences, this)
+            PrivilegeCardAdapter(cardDataList, this@InCinemaModeActivity, preferences, this)
         binding?.apply {
             rvSeatNumber.layoutManager = GridLayoutManager(this@InCinemaModeActivity, 7)
             layoutManager =
@@ -334,10 +432,10 @@ class InCinemaModeActivity : AppCompatActivity(),
             rvFoodandbevrages.addItemDecoration(RecyclerViewMarginFoodOrder(30, 1))
             LinearSnapHelper().attachToRecyclerView(binding!!.rvIntervalTiming)
             rvFoodandbevrages.adapter = orderAdapter
-            privilegeCardList?.layoutManager = layoutManager
-            privilegeCardList?.adapter = cardAdapter
-            privilegeCardList?.onFlingListener = null
-            privilegeCardList?.addOnScrollListener(object :
+            privilegeCardList.layoutManager = layoutManager
+            privilegeCardList.adapter = cardAdapter
+            privilegeCardList.onFlingListener = null
+            privilegeCardList.addOnScrollListener(object :
                 RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
@@ -348,7 +446,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                             HomeActivity.getCurrentItem(binding?.privilegeCardList!!)
                         if (HomeActivity.reviewPosition == 0) {
                             binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_loyalty)
-                            if (cardDataList!![HomeActivity.reviewPosition].lock == true) {
+                            if (cardDataList[HomeActivity.reviewPosition].lock == true) {
                                 binding?.unLockView?.show()
                                 binding?.cardBelowView?.hide()
                                 binding?.passportView?.hide()
@@ -360,7 +458,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                                 binding?.cardBelowView?.show()
                             }
                         } else if (HomeActivity.reviewPosition == 1) {
-                            if (cardDataList!![HomeActivity.reviewPosition].lock == true) {
+                            if (cardDataList[HomeActivity.reviewPosition].lock == true) {
                                 binding?.unLockView?.show()
                                 binding?.cardBelowView?.hide()
                                 binding?.passportView?.hide()
@@ -374,7 +472,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                             } else {
                                 binding?.cardBelowView?.hide()
                                 binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_kotak)
-                                if (cardDataList!![HomeActivity.reviewPosition].type.equals("PPP")) {
+                                if (cardDataList[HomeActivity.reviewPosition].type.equals("PPP")) {
                                     binding?.passportView?.hide()
                                     binding?.unLockView?.hide()
                                     binding?.cardBelowView?.show()
@@ -396,7 +494,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                             }
                         } else if (HomeActivity.reviewPosition == 2) {
                             binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_kotak)
-                            if (cardDataList!![HomeActivity.reviewPosition].lock == true) {
+                            if (cardDataList[HomeActivity.reviewPosition].lock == true) {
                                 binding?.unLockView?.show()
                                 binding?.cardBelowView?.hide()
                                 binding?.passportView?.hide()
@@ -410,11 +508,8 @@ class InCinemaModeActivity : AppCompatActivity(),
                     }
                 }
 
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-                }
             })
-            mSnapHelper.attachToRecyclerView(privilegeCardList!!)
+            mSnapHelper.attachToRecyclerView(privilegeCardList)
             initNoDataDialog()
         }
     }
@@ -439,8 +534,8 @@ class InCinemaModeActivity : AppCompatActivity(),
             when (it) {
                 is NetworkResult.Success -> {
                     dismissLoader()
-                    binding!!.nestedScrollView.show()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        mCinemaData = it.data.output
                         try {
                             bookingIdList!!.clear()
                             bookingIdList!!.addAll(it.data.output.bookingIdList)
@@ -466,8 +561,6 @@ class InCinemaModeActivity : AppCompatActivity(),
                         nestedScrollView.hide()
                     }
                     noDataDialog?.show()
-
-
                 }
 
                 is NetworkResult.Loading -> {
@@ -493,14 +586,15 @@ class InCinemaModeActivity : AppCompatActivity(),
     }
 
     private fun observeBookingResponse() {
-        authViewModel.getBookingLiveData.observe(this) {
+        authViewModel.getBookingLiveData.observe(this) { it ->
             when (it) {
                 is NetworkResult.Success -> {
                     dismissLoader()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        var data = it.data.output
+                        bookingData = it.data.output
                         try {
-                            if (data != null) {
+                            if (bookingData != null) {
+                                binding!!.nestedScrollView.show()
                                 binding
                                     ?.apply {
                                         textviewMovieNumber.text =
@@ -510,13 +604,16 @@ class InCinemaModeActivity : AppCompatActivity(),
                                     Glide.with(this@InCinemaModeActivity).load("")
                                         .placeholder(getDrawable(R.drawable.error))
                                         .into(imageviewMoviewPoster)
-                                    textViewAudiName.text = data.cinemaname
-                                    textviewMovieTheatreLocation.text = data.cinemaname
-                                    textviewMovieDateAndTime.text = data.showtime
-                                    textviewMovieCategory.text = data.mcensor
-                                    textviewMovieLanguage.text = data.lang
-                                    textviewMovieType.text = data.format
-                                    textviewMovieName.text = data.mname
+                                    bookingData?.apply {
+                                        textViewAudiName.text = cinemaname
+                                        textviewMovieTheatreLocation.text = cinemaname
+                                        textviewMovieDateAndTime.text = showtime
+                                        textviewMovieCategory.text = mcensor
+                                        textviewMovieLanguage.text = lang
+                                        textviewMovieType.text = format
+                                        textviewMovieName.text = mname
+                                    }
+
                                     if (currentBooking == 0) {
                                         imageviewPreviousBookedMovie.hide()
                                         imageviewNextBookedMovie.show()
@@ -529,8 +626,8 @@ class InCinemaModeActivity : AppCompatActivity(),
                                     }
 
                                 }
-                                movieDetailsAdapter.submitList(data.seats)
-                                data.inCinemaFoodResp.forEach {
+                                movieDetailsAdapter.submitList(bookingData!!.seats)
+                                bookingData!!.inCinemaFoodResp.forEach {
                                     orderAdapter!!.add(
                                         OrderItemView(
                                             context = this@InCinemaModeActivity,
@@ -650,10 +747,10 @@ class InCinemaModeActivity : AppCompatActivity(),
             }
         for (i in 0 until count) {
             if (i == 0) {
-                cardDataList!!.add(PrivilegeCardData("", "P", false, "", "", points_data, output))
+                cardDataList.add(PrivilegeCardData("", "P", false, "", "", points_data, output))
             } else if (i == 1) {
                 if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == Constant.SharedPreference.ACTIVE) {
-                    cardDataList!!.add(
+                    cardDataList.add(
                         PrivilegeCardData(
                             java.lang.String.valueOf(output.subscription.can_redeem - output.subscription.redeemed),
                             "PP",
@@ -666,7 +763,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                     )
                 } else {
                     if (preferences.getString(Constant.SharedPreference.SUBS_OPEN) == "true") {
-                        cardDataList!!.add(
+                        cardDataList.add(
                             PrivilegeCardData(
                                 Constant.PrivilegeHomeResponseConst?.pinfo?.get(
                                     0
@@ -675,26 +772,26 @@ class InCinemaModeActivity : AppCompatActivity(),
                         )
                     } else {
                         if (preferences.getString(Constant.SharedPreference.LOYALITY_STATUS) == "PPP") {
-                            cardDataList!!.add(
+                            cardDataList.add(
                                 PrivilegeCardData(
                                     "",
                                     "PPP",
                                     false,
                                     "",
                                     "",
-                                    points_data.toString(),
+                                    points_data,
                                     output
                                 )
                             )
                         } else {
-                            cardDataList!!.add(
+                            cardDataList.add(
                                 PrivilegeCardData(
                                     Constant.PrivilegeHomeResponseConst?.pinfo?.get(0)?.pi.toString(),
                                     "PPP",
                                     true,
                                     "",
                                     "",
-                                    points_data.toString(),
+                                    points_data,
                                     output
                                 )
                             )
@@ -704,65 +801,65 @@ class InCinemaModeActivity : AppCompatActivity(),
             } else {
                 if (Constant.PrivilegeHomeResponseConst?.pinfo?.size == 2) {
                     if (preferences.getString(Constant.SharedPreference.LOYALITY_STATUS) == "PPP") {
-                        cardDataList!!.add(
+                        cardDataList.add(
                             PrivilegeCardData(
                                 "",
                                 "PPP",
                                 false,
                                 "",
                                 "",
-                                points_data.toString(),
+                                points_data,
                                 output
                             )
                         )
                     } else {
-                        cardDataList!!.add(
+                        cardDataList.add(
                             PrivilegeCardData(
                                 Constant.PrivilegeHomeResponseConst?.pinfo?.get(1)?.pi.toString(),
                                 "PPP",
                                 true,
                                 "",
                                 "",
-                                points_data.toString(),
+                                points_data,
                                 output
                             )
                         )
                     }
                 } else if (Constant.PrivilegeHomeResponseConst?.pinfo?.size == 1) {
                     if (preferences.getString(Constant.SharedPreference.LOYALITY_STATUS) == "PPP") {
-                        cardDataList!!.add(
+                        cardDataList.add(
                             PrivilegeCardData(
                                 "",
                                 "PPP",
                                 false,
                                 "",
                                 "",
-                                points_data.toString(),
+                                points_data,
                                 output
                             )
                         )
                     } else {
-                        cardDataList!!.add(
+                        cardDataList.add(
                             PrivilegeCardData(
                                 Constant.PrivilegeHomeResponseConst?.pinfo?.get(0)?.pi.toString(),
                                 "PPP",
                                 true,
                                 "",
                                 "",
-                                points_data.toString(),
+                                points_data,
                                 output
                             )
                         )
                     }
                 } else if (Constant.PrivilegeHomeResponseConst?.pinfo?.size == 0) {
-                    cardDataList!!.add(
+                    cardDataList.add(
                         PrivilegeCardData(
                             "",
                             "PPP",
                             false,
                             "",
                             "",
-                            points_data.toString(),
+                            points_data,
                             output
                         )
                     )
@@ -774,7 +871,7 @@ class InCinemaModeActivity : AppCompatActivity(),
         val mSnapHelper = PagerSnapHelper()
         binding?.privilegeCardList?.layoutManager = layoutManager
         val cardAdapter =
-            PrivilegeCardAdapter(cardDataList!!, this@InCinemaModeActivity, preferences, this)
+            PrivilegeCardAdapter(cardDataList, this@InCinemaModeActivity, preferences, this)
         binding?.privilegeCardList?.adapter = cardAdapter
         binding?.privilegeCardList?.onFlingListener = null
         mSnapHelper.attachToRecyclerView(binding?.privilegeCardList!!)
@@ -789,7 +886,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                         HomeActivity.getCurrentItem(binding?.privilegeCardList!!)
                     if (HomeActivity.reviewPosition == 0) {
 //                        binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_loyalty)
-                        if (cardDataList!![HomeActivity.reviewPosition].lock == true) {
+                        if (cardDataList[HomeActivity.reviewPosition].lock == true) {
                             binding?.unLockView?.show()
                             binding?.cardBelowView?.hide()
                             binding?.passportView?.hide()
@@ -801,7 +898,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                             binding?.cardBelowView?.show()
                         }
                     } else if (HomeActivity.reviewPosition == 1) {
-                        if (cardDataList!![HomeActivity.reviewPosition].lock == true) {
+                        if (cardDataList[HomeActivity.reviewPosition].lock == true) {
                             binding?.unLockView?.show()
                             binding?.cardBelowView?.hide()
                             binding?.passportView?.hide()
@@ -815,7 +912,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                         } else {
                             binding?.cardBelowView?.hide()
                             binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_kotak)
-                            if (cardDataList!![HomeActivity.reviewPosition].type.equals("PPP")) {
+                            if (cardDataList[HomeActivity.reviewPosition].type.equals("PPP")) {
                                 binding?.passportView?.hide()
                                 binding?.unLockView?.hide()
                                 binding?.cardBelowView?.show()
@@ -860,8 +957,8 @@ class InCinemaModeActivity : AppCompatActivity(),
             )
                 .equals("", ignoreCase = true)
         ) {
-            for (i in cardDataList!!.indices) {
-                if (cardDataList!![i].type.equals(mIntent!!.getStringExtra("type"))) {
+            for (i in cardDataList.indices) {
+                if (cardDataList[i].type.equals(mIntent!!.getStringExtra("type"))) {
                     if (mIntent!!.getStringExtra("type").equals("T", ignoreCase = true)) {
                         HomeActivity.reviewPosition = 1
                         binding?.passportView?.show()
@@ -874,8 +971,8 @@ class InCinemaModeActivity : AppCompatActivity(),
                         break
                     } else {
                         HomeActivity.reviewPosition = i
-                        if (cardDataList!![i].type.equals("PP")) {
-                            if (cardDataList!![i].lock == true) {
+                        if (cardDataList[i].type.equals("PP")) {
+                            if (cardDataList[i].lock == true) {
                                 binding?.unLockView?.show()
                                 binding?.cardBelowView?.hide()
                                 binding?.passportView?.hide()
@@ -893,7 +990,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                                 binding?.bookBtn?.isClickable = false
                             }
                         } else {
-                            if (cardDataList!![i].lock == true) {
+                            if (cardDataList[i].lock == true) {
                                 binding?.unLockView?.show()
                                 binding?.cardBelowView?.hide()
                                 binding?.titleUnlock?.text = "Kotak Card"
@@ -902,7 +999,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                     }
                     break
                 } else {
-                    if (getIntent() != null && mIntent!!.getStringExtra("type")
+                    if (intent != null && mIntent!!.getStringExtra("type")
                             .equals("T", ignoreCase = true)
                     ) {
                         HomeActivity.reviewPosition = 1
@@ -914,7 +1011,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                             binding?.bookBtn?.isClickable = false
                         }
                     } else {
-                        if (getIntent() != null && mIntent!!.getStringExtra("type")
+                        if (intent != null && mIntent!!.getStringExtra("type")
                                 .equals("C", ignoreCase = true)
                         ) {
                             binding?.unLockView?.hide()
@@ -923,15 +1020,15 @@ class InCinemaModeActivity : AppCompatActivity(),
                             HomeActivity.reviewPosition = 0
                         } else {
                             HomeActivity.reviewPosition = i
-                            if (cardDataList!![i].type.equals("PP")) {
-                                if (cardDataList!![i].lock == true) {
+                            if (cardDataList[i].type.equals("PP")) {
+                                if (cardDataList[i].lock == true) {
                                     binding?.unLockView?.show()
                                     binding?.cardBelowView?.hide()
                                     binding?.passportView?.hide()
                                     binding?.titleUnlock?.text = "PVR Passport"
                                 }
                             } else {
-                                if (cardDataList!![i].lock == true) {
+                                if (cardDataList[i].lock == true) {
                                     binding?.unLockView?.show()
                                     binding?.cardBelowView?.hide()
                                     binding?.passportView?.hide()
@@ -972,7 +1069,7 @@ class InCinemaModeActivity : AppCompatActivity(),
         }
     )
 
-    fun isMovieDetailSame(any: String, any1: String): Boolean {
+    private fun isMovieDetailSame(any: String, any1: String): Boolean {
         return false
     }
 
@@ -987,7 +1084,7 @@ class InCinemaModeActivity : AppCompatActivity(),
         }
     )
 
-    fun isIntervalTimingSame(any: String, any1: String): Boolean {
+    private fun isIntervalTimingSame(any: String, any1: String): Boolean {
         return false
     }
 
@@ -1054,7 +1151,7 @@ class InCinemaModeActivity : AppCompatActivity(),
         TODO("Not yet implemented")
     }
 
-    fun isPackageExisted(targetPackage: String?): Boolean {
+    private fun isPackageExisted(targetPackage: String?): Boolean {
         val pm = packageManager
         try {
             val info = pm.getPackageInfo(targetPackage!!, PackageManager.GET_META_DATA)
@@ -1070,13 +1167,13 @@ class InCinemaModeActivity : AppCompatActivity(),
         uri: String = "uber://?action=setPickup&pickup=my_location",
         playStoreUrl: String = "http://play.google.com/store/apps/details?id=com.olacabs.customer"
     ) {
-        var pm = packageManager
+        val pm = packageManager
         if (isPackageExisted(packageId)) {
             try {
                 pm.getPackageInfo(packageId, PackageManager.GET_ACTIVITIES)
-                val uri = uri
+                val mUri = uri
                 val intent = Intent(Intent.ACTION_VIEW)
-                intent.data = Uri.parse(uri)
+                intent.data = Uri.parse(mUri)
                 startActivity(intent)
             } catch (e: PackageManager.NameNotFoundException) {
                 try {

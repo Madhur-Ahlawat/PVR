@@ -551,6 +551,12 @@
             android:name="com.net.pvr.ui.webView.WebViewActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.net.pvr.ui.webView.WebViewReadyToLeave"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name="com.net.pvr.ui.myBookings.MyBookingsActivity"
             android:exported="false"

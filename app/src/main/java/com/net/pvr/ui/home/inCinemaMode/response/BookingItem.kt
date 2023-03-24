@@ -10,7 +10,7 @@ data class BookingItem(
     val lang: String,
     val mcensor: String,
     val mname: String,
-    val showData: Any,
+    val showData: ShowData,
     val showtime: String,
     val seats: MutableList<String> = mutableListOf()
 )
