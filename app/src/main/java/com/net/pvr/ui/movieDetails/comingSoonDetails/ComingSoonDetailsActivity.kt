@@ -236,14 +236,19 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
         ISEvents().movieDetail(this,HomeFragment.mcId)
 
         //Promotion
-        val snapHelper = PagerSnapHelper()
-        binding?.include40?.recyclerPromotion?.onFlingListener = null
-        snapHelper.attachToRecyclerView(binding?.include40?.recyclerPromotion)
-        val gridLayoutSlider =
-            GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-        binding?.include40?.recyclerPromotion?.layoutManager = gridLayoutSlider
-        val adapter = ComDetailsPhAdapter(this, output.ph)
-        binding?.include40?.recyclerPromotion?.adapter = adapter
+        try {
+            val snapHelper = PagerSnapHelper()
+            binding?.include40?.recyclerPromotion?.onFlingListener = null
+            snapHelper.attachToRecyclerView(binding?.include40?.recyclerPromotion)
+            val gridLayoutSlider =
+                GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+            binding?.include40?.recyclerPromotion?.layoutManager = gridLayoutSlider
+            val adapter = ComDetailsPhAdapter(this, output.ph)
+            binding?.include40?.recyclerPromotion?.adapter = adapter
+        }catch (e:java.lang.Exception){
+            e.printStackTrace()
+        }
+
 
         //Image
         Glide.with(this)
@@ -293,13 +298,18 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
 
             //trailer
             if (trailerList.size != 0) {
-                val snapHelper = PagerSnapHelper()
-                snapHelper.attachToRecyclerView(binding?.recyclerView5)
-                val layoutManagerTrailer =
-                    GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-                val trailerAdapter = TrailerTrsAdapter(trailerList, this, this)
-                binding?.recyclerView5?.layoutManager = layoutManagerTrailer
-                binding?.recyclerView5?.adapter = trailerAdapter
+                try {
+                    val snapHelper = PagerSnapHelper()
+                    snapHelper.attachToRecyclerView(binding?.recyclerView5)
+                    val layoutManagerTrailer =
+                        GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+                    val trailerAdapter = TrailerTrsAdapter(trailerList, this, this)
+                    binding?.recyclerView5?.layoutManager = layoutManagerTrailer
+                    binding?.recyclerView5?.adapter = trailerAdapter
+                }catch (e:java.lang.Exception){
+                    e.printStackTrace()
+                }
+
             } else {
                 if (output.mb.videos.isNotEmpty()) {
                     try {
@@ -322,27 +332,37 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
 
         //MusicVideo
             if (musicVideoList.size != 0) {
-                val snapHelper = PagerSnapHelper()
-                snapHelper.attachToRecyclerView(binding?.recyclerMusic)
-                binding?.musicVideo?.show()
-                binding?.textView70?.show()
-                val layoutManagerTrailer =
-                    GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-                val trailerAdapter = MusicVideoTrsAdapter(musicVideoList, this, this)
-                binding?.recyclerMusic?.layoutManager = layoutManagerTrailer
-                binding?.recyclerMusic?.adapter = trailerAdapter
+                try {
+                    val snapHelper = PagerSnapHelper()
+                    snapHelper.attachToRecyclerView(binding?.recyclerMusic)
+                    binding?.musicVideo?.show()
+                    binding?.textView70?.show()
+                    val layoutManagerTrailer =
+                        GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+                    val trailerAdapter = MusicVideoTrsAdapter(musicVideoList, this, this)
+                    binding?.recyclerMusic?.layoutManager = layoutManagerTrailer
+                    binding?.recyclerMusic?.adapter = trailerAdapter
+                }catch (e:java.lang.Exception){
+                    e.printStackTrace()
+                }
+
             } else {
                 if (output.mb != null && output.mb.name != null) {
                     if (output.mb.tracks.isNotEmpty()) {
-                        val snapHelper = PagerSnapHelper()
-                        snapHelper.attachToRecyclerView(binding?.recyclerMusic)
-                        binding?.textView70?.show()
-                        binding?.musicVideo?.show()
-                        val layoutManagerTrailer =
-                            GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-                        val trailerAdapter = MusicVideoAdapter(output.mb.tracks[0].roles, this, this)
-                        binding?.recyclerMusic?.layoutManager = layoutManagerTrailer
-                        binding?.recyclerMusic?.adapter = trailerAdapter
+                        try {
+                            val snapHelper = PagerSnapHelper()
+                            snapHelper.attachToRecyclerView(binding?.recyclerMusic)
+                            binding?.textView70?.show()
+                            binding?.musicVideo?.show()
+                            val layoutManagerTrailer =
+                                GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+                            val trailerAdapter = MusicVideoAdapter(output.mb.tracks[0].roles, this, this)
+                            binding?.recyclerMusic?.layoutManager = layoutManagerTrailer
+                            binding?.recyclerMusic?.adapter = trailerAdapter
+                        }catch (e:java.lang.Exception){
+                            e.printStackTrace()
+                        }
+
                     } else {
                         binding?.musicVideo?.hide()
                     }

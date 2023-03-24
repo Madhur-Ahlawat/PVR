@@ -143,13 +143,13 @@
 
                     <TextView
                         android:id="@+id/tv_gift_name"
-                        style="@style/text_black_bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:layout_marginTop="@dimen/padding_10"
-                        android:text="Generic"
+                        android:text="@string/generic"
+                        android:fontFamily="@font/montserrat_bold"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimen_18sp" />
 
@@ -239,13 +239,13 @@
 
                     <TextView
                         android:id="@+id/tv_occasions"
-                        style="@style/text_black_bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/padding_10"
                         android:gravity="center"
-                        android:text="Occasions"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="@string/occasions"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dimen_18sp" />
 

@@ -574,8 +574,20 @@ class MoreFragment : Fragment() {
         binding?.profileDetails?.textView206?.text = output.cd
         binding?.profileDetails?.textView208?.text = output.percentage.toString() + "%"
 
+        if (output.msg==""){
+            binding?.profileDetails?.textView209?.hide()
+        }else{
+            binding?.profileDetails?.textView209?.show()
+        }
+
         binding?.profileDetails?.textView209?.text = Html.fromHtml(output.msg)
         binding?.profileDetails?.progressBar?.progress = output.percentage
+
+
+        Glide.with(this)
+            .load(output.im)
+            .error(R.drawable.placeholder_profile)
+            .into(binding?.profileDetails?.imageView1!!)
 
         //profile Complete
         binding?.profileDetails?.completeProfile?.setOnClickListener {

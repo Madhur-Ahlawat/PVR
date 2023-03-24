@@ -85,35 +85,56 @@ class ComingSoonMovieAdapter(
                 holder.release.show()
             }
 
-//        //Manage Language
-            if (comingSoonItem.masterMovieId == "NHO00017887") {
-                println("NHO00021636--->${comingSoonItem.otherlanguages}${comingSoonItem.language}${comingSoonItem.censor}")
-            } else {
-                censorLanguage(
-                    comingSoonItem.otherlanguages,
-                    comingSoonItem.language,
-                    comingSoonItem.censor,
-                    holder.language,
-                    context,
-                    holder.otherLanguage
-                )
-            }
+//
 //        //Manage Genre
             if (comingSoonItem.othergenres != "") {
                 if (comingSoonItem.othergenres.split(",").size > 2) {
                     holder.otherGenre.show()
                     holder.otherGenre.text = "+" + (comingSoonItem.othergenres.split(",").size - 2)
                     holder.genre.text =
-                        comingSoonItem.othergenres.split(",")[0] + " | " + comingSoonItem.othergenres.split(
+                        comingSoonItem.othergenres.split(",")[0] + "," + comingSoonItem.othergenres.split(
                             ","
                         )[1]
                 } else {
                     holder.otherGenre.invisible()
-                    holder.genre.text = comingSoonItem.othergenres.replace(",", " | ")
+                    holder.genre.text = comingSoonItem.othergenres.replace(",", ",")
                 }
             } else {
                 holder.genre.text = comingSoonItem.genre
             }
+            //Manage Language
+            if (comingSoonItem.masterMovieId == "NHO00017887") {
+                println("NHO00021636--->${comingSoonItem.otherlanguages}${comingSoonItem.language}${comingSoonItem.censor}")
+            } else {
+
+            }
+
+            //manage Language
+            if (comingSoonItem.otherlanguages != "") {
+                if (comingSoonItem.otherlanguages.split(",").size > 2) {
+                    holder.otherLanguage.show()
+                    holder.otherLanguage.text = "+" + (comingSoonItem.otherlanguages.split(",").size - 2)
+                    holder.language.text =
+                        comingSoonItem.otherlanguages.split(",")[0] + "," + comingSoonItem.otherlanguages.split(
+                            ","
+                        )[1]
+                } else {
+                    holder.otherLanguage.invisible()
+                    holder.language.text = comingSoonItem.otherlanguages.replace(",", ",")
+                }
+            } else {
+                holder.language.text = comingSoonItem.language
+            }
+
+
+//            censorLanguage(
+//                comingSoonItem.otherlanguages,
+//                comingSoonItem.language,
+//                comingSoonItem.censor,
+//                holder.language,
+//                context,
+//                holder.otherLanguage
+//            )
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -165,7 +186,7 @@ class ComingSoonMovieAdapter(
                 )
             } else {
 //                otherLanguage.hide()
-                stringBuilder.append(otherLang.replace(",".toRegex(), " | "))
+                stringBuilder.append(otherLang.replace(",".toRegex(), ","))
             }
         } else {
             stringBuilder.append(lang)
