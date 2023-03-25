@@ -88,6 +88,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.HashMap
 
 
 @AndroidEntryPoint
@@ -660,7 +661,7 @@ class HomeFragment : Fragment(),
 
     @SuppressLint("SuspiciousIndentation", "ClickableViewAccessibility")
     private fun retrieveData(output: HomeResponse.Output) {
-        movieData = ArrayList()
+        if (movieData.size == 0)
         movieData.addAll(output.mv)
         //layout
         binding?.nestedScrollView4?.show()
@@ -1413,6 +1414,8 @@ class HomeFragment : Fragment(),
         buttonPressed = ArrayList()
         generaSelected = ArrayList()
         appliedFilterItem = HashMap()
+        appliedFilterType=""
+        appliedFilterItem = HashMap()
         authViewModel.home(
             preferences.getCityName(),
             "",
@@ -1952,7 +1955,6 @@ class HomeFragment : Fragment(),
                 spShows
             )
         }
-        println("showCount--->$showCount---${movieData.size}")
         return showCount
     }
 
@@ -1967,7 +1969,7 @@ class HomeFragment : Fragment(),
         for (movie in movies) {
             if (!languages.contains("ALL") && languages.isNotEmpty()) {
 
-                val languagesM = movie.otherlanguages.split(",").toList()
+                val languagesM = movie.mfs
 
                 if (languagesM.stream()
                         .noneMatch { m: String -> languages.contains(m.uppercase()) }
@@ -1975,6 +1977,7 @@ class HomeFragment : Fragment(),
             }
             if (!genres.contains("ALL") && genres.isNotEmpty()) {
                 val genresM: List<String> = movie.othergenres.split(",").toList()
+
                 if (genresM.stream().noneMatch { m: String ->
                         genres.contains(
                             m.uppercase()
@@ -1982,7 +1985,13 @@ class HomeFragment : Fragment(),
                     }) continue
             }
             if (!spShows.contains("ALL") && spShows.isNotEmpty()) {
-                if (movie.sh != "") continue
+                println("showCount--->${movie.sh}---${spShows}")
+                if (movie.sh!="") continue
+               // if (movie.sh == ""){
+
+//
+//                    continue
+//                }
             }
 
             filteredMovies.add(movie)

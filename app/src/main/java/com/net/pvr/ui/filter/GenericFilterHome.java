@@ -429,6 +429,8 @@ public class GenericFilterHome implements GenericFilterAdapter.onFilterItemSelec
 
         btnReset.setOnClickListener(v -> {
             dialog.dismiss();
+            type = new ArrayList<>();
+            filterItemSelected = "";
             selectedFilters = new HashMap<>();
             filterStrings = new HashMap<>();
             filterValue = new ArrayList<>();
@@ -621,10 +623,13 @@ public class GenericFilterHome implements GenericFilterAdapter.onFilterItemSelec
                 filterValue = new ArrayList<>();
                 filterValue.add(itemSelected.toUpperCase());
                 filterStrings.put(typeStr, filterValue);
+                filterValue = new ArrayList<>();
             }else {
                 filterValue.add(itemSelected.toUpperCase());
                 filterStrings.put(typeStr, filterValue);
             }
+            System.out.println("itemSelected--->"+filterValue+"----"+filterStrings);
+
         }else {
             if (typeStr.equalsIgnoreCase("accessability")){
                 if (filterValue.contains(itemSelected.toUpperCase(Locale.ROOT))) {
