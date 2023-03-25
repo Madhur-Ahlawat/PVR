@@ -167,14 +167,25 @@ class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.Re
         inActiveGiftList = output.gci
         if (inActiveGiftList.size>0){
             binding?.llBottom?.show()
+            binding?.noData?.show()
         }else{
             binding?.llBottom?.hide()
         }
+        if (output.gca.isEmpty()){
+
+        }else{
+            binding?.noData?.hide()
+        }
+        if (output.gca.isEmpty()){
+
+        }else{
+
+        }
+
         val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
         val giftCardMainAdapter2 = ActivateGiftCardAdapter(output.gca,  this, this)
         binding?.recyclerView30?.layoutManager = gridLayout2
         binding?.recyclerView30?.adapter = giftCardMainAdapter2
-
     }
 
     override fun activateGiftCard(comingSoonItem: ActiveGCResponse.Gca) {

@@ -46,7 +46,6 @@ class ComingSoonDetailsActivity : AppCompatActivity(),
     private  var cinemaId=""
     private val authViewModel: ComingSoonDetailsViewModel by viewModels()
 
-
     //internet Check
     private var broadcastReceiver: BroadcastReceiver? = null
 
