@@ -7,74 +7,156 @@
     android:background="@color/white"
     tools:context=".ui.giftCard.activateGiftCard.ActivateGiftCardActivity">
 
-    <View
-        android:id="@+id/view30"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <include
-        android:id="@+id/include12"
-        layout="@layout/common_toolbar"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dimen_60dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/view30"
-        app:layout_constraintTop_toTopOf="@+id/view30" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView30"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:paddingEnd="@dimen/dimen_15dp"
-        android:paddingStart="@dimen/dimen_15dp"
-        app:layout_constraintBottom_toTopOf="@+id/ll_bottom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include12"
-        tools:itemCount="5"
-        tools:listitem="@layout/gift_card_item" />
-
-    <LinearLayout
-        android:id="@+id/ll_bottom"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/view30"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/grayEd" />
+            android:id="@+id/view30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_expired_gift"
+        <include
+            android:id="@+id/include12"
+            layout="@layout/common_toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/view30"
+            app:layout_constraintTop_toTopOf="@+id/view30" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView30"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingEnd="@dimen/dimen_15dp"
+            android:paddingStart="@dimen/dimen_15dp"
+            app:layout_constraintBottom_toTopOf="@+id/ll_bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include12"
+            tools:itemCount="5"
+            tools:listitem="@layout/gift_card_item" />
+
+        <LinearLayout
+            android:id="@+id/ll_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/view_bottom"
-            android:layout_margin="@dimen/dimen_20dp"
-            android:background="@drawable/bg_grey_booking"
-            android:drawableRight="@drawable/ic_arrow_right_white"
-            android:drawableTint="@color/black"
-            android:paddingStart="@dimen/dimen_20dp"
-            android:paddingTop="@dimen/padding_10"
-            android:paddingEnd="@dimen/dimen_20dp"
-            android:paddingBottom="@dimen/padding_10"
-            android:text="Expierd Gift Card" />
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/view30"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-        <View
-            android:id="@+id/view_bottom"
-            android:layout_width="200dp"
-            android:layout_height="5dp"
-            android:visibility="gone"
-            android:layout_gravity="center"
-            android:background="@color/black" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grayEd" />
+
+            <TextView
+                android:id="@+id/tv_expired_gift"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/view_bottom"
+                android:layout_margin="@dimen/dimen_20dp"
+                android:background="@drawable/bg_grey_booking"
+                android:drawableRight="@drawable/ic_arrow_right_white"
+                android:drawableTint="@color/black"
+                android:paddingStart="@dimen/dimen_20dp"
+                android:paddingTop="@dimen/padding_10"
+                android:paddingEnd="@dimen/dimen_20dp"
+                android:paddingBottom="@dimen/padding_10"
+                android:text="Expierd Gift Card" />
+
+            <View
+                android:id="@+id/view_bottom"
+                android:layout_width="200dp"
+                android:layout_height="5dp"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:background="@color/black" />
+
+        </LinearLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <LinearLayout
+        android:id="@+id/noData"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/noDataImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/noTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/dimen_8dp"
+            android:fontFamily="@font/sf_pro_text_medium"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="No Bookings Available"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/view15"
+            app:layout_constraintStart_toStartOf="@+id/view15"
+            app:layout_constraintTop_toTopOf="@+id/view15" />
+
+        <TextView
+            android:id="@+id/noSubTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/dimen_8dp"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:layout_marginTop="@dimen/dimen_4dp"
+            android:text="Movie bookings and F&amp;B order will appear here"
+            android:textColor="#7A7A7A"
+            android:textSize="@dimen/dimen_14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/view15"
+            app:layout_constraintStart_toStartOf="@+id/view15"
+            app:layout_constraintTop_toTopOf="@+id/view15" />
+
+        <TextView
+            android:id="@+id/buttonProceed"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_marginTop="@dimen/padding_10"
+            android:background="@drawable/curve_25"
+            android:backgroundTint="@color/yellow"
+            android:backgroundTintMode="src_in"
+            android:fontFamily="@font/sf_pro_text_semi_bold"
+            android:gravity="center"
+            android:paddingStart="@dimen/dimen_20dp"
+            android:paddingEnd="@dimen/dimen_20dp"
+            android:text="@string/book_movie"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimen_14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/view15"
+            app:layout_constraintStart_toStartOf="@+id/view15"
+            app:layout_constraintTop_toTopOf="@+id/view15" />
 
     </LinearLayout>
 

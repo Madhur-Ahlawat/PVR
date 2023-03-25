@@ -453,11 +453,10 @@
                     app:layout_constraintStart_toStartOf="@+id/view15"
                     app:layout_constraintTop_toTopOf="@+id/view15" />
 
-
             </LinearLayout>
 
-
         </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
 
 
