@@ -21,6 +21,7 @@ import com.net.pvr.databinding.VoucherListBinding
 import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.home.fragment.privilege.response.LoyaltyDataResponse
 import com.net.pvr.utils.hide
+import com.net.pvr.utils.invisible
 import com.net.pvr.utils.show
 
 
@@ -202,10 +203,12 @@ class PrivilegeVochersAdapter(
 
                         holder.binding.ivRedeemedSubs.show()
                         holder.binding.ivsubs.hide()
+                        holder.binding.tvfirst.show()
                         holder.binding.ivRedeemedSubs.setImageResource(R.drawable.expired)
                         holder.binding.rlsubsMain.setBackgroundResource(R.drawable.back_gray_subs)
                     }else{
                         holder.binding.ivsubs.show()
+                        holder.binding.tvfirst.invisible()
                         holder.binding.rlsubsMain.setBackgroundResource(R.drawable.bannerprivv)
                     }
                     holder.binding.tvVoucherCode.text = "" + cardData.cd
@@ -289,8 +292,12 @@ class PrivilegeVochersAdapter(
                 holder.binding.relativeLayout.hide()
 
                 if (cardData.st == "E") {
+                    holder.binding.tvfirst.show()
                     holder.binding.ivRedeemedSubs.show()
                     holder.binding.ivRedeemedSubs.setImageResource(R.drawable.expired)
+                }else{
+                    holder.binding.tvfirst.invisible()
+
                 }
                 holder.binding.tvVoucherCode.text = "" + cardData.cd
                 println("cardData.st--->"+cardData.expDate)

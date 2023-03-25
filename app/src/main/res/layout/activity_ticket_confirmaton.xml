@@ -103,7 +103,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="14dp"
                                 android:fontFamily="@font/montserrat_bold"
-                                android:maxLines="1"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/dimen_16sp"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -581,13 +580,12 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="14dp"
                                 android:fontFamily="@font/montserrat_bold"
-                                android:maxLines="1"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/dimen_16sp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@+id/imageView151"
                                 app:layout_constraintTop_toTopOf="@+id/imageView151"
-                                tools:text="The Assassin" />
+                                tools:text="The Assassin hhhh ghggg hhhh gggg hhhhh hhhhh" />
 
                             <TextView
                                 android:id="@+id/textView329"

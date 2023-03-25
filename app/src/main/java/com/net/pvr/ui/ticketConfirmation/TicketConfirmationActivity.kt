@@ -718,6 +718,8 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 binding?.direction?.hide()
                 binding?.audiFood?.hide()
                 binding?.text?.hide()
+                binding?.movieNameFood?.text = output.m
+
             }else{
                 binding?.audiFood?.text = output.audi
                 binding?.audiFood?.show()
@@ -725,6 +727,8 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 binding?.movieImgFood?.show()
                 binding?.cencorId?.show()
                 binding?.direction?.show()
+                binding?.movieNameFood?.text = output.mn
+
             }
 
             for (data in output.f) {
@@ -736,7 +740,6 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 }
             }
 
-            binding?.movieNameFood?.text = output.m
             //movie Type
 
             binding?.cencorId?.text = output.cen.replace("[", "").replace("]", "").replace("(", "")

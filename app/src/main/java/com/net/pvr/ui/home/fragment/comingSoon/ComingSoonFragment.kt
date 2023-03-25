@@ -283,9 +283,7 @@ class ComingSoonFragment : Fragment(),
         binding?.constraintLayout148?.hide()
         //Ui
         binding?.constraintLayout147?.show()
-
-        comingMovieData = ArrayList()
-
+        if (comingMovieData.isEmpty())
         comingMovieData.addAll(output.movies)
 
         clickTime+=1

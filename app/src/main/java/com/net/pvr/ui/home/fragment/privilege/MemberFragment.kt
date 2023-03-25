@@ -187,7 +187,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding?.privilegeList?.layoutManager = layoutManager
         val cardAdapter =
-            PrivilegeVochersAdapter(voucherList, requireActivity(), preferences, this)
+            PrivilegeVochersAdapter(getUpdatedList(voucherList), requireActivity(), preferences, this)
         binding?.privilegeList?.adapter = cardAdapter
 //        MMM dd yyyy hh:mma
         binding?.vocCard?.setOnClickListener {
@@ -217,7 +217,7 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
             val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             binding?.privilegeList?.layoutManager = layoutManager
             val cardAdapter =
-                PrivilegeVochersAdapter(voucherList, requireActivity(), preferences, this)
+                PrivilegeVochersAdapter(getUpdatedList(voucherList), requireActivity(), preferences, this)
             binding?.privilegeList?.adapter = cardAdapter
             binding?.totalVocBox?.text = getCounOfActivVo(voucherList)
             binding?.totalVocBoxIn?.text = getCounOfActivVo(voucherList)
@@ -265,6 +265,22 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
             startActivity(intent)
 
         }
+    }
+
+    private fun getUpdatedList(voucherList: ArrayList<LoyaltyDataResponse.Voucher>): ArrayList<LoyaltyDataResponse.Voucher> {
+        var newData:LoyaltyDataResponse.Voucher? = null
+        for (data in voucherList){
+            if (data.type == "SUBSCRIPTION" && data.st == "V"){
+                newData = data
+                break
+            }
+        }
+        if (newData!=null){
+            voucherList.remove(newData)
+            voucherList.add(0,newData)
+        }
+
+        return voucherList
     }
 
     private fun getCounOfActivVo(voucherList: ArrayList<LoyaltyDataResponse.Voucher>): String? {

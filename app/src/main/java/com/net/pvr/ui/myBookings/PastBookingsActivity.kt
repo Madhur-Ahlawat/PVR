@@ -117,21 +117,33 @@ class PastBookingsActivity : AppCompatActivity(),
 
     private fun getUpdatedList(p: ArrayList<FoodTicketResponse.Output.C>): ArrayList<FoodTicketResponse.Output.C> {
         var newListFood = ArrayList<FoodTicketResponse.Output.C>()
+        var newListFoodUpdated = ArrayList<FoodTicketResponse.Output.C>()
         var newList = ArrayList<FoodTicketResponse.Output.C>()
+        var newListUpdated = ArrayList<FoodTicketResponse.Output.C>()
         for (data in p){
-            if (data.is_only_fd){
+            if (data.is_only_fd && data.food.isNotEmpty()){
                 newListFood.add(data)
+            }else{
+                if (!data.is_only_fd)
+                    newList.add(data)
             }
         }
-        if (newListFood.size>0){
-            for (data in newListFood){
-                println("checkId(data,p)--->"+checkId(data,p))
-                if (checkId(data,p)){
-                    p.remove(data)
+
+        for (data in newList){
+            newListUpdated.add(data)
+            if (newListFood.size>0){
+                for (item in newListFood){
+                    if (item.abi!=null && item.abi!="" && item.abi == data.bi){
+                        println("data.abi--->"+data.abi)
+                        newListUpdated.add(item)
+                    }else{
+                        newListFoodUpdated.add(item)
+                    }
                 }
             }
         }
-        return p
+        newListUpdated.addAll(newListFoodUpdated)
+        return newListUpdated
     }
 
     private fun checkId(data: FoodTicketResponse.Output.C, newList: ArrayList<FoodTicketResponse.Output.C>): Boolean {

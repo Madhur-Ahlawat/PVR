@@ -1984,17 +1984,18 @@ class HomeFragment : Fragment(),
                         )
                     }) continue
             }
-            if (!spShows.contains("ALL") && spShows.isNotEmpty()) {
-                println("showCount--->${movie.sh}---${spShows}")
-                if (movie.sh!="") continue
-               // if (movie.sh == ""){
-
+//            if (!spShows.contains("ALL") && spShows.isNotEmpty()) {
+//                println("showCount--->${movie.sh}---${spShows}")
+//                if (movie.sh!="") continue
+//               // if (movie.sh == ""){
 //
-//                    continue
-//                }
-            }
+////
+////                    continue
+////                }
+//            }
 
             filteredMovies.add(movie)
+            println()
         }
         return filteredMovies.size
     }

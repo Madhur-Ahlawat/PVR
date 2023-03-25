@@ -608,6 +608,7 @@ class CinemaSessionActivity : AppCompatActivity(),
     override fun dateClick(comingSoonItem: CinemaSessionResponse.Output.Bd) {
         // Hit Event
         try {
+            onReset()
             val bundle = Bundle()
             bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "CINEMA PROFILE PAGE")
 //            bundle.putString("var_login_city", cityNameMAin)
