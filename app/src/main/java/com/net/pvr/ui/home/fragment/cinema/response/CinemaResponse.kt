@@ -12,7 +12,7 @@ data class CinemaResponse(
     val version: Any
 ) : Serializable {
     data class Output(
-        val c: List<C>,
+        val c: ArrayList<C>,
         val ph: ArrayList<HomeResponse.Ph>,
         val pu: ArrayList<Pu>
     ) : Serializable {

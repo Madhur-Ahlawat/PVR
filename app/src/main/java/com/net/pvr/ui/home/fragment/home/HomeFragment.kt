@@ -742,14 +742,15 @@ class HomeFragment : Fragment(),
         binding?.recyclerOffer?.adapter = adapterTrailer
 
         if (output.cp.size>1){
-            val speedScroll = 5000
+            val speedScroll = 3000
             val handler = Handler()
             val runnable: Runnable = object : Runnable {
                 var count = 0
                 override fun run() {
-                    if (count == adapterTrailer.itemCount) count = 0
+                    if (count == adapterTrailer.itemCount)
+                        count = 0
                     if (count < adapterTrailer.itemCount) {
-                        binding?.recyclerOffer?.smoothScrollToPosition(++count)
+                        binding?.recyclerOffer?.scrollToPosition(++count)
                         handler.postDelayed(this, speedScroll.toLong())
                     }
                 }
@@ -1965,7 +1966,7 @@ class HomeFragment : Fragment(),
         genres: List<String?>,
         spShows: List<String?>
     ): Int {
-        val filteredMovies: MutableList<HomeResponse.Mv> = ArrayList<HomeResponse.Mv>()
+        var filteredMovies: MutableList<HomeResponse.Mv> = ArrayList<HomeResponse.Mv>()
         for (movie in movies) {
             if (!languages.contains("ALL") && languages.isNotEmpty()) {
 
@@ -1986,16 +1987,24 @@ class HomeFragment : Fragment(),
             }
 //            if (!spShows.contains("ALL") && spShows.isNotEmpty()) {
 //                println("showCount--->${movie.sh}---${spShows}")
-//                if (movie.sh!="") continue
-//               // if (movie.sh == ""){
+//                if (movie.mty!="") continue
 //
-////
-////                    continue
-////                }
 //            }
 
             filteredMovies.add(movie)
-            println()
+        }
+
+        val newList: MutableList<HomeResponse.Mv> = ArrayList<HomeResponse.Mv>()
+
+        if (!spShows.contains("ALL") && spShows.isNotEmpty()) {
+            for (data in filteredMovies){
+                if (data.mty != "OTHERS"){
+                    newList.add(data)
+                    println("showCount--->${data.sh.length}---${data.sh}")
+                }
+            }
+            if (newList.isNotEmpty())
+            filteredMovies = newList
         }
         return filteredMovies.size
     }

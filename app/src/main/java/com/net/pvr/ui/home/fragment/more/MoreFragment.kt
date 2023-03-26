@@ -24,7 +24,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.base.Splitter
 import com.net.pvr.R
 import com.net.pvr.databinding.FragmentMoreBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -222,8 +221,8 @@ class MoreFragment : Fragment() {
 
     private fun newTagShow() {
         val str = newTag
-        val list = Splitter.on(",").splitToList(str)
-        for (i in 0 until list.size) {
+        val list =str.split(",").toList()
+        for (i in list.indices) {
             if (list[i].contains("Experience")) {
                 binding?.login?.includeExperience?.cardView19?.show()
 

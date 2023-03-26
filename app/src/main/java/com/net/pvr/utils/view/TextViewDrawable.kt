@@ -6,7 +6,7 @@ import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
-import com.google.firebase.crashlytics.buildtools.reloc.javax.annotation.Nullable
+import javax.annotation.Nullable
 
 
 class TextViewDrawable(context: Context?, @Nullable attrs: AttributeSet?) :

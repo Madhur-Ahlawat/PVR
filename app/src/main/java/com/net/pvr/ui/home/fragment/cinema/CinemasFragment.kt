@@ -375,6 +375,8 @@ class CinemasFragment : Fragment(),
 
 //        List
         gridLayout2 = GridLayoutManager(requireContext(), 1, GridLayoutManager.VERTICAL, false)
+        output.c.sortBy { it.d }
+
         val comingSoonMovieAdapter =
             CinemaAdapter(output.c, requireActivity(), this, this, this, preferences.getIsLogin())
         binding?.recyclerCinema?.layoutManager = gridLayout2

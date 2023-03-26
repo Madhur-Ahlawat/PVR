@@ -12,7 +12,6 @@ import android.view.View
 import android.webkit.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.util.EncodingUtils
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityPaymentWebBinding
 import com.net.pvr.di.preference.PreferenceManager
@@ -422,7 +421,7 @@ class PaytmWebActivity : AppCompatActivity() {
 //            )
 //            setContentView(webview)
             webview?.requestFocus(View.FOCUS_DOWN)
-            webview?.postUrl(data.callingurl, EncodingUtils.getBytes(postData, "BASE64"))
+            webview?.postUrl(data.callingurl, postData.toByteArray())
             webview?.webChromeClient = object : WebChromeClient() {}
 
             webview?.webViewClient = object : WebViewClient() {
@@ -669,7 +668,7 @@ class PaytmWebActivity : AppCompatActivity() {
             binding?.webView?.postUrl(
                 it, data.toByteArray()
             )
-        } else url?.let { binding?.webView?.postUrl(it, EncodingUtils.getBytes(data, "BASE64")) }
+        } else url?.let { binding?.webView?.postUrl(it, data.toByteArray()) }
     }
 
     override fun onBackPressed() {

@@ -47,7 +47,10 @@ class CinemaSessionCinChildLanguageAdapter(
             with(nowShowingList[position]) {
                 //title
                 binding.textView95.text = this.lng
-                if (this.lng.contains("Atmos") || this.lng.contains("4Dx") || this.lng.contains("IMAX") || this.lng.contains("DBOX")) {
+                if (this.lng.contains("Atmos") || this.lng.contains("4Dx") || this.lng.contains("IMAX") || this.lng.contains(
+                        "DBOX"
+                    )
+                ) {
                     binding.atInfo.show()
                 } else {
                     binding.atInfo.hide()
@@ -58,22 +61,40 @@ class CinemaSessionCinChildLanguageAdapter(
                 layoutManager.flexDirection = FlexDirection.ROW
                 layoutManager.justifyContent = JustifyContent.FLEX_START
                 layoutManager.alignItems = AlignItems.FLEX_START
-                val cinemaSessionLanguageAdapter = CinemaSessionTimeAdapter(this.s, context,cinemaId,ccn,adlt,at,mih)
-                binding.recyclerView6.layoutManager = layoutManager
-                binding.recyclerView6.adapter = cinemaSessionLanguageAdapter
+                if (showType == 1) {
+                    val cinemaSessionLanguageAdapter =
+                        CinemaSessionTimeAdapter(this.s, context, cinemaId, ccn, adlt, at, mih, 3)
+                    binding.recyclerView6.layoutManager = layoutManager
+                    binding.recyclerView6.adapter = cinemaSessionLanguageAdapter
+                } else {
+                    val cinemaSessionLanguageAdapter =
+                        CinemaSessionTimeAdapter(
+                            this.s,
+                            context,
+                            cinemaId,
+                            ccn,
+                            adlt,
+                            at,
+                            mih,
+                            this.s.size
+                        )
+                    binding.recyclerView6.layoutManager = layoutManager
+                    binding.recyclerView6.adapter = cinemaSessionLanguageAdapter
+                }
                 binding.atInfo.setOnClickListener {
-                    showATDialog(context,this.lng)
+                    showATDialog(context, this.lng)
                 }
             }
         }
     }
 
     override fun getItemCount(): Int {
-//        return if (showType==0){
-//            1
-//        }else{
-        return nowShowingList.size
-       // }
+        println("showType--->$showType")
+        return if (showType == 1) {
+            1
+        } else {
+            nowShowingList.size
+        }
     }
 
     private fun showATDialog(mContext: Context?, format: String) {

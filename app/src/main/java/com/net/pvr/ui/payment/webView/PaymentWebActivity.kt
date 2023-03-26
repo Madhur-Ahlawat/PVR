@@ -8,7 +8,6 @@ import android.os.Build
 import android.os.Bundle
 import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.util.EncodingUtils
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityPaymentWebBinding
 import com.net.pvr.ui.dailogs.OptionDialog
@@ -378,7 +377,7 @@ class PaymentWebActivity : AppCompatActivity() {
             binding?.webView?.postUrl(
                 it, data.toByteArray()
             )
-        } else url?.let { binding?.webView?.postUrl(it, EncodingUtils.getBytes(data, "BASE64")) }
+        } else url?.let { binding?.webView?.postUrl(it, data.toByteArray()) }
     }
 
     override fun onBackPressed() {

@@ -34,7 +34,6 @@ import com.net.pvr.ui.seatLayout.SeatLayoutActivity
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.ga.GoogleAnalytics
 import com.net.pvr.utils.hide
-import com.net.pvr.utils.invisible
 import com.net.pvr.utils.show
 import java.util.*
 import kotlin.collections.ArrayList
@@ -49,7 +48,8 @@ class CinemaSessionTimeAdapter(
     private var ccn: String,
     private var adlt: Boolean,
     private var at: String,
-    private var mih: String
+    private var mih: String,
+    private var i: Int
 ) :
     RecyclerView.Adapter<CinemaSessionTimeAdapter.ViewHolder>() {
 
@@ -294,7 +294,19 @@ class CinemaSessionTimeAdapter(
     }
 
     override fun getItemCount(): Int {
-        return   if (nowShowingList.isNotEmpty()) nowShowingList.size else 0
+        println("getItemCount----$i-----${nowShowingList.size}")
+
+        return if (i==3){
+            if (nowShowingList.size<3){
+                nowShowingList.size
+            }else{
+                3
+            }
+        }else{
+            nowShowingList.size
+        }
+
+
     }
 
     private fun showChangeLangDialogNew(

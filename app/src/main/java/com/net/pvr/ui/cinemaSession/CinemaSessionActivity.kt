@@ -432,6 +432,7 @@ class CinemaSessionActivity : AppCompatActivity(),
             binding?.include43?.cancelBtn?.setOnClickListener {
                 binding?.imageView43?.show()
                 binding?.imageView42?.show()
+                binding?.include43?.editTextTextPersonName?.setText("")
                 binding?.constraintLayout151?.hide()
 
             }
@@ -888,55 +889,9 @@ class CinemaSessionActivity : AppCompatActivity(),
 
 
     private fun filter(text: String) {
-        val filtered: ArrayList<CinemaSessionResponse.Child.Mv> = ArrayList()
-        val filtered1: ArrayList<CinemaSessionResponse.Child.Mv> = ArrayList()
-//        for (item in cinemaSessionData!!) {
-//            if (item.name.lowercase(Locale.getDefault())
-//                    .contains(text.lowercase(Locale.getDefault()))
-//            ) {
-//                filtered.add(item)
-//            }
-//        }
-//
+        if (text.isNotEmpty() && text!="")
+        cinemaSessionCinParentAdapter?.filterList(text)
 
-        for ( item in cinemaSessionData!!.childs){
-
-            for (i in item.mvs) {
-
-                if (i.mn.lowercase(Locale.getDefault()).contains(text.lowercase(Locale.getDefault()))){
-                    filtered.add(i)
-                }
-                //..............
-            }
-
-        }
-//
-//        for (list in cinemaSessionData?.childs!!) {
-//
-//
-//            //if the existing elements contains the search input
-//            if (list.ccn.lowercase(Locale.getDefault())
-//                    .contains(text.lowercase(Locale.getDefault()))) {
-//                //adding the element to filtered list
-//                filtered.add(list)
-//            }
-//        }
-
-        if (filtered.isEmpty()) {
-//            binding?.consSelectedLocation?.hide()
-//            binding?.nestedScrollView3?.hide()
-//            binding?.consSelectCity?.hide()
-//            binding?.recyclerViewSearchCity?.hide()
-//            binding?.textView124?.show()
-            cinemaSessionCinParentAdapter?.filterList(filtered1)
-        } else {
-//            binding?.consSelectedLocation?.show()
-//            binding?.nestedScrollView3?.show()
-//            binding?.consSelectCity?.show()
-//            binding?.textView124?.hide()
-//            binding?.nestedScrollView3?.show()
-            cinemaSessionCinParentAdapter?.filterList(filtered)
-        }
     }
 
 //    private fun filter(text: String) {

@@ -20,6 +20,8 @@ class CinemaSessionCinParentAdapter(
     : RecyclerView.Adapter<CinemaSessionCinParentAdapter.ViewHolder>() {
     private var check = 1
     private var rowIndex = 0
+    private var searchText = ""
+
 
     inner class ViewHolder(val binding: ItemCinemaDetailsMoviesBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -37,7 +39,7 @@ class CinemaSessionCinParentAdapter(
                 cinemaId= this.ccid
                 //RecyclerView
                 val gridLayout = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
-                val cinemaSessionCinemasChildAdapter = CinemaSessionChildAdapter(this.mvs, context,cinemaId,this.ccn,this.at)
+                val cinemaSessionCinemasChildAdapter = CinemaSessionChildAdapter(getUpdatedMovie(this), context,cinemaId,this.ccn,this.at)
                 binding.recyclerView16.layoutManager = gridLayout
                 binding.recyclerView16.adapter = cinemaSessionCinemasChildAdapter
 
@@ -67,10 +69,35 @@ class CinemaSessionCinParentAdapter(
 
     }
 
+    private fun getUpdatedMovie(child: CinemaSessionResponse.Child): ArrayList<CinemaSessionResponse.Child.Mv> {
+        println("filterdNames---${searchText.length}")
+
+        return if (searchText!= "") {
+            var newList = ArrayList<CinemaSessionResponse.Child.Mv>()
+            for (data in child.mvs) {
+                if (data.mn.lowercase().contains(searchText.lowercase())) {
+                    newList.add(data)
+                }
+            }
+            newList
+        }else{
+            child.mvs
+        }
+    }
+
     override fun getItemCount(): Int {
         return if (nowShowingList.isNotEmpty()) nowShowingList.size else 0
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun filterList(searchText: String) {
+
+        if (searchText != "") {
+            this.searchText = searchText
+            notifyDataSetChanged()
+        }
+
+    }
 
 
 

@@ -37,6 +37,7 @@ class CinemaSessionChildAdapter(
         return ViewHolder(binding)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
@@ -72,20 +73,23 @@ class CinemaSessionChildAdapter(
                 }
 
                 //RecyclerView
-                val layoutManager = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
-                println("this.ml--->"+this.ml.size)
-                val cinemaSessionLanguageAdapter =
-                    CinemaSessionCinChildLanguageAdapter(this.ml, context, cinemaId,0,ccn,this.adlt,at,this.mih)
-                binding.recyclerView17.layoutManager = layoutManager
-                binding.recyclerView17.adapter = cinemaSessionLanguageAdapter
+                val count = getShowCount(this)
 
-                if(this.ml.size>0){
+                println("getShowCount--->$count")
+                if(count<4){
                     binding.imageView111.hide()
                     binding.constraintLayout87.hide()
-
+                    val layoutManager = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
+                    val cinemaSessionLanguageAdapter = CinemaSessionCinChildLanguageAdapter(this.ml, context, cinemaId,0,ccn,this.adlt,at,this.mih)
+                    binding.recyclerView17.layoutManager = layoutManager
+                    binding.recyclerView17.adapter = cinemaSessionLanguageAdapter
                 }else{
                     binding.imageView111.show()
                     binding.constraintLayout87.show()
+                    val layoutManager = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
+                    val cinemaSessionLanguageAdapter = CinemaSessionCinChildLanguageAdapter(this.ml, context, cinemaId,1,ccn,this.adlt,at,this.mih)
+                    binding.recyclerView17.layoutManager = layoutManager
+                    binding.recyclerView17.adapter = cinemaSessionLanguageAdapter
                 }
 
                 binding.textView387.setOnClickListener {
@@ -98,7 +102,7 @@ class CinemaSessionChildAdapter(
                             CinemaSessionCinChildLanguageAdapter(this.ml, context, cinemaId,0,ccn,this.adlt,at,this.mih)
                         binding.recyclerView17.layoutManager = layoutManager
                         binding.recyclerView17.adapter = cinemaSessionLanguageAdapter
-
+                        cinemaSessionLanguageAdapter.notifyDataSetChanged()
                     }else{
                         binding.imageView111.show()
                         binding.textView387.text=context.getString(R.string.view_more)
@@ -108,12 +112,22 @@ class CinemaSessionChildAdapter(
                             CinemaSessionCinChildLanguageAdapter(this.ml, context, cinemaId,1,ccn,this.adlt,at,this.mih)
                         binding.recyclerView17.layoutManager = layoutManager
                         binding.recyclerView17.adapter = cinemaSessionLanguageAdapter
+                        cinemaSessionLanguageAdapter.notifyDataSetChanged()
                     }
                 }
 
             }
         }
 
+    }
+
+    private fun getShowCount(mv: CinemaSessionResponse.Child.Mv): Int {
+        var count = 0
+        for (data in mv.ml){
+            count += data.s.size
+        }
+
+        return count
     }
 
     override fun getItemCount(): Int {

@@ -20,8 +20,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.NameValuePair
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.utils.URLEncodedUtils
 import com.journeyapps.barcodescanner.*
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityScannerBinding
@@ -170,17 +168,17 @@ class ScannerActivity : AppCompatActivity(), DecoratedBarcodeView.TorchListener 
             } else if (path?.contains("food") == true || path?.contains("booking") == true) {
                 var type = ""
                 if (contents.contains("type")) {
-                    var params: List<NameValuePair?>? = null
-                    try {
-                        params = URLEncodedUtils.parse(URI(contents), "UTF-8")
-                        for (param in params) {
-                            printLog(param.name + " : " + param.value)
-
-                            if (param.name != "type") type = param.value
-                        }
-                    } catch (e: URISyntaxException) {
-                        e.printStackTrace()
-                    }
+//                    var params: List<NameValuePair?>? = null
+//                    try {
+//                        params = URLEncodedUtils.parse(URI(contents), "UTF-8")
+//                        for (param in params) {
+//                            printLog(param.name + " : " + param.value)
+//
+//                            if (param.name != "type") type = param.value
+//                        }
+//                    } catch (e: URISyntaxException) {
+//                        e.printStackTrace()
+//                    }
                 }
                 val intent = Intent(this, SelectBookingsActivity::class.java)
                 intent.putExtra("from", "pscan")
@@ -205,29 +203,29 @@ class ScannerActivity : AppCompatActivity(), DecoratedBarcodeView.TorchListener 
                     var iserv = ""
                     var seat = ""
                     if (contents.contains("type")) {
-                        var params: List<NameValuePair?>? = null
-                        try {
-                            params = URLEncodedUtils.parse(URI(contents), "UTF-8")
-                            for (param2 in (params as MutableList<NameValuePair>?)!!) {
-                                println(param2.name + " : " + param2.value)
-                                if (param2.name.equals("type", ignoreCase = true)) type =
-                                    param2.value else if (param2.name.equals(
-                                        "option",
-                                        ignoreCase = true
-                                    )
-                                ) option = param2.value else if (param2.name.equals(
-                                        "iserv",
-                                        ignoreCase = true
-                                    )
-                                ) iserv = param2.value else if (param2.name.equals(
-                                        "seat",
-                                        ignoreCase = true
-                                    )
-                                ) seat = param2.value
-                            }
-                        } catch (e: URISyntaxException) {
-                            e.printStackTrace()
-                        }
+//                        var params: List<NameValuePair?>? = null
+//                        try {
+//                            params = URLEncodedUtils.parse(URI(contents), "UTF-8")
+//                            for (param2 in (params as MutableList<NameValuePair>?)!!) {
+//                                println(param2.name + " : " + param2.value)
+//                                if (param2.name.equals("type", ignoreCase = true)) type =
+//                                    param2.value else if (param2.name.equals(
+//                                        "option",
+//                                        ignoreCase = true
+//                                    )
+//                                ) option = param2.value else if (param2.name.equals(
+//                                        "iserv",
+//                                        ignoreCase = true
+//                                    )
+//                                ) iserv = param2.value else if (param2.name.equals(
+//                                        "seat",
+//                                        ignoreCase = true
+//                                    )
+//                                ) seat = param2.value
+//                            }
+//                        } catch (e: URISyntaxException) {
+//                            e.printStackTrace()
+//                        }
                     }
 
                 }

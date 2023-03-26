@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -75,10 +76,10 @@ dependencies {
     implementation 'androidx.camera:camera-core:1.2.1'
     implementation 'androidx.annotation:annotation:1.5.0'
 
-    //fairebase
-    implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.9.2'
+    //firebase
+    implementation 'com.google.firebase:firebase-crashlytics:18.3.5'
     implementation 'com.google.android.gms:play-services-safetynet:18.0.1'
-    implementation 'com.google.firebase:firebase-messaging-ktx:23.1.1'
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.1.2'
     implementation 'com.google.firebase:firebase-analytics:21.2.0'
     implementation 'com.google.android.gms:play-services-analytics-impl:18.0.2'
     implementation 'com.google.android.gms:play-services-measurement-api:21.2.0'
@@ -140,7 +141,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:20.4.1'
     implementation 'com.google.android.gms:play-services-auth-api-phone:18.0.1'
     implementation 'com.google.android.gms:play-services-identity:18.0.1'
-    implementation 'com.google.android.gms:play-services-base:18.1.0'
+    implementation 'com.google.android.gms:play-services-base:18.2.0'
 
     // Slider
     implementation 'com.github.IslamKhSh:CardSlider:1.0.1'

@@ -4,26 +4,26 @@
     <item
         android:id="@+id/homeFragment"
         android:title="@string/home"
-        android:icon="@drawable/home_black"/>
+        android:icon="@drawable/home_new"/>
 
     <item
         android:id="@+id/cinemaFragment"
         android:title="@string/cinema"
-        android:icon="@drawable/cinema_grey"/>
+        android:icon="@drawable/cinema_new"/>
 
     <item
         android:id="@+id/privilegeFragment"
         android:title="@string/privilege"
-        android:icon="@drawable/privilege_grey"/>
+        android:icon="@drawable/privilege_new"/>
 
     <item
         android:id="@+id/comingSoonFragment"
         android:title="@string/coming_soon"
-        android:icon="@drawable/commingsoon_grey"/>
+        android:icon="@drawable/coming_soon_new"/>
 
     <item
         android:id="@+id/moreFragment"
         android:title="@string/account"
-        android:icon="@drawable/more_grey"/>
+        android:icon="@drawable/account_new"/>
 
 </menu>
