@@ -37,7 +37,7 @@ class CinemaSessionChildAdapter(
         return ViewHolder(binding)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+    @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
@@ -46,10 +46,10 @@ class CinemaSessionChildAdapter(
                 binding.textView91.text = this.mn
 
                 //time
-                binding.textView92.text = this.mlength
+                binding.textView92.text = this.mcensor.replace("[", "").replace("]", "").replace("(", "").replace(")", "") +" • "+this.genres.joinToString { it }
 
                 //genre
-                binding.textView93.text = this.genres.joinToString { it }
+                binding.textView93.text =   this.mlength
 
                 //Language
                 binding.textView94.hide()
@@ -95,6 +95,7 @@ class CinemaSessionChildAdapter(
                 binding.textView387.setOnClickListener {
                     if (binding.textView387.text==context.getString(R.string.view_more)){
                         binding.textView387.text=context.getString(R.string.view_less)
+                        binding?.textView387?.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.arrow_up_session,0,0,0)
                         binding.imageView111.hide()
 
                         val layoutManager = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
@@ -104,6 +105,8 @@ class CinemaSessionChildAdapter(
                         binding.recyclerView17.adapter = cinemaSessionLanguageAdapter
                         cinemaSessionLanguageAdapter.notifyDataSetChanged()
                     }else{
+                        binding?.textView387?.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.arrow_down_session,0,0,0)
+
                         binding.imageView111.show()
                         binding.textView387.text=context.getString(R.string.view_more)
 

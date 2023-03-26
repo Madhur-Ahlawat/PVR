@@ -472,21 +472,21 @@ class MovieSessionActivity : AppCompatActivity(),
         binding?.filterFab?.setOnClickListener {
             val gFilter = GenericFilterSession()
             val filterPoints = HashMap<String, ArrayList<String>>()
-            if (output.lngs != null && output.lngs.size > 1) filterPoints[Constant.FilterType.LANG_FILTER] =
-                output.lngs
+            if (daySessionResponse?.lngs != null && daySessionResponse?.lngs?.size!! > 1) filterPoints[Constant.FilterType.LANG_FILTER] =
+                daySessionResponse?.lngs!!
             else filterPoints[Constant.FilterType.LANG_FILTER] = ArrayList()
             filterPoints[Constant.FilterType.GENERE_FILTER] = ArrayList()
-            if (output.icn != null && output.icn.size > 1) filterPoints[Constant.FilterType.FORMAT_FILTER] =
-                output.icn else filterPoints[Constant.FilterType.FORMAT_FILTER] = ArrayList()
+            if (daySessionResponse?.icn != null && daySessionResponse?.icn?.size!! > 1) filterPoints[Constant.FilterType.FORMAT_FILTER] =
+                daySessionResponse?.icn!! else filterPoints[Constant.FilterType.FORMAT_FILTER] = ArrayList()
             filterPoints[Constant.FilterType.ACCESSABILITY_FILTER] =
                 ArrayList(listOf("Wheelchair Friendly"))
             filterPoints[Constant.FilterType.PRICE_FILTER] = ArrayList(
                 listOf("Below ₹300", "₹301 - 500", "₹501 - 1000", "₹1001 - 1500")
             )
             filterPoints[Constant.FilterType.SHOWTIME_FILTER] = ArrayList()
-            if (output.ct != null && output.ct.size > 0) filterPoints[Constant.FilterType.CINEMA_FORMAT] =
-                output.ct else filterPoints[Constant.FilterType.CINEMA_FORMAT] = ArrayList()
-            if (output.sps != null && output.sps.size > 0) filterPoints[Constant.FilterType.SPECIAL_SHOW] =
+            if (daySessionResponse?.ct != null && daySessionResponse?.ct?.size!! > 0) filterPoints[Constant.FilterType.CINEMA_FORMAT] =
+                daySessionResponse?.ct!! else filterPoints[Constant.FilterType.CINEMA_FORMAT] = ArrayList()
+            if (daySessionResponse?.sps != null && daySessionResponse?.sps?.size!! > 0) filterPoints[Constant.FilterType.SPECIAL_SHOW] =
                 getSpsList() as ArrayList<String> else filterPoints[Constant.FilterType.SPECIAL_SHOW] =
                 ArrayList()
             gFilter.openFilters(
@@ -558,7 +558,17 @@ class MovieSessionActivity : AppCompatActivity(),
 
 
     override fun showsDaysClick(comingSoonItem: BookingResponse.Output.Dy, itemView: View) {
-        onReset()
+        binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
+        appliedFilterItem = HashMap()
+        lang = "ALL"
+        format = "ALL"
+        price1 = "ALL"
+        price2 = "ALL"
+        show1 = "ALL"
+        hc = "ALL"
+        show2 = "ALL"
+        special = "ALL"
+        cinemaType = "ALL"
         daysClick = true
         dateText = comingSoonItem.dt
         authViewModel.bookingTicket(

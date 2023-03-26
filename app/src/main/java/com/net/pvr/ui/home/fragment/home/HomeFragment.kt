@@ -17,7 +17,6 @@ import android.text.SpannableString
 import android.text.TextUtils
 import android.text.method.LinkMovementMethod
 import android.text.style.ForegroundColorSpan
-import android.util.DisplayMetrics
 import android.view.*
 import android.view.View.OnTouchListener
 import android.widget.ImageView
@@ -88,9 +87,9 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.HashMap
 
 
+@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class HomeFragment : Fragment(),
     HomeCinemaCategoryAdapter.RecycleViewItemClickListener,
@@ -150,7 +149,7 @@ class HomeFragment : Fragment(),
 
     //internet Check
     private var broadcastReceiver: BroadcastReceiver? = null
-
+    val ooferHandler = Handler()
 
     private var musicData: ArrayList<MovieDetailsResponse.Trs> = ArrayList()
 
@@ -661,6 +660,8 @@ class HomeFragment : Fragment(),
 
     @SuppressLint("SuspiciousIndentation", "ClickableViewAccessibility")
     private fun retrieveData(output: HomeResponse.Output) {
+        ooferHandler.removeCallbacksAndMessages(null)
+
         if (movieData.size == 0)
         movieData.addAll(output.mv)
         //layout
@@ -740,23 +741,27 @@ class HomeFragment : Fragment(),
         binding?.recyclerOffer?.layoutManager = layoutManager
         val adapterTrailer = HomeOfferListAdapter(requireActivity(), output.cp, this)
         binding?.recyclerOffer?.adapter = adapterTrailer
-
-        if (output.cp.size>1){
+        if (output.cp.size>1) {
             val speedScroll = 3000
-            val handler = Handler()
             val runnable: Runnable = object : Runnable {
                 var count = 0
+                var flag = true
                 override fun run() {
-                    if (count == adapterTrailer.itemCount)
-                        count = 0
                     if (count < adapterTrailer.itemCount) {
-                        binding?.recyclerOffer?.scrollToPosition(++count)
-                        handler.postDelayed(this, speedScroll.toLong())
+                        if (count == adapterTrailer.itemCount - 1) {
+                            flag = false
+                        } else if (count == 0) {
+                            flag = true
+                        }
+                        if (flag) count++ else count--
+                        binding?.recyclerOffer?.smoothScrollToPosition(count)
+                        ooferHandler.postDelayed(this, speedScroll.toLong())
                     }
                 }
             }
-            handler.postDelayed(runnable, speedScroll.toLong())
+            ooferHandler.postDelayed(runnable, speedScroll.toLong())
         }
+
 
 //        if (output.cp.size > 1) {
 //            val speedScroll = 5000
@@ -1996,16 +2001,16 @@ class HomeFragment : Fragment(),
 
         val newList: MutableList<HomeResponse.Mv> = ArrayList<HomeResponse.Mv>()
 
-        if (!spShows.contains("ALL") && spShows.isNotEmpty()) {
-            for (data in filteredMovies){
-                if (data.mty != "OTHERS"){
-                    newList.add(data)
-                    println("showCount--->${data.sh.length}---${data.sh}")
-                }
-            }
-            if (newList.isNotEmpty())
-            filteredMovies = newList
-        }
+//        if (!spShows.contains("ALL") && spShows.isNotEmpty()) {
+//            for (data in filteredMovies){
+//                if (data.mty != "OTHERS"){
+//                    newList.add(data)
+//                    println("showCount--->${data.sh.length}---${data.sh}")
+//                }
+//            }
+//            if (newList.isNotEmpty())
+//            filteredMovies = newList
+//        }
         return filteredMovies.size
     }
 

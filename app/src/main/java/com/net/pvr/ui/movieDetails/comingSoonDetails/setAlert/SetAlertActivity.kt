@@ -204,7 +204,7 @@ class SetAlertActivity : AppCompatActivity() {
                         }catch (e:Exception){
                             e.printStackTrace()
                         }
-
+                        alert = true
                         setAlertDialog()
                     } else {
                         val dialog = OptionDialog(this,
@@ -249,7 +249,7 @@ class SetAlertActivity : AppCompatActivity() {
         val inflater = LayoutInflater.from(this)
         val bindingBottom = SetAlertDialogBinding.inflate(inflater)
         dialog.setContentView(bindingBottom.root)
-
+        alert = true
         dialog.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT)

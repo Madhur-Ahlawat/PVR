@@ -74,6 +74,7 @@ class CinemaSessionActivity : AppCompatActivity(),
     private var rowIndex = false
 
     private var cinemaSessionData: CinemaSessionResponse.Output? = null
+    private var cinemaSessionDataForFilter: CinemaSessionResponse.Output? = null
 
     private var appliedFilterItem = HashMap<String, String>()
     private var appliedFilterType = ""
@@ -309,7 +310,6 @@ class CinemaSessionActivity : AppCompatActivity(),
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        cinemaSessionData = it.data.output
                         btnc = it.data.output.btnc
                         retrieveData(it.data.output)
                     } else {
@@ -369,7 +369,7 @@ class CinemaSessionActivity : AppCompatActivity(),
         //recycler Cinemas
         if (output.c.isEmpty()) {
             binding?.constraintLayout187?.hide()
-        } else if (output.c.size == 0) {
+        } else if (output.c.isEmpty()) {
             binding?.constraintLayout187?.hide()
         } else {
             binding?.constraintLayout187?.show()
@@ -387,6 +387,9 @@ class CinemaSessionActivity : AppCompatActivity(),
 
     @SuppressLint("SetTextI18n")
     private fun retrieveData(output: CinemaSessionResponse.Output) {
+        cinemaSessionData = output
+        if (cinemaSessionDataForFilter == null)
+        cinemaSessionDataForFilter = output
         binding?.filterFab?.show()
         //movie Details
         binding?.nestedScrollView5?.show()
@@ -425,7 +428,7 @@ class CinemaSessionActivity : AppCompatActivity(),
                 binding?.imageView42?.hide()
                 //Constant().shareData(this, "", "")
             }
-            binding?.include43?.editTextTextPersonName?.hint = "Search cinema"
+            binding?.include43?.editTextTextPersonName?.hint = "Search movie"
 
             // Search
             // search Cancel
@@ -580,12 +583,12 @@ class CinemaSessionActivity : AppCompatActivity(),
         binding?.filterFab?.setOnClickListener {
             val gFilter = GenericFilterSession()
             val filterPoints = HashMap<String, ArrayList<String>>()
-            if (output.lngs != null && output.lngs.size > 1) filterPoints[Constant.FilterType.LANG_FILTER] =
-                output.lngs
+            if (cinemaSessionDataForFilter?.lngs != null && cinemaSessionDataForFilter?.lngs?.size!! > 1) filterPoints[Constant.FilterType.LANG_FILTER] =
+                cinemaSessionDataForFilter?.lngs!!
             else filterPoints[Constant.FilterType.LANG_FILTER] = ArrayList()
             filterPoints[Constant.FilterType.GENERE_FILTER] = ArrayList()
-            if (output.fmts != null && output.fmts.size > 1) filterPoints[Constant.FilterType.FORMAT_FILTER] =
-                output.fmts else filterPoints[Constant.FilterType.FORMAT_FILTER] = ArrayList()
+            if (cinemaSessionDataForFilter?.fmts != null && cinemaSessionDataForFilter?.fmts?.size!! > 1) filterPoints[Constant.FilterType.FORMAT_FILTER] =
+                cinemaSessionDataForFilter?.fmts!! else filterPoints[Constant.FilterType.FORMAT_FILTER] = ArrayList()
             filterPoints[Constant.FilterType.ACCESSABILITY_FILTER] =
                 ArrayList(listOf("Wheelchair Friendly"))
             filterPoints[Constant.FilterType.PRICE_FILTER] = ArrayList(
@@ -607,7 +610,17 @@ class CinemaSessionActivity : AppCompatActivity(),
     override fun dateClick(comingSoonItem: CinemaSessionResponse.Output.Bd) {
         // Hit Event
         try {
-            onReset()
+            binding?.filterFab?.setImageResource(R.drawable.filter_unselect)
+            lang = "ALL"
+            format = "ALL"
+            price1 = "ALL"
+            show1 = "ALL"
+            hc = "ALL"
+            cc = "ALL"
+            ad = "ALL"
+            cinema_type = "ALL"
+
+            appliedFilterItem = HashMap()
             val bundle = Bundle()
             bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "CINEMA PROFILE PAGE")
 //            bundle.putString("var_login_city", cityNameMAin)
