@@ -225,7 +225,7 @@ class MoreFragment : Fragment() {
         val list = Splitter.on(",").splitToList(str)
         for (i in 0 until list.size) {
             if (list[i].contains("Experience")) {
-                binding?.logout?.includeExperience?.cardView19?.show()
+                binding?.login?.includeExperience?.cardView19?.show()
 
             } else if (list[i].contains("PVR Cares")) {
                 binding?.logout?.includePvrCare?.cardView19?.show()
@@ -273,7 +273,7 @@ class MoreFragment : Fragment() {
         }
 
         //Experience
-        binding?.logout?.experience?.setOnClickListener {
+        binding?.login?.experience?.setOnClickListener {
             // Hit Event
             try {
                 val bundle = Bundle()

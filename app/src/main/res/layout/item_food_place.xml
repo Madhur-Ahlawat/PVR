@@ -38,8 +38,9 @@
             android:id="@+id/imageView66"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:padding="@dimen/dimen_15dp"
-            android:src="@drawable/food_all" />
+            android:padding="@dimen/dimen_10dp"
+            android:src="@drawable/food_all"
+            tools:ignore="ContentDescription" />
 
 
         <TextView

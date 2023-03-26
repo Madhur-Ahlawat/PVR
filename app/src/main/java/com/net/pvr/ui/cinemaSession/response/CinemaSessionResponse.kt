@@ -17,7 +17,7 @@ data class CinemaSessionResponse(
         val btnc: String,
         val cd: String,
         val cf: Boolean,
-        val childs: List<Child>,
+        val childs: ArrayList<Child>,
         val cn: String,
         val newCinemaText: String,
         val d: String,

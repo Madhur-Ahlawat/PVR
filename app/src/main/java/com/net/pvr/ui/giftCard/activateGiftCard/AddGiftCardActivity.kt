@@ -29,7 +29,6 @@ import com.net.pvr.ui.giftCard.response.GiftCardListResponse
 import com.net.pvr.ui.giftCard.response.GiftCards
 import com.net.pvr.ui.giftCard.response.SaveGiftCardCount
 import com.net.pvr.ui.home.fragment.home.HomeFragment
-import com.net.pvr.ui.myBookings.response.GiftCardResponse
 import com.net.pvr.utils.*
 import com.net.pvr.utils.Constant.Companion.GC_COUNT
 import com.net.pvr.utils.ga.GoogleAnalytics
@@ -185,6 +184,7 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
                 dialog.show()
             }
             R.id.tv_add_amount_custom ->
+
                 if (binding?.etCustomAmount?.text.toString().isNotEmpty()) {
                 if ((binding?.etCustomAmount?.text?.toString()?.toInt()
                         ?: 0) >= 150 && binding?.etCustomAmount?.text.toString()
@@ -257,6 +257,8 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
                         })
                     dialog.show()
                 }
+
+                    Constant().hideKeyboard(this@AddGiftCardActivity)
             } else {
                     val dialog = OptionDialog(this,
                         R.mipmap.ic_launcher,
@@ -276,7 +278,7 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
 
     private fun setCustomAmountAdapter() {
         binding?.rvCustomAmountList?.layoutManager = LinearLayoutManager(this)
-        customGiftCardAdapter = CustomGiftCardAdapter( customizedGiftList, this,Uri.parse(imageValue))
+        customGiftCardAdapter = CustomGiftCardAdapter( customizedGiftList, this,imageValue)
         binding?.rvCustomAmountList?.adapter = customGiftCardAdapter
     }
 

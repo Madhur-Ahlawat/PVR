@@ -8,6 +8,7 @@ import com.google.android.youtube.player.YouTubePlayerFragment
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityPlayerBinding
 import com.net.pvr.ui.dailogs.OptionDialog
+import com.net.pvr.utils.Constant
 import com.net.pvr.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,6 +26,7 @@ class PlayerActivity : AppCompatActivity(),YouTubePlayer.OnInitializedListener {
         binding = ActivityPlayerBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
+        Constant().appBarHide(this)
         trailerUrl = intent.getStringExtra("trailerUrl").toString()
         printLog("trailerUrl--->${trailerUrl}")
 

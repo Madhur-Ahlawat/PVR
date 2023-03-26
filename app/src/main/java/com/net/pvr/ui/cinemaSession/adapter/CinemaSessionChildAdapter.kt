@@ -119,4 +119,10 @@ class CinemaSessionChildAdapter(
     override fun getItemCount(): Int {
         return if (nowShowingList.isNotEmpty()) nowShowingList.size else 0
     }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun filterList(filterdNames: ArrayList<CinemaSessionResponse.Child.Mv>) {
+        this.nowShowingList = filterdNames
+        notifyDataSetChanged()
+    }
 }

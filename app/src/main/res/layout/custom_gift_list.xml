@@ -44,7 +44,7 @@
             android:paddingTop="@dimen/padding_10"
             android:paddingEnd="@dimen/dimen_20dp"
             android:paddingBottom="@dimen/padding_10"
-            android:text="Rs 300"
+            tools:text="Rs 300"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="@dimen/dimen_14sp" />
@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="x 1"
+        tools:text="x 1"
         android:gravity="center"
         android:layout_marginStart="@dimen/padding_10"
         android:textSize="@dimen/dimen_14sp"
@@ -69,7 +69,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:textColor="@color/gray"
-        android:text="  CUSTOMISED "
+        android:text="  Custom Card "
         android:textSize="@dimen/dimen_14sp"
         android:layout_gravity="center"
         android:gravity="center"/>
@@ -77,18 +77,31 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/padding_10"
-        android:layout_weight="1"
+        android:layout_weight="0.5"
         android:layout_gravity="center"
         android:background="@color/white"/>
 
-    <ImageView
+    <LinearLayout
         android:id="@+id/iv_close"
-        android:layout_width="@dimen/dimen_40dp"
-        android:layout_height="@dimen/dimen_40dp"
-        android:src="@drawable/close"
-        android:padding="@dimen/padding_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        app:tint="@color/red"
-        tools:ignore="ContentDescription" />
+        android:background="@drawable/bg_grey_booking"
+        tools:ignore="ContentDescription"
+        android:gravity="end"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_10">
+        <TextView
+            android:id="@+id/tv_add_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_10dp"
+            android:layout_marginEnd="@dimen/dimen_10dp"
+            android:text="@string/remove"
+            android:textColor="@color/red"
+            android:textSize="@dimen/dimen_14sp"
+            android:visibility="visible" />
+
+    </LinearLayout>
 
 </LinearLayout>

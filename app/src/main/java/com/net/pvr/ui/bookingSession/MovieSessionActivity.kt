@@ -399,7 +399,10 @@ class MovieSessionActivity : AppCompatActivity(),
     private fun retrieveTheatreData(output: BookingTheatreResponse.Output) {
         if (output.m.isEmpty()) {
             binding?.constraintLayout83?.hide()
-        } else {
+        }else if(output.m.size==0){
+            binding?.constraintLayout83?.hide()
+        }
+        else {
             binding?.constraintLayout83?.show()
             val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
             val bookingTheatreAdapter = BookingTheatreAdapter(output.m, this, this)

@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.net.pvr.R
 import com.net.pvr.databinding.ItemFoodPlaceBinding
 import com.net.pvr.ui.food.response.FoodResponse
+import kotlin.reflect.jvm.internal.impl.load.java.Constant
 
 //category
 
@@ -37,6 +38,7 @@ class CategoryAdapter(
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         with(holder) {
             with(nowShowingList[position]) {
+
                 //Image
                 if (this.name=="ALL"){
                     Glide.with(context)
@@ -51,6 +53,7 @@ class CategoryAdapter(
                         .into(binding.imageView66)
                     binding.imageView66.setPadding(15)
                 }
+
                 if (rowIndex == position) {
                     binding.mainView.setBackgroundResource(R.drawable.border_circle)
                     if (this.name=="ALL"){
@@ -71,7 +74,7 @@ class CategoryAdapter(
                 }
 
                 //Name
-                binding.textView136.text = this.name
+                binding.textView136.text =com.net.pvr.utils.Constant().toCamelCase(this.name)
                 holder.itemView.setOnClickListener {
                     rowIndex = position
                     listener.categoryClick(this)

@@ -36,7 +36,6 @@ class OfferActivity : AppCompatActivity(),
         binding = ActivityOfferBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-
         manageFunction()
     }
 

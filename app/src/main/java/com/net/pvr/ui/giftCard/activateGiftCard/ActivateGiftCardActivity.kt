@@ -24,19 +24,18 @@ import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.giftCard.activateGiftCard.adapter.ActivateGiftCardAdapter
 import com.net.pvr.ui.giftCard.activateGiftCard.viewModel.ActivateGiftCardViewModel
 import com.net.pvr.ui.giftCard.response.ActiveGCResponse
-import com.net.pvr.utils.Constant
-import com.net.pvr.utils.NetworkResult
-import com.net.pvr.utils.hide
-import com.net.pvr.utils.show
+import com.net.pvr.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
-class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.RecycleViewItemClickListener{
+class ActivateGiftCardActivity : AppCompatActivity(),
+    ActivateGiftCardAdapter.RecycleViewItemClickListener {
     private var binding: ActivityActivateGiftCardBinding? = null
     private var loader: LoaderDialog? = null
     private val authViewModel: ActivateGiftCardViewModel by viewModels()
+
     @Inject
     lateinit var preferences: PreferenceManager
     private var activeGiftList = ArrayList<ActiveGCResponse.Gca>()
@@ -68,6 +67,7 @@ class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.Re
         }
 
     }
+
     private fun activateGiftCard() {
         authViewModel.activeGCResponseLiveData.observe(this) {
             when (it) {
@@ -82,10 +82,8 @@ class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.Re
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -97,10 +95,8 @@ class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.Re
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
@@ -110,22 +106,27 @@ class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.Re
             }
         }
     }
+
     private fun getDetails(data: ActiveGCResponse.Gca) {
         authViewModel.redeemGCResponseLiveData.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        val detailIntent = Intent(this@ActivateGiftCardActivity, GiftCardDetailsActivity::class.java)
+                        val detailIntent = Intent(
+                            this@ActivateGiftCardActivity,
+                            GiftCardDetailsActivity::class.java
+                        )
                         detailIntent.putExtra("cardDetails", it.data.output)
                         detailIntent.putExtra("cardId", data.id)
                         detailIntent.putExtra("cardNo", data.gcn)
                         detailIntent.putExtra("giftedTo", data.r)
                         detailIntent.putExtra("giftedOn", data.dn)
-                        if (data.ci != null && data.ci != "")
-                            detailIntent.putExtra("image", data.ci)
-                            else
-                            detailIntent.putExtra("image", data.gi)
+                        if (data.ci != null && data.ci != "") detailIntent.putExtra(
+                            "image",
+                            data.ci
+                        )
+                        else detailIntent.putExtra("image", data.gi)
                         startActivity(detailIntent)
                     } else {
                         val dialog = OptionDialog(this,
@@ -134,10 +135,8 @@ class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.Re
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {
-                            },
-                            negativeClick = {
-                            })
+                            positiveClick = {},
+                            negativeClick = {})
                         dialog.show()
                     }
                 }
@@ -149,10 +148,8 @@ class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.Re
                         it.message.toString(),
                         positiveBtnText = R.string.ok,
                         negativeBtnText = R.string.no,
-                        positiveClick = {
-                        },
-                        negativeClick = {
-                        })
+                        positiveClick = {},
+                        negativeClick = {})
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
@@ -165,25 +162,39 @@ class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.Re
 
     private fun retrieveData(output: ActiveGCResponse.Output) {
         inActiveGiftList = output.gci
-        if (inActiveGiftList.size>0){
+
+        if (inActiveGiftList.size > 0) {
             binding?.llBottom?.show()
             binding?.noData?.show()
-        }else{
+        } else {
             binding?.llBottom?.hide()
         }
-        if (output.gca.isEmpty()){
 
-        }else{
+        binding?.noTitle?.text = "No Gift Cards Available"
+        binding?.buttonProceed?.text = "Buy Gift Cards"
+        binding?.noSubTitle?.text = "Your Gift Cards will appear here"
+        binding?.noDataImg?.setImageResource(R.drawable.gift_card_no_data)
+
+        if (output.gca.isEmpty()) {
+            binding?.noData?.show()
+        } else {
             binding?.noData?.hide()
         }
-        if (output.gca.isEmpty()){
 
-        }else{
+        if (output.gci.isEmpty()) {
+//            binding?.buttonProceed?.hide()
+            binding?.noData?.show()
+        } else {
+            binding?.noData?.hide()
+        }
 
+        //back Button
+        binding?.buttonProceed?.setOnClickListener {
+            finish()
         }
 
         val gridLayout2 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-        val giftCardMainAdapter2 = ActivateGiftCardAdapter(output.gca,  this, this)
+        val giftCardMainAdapter2 = ActivateGiftCardAdapter(output.gca, this, this)
         binding?.recyclerView30?.layoutManager = gridLayout2
         binding?.recyclerView30?.adapter = giftCardMainAdapter2
     }
@@ -191,18 +202,17 @@ class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.Re
     override fun activateGiftCard(comingSoonItem: ActiveGCResponse.Gca) {
         if (comingSoonItem.customImageApprove != null && comingSoonItem.customImageApprove && comingSoonItem.ci != null && comingSoonItem.ci != "") {
             //Approved
-            showDialog(comingSoonItem,comingSoonItem.gcn.replace("ID:", ""))
+            showDialog(comingSoonItem, comingSoonItem.gcn.replace("ID:", ""))
         } else if (comingSoonItem.up) {
             // Waiting for Approval
-            showApprovalDialog(comingSoonItem,comingSoonItem.gcn.replace("ID:", ""))
+            showApprovalDialog(comingSoonItem, comingSoonItem.gcn.replace("ID:", ""))
         } else if (comingSoonItem.ci == null || comingSoonItem.ci == "") {
             // Details
-            showDialog(comingSoonItem,comingSoonItem.gcn.replace("ID:", ""))
+            showDialog(comingSoonItem, comingSoonItem.gcn.replace("ID:", ""))
         } else {
-           //Rejected
+            //Rejected
             val createIntent = Intent(
-                this@ActivateGiftCardActivity,
-                RejectedGiftCardActivity::class.java
+                this@ActivateGiftCardActivity, RejectedGiftCardActivity::class.java
             )
             createIntent.putExtra("cim", comingSoonItem.cim)
             createIntent.putExtra("msg", comingSoonItem.msg)
@@ -211,36 +221,32 @@ class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.Re
         }
     }
 
-    private fun showDialog(data: ActiveGCResponse.Gca,giftId: String) {
-        val pinDialog =  BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
+    private fun showDialog(data: ActiveGCResponse.Gca, giftId: String) {
+        val pinDialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
         pinDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         pinDialog.setCancelable(true)
         pinDialog.setCanceledOnTouchOutside(true)
         pinDialog.setContentView(R.layout.gift_pin_dialog)
         pinDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         pinDialog.window!!.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         pinDialog.window!!.setGravity(Gravity.BOTTOM)
         val et_card_pin = pinDialog.findViewById<EditText>(R.id.et_card_pin)
         val tv_proceed_detail = pinDialog.findViewById<TextView>(R.id.tv_proceed_detail)
         val iv_gift_image = pinDialog.findViewById<ImageView>(R.id.iv_gift_image)
-        if (data.ci != null && data.ci != "")
-            Glide.with(this)
-                .load(data.ci)
-                .error(R.drawable.gift_card_placeholder)
-                .placeholder(R.drawable.gift_card_placeholder)
-                .into(iv_gift_image!!)
-        else
-            Glide.with(this)
-                .load(data.ci)
-                .error(R.drawable.gift_card_placeholder)
-                .placeholder(R.drawable.gift_card_placeholder)
-                .into(iv_gift_image!!)
+        if (data.ci != null && data.ci != "") Glide.with(this).load(data.ci)
+            .error(R.drawable.gift_card_placeholder).placeholder(R.drawable.gift_card_placeholder)
+            .into(iv_gift_image!!)
+        else Glide.with(this).load(data.ci).error(R.drawable.gift_card_placeholder)
+            .placeholder(R.drawable.gift_card_placeholder).into(iv_gift_image!!)
         tv_proceed_detail?.setOnClickListener {
             if (et_card_pin?.text.toString().isNotEmpty()) {
-                authViewModel.redeemGC(preferences.getUserId(), giftId.replace("ID:", "").trim(),et_card_pin?.text.toString())
+                authViewModel.redeemGC(
+                    preferences.getUserId(),
+                    giftId.replace("ID:", "").trim(),
+                    et_card_pin?.text.toString()
+                )
                 getDetails(data)
                 et_card_pin?.setText("")
                 pinDialog.dismiss()
@@ -251,10 +257,8 @@ class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.Re
                     "Please enter Card Pin",
                     positiveBtnText = R.string.ok,
                     negativeBtnText = R.string.no,
-                    positiveClick = {
-                    },
-                    negativeClick = {
-                    })
+                    positiveClick = {},
+                    negativeClick = {})
                 dialog.show()
             }
         }
@@ -270,25 +274,17 @@ class ActivateGiftCardActivity : AppCompatActivity() ,ActivateGiftCardAdapter.Re
         pinDialog.setContentView(R.layout.gift_approval_dialog)
         pinDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         pinDialog.window!!.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         pinDialog.window!!.setGravity(Gravity.BOTTOM)
-        val upText:TextView = pinDialog.findViewById<TextView>(R.id.upText)!!
+        val upText: TextView = pinDialog.findViewById<TextView>(R.id.upText)!!
         upText.text = data.cim.toString()
         val iv_gift_image = pinDialog.findViewById<ImageView>(R.id.iv_gift_image)
-        if (data.ci != null && data.ci != "")
-            Glide.with(this)
-                .load(data.ci)
-                .error(R.drawable.gift_card_placeholder)
-                .placeholder(R.drawable.gift_card_placeholder)
-                .into(iv_gift_image!!)
-             else
-        Glide.with(this)
-            .load(data.ci)
-            .error(R.drawable.gift_card_placeholder)
-            .placeholder(R.drawable.gift_card_placeholder)
+        if (data.ci != null && data.ci != "") Glide.with(this).load(data.ci)
+            .error(R.drawable.gift_card_placeholder).placeholder(R.drawable.gift_card_placeholder)
             .into(iv_gift_image!!)
+        else Glide.with(this).load(data.ci).error(R.drawable.gift_card_placeholder)
+            .placeholder(R.drawable.gift_card_placeholder).into(iv_gift_image!!)
         pinDialog.window!!.setWindowAnimations(R.style.AppTheme_Slide)
         pinDialog.show()
     }

@@ -169,6 +169,7 @@
                             android:maxLength="4"
                             android:digits="0123456789"
                             android:inputType="number"
+                            android:imeOptions="actionDone"
                             android:textColor="@color/black"
                             android:textColorHint="@color/gray_"
                             android:textSize="@dimen/dimen_14sp" />
@@ -264,7 +265,7 @@
                 android:id="@+id/rv_custom_amount_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:itemCount="4"
+                tools:itemCount="2"
                 tools:listitem="@layout/custom_gift_list"
                 android:layout_marginStart="@dimen/dimen_20dp"
                 android:layout_marginTop="@dimen/padding_10"
@@ -280,6 +281,8 @@
                 android:layout_marginTop="@dimen/padding_10"
                 android:layout_marginEnd="@dimen/dimen_20dp"
                 android:layout_marginBottom="@dimen/padding_10"
+                tools:itemCount="2"
+                tools:listitem="@layout/add_amt_list"
                 android:nestedScrollingEnabled="false" />
 
         </LinearLayout>

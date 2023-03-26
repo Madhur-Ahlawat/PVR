@@ -99,14 +99,13 @@
                 </RelativeLayout>
 
 
-
                 <LinearLayout
                     android:id="@+id/upperView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
 
                     <include
@@ -285,7 +284,8 @@
             android:background="@color/white"
             android:orientation="vertical">
 
-           <include layout="@layout/button_next"
+           <include
+               layout="@layout/button_next"
                android:id="@+id/include37"/>
 
         </LinearLayout>

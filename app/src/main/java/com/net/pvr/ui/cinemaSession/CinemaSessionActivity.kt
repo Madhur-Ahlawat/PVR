@@ -31,7 +31,6 @@ import com.net.pvr.R
 import com.net.pvr.databinding.ActivityCinemaSessionBinding
 import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.bookingSession.MovieSessionActivity.Companion.btnc
-import com.net.pvr.ui.bookingSession.response.BookingResponse
 import com.net.pvr.ui.cinemaSession.adapter.CinemaSessionCinParentAdapter
 import com.net.pvr.ui.cinemaSession.adapter.CinemaSessionDaysAdapter
 import com.net.pvr.ui.cinemaSession.adapter.CinemaSessionLanguageAdapter
@@ -43,6 +42,7 @@ import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.filter.GenericFilterSession
 import com.net.pvr.ui.home.fragment.home.adapter.PromotionAdapter
+import com.net.pvr.ui.location.selectCity.response.SelectCityResponse
 import com.net.pvr.ui.login.LoginActivity
 import com.net.pvr.utils.*
 import com.net.pvr.utils.ga.GoogleAnalytics
@@ -53,7 +53,6 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 @Suppress("DEPRECATION", "NAME_SHADOWING")
 @AndroidEntryPoint
@@ -67,14 +66,14 @@ class CinemaSessionActivity : AppCompatActivity(),
     private var binding: ActivityCinemaSessionBinding? = null
     private val authViewModel: CinemaSessionViewModel by viewModels()
     private var loader: LoaderDialog? = null
-    private var cinemaSessionCinParentAdapter:CinemaSessionCinParentAdapter? = null
+    private var cinemaSessionCinParentAdapter: CinemaSessionCinParentAdapter? = null
 
     private var cinemaId = "0"
     private var cinemaName = "0"
     private var openTime = 0
     private var rowIndex = false
 
-    private var cinemaSessionData : CinemaSessionResponse.Output? = null
+    private var cinemaSessionData: CinemaSessionResponse.Output? = null
 
     private var appliedFilterItem = HashMap<String, String>()
     private var appliedFilterType = ""
@@ -113,25 +112,8 @@ class CinemaSessionActivity : AppCompatActivity(),
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         val view = binding?.root
         setContentView(view)
-        printLog("cid---->${intent.getStringExtra("cid").toString()}")
 
-        if (intent.hasExtra("cid"))
-        cinemaId = intent.getStringExtra("cid").toString()
         manageFunctions()
-
-        val intent = intent
-        val action = intent.action
-        val data = intent.data
-        if (data != null) {
-            val path = data.path
-            val parts = path!!.split("/".toRegex()).dropLastWhile { it.isEmpty() }
-                .toTypedArray()
-            preferences.saveString(Constant.SharedPreference.SELECTED_CITY_NAME, parts[2])
-            preferences.saveString(Constant.SharedPreference.SELECTED_CITY_ID, parts[2])
-            cinemaId = parts[4]
-            cinemaName = parts[3].replace("-".toRegex(), " ")
-        }
-
     }
 
     @SuppressLint("MissingPermission")
@@ -149,8 +131,6 @@ class CinemaSessionActivity : AppCompatActivity(),
                         }
                     }
                     if (addresses?.isNotEmpty() == true) {
-//                            val currentAddress: String = addresses[0].locality
-//                            preferences.cityNameCinema(currentAddress)
                         lat = location.latitude.toString()
                         lng = location.longitude.toString()
 
@@ -194,7 +174,7 @@ class CinemaSessionActivity : AppCompatActivity(),
                             )
                         }
 
-                    }else{
+                    } else {
                         authViewModel.cinemaSession(
                             preferences.getCityName(),
                             cinemaId,
@@ -273,9 +253,19 @@ class CinemaSessionActivity : AppCompatActivity(),
     }
 
     private fun manageFunctions() {
+        if (intent.hasExtra("cid")) cinemaId = intent.getStringExtra("cid").toString()
+        val intent = intent
+        val action = intent.action
+        val data = intent.data
+        if (data != null) {
+            val path = data.path
+            val parts = path!!.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            preferences.saveString(Constant.SharedPreference.SELECTED_CITY_NAME, parts[2])
+            preferences.saveString(Constant.SharedPreference.SELECTED_CITY_ID, parts[2])
+            cinemaId = parts[4]
+            cinemaName = parts[3].replace("-".toRegex(), " ")
+        }
 
-        cinemaSessionDataLoad()
-        cinemaNearTheaterLoad()
 
         //Hide AppBar
         Constant().appBarHide(this)
@@ -284,12 +274,14 @@ class CinemaSessionActivity : AppCompatActivity(),
         binding?.imageView41?.setOnClickListener {
             onBackPressed()
         }
+
         //internet Check
         broadcastReceiver = NetworkReceiver()
         broadcastIntent()
         getShimmerData()
         getLocation()
-
+        cinemaSessionDataLoad()
+        cinemaNearTheaterLoad()
 
     }
 
@@ -318,8 +310,8 @@ class CinemaSessionActivity : AppCompatActivity(),
                     loader?.dismiss()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         cinemaSessionData = it.data.output
-                        retrieveData(it.data.output)
                         btnc = it.data.output.btnc
+                        retrieveData(it.data.output)
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -327,7 +319,9 @@ class CinemaSessionActivity : AppCompatActivity(),
                             it.data?.msg.toString(),
                             positiveBtnText = R.string.ok,
                             negativeBtnText = R.string.no,
-                            positiveClick = {},
+                            positiveClick = {
+                                finish()
+                            },
                             negativeClick = {})
                         dialog.show()
                     }
@@ -373,23 +367,31 @@ class CinemaSessionActivity : AppCompatActivity(),
 
     private fun retrieveTheaterData(output: CinemaNearTheaterResponse.Output) {
         //recycler Cinemas
-        val snapHelper = PagerSnapHelper()
-        binding?.recyclerView18?.onFlingListener = null
-        snapHelper.attachToRecyclerView(binding?.recyclerView18)
-        val gridLayout4 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
-        val cinemaSessionNearTheaterAdapter = CinemaSessionNearTheaterAdapter(output.c, this, this)
-        binding?.recyclerView18?.layoutManager = gridLayout4
-        binding?.recyclerView18?.adapter = cinemaSessionNearTheaterAdapter
+        if (output.c.isEmpty()) {
+            binding?.constraintLayout187?.hide()
+        } else if (output.c.size == 0) {
+            binding?.constraintLayout187?.hide()
+        } else {
+            binding?.constraintLayout187?.show()
+            val snapHelper = PagerSnapHelper()
+            binding?.recyclerView18?.onFlingListener = null
+            snapHelper.attachToRecyclerView(binding?.recyclerView18)
+            val gridLayout4 = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+            val cinemaSessionNearTheaterAdapter =
+                CinemaSessionNearTheaterAdapter(output.c, this, this)
+            binding?.recyclerView18?.layoutManager = gridLayout4
+            binding?.recyclerView18?.adapter = cinemaSessionNearTheaterAdapter
+        }
+
     }
 
     @SuppressLint("SetTextI18n")
     private fun retrieveData(output: CinemaSessionResponse.Output) {
+        binding?.filterFab?.show()
         //movie Details
         binding?.nestedScrollView5?.show()
         //shimmer
         binding?.constraintLayout145?.hide()
-        //Filter
-//        binding?.filterFab?.hide()
 
         cinemaLat = output.lat
         cinemaLng = output.lang
@@ -410,11 +412,9 @@ class CinemaSessionActivity : AppCompatActivity(),
                     bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "CINEMA PROFILE PAGE")
 //                    bundle.putString("var_login_city", cityNameMAin)
                     GoogleAnalytics.hitEvent(this, "cinema_movie_directions", bundle)
-                }catch (e:Exception){
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
-
-
 
                 Constant().openMap(this, output.lat, output.lang)
             }
@@ -437,8 +437,6 @@ class CinemaSessionActivity : AppCompatActivity(),
             }
 
             // search Click
-
-
             //search
             binding?.include43?.editTextTextPersonName?.addTextChangedListener(object :
                 TextWatcher {
@@ -487,7 +485,7 @@ class CinemaSessionActivity : AppCompatActivity(),
 
             //recycler Cinemas
             val gridLayout3 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-             cinemaSessionCinParentAdapter =
+            cinemaSessionCinParentAdapter =
                 CinemaSessionCinParentAdapter(output.childs, this, cinemaId)
             binding?.recyclerView15?.layoutManager = gridLayout3
             binding?.recyclerView15?.adapter = cinemaSessionCinParentAdapter
@@ -571,7 +569,7 @@ class CinemaSessionActivity : AppCompatActivity(),
         } else {
             //recycler Cinemas
             val gridLayout3 = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
-             cinemaSessionCinParentAdapter =
+            cinemaSessionCinParentAdapter =
                 CinemaSessionCinParentAdapter(output.childs, this, cinemaId)
             binding?.recyclerView15?.layoutManager = gridLayout3
             binding?.recyclerView15?.adapter = cinemaSessionCinParentAdapter
@@ -613,7 +611,7 @@ class CinemaSessionActivity : AppCompatActivity(),
             bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "CINEMA PROFILE PAGE")
 //            bundle.putString("var_login_city", cityNameMAin)
             GoogleAnalytics.hitEvent(this, "cinema_movie_show_time", bundle)
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
@@ -664,47 +662,6 @@ class CinemaSessionActivity : AppCompatActivity(),
 
     override fun languageClick(comingSoonItem: String) {
 
-    }
-
-    private fun filter(text: String) {
-        //new array list that will hold the filtered data
-        val filteredNames: ArrayList<CinemaSessionResponse.Child> = ArrayList()
-
-        //looping through existing elements
-        for (list in cinemaSessionData?.childs!!) {
-
-            //if the existing elements contains the search input
-            if (list.ccn.lowercase(Locale.getDefault())
-                    .contains(text.lowercase(Locale.getDefault()))
-            ) {
-
-                //adding the element to filtered list
-                filteredNames.add(list)
-            }
-        }
-
-        //calling a method of the adapter class and passing the filtered list
-        if (filteredNames.size > 0) {
-            cinemaSessionCinParentAdapter?.filterList(
-                filteredNames
-            )
-        } else {
-            cinemaSessionCinParentAdapter?.filterList(
-                filteredNames
-            )
-        }
-
-
-        //calling a method of the adapter class and passing the filtered list
-        if (filteredNames.size > 0) {
-            cinemaSessionCinParentAdapter?.filterList(
-                filteredNames
-            )
-        } else {
-            cinemaSessionCinParentAdapter?.filterList(
-                filteredNames
-            )
-        }
     }
 
 
@@ -921,9 +878,107 @@ class CinemaSessionActivity : AppCompatActivity(),
                         RecognizerIntent.EXTRA_RESULTS
                     )
                     binding?.include43?.editTextTextPersonName?.setText(
-                        Objects.requireNonNull(result)?.get(0)
+                        Objects.requireNonNull(result)!!.get(0)
                     )
                 }
             }
         }
+
+
+
+
+    private fun filter(text: String) {
+        val filtered: ArrayList<CinemaSessionResponse.Child.Mv> = ArrayList()
+        val filtered1: ArrayList<CinemaSessionResponse.Child.Mv> = ArrayList()
+//        for (item in cinemaSessionData!!) {
+//            if (item.name.lowercase(Locale.getDefault())
+//                    .contains(text.lowercase(Locale.getDefault()))
+//            ) {
+//                filtered.add(item)
+//            }
+//        }
+//
+
+        for ( item in cinemaSessionData!!.childs){
+
+            for (i in item.mvs) {
+
+                if (i.mn.lowercase(Locale.getDefault()).contains(text.lowercase(Locale.getDefault()))){
+                    filtered.add(i)
+                }
+                //..............
+            }
+
+        }
+//
+//        for (list in cinemaSessionData?.childs!!) {
+//
+//
+//            //if the existing elements contains the search input
+//            if (list.ccn.lowercase(Locale.getDefault())
+//                    .contains(text.lowercase(Locale.getDefault()))) {
+//                //adding the element to filtered list
+//                filtered.add(list)
+//            }
+//        }
+
+        if (filtered.isEmpty()) {
+//            binding?.consSelectedLocation?.hide()
+//            binding?.nestedScrollView3?.hide()
+//            binding?.consSelectCity?.hide()
+//            binding?.recyclerViewSearchCity?.hide()
+//            binding?.textView124?.show()
+            cinemaSessionCinParentAdapter?.filterList(filtered1)
+        } else {
+//            binding?.consSelectedLocation?.show()
+//            binding?.nestedScrollView3?.show()
+//            binding?.consSelectCity?.show()
+//            binding?.textView124?.hide()
+//            binding?.nestedScrollView3?.show()
+            cinemaSessionCinParentAdapter?.filterList(filtered)
+        }
+    }
+
+//    private fun filter(text: String) {
+//        val filteredNames: ArrayList<CinemaSessionResponse.Child> = ArrayList()
+//        //new array list that will hold the filtered data
+//        printLog("texrrtttt------->${text}----${filteredNames}----$cinemaSessionData")
+//
+//
+//        //looping through existing elements
+//        for (list in cinemaSessionData?.childs!!) {
+//
+//
+//            //if the existing elements contains the search input
+//            if (list.ccn.lowercase(Locale.getDefault())
+//                    .contains(text.lowercase(Locale.getDefault()))
+//            ) {
+//                //adding the element to filtered list
+//                filteredNames.add(list)
+//            }
+//        }
+//
+//        //calling a method of the adapter class and passing the filtered list
+//        if (filteredNames.size > 0) {
+//            cinemaSessionCinParentAdapter?.filterList(
+//                filteredNames
+//            )
+//        } else {
+//            cinemaSessionCinParentAdapter?.filterList(
+//                filteredNames
+//            )
+//        }
+//
+//
+//        //calling a method of the adapter class and passing the filtered list
+//        if (filteredNames.size > 0) {
+//            cinemaSessionCinParentAdapter?.filterList(
+//                filteredNames
+//            )
+//        } else {
+//            cinemaSessionCinParentAdapter?.filterList(
+//                filteredNames
+//            )
+//        }
+//    }
 }

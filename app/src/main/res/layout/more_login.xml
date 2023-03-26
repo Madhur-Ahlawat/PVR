@@ -99,13 +99,87 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/experience"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/view155"
+            app:layout_constraintStart_toStartOf="@+id/view155"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout70">
+
+            <ImageView
+                android:id="@+id/imageView171"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/my_booking"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
+
+
+            <TextView
+                android:id="@+id/textView390"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:includeFontPadding="false"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/sf_pro_text_medium"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
+                android:text="@string/experience"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView171"
+                app:layout_constraintStart_toEndOf="@+id/imageView171"
+                app:layout_constraintTop_toTopOf="@+id/imageView171" />
+
+            <ImageView
+                android:id="@+id/imageView172"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_bright"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription"
+                app:tint="@color/gray_payment" />
+
+
+            <View
+                android:id="@+id/view237"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/grayEd"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView390" />
+
+            <include
+                android:id="@+id/includeExperience"
+                layout="@layout/new_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView390"
+                app:layout_constraintStart_toEndOf="@+id/textView390"
+                app:layout_constraintTop_toTopOf="@+id/textView390" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout71"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@+id/view155"
             app:layout_constraintStart_toStartOf="@+id/view155"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout70">
+            app:layout_constraintTop_toBottomOf="@+id/experience">
 
             <ImageView
                 android:id="@+id/imageView120"
