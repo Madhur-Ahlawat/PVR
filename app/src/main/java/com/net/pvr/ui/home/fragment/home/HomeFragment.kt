@@ -56,11 +56,13 @@ import com.net.pvr.ui.home.fragment.home.adapter.*
 import com.net.pvr.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr.ui.home.fragment.home.response.NextBookingResponse
 import com.net.pvr.ui.home.fragment.home.viewModel.HomeViewModel
+import com.net.pvr.ui.home.fragment.more.offer.OfferActivity
 import com.net.pvr.ui.home.fragment.more.offer.offerDetails.OfferDetailsActivity
 import com.net.pvr.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr.ui.home.fragment.more.profile.userDetails.ProfileActivity
 import com.net.pvr.ui.home.interfaces.PlayPopup
 import com.net.pvr.ui.location.selectCity.SelectCityActivity
+import com.net.pvr.ui.login.LoginActivity
 import com.net.pvr.ui.movieDetails.nowShowing.NowShowingMovieDetailsActivity
 import com.net.pvr.ui.movieDetails.nowShowing.adapter.MusicVideoTrsAdapter
 import com.net.pvr.ui.movieDetails.nowShowing.adapter.TrailerTrsAdapter
@@ -146,6 +148,8 @@ class HomeFragment : Fragment(),
     private var listener: PlayPopup? = null
 
     var gFilter: GenericFilterHome? = null
+
+    private  var bottomSheetDialog: BottomSheetDialog?=null
 
     //internet Check
     private var broadcastReceiver: BroadcastReceiver? = null
@@ -292,6 +296,7 @@ class HomeFragment : Fragment(),
         binding?.constraintLayout55?.setOnClickListener {
 
         }
+
         binding?.imageView78?.setOnClickListener {
             try {
                 binding?.constraintLayout55?.hide()
@@ -466,23 +471,23 @@ class HomeFragment : Fragment(),
 
 
     //  offers Dialog
-    private var positionUpdate = 0
     private fun showOfferDialog() {
-        val dialog = BottomSheetDialog(requireActivity(), R.style.NoBackgroundDialogTheme)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.offer_dialog)
-        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window!!.setLayout(
+        bottomSheetDialog = BottomSheetDialog(requireActivity(), R.style.NoBackgroundDialogTheme)
+        bottomSheetDialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        bottomSheetDialog?.setContentView(R.layout.offer_dialog)
+        bottomSheetDialog?.behavior?.state = BottomSheetBehavior.STATE_EXPANDED
+        bottomSheetDialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        bottomSheetDialog?.window!!.setLayout(
             ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        dialog.show()
+        bottomSheetDialog?.show()
 
-        val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerView26)
-        val ignore = dialog.findViewById<TextView>(R.id.textView194)
-        val textView5 = dialog.findViewById<TextView>(R.id.textView5)
-        val indicators = dialog.findViewById<LinearLayout>(R.id.indicators)
-        val textView192 = dialog.findViewById<TextView>(R.id.textView192)
+        val recyclerView = bottomSheetDialog?.findViewById<RecyclerView>(R.id.recyclerView26)
+        val ignore = bottomSheetDialog?.findViewById<TextView>(R.id.textView194)
+        val textView5 = bottomSheetDialog?.findViewById<TextView>(R.id.textView5)
+        val indicators = bottomSheetDialog?.findViewById<LinearLayout>(R.id.indicators)
+        val textView192 = bottomSheetDialog?.findViewById<TextView>(R.id.textView192)
+
         textView5?.text = getString(R.string.explore_offers)
         val gridLayout =
             GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
@@ -496,57 +501,17 @@ class HomeFragment : Fragment(),
         recyclerView?.adapter = adapter
         textView192?.text = offerResponse?.get(0)?.offerName
 
-        if (positionUpdate==0){
-            textView5?.setOnClickListener {
-                val intent = Intent(
-                    Intent.ACTION_VIEW, Uri.parse(
-                        offerResponse?.get(positionUpdate)?.otherLinkRedirectUrl?.replace(
-                            "https",
-                            "app"
-                        )
-                    )
-                )
-                startActivity(intent)
-                dialog.dismiss()
-            }
+        textView5?.setOnClickListener {
+            val intent = Intent(requireActivity(), OfferActivity::class.java)
+            startActivity(intent)
+            bottomSheetDialog?.dismiss()
         }
-
-        recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    val position = HomeActivity.getCurrentItem(recyclerView)
-                    textView192?.text = offerResponse?.get(position)?.offerName
-                    printLog("check------->${position}")
-                    positionUpdate=position
-                    textView5?.setOnClickListener {
-                        printLog(
-                            "----------------------->${
-                                offerResponse?.get(position)?.otherLinkRedirectUrl?.replace(
-                                    "https", "app"
-                                )
-                            }"
-                        )
-                        val intent = Intent(
-                            Intent.ACTION_VIEW, Uri.parse(
-                                offerResponse?.get(position)?.otherLinkRedirectUrl?.replace(
-                                    "https",
-                                    "app"
-                                )
-                            )
-                        )
-                        startActivity(intent)
-                        dialog.dismiss()
-                    }
-                }
-            }
-        })
 
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(recyclerView)
 
         ignore?.setOnClickListener {
-            dialog.dismiss()
+            bottomSheetDialog?.dismiss()
             try {
                 binding?.constraintLayout55?.hide()
                 authViewModel.hideOffer(
@@ -557,9 +522,10 @@ class HomeFragment : Fragment(),
                 )
                 // hideDataLoad()
             } catch (e: java.lang.Exception) {
-
+                e.printStackTrace()
             }
         }
+
         if (offerResponse?.size!! > 1) {
             indicators?.show()
             recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -1926,12 +1892,22 @@ class HomeFragment : Fragment(),
 
     }
 
-    override fun offerClick(comingSoonItem: OfferResponse.Offer) {
+    override fun offerItemClick(comingSoonItem: OfferResponse.Offer) {
+
+        val intent = Intent(
+            Intent.ACTION_VIEW, Uri.parse(
+                comingSoonItem.otherLinkRedirectUrl.replace(
+                    "https",
+                    "app"
+                )
+            )
+        )
+        startActivity(intent)
+        bottomSheetDialog?.dismiss()
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    fun getShowCountHome(filterStrings: Map<String, ArrayList<String?>>): Int {
+     fun getShowCountHome(filterStrings: Map<String, ArrayList<String?>>): Int {
         var showCount = 0
         var languages: List<String?> = ArrayList()
         var genres: List<String?> = ArrayList()
@@ -1962,8 +1938,7 @@ class HomeFragment : Fragment(),
         return showCount
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    fun filterMovies(
+    private fun filterMovies(
         movies: ArrayList<HomeResponse.Mv>,
         languages: List<String?>,
         genres: List<String?>,

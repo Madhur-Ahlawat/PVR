@@ -551,22 +551,6 @@ class HomeActivity : AppCompatActivity(),
 
                 Handler().postDelayed({ back_flag = 0 }, 3000)
 
-//                val dialog = OptionDialog(this,
-//                    R.mipmap.ic_launcher,
-//                    R.string.app_name,
-//                    getString(R.string.exitApp),
-//                    positiveBtnText = R.string.yes,
-//                    negativeBtnText = R.string.no,
-//                    positiveClick = {
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-//                        back_flag = 1
-//                        val a = Intent(Intent.ACTION_MAIN)
-//                        a.addCategory(Intent.CATEGORY_HOME)
-//                        a.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//                        startActivity(a)
-//                    },
-//                    negativeClick = {})
-//                dialog.show()
                 back_flag = 1
 
             } else {

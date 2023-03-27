@@ -37,7 +37,9 @@ data class GiftCardDetailResponse(
         val ta: String,
         val tan: String,
         val title: String,
-        val tp: String
+        val tp: String,
+        val tnc: String,
+        val tnC: String
     )
     data class Fn(
         val c: Int,

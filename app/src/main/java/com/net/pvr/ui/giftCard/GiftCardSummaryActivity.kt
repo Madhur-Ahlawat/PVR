@@ -1,20 +1,26 @@
 package com.net.pvr.ui.giftCard
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.text.Html
 import android.text.TextUtils
 import android.view.*
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.CheckBox
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityGiftcardSummaryBinding
@@ -31,6 +37,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
 import javax.inject.Inject
 
+
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
 class GiftCardSummaryActivity : AppCompatActivity() {
@@ -43,6 +50,7 @@ class GiftCardSummaryActivity : AppCompatActivity() {
     private val authViewModel: ActivateGiftCardViewModel by viewModels()
     private var df = DecimalFormat("#,###.00")
 
+    private  var tncUrl =""
     @Inject
     lateinit var preferences: PreferenceManager
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -127,6 +135,8 @@ class GiftCardSummaryActivity : AppCompatActivity() {
         }
     }
 
+    private var textTermsAndCondition: TextView? = null
+
     private fun initData() {
         if (intent != null) {
             if (intent.getStringExtra("imageValueUri") != null) {
@@ -136,41 +146,54 @@ class GiftCardSummaryActivity : AppCompatActivity() {
             }
         }
 
-        binding?.checkboxTnc?.setOnClickListener{ v ->
-            val checked = (v as CheckBox).isChecked
-            // Check which checkbox was clicked
-            if (checked) {
-                binding?.llPayGift?.show()
-                binding?.llProceedGiftUnselect?.hide()
-                binding?.checkboxTnc?.isChecked = true
-            } else {
-                binding?.llPayGift?.hide()
-                binding?.llProceedGiftUnselect?.show()
-            }
-        }
+//        binding?.checkboxTnc?.setOnClickListener{ v ->
+//            val checked = (v as CheckBox).isChecked
+//            // Check which checkbox was clicked
+//            if (checked) {
+//                binding?.llPayGift?.show()
+//                binding?.llProceedGiftUnselect?.hide()
+//                binding?.checkboxTnc?.isChecked = true
+//            } else {
+//                binding?.llPayGift?.hide()
+//                binding?.llProceedGiftUnselect?.show()
+//            }
+//        }
 
         binding?.tvTermsGift?.setOnClickListener{
-
-            val termsDialog = Dialog(this)
-            termsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            termsDialog.setCancelable(true)
-            termsDialog.setCanceledOnTouchOutside(true)
-            termsDialog.setContentView(R.layout.gc_terms_dialoge)
-            termsDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            termsDialog.window!!.setLayout(
+            val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setContentView(R.layout.seat_t_c_dialog_layout)
+            dialog.setCancelable(false)
+            val behavior: BottomSheetBehavior<FrameLayout> = dialog.behavior
+            behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+            dialog.window?.setGravity(Gravity.BOTTOM)
+            dialog.window!!.setLayout(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
             )
-            termsDialog.window!!.setGravity(Gravity.BOTTOM)
-            termsDialog.findViewById<TextView>(R.id.tv_t_n_c)
-            val tvAcceptTerms = termsDialog.findViewById<TextView>(R.id.tv_accept_terms)
-            tvAcceptTerms.setOnClickListener {
-                termsDialog.dismiss()
-                binding?.llPayGift?.show()
-                binding?.llProceedGiftUnselect?.hide()
-                binding?.checkboxTnc?.isChecked = true
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+            dialog.window!!.setGravity(Gravity.BOTTOM)
+            dialog.show()
+            dialog.setCanceledOnTouchOutside(false)
+
+            val btnName = dialog.findViewById<TextView>(R.id.textView5)
+
+            textTermsAndCondition = dialog.findViewById(R.id.textTermsAndCondition)
+            val value =Constant().setSubtitle(tncUrl)
+            val secretedData=value.replace("|", "")
+//            val regex = "-?\\d+(\\.\\d+)?"
+//            val sourceString = "<b>$regex</b> $secretedData"
+
+            textTermsAndCondition?.text =secretedData
+
+//            textTermsAndCondition?.text = value.replace("|", "")
+            btnName?.text = getString(R.string.accept)
+            btnName?.setOnClickListener {
+
+                dialog.dismiss()
             }
-            termsDialog.window!!.setWindowAnimations(R.style.AppTheme_Slide)
-            termsDialog.show()
+
 
         }
 
@@ -185,40 +208,58 @@ class GiftCardSummaryActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding?.llPayGift?.setOnClickListener{
-            //NEW GOOGLE IMPLEMENTED
-            if (binding?.checkboxTnc?.isChecked == true) {
-//PP Work to do
+//        binding?.llPayGift?.setOnClickListener{
+//            //NEW GOOGLE IMPLEMENTED
+//            if (binding?.checkboxTnc?.isChecked == true) {
+//
+//
+//            } else {
+//                val dialog = OptionDialog(this,
+//                    R.mipmap.ic_launcher,
+//                    R.string.app_name,
+//                    "Please accept the T&C to proceed",
+//                    positiveBtnText = R.string.ok,
+//                    negativeBtnText = R.string.no,
+//                    positiveClick = {},
+//                    negativeClick = {})
+//                dialog.show()
+//            }
+//        }
 
-                val intent = Intent(this, PaymentActivity::class.java)
-                intent.putExtra("paidAmount",paidAmount)
 
-                startActivity(intent)
-
+        binding?.checkboxTnc?.setOnCheckedChangeListener { _, isChecked ->
+            // checkbox status is changed from uncheck to checked.
+            if (isChecked) {
+                binding?.checkboxTnc?.buttonTintList =
+                    ColorStateList.valueOf(this.getColor(R.color.black))
             } else {
-                val dialog = OptionDialog(this,
-                    R.mipmap.ic_launcher,
-                    R.string.app_name,
-                    "Please accept the T&C to proceed",
-                    positiveBtnText = R.string.ok,
-                    negativeBtnText = R.string.no,
-                    positiveClick = {},
-                    negativeClick = {})
-                dialog.show()
+                binding?.checkboxTnc?.buttonTintList =
+                    ColorStateList.valueOf(this.getColor(R.color.black))
             }
         }
 
         binding?.llProceedGiftUnselect?.setOnClickListener{
+            if (binding?.checkboxTnc?.isChecked== false){
+                binding?.checkboxTnc?.buttonTintList =
+                    ColorStateList.valueOf(this.getColor(R.color.red))
+                val shake: Animation =
+                    AnimationUtils.loadAnimation(this@GiftCardSummaryActivity, R.anim.shake)
+                binding?.tvTermsGift?.startAnimation(shake)
+                Constant().vibrateDevice(this)
 
-            val dialog = OptionDialog(this,
-                R.mipmap.ic_launcher,
-                R.string.app_name,
-                "Please accept the T&C to proceed",
-                positiveBtnText = R.string.ok,
-                negativeBtnText = R.string.no,
-                positiveClick = {},
-                negativeClick = {})
-            dialog.show()
+//                binding?.llPayGift?.show()
+//                binding?.llProceedGiftUnselect?.hide()
+
+            }else{
+//                binding?.llPayGift?.show()
+//                binding?.llProceedGiftUnselect?.hide()
+
+                //PP Work to do
+                val intent = Intent(this, PaymentActivity::class.java)
+                intent.putExtra("paidAmount",paidAmount)
+                startActivity(intent)
+
+            }
         }
 
         binding?.btnPay?.setOnClickListener{
@@ -230,11 +271,13 @@ class GiftCardSummaryActivity : AppCompatActivity() {
             }catch (e:Exception){
                 e.printStackTrace()
             }
+
             //PP Work to do
             val intent = Intent(this, PaymentActivity::class.java)
             intent.putExtra("paidAmount",paidAmount)
             startActivity(intent)
         }
+
     }
 
     private fun getGiftCardDetails() {
@@ -284,6 +327,7 @@ class GiftCardSummaryActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun retrieveData(output: GiftCardDetailResponse.Output) {
         addData(output.fn,output.dc)
+        tncUrl= output.tnC
         paidAmount = output.a
         binding?.otherPg?.rlMainLayout?.show()
 

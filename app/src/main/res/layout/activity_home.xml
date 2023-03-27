@@ -41,6 +41,7 @@
             android:layout_height="50dp"
             app:backgroundTint="@color/white"
             app:itemBackground="@color/white"
+            app:itemIconTint="@color/text_selection_menu"
             app:itemTextColor="@color/text_selection_menu"
             android:background="@color/translucent"
             app:labelVisibilityMode="labeled"

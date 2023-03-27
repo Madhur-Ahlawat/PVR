@@ -2,65 +2,80 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="bottom"
-    android:layout_marginBottom="-50dp"
-    android:orientation="vertical"
-    android:background="@drawable/bg_circle_see_all"
-    android:backgroundTint="@color/white">
+    android:background="@drawable/bottom_corner"
+    android:backgroundTint="@color/white"
+    android:orientation="vertical">
 
     <View
         android:layout_width="@dimen/dimen_50dp"
         android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dimen_5dp"
-        android:background="@color/gray_color_pvr"
-        android:layout_gravity="center_horizontal"/>
+        android:background="@color/gray_color_pvr" />
 
     <TextView
+        style="@style/text_black_bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimen_15dp"
+        android:gravity="center"
         android:text="Terms &amp; Conditions"
         android:textColor="@color/black"
-        style="@style/text_black_bold"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/dimen_15dp"
-        android:textSize="@dimen/dimen_16sp"/>
+        android:textSize="@dimen/dimen_16sp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dimen_15dp"
-        android:background="@color/gray_"
-        android:layout_gravity="center_horizontal"/>
+        android:background="@color/gray_" />
 
-    <TextView
-        android:id="@+id/tv_t_n_c"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/note_data"
-        android:textColor="@color/gray_"
-        android:layout_marginTop="@dimen/dimen_20dp"
-        android:layout_margin="@dimen/dimen_20dp"
-        android:isScrollContainer="true"
-        android:textSize="@dimen/dimen_12sp"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="350dp"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_t_n_c"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/dimen_20dp"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:isScrollContainer="true"
+                android:text="@string/note_data"
+                android:textColor="@color/gray_"
+                android:textSize="@dimen/dimen_12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
 
     <TextView
         android:id="@+id/tv_accept_terms"
+        style="@style/text_black_bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Accept"
-        android:textColor="@color/black"
-        style="@style/text_black_bold"
-        android:textStyle="bold"
-        android:textSize="@dimen/dimen_16sp"
-        android:gravity="center"
+        android:layout_marginStart="@dimen/dimen_20dp"
+        android:layout_marginTop="@dimen/padding_10"
+        android:layout_marginEnd="@dimen/dimen_20dp"
         android:background="@drawable/bg_genre_yellow"
         android:backgroundTint="@color/yellow_gift"
+        android:gravity="center"
         android:padding="@dimen/dimen_15dp"
-        android:layout_marginTop="@dimen/padding_10"
-        android:layout_marginStart="@dimen/dimen_20dp"
-        android:layout_marginEnd="@dimen/dimen_20dp"
-        android:layout_marginBottom="@dimen/dimen_60dp"/>
-
+        android:text="@string/accept"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dimen_16sp"
+        android:textStyle="bold" />
 
 </LinearLayout>

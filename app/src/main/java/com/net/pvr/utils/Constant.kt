@@ -960,4 +960,8 @@ class Constant {
         return s.substring(0, 1).uppercase(Locale.getDefault()) +
                 s.substring(1).lowercase(Locale.getDefault())
     }
+
+    fun setSubtitle(subtitle: String): String {
+      return  subtitle.replace("\\n", System.getProperty("line.separator"))
+    }
 }
