@@ -14,12 +14,12 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
-class PlayerActivity : AppCompatActivity(),YouTubePlayer.OnInitializedListener {
+class PlayerActivity : AppCompatActivity(), YouTubePlayer.OnInitializedListener {
     private var binding: ActivityPlayerBinding? = null
     private var apiKey = "AIzaSyBHqqCEPXq1hU3nEcsBgROgwGOsiSDZlfc"
     private var isSingleVideo = true
     private var trailerUrl = ""
-    private var youtubeVideoCode=""
+    private var youtubeVideoCode = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +50,7 @@ class PlayerActivity : AppCompatActivity(),YouTubePlayer.OnInitializedListener {
                 positiveBtnText = R.string.ok,
                 negativeBtnText = R.string.no,
                 positiveClick = {
-                 finish()
+                    finish()
                 },
                 negativeClick = {
                 })
@@ -97,8 +97,7 @@ class PlayerActivity : AppCompatActivity(),YouTubePlayer.OnInitializedListener {
 
     override fun onInitializationFailure(
         p0: YouTubePlayer.Provider?,
-        p1: YouTubeInitializationResult?
-    ) {
+        p1: YouTubeInitializationResult?) {
         val dialog = OptionDialog(this,
             R.mipmap.ic_launcher,
             R.string.app_name,

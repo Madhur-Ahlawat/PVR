@@ -86,8 +86,8 @@ class HomeOfferAdapter(
         }
 
         //moreDetails
-        holder.itemView.setOnClickListener {
-            listener.offerClick(cinemaItem)
+        holder.image.setOnClickListener {
+            listener.offerItemClick(cinemaItem)
         }
     }
 
@@ -100,7 +100,7 @@ class HomeOfferAdapter(
     }
 
     interface RecycleViewItemClickListenerCity {
-        fun offerClick(comingSoonItem: OfferResponse.Offer)
+        fun offerItemClick(comingSoonItem: OfferResponse.Offer)
     }
 
 }

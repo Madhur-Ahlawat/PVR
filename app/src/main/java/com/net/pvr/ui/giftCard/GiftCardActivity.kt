@@ -64,7 +64,6 @@ class GiftCardActivity : AppCompatActivity() ,
         val view = binding?.root
         setContentView(view)
 
-
         manageFunction()
     }
 

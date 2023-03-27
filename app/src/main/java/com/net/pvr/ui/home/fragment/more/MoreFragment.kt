@@ -75,7 +75,6 @@ class MoreFragment : Fragment() {
     companion object{
         var clickRefresh = false
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
