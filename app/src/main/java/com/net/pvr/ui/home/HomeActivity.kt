@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 import com.net.pvr.R
@@ -120,7 +121,6 @@ class HomeActivity : AppCompatActivity(),
         authViewModel.privilegeHome(preferences.geMobileNumber(), preferences.getCityName())
 
         if (intent.hasExtra("from")) from = intent.getStringExtra("from").toString()
-        println("managePrivilege---$from")
 
         privilegeDataLoad()
         movedNext()
@@ -535,30 +535,44 @@ class HomeActivity : AppCompatActivity(),
             dialogTrailer?.dismiss()
         }else {
             if (binding?.bottomNavigationView?.selectedItemId == R.id.homeFragment) {
-                //if (back_flag==0) {
-                val dialog = OptionDialog(this,
-                    R.mipmap.ic_launcher,
-                    R.string.app_name,
-                    getString(R.string.exitApp),
-                    positiveBtnText = R.string.yes,
-                    negativeBtnText = R.string.no,
-                    positiveClick = {
+
+                if (back_flag == 0) {
+                    back_flag = 1
+                    val snackBar = Snackbar
+                        .make(
+                            this@HomeActivity.binding?.constraintLayout188!!,
+                            "Press again to close the app!",
+                            Snackbar.LENGTH_LONG
+                        )
+                    snackBar.show()
+                } else {
+                    finish()
+                }
+
+                Handler().postDelayed({ back_flag = 0 }, 3000)
+
+//                val dialog = OptionDialog(this,
+//                    R.mipmap.ic_launcher,
+//                    R.string.app_name,
+//                    getString(R.string.exitApp),
+//                    positiveBtnText = R.string.yes,
+//                    negativeBtnText = R.string.no,
+//                    positiveClick = {
 //                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                        back_flag = 1
-                        val a = Intent(Intent.ACTION_MAIN)
-                        a.addCategory(Intent.CATEGORY_HOME)
-                        a.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                        startActivity(a)
-                    },
-                    negativeClick = {})
-                dialog.show()
+//                        back_flag = 1
+//                        val a = Intent(Intent.ACTION_MAIN)
+//                        a.addCategory(Intent.CATEGORY_HOME)
+//                        a.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//                        startActivity(a)
+//                    },
+//                    negativeClick = {})
+//                dialog.show()
                 back_flag = 1
-//            } else {
-//                finish()
-//            }
 
             } else {
+                setCurrentFragment(HomeFragment())
                 binding?.bottomNavigationView?.selectedItemId = R.id.homeFragment
+
             }
         }
     }

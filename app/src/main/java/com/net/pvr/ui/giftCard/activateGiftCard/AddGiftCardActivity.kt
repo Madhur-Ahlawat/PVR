@@ -97,6 +97,11 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
         binding?.tvAddAmountCustom?.setOnClickListener(this)
 
         binding?.tvTotal?.text = resources.getString(R.string.currency) + " " + total_amount
+        if (total_amount>0){
+            binding?.priceUi?.show()
+        }else{
+            binding?.priceUi?.hide()
+        }
         giftCardListFilter = ArrayList()
         if (intent != null) {
             if (intent.hasExtra("genericList")) {
@@ -200,6 +205,17 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
                     }
                     if (customAmountTotal + custom_amount <= 5000) {
                         total_amount += custom_amount
+                        if (total_amount>0){
+                            binding?.priceUi?.show()
+                        }else{
+                            binding?.priceUi?.hide()
+                        }
+                        if (total_amount>0){
+                            binding?.priceUi?.show()
+                        }else{
+                            binding?.priceUi?.hide()
+                        }
+
                         binding?.tvTotal?.text = resources.getString(R.string.currency) + " " + total_amount
                         binding?.llProceedGift?.show()
                         binding?.llProceedGiftUnselect?.hide()
@@ -285,6 +301,11 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
     fun customCloseClick(pos: Int, amount: String) {
         total_amount -= amount.toInt() * customizedGiftList[pos].c.toInt()
         binding?.tvTotal?.text = total_amount.toString()
+        if (total_amount>0){
+            binding?.priceUi?.show()
+        }else{
+            binding?.priceUi?.hide()
+        }
         customizedGiftList.removeAt(pos)
         customizedAmountList.removeAt(customizedAmountList.indexOf(amount))
         customGiftCardAdapter?.notifyDataSetChanged()
@@ -307,6 +328,11 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
         if (giftCardListFilter[pos].count < giftCardListFilter[pos].allowedCount) {
             giftCardListFilter[pos].count = (giftCardListFilter[pos].count + 1)
             total_amount += amount
+            if (total_amount>0){
+                binding?.priceUi?.show()
+            }else{
+                binding?.priceUi?.hide()
+            }
             binding?.tvTotal?.text = resources.getString(R.string.currency) + " " + total_amount
             updateCount(giftCardListFilter)
         }else{
@@ -345,6 +371,11 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
         if (giftCardListFilter[pos].count > 0) {
             giftCardListFilter[pos].count = (giftCardListFilter[pos].count - 1)
             total_amount -= amount
+            if (total_amount>0){
+                binding?.priceUi?.show()
+            }else{
+                binding?.priceUi?.hide()
+            }
             binding?.tvTotal?.text = (resources.getString(R.string.currency) + " " + total_amount)
             for (i in giftCardListFilter.indices) {
                 if (giftCardListFilter[i].count > 0) {

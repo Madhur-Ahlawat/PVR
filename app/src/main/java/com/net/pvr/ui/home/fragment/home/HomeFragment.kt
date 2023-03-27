@@ -293,9 +293,7 @@ class HomeFragment : Fragment(),
 
         }
         binding?.imageView78?.setOnClickListener {
-
             try {
-
                 binding?.constraintLayout55?.hide()
                 showHomeOffer = false
 //                authViewModel.hideOffer(
@@ -307,7 +305,7 @@ class HomeFragment : Fragment(),
 
                 // hideDataLoad()
             } catch (e: java.lang.Exception) {
-
+                    e.printStackTrace()
             }
 
         }

@@ -57,15 +57,17 @@ class GiftCardAddAmtAdapter(
         if (cinemaItem.count == 0) {
             holder.tv_add_amount.show()
             holder.ll_plus_minus.hide()
+
+            holder.linearAdd.setOnClickListener {
+                (context as AddGiftCardActivity).plusClick(
+                    position,
+                    (cinemaItem.giftValue / 100)
+                )
+            }
+            
         } else {
             holder.tv_add_amount.hide()
             holder.ll_plus_minus.show()
-        }
-        holder.tv_add_amount.setOnClickListener {
-            (context as AddGiftCardActivity).plusClick(
-                position,
-                (cinemaItem.giftValue / 100)
-            )
         }
         holder.tv_plus_amount.setOnClickListener {
             (context as AddGiftCardActivity).plusClick(
@@ -102,6 +104,7 @@ class GiftCardAddAmtAdapter(
         var tv_number_amount = itemView.findViewById<TextView?>(R.id.tv_number_amount)
         var tv_plus_amount = itemView.findViewById<TextView?>(R.id.tv_plus_amount)
         var tv_add_amount = itemView.findViewById<TextView?>(R.id.tv_add_amount)
+        var linearAdd = itemView.findViewById<LinearLayout?>(R.id.LinearAdd)
 
         var view_minus = itemView.findViewById<LinearLayout?>(R.id.view_minus)
         var view_plus = itemView.findViewById<LinearLayout?>(R.id.view_plus)

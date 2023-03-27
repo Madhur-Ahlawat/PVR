@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/homeFragment"
         android:title="@string/home"
-        android:icon="@drawable/home_new"/>
+        android:icon="@drawable/home_menu_selector"/>
 
     <item
         android:id="@+id/cinemaFragment"
@@ -20,7 +21,6 @@
         android:id="@+id/comingSoonFragment"
         android:title="@string/coming_soon"
         android:icon="@drawable/coming_soon_new"/>
-
     <item
         android:id="@+id/moreFragment"
         android:title="@string/account"
