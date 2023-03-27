@@ -35,21 +35,23 @@
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="false"
+            android:layout_height="0dp"
+            android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayoutToolbar"
             app:layout_constraintVertical_bias="0.0"
             tools:layout_editor_absoluteX="14dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_24dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayoutScanQR"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_70dp"
+                    android:visibility="gone"
                     android:layout_marginHorizontal="@dimen/dimen_24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -110,7 +112,7 @@
                                 android:id="@+id/imageview_moview_poster"
                                 android:layout_width="0dp"
                                 android:layout_height="105dp"
-                                android:src="@drawable/poster_movie_sample"
+                                android:src="@drawable/placeholder_vertical"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintDimensionRatio="h,16:11"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -121,23 +123,22 @@
 
                         <LinearLayout
                             android:id="@+id/linearlayout_movie_details"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="14sp"
                             android:gravity="center_vertical"
                             android:orientation="vertical"
                             app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/textview_movie_number"
                             app:layout_constraintStart_toEndOf="@+id/constraintlayout_poster"
                             app:layout_constraintTop_toTopOf="parent">
 
                             <TextView
                                 android:id="@+id/textview_movie_name"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/sf_pro_text_semi_bold"
-                                android:gravity="center"
-                                android:text="Best Movie"
-                                android:textAlignment="center"
+                                android:text="Best Movie shsdhdshhds dshdshhds"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/dimen_16sp"
                                 app:layout_constraintBottom_toTopOf="@id/textview_movie_category"
@@ -260,7 +261,6 @@
 
                 <TextView
                     android:id="@+id/textView_show_details"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dimen_14dp"

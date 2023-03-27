@@ -47,6 +47,7 @@ import com.net.pvr.ui.home.fragment.privilege.response.PrivilegeCardData
 import com.net.pvr.ui.home.inCinemaMode.response.BookingItem
 import com.net.pvr.ui.home.inCinemaMode.response.Output
 import com.net.pvr.ui.login.LoginActivity
+import com.net.pvr.ui.scanner.ScannerActivity
 import com.net.pvr.ui.webView.WebViewActivity
 import com.net.pvr.ui.webView.WebViewReadyToLeave
 import com.net.pvr.utils.*
@@ -124,10 +125,23 @@ class InCinemaModeActivity : AppCompatActivity(),
         qrCode = Constant().getLoyaltyQr(preferences.geMobileNumber(), "180x180")
     }
     private fun setClickListeners() {
-        binding?.apply {
-            constraintLayoutScanQR.setOnClickListener {
-                oPenDialogQR()
+        binding?.toolbar?.apply {
+            imageViewQRCode.setOnClickListener {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Home Screen")
+//                bundle.putString("var_header_search", "")
+                    GoogleAnalytics.hitEvent(this@InCinemaModeActivity, "hearder_qr_code", bundle)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+                val intent = Intent(this@InCinemaModeActivity, ScannerActivity::class.java)
+                startActivity(intent)
             }
+        }
+        binding?.apply {
             bookBtn.setOnClickListener {
                 val intent = Intent(this@InCinemaModeActivity, HomeActivity::class.java)
                 startActivity(intent)
@@ -602,10 +616,11 @@ class InCinemaModeActivity : AppCompatActivity(),
                                     }
                                 binding?.apply {
                                     Glide.with(this@InCinemaModeActivity).load("")
-                                        .placeholder(getDrawable(R.drawable.error))
+                                        .placeholder(getDrawable(R.drawable.placeholder_vertical))
+                                        .error(getDrawable(R.drawable.placeholder_vertical))
                                         .into(imageviewMoviewPoster)
                                     bookingData?.apply {
-                                        textViewAudiName.text = cinemaname
+                                        textViewAudiName.text = audi
                                         textviewMovieTheatreLocation.text = cinemaname
                                         textviewMovieDateAndTime.text = showtime
                                         textviewMovieCategory.text = mcensor
