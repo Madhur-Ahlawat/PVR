@@ -15,12 +15,13 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dimen_5dp"
-        android:visibility="gone"
-        android:background="@color/gray" />
+        android:background="@color/gray"
+        android:visibility="gone" />
 
     <!--//top view-->
-    <include layout="@layout/common_toolbar"
-        android:id="@+id/ll_top"/>
+    <include
+        android:id="@+id/ll_top"
+        layout="@layout/common_toolbar" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -37,68 +38,70 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardUseCompatPadding="false"
-                app:cardBackgroundColor="@color/transparent1"
                 android:layout_marginStart="@dimen/dimen_20dp"
                 android:layout_marginTop="@dimen/dimen_25dp"
                 android:layout_marginEnd="@dimen/dimen_20dp"
-                >
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                >
-
-                <ImageView
-                    android:id="@+id/iv_uploaded_image"
+                app:cardCornerRadius="5dp"
+                app:cardBackgroundColor="@color/transparent1"
+                app:cardUseCompatPadding="true">
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/gift_card_placeholder"
-                    android:scaleType="fitXY"
-                    app:layout_constraintDimensionRatio="H,1:1.94"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
-                <LinearLayout
-                    android:id="@+id/ll_pvr_logo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:visibility="gone"
-                    android:layout_marginStart="@dimen/padding_10"
-                    android:layout_marginTop="@dimen/padding_10"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent">
 
                     <ImageView
-                        android:layout_width="@dimen/dimen_50dp"
-                        android:layout_height="@dimen/dimen_20dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/pvr_logo" />
+                        android:id="@+id/iv_uploaded_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/gift_card_placeholder"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="H,1:1.94"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
 
-                    <View
-                        android:layout_width="@dimen/dimen_2dp"
-                        android:layout_height="@dimen/dimen_15dp"
-                        android:layout_gravity="center"
-                        android:background="@color/gray" />
 
-                    <TextView
-                        android:id="@+id/tv_gift_card_name"
+                    <LinearLayout
+                        android:id="@+id/ll_pvr_logo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_alignParentTop="true"
                         android:layout_marginStart="@dimen/padding_10"
-                        android:text="Gift Card"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/dimen_14sp"
-                        android:textStyle="bold" />
+                        android:layout_marginTop="@dimen/padding_10"
+                        android:orientation="horizontal"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                </LinearLayout>
+                        <ImageView
+                            android:layout_width="@dimen/dimen_50dp"
+                            android:layout_height="@dimen/dimen_20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/pvr_logo" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                        <View
+                            android:layout_width="@dimen/dimen_2dp"
+                            android:layout_height="@dimen/dimen_15dp"
+                            android:layout_gravity="center"
+                            android:background="@color/gray" />
+
+                        <TextView
+                            android:id="@+id/tv_gift_card_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/padding_10"
+                            android:text="Gift Card"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/dimen_14sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </androidx.cardview.widget.CardView>
 
             <TextView
@@ -107,11 +110,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/dimen_30dp"
-                android:layout_marginTop="@dimen/dimen_20dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="@dimen/dimen_30dp"
                 android:gravity="center"
                 android:letterSpacing="0.1"
-                android:text="What can make a better Gift Card than a movie!"
+                android:textSize="@dimen/dimen_16sp"
+                android:text="@string/what_can_make_a_better_gift_card_than_a_movie"
                 android:textAlignment="center"
                 android:textColor="@color/black" />
 
@@ -165,11 +169,11 @@
                             android:layout_marginStart="@dimen/padding_10"
                             android:layout_marginEnd="@dimen/padding_10"
                             android:background="@null"
-                            android:hint="Enter amount"
-                            android:maxLength="4"
                             android:digits="0123456789"
-                            android:inputType="number"
+                            android:hint="Enter amount"
                             android:imeOptions="actionDone"
+                            android:inputType="number"
+                            android:maxLength="4"
                             android:textColor="@color/black"
                             android:textColorHint="@color/gray_"
                             android:textSize="@dimen/dimen_14sp" />
@@ -265,13 +269,13 @@
                 android:id="@+id/rv_custom_amount_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:itemCount="2"
-                tools:listitem="@layout/custom_gift_list"
                 android:layout_marginStart="@dimen/dimen_20dp"
                 android:layout_marginTop="@dimen/padding_10"
                 android:layout_marginEnd="@dimen/dimen_20dp"
                 android:layout_marginBottom="@dimen/padding_10"
-                android:nestedScrollingEnabled="false" />
+                android:nestedScrollingEnabled="false"
+                tools:itemCount="2"
+                tools:listitem="@layout/custom_gift_list" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_amount_list"
@@ -281,9 +285,9 @@
                 android:layout_marginTop="@dimen/padding_10"
                 android:layout_marginEnd="@dimen/dimen_20dp"
                 android:layout_marginBottom="@dimen/padding_10"
+                android:nestedScrollingEnabled="false"
                 tools:itemCount="2"
-                tools:listitem="@layout/add_amt_list"
-                android:nestedScrollingEnabled="false" />
+                tools:listitem="@layout/add_amt_list" />
 
         </LinearLayout>
 
@@ -434,9 +438,9 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/padding_10"
             android:layout_marginBottom="@dimen/dimen_5dp"
-            android:visibility="gone"
             android:background="@drawable/bg_grey_booking"
-            android:backgroundTint="@color/black" />
+            android:backgroundTint="@color/black"
+            android:visibility="gone" />
 
     </LinearLayout>
 

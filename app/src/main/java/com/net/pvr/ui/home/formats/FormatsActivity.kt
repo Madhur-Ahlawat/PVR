@@ -74,6 +74,12 @@ class FormatsActivity : AppCompatActivity() ,
         //  format=
 
 
+
+        manageFunctions()
+    }
+
+    private fun manageFunctions() {
+        format = intent.getStringExtra("format").toString()
         // IMAX 4DX PLAYHOUSE GOLD ONYX PXL
         val intent = intent
         val action = intent.action
@@ -89,11 +95,6 @@ class FormatsActivity : AppCompatActivity() ,
             format = parts[3]
         }
 
-        manageFunctions()
-    }
-
-    private fun manageFunctions() {
-        format = intent.getStringExtra("format").toString()
         //title
         binding?.toolbar?.textView108?.text= format
         //back
