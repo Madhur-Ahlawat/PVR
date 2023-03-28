@@ -46,6 +46,7 @@ import com.net.pvr.ui.home.fragment.privilege.response.LoyaltyDataResponse
 import com.net.pvr.ui.home.fragment.privilege.response.PrivilegeCardData
 import com.net.pvr.ui.home.inCinemaMode.response.BookingItem
 import com.net.pvr.ui.home.inCinemaMode.response.Output
+import com.net.pvr.ui.home.inCinemaMode.response.ShowData
 import com.net.pvr.ui.login.LoginActivity
 import com.net.pvr.ui.scanner.ScannerActivity
 import com.net.pvr.ui.webView.WebViewActivity
@@ -85,7 +86,7 @@ class InCinemaModeActivity : AppCompatActivity(),
     private var recyclerAdapter: HowItWorkAdapter? = null
     private var limit = 500L
     private var currentBooking: Int = 0
-    var intent_ready_to_leave:Intent? = null
+    var intent_ready_to_leave: Intent? = null
     private var mGeoLocationCallback: GeolocationPermissions.Callback? = null
     private var mGeoLocationRequestOrigin: String? = null
     private val MY_PERMISSIONS_REQUEST_LOCATION: Int = 111
@@ -98,14 +99,13 @@ class InCinemaModeActivity : AppCompatActivity(),
     private val mSnapHelper = PagerSnapHelper()
     private var orderAdapter: GroupAdapter<ViewHolder>? = null
     private val movieDetailsAdapter: GenericRecyclerViewAdapter<String> by lazy { createMovieDetailAdapter() }
-    private val intervalAdadapter: GenericRecyclerViewAdapter<String> by lazy { createIntervalTimingAdapter() }
+    private val intervalAdadapter: GenericRecyclerViewAdapter<ShowData> by lazy { createIntervalTimingAdapter() }
     private var mIntent: Intent? = null
     var dialog: OptionDialog? = null
     private var noDataDialog: OptionDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mIntent = intent
-        intent_ready_to_leave=Intent(this@InCinemaModeActivity, WebViewReadyToLeave::class.java)
         binding = ActivityInCinemaModeBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
         initUI()
@@ -121,9 +121,11 @@ class InCinemaModeActivity : AppCompatActivity(),
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = ContextCompat.getColor(this, R.color.black_111111)
     }
+
     private fun createQr() {
         qrCode = Constant().getLoyaltyQr(preferences.geMobileNumber(), "180x180")
     }
+
     private fun setClickListeners() {
         binding?.toolbar?.apply {
             imageViewQRCode.setOnClickListener {
@@ -206,22 +208,22 @@ class InCinemaModeActivity : AppCompatActivity(),
             imageviewPreviousBookedMovie.setOnClickListener {
                 if (currentBooking > 0) {
                     currentBooking--
-                    getBookingInfo(bookingIdList!![currentBooking],preferences.getCityName())
+                    getBookingInfo(bookingIdList!![currentBooking], preferences.getCityName())
                 }
             }
             imageviewNextBookedMovie.setOnClickListener {
                 if (currentBooking < bookingIdList!!.size - 1) {
                     currentBooking++
-                    getBookingInfo(bookingIdList!![currentBooking],preferences.getCityName())
+                    getBookingInfo(bookingIdList!![currentBooking], preferences.getCityName())
                 }
             }
             cardviewFoodAndBevarages.setOnClickListener {
                 Constant.CINEMA_ID = ""
                 bookingData?.let {
-                            it?.inCinemaFoodResp?.let{
-                                Constant.BOOKING_ID = bookingIdList!![currentBooking]
+                    it?.inCinemaFoodResp?.let {
+                        Constant.BOOKING_ID = bookingIdList!![currentBooking]
 
-                            }
+                    }
 //                        Constant.CINEMA_ID =
 
                 }
@@ -243,20 +245,28 @@ class InCinemaModeActivity : AppCompatActivity(),
             }
             cardviewReadyToLeave.setOnClickListener {
                 val dialog =
-                    BottomSheetDialog(this@InCinemaModeActivity, R.style.NoBackgroundDialogTheme)
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                dialog.setContentView(R.layout.dialog_ready_to_leave)
-                dialog.setCancelable(true)
-                dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
-                dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                dialog.window!!.setLayout(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-                dialog.window!!.setGravity(Gravity.CENTER)
+                    BottomSheetDialog(
+                        this@InCinemaModeActivity,
+                        R.style.NoBackgroundDialogTheme
+                    ).also {
+                        it.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                        it.setContentView(R.layout.dialog_ready_to_leave)
+                        it.setCancelable(true)
+                        it.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                        it.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                        it.window!!.setLayout(
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT
+                        )
+                        it.window!!.setGravity(Gravity.CENTER)
+                    }
+
                 val uber = dialog.findViewById<View>(R.id.cardview_uber) as MaterialCardView?
                 val ola = dialog.findViewById<View>(R.id.cardview_ola) as MaterialCardView?
+
                 uber!!.setOnClickListener {
+                    intent_ready_to_leave =
+                        Intent(this@InCinemaModeActivity, WebViewReadyToLeave::class.java)
                     intent_ready_to_leave?.apply {
                         putExtra("getUrl", "https://www.uber.com/in/en/ride/")
                         putExtra("from", "inCinemaMode")
@@ -266,6 +276,8 @@ class InCinemaModeActivity : AppCompatActivity(),
                     }
                 }
                 ola!!.setOnClickListener {
+                    intent_ready_to_leave =
+                        Intent(this@InCinemaModeActivity, WebViewReadyToLeave::class.java)
                     intent_ready_to_leave?.apply {
                         putExtra("getUrl", "https://book.olacabs.com/?")
                         putExtra("from", "inCinemaMode")
@@ -561,7 +573,10 @@ class InCinemaModeActivity : AppCompatActivity(),
                             }
                             if (bookingIdList!!.size != 0) {
                                 binding!!.nestedScrollView.show()
-                                getBookingInfo(bookingIdList!![currentBooking],preferences.getCityName())
+                                getBookingInfo(
+                                    bookingIdList!![currentBooking],
+                                    preferences.getCityName()
+                                )
                             } else {
                                 binding!!.nestedScrollView.hide()
                                 dialog!!.show()
@@ -591,9 +606,9 @@ class InCinemaModeActivity : AppCompatActivity(),
         loader?.dismiss()
     }
 
-    private fun getBookingInfo(bookingId: String,city: String) {
+    private fun getBookingInfo(bookingId: String, city: String) {
         showLoader()
-        authViewModel.getBooking(bookingId,city)
+        authViewModel.getBooking(bookingId, city)
         observeBookingResponse()
     }
 
@@ -644,6 +659,7 @@ class InCinemaModeActivity : AppCompatActivity(),
 
                                 }
                                 movieDetailsAdapter.submitList(bookingData!!.seats)
+                                intervalAdadapter.submitList(bookingData!!.showData)
                                 orderAdapter!!.clear()
                                 orderAdapter!!.notifyDataSetChanged()
                                 bookingData!!.inCinemaFoodResp.forEach {
@@ -1088,6 +1104,7 @@ class InCinemaModeActivity : AppCompatActivity(),
             }
         }
     )
+
     private fun createOrderAdapter() = GenericRecyclerViewAdapter(
         getViewLayout = { R.layout.movie_details_item },
         areItemsSame = ::isMovieDetailSame,
@@ -1099,6 +1116,7 @@ class InCinemaModeActivity : AppCompatActivity(),
             }
         }
     )
+
     private fun isMovieDetailSame(any: String, any1: String): Boolean {
         return false
     }
@@ -1107,14 +1125,15 @@ class InCinemaModeActivity : AppCompatActivity(),
         getViewLayout = { R.layout.interval_timing_item },
         areItemsSame = ::isIntervalTimingSame,
         areItemContentsEqual = ::isIntervalTimingSame,
-        onBind = { ratingTag, viewDataBinding, _ ->
+        onBind = { showData, viewDataBinding, _ ->
             with(viewDataBinding as IntervalTimingItemBinding) {
-
+                viewDataBinding.textviewIntervalStartsAt.text = showData.slider
+                viewDataBinding.textviewIntervalStartTime.text = showData.time
             }
         }
     )
 
-    private fun isIntervalTimingSame(any: String, any1: String): Boolean {
+    private fun isIntervalTimingSame(any: ShowData, any1: ShowData): Boolean {
         return false
     }
 

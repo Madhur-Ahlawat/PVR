@@ -14,6 +14,6 @@ data class BookingItem(
     val placeholders: List<Any>,
     val popups: List<Any>,
     val seats: List<String>,
-    val showData: List<ShowDataX>,
+    val showData: List<ShowData>,
     val showtime: String
 )

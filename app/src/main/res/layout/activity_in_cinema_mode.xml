@@ -102,11 +102,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginStart="@dimen/dimen_14dp"
-                            android:layout_marginTop="@dimen/dimen_14dp"
-                            android:layout_marginBottom="@dimen/dimen_14dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
+
+                            app:layout_constraintBottom_toBottomOf="@id/linearlayout_movie_details"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
+                            app:layout_constraintTop_toTopOf="@id/linearlayout_movie_details">
 
                             <ImageView
                                 android:id="@+id/imageview_moview_poster"
@@ -127,11 +126,13 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="14sp"
                             android:gravity="center_vertical"
+                            android:layout_marginTop="@dimen/dimen_14dp"
+                            android:layout_marginBottom="@dimen/dimen_14dp"
                             android:orientation="vertical"
-                            app:layout_constraintBottom_toBottomOf="@id/constraintlayout_poster"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/textview_movie_number"
                             app:layout_constraintStart_toEndOf="@+id/constraintlayout_poster"
-                            app:layout_constraintTop_toTopOf="@id/constraintlayout_poster">
+                            app:layout_constraintTop_toTopOf="parent">
 
                             <TextView
                                 android:id="@+id/textview_movie_name"
@@ -346,7 +347,6 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/rvSeatNumber" />
-
                         <View
                             android:layout_width="0dp"
                             android:layout_height="@dimen/dimen_13dp"
@@ -358,7 +358,6 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardview_food_orders"
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dimen_14dp"
