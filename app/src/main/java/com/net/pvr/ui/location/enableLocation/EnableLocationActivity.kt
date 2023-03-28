@@ -11,6 +11,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.ResultReceiver
 import android.provider.Settings
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -21,11 +22,14 @@ import com.google.android.gms.location.LocationServices
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityEnableLocationBinding
 import com.net.pvr.di.preference.PreferenceManager
+import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.home.HomeActivity
 import com.net.pvr.ui.location.selectCity.SelectCityActivity
+import com.net.pvr.ui.location.selectCity.viewModel.SelectCityViewModel
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.FetchAddressIntentServices
+import com.net.pvr.utils.NetworkResult
 import com.net.pvr.utils.printLog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -38,6 +42,7 @@ class EnableLocationActivity : AppCompatActivity() {
     private var binding: ActivityEnableLocationBinding? = null
     private var from: String = ""
     private var cid: String = ""
+    private val selectCityViewModel: SelectCityViewModel by viewModels()
 
     private val LOCATION_PERMISSION_REQUEST_CODE = 1
     private var resultReceiver: ResultReceiver? = null
@@ -150,17 +155,24 @@ class EnableLocationActivity : AppCompatActivity() {
                         preferences.saveLatitudeData(lat.toString())
                         preferences.saveLongitudeData(long.toString())
 
-                        if (preferences.getCityName() == "") {
-                            val intent =
-                                Intent(this@EnableLocationActivity, SelectCityActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        } else {
-                            val intent =
-                                Intent(this@EnableLocationActivity, HomeActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        }
+                        selectCityViewModel.selectCity(
+                            preferences.getLatitudeData(),
+                            preferences.getLongitudeData(),
+                            preferences.getUserId(),
+                            "no",
+                            "no"
+                        )
+
+                        selectCity()
+
+//                        if (preferences.getCityName() == "") {
+//                            val intent =
+//                                Intent(this@EnableLocationActivity, SelectCityActivity::class.java)
+//                            startActivity(intent)
+//                            finish()
+//                        } else {
+
+//                        }
 
                         location.longitude = long
                         location.latitude = lat
@@ -209,6 +221,46 @@ class EnableLocationActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun selectCity() {
+        selectCityViewModel.cityResponseLiveData.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        preferences.saveCityName(it.data.output.cc.name)
+                        val intent =
+                            Intent(this@EnableLocationActivity, HomeActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        val dialog = OptionDialog(this,
+                            R.mipmap.ic_launcher,
+                            R.string.app_name,
+                            it.data?.msg.toString(),
+                            positiveBtnText = R.string.ok,
+                            negativeBtnText = R.string.no,
+                            positiveClick = {},
+                            negativeClick = {})
+                        dialog.show()
+                    }
+                }
+                is NetworkResult.Error -> {
+                    val dialog = OptionDialog(this,
+                        R.mipmap.ic_launcher,
+                        R.string.app_name,
+                        it.message.toString(),
+                        positiveBtnText = R.string.ok,
+                        negativeBtnText = R.string.no,
+                        positiveClick = {},
+                        negativeClick = {})
+                    dialog.show()
+                }
+                is NetworkResult.Loading -> {
+                }
+            }
+        }
+    }
+
 
 
     private fun enableLocation() {

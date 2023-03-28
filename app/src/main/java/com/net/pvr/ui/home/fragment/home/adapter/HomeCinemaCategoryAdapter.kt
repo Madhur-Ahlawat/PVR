@@ -1,6 +1,7 @@
 package com.net.pvr.ui.home.fragment.home.adapter
 
 import android.content.Context
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,11 +20,10 @@ import com.net.pvr.utils.toast
 class HomeCinemaCategoryAdapter(
     private var context: Context,
     private var nowShowingList: List<HomeResponse.Mfi>,
-    private var listener: RecycleViewItemClickListener,
-
-    ) :
+    private var listener: RecycleViewItemClickListener) :
     RecyclerView.Adapter<HomeCinemaCategoryAdapter.MyViewHolderNowShowing>() {
-
+    private var displayMetrics = DisplayMetrics()
+    private var screenWidth = 0
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderNowShowing {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_home_image, parent, false)
@@ -44,6 +44,16 @@ class HomeCinemaCategoryAdapter(
                 .placeholder(R.drawable.format_placeholder)
                 .error(R.drawable.format_placeholder)
                 .into(holder.imageCatNew)
+        }else if (nowShowingList.size<5){
+            holder.mainView.layoutParams
+            holder.itemView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+            holder.cardTag.show()
+            holder.imageCatNew.hide()
+            Glide.with(context)
+                .load(comingSoonItem.nurl)
+                .placeholder(R.drawable.format_placeholder)
+                .error(R.drawable.format_placeholder)
+                .into(holder.imageCat)
         }else{
             holder.mainView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT)
             holder.itemView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT)

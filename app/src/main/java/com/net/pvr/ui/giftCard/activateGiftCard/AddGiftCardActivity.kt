@@ -54,15 +54,20 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
     private var limit = 0
     private var total_amount = 0
     private var isCustom = ""
-    private var card_type = ""
-    private var imageValue = ""
-    private var imageValueUri: Uri? = null
+
     private var giftCardListFilter = ArrayList<GiftCardListResponse.Output.GiftCard>()
     var customGiftCard: GiftCards? = null
     var customizedGiftList: ArrayList<GiftCards> = ArrayList<GiftCards>()
     var customizedAmountList = java.util.ArrayList<String>()
     @Inject
     lateinit var preferences: PreferenceManager
+
+    companion object{
+        var saveGiftCardCount: SaveGiftCardCount? = null
+        var imageValueUri: Uri? = null
+         var card_type = ""
+         var imageValue = ""
+    }
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -484,10 +489,11 @@ class AddGiftCardActivity : AppCompatActivity(), View.OnClickListener{
                     }
                 }
             }
-            val saveGiftCardCount = SaveGiftCardCount("","","","","","","","",newList)
-            if (saveGiftCardCount.gift_cards.size > 0) {
-                GC_COUNT = saveGiftCardCount.gift_cards.size
-                GoogleAnalytics.hitAddCartEvent(this, HomeFragment.mcId,total_amount.toString(),"Gift Card",saveGiftCardCount.gift_cards.size)
+             saveGiftCardCount = SaveGiftCardCount("","","","","","","","",newList)
+
+            if (saveGiftCardCount?.gift_cards?.size!! > 0) {
+                GC_COUNT = saveGiftCardCount?.gift_cards?.size!!
+                GoogleAnalytics.hitAddCartEvent(this, HomeFragment.mcId,total_amount.toString(),"Gift Card",saveGiftCardCount?.gift_cards?.size!!)
                 val intent = Intent(this, GiftCardPlaceOrderActivity::class.java)
                 try {
                     if (imageValueUri != null) {

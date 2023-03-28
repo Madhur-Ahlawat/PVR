@@ -18,6 +18,7 @@ import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.giftCard.GiftCardSummaryActivity
+import com.net.pvr.ui.giftCard.activateGiftCard.GiftCardPlaceOrderActivity
 import com.net.pvr.ui.home.HomeActivity
 import com.net.pvr.ui.home.fragment.privilege.EnrollInPassportActivity
 import com.net.pvr.ui.home.fragment.privilege.EnrollInPrivilegeActivity
@@ -500,7 +501,7 @@ class OtpVerifyActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }else if (from == "GC"){
-                val intent = Intent(this@OtpVerifyActivity, GiftCardSummaryActivity::class.java)
+                val intent = Intent(this@OtpVerifyActivity, GiftCardPlaceOrderActivity::class.java)
                 startActivity(intent)
                 finish()
             }else if (from == "PP"){

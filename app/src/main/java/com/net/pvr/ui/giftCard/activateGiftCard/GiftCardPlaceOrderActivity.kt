@@ -25,6 +25,7 @@ import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.giftCard.GiftCardSummaryActivity
 import com.net.pvr.ui.giftCard.activateGiftCard.viewModel.ActivateGiftCardViewModel
 import com.net.pvr.ui.giftCard.response.SaveGiftCardCount
+import com.net.pvr.ui.login.LoginActivity
 import com.net.pvr.utils.*
 import com.net.pvr.utils.ga.GoogleAnalytics
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,7 +58,12 @@ class GiftCardPlaceOrderActivity : AppCompatActivity(){
         binding = ActivityPlaceGcOrderBinding.inflate(layoutInflater, null, false)
         val view = binding?.root
         setContentView(view)
-
+        if (!preferences.getIsLogin()) {
+            val intent4 = Intent(this, LoginActivity::class.java)
+            intent4.putExtra("from", "GC")
+            startActivity(intent4)
+            finish()
+        }
         manageFunctions()
     }
 
@@ -68,16 +74,11 @@ class GiftCardPlaceOrderActivity : AppCompatActivity(){
         }
 
         //Screen Width
-        if (intent.getSerializableExtra(Constant.SharedPreference.GIFT_CARD_DETAILS) != null) {
-            saveGiftCardCount = intent.getSerializableExtra(Constant.SharedPreference.GIFT_CARD_DETAILS) as SaveGiftCardCount
-        }
+        saveGiftCardCount = AddGiftCardActivity.saveGiftCardCount
 
-        if (intent.getStringExtra("imageValueUriUrl") != null) {
-            imageUrl = intent.getStringExtra("imageValueUriUrl").toString()
-        }
+        imageUrl = AddGiftCardActivity.imageValue
 
-        if (intent.extras?.getString("key") != null)
-            card_type = intent.extras?.getString("key").toString()
+         card_type = AddGiftCardActivity.card_type
 
         initData()
         personalMessage()

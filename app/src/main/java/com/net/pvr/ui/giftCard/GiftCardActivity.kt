@@ -11,6 +11,7 @@ import android.util.DisplayMetrics
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -58,6 +59,7 @@ class GiftCardActivity : AppCompatActivity() ,
     @Inject
     lateinit var preferences: PreferenceManager
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGiftCardBinding.inflate(layoutInflater, null, false)
@@ -65,6 +67,10 @@ class GiftCardActivity : AppCompatActivity() ,
         setContentView(view)
 
         manageFunction()
+        binding?.scrollView?.setOnTouchListener { v, event ->
+            Toast.makeText(this@GiftCardActivity, "ScrollView Disabled", Toast.LENGTH_SHORT).show()
+            true
+        }
     }
 
     private fun manageFunction() {
