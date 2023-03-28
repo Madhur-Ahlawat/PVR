@@ -102,11 +102,9 @@ class MoreFragment : Fragment() {
 
         //add List
 
-
         //SetName
         binding?.profileDetails?.textView205?.text = preferences.getUserName()
         manageFunctions()
-
 
     }
 
@@ -618,7 +616,14 @@ class MoreFragment : Fragment() {
         profileList.add(ProfileModel("Save movie preferences", "PREFERENCES"))
 
         val title = dialog.findViewById<TextView>(R.id.voucherText)
+        printLog("title------>${output.msg}")
         //title
+        if (output.msg==""){
+            title?.hide()
+        }else{
+            title?.show()
+        }
+
         title?.text= Html.fromHtml(output.msg)
         progressBar2?.progress = output.percentage
         val layoutManager = LinearLayoutManager(context)

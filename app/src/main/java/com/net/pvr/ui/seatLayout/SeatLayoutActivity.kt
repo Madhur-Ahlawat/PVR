@@ -1779,7 +1779,11 @@ class SeatLayoutActivity : AppCompatActivity(),
                             seatNo.length,
                             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                         )
-                        binding?.textView195?.text = noOfSeatsSelected.size.toString() + " Seats |"
+                        if (noOfSeatsSelected.size==1){
+                            binding?.textView195?.text = noOfSeatsSelected.size.toString() + " Seat |"
+                        }else{
+                            binding?.textView195?.text = noOfSeatsSelected.size.toString() + " Seats |"
+                        }
 //                        binding?.textView195?.append(wordToSpan)
                     }
                     2 -> {
@@ -1797,7 +1801,13 @@ class SeatLayoutActivity : AppCompatActivity(),
                             seatNo.length,
                             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                         )
-                        binding?.textView195?.text = noOfSeatsSelected.size.toString() + " Seats |"
+                        if (noOfSeatsSelected.size==1){
+                            binding?.textView195?.text = noOfSeatsSelected.size.toString() + " Seat |"
+                        }else{
+                            binding?.textView195?.text = noOfSeatsSelected.size.toString() + " Seats |"
+                        }
+//                        b
+//                        binding?.textView195?.text = noOfSeatsSelected.size.toString() + " Seats |"
                     }
                     else -> {
                         seatNo = if (binding?.textView195?.text.toString()
@@ -1814,7 +1824,12 @@ class SeatLayoutActivity : AppCompatActivity(),
                             seatNo.length,
                             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                         )
-                        binding?.textView195?.text = noOfSeatsSelected.size.toString() + " Seats |"
+                        if (noOfSeatsSelected.size==1){
+                            binding?.textView195?.text = noOfSeatsSelected.size.toString() + " Seat |"
+                        }else{
+                            binding?.textView195?.text = noOfSeatsSelected.size.toString() + " Seats |"
+                        }
+//                        binding?.textView195?.text = noOfSeatsSelected.size.toString() + " Seats |"
                     }
                 }
                 selectSeat.add(wordToSpan)

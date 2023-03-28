@@ -22,6 +22,7 @@ class BookingCinemaNameAdapter(
 ) :
     RecyclerView.Adapter<BookingCinemaNameAdapter.ViewHolder>() {
 
+    private  var rowIndex= 0
     inner class ViewHolder(val binding: ItemBookingSessionCinemaLanguageBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -40,41 +41,43 @@ class BookingCinemaNameAdapter(
             with(nowShowingList[position]) {
                 //Language  .lng+this.lk
                 binding.textView106.text = this.ccn
-//                if(this.hc){
-//                    binding.hcIcon.show()
-//                }else{
-//                    binding.hcIcon.hide()
-//                }
 
-                if (position==0){
+
+                if (rowIndex== position){
                     binding.recyclerView11.show()
+                    binding.hcIcon.hide()
                     binding.imageView56.rotation = 180f
+                }else{
+                    binding.imageView56.rotation = 360f
+                    binding.recyclerView11.hide()
+                    binding.hcIcon.hide()
                 }
 
-
-                binding.constraintLayout111.setOnClickListener {
-                    if (binding.recyclerView11.visibility == View.GONE) {
-                        binding.recyclerView11.show()
-                        binding.hcIcon.hide()
-                        binding.imageView56.rotation = 180f
-                    } else {
-                        binding.imageView56.rotation = 360f
-                        binding.recyclerView11.hide()
-                        binding.hcIcon.hide()
-                    }
+                binding.constraintLayout23.setOnClickListener {
+                    rowIndex=position
+                    notifyDataSetChanged()
+//                    if (binding.recyclerView11.visibility == View.GONE) {
+//                        binding.recyclerView11.show()
+//                        binding.hcIcon.hide()
+//                        binding.imageView56.rotation = 180f
+//                    } else {
+//                        binding.imageView56.rotation = 360f
+//                        binding.recyclerView11.hide()
+//                        binding.hcIcon.hide()
+//                    }
                 }
 
-                binding.imageView56.setOnClickListener {
-                    if (binding.recyclerView11.visibility == View.GONE) {
-                        binding.recyclerView11.show()
-                        binding.hcIcon.hide()
-                        binding.imageView56.rotation = 180f
-                    } else {
-                        binding.imageView56.rotation = 360f
-                        binding.recyclerView11.hide()
-                        binding.hcIcon.hide()
-                    }
-                }
+//                binding.imageView56.setOnClickListener {
+//                    if (binding.recyclerView11.visibility == View.GONE) {
+//                        binding.recyclerView11.show()
+//                        binding.hcIcon.hide()
+//                        binding.imageView56.rotation = 180f
+//                    } else {
+//                        binding.imageView56.rotation = 360f
+//                        binding.recyclerView11.hide()
+//                        binding.hcIcon.hide()
+//                    }
+//                }
 
                 //Recycler
                 val layoutManager =
