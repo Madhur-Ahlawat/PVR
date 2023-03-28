@@ -150,15 +150,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:background="@drawable/curve_three"
-                    android:textSize="@dimen/dimen_12sp"
                     android:fontFamily="@font/montserrat_alternates_semi_bold"
                     android:includeFontPadding="false"
                     android:textColor="@color/black"
-                    tools:text="+2"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:textSize="@dimen/dimen_12sp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvGenre"
                     app:layout_constraintStart_toEndOf="@+id/tvGenre"
-                    app:layout_constraintTop_toBottomOf="@id/tvCensorLang" />
+                    app:layout_constraintTop_toTopOf="@+id/tvGenre"
+                    tools:text="+2" />
 
 
                 <TextView

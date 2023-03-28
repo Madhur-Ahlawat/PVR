@@ -141,15 +141,15 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:background="@drawable/curve_three"
-        android:textSize="@dimen/dimen_12sp"
         android:fontFamily="@font/montserrat_alternates_semi_bold"
         android:includeFontPadding="false"
         android:textColor="@color/black"
-        tools:text="+2"
+        android:textSize="@dimen/dimen_12sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/textView45"
         app:layout_constraintStart_toEndOf="@+id/textView45"
-        app:layout_constraintTop_toBottomOf="@+id/textView43" />
+        app:layout_constraintTop_toTopOf="@+id/textView45"
+        tools:text="+2" />
 
 
     <TextView

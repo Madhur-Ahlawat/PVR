@@ -26,7 +26,6 @@ class ComingSoonMovieAdapter(
     private var listener: VideoPlay,
     private var checkLogin: Boolean
 ) : RecyclerView.Adapter<ComingSoonMovieAdapter.MyViewHolderNowShowing>() {
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderNowShowing {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.coming_soon_item_layout, parent, false)

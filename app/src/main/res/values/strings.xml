@@ -516,7 +516,7 @@
     <string name="password_msg_invalid">You entered an invalid password</string>
     <string name="otp_sent">OTP Sent</string>
     <string name="terms_amp_condition"><![CDATA[Terms & Condition]]></string>
-    <string name="terms_amp_condition_gc">I agree to the terms &amp; conditions</string>
+    <string name="terms_amp_condition_gc">I agree to the <u>terms &amp; conditions</u></string>
     <string name="avail_offers">Avail Offers</string>
 
     <string name="languages">Languages</string>
@@ -724,5 +724,6 @@ IMAX Corporation is one of the world\'s leading entertainment technology compani
     <string name="purchased_on">Purchased on</string>
     <string name="voucher_code">Voucher Code</string>
     <string name="transaction_history">Transaction History</string>
+    <string name="what_can_make_a_better_gift_card_than_a_movie">What can make a better Gift Card than a movie!</string>
 
 </resources>
