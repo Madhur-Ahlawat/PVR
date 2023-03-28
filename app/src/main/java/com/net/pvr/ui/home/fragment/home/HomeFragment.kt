@@ -241,9 +241,9 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
             )
 
 //            nextBooking
-            authViewModel.nextBooking(
-                preferences.getUserId(), Constant().getDeviceId(requireActivity())
-            )
+//            authViewModel.nextBooking(
+//                preferences.getUserId(), Constant().getDeviceId(requireActivity())
+//            )
 
         } else {
             binding?.includeAppBar?.profileBtn?.hide()
@@ -268,7 +268,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
         getShimmerData()
         movedNext()
         homeApi()
-        nextBooking()
+        //nextBooking()
         createQr()
         getMovieFormatFromApi()
         makeToTop()
@@ -448,14 +448,14 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     private fun getInCinemaModeWithBookingIDDataLoad() {
-        authViewModel.getInCinema(preferences.getUserId(), "Delhi-NCR")
-        authViewModel.getInCinemaLiveData.observe(viewLifecycleOwner) {
+        authViewModel.getInCinemaHome(preferences.getUserId(), preferences.getCityName())
+        authViewModel.getInCinemaLiveDataHome.observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkResult.Success -> {
                     dismissLoader()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         try {
-                            if (it.data.output != null && it.data.output.data.size != 0) {
+                            if (it.data.output != null && it.data.output.data.isNotEmpty()) {
                                 inCinemaModeAdapter.submitList(it.data.output.data)
                                 binding?.rvInCinemaHome?.show()
                             } else {

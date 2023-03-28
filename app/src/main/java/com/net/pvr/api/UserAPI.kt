@@ -1651,6 +1651,7 @@ interface UserAPI {
     @POST("api/content/incinema/getBooking")
     suspend fun getBooking(
         @Query("bookingId") bookingId: String,
+        @Query("city") city: String,
         @Query("av") version: String,
         @Query("pt") platform: String,
         @Query("did") did: String

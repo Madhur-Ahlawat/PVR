@@ -206,13 +206,13 @@ class InCinemaModeActivity : AppCompatActivity(),
             imageviewPreviousBookedMovie.setOnClickListener {
                 if (currentBooking > 0) {
                     currentBooking--
-                    getBookingInfo(bookingIdList!![currentBooking])
+                    getBookingInfo(bookingIdList!![currentBooking],preferences.getCityName())
                 }
             }
             imageviewNextBookedMovie.setOnClickListener {
                 if (currentBooking < bookingIdList!!.size - 1) {
                     currentBooking++
-                    getBookingInfo(bookingIdList!![currentBooking])
+                    getBookingInfo(bookingIdList!![currentBooking],preferences.getCityName())
                 }
             }
             cardviewFoodAndBevarages.setOnClickListener {
@@ -543,11 +543,11 @@ class InCinemaModeActivity : AppCompatActivity(),
     }
 
     private fun getInCinemaMode() {
-        showLoader()
+        //showLoader()
         authViewModel.getInCinemaLiveData.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
-                    dismissLoader()
+                    //dismissLoader()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         mCinemaData = it.data.output
                         try {
@@ -560,7 +560,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                                 }
                             }
                             if (bookingIdList!!.size != 0) {
-                                getBookingInfo(bookingIdList!![currentBooking])
+                                getBookingInfo(bookingIdList!![currentBooking],preferences.getCityName())
                             } else {
                                 dialog!!.show()
                             }
@@ -570,7 +570,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                     }
                 }
                 is NetworkResult.Error -> {
-                    dismissLoader()
+                   // dismissLoader()
                     binding?.apply {
                         nestedScrollView.hide()
                     }
@@ -582,17 +582,17 @@ class InCinemaModeActivity : AppCompatActivity(),
             }
         }
 
-        authViewModel.getInCinema(preferences.getUserId(), "Delhi-NCR")
+        authViewModel.getInCinema(preferences.getUserId(), preferences.getCityName())
     }
 
     private fun dismissLoader() {
         loader?.dismiss()
     }
 
-    private fun getBookingInfo(bookingId: String) {
+    private fun getBookingInfo(bookingId: String,city: String) {
         showLoader()
+        authViewModel.getBooking(bookingId,city)
         observeBookingResponse()
-        authViewModel.getBooking(bookingId)
     }
 
     override fun onBackPressed() {
@@ -643,13 +643,16 @@ class InCinemaModeActivity : AppCompatActivity(),
                                 }
                                 movieDetailsAdapter.submitList(bookingData!!.seats)
                                 bookingData!!.inCinemaFoodResp.forEach {
+                                    println("it--->$it")
                                     orderAdapter!!.add(
                                         OrderItemView(
                                             context = this@InCinemaModeActivity,
                                             it
                                         )
                                     )
+
                                 }
+                                orderAdapter?.notifyDataSetChanged()
 
                             } else {
                                 dismissLoader()

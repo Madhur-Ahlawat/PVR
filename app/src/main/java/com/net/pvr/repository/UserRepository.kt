@@ -4411,9 +4411,9 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         processInCinemaResponse(response)
     }
 
-    suspend fun getBooking(bookingId: String) {
+    suspend fun getBooking(bookingId: String,city: String) {
         _getBookingResponseLiveData.postValue(NetworkResult.Loading())
-        val response = userAPI.getBooking(bookingId=bookingId, platform = Constant.platform, did = Constant.getDid(), version = Constant.version)
+        val response = userAPI.getBooking(bookingId=bookingId,city=city, platform = Constant.platform, did = Constant.getDid(), version = Constant.version)
         processBookingResponse(response)
     }
 

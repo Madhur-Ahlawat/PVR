@@ -11,6 +11,7 @@ import com.net.pvr.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr.ui.home.inCinemaMode.response.GetBookingResponse
 import com.net.pvr.ui.home.inCinemaMode.response.GetInCinemaResponse
+import com.net.pvr.ui.home.inCinemaMode.response.InCinemaHomeResponse
 import com.net.pvr.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -77,6 +78,9 @@ class HomeViewModel @Inject constructor(private val userRepository: UserReposito
     val privilegeHomeResponseLiveData: LiveData<NetworkResult<PrivilegeHomeResponse>>
         get() = userRepository.privilegeHomeResponseLiveData
 
+    val getInCinemaLiveDataHome: LiveData<NetworkResult<InCinemaHomeResponse>>
+        get() = userRepository.inCinemaHomeResponseLiveData
+
     val getInCinemaLiveData: LiveData<NetworkResult<GetInCinemaResponse>>
         get() = userRepository.getInCinemaResponseLiveData
     val getBookingLiveData: LiveData<NetworkResult<GetBookingResponse>>
@@ -94,12 +98,12 @@ class HomeViewModel @Inject constructor(private val userRepository: UserReposito
     val nextBookingResponseLiveData: LiveData<NetworkResult<NextBookingResponse>>
         get() = userRepository.nextBookingResponseLiveData
 
-    fun nextBooking(
+    fun getInCinemaHome(
         userid: String,
-        did: String
+        city: String
     ) {
         viewModelScope.launch {
-            userRepository.nextBookingData(userid, did)
+            userRepository.getInCinemaHome(userid, city)
         }
     }
 
@@ -136,10 +140,10 @@ class HomeViewModel @Inject constructor(private val userRepository: UserReposito
         }
     }
     fun getBooking(
-        bookingId: String
+        bookingId: String,city: String
     ) {
         viewModelScope.launch {
-            userRepository.getBooking(bookingId)
+            userRepository.getBooking(bookingId,city)
         }
     }
 }
