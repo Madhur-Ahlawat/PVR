@@ -39,11 +39,6 @@ class NetworkModule {
     @Provides
     fun providesUserAPI(retrofitBuilder: Retrofit.Builder): UserAPI {
         val client = OkHttpClient.Builder()
-//            client.certificatePinner(
-//                CertificatePinner.Builder()
-//                    .add("publicobject.com", "sha256/afwiKY3RxoMmLkuRW1l7QsPZTJPwDS2pdDROQjXw8ig=")
-//                    .build())
-//            .build()
         client.readTimeout(600, TimeUnit.SECONDS)
         client.connectTimeout(600, TimeUnit.SECONDS)
         client.addInterceptor(Interceptor { chain ->
@@ -54,7 +49,6 @@ class NetworkModule {
         })
 
         val logging = HttpLoggingInterceptor()
-
         // if (BuildConfig.DEBUG) {
         if (BuildConfig.DEBUG) {
             logging.level = HttpLoggingInterceptor.Level.BODY
@@ -68,5 +62,4 @@ class NetworkModule {
             .build()
             .create(UserAPI::class.java)
     }
-
 }

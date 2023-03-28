@@ -725,5 +725,7 @@ IMAX Corporation is one of the world\'s leading entertainment technology compani
     <string name="voucher_code">Voucher Code</string>
     <string name="transaction_history">Transaction History</string>
     <string name="what_can_make_a_better_gift_card_than_a_movie">What can make a better Gift Card than a movie!</string>
+    <string name="awesome">Awesome!</string>
+    <string name="saved_with_this_ncoupon_code">saved with this\ncoupon code</string>
 
 </resources>

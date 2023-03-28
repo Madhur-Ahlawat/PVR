@@ -8,5 +8,5 @@
         />
 
     <corners
-        android:radius="@dimen/padding_10"/>
+        android:radius="@dimen/dimen_10dp"/>
 </shape>

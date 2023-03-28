@@ -146,9 +146,9 @@ class PaymentActivity : AppCompatActivity(),
             val priceText = dialog.findViewById<View>(R.id.priceText) as TextView?
             val promCode = dialog.findViewById<View>(R.id.promcode) as TextView?
             price?.text = "₹$priceTextV"
-            priceText?.text = "\nsaved with this\ncoupon code"
+            priceText?.text = "saved with this\ncoupon code"
             if (code != "") {
-                promCode?.text = "'$code' Applied!"
+                promCode?.text = code
             } else {
                 promCode?.text = ""
             }

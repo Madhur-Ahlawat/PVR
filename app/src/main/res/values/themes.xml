@@ -227,8 +227,8 @@
     //progressBar
     <style name="CustomProgressBarHorizontalNew"
         parent="android:Widget.ProgressBar.Horizontal">
-        <item name="android:minHeight">10dp</item>
-        <item name="android:maxHeight">20dp</item>
+        <item name="android:minHeight">6dp</item>
+        <item name="android:maxHeight">10dp</item>
     </style>
 
     //progressBar
