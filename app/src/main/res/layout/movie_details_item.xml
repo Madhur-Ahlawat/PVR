@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="item"
+            type="String" />
+    </data>
+    <com.google.android.material.card.MaterialCardView
+        android:layout_margin="@dimen/dimen_3dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_32dp"
+        android:backgroundTint="@color/bg_dark_seat_indicator"
+        app:cardCornerRadius="@dimen/dimen_4dp"
+        app:cardElevation="0dp">
+        <TextView
+            android:id="@+id/textview_seat_number"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:gravity="center"
+            android:text="D10"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen_12sp" />
+    </com.google.android.material.card.MaterialCardView>
+</layout>

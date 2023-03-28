@@ -378,6 +378,7 @@ class HomeActivity : AppCompatActivity(),
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
+
                 }
             }
         }

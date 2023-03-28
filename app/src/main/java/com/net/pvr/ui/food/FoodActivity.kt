@@ -141,7 +141,6 @@ class FoodActivity : AppCompatActivity(),
         val view = binding?.root
         setContentView(view)
         foodCartModel = ArrayList()
-
         manageFunction()
     }
 

@@ -34,42 +34,43 @@ class WebViewActivity : AppCompatActivity() {
         get = intent.getStringExtra("getUrl").toString()
         movedNext()
         binding?.webView?.settings?.builtInZoomControls = true
-
-             if (from == "Experience") {
-                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
-                binding?.webView?.settings?.setSupportMultipleWindows(true)
-                binding?.webView?.settings?.javaScriptCanOpenWindowsAutomatically = true
-            } else {
-                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-            }
+        if (from == "Experience") {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
+            binding?.webView?.settings?.setSupportMultipleWindows(true)
+            binding?.webView?.settings?.javaScriptCanOpenWindowsAutomatically = true
+        } else {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
 
 
         when (from) {
             "merchandise" -> {
-                binding?.include3?.textView108?.text= title
+                binding?.include3?.textView108?.text = title
                 loadWebData(get)
             }
             "PVRcare" -> {
-                binding?.include3?.textView108?.text= title
+                binding?.include3?.textView108?.text = title
                 loadWebData(get)
-            }"passFaq" -> {
-
-                binding?.include3?.textView108?.text= title
-                loadWebData(get)
-            }"kotakApply" -> {
-            // Hit Event
-            try {
-                val bundle = Bundle()
-                bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Privilege")
-                GoogleAnalytics.hitEvent(this, "kotak_saving_account", bundle)
-            }catch (e:Exception) {
-                e.printStackTrace()
             }
-                binding?.include3?.textView108?.text= title
+            "passFaq" -> {
+
+                binding?.include3?.textView108?.text = title
+                loadWebData(get)
+            }
+            "kotakApply" -> {
+                // Hit Event
+                try {
+                    val bundle = Bundle()
+                    bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Privilege")
+                    GoogleAnalytics.hitEvent(this, "kotak_saving_account", bundle)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                binding?.include3?.textView108?.text = title
                 loadWebData(get)
             }
             else -> {
-                binding?.include3?.textView108?.text= title
+                binding?.include3?.textView108?.text = title
                 loadWebData(get)
             }
         }
@@ -150,8 +151,6 @@ class WebViewActivity : AppCompatActivity() {
 
         }
     }
-
-
 
 
 }

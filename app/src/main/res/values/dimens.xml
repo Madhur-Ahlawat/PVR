@@ -352,6 +352,8 @@
 
     <dimen name="dimen_0dp">0dp</dimen>
     <dimen name="dimen_100dp">100dp</dimen>
+    <dimen name="dimen_117dp">117dp</dimen>
+    <dimen name="dimen_136dp">136dp</dimen>
     <dimen name="dimen_10dp">10dp</dimen>
     <dimen name="dimen_11dp">11dp</dimen>
     <dimen name="dimen_11sp">11sp</dimen>
@@ -361,6 +363,7 @@
     <dimen name="dimen_13dp">13dp</dimen>
     <dimen name="dimen_13sp">13sp</dimen>
     <dimen name="dimen_14dp">14dp</dimen>
+    <dimen name="dimen_20.46dp">20.46dp</dimen>
     <dimen name="dimen_14sp">14sp</dimen>
     <dimen name="dimen_15dp">15dp</dimen>
     <dimen name="dimen_15sp">15sp</dimen>
@@ -371,6 +374,7 @@
     <dimen name="dimen_17sp">17sp</dimen>
     <dimen name="dimen_180dp">180dp</dimen>
     <dimen name="dimen_18dp">18dp</dimen>
+    <dimen name="dimen_18.5dp">18.5dp</dimen>
     <dimen name="dimen_18sp">18sp</dimen>
     <dimen name="dimen_190dp">190dp</dimen>
     <dimen name="dimen_19dp">19dp</dimen>
@@ -430,6 +434,7 @@
     <dimen name="dimen_75dp">75dp</dimen>
     <dimen name="dimen_76dp">76dp</dimen>
     <dimen name="dimen_7dp">7dp</dimen>
+    <dimen name="dimen_7.5dp">7.5dp</dimen>
     <dimen name="dimen_80dp">80dp</dimen>
     <dimen name="dimen_85dp">85dp</dimen>
     <dimen name="dimen_8dp">8dp</dimen>
@@ -443,4 +448,9 @@
     <dimen name="barcode_reticle_corner_radius">8dp</dimen>
     <dimen name="list_item_spacing">16dp</dimen>
     <dimen name="list_item_spacing_half">8dp</dimen>
+    <dimen name="dimen_52dp">52dp</dimen>
+    <dimen name="dimen_127dp">127dp</dimen>
+    <dimen name="dimen_10sp">10sp</dimen>
+    <dimen name="dimen_46dp">46dp</dimen>
+    <dimen name="dimen_42dp">42dp</dimen>
 </resources>

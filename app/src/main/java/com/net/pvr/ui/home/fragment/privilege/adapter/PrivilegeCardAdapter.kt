@@ -21,7 +21,7 @@ import com.squareup.picasso.Picasso
 
 @Suppress("DEPRECATION")
 class PrivilegeCardAdapter(
-    private var nowShowingList: ArrayList<PrivilegeCardData>,
+    private var nowShowingList: ArrayList<PrivilegeCardData> = arrayListOf(),
     private var context: Activity,
     private val preferences: PreferenceManager,
     private val listener: RecycleViewItemClickListener
@@ -36,7 +36,6 @@ class PrivilegeCardAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context.windowManager.defaultDisplay.getMetrics(displayMetrics)
         screenWidth = displayMetrics.widthPixels
-
         val binding = PrivilegeCardsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
