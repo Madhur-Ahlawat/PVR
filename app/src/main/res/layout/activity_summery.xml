@@ -672,13 +672,15 @@
 
                         <TextView
                             android:id="@+id/textView162"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
+                            android:layout_marginEnd="8dp"
                             android:fontFamily="@font/sf_pro_text_medium"
                             android:text="@string/sub_total"
                             android:textColor="@color/black"
                             android:textSize="@dimen/dimen_14sp"
+                            app:layout_constraintEnd_toStartOf="@+id/linearLayout6"
                             app:layout_constraintStart_toStartOf="@+id/view110"
                             app:layout_constraintTop_toBottomOf="@+id/textView161" />
 
@@ -868,25 +870,28 @@
 
 
                         <LinearLayout
+                            android:id="@+id/linearLayout6"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             app:layout_constraintBottom_toBottomOf="@+id/textView162"
                             app:layout_constraintEnd_toEndOf="@+id/textView169"
                             app:layout_constraintTop_toTopOf="@+id/textView162">
+
                             <TextView
                                 android:id="@+id/cutPriceSub"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/dimen_8dp"
                                 android:fontFamily="@font/sf_pro_text_medium"
                                 android:textColor="@color/red"
                                 android:textSize="@dimen/dimen_14sp"
                                 android:visibility="gone"
-                                android:layout_marginEnd="@dimen/dimen_8dp"
                                 app:layout_constraintBottom_toBottomOf="@+id/textView119"
                                 app:layout_constraintEnd_toEndOf="@+id/view81"
                                 app:layout_constraintTop_toBottomOf="@+id/textView117"
                                 tools:text="12345" />
+
                             <TextView
                                 android:id="@+id/textView168"
                                 android:layout_width="wrap_content"

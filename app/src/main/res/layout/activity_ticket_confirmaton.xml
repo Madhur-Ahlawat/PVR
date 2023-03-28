@@ -567,7 +567,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="100dp"
                                 android:adjustViewBounds="true"
-                                app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintDimensionRatio="H,1:0.4625"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
