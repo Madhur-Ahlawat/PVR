@@ -8,6 +8,7 @@ data class BookingItem(
     val inCinemaFoodResp: List<InCinemaFoodResp>,
     val incinemaTypes: List<IncinemaTypeX>,
     val lang: String,
+    val ccode: String,
     val mcensor: String,
     val mname: String,
     val movieImage: String,
