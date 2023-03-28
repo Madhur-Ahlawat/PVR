@@ -60,7 +60,6 @@ import com.net.pvr.ui.ticketConfirmation.response.TicketBookedResponse
 import com.net.pvr.ui.watchList.response.WatchListResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -1653,8 +1652,7 @@ interface UserAPI {
         @Query("bookingId") bookingId: String,
         @Query("city") city: String,
         @Query("av") version: String,
-        @Query("pt") platform: String,
-        @Query("did") did: String
+        @Query("pt") platform: String
     ): Response<GetBookingResponse>
 
 

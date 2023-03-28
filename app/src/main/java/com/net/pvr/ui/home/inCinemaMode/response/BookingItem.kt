@@ -4,13 +4,16 @@ data class BookingItem(
     val audi: String,
     val cinemaname: String,
     val format: String,
-    val genre: String,
-    val inCinemaFoodResp: MutableList<InCinemaFoodResp>,
-    val incinemaTypes: MutableList<IncinemaType>,
+    val genre: Any,
+    val inCinemaFoodResp: List<InCinemaFoodResp>,
+    val incinemaTypes: List<IncinemaTypeX>,
     val lang: String,
     val mcensor: String,
     val mname: String,
-    val showData: ShowData,
-    val showtime: String,
-    val seats: MutableList<String> = mutableListOf()
+    val movieImage: String,
+    val placeholders: List<Any>,
+    val popups: List<Any>,
+    val seats: List<String>,
+    val showData: List<ShowDataX>,
+    val showtime: String
 )

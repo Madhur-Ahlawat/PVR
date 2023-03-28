@@ -218,12 +218,12 @@ class InCinemaModeActivity : AppCompatActivity(),
             cardviewFoodAndBevarages.setOnClickListener {
                 Constant.CINEMA_ID = ""
                 bookingData?.let {
-                    it?.showData.let {
-                        it?.let {
-                            Constant.CINEMA_ID = it.Cinema_code
-                            Constant.BOOKING_ID = bookingIdList!![currentBooking]
-                        }
-                    }
+                            it?.inCinemaFoodResp?.let{
+                                Constant.BOOKING_ID = bookingIdList!![currentBooking]
+
+                            }
+//                        Constant.CINEMA_ID =
+
                 }
                 if (!Constant.CINEMA_ID.isNullOrEmpty() && !Constant.BOOKING_ID.isNullOrEmpty()) {
                     val intent = Intent(this@InCinemaModeActivity, FoodActivity::class.java)
@@ -543,11 +543,11 @@ class InCinemaModeActivity : AppCompatActivity(),
     }
 
     private fun getInCinemaMode() {
-        //showLoader()
+        showLoader()
         authViewModel.getInCinemaLiveData.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
-                    //dismissLoader()
+                    dismissLoader()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         mCinemaData = it.data.output
                         try {
@@ -560,8 +560,10 @@ class InCinemaModeActivity : AppCompatActivity(),
                                 }
                             }
                             if (bookingIdList!!.size != 0) {
+                                binding!!.nestedScrollView.show()
                                 getBookingInfo(bookingIdList!![currentBooking],preferences.getCityName())
                             } else {
+                                binding!!.nestedScrollView.hide()
                                 dialog!!.show()
                             }
                         } catch (e: Exception) {
@@ -570,7 +572,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                     }
                 }
                 is NetworkResult.Error -> {
-                   // dismissLoader()
+                    dismissLoader()
                     binding?.apply {
                         nestedScrollView.hide()
                     }
@@ -642,6 +644,8 @@ class InCinemaModeActivity : AppCompatActivity(),
 
                                 }
                                 movieDetailsAdapter.submitList(bookingData!!.seats)
+                                orderAdapter!!.clear()
+                                orderAdapter!!.notifyDataSetChanged()
                                 bookingData!!.inCinemaFoodResp.forEach {
                                     println("it--->$it")
                                     orderAdapter!!.add(
@@ -650,10 +654,8 @@ class InCinemaModeActivity : AppCompatActivity(),
                                             it
                                         )
                                     )
-
                                 }
-                                orderAdapter?.notifyDataSetChanged()
-
+                                orderAdapter!!.notifyDataSetChanged()
                             } else {
                                 dismissLoader()
                                 binding?.apply {
@@ -1086,7 +1088,17 @@ class InCinemaModeActivity : AppCompatActivity(),
             }
         }
     )
+    private fun createOrderAdapter() = GenericRecyclerViewAdapter(
+        getViewLayout = { R.layout.movie_details_item },
+        areItemsSame = ::isMovieDetailSame,
+        areItemContentsEqual = ::isMovieDetailSame,
+        onBind = { seat, viewDataBinding, _ ->
+            with(viewDataBinding as MovieDetailsItemBinding) {
+                textviewSeatNumber.text = seat
 
+            }
+        }
+    )
     private fun isMovieDetailSame(any: String, any1: String): Boolean {
         return false
     }

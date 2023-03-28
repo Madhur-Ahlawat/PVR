@@ -25,7 +25,9 @@ class OrderItemView(var context: Context?, var item: InCinemaFoodResp) :
         var groupAdapter = GroupAdapter<ViewHolder>()
         this.viewBinding = viewBinding
         viewBinding.apply {
-            rvOrdersList.addItemDecoration(RecyclerViewMarginFoodInnerItem(30, 1))
+            if(rvOrdersList.itemDecorationCount==0){
+                rvOrdersList.addItemDecoration(RecyclerViewMarginFoodInnerItem(30, 1))
+            }
             if (rowindex == position){
                 rvOrdersList.show()
             }else{
@@ -38,6 +40,7 @@ class OrderItemView(var context: Context?, var item: InCinemaFoodResp) :
             rootOrder.setOnClickListener {
                 rowindex = position
                 if(rvOrdersList.visibility==View.GONE){
+                    groupAdapter.clear()
                     item.foods.forEach {
                         groupAdapter.add(FoodItemView(context,it))
                     }
@@ -48,12 +51,13 @@ class OrderItemView(var context: Context?, var item: InCinemaFoodResp) :
                 else{
                     groupAdapter.clear()
                     rvOrdersList.visibility=View.GONE
-                    imageviewExpandOrder.setImageDrawable(imageviewExpandOrder.context.resources.getDrawable(R.drawable.ic_arrow_up_white))
+                    imageviewExpandOrder.setImageDrawable(imageviewExpandOrder.context.resources.getDrawable(R.drawable.ic_arrow_down))
                 }
 
                 groupAdapter.notifyDataSetChanged()
 
             }
+            groupAdapter.clear()
             item.foods.forEach {
                 groupAdapter.add(FoodItemView(context,it))
             }

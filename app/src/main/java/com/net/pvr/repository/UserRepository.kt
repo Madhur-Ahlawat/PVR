@@ -4413,7 +4413,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
 
     suspend fun getBooking(bookingId: String,city: String) {
         _getBookingResponseLiveData.postValue(NetworkResult.Loading())
-        val response = userAPI.getBooking(bookingId=bookingId,city=city, platform = Constant.platform, did = Constant.getDid(), version = Constant.version)
+        val response = userAPI.getBooking(bookingId=bookingId,city=city, platform = Constant.platform, version = Constant.version)
         processBookingResponse(response)
     }
 

@@ -128,10 +128,10 @@
                             android:layout_marginStart="14sp"
                             android:gravity="center_vertical"
                             android:orientation="vertical"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintBottom_toBottomOf="@id/constraintlayout_poster"
                             app:layout_constraintEnd_toStartOf="@+id/textview_movie_number"
                             app:layout_constraintStart_toEndOf="@+id/constraintlayout_poster"
-                            app:layout_constraintTop_toTopOf="parent">
+                            app:layout_constraintTop_toTopOf="@id/constraintlayout_poster">
 
                             <TextView
                                 android:id="@+id/textview_movie_name"

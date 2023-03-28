@@ -448,7 +448,6 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
     }
 
     private fun getInCinemaModeWithBookingIDDataLoad() {
-        authViewModel.getInCinemaHome(preferences.getUserId(), preferences.getCityName())
         authViewModel.getInCinemaLiveDataHome.observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkResult.Success -> {
@@ -477,6 +476,7 @@ class HomeFragment : Fragment(), HomeCinemaCategoryAdapter.RecycleViewItemClickL
                 }
             }
         }
+        authViewModel.getInCinemaHome(preferences.getUserId(), preferences.getCityName())
     }
 
     private fun dismissLoader() {
