@@ -79,14 +79,15 @@
 
             <ImageView
                 android:id="@+id/hcIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dimen_25dp"
+                android:layout_height="@dimen/dimen_25dp"
                 android:layout_marginEnd="@dimen/dimen_24dp"
                 android:visibility="visible"
+                android:adjustViewBounds="true"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/hc_icon"
                 app:layout_constraintEnd_toStartOf="@+id/imageView56"
                 app:layout_constraintTop_toTopOf="@+id/constraintLayout47"
-                app:srcCompat="@drawable/hc_icon"
                 tools:ignore="ContentDescription" />
 
             <ImageView

@@ -26,6 +26,7 @@ import com.net.pvr.utils.hide
 import com.net.pvr.utils.printLog
 import com.net.pvr.utils.toast
 import java.util.*
+import kotlin.collections.ArrayList
 
 @Suppress("DEPRECATION")
 class OffersAdapter(
@@ -80,9 +81,9 @@ class OffersAdapter(
         holder.offerRecList.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         if (cat.equals("", ignoreCase = true)) {
-
-            val list: List<String> =
-                offerList!![0].offerList[0].catp.replace("Trending,", "",ignoreCase = true).replace("TREND,", "",ignoreCase = true).split(",")
+            val list = ArrayList<String>()
+            list.add("All")
+            list.addAll(offerList!![0].offerList[0].catp.replace("Trending,", "",ignoreCase = true).replace("TREND,", "",ignoreCase = true).split(","))
 
             val adapter1 = OfferFilterAdapter(list , context, this, rowIndex, holder.offerRecList)
             holder.offerRecList.adapter = adapter1
@@ -112,7 +113,7 @@ class OffersAdapter(
             }
         } else {
             holder.upperView.visibility = View.GONE
-            if (offerList1.size > 1) {
+            if (offerList1.size > 2) {
                 if (position == 0) {
                     holder.seeAll.visibility = View.GONE
                 } else {
@@ -162,24 +163,28 @@ class OffersAdapter(
         try {
             if (runnable != null) handler.removeCallbacksAndMessages(null)
             this.rowIndex = rowIndex
-            val offers = ArrayList<OfferLocalData>()
-            for (data in offerListAll) {
-                if (data.cat.equals(offer, ignoreCase = true)) {
-                    if (listHas(offerListAll)) {
-                        offers.add(offerListAll[0])
-                        offers.add(offerListAll[1])
-                    } else {
-                        offers.add(offerListAll[0])
+            var offers = ArrayList<OfferLocalData>()
+            if (offer == "All") {
+                for (data in offerListAll) {
+                    if (data.cat.equals(offer, ignoreCase = true)) {
+                        if (listHas(offerListAll)) {
+                            offers.add(offerListAll[0])
+                            offers.add(offerListAll[1])
+                        } else {
+                            offers.add(offerListAll[0])
+                        }
+                        if (offerListAll.size > 2) offers.add(data)
                     }
-                    if (offerListAll.size > 2) offers.add(data)
                 }
             }
+            offers = offerListAll
             if (type == 0) {
                 offerList = offerListAll
             } else {
                 if (offers.size > 0) {
                     offerList = offers
                 } else {
+
                     context.toast("No offer available for selected category!")
                 }
             }

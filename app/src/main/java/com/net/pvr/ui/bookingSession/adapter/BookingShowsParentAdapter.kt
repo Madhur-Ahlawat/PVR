@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.net.pvr.R
 import com.net.pvr.databinding.ItemBookingSessionCinemaLocationBinding
 import com.net.pvr.ui.bookingSession.response.BookingResponse
 import com.net.pvr.utils.hide
@@ -45,6 +46,12 @@ class BookingShowsParentAdapter(
                     binding.hcIcon.show()
                 }else{
                     binding.hcIcon.hide()
+                }
+
+                if (this.acct){
+                    binding.hcIcon.setImageResource(R.drawable.accst_icon)
+                }else{
+                    binding.hcIcon.setImageResource(R.drawable.hc_icon)
                 }
                 if (this.newCinemaText!= null && this.newCinemaText!= ""){
                     binding.cinemaLocation.show()

@@ -585,6 +585,7 @@
             android:name="com.net.pvr.ui.login.LoginActivity"
             android:exported="false"
             android:noHistory="true"
+            android:windowSoftInputMode="stateHidden|adjustPan"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.net.pvr.ui.splash.onBoarding.LandingActivity"

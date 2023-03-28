@@ -18,10 +18,8 @@ class OfferFilterAdapter(
     rowIndex: Int,
     private var offerRecList: RecyclerView
 ) : RecyclerView.Adapter<OfferFilterAdapter.FilterViewHolder>() {
-    var rowIndex = -1
-    init {
-        this.rowIndex = rowIndex
-    }
+    var rowIndex = 0
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilterViewHolder {
         val view: View =
             LayoutInflater.from(context).inflate(R.layout.item_filter_list, parent, false)

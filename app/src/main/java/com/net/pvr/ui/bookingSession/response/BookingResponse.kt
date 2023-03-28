@@ -93,6 +93,7 @@ data class BookingResponse(
             val cn: String,
             val dst: Int,
             val hc: Boolean,
+            val acct: Boolean,
             val ina: String,
             val newCinemaText: String,
             val lc: String,
