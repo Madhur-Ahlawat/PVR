@@ -222,7 +222,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                 bookingData?.let {
                     it?.inCinemaFoodResp?.let {
                         Constant.BOOKING_ID = bookingIdList!![currentBooking]
-                        Constant.CINEMA_ID =  bookingData?.ccode!!
+                        Constant.CINEMA_ID = bookingData?.ccode!!
                     }
 
                 }
@@ -264,11 +264,17 @@ class InCinemaModeActivity : AppCompatActivity(),
                 val ola = dialog.findViewById<View>(R.id.cardview_ola) as MaterialCardView?
 
                 uber!!.setOnClickListener {
-//                    intent_ready_to_leave =
-//                        Intent(this@InCinemaModeActivity, WebViewReadyToLeave::class.java)
+                    dialog?.let {
+                        if (it.isShowing) {
+                            it.dismiss()
+                        }
+                    }
                     val browserIntent =
                         Intent(Intent.ACTION_VIEW, Uri.parse("https://www.uber.com/in/en/ride/"))
                     startActivity(browserIntent)
+//                    intent_ready_to_leave =
+//                        Intent(this@InCinemaModeActivity, WebViewReadyToLeave::class.java)
+
 //                    intent_ready_to_leave?.apply {
 //                        putExtra("getUrl", "https://www.uber.com/in/en/ride/")
 //                        putExtra("from", "inCinemaMode")
@@ -278,11 +284,17 @@ class InCinemaModeActivity : AppCompatActivity(),
 //                    }
                 }
                 ola!!.setOnClickListener {
-//                    intent_ready_to_leave =
-//                        Intent(this@InCinemaModeActivity, WebViewReadyToLeave::class.java)
+                    dialog?.let {
+                        if (it.isShowing) {
+                            it.dismiss()
+                        }
+                    }
                     val browserIntent =
                         Intent(Intent.ACTION_VIEW, Uri.parse("https://book.olacabs.com/?"))
                     startActivity(browserIntent)
+//                    intent_ready_to_leave =
+//                        Intent(this@InCinemaModeActivity, WebViewReadyToLeave::class.java)
+
 //                    intent_ready_to_leave?.apply {
 //                        putExtra("getUrl", "https://book.olacabs.com/?")
 //                        putExtra("from", "inCinemaMode")
