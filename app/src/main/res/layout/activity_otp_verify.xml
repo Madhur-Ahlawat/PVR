@@ -322,6 +322,24 @@
                 app:layout_constraintStart_toStartOf="@+id/view11"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout38" />
 
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="@dimen/dimen_30dp"
+                android:layout_marginBottom="@dimen/dimen_30dp"
+                android:lineSpacingExtra="0.1dp"
+                android:visibility="gone"
+                android:background="@drawable/grey_seat_curve"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:gravity="center"
+                android:text="@string/continue_txt"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_14sp"
+                app:layout_constraintEnd_toEndOf="@+id/view11"
+                app:layout_constraintStart_toStartOf="@+id/view11"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout38" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>

@@ -7,9 +7,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
@@ -77,9 +79,13 @@ class OtpVerifyActivity : AppCompatActivity() {
         }
 
         if (newUser == "false") {
-            binding?.textView15?.text = getString(R.string.continue_txt)
-        } else {
+            binding?.textView15?.show()
+            binding?.textView16?.hide()
             binding?.textView15?.text = getString(R.string.submit)
+        } else {
+            binding?.textView15?.hide()
+            binding?.textView16?.show()
+            binding?.textView16?.text = getString(R.string.continue_txt)
         }
 
 //        Read otp
@@ -94,6 +100,8 @@ class OtpVerifyActivity : AppCompatActivity() {
         //newUser
         registerUser()
         extendTime()
+
+        otpResend()
     }
 
     //For Auto Read otp
@@ -114,6 +122,7 @@ class OtpVerifyActivity : AppCompatActivity() {
         //Resend Otp
         binding?.textView14?.setOnClickListener {
             binding?.otpEditText?.clearText(true)
+
             binding?.textView15?.isClickable = false
             binding?.textView15?.isFocusable = false
             binding?.textView15?.isEnabled = false
@@ -127,7 +136,7 @@ class OtpVerifyActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
             authViewModel.loginMobileUser(mobile, preferences.getCityName(), "INDIA")
-            otpResend()
+
         }
 
         binding?.otpEditText?.setOnCharacterUpdatedListener {
@@ -147,66 +156,77 @@ class OtpVerifyActivity : AppCompatActivity() {
 
             //otp_view.isFilled()
         }
+
         //Submit
         binding?.textView15?.setOnClickListener {
             val otp = binding?.otpEditText?.getStringFromFields()
             if (binding?.otpEditText?.getStringFromFields()?.contains("null") == true) {
-
-                binding?.textView15?.isClickable = true
-                binding?.textView15?.isFocusable = true
-                binding?.textView15?.setBackgroundResource(R.drawable.yellow_book_curve)
-
-
                 binding?.textView383?.show()
                 binding?.textView383?.text=getString(R.string.enterOtp)
 
+                binding?.textView15?.setBackgroundResource(R.drawable.grey_seat_curve)
+
             } else {
-                if (newUser == "false") {
-                    authViewModel.otpVerify(
-                        mobile, getHash(
-                            "$mobile|$otp"
-                        )
+                binding?.textView15?.setBackgroundResource(R.drawable.yellow_book_curve)
+
+                authViewModel.otpVerify(
+                    mobile, getHash(
+                        "$mobile|$otp"
                     )
-                } else {
-                    binding?.textView15?.setOnClickListener {
-                        binding?.textView383?.hide()
-                        val name = binding?.name?.text.toString()
-                        val email = binding?.email?.text.toString()
-                        if (signUpClick==0){
-                            binding?.constraintLayout38?.show()
-                            binding?.textView15?.text= getString(R.string.continue_txt)
-                            signUpClick+=1
-                        }else{
-                            if (name==""){
-                                binding?.textView384?.show()
-                                binding?.textView384?.hide()
-                                binding?.textView384?.text=getString(R.string.enterName)
-                            }else if (!InputTextValidator.checkFullName(binding?.name!!)) {
-                                binding?.textView384?.hide()
-                                binding?.textView384?.show()
-                                binding?.textView384?.text=getString(R.string.lastName)
-                            } else if (email=="") {
-                                binding?.textView384?.hide()
-                                binding?.textView385?.show()
-                                binding?.textView385?.text=getString(R.string.enterEmail)
-                            } else if (!InputTextValidator.validateEmail(binding?.email!!)) {
-                                binding?.textView384?.hide()
-                                binding?.textView385?.show()
-                                binding?.textView385?.text=getString(R.string.wrongEmail)
-                            } else {
-                                binding?.textView384?.hide()
-                                binding?.textView385?.hide()
-                                authViewModel.resister(
-                                    getHash(
-                                        "$mobile|$otp|$email"
-                                    ), name, email, mobile, otp.toString(), "INDIA", false
-                                )
-                            }
-                        }
-                    }
-                }
+                )
             }
         }
+
+        //New User
+        binding?.textView16?.setOnClickListener {
+                if (binding?.otpEditText?.getStringFromFields()?.contains("null") == true){
+                    signUpClick=0
+                    binding?.constraintLayout38?.hide()
+                    binding?.textView384?.hide()
+                    binding?.textView385?.hide()
+                    binding?.textView383?.show()
+                    binding?.textView383?.text=getString(R.string.enterOtp)
+                    binding?.textView16?.setBackgroundResource(R.drawable.grey_seat_curve)
+                }else{
+                    binding?.textView383?.hide()
+                    binding?.constraintLayout38?.show()
+                    binding?.textView16?.setBackgroundResource(R.drawable.yellow_book_curve)
+
+                    if (signUpClick==1){
+                        val name = binding?.name?.text.toString()
+                        val otp = binding?.otpEditText?.getStringFromFields()
+                        val email = binding?.email?.text.toString()
+
+                        if (name==""){
+                            binding?.textView384?.text=getString(R.string.enterName)
+                            binding?.textView384?.show()
+                            binding?.textView385?.hide()
+                        }else if (!InputTextValidator.checkFullName(binding?.name!!)) {
+                            binding?.textView384?.show()
+                            binding?.textView385?.hide()
+                            binding?.textView384?.text=getString(R.string.lastName)
+                        } else if (email=="") {
+                            binding?.textView384?.hide()
+                            binding?.textView385?.show()
+                            binding?.textView385?.text=getString(R.string.enterEmail)
+                        } else if (!InputTextValidator.validateEmail(binding?.email!!)) {
+                            binding?.textView384?.hide()
+                            binding?.textView385?.show()
+                            binding?.textView385?.text=getString(R.string.wrongEmail)
+                        } else {
+                            binding?.textView384?.hide()
+                            binding?.textView385?.hide()
+                            authViewModel.resister(
+                                getHash(
+                                    "$mobile|$otp|$email"
+                                ), name, email, mobile, otp.toString(), "INDIA", false
+                            )
+                        }
+                    }
+
+                    signUpClick=1
+                }
+            }
     }
 
 
@@ -247,6 +267,7 @@ class OtpVerifyActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun otpResend() {
         authViewModel.resendResponseLiveData.observe(this) {
             when (it) {
@@ -286,8 +307,6 @@ class OtpVerifyActivity : AppCompatActivity() {
                     dialog.show()
                 }
                 is NetworkResult.Loading -> {
-                    loader = LoaderDialog(R.string.pleaseWait)
-                    loader?.show(supportFragmentManager, null)
                 }
             }
         }
@@ -335,22 +354,7 @@ class OtpVerifyActivity : AppCompatActivity() {
         Constant.setAverageUserIdSCM(preferences)
         Constant.setUPSFMCSDK(preferences)
 
-
-
-
-
-
-//        preferences.saveIsLogin(true)
-        // Hit Event
         try {
-
-
-//        output.id.let { preferences.saveUserId(it) }
-//        output.un.let { preferences.saveUserName(it) }
-//        output.ph.let { preferences.saveMobileNumber(it) }
-//        output.em.let { preferences.saveEmail(it) }
-//        output.token.let { preferences.saveToken(it) }
-
             preferences.saveIsLogin(true)
             output.id.let { preferences.saveUserId(it) }
             output.un.let { preferences.saveUserName(it) }
@@ -457,7 +461,6 @@ class OtpVerifyActivity : AppCompatActivity() {
 
     private fun privilegeRetrieveData(output: PrivilegeHomeResponse.Output) {
         try {
-//            toast("hello1")
 
             Constant.PrivilegeHomeResponseConst = output
             preferences.saveString("FAQ", output.faq)
@@ -479,10 +482,7 @@ class OtpVerifyActivity : AppCompatActivity() {
 
     }
 
-
-
     private fun checkMoved() {
-//        toast("hello2")
         if (!Constant().locationServicesEnabled(this@OtpVerifyActivity)) {
             val intent = Intent(this@OtpVerifyActivity, EnableLocationActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -562,7 +562,6 @@ class OtpVerifyActivity : AppCompatActivity() {
         return sb.toString()
     }
 
-
     private var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -581,14 +580,23 @@ class OtpVerifyActivity : AppCompatActivity() {
         val matcher: Matcher = pattern.matcher(message)
         if (matcher.find()) {
             binding?.otpEditText?.setText(matcher.group(0)!!)
-            binding?.textView15?.setBackgroundResource(R.drawable.yellow_book_curve)
+            manageLoginResister()
+        }
+    }
 
+    private fun manageLoginResister() {
+        if (newUser == "false") {
+            binding?.textView15?.setBackgroundResource(R.drawable.yellow_book_curve)
             val otp = binding?.otpEditText?.getStringFromFields()
             authViewModel.otpVerify(
                 mobile, getHash(
                     "$mobile|$otp"
                 )
             )
+        } else {
+            binding?.textView383?.hide()
+            binding?.constraintLayout38?.show()
+            binding?.textView16?.setBackgroundResource(R.drawable.yellow_book_curve)
         }
     }
 
