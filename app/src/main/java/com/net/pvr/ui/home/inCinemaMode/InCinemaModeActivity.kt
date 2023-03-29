@@ -26,32 +26,27 @@ import androidx.recyclerview.widget.*
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.card.MaterialCardView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityInCinemaModeBinding
+import com.net.pvr.databinding.InCinemaModeBinding
 import com.net.pvr.databinding.IntervalTimingItemBinding
+import com.net.pvr.databinding.ItemQuickOptionIncinemaBinding
 import com.net.pvr.databinding.MovieDetailsItemBinding
 import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.GridAutoFitLayoutManager
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
-import com.net.pvr.ui.food.FoodActivity
-import com.net.pvr.ui.home.HomeActivity
 import com.net.pvr.ui.home.fragment.home.viewModel.HomeViewModel
-import com.net.pvr.ui.home.fragment.privilege.NonMemberActivity
 import com.net.pvr.ui.home.fragment.privilege.adapter.HowItWorkAdapter
 import com.net.pvr.ui.home.fragment.privilege.adapter.PrivilegeCardAdapter
-import com.net.pvr.ui.home.fragment.privilege.response.LoyaltyDataResponse
 import com.net.pvr.ui.home.fragment.privilege.response.PrivilegeCardData
 import com.net.pvr.ui.home.inCinemaMode.response.BookingItem
+import com.net.pvr.ui.home.inCinemaMode.response.IncinemaType
 import com.net.pvr.ui.home.inCinemaMode.response.Output
 import com.net.pvr.ui.home.inCinemaMode.response.ShowData
-import com.net.pvr.ui.login.LoginActivity
 import com.net.pvr.ui.scanner.ScannerActivity
 import com.net.pvr.ui.ticketConfirmation.adapter.TicketPlaceHolderAdapter
-import com.net.pvr.ui.webView.WebViewActivity
-import com.net.pvr.ui.webView.WebViewReadyToLeave
 import com.net.pvr.utils.*
 import com.net.pvr.utils.ga.GoogleAnalytics
 import com.xwray.groupie.GroupAdapter
@@ -101,6 +96,7 @@ class InCinemaModeActivity : AppCompatActivity(),
     private var orderAdapter: GroupAdapter<ViewHolder>? = null
     private val movieDetailsAdapter: GenericRecyclerViewAdapter<String> by lazy { createMovieDetailAdapter() }
     private val intervalAdadapter: GenericRecyclerViewAdapter<ShowData> by lazy { createIntervalTimingAdapter() }
+    private val inCinemaTypesAdadapter: GenericRecyclerViewAdapter<IncinemaType> by lazy { createInCinemaTypesAdapter() }
     private var mIntent: Intent? = null
     var dialog: OptionDialog? = null
     private var noDataDialog: OptionDialog? = null
@@ -464,6 +460,9 @@ class InCinemaModeActivity : AppCompatActivity(),
             rvSeatNumber.layoutManager = GridLayoutManager(this@InCinemaModeActivity, 7)
             layoutManager =
                 LinearLayoutManager(this@InCinemaModeActivity, LinearLayoutManager.VERTICAL, false)
+            rvQuickOption.layoutManager = layoutManager
+            rvQuickOption.addItemDecoration(RecyclerViewDecorationInCinemaTypes(4, 1))
+
             rvIntervalTiming.adapter = intervalAdadapter
             rvSeatNumber.adapter = movieDetailsAdapter
             rvIntervalTiming.addItemDecoration(RecyclerViewMarginBookedTickets(14, 1))
@@ -590,7 +589,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                                 }
                             }
                             //placeholder
-                            if ( mCinemaData?.inCinemaResp?.placeholders?.isEmpty() == true) {
+                            if (mCinemaData?.inCinemaResp?.placeholders?.isEmpty() == true) {
                                 binding?.recyclerView51?.hide()
                             } else {
                                 binding?.recyclerView51?.show()
@@ -599,7 +598,10 @@ class InCinemaModeActivity : AppCompatActivity(),
                                 snapHelper.attachToRecyclerView(binding?.recyclerView51)
                                 val layoutManagerPlaceHolder =
                                     LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-                                val ticketPlaceHolderAdapter = TicketPlaceHolderAdapter(this, mCinemaData?.inCinemaResp?.placeholders!!)
+                                val ticketPlaceHolderAdapter = TicketPlaceHolderAdapter(
+                                    this,
+                                    mCinemaData?.inCinemaResp?.placeholders!!
+                                )
 
                                 binding?.recyclerView51?.setHasFixedSize(true)
                                 binding?.recyclerView51?.layoutManager = layoutManagerPlaceHolder
@@ -694,6 +696,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                                 }
                                 movieDetailsAdapter.submitList(bookingData!!.seats)
                                 intervalAdadapter.submitList(bookingData!!.showData)
+                                inCinemaTypesAdadapter.submitList(bookingData!!.incinemaTypes)
                                 orderAdapter!!.clear()
                                 orderAdapter!!.notifyDataSetChanged()
                                 bookingData!!.inCinemaFoodResp.forEach {
@@ -742,8 +745,6 @@ class InCinemaModeActivity : AppCompatActivity(),
         loader = LoaderDialog(R.string.pleaseWait)
         loader?.show(this@InCinemaModeActivity.supportFragmentManager, null)
     }
-
-
 
 
     private fun createMovieDetailAdapter() = GenericRecyclerViewAdapter(
@@ -912,6 +913,43 @@ class InCinemaModeActivity : AppCompatActivity(),
             }
         }
     }
+
+    private fun createInCinemaTypesAdapter() = GenericRecyclerViewAdapter(
+        getViewLayout = { R.layout.item_quick_option_incinema },
+        areItemsSame = ::isCinemaTypesSame,
+        areItemContentsEqual = ::isCinemaTypesSame,
+        onBind = { inCinemaModeItem, viewDataBinding, _ ->
+            with(viewDataBinding as ItemQuickOptionIncinemaBinding) {
+                when (inCinemaModeItem.key) {
+                    Constant.CAB -> {
+                        Glide.with(this@InCinemaModeActivity)
+                            .load(resources.getDrawable(R.drawable.ic_ready_to_leave))
+
+                        textViewTypeLabel.text=inCinemaModeItem.value
+
+                    }
+                    Constant.FnB -> {
+                        Glide.with(this@InCinemaModeActivity)
+                            .load(resources.getDrawable(R.drawable.ic_food_and_bevarages))
+
+                        textViewTypeLabel.text=inCinemaModeItem.value
+
+                    }
+                    Constant.Feedback -> {
+                        Glide.with(this@InCinemaModeActivity)
+                            .load(resources.getDrawable(R.drawable.ic_feedback))
+
+                        textViewTypeLabel.text=inCinemaModeItem.value
+
+                    }
+                }
+            }
+        }
+    )
+}
+
+fun isCinemaTypesSame(type1: IncinemaType, type2: IncinemaType): Boolean {
+    return if (type1.key == type2.key) true else false
 }
 
 

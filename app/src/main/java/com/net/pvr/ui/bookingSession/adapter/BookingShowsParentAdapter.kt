@@ -49,7 +49,7 @@ class BookingShowsParentAdapter(
                 }
 
                 if (this.acct){
-                    binding.hcIcon.setImageResource(R.drawable.accst_icon)
+//                    binding.hcIcon.setImageResource(R.drawable.accst_icon)
                 }else{
                     binding.hcIcon.setImageResource(R.drawable.hc_icon)
                 }

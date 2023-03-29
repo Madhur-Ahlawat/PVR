@@ -4,7 +4,7 @@
     <data>
         <variable
             name="item"
-            type="String" />
+            type="com.net.pvr.ui.home.inCinemaMode.response.IncinemaType" />
     </data>
     <com.google.android.material.card.MaterialCardView
         android:layout_margin="@dimen/dimen_3dp"

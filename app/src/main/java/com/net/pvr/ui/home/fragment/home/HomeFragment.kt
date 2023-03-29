@@ -273,7 +273,6 @@ class HomeFragment : Fragment(),
         makeToTop()
         offerDataLoad()
         getInCinemaModeWithBookingIDDataLoad()
-
     }
 
     private fun showLoader() {
@@ -315,6 +314,7 @@ class HomeFragment : Fragment(),
 
                 is NetworkResult.Loading -> {
                 }
+                else -> {}
             }
         }
         authViewModel.getInCinemaHome(preferences.getUserId(), preferences.getCityName())

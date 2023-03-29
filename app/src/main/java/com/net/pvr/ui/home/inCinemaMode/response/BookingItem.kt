@@ -6,7 +6,7 @@ data class BookingItem(
     val format: String,
     val genre: Any,
     val inCinemaFoodResp: List<InCinemaFoodResp>,
-    val incinemaTypes: List<IncinemaTypeX>,
+    val incinemaTypes: MutableList<IncinemaType>,
     val lang: String,
     val ccode: String,
     val mcensor: String,

@@ -73,6 +73,9 @@ class Constant {
         }
     }
     companion object {
+        val CAB: String = "CAB"
+        val FnB: String = "FnB"
+        val Feedback: String = "Feedback"
         var timerCounter = 0
         const val platform = "ANDROID"
         const val version = "11.3"
