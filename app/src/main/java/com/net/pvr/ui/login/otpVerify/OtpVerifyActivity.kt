@@ -485,6 +485,7 @@ class OtpVerifyActivity : AppCompatActivity() {
     private fun checkMoved() {
         if (!Constant().locationServicesEnabled(this@OtpVerifyActivity)) {
             val intent = Intent(this@OtpVerifyActivity, EnableLocationActivity::class.java)
+            intent.putExtra("from",from)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             finish()
@@ -515,7 +516,8 @@ class OtpVerifyActivity : AppCompatActivity() {
                     startActivity(intent)
                     finish()
                 }
-            }else if (from == "P"){
+            }
+            else if (from == "P"){
                 val ls = preferences.getString(Constant.SharedPreference.LOYALITY_STATUS)
                 val isHl: String = preferences.getString(Constant.SharedPreference.IS_HL)
                 val isLy: String = preferences.getString(Constant.SharedPreference.IS_LY)

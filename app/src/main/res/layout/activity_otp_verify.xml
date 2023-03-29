@@ -52,7 +52,8 @@
             <ImageView
                 android:id="@+id/imageView7"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dimen_41dp"
+                android:adjustViewBounds="true"
                 android:layout_marginTop="75dp"
                 app:layout_constraintStart_toStartOf="@+id/view11"
                 app:layout_constraintTop_toTopOf="@+id/view11"

@@ -376,7 +376,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/fnbDis"
-                                android:visibility="gone"
+                                android:visibility="visible"
                                 android:layout_marginStart="@dimen/dimen_24dp"
                                 android:layout_marginEnd="@dimen/dimen_24dp"
                                 android:layout_marginBottom="@dimen/dimen_18dp">
@@ -402,7 +402,8 @@
                                 android:textColor="@color/black_70"
                                 android:textSize="@dimen/dimen_12sp"
                                 android:layout_alignParentEnd="true"
-                                tools:text="dnsuywrkjke6774" />
+                                tools:text="dnsuywrkjke6774"
+                                tools:ignore="RelativeOverlap" />
 
                             </RelativeLayout>
 
@@ -416,18 +417,17 @@
                                 android:id="@+id/viewDetails"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:drawableEnd="@drawable/arrow_down"
                                 android:drawablePadding="@dimen/dimen_5dp"
                                 android:fontFamily="@font/sf_pro_text_bold"
                                 android:gravity="start"
                                 android:maxLines="2"
                                 android:paddingTop="@dimen/dimen_12dp"
                                 android:paddingBottom="@dimen/dimen_12dp"
-                                android:text="View Details"
+                                android:text="@string/view_details"
                                 android:textAlignment="textStart"
                                 android:textColor="#7D7D7D"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                app:drawableEndCompat="@drawable/arrow_down" />
 
 
                         </LinearLayout>
@@ -833,14 +833,16 @@
 
                                 <TextView
                                     android:id="@+id/textView311"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="9dp"
+                                    android:layout_marginEnd="8dp"
                                     android:fontFamily="@font/sf_pro_text_semi_bold"
                                     android:text="@string/grab_a_bite"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/dimen_14sp"
                                     app:layout_constraintBottom_toBottomOf="@+id/imageView148"
+                                    app:layout_constraintEnd_toStartOf="@+id/textView312"
                                     app:layout_constraintStart_toEndOf="@+id/imageView148"
                                     app:layout_constraintTop_toTopOf="@+id/imageView148" />
 
@@ -1831,6 +1833,8 @@ ididunt ut labore et dolore magna aliqua." />
                     android:fontFamily="@font/montserrat_bold"
                     android:gravity="center"
                     android:paddingTop="@dimen/dimen_14dp"
+                    android:paddingStart="@dimen/dimen_5dp"
+                    android:paddingEnd="5dp"
                     android:paddingBottom="@dimen/dimen_14dp"
                     android:text="@string/book_parking"
                     android:textColor="@color/black"

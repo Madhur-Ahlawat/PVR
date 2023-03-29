@@ -56,7 +56,7 @@ class OptionDialog(
         }
 
 //        manage title show
-        if (context.getString(title) ==""){
+        if (context.getString(title) =="" || context.getString(title)==context.getString(R.string.app_name)){
             binding?.title?.hide()
         }else{
             binding?.title?.show()
