@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -44,7 +46,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
-
     @Inject
     lateinit var preferences: PreferenceManager
     private var binding: ActivityLoginBinding? = null
@@ -52,11 +53,12 @@ class LoginActivity : AppCompatActivity() {
     private val authViewModel: LoginViewModel by viewModels()
     private val mobileRequest = 1
     private var from: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater, null, false)
-        val view = binding?.root
-        setContentView(view)
+        setContentView(binding?.root)
+
         manageFunction()
     }
 
@@ -83,6 +85,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun movedNext() {
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
         binding?.mobileNumber?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {}
@@ -95,10 +98,13 @@ class LoginActivity : AppCompatActivity() {
                 s: CharSequence, start: Int, before: Int, count: Int
             ) {
                 if (s.toString() != " ") {
-                    binding?.textView382?.hide()
+                    customMargin(0)
+                    binding?.textView382?.invisible()
                 } else {
+                    customMargin(1)
                     binding?.textView382?.text = getString(R.string.checkNumber)
                     binding?.textView382?.show()
+
                 }
             }
         })
@@ -106,6 +112,7 @@ class LoginActivity : AppCompatActivity() {
         binding?.mobileNumber?.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val mobile = binding?.mobileNumber?.text.toString()
+                Constant().hideKeyboard(this@LoginActivity)
                 if (mobile == "") {
                     binding?.textView382?.show()
                     binding?.textView382?.text = getString(R.string.enterMobileNo)
@@ -195,16 +202,19 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        // OutSide Click
-        binding?.loginClick?.setOnClickListener {
-//            binding?.textInputLayout?.isSelected = false
-//            binding?.mobileNumber?.isFocusableInTouchMode = false
-//            binding?.textInputLayout?.isFocusableInTouchMode = false
-//            Constant().hideKeyboard(this)
-        }
 
         //Login
         loginApi()
+    }
+
+    private fun customMargin(i: Int) {
+        if (i==0){
+            binding?.textView382?.setPadding(0,0,0,50)
+
+        }else{
+            binding?.textView382?.setPadding(0,0,0,150)
+
+        }
     }
 
     private fun loginApi() {

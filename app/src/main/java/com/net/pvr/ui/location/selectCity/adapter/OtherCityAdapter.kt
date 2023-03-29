@@ -20,10 +20,9 @@ class OtherCityAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderNowShowing {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.select_dialog_city_item_layout, parent, false)
+            .inflate(R.layout.city_item_layout, parent, false)
         return MyViewHolderNowShowing(view)
     }
-
     override fun onBindViewHolder(holder: MyViewHolderNowShowing, position: Int) {
         val selectCityItemList = selectCityList[position]
         holder.otherCityName.text = selectCityItemList.name

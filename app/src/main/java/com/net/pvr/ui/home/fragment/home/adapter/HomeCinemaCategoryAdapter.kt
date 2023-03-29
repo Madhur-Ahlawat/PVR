@@ -1,5 +1,6 @@
 package com.net.pvr.ui.home.fragment.home.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
@@ -18,15 +19,19 @@ import com.net.pvr.utils.toast
 
 
 class HomeCinemaCategoryAdapter(
-    private var context: Context,
+    private var context: Activity,
     private var nowShowingList: List<HomeResponse.Mfi>,
-    private var listener: RecycleViewItemClickListener) :
+    private var listener: RecycleViewItemClickListener,
+    private var recyclerView: RecyclerView) :
     RecyclerView.Adapter<HomeCinemaCategoryAdapter.MyViewHolderNowShowing>() {
     private var displayMetrics = DisplayMetrics()
     private var screenWidth = 0
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderNowShowing {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_home_image, parent, false)
+        context.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        screenWidth = displayMetrics.widthPixels
+//        recyclerView.layoutParams.width = screenWidth
         return MyViewHolderNowShowing(view)
     }
 
@@ -41,18 +46,18 @@ class HomeCinemaCategoryAdapter(
             holder.imageCatNew.show()
             Glide.with(context)
                 .load(comingSoonItem.nurl)
-                .placeholder(R.drawable.format_placeholder)
-                .error(R.drawable.format_placeholder)
+                .placeholder(R.drawable.multipleformats)
+                .error(R.drawable.multipleformats)
                 .into(holder.imageCatNew)
         }else if (nowShowingList.size<5){
-            holder.mainView.layoutParams
-            holder.itemView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+            holder.cardTag.layoutParams.width = (screenWidth/nowShowingList.size)-50
+            holder.itemView.layoutParams.width = (screenWidth/nowShowingList.size)-50
             holder.cardTag.show()
             holder.imageCatNew.hide()
             Glide.with(context)
                 .load(comingSoonItem.nurl)
-                .placeholder(R.drawable.format_placeholder)
-                .error(R.drawable.format_placeholder)
+                .placeholder(R.drawable.multipleformats)
+                .error(R.drawable.multipleformats)
                 .into(holder.imageCat)
         }else{
             holder.mainView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -61,8 +66,8 @@ class HomeCinemaCategoryAdapter(
             holder.imageCatNew.hide()
             Glide.with(context)
                 .load(comingSoonItem.nurl)
-                .placeholder(R.drawable.format_placeholder)
-                .error(R.drawable.format_placeholder)
+                .placeholder(R.drawable.multipleformats)
+                .error(R.drawable.multipleformats)
                 .into(holder.imageCat)
         }
 

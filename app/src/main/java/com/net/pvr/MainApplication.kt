@@ -38,6 +38,7 @@ import com.net.pvr.R
 class MainApplication : Application() {
     companion object {
          var homeLoadBanner = false
+         var homeofferBanner = false
     }
 
     @RequiresApi(Build.VERSION_CODES.S)

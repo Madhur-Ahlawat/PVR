@@ -31,7 +31,6 @@ import com.net.pvr.ui.food.FoodActivity
 import com.net.pvr.ui.giftCard.GiftCardActivity
 import com.net.pvr.ui.home.HomeActivity
 import com.net.pvr.ui.home.fragment.more.eVoucher.EVoucherActivity
-import com.net.pvr.ui.home.fragment.more.eVoucher.purchaseDetails.PurchaseEVoucherDetailsActivity
 import com.net.pvr.ui.myBookings.adapter.FoodTicketChildAdapter
 import com.net.pvr.ui.myBookings.adapter.GiftCardAdapter
 import com.net.pvr.ui.myBookings.adapter.VoucherListAdapter
@@ -625,10 +624,10 @@ class MyBookingsActivity : AppCompatActivity(),
     }
 
     private fun getUpdatedList(p: ArrayList<FoodTicketResponse.Output.C>,type:kotlin.String): ArrayList<FoodTicketResponse.Output.C> {
-        var newListFood = ArrayList<FoodTicketResponse.Output.C>()
-        var newListFoodUpdated = ArrayList<FoodTicketResponse.Output.C>()
-        var newList = ArrayList<FoodTicketResponse.Output.C>()
-        var newListUpdated = ArrayList<FoodTicketResponse.Output.C>()
+        val newListFood = ArrayList<FoodTicketResponse.Output.C>()
+        val newListFoodUpdated = ArrayList<FoodTicketResponse.Output.C>()
+        val newList = ArrayList<FoodTicketResponse.Output.C>()
+        val newListUpdated = ArrayList<FoodTicketResponse.Output.C>()
         for (data in p){
             if (data.is_only_fd && data.food.isNotEmpty()){
                 newListFood.add(data)
@@ -757,10 +756,7 @@ class MyBookingsActivity : AppCompatActivity(),
     }
 
 
-
-
     ////////////////////////////////////  Voucher  //////////////////////////////////////
-
 
     private fun voucher() {
         authViewModel.userResponseVoucherLiveData.observe(this) {

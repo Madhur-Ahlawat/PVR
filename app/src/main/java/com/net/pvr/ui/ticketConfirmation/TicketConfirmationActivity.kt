@@ -1266,7 +1266,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
             bindingProfile.rate3.setImageResource(R.drawable.emotion_normal)
             bindingProfile.rate4.setImageResource(R.drawable.emotion_laugh)
             bindingProfile.rate5.setImageResource(R.drawable.emotion_happy)
-            rateVal = "1"
+            rateVal = "L1"
         })
         bindingProfile.rate2.setOnClickListener(View.OnClickListener {
             bindingProfile.feedbackText.text = output.ratings.L2
@@ -1277,7 +1277,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
             bindingProfile.rate3.setImageResource(R.drawable.emotion_normal)
             bindingProfile.rate4.setImageResource(R.drawable.emotion_laugh)
             bindingProfile.rate5.setImageResource(R.drawable.emotion_happy)
-            rateVal = "2"
+            rateVal = "L2"
         })
         bindingProfile.rate3.setOnClickListener(View.OnClickListener {
             bindingProfile.feedbackText.text = output.ratings.L3
@@ -1288,7 +1288,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
             bindingProfile.rate3.setImageResource(R.drawable.select_normal)
             bindingProfile.rate4.setImageResource(R.drawable.emotion_laugh)
             bindingProfile.rate5.setImageResource(R.drawable.emotion_happy)
-            rateVal = "3"
+            rateVal = "L3"
         })
         bindingProfile.rate4.setOnClickListener(View.OnClickListener {
             bindingProfile.feedbackText.text = output.ratings.L4
@@ -1299,7 +1299,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
             bindingProfile.rate3.setImageResource(R.drawable.emotion_normal)
             bindingProfile.rate4.setImageResource(R.drawable.select_laugh)
             bindingProfile.rate5.setImageResource(R.drawable.emotion_happy)
-            rateVal = "4"
+            rateVal = "L4"
         })
         bindingProfile.rate5.setOnClickListener(View.OnClickListener {
             bindingProfile.feedbackText.text = output.ratings.L5
@@ -1310,17 +1310,19 @@ class TicketConfirmationActivity : AppCompatActivity() {
             bindingProfile.rate3.setImageResource(R.drawable.emotion_normal)
             bindingProfile.rate4.setImageResource(R.drawable.emotion_laugh)
             bindingProfile.rate5.setImageResource(R.drawable.select_happy)
-            rateVal = "5"
+            rateVal = "L5"
         })
 
         bindingProfile.doneBtn.setOnClickListener(View.OnClickListener {
             authViewModel.setFeedBackData(
                 preferences.getUserId(),
                 "BOOKING",
-                ticketData.cid,
+                rateVal,
                 bindingProfile.feedbackText.text.toString(),
                 "",
-                bindingProfile.commentBox.text.toString()
+                bindingProfile.commentBox.text.toString(),
+                ticketData.cid,
+                ticketData.bi
             )
             setFeedBackData()
             dialog.dismiss()

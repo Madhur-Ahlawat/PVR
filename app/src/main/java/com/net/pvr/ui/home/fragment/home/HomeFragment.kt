@@ -9,7 +9,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.text.Spannable
@@ -19,11 +18,7 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ForegroundColorSpan
 import android.view.*
 import android.view.View.OnTouchListener
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
-import androidx.annotation.RequiresApi
+import android.widget.*
 import androidx.core.view.ViewCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -40,6 +35,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 import com.google.gson.internal.LinkedTreeMap
 import com.net.pvr.MainApplication.Companion.homeLoadBanner
+import com.net.pvr.MainApplication.Companion.homeofferBanner
 import com.net.pvr.R
 import com.net.pvr.databinding.FragmentHomeBinding
 import com.net.pvr.databinding.InCinemaModeBinding
@@ -50,7 +46,6 @@ import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.filter.GenericFilterHome
 import com.net.pvr.ui.giftCard.GiftCardActivity
-import com.net.pvr.ui.home.HomeActivity
 import com.net.pvr.ui.home.HomeActivity.Companion.backToTop
 import com.net.pvr.ui.home.formats.FormatsActivity
 import com.net.pvr.ui.home.fragment.home.adapter.*
@@ -65,7 +60,6 @@ import com.net.pvr.ui.home.inCinemaMode.InCinemaModeActivity
 import com.net.pvr.ui.home.inCinemaMode.response.Data
 import com.net.pvr.ui.home.interfaces.PlayPopup
 import com.net.pvr.ui.location.selectCity.SelectCityActivity
-import com.net.pvr.ui.login.LoginActivity
 import com.net.pvr.ui.movieDetails.nowShowing.NowShowingMovieDetailsActivity
 import com.net.pvr.ui.movieDetails.nowShowing.adapter.MusicVideoTrsAdapter
 import com.net.pvr.ui.movieDetails.nowShowing.adapter.TrailerTrsAdapter
@@ -222,6 +216,14 @@ class HomeFragment : Fragment(),
         // functions
 
         manageFunction()
+
+        binding?.constraintLayout55?.setOnTouchListener(object : OnSwipeTouchListener(requireContext()) {
+            @SuppressLint("ClickableViewAccessibility")
+            override fun onSwipeRight() {
+                binding?.constraintLayout55?.hide()
+            }
+        })
+
     }
 
     private fun manageFunction() {
@@ -329,6 +331,7 @@ class HomeFragment : Fragment(),
 
             if (scrollY > 1000) {
                 backToTop?.show()
+                binding?.constraintLayout55?.hide()
             } else {
                 backToTop?.hide()
 
@@ -518,8 +521,9 @@ class HomeFragment : Fragment(),
             0
         }
 
-        if (offerShow == 1 && showHomeOffer) {
+        if (offerShow == 1 && showHomeOffer && !homeofferBanner) {
             binding?.constraintLayout55?.show()
+            homeofferBanner = true
         } else {
             binding?.constraintLayout55?.hide()
         }
@@ -698,7 +702,7 @@ class HomeFragment : Fragment(),
             val gridLayout =
                 GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
             binding?.recyclerCinemaCat?.layoutManager = LinearLayoutManager(context)
-            val adapter = HomeCinemaCategoryAdapter(requireActivity(), output.mfi, this)
+            val adapter = HomeCinemaCategoryAdapter(requireActivity(), output.mfi, this,binding?.recyclerCinemaCat!!)
             binding?.recyclerCinemaCat?.layoutManager = gridLayout
             binding?.recyclerCinemaCat?.adapter = adapter
 

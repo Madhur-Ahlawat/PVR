@@ -11,14 +11,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_24dp"
+        android:layout_marginStart="@dimen/dimen_24dp"
+        android:layout_marginEnd="@dimen/dimen_24dp"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/imageView7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_10"
             app:srcCompat="@drawable/ic_dialoge_line" />
 
 
@@ -55,8 +55,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="@dimen/dimen_40dp"
-            android:layout_marginBottom="@dimen/dimen_30dp"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:layout_marginBottom="@dimen/dimen_20dp"
             android:gravity="center_horizontal|center_vertical">
             <ImageView
                 android:layout_width="wrap_content"
@@ -100,7 +100,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/commentView"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
 
             <TextView
@@ -134,10 +134,10 @@ Tell us what we can improve"/>
                 android:layout_marginTop="@dimen/dimen_30dp"
                 android:background="@drawable/gray_border"
                 android:gravity="left"
-                android:hint="@string/comment"
+                android:hint="@string/type_your_feedback_here"
                 android:maxLength="500"
-                android:maxLines="7"
-                android:minLines="7"
+                android:maxLines="4"
+                android:minLines="4"
                 android:padding="@dimen/contact_us_padding_default"
                 android:scrollbars="vertical" />
 
@@ -160,9 +160,9 @@ Tell us what we can improve"/>
                     android:fontFamily="@font/sf_pro_text_bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:layout_weight="1"
                     android:gravity="center"
-                    app:textAllCaps="true"
                     android:textSize="18sp"
                     android:text="Submit Feedback"
                     />

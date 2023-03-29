@@ -438,12 +438,12 @@ public class GenericFilterHome implements GenericFilterAdapter.onFilterItemSelec
         });
 
         int count = new HomeFragment().getShowCountHome(filterStrings);
-        if (count>0){
+        //if (count>0){
             showCount.setVisibility(View.VISIBLE);
             showCount.setText("Movie Count:  "+count);
-        }else {
-            showCount.setVisibility(View.GONE);
-        }
+//        }else {
+//            showCount.setVisibility(View.GONE);
+//        }
 
         dialog.show();
     }
@@ -647,12 +647,12 @@ public class GenericFilterHome implements GenericFilterAdapter.onFilterItemSelec
         System.out.println("filterStrings---"+filterStrings);
 
         int count = new HomeFragment().getShowCountHome(filterStrings);
-        if (count>0){
+
             showCount.setVisibility(View.VISIBLE);
             showCount.setText("Movie Count:  "+count);
-        }else {
-            showCount.setVisibility(View.GONE);
-        }
+//        }else {
+//            showCount.setVisibility(View.GONE);
+//        }
     }
 
     private String removeItem(String itemSelected, String languagesStr) {

@@ -181,8 +181,18 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
         for (data in output.vou){
             voucherList.addAll(data.vouchers)
         }
-        val sdf = SimpleDateFormat("MMM dd, yyyyy")
-        voucherList.sortByDescending { sdf.parse(it.exf) }
+        try {
+            val sdf = SimpleDateFormat("MMM dd, yyyy")
+            voucherList.sortByDescending { sdf.parse(it.exf) }
+        }catch (e:ParseException){
+
+            val sdf = SimpleDateFormat("MMM dd, yyyy")
+//            voucherList.sortByDescending {
+//                println("it.exf---"+it.exf)
+//                sdf.parse(it.exf)
+//            }
+
+        }
         voucherList.sortBy { it.usd }
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding?.privilegeList?.layoutManager = layoutManager
@@ -841,6 +851,8 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
         fun getDays(ex:String):Int{
                 var vocEx: Date? = null
                 val today = Calendar.getInstance().time
+            println("days--->$today---->$ex")
+
             val simpleDateFormat = SimpleDateFormat("MMM dd yyyy hh:mma", Locale.US)
             try {
                     vocEx = simpleDateFormat.parse(ex)
@@ -850,7 +862,6 @@ class MemberFragment : Fragment(), PrivilegeCardAdapter.RecycleViewItemClickList
             return if (today.time <= (vocEx?.time ?: 0)) {
                 val l = vocEx!!.time - today.time
                 val days = (l / (1000 * 60 * 60 * 24)).toInt()
-                println("days--->$days")
                 days
             } else {
                 0

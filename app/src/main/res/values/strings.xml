@@ -17,7 +17,7 @@
     <string name="txt_login_subHeader">Login to access your notes</string>
     <string name="txt_login">Login</string>
     <string name="checkNumber">Invalid mobile number</string>
-    <string name="enterMobileNo">Your mobile number is required</string>
+    <string name="enterMobileNo">Phone number is required</string>
     <string name="exitApp">Are You Sure You want to exit?</string>
 
     <string name="txt_error_message">%1$S*</string>
@@ -152,7 +152,7 @@
     //Enable Location
     <string name="location_recommendation">If we know your location we will make better \n movie recommendations for you.</string>
     <string name="enable_location">Enable Location</string>
-    <string name="battery_usage">we will keep the battery usage to minimum</string>
+    <string name="battery_usage">We will keep the battery usage to minimum</string>
     <string name="recommendation">Not Now</string>
 
     //Search
@@ -495,8 +495,8 @@
     <string name="shared_successfully">Shared successfully</string>
     <string name="apply_name">Apply</string>
 
-    <string name="promo_code_msg_required">promocode is required</string>
-    <string name="promo_code_msg_invalid">invalid promocode</string>
+    <string name="promo_code_msg_required">Promocode is required</string>
+    <string name="promo_code_msg_invalid">Invalid promocode</string>
 
     <string name="email_msg">We promise to keep the noise low</string>
     <string name="mobile_msg">We will only use your number for transactional information</string>
@@ -727,6 +727,7 @@ IMAX Corporation is one of the world\'s leading entertainment technology compani
     <string name="what_can_make_a_better_gift_card_than_a_movie">What can make a better Gift Card than a movie!</string>
     <string name="awesome">Awesome!</string>
     <string name="saved_with_this_ncoupon_code">saved with this\ncoupon code</string>
+    <string name="view_details">View Details</string>
 
     <string name="in_cinema_mode">In Cinema Mode</string>
     <string name="one_tickets_booked">1 Tickets Booked</string>

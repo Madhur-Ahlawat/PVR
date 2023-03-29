@@ -22,11 +22,15 @@ import com.google.android.gms.location.LocationServices
 import com.net.pvr.R
 import com.net.pvr.databinding.ActivityEnableLocationBinding
 import com.net.pvr.di.preference.PreferenceManager
-import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
+import com.net.pvr.ui.giftCard.activateGiftCard.GiftCardPlaceOrderActivity
 import com.net.pvr.ui.home.HomeActivity
+import com.net.pvr.ui.home.fragment.privilege.EnrollInPassportActivity
+import com.net.pvr.ui.home.fragment.privilege.EnrollInPrivilegeActivity
 import com.net.pvr.ui.location.selectCity.SelectCityActivity
+import com.net.pvr.ui.location.selectCity.response.SelectCityResponse
 import com.net.pvr.ui.location.selectCity.viewModel.SelectCityViewModel
+import com.net.pvr.ui.summery.SummeryActivity
 import com.net.pvr.utils.Constant
 import com.net.pvr.utils.FetchAddressIntentServices
 import com.net.pvr.utils.NetworkResult
@@ -76,6 +80,64 @@ class EnableLocationActivity : AppCompatActivity() {
                 val intent = Intent(this@EnableLocationActivity, SelectCityActivity::class.java)
                 startActivity(intent)
                 finish()
+            } else if (from == "summery") {
+                val intent = Intent(this@EnableLocationActivity, SummeryActivity::class.java)
+                intent.putExtra("from", from)
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                finish()
+            } else if (from == "GC") {
+                val intent =
+                    Intent(this@EnableLocationActivity, GiftCardPlaceOrderActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else if (from == "PP") {
+                if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == Constant.SharedPreference.ACTIVE) {
+                    val intent = Intent(this@EnableLocationActivity, HomeActivity::class.java)
+                    intent.putExtra("from", "P")
+                    startActivity(intent)
+                    finish()
+                } else {
+                    val intent =
+                        Intent(this@EnableLocationActivity, EnrollInPassportActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            } else if (from == "P") {
+                val ls = preferences.getString(Constant.SharedPreference.LOYALITY_STATUS)
+                val isHl: String = preferences.getString(Constant.SharedPreference.IS_HL)
+                val isLy: String = preferences.getString(Constant.SharedPreference.IS_LY)
+                if (isLy.equals("true", ignoreCase = true)) {
+                    if (ls != null && !ls.equals("", ignoreCase = true)) {
+                        if (isHl.equals("true", ignoreCase = true)) {
+                            val intent =
+                                Intent(this@EnableLocationActivity, HomeActivity::class.java)
+                            intent.putExtra("from", "P")
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            val intent = Intent(
+                                this@EnableLocationActivity,
+                                EnrollInPrivilegeActivity::class.java
+                            )
+                            startActivity(intent)
+                            finish()
+                        }
+                    } else {
+                        val intent = Intent(
+                            this@EnableLocationActivity,
+                            EnrollInPrivilegeActivity::class.java
+                        )
+                        startActivity(intent)
+                        finish()
+                    }
+                } else {
+                    val intent =
+                        Intent(this@EnableLocationActivity, EnrollInPrivilegeActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+
             } else {
                 val intent = Intent(this@EnableLocationActivity, HomeActivity::class.java)
                 startActivity(intent)
@@ -99,9 +161,9 @@ class EnableLocationActivity : AppCompatActivity() {
                 } else {
                     getCurrentLocation()
                 }
-            }else{
+            } else {
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                startActivityForResult(intent,100)
+                startActivityForResult(intent, 100)
             }
         }
 
@@ -165,14 +227,7 @@ class EnableLocationActivity : AppCompatActivity() {
 
                         selectCity()
 
-//                        if (preferences.getCityName() == "") {
-//                            val intent =
-//                                Intent(this@EnableLocationActivity, SelectCityActivity::class.java)
-//                            startActivity(intent)
-//                            finish()
-//                        } else {
 
-//                        }
 
                         location.longitude = long
                         location.latitude = lat
@@ -228,10 +283,8 @@ class EnableLocationActivity : AppCompatActivity() {
                 is NetworkResult.Success -> {
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         preferences.saveCityName(it.data.output.cc.name)
-                        val intent =
-                            Intent(this@EnableLocationActivity, HomeActivity::class.java)
-                        startActivity(intent)
-                        finish()
+                        retrieveData(it.data.output)
+
                     } else {
                         val dialog = OptionDialog(this,
                             R.mipmap.ic_launcher,
@@ -261,6 +314,79 @@ class EnableLocationActivity : AppCompatActivity() {
         }
     }
 
+    private fun retrieveData(output: SelectCityResponse.Output) {
+        if (preferences.getCityName() == "") {
+            val intent = Intent(this@EnableLocationActivity, SelectCityActivity::class.java)
+            startActivity(intent)
+            finish()
+        } else if (from == "summery") {
+            val intent = Intent(this@EnableLocationActivity, SummeryActivity::class.java)
+            intent.putExtra("from", from)
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
+        } else if (from == "GC") {
+            val intent =
+                Intent(this@EnableLocationActivity, GiftCardPlaceOrderActivity::class.java)
+            startActivity(intent)
+            finish()
+        } else if (from == "PP") {
+            if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == Constant.SharedPreference.ACTIVE) {
+                val intent = Intent(this@EnableLocationActivity, HomeActivity::class.java)
+                intent.putExtra("from", "P")
+                startActivity(intent)
+                finish()
+            } else {
+                val intent =
+                    Intent(this@EnableLocationActivity, EnrollInPassportActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        } else if (from == "P") {
+            val ls = preferences.getString(Constant.SharedPreference.LOYALITY_STATUS)
+            val isHl: String = preferences.getString(Constant.SharedPreference.IS_HL)
+            val isLy: String = preferences.getString(Constant.SharedPreference.IS_LY)
+            if (isLy.equals("true", ignoreCase = true)) {
+                if (ls != null && !ls.equals("", ignoreCase = true)) {
+                    if (isHl.equals("true", ignoreCase = true)) {
+                        val intent =
+                            Intent(this@EnableLocationActivity, HomeActivity::class.java)
+                        intent.putExtra("from", "P")
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        val intent = Intent(
+                            this@EnableLocationActivity,
+                            EnrollInPrivilegeActivity::class.java
+                        )
+                        startActivity(intent)
+                        finish()
+                    }
+                } else {
+                    val intent = Intent(
+                        this@EnableLocationActivity,
+                        EnrollInPrivilegeActivity::class.java
+                    )
+                    startActivity(intent)
+                    finish()
+                }
+            } else {
+                val intent =
+                    Intent(this@EnableLocationActivity, EnrollInPrivilegeActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+
+        } else {
+            val intent = Intent(this@EnableLocationActivity, HomeActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+//        val intent =
+//            Intent(this@EnableLocationActivity, HomeActivity::class.java)
+//        startActivity(intent)
+//        finish()
+    }
 
 
     private fun enableLocation() {

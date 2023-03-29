@@ -267,6 +267,7 @@ class PaymentActivity : AppCompatActivity(),
         }
 
         if (BOOK_TYPE == "BOOKING" || BOOK_TYPE == "FOOD") {
+
             binding?.constraintLayout110?.show()
             binding?.promoView?.show()
             binding?.offerParrent?.show()
@@ -281,12 +282,16 @@ class PaymentActivity : AppCompatActivity(),
                 preferences.getUserId(),
                 time.toString()
             )
-        } else {
+        } else if (BOOK_TYPE == "GIFTCARD") {
+            binding?.promoView?.show()
+            binding?.offerParrent?.show()
+            binding?.constraintLayout110?.hide()
+            authViewModel.promoList()
+        }else{
             println("BOOK_TYPE---->$BOOK_TYPE")
             binding?.constraintLayout110?.hide()
             binding?.promoView?.hide()
             binding?.offerParrent?.hide()
-
         }
 
 

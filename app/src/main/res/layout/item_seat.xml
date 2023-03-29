@@ -12,6 +12,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginEnd="@dimen/dimen_8dp"
+        android:layout_marginBottom="@dimen/dimen_8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/curve_seat">
@@ -33,6 +34,7 @@
             android:fontFamily="@font/sf_pro_text_semi_bold"
             android:textColor="@color/black"
             tools:text="D14"
+            android:minEms="2"
             android:gravity="center"
             android:includeFontPadding="false"
             android:layout_marginTop="@dimen/dimen_7dp"
