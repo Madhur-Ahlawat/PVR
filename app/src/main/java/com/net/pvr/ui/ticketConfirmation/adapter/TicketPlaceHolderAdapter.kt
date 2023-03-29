@@ -84,9 +84,9 @@ class TicketPlaceHolderAdapter(
                 )
                 if (position == 0) {
                     layoutParams.leftMargin = Constant().convertDpToPixel(13f, context)
-                    layoutParams.rightMargin = Constant().convertDpToPixel(1f, context)
+                    layoutParams.rightMargin = Constant().convertDpToPixel(8f, context)
                 } else {
-                    layoutParams.leftMargin = Constant().convertDpToPixel(1f, context)
+                    layoutParams.leftMargin = Constant().convertDpToPixel(8f, context)
                     layoutParams.rightMargin = Constant().convertDpToPixel(13f, context)
                 }
                 holder.itemView.layoutParams = layoutParams
@@ -112,8 +112,8 @@ class TicketPlaceHolderAdapter(
                     itemWidth,
                     ConstraintLayout.LayoutParams.WRAP_CONTENT
                 )
-                layoutParams.rightMargin = Constant().convertDpToPixel(1f, context)
-                layoutParams.leftMargin = Constant().convertDpToPixel(1f, context)
+                layoutParams.rightMargin = Constant().convertDpToPixel(13f, context)
+                layoutParams.leftMargin = Constant().convertDpToPixel(13f, context)
                 holder.itemView.layoutParams = layoutParams
             }
         } else {
@@ -152,14 +152,17 @@ class TicketPlaceHolderAdapter(
 
 
             if (obj.type == "IMAGE" && obj.redirectView == "DEEPLINK") {
-                if (obj.redirect_url.equals("", ignoreCase = true)) {
+                if (obj.redirect_url != "") {
                     if (obj.redirect_url.lowercase(Locale.ROOT).contains("/loyalty/home")) {
                         val navigationView = HomeActivity().findViewById(R.id.bottomNavigationView) as BottomNavigationView
                         val bottomMenuView = navigationView.getChildAt(0) as BottomNavigationMenuView
                         val newView = bottomMenuView.getChildAt(2)
                         val itemView = newView as BottomNavigationItemView
                         itemView.performClick()
-                    } else {
+                    } else if (obj.redirect_url == "https://www.pvrcinemas.com/") {
+                        val intent = Intent(context, HomeActivity::class.java)
+                        context.startActivity(intent)
+                    }else{
                         val intent = Intent(
                             Intent.ACTION_VIEW, Uri.parse(
                                 obj.redirect_url.replace(

@@ -10,6 +10,9 @@ import com.net.pvr.ui.home.fragment.home.response.NextBookingResponse
 import com.net.pvr.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr.ui.home.fragment.more.response.WhatsAppOptStatus
 import com.net.pvr.ui.home.fragment.privilege.response.PrivilegeHomeResponse
+import com.net.pvr.ui.home.inCinemaMode.response.GetBookingResponse
+import com.net.pvr.ui.home.inCinemaMode.response.GetInCinemaResponse
+import com.net.pvr.ui.home.inCinemaMode.response.InCinemaHomeResponse
 import com.net.pvr.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -98,6 +101,39 @@ class HomeViewModel @Inject constructor(private val userRepository: UserReposito
     ) {
         viewModelScope.launch {
             userRepository.setFeedBackData(userId,type,code,text,tags,comment,ccode,bookingId)
+        }
+    }
+
+    val getInCinemaLiveDataHome: LiveData<NetworkResult<InCinemaHomeResponse>>
+        get() = userRepository.inCinemaHomeResponseLiveData
+
+    val getInCinemaLiveData: LiveData<NetworkResult<GetInCinemaResponse>>
+        get() = userRepository.getInCinemaResponseLiveData
+    val getBookingLiveData: LiveData<NetworkResult<GetBookingResponse>>
+        get() = userRepository.getBookingResponseLiveData
+
+    fun getInCinema(
+        userid: String,
+        city: String
+    ) {
+        viewModelScope.launch {
+            userRepository.getInCinema(userid, city)
+        }
+    }
+    fun getBooking(
+        bookingId: String,city: String
+    ) {
+        viewModelScope.launch {
+            userRepository.getBooking(bookingId,city)
+        }
+    }
+
+    fun getInCinemaHome(
+        userid: String,
+        city: String
+    ) {
+        viewModelScope.launch {
+            userRepository.getInCinemaHome(userid, city)
         }
     }
 

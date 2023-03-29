@@ -36,6 +36,9 @@ import com.net.pvr.ui.home.fragment.privilege.response.LoyaltyDataResponse
 import com.net.pvr.ui.home.fragment.privilege.response.PassportHistory
 import com.net.pvr.ui.home.fragment.privilege.response.PassportPlanResponse
 import com.net.pvr.ui.home.fragment.privilege.response.PrivilegeHomeResponse
+import com.net.pvr.ui.home.inCinemaMode.response.GetBookingResponse
+import com.net.pvr.ui.home.inCinemaMode.response.GetInCinemaResponse
+import com.net.pvr.ui.home.inCinemaMode.response.InCinemaHomeResponse
 import com.net.pvr.ui.location.selectCity.response.SelectCityResponse
 import com.net.pvr.ui.login.otpVerify.response.ResisterResponse
 import com.net.pvr.ui.login.response.LoginResponse
@@ -3937,6 +3940,102 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
         } else {
             freechargeAddMoneyLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    /**********
+     * In Cinema Home
+     */
+
+    //In Cinema Home
+    private val _inCinemaHomeResponseLiveData =
+        MutableLiveData<NetworkResult<InCinemaHomeResponse>>()
+    val inCinemaHomeResponseLiveData: LiveData<NetworkResult<InCinemaHomeResponse>>
+        get() = _inCinemaHomeResponseLiveData
+
+    suspend fun getInCinemaHome(userId: String, city: String) {
+        _inCinemaHomeResponseLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.inCinemaHome(
+            userId,
+            city,
+            Constant.getDid(),
+            Constant.platform,
+            Constant.getDid()
+        )
+        inCinemaHomeResponse(response)
+    }
+
+    private fun inCinemaHomeResponse(response: Response<InCinemaHomeResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            _inCinemaHomeResponseLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            try {
+                val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+                _inCinemaHomeResponseLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            } catch (e: JSONException) {
+                _inCinemaHomeResponseLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+            }
+        } else {
+            _inCinemaHomeResponseLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+
+    /***
+     * In cinema with booking ID
+     */
+
+    private val _getInCinemaResponseLiveData = MutableLiveData<NetworkResult<GetInCinemaResponse>>()
+    val getInCinemaResponseLiveData: LiveData<NetworkResult<GetInCinemaResponse>>
+        get() = _getInCinemaResponseLiveData
+
+    private val _getBookingResponseLiveData = MutableLiveData<NetworkResult<GetBookingResponse>>()
+    val getBookingResponseLiveData: LiveData<NetworkResult<GetBookingResponse>>
+        get() = _getBookingResponseLiveData
+
+    suspend fun getInCinema(userId: String, city: String) {
+        _getInCinemaResponseLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.getInCinemaBookingID(
+            userid = userId,
+            city = city,
+            version = Constant.version,
+            platform = Constant.platform,
+            did = Constant.getDid()
+        )
+        processInCinemaResponse(response)
+    }
+
+    suspend fun getBooking(bookingId: String,city: String) {
+        _getBookingResponseLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.getBooking(bookingId=bookingId,city=city, platform = Constant.platform, version = Constant.version)
+        processBookingResponse(response)
+    }
+
+    private fun processInCinemaResponse(response: Response<GetInCinemaResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            _getInCinemaResponseLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            try {
+                val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+                _getInCinemaResponseLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            } catch (e: JSONException) {
+                _getInCinemaResponseLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+            }
+        } else {
+            _getInCinemaResponseLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+        }
+    }
+    private fun processBookingResponse(response: Response<GetBookingResponse>) {
+        if (response.isSuccessful && response.body() != null) {
+            _getBookingResponseLiveData.postValue(NetworkResult.Success(response.body()!!))
+        } else if (response.errorBody() != null) {
+            try {
+                val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+                _getBookingResponseLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+            } catch (e: JSONException) {
+                _getBookingResponseLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
+            }
+        } else {
+            _getBookingResponseLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
 

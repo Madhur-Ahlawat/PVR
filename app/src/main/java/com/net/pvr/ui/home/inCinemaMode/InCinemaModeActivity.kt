@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
@@ -332,7 +333,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                 false
             )
             rvFoodandbevrages.addItemDecoration(RecyclerViewMarginFoodOrder(30, 1))
-            LinearSnapHelper().attachToRecyclerView(binding!!.rvIntervalTiming)
+            PagerSnapHelper().attachToRecyclerView(binding!!.rvIntervalTiming)
 
             rvFoodandbevrages.adapter = orderAdapter
 //            privilegeCardList.layoutManager = layoutManager
@@ -585,6 +586,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                 }
 
                 is NetworkResult.Loading -> {
+                    showLoader()
                 }
             }
         }
@@ -861,10 +863,19 @@ class InCinemaModeActivity : AppCompatActivity(),
 
                             }
                             if (!Constant.CINEMA_ID.isNullOrEmpty() && !Constant.BOOKING_ID.isNullOrEmpty()) {
-                                val intent =
-                                    Intent(this@InCinemaModeActivity, FoodActivity::class.java)
-                                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                                Constant.QR = "NO"
+                                Constant.INCINEMA = "YES"
+                                Constant.AUDI= ""
+                                Constant.SEAT= ""
+                                val intent = Intent(this@InCinemaModeActivity, FoodActivity::class.java)
+                                intent.putExtra("from", "pcOrdrsnc")
+                                intent.putExtra("NF", "true")
+                                Constant.CINEMA_ID = mCinemaData?.inCinemaResp?.ccode!!
+                                Constant.BOOKING_ID = mCinemaData?.inCinemaResp?.bookingId!!
+                                Constant.BOOK_TYPE = "FOOD"
+                                intent.putExtra("SEATS", java.lang.String.valueOf(mCinemaData?.inCinemaResp?.seats?.size))
                                 startActivity(intent)
+
                             } else {
                                 dialog = OptionDialog(this@InCinemaModeActivity,
                                     R.mipmap.ic_launcher,
@@ -921,76 +932,96 @@ class InCinemaModeActivity : AppCompatActivity(),
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
         dialog.setContentView(bindingProfile.root)
 
+        bindingProfile.mainView.background.setColorFilter(Color.parseColor("#111111"), PorterDuff.Mode.SRC_ATOP);
+        bindingProfile.commentBox.background.setColorFilter(Color.parseColor("#343434"), PorterDuff.Mode.SRC_ATOP);
+        bindingProfile.feedbackText.background.setColorFilter(Color.parseColor("#333333"), PorterDuff.Mode.SRC_ATOP);
+
+
         bindingProfile.title.text = output.title
-        val text =
-            "<font color=#000000>How was your experience with </font> <font color=#000000><b>" + ticketData.c + "</b></font><font color=#000000> for the movie </font><font><b>'" + ticketData.m + "'</b></font>"
-        bindingProfile.subTitle.text = Html.fromHtml(text)
+        bindingProfile.title.setTextColor(getColor(R.color.white))
+        bindingProfile.subTitle.setTextColor(getColor(R.color.white))
+        bindingProfile.feedbackText.setTextColor(getColor(R.color.white))
+        bindingProfile.commentBox.setTextColor(getColor(R.color.white))
+        bindingProfile.subTitle.text = "Please rate your experience"
         bindingProfile.feedbackText.hide()
 
         bindingProfile.rate1.setOnClickListener(View.OnClickListener {
             bindingProfile.feedbackText.text = output.ratings.L1
             bindingProfile.commentView.show()
+            bindingProfile.commentBox.show()
+            bindingProfile.doneBtn.show()
             bindingProfile.feedbackText.show()
             bindingProfile.rate1.setImageResource(R.drawable.select_sad)
             bindingProfile.rate2.setImageResource(R.drawable.emotion_unhappy)
             bindingProfile.rate3.setImageResource(R.drawable.emotion_normal)
             bindingProfile.rate4.setImageResource(R.drawable.emotion_laugh)
             bindingProfile.rate5.setImageResource(R.drawable.emotion_happy)
-            rateVal = "1"
+            rateVal = "L1"
         })
         bindingProfile.rate2.setOnClickListener(View.OnClickListener {
             bindingProfile.feedbackText.text = output.ratings.L2
             bindingProfile.commentView.show()
+            bindingProfile.commentBox.show()
+            bindingProfile.doneBtn.show()
             bindingProfile.feedbackText.show()
             bindingProfile.rate1.setImageResource(R.drawable.emotion_sad)
             bindingProfile.rate2.setImageResource(R.drawable.select_unhappy)
             bindingProfile.rate3.setImageResource(R.drawable.emotion_normal)
             bindingProfile.rate4.setImageResource(R.drawable.emotion_laugh)
             bindingProfile.rate5.setImageResource(R.drawable.emotion_happy)
-            rateVal = "2"
+            rateVal = "L2"
         })
         bindingProfile.rate3.setOnClickListener(View.OnClickListener {
             bindingProfile.feedbackText.text = output.ratings.L3
             bindingProfile.commentView.show()
+            bindingProfile.commentBox.show()
+            bindingProfile.doneBtn.show()
             bindingProfile.feedbackText.show()
             bindingProfile.rate1.setImageResource(R.drawable.emotion_sad)
             bindingProfile.rate2.setImageResource(R.drawable.emotion_unhappy)
             bindingProfile.rate3.setImageResource(R.drawable.select_normal)
             bindingProfile.rate4.setImageResource(R.drawable.emotion_laugh)
             bindingProfile.rate5.setImageResource(R.drawable.emotion_happy)
-            rateVal = "3"
+            rateVal = "L3"
         })
         bindingProfile.rate4.setOnClickListener(View.OnClickListener {
             bindingProfile.feedbackText.text = output.ratings.L4
             bindingProfile.commentView.show()
+            bindingProfile.commentBox.show()
+            bindingProfile.doneBtn.show()
             bindingProfile.feedbackText.show()
             bindingProfile.rate1.setImageResource(R.drawable.emotion_sad)
             bindingProfile.rate2.setImageResource(R.drawable.emotion_unhappy)
             bindingProfile.rate3.setImageResource(R.drawable.emotion_normal)
             bindingProfile.rate4.setImageResource(R.drawable.select_laugh)
             bindingProfile.rate5.setImageResource(R.drawable.emotion_happy)
-            rateVal = "4"
+            rateVal = "L4"
         })
         bindingProfile.rate5.setOnClickListener(View.OnClickListener {
             bindingProfile.feedbackText.text = output.ratings.L5
             bindingProfile.commentView.show()
+            bindingProfile.commentBox.show()
+            bindingProfile.doneBtn.show()
             bindingProfile.feedbackText.show()
             bindingProfile.rate1.setImageResource(R.drawable.emotion_sad)
             bindingProfile.rate2.setImageResource(R.drawable.emotion_unhappy)
             bindingProfile.rate3.setImageResource(R.drawable.emotion_normal)
             bindingProfile.rate4.setImageResource(R.drawable.emotion_laugh)
             bindingProfile.rate5.setImageResource(R.drawable.select_happy)
-            rateVal = "5"
+            rateVal = "L5"
         })
 
         bindingProfile.doneBtn.setOnClickListener(View.OnClickListener {
             authViewModel.setFeedBackData(
                 preferences.getUserId(),
                 "INCINEMA",
-                mCinemaData?.inCinemaResp?.ccode!!,
+                rateVal,
                 bindingProfile.feedbackText.text.toString(),
                 "",
-                bindingProfile.commentBox.text.toString()
+                bindingProfile.commentBox.text.toString(),
+                mCinemaData?.inCinemaResp?.ccode!!,
+                mCinemaData?.inCinemaResp?.bookingId!!
+
             )
             setFeedBackData()
             dialog.dismiss()
@@ -1023,6 +1054,9 @@ class InCinemaModeActivity : AppCompatActivity(),
         val inflater = LayoutInflater.from(this)
         val bindingProfile = FeedbackThanksBinding.inflate(inflater)
         val behavior: BottomSheetBehavior<FrameLayout> = dialog.behavior
+        bindingProfile.mainView.background.setColorFilter(Color.parseColor("#111111"), PorterDuff.Mode.SRC_ATOP);
+        bindingProfile.title.setTextColor(getColor(R.color.white))
+
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
         dialog.setContentView(bindingProfile.root)
         dialog.show()

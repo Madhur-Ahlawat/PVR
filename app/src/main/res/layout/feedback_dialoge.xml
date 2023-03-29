@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_gravity="bottom"
+    android:id="@+id/mainView"
     android:background="@drawable/bottom_corner">
 
     <LinearLayout
@@ -46,7 +47,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="How was your experience with PVR Plaza Delhi for the movie ‘Joker’. "
             />
@@ -112,6 +112,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/dimen_14sp"
                 android:paddingStart="@dimen/dimen_30dp"
+                android:visibility="gone"
                 android:paddingEnd="@dimen/dimen_30dp"
                 android:paddingBottom="@dimen/dimen_15dp"
                 android:paddingTop="@dimen/dimen_15dp"
@@ -136,6 +137,7 @@ Tell us what we can improve"/>
                 android:gravity="left"
                 android:hint="@string/type_your_feedback_here"
                 android:maxLength="500"
+                android:visibility="gone"
                 android:maxLines="4"
                 android:minLines="4"
                 android:padding="@dimen/contact_us_padding_default"
@@ -152,7 +154,7 @@ Tell us what we can improve"/>
                 android:backgroundTint="@color/pvr_yellow"
                 android:layout_marginTop="40dp"
                 android:layout_gravity="bottom"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView

@@ -34,9 +34,11 @@ import com.net.pvr.R
 import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.food.CartModel
+import com.net.pvr.ui.giftCard.GiftCardActivity
 import com.net.pvr.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr.ui.home.fragment.more.response.ProfileResponse
 import com.net.pvr.ui.home.fragment.privilege.response.PrivilegeHomeResponse
+import com.net.pvr.ui.home.inCinemaMode.InCinemaModeActivity
 import com.net.pvr.ui.ticketConfirmation.TicketConfirmationActivity
 import com.salesforce.marketingcloud.registration.RegistrationManager
 import com.salesforce.marketingcloud.sfmcsdk.SFMCSdk
@@ -85,6 +87,7 @@ class Constant {
         var latitude: Double? = 0.0
         var longitude: Double? = 0.0
         var QR = "NO"
+        var INCINEMA = "NO"
 
         const val donation = "https://www.pvrcinemas.com/pvrstatic/donation/tnc.html"
         const val pvrCare = " https://www.pvrcinemas.com/pvrstatic/pvr-care/index.html"
@@ -449,12 +452,19 @@ class Constant {
 
 
     fun printTicket(activity: Activity) {
-        val intent = Intent(
-            activity, TicketConfirmationActivity::class.java
-        )
-        intent.putExtra("type","HOME")
-        activity.startActivity(intent)
-        activity.finish()
+        if (Constant.INCINEMA == "true") {
+            val intent = Intent(
+                activity, TicketConfirmationActivity::class.java
+            )
+            intent.putExtra("type", "HOME")
+            activity.startActivity(intent)
+            activity.finish()
+        }else{
+            activity.launchActivity(
+                InCinemaModeActivity::class.java,
+                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            )
+        }
     }
 
     fun shareData(activity: Activity, title: String, shareUrl: String) {
