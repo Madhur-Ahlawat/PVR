@@ -443,12 +443,12 @@ public class GenericFilterComing implements GenericFilterAdapter.onFilterItemSel
         dialog.show();
 
         int count = new ComingSoonFragment().getShowCountHome(filterStrings);
-        if (count>0){
+       // if (count>0){
             showCount.setVisibility(View.VISIBLE);
             showCount.setText("Movie Count:  "+count);
-        }else {
-            showCount.setVisibility(View.GONE);
-        }
+//        }else {
+//            showCount.setVisibility(View.GONE);
+//        }
     }
 
     @Override
@@ -631,12 +631,12 @@ public class GenericFilterComing implements GenericFilterAdapter.onFilterItemSel
         System.out.println("filterStrings---"+filterStrings);
 
         int count = new ComingSoonFragment().getShowCountHome(filterStrings);
-        if (count>0){
+        //if (count>0){
             showCount.setVisibility(View.VISIBLE);
             showCount.setText("Movie Count:  "+count);
-        }else {
-            showCount.setVisibility(View.GONE);
-        }
+//        }else {
+//            showCount.setVisibility(View.GONE);
+//        }
     }
 
     private String removeItem(String itemSelected, String languagesStr) {

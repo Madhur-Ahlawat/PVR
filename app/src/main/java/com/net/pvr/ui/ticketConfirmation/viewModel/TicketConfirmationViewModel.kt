@@ -136,10 +136,10 @@ class TicketConfirmationViewModel @Inject constructor(private val userRepository
         get() = userRepository.setFeedBackDataResponseLiveData
 
     fun setFeedBackData(
-        userId: String, type: String,code:String,text: String,tags:String,comment: String
+        userId: String, type: String,code:String,text: String,tags:String,comment: String,ccode:String,bookingid: String
     ) {
         viewModelScope.launch {
-            userRepository.setFeedBackData(userId,type,code,text,tags,comment)
+            userRepository.setFeedBackData(userId,type,code,text,tags,comment,ccode,bookingid)
         }
     }
 

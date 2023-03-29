@@ -34,6 +34,8 @@ class GiftCardRedeemActivity : AppCompatActivity() {
     private var stringtex = ""
     private var type = "GIFT_CARD"
     private var paymentOptionMode = ""
+
+    private var paidAmount = "0.0"
     var c = ""
     private val giftcardRedeemViewModel: GiftcardRedeemViewModel by viewModels()
 
@@ -52,6 +54,7 @@ class GiftCardRedeemActivity : AppCompatActivity() {
         binding?.include29?.imageView58?.setOnClickListener {
             onBackPressed()
         }
+        paidAmount = intent.getStringExtra("paidAmount").toString()
         type = intent.extras?.getString("type").toString()
         if (intent.getStringExtra("c") != null) {
             c = intent.getStringExtra("c")?.split("-")?.get(0) ?: ""
@@ -203,7 +206,7 @@ class GiftCardRedeemActivity : AppCompatActivity() {
                                     Constant.discount_txt = it.data.output.txt
                                     launchPaymentActivity(
                                         PaymentActivity::class.java,
-                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,intent.getStringExtra("paidAmount").toString()
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,paidAmount
                                         ,"Gift Card")
 //                                    showTncDialog(this,it.data.output.di,"Gift Card")
 
@@ -289,10 +292,10 @@ class GiftCardRedeemActivity : AppCompatActivity() {
                                 } else {
                                     Constant.discount_val = it.data.output.di
                                     Constant.discount_txt = it.data.output.txt
-                                    launchActivity(
+                                    launchPaymentActivity(
                                         PaymentActivity::class.java,
-                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                                    )
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK,paidAmount
+                                        ,"Gift Card")
 
                                 }
                             }

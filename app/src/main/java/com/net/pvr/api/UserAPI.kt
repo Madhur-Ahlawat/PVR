@@ -1560,6 +1560,8 @@ interface UserAPI {
         @Query("text") text: String,
         @Query("tags") tags: String,
         @Query("comments") comments: String,
+        @Query("ccode") ccode: String,
+        @Query("bookingid") bookingid: String,
         @Query("av") version: String,
         @Query("pt") platform: String,
         @Query("did") did: String

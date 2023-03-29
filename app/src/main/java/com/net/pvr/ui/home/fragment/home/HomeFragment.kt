@@ -641,7 +641,7 @@ class HomeFragment : Fragment(),
             val gridLayout =
                 GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
             binding?.recyclerCinemaCat?.layoutManager = LinearLayoutManager(context)
-            val adapter = HomeCinemaCategoryAdapter(requireActivity(), output.mfi, this)
+            val adapter = HomeCinemaCategoryAdapter(requireActivity(), output.mfi, this,binding?.recyclerCinemaCat!!)
             binding?.recyclerCinemaCat?.layoutManager = gridLayout
             binding?.recyclerCinemaCat?.adapter = adapter
 

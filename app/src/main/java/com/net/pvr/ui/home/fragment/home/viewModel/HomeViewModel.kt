@@ -94,10 +94,10 @@ class HomeViewModel @Inject constructor(private val userRepository: UserReposito
         get() = userRepository.setFeedBackDataResponseLiveData
 
     fun setFeedBackData(
-        userId: String, type: String,code:String,text: String,tags:String,comment: String
+        userId: String, type: String,code:String,text: String,tags:String,comment: String,ccode:String,bookingId:String
     ) {
         viewModelScope.launch {
-            userRepository.setFeedBackData(userId,type,code,text,tags,comment)
+            userRepository.setFeedBackData(userId,type,code,text,tags,comment,ccode,bookingId)
         }
     }
 

@@ -3775,9 +3775,9 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     val setFeedBackDataResponseLiveData: LiveData<NetworkResult<FeedbackDataResponse>>
         get() = setFeedBackDataLiveData
 
-    suspend fun setFeedBackData(userId: String, type: String,code:String,text: String,tags:String,comment: String) {
+    suspend fun setFeedBackData(userId: String, type: String,code:String,text: String,tags:String,comment: String,ccode:String,bookingid: String) {
         _userResponseLiveData.postValue(NetworkResult.Loading())
-        val response = userAPI.setFeedBackData(userId, type,code,text,tags,comment, Constant.version, Constant.platform,Constant.getDid())
+        val response = userAPI.setFeedBackData(userId, type,code,text,tags,comment,ccode,bookingid, Constant.version, Constant.platform,Constant.getDid())
         setFeedBackDataResponse(response)
     }
 
