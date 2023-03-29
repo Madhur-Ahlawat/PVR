@@ -84,7 +84,8 @@
                 <ImageView
                     android:id="@+id/imageView6"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/dimen_41dp"
+                    android:adjustViewBounds="true"
                     android:layout_marginTop="35dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

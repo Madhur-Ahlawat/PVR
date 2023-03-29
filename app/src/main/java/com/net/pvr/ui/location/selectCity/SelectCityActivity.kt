@@ -283,8 +283,9 @@ class SelectCityActivity : AppCompatActivity(),
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-
+            preferences.saveCityName(output.cc.name)
             val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
+
             intent.putExtra("from", from)
             startActivity(intent)
             finish()
@@ -348,6 +349,7 @@ class SelectCityActivity : AppCompatActivity(),
                 }
 
                 val intent = Intent(this@SelectCityActivity, HomeActivity::class.java)
+                preferences.saveCityName(city[position].name)
                 intent.putExtra("from", from)
                 startActivity(intent)
                 finish()

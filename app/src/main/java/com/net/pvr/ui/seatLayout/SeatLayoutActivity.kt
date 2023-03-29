@@ -505,7 +505,6 @@ class SeatLayoutActivity : AppCompatActivity(),
             e.printStackTrace()
         }
 
-
         if (output.fc == "true") {
             Constant.AUDI= ""
             Constant.SEAT= ""
