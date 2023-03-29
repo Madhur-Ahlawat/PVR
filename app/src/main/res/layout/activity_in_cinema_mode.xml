@@ -443,5 +443,21 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
+
+        <!--    banner -->
+        <RelativeLayout
+            android:id="@+id/RlBanner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#E8000000"
+            android:visibility="gone">
+
+            <include
+                android:id="@+id/bannerLayout"
+                layout="@layout/banner_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
