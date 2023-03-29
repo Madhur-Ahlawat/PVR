@@ -49,6 +49,7 @@ import com.net.pvr.ui.home.inCinemaMode.response.Output
 import com.net.pvr.ui.home.inCinemaMode.response.ShowData
 import com.net.pvr.ui.login.LoginActivity
 import com.net.pvr.ui.scanner.ScannerActivity
+import com.net.pvr.ui.ticketConfirmation.adapter.TicketPlaceHolderAdapter
 import com.net.pvr.ui.webView.WebViewActivity
 import com.net.pvr.ui.webView.WebViewReadyToLeave
 import com.net.pvr.utils.*
@@ -107,7 +108,7 @@ class InCinemaModeActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         mIntent = intent
         binding = ActivityInCinemaModeBinding.inflate(layoutInflater)
-        setContentView(binding!!.root)
+        setContentView(binding?.root)
         initUI()
         setClickListeners()
         getInCinemaMode()
@@ -143,169 +144,169 @@ class InCinemaModeActivity : AppCompatActivity(),
                 startActivity(intent)
             }
         }
-        binding?.apply {
-            bookBtn.setOnClickListener {
-                val intent = Intent(this@InCinemaModeActivity, HomeActivity::class.java)
-                startActivity(intent)
-            }
-            howWork.setOnClickListener { openHowToWork() }
-            faq.setOnClickListener {
-                val intent = Intent(this@InCinemaModeActivity, WebViewActivity::class.java)
-                intent.putExtra("from", "privilege")
-                intent.putExtra("title", "Passport FAQ")
-                intent.putExtra("getUrl", Constant.PrivilegeHomeResponseConst?.faq)
-                startActivity(intent)
-            }
-            unLockView.setOnClickListener {
-                if (Constant.PrivilegeHomeResponseConst?.pinfo?.size == 1) {
-                    val intent1 = Intent(this@InCinemaModeActivity, NonMemberActivity::class.java)
-                    intent1.putExtra("data", Constant.PrivilegeHomeResponseConst?.pinfo)
-                    intent1.putExtra(
-                        "type",
-                        Constant.PrivilegeHomeResponseConst?.pinfo?.get(0)?.ptype
-                    )
-                    startActivity(intent1)
-                } else {
-                    HomeActivity.reviewPosition =
-                        if (Constant.PrivilegeHomeResponseConst?.pinfo?.size == 2 && HomeActivity.reviewPosition == 2) {
-                            1
-                        } else {
-                            0
-                        }
-                    if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(HomeActivity.reviewPosition)?.ptype == ("PP")) {
-                        if (!preferences.getIsLogin()) {
-                            val intent4 =
-                                Intent(this@InCinemaModeActivity, LoginActivity::class.java)
-                            intent4.putExtra(
-                                Constant.PCBackStackActivity.OPEN_ACTIVITY_NAME,
-                                Constant.PCBackStackActivity.LOYALITY_UNLIMITED_ACTIVITY
-                            )
-                            (this@InCinemaModeActivity.startActivity(intent4))
-                        } else {
-                            val intent1 =
-                                Intent(this@InCinemaModeActivity, NonMemberActivity::class.java)
-                            intent1.putExtra("data", Constant.PrivilegeHomeResponseConst?.pinfo)
-                            intent1.putExtra("type", "PP")
-                            intent1.putExtra(
-                                Constant.PCBackStackActivity.OPEN_ACTIVITY_NAME,
-                                Constant.PCBackStackActivity.LANDING_ACTIVITY
-                            )
-                            startActivity(intent1)
-                        }
-                    } else {
-                        val intent1 =
-                            Intent(this@InCinemaModeActivity, NonMemberActivity::class.java)
-                        intent1.putExtra("data", Constant.PrivilegeHomeResponseConst?.pinfo)
-                        intent1.putExtra("type", "PPP")
-                        intent1.putExtra(
-                            Constant.PCBackStackActivity.OPEN_ACTIVITY_NAME,
-                            Constant.PCBackStackActivity.LANDING_ACTIVITY
-                        )
-                        startActivity(intent1)
-                    }
-                }
-            }
-            imageviewPreviousBookedMovie.setOnClickListener {
-                if (currentBooking > 0) {
-                    currentBooking--
-                    getBookingInfo(bookingIdList!![currentBooking], preferences.getCityName())
-                }
-            }
-            imageviewNextBookedMovie.setOnClickListener {
-                if (currentBooking < bookingIdList!!.size - 1) {
-                    currentBooking++
-                    getBookingInfo(bookingIdList!![currentBooking], preferences.getCityName())
-                }
-            }
-            cardviewFoodAndBevarages.setOnClickListener {
-                Constant.CINEMA_ID = ""
-                bookingData?.let {
-                    it?.inCinemaFoodResp?.let {
-                        Constant.BOOKING_ID = bookingIdList!![currentBooking]
-                        Constant.CINEMA_ID = bookingData?.ccode!!
-                    }
-
-                }
-                if (!Constant.CINEMA_ID.isNullOrEmpty() && !Constant.BOOKING_ID.isNullOrEmpty()) {
-                    val intent = Intent(this@InCinemaModeActivity, FoodActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
-                    startActivity(intent)
-                } else {
-                    dialog = OptionDialog(this@InCinemaModeActivity,
-                        R.mipmap.ic_launcher,
-                        R.string.app_name,
-                        getString(R.string.error_message),
-                        positiveBtnText = R.string.ok,
-                        negativeBtnText = R.string.no,
-                        positiveClick = {},
-                        negativeClick = {})
-                    dialog!!.show()
-                }
-            }
-            cardviewReadyToLeave.setOnClickListener {
-                val dialog =
-                    BottomSheetDialog(
-                        this@InCinemaModeActivity,
-                        R.style.NoBackgroundDialogTheme
-                    ).also {
-                        it.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                        it.setContentView(R.layout.dialog_ready_to_leave)
-                        it.setCancelable(true)
-                        it.behavior.state = BottomSheetBehavior.STATE_EXPANDED
-                        it.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                        it.window!!.setLayout(
-                            ViewGroup.LayoutParams.WRAP_CONTENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT
-                        )
-                        it.window!!.setGravity(Gravity.CENTER)
-                    }
-
-                val uber = dialog.findViewById<View>(R.id.cardview_uber) as MaterialCardView?
-                val ola = dialog.findViewById<View>(R.id.cardview_ola) as MaterialCardView?
-
-                uber!!.setOnClickListener {
-                    dialog?.let {
-                        if (it.isShowing) {
-                            it.dismiss()
-                        }
-                    }
-                    val browserIntent =
-                        Intent(Intent.ACTION_VIEW, Uri.parse("https://www.uber.com/in/en/ride/"))
-                    startActivity(browserIntent)
-//                    intent_ready_to_leave =
-//                        Intent(this@InCinemaModeActivity, WebViewReadyToLeave::class.java)
-
-//                    intent_ready_to_leave?.apply {
-//                        putExtra("getUrl", "https://www.uber.com/in/en/ride/")
-//                        putExtra("from", "inCinemaMode")
-//                        putExtra("title", "In Cinema Mode")
-//                        addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
-//                        startActivity(intent_ready_to_leave)
+//        binding?.apply {
+//            bookBtn.setOnClickListener {
+//                val intent = Intent(this@InCinemaModeActivity, HomeActivity::class.java)
+//                startActivity(intent)
+//            }
+//            howWork.setOnClickListener { openHowToWork() }
+//            faq.setOnClickListener {
+//                val intent = Intent(this@InCinemaModeActivity, WebViewActivity::class.java)
+//                intent.putExtra("from", "privilege")
+//                intent.putExtra("title", "Passport FAQ")
+//                intent.putExtra("getUrl", Constant.PrivilegeHomeResponseConst?.faq)
+//                startActivity(intent)
+//            }
+//            unLockView.setOnClickListener {
+//                if (Constant.PrivilegeHomeResponseConst?.pinfo?.size == 1) {
+//                    val intent1 = Intent(this@InCinemaModeActivity, NonMemberActivity::class.java)
+//                    intent1.putExtra("data", Constant.PrivilegeHomeResponseConst?.pinfo)
+//                    intent1.putExtra(
+//                        "type",
+//                        Constant.PrivilegeHomeResponseConst?.pinfo?.get(0)?.ptype
+//                    )
+//                    startActivity(intent1)
+//                } else {
+//                    HomeActivity.reviewPosition =
+//                        if (Constant.PrivilegeHomeResponseConst?.pinfo?.size == 2 && HomeActivity.reviewPosition == 2) {
+//                            1
+//                        } else {
+//                            0
+//                        }
+//                    if (Constant.PrivilegeHomeResponseConst?.pinfo?.get(HomeActivity.reviewPosition)?.ptype == ("PP")) {
+//                        if (!preferences.getIsLogin()) {
+//                            val intent4 =
+//                                Intent(this@InCinemaModeActivity, LoginActivity::class.java)
+//                            intent4.putExtra(
+//                                Constant.PCBackStackActivity.OPEN_ACTIVITY_NAME,
+//                                Constant.PCBackStackActivity.LOYALITY_UNLIMITED_ACTIVITY
+//                            )
+//                            (this@InCinemaModeActivity.startActivity(intent4))
+//                        } else {
+//                            val intent1 =
+//                                Intent(this@InCinemaModeActivity, NonMemberActivity::class.java)
+//                            intent1.putExtra("data", Constant.PrivilegeHomeResponseConst?.pinfo)
+//                            intent1.putExtra("type", "PP")
+//                            intent1.putExtra(
+//                                Constant.PCBackStackActivity.OPEN_ACTIVITY_NAME,
+//                                Constant.PCBackStackActivity.LANDING_ACTIVITY
+//                            )
+//                            startActivity(intent1)
+//                        }
+//                    } else {
+//                        val intent1 =
+//                            Intent(this@InCinemaModeActivity, NonMemberActivity::class.java)
+//                        intent1.putExtra("data", Constant.PrivilegeHomeResponseConst?.pinfo)
+//                        intent1.putExtra("type", "PPP")
+//                        intent1.putExtra(
+//                            Constant.PCBackStackActivity.OPEN_ACTIVITY_NAME,
+//                            Constant.PCBackStackActivity.LANDING_ACTIVITY
+//                        )
+//                        startActivity(intent1)
 //                    }
-                }
-                ola!!.setOnClickListener {
-                    dialog?.let {
-                        if (it.isShowing) {
-                            it.dismiss()
-                        }
-                    }
-                    val browserIntent =
-                        Intent(Intent.ACTION_VIEW, Uri.parse("https://book.olacabs.com/?"))
-                    startActivity(browserIntent)
-//                    intent_ready_to_leave =
-//                        Intent(this@InCinemaModeActivity, WebViewReadyToLeave::class.java)
-
-//                    intent_ready_to_leave?.apply {
-//                        putExtra("getUrl", "https://book.olacabs.com/?")
-//                        putExtra("from", "inCinemaMode")
-//                        putExtra("title", "In Cinema Mode")
-//                        addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
-//                        startActivity(intent_ready_to_leave)
+//                }
+//            }
+//            imageviewPreviousBookedMovie.setOnClickListener {
+//                if (currentBooking > 0) {
+//                    currentBooking--
+//                    getBookingInfo(bookingIdList!![currentBooking], preferences.getCityName())
+//                }
+//            }
+//            imageviewNextBookedMovie.setOnClickListener {
+//                if (currentBooking < bookingIdList!!.size - 1) {
+//                    currentBooking++
+//                    getBookingInfo(bookingIdList!![currentBooking], preferences.getCityName())
+//                }
+//            }
+//            cardviewFoodAndBevarages.setOnClickListener {
+//                Constant.CINEMA_ID = ""
+//                bookingData?.let {
+//                    it?.inCinemaFoodResp?.let {
+//                        Constant.BOOKING_ID = bookingIdList!![currentBooking]
+//                        Constant.CINEMA_ID = bookingData?.ccode!!
 //                    }
-                }
-                dialog.show()
-            }
-        }
+//
+//                }
+//                if (!Constant.CINEMA_ID.isNullOrEmpty() && !Constant.BOOKING_ID.isNullOrEmpty()) {
+//                    val intent = Intent(this@InCinemaModeActivity, FoodActivity::class.java)
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+//                    startActivity(intent)
+//                } else {
+//                    dialog = OptionDialog(this@InCinemaModeActivity,
+//                        R.mipmap.ic_launcher,
+//                        R.string.app_name,
+//                        getString(R.string.error_message),
+//                        positiveBtnText = R.string.ok,
+//                        negativeBtnText = R.string.no,
+//                        positiveClick = {},
+//                        negativeClick = {})
+//                    dialog!!.show()
+//                }
+//            }
+//            cardviewReadyToLeave.setOnClickListener {
+//                val dialog =
+//                    BottomSheetDialog(
+//                        this@InCinemaModeActivity,
+//                        R.style.NoBackgroundDialogTheme
+//                    ).also {
+//                        it.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//                        it.setContentView(R.layout.dialog_ready_to_leave)
+//                        it.setCancelable(true)
+//                        it.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+//                        it.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//                        it.window!!.setLayout(
+//                            ViewGroup.LayoutParams.WRAP_CONTENT,
+//                            ViewGroup.LayoutParams.WRAP_CONTENT
+//                        )
+//                        it.window!!.setGravity(Gravity.CENTER)
+//                    }
+//
+//                val uber = dialog.findViewById<View>(R.id.cardview_uber) as MaterialCardView?
+//                val ola = dialog.findViewById<View>(R.id.cardview_ola) as MaterialCardView?
+//
+//                uber!!.setOnClickListener {
+//                    dialog?.let {
+//                        if (it.isShowing) {
+//                            it.dismiss()
+//                        }
+//                    }
+//                    val browserIntent =
+//                        Intent(Intent.ACTION_VIEW, Uri.parse("https://www.uber.com/in/en/ride/"))
+//                    startActivity(browserIntent)
+////                    intent_ready_to_leave =
+////                        Intent(this@InCinemaModeActivity, WebViewReadyToLeave::class.java)
+//
+////                    intent_ready_to_leave?.apply {
+////                        putExtra("getUrl", "https://www.uber.com/in/en/ride/")
+////                        putExtra("from", "inCinemaMode")
+////                        putExtra("title", "In Cinema Mode")
+////                        addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+////                        startActivity(intent_ready_to_leave)
+////                    }
+//                }
+//                ola!!.setOnClickListener {
+//                    dialog?.let {
+//                        if (it.isShowing) {
+//                            it.dismiss()
+//                        }
+//                    }
+//                    val browserIntent =
+//                        Intent(Intent.ACTION_VIEW, Uri.parse("https://book.olacabs.com/?"))
+//                    startActivity(browserIntent)
+////                    intent_ready_to_leave =
+////                        Intent(this@InCinemaModeActivity, WebViewReadyToLeave::class.java)
+//
+////                    intent_ready_to_leave?.apply {
+////                        putExtra("getUrl", "https://book.olacabs.com/?")
+////                        putExtra("from", "inCinemaMode")
+////                        putExtra("title", "In Cinema Mode")
+////                        addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+////                        startActivity(intent_ready_to_leave)
+////                    }
+//                }
+//                dialog.show()
+//            }
+//        }
 
         if (mIntent != null && mIntent!!.hasExtra("from") && !mIntent!!.getStringExtra("from")
                 .isNullOrEmpty()
@@ -475,84 +476,84 @@ class InCinemaModeActivity : AppCompatActivity(),
             rvFoodandbevrages.addItemDecoration(RecyclerViewMarginFoodOrder(30, 1))
             LinearSnapHelper().attachToRecyclerView(binding!!.rvIntervalTiming)
             rvFoodandbevrages.adapter = orderAdapter
-            privilegeCardList.layoutManager = layoutManager
-            privilegeCardList.adapter = cardAdapter
-            privilegeCardList.onFlingListener = null
-            privilegeCardList.addOnScrollListener(object :
-                RecyclerView.OnScrollListener() {
-                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                    super.onScrollStateChanged(recyclerView, newState)
-                    if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
-                        //Dragging
-                    } else if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        HomeActivity.reviewPosition =
-                            HomeActivity.getCurrentItem(binding?.privilegeCardList!!)
-                        if (HomeActivity.reviewPosition == 0) {
-                            binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_loyalty)
-                            if (cardDataList[HomeActivity.reviewPosition].lock == true) {
-                                binding?.unLockView?.show()
-                                binding?.cardBelowView?.hide()
-                                binding?.passportView?.hide()
-                                binding?.titleUnlock?.text = "PVR Privilege"
-                                binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_loyalty)
-                            } else {
-                                binding?.unLockView?.hide()
-                                binding?.passportView?.hide()
-                                binding?.cardBelowView?.show()
-                            }
-                        } else if (HomeActivity.reviewPosition == 1) {
-                            if (cardDataList[HomeActivity.reviewPosition].lock == true) {
-                                binding?.unLockView?.show()
-                                binding?.cardBelowView?.hide()
-                                binding?.passportView?.hide()
-                                if (preferences.getString(Constant.SharedPreference.SUBS_OPEN) == "true") {
-                                    binding?.titleUnlock?.text = "PVR Passport"
-                                    binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_passport)
-                                } else {
-                                    binding?.titleUnlock?.text = "Kotak Card"
-                                    binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_kotak)
-                                }
-                            } else {
-                                binding?.cardBelowView?.hide()
-                                binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_kotak)
-                                if (cardDataList[HomeActivity.reviewPosition].type.equals("PPP")) {
-                                    binding?.passportView?.hide()
-                                    binding?.unLockView?.hide()
-                                    binding?.cardBelowView?.show()
-                                } else {
-                                    if (preferences.getString(Constant.SharedPreference.SUBS_OPEN) == "true") {
-                                        binding?.passportView?.show()
-                                        binding?.unLockView?.hide()
-                                        binding?.cardBelowView?.hide()
-                                        binding?.bookBtn?.isEnabled = true
-                                        binding?.bookBtn?.isClickable = true
-                                    } else {
-                                        binding?.passportView?.show()
-                                        binding?.unLockView?.hide()
-                                        binding?.cardBelowView?.hide()
-                                        binding?.bookBtn?.isEnabled = false
-                                        binding?.bookBtn?.isClickable = false
-                                    }
-                                }
-                            }
-                        } else if (HomeActivity.reviewPosition == 2) {
-                            binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_kotak)
-                            if (cardDataList[HomeActivity.reviewPosition].lock == true) {
-                                binding?.unLockView?.show()
-                                binding?.cardBelowView?.hide()
-                                binding?.passportView?.hide()
-                                binding?.titleUnlock?.text = "Kotak Card"
-                            } else {
-                                binding?.passportView?.hide()
-                                binding?.cardBelowView?.show()
-                                binding?.unLockView?.hide()
-                            }
-                        }
-                    }
-                }
-
-            })
-            mSnapHelper.attachToRecyclerView(privilegeCardList)
+//            privilegeCardList.layoutManager = layoutManager
+//            privilegeCardList.adapter = cardAdapter
+//            privilegeCardList.onFlingListener = null
+//            privilegeCardList.addOnScrollListener(object :
+//                RecyclerView.OnScrollListener() {
+//                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+//                    super.onScrollStateChanged(recyclerView, newState)
+//                    if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+//                        //Dragging
+//                    } else if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+//                        HomeActivity.reviewPosition =
+//                            HomeActivity.getCurrentItem(binding?.privilegeCardList!!)
+//                        if (HomeActivity.reviewPosition == 0) {
+//                            binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_loyalty)
+//                            if (cardDataList[HomeActivity.reviewPosition].lock == true) {
+//                                binding?.unLockView?.show()
+//                                binding?.cardBelowView?.hide()
+//                                binding?.passportView?.hide()
+//                                binding?.titleUnlock?.text = "PVR Privilege"
+//                                binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_loyalty)
+//                            } else {
+//                                binding?.unLockView?.hide()
+//                                binding?.passportView?.hide()
+//                                binding?.cardBelowView?.show()
+//                            }
+//                        } else if (HomeActivity.reviewPosition == 1) {
+//                            if (cardDataList[HomeActivity.reviewPosition].lock == true) {
+//                                binding?.unLockView?.show()
+//                                binding?.cardBelowView?.hide()
+//                                binding?.passportView?.hide()
+//                                if (preferences.getString(Constant.SharedPreference.SUBS_OPEN) == "true") {
+//                                    binding?.titleUnlock?.text = "PVR Passport"
+//                                    binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_passport)
+//                                } else {
+//                                    binding?.titleUnlock?.text = "Kotak Card"
+//                                    binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_kotak)
+//                                }
+//                            } else {
+//                                binding?.cardBelowView?.hide()
+//                                binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_kotak)
+//                                if (cardDataList[HomeActivity.reviewPosition].type.equals("PPP")) {
+//                                    binding?.passportView?.hide()
+//                                    binding?.unLockView?.hide()
+//                                    binding?.cardBelowView?.show()
+//                                } else {
+//                                    if (preferences.getString(Constant.SharedPreference.SUBS_OPEN) == "true") {
+//                                        binding?.passportView?.show()
+//                                        binding?.unLockView?.hide()
+//                                        binding?.cardBelowView?.hide()
+//                                        binding?.bookBtn?.isEnabled = true
+//                                        binding?.bookBtn?.isClickable = true
+//                                    } else {
+//                                        binding?.passportView?.show()
+//                                        binding?.unLockView?.hide()
+//                                        binding?.cardBelowView?.hide()
+//                                        binding?.bookBtn?.isEnabled = false
+//                                        binding?.bookBtn?.isClickable = false
+//                                    }
+//                                }
+//                            }
+//                        } else if (HomeActivity.reviewPosition == 2) {
+//                            binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_kotak)
+//                            if (cardDataList[HomeActivity.reviewPosition].lock == true) {
+//                                binding?.unLockView?.show()
+//                                binding?.cardBelowView?.hide()
+//                                binding?.passportView?.hide()
+//                                binding?.titleUnlock?.text = "Kotak Card"
+//                            } else {
+//                                binding?.passportView?.hide()
+//                                binding?.cardBelowView?.show()
+//                                binding?.unLockView?.hide()
+//                            }
+//                        }
+//                    }
+//                }
+//
+//            })
+//            mSnapHelper.attachToRecyclerView(privilegeCardList)
             initNoDataDialog()
         }
     }
@@ -587,6 +588,22 @@ class InCinemaModeActivity : AppCompatActivity(),
                                     textviewMovieNumber.text =
                                         (currentBooking + 1).toString() + "/" + bookingIdList!!.size.toString()
                                 }
+                            }
+                            //placeholder
+                            if ( mCinemaData?.inCinemaResp?.placeholders?.isEmpty() == true) {
+                                binding?.recyclerView51?.hide()
+                            } else {
+                                binding?.recyclerView51?.show()
+                                val snapHelper = PagerSnapHelper()
+                                binding?.recyclerView51?.onFlingListener = null
+                                snapHelper.attachToRecyclerView(binding?.recyclerView51)
+                                val layoutManagerPlaceHolder =
+                                    LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                                val ticketPlaceHolderAdapter = TicketPlaceHolderAdapter(this, mCinemaData?.inCinemaResp?.placeholders!!)
+
+                                binding?.recyclerView51?.setHasFixedSize(true)
+                                binding?.recyclerView51?.layoutManager = layoutManagerPlaceHolder
+                                binding?.recyclerView51?.adapter = ticketPlaceHolderAdapter
                             }
                             if (bookingIdList!!.size != 0) {
                                 binding!!.nestedScrollView.show()
@@ -726,389 +743,8 @@ class InCinemaModeActivity : AppCompatActivity(),
         loader?.show(this@InCinemaModeActivity.supportFragmentManager, null)
     }
 
-    private fun retrieveData(output: LoyaltyDataResponse.Output) {
-        binding?.rlImgContainer?.show()
-        try {
-            addLoyalty(output)
-            updateHeaderView(output)
-//            manageTabs(output)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
 
-    private fun addLoyalty(output: LoyaltyDataResponse.Output) {
-        if (!TextUtils.isEmpty(output.pt)) {
-            val points: Float = output.pt.toFloat()
-            var pointsValue: String
-            var percentage: Float
-            var pointsValue1 = 0f
-            val ls: String = preferences.getString(Constant.SharedPreference.LOYALITY_STATUS)
-            if (ls.equals("GOLD", ignoreCase = true)) {
-                pointsValue = String.format("%.2f", 50 - points)
-                pointsValue1 = 50 - points
-                percentage = points * 100 / 50
-            } else {
-                pointsValue = String.format("%.2f", 100 - points)
-                pointsValue1 = 100 - points
-                percentage = points
-                println("percentage===========$percentage")
-            }
-            if (pointsValue1 < 0) {
-                pointsValue = String.format("%.2f", 0f)
-                percentage = 0f
-            }
-            println("percentage===========$percentage")
-            binding?.ProgressBAR?.progress = percentage.toInt()
-            if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == Constant.SharedPreference.ACTIVE && preferences.getString(
-                    Constant.SharedPreference.SUBS_OPEN
-                ) == "true"
-            ) {
-                binding?.tvPoints?.text = Html.fromHtml("<b>$pointsValue Points Needed</b>")
-                binding?.tvPointsMsg?.text = Html.fromHtml("To Unlock Next Voucher")
-                binding?.tvPoints?.show()
-            } else {
-                binding?.tvPoints?.show()
-                binding?.tvPoints?.text = Html.fromHtml("<b>$pointsValue Points Needed</b>")
-                binding?.tvPointsMsg?.text = Html.fromHtml("To Unlock Next Voucher")
-            }
-            if (output.sync_time.isNotEmpty()) {
-                val date: String =
-                    Constant.getDate("yyyy-MM-dd HH:mm:ss", "dd MMM yyyy", output.sync_time)
-                        .toString()
-                val time: String =
-                    Constant.getDate("yyyy-mm-dd HH:mm:ss", "hh:mm a", output.sync_time).toString()
 
-                binding?.tvLastHistory?.text = "Updated on: $date at $time"
-            }
-        }
-    }
-
-    private fun updateHeaderView(output: LoyaltyDataResponse.Output) {
-
-        val points_data = Constant.PRIVILEGEPOINT
-        cardDataList = ArrayList()
-        var count = 3
-        count =
-            if (preferences.getString(Constant.SharedPreference.SUBS_OPEN) != "true" && preferences.getString(
-                    Constant.SharedPreference.SUBSCRIPTION_STATUS
-                ) != Constant.SharedPreference.ACTIVE
-            ) {
-                2
-            } else {
-                3
-            }
-        for (i in 0 until count) {
-            if (i == 0) {
-                cardDataList.add(PrivilegeCardData("", "P", false, "", "", points_data, output))
-            } else if (i == 1) {
-                if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == Constant.SharedPreference.ACTIVE) {
-                    cardDataList.add(
-                        PrivilegeCardData(
-                            java.lang.String.valueOf(output.subscription.can_redeem - output.subscription.redeemed),
-                            "PP",
-                            false,
-                            "",
-                            "",
-                            points_data,
-                            output
-                        )
-                    )
-                } else {
-                    if (preferences.getString(Constant.SharedPreference.SUBS_OPEN) == "true") {
-                        cardDataList.add(
-                            PrivilegeCardData(
-                                Constant.PrivilegeHomeResponseConst?.pinfo?.get(
-                                    0
-                                )?.pi.toString(), "PP", true, "", "", points_data, output
-                            )
-                        )
-                    } else {
-                        if (preferences.getString(Constant.SharedPreference.LOYALITY_STATUS) == "PPP") {
-                            cardDataList.add(
-                                PrivilegeCardData(
-                                    "",
-                                    "PPP",
-                                    false,
-                                    "",
-                                    "",
-                                    points_data,
-                                    output
-                                )
-                            )
-                        } else {
-                            cardDataList.add(
-                                PrivilegeCardData(
-                                    Constant.PrivilegeHomeResponseConst?.pinfo?.get(0)?.pi.toString(),
-                                    "PPP",
-                                    true,
-                                    "",
-                                    "",
-                                    points_data,
-                                    output
-                                )
-                            )
-                        }
-                    }
-                }
-            } else {
-                if (Constant.PrivilegeHomeResponseConst?.pinfo?.size == 2) {
-                    if (preferences.getString(Constant.SharedPreference.LOYALITY_STATUS) == "PPP") {
-                        cardDataList.add(
-                            PrivilegeCardData(
-                                "",
-                                "PPP",
-                                false,
-                                "",
-                                "",
-                                points_data,
-                                output
-                            )
-                        )
-                    } else {
-                        cardDataList.add(
-                            PrivilegeCardData(
-                                Constant.PrivilegeHomeResponseConst?.pinfo?.get(1)?.pi.toString(),
-                                "PPP",
-                                true,
-                                "",
-                                "",
-                                points_data,
-                                output
-                            )
-                        )
-                    }
-                } else if (Constant.PrivilegeHomeResponseConst?.pinfo?.size == 1) {
-                    if (preferences.getString(Constant.SharedPreference.LOYALITY_STATUS) == "PPP") {
-                        cardDataList.add(
-                            PrivilegeCardData(
-                                "",
-                                "PPP",
-                                false,
-                                "",
-                                "",
-                                points_data,
-                                output
-                            )
-                        )
-                    } else {
-                        cardDataList.add(
-                            PrivilegeCardData(
-                                Constant.PrivilegeHomeResponseConst?.pinfo?.get(0)?.pi.toString(),
-                                "PPP",
-                                true,
-                                "",
-                                "",
-                                points_data,
-                                output
-                            )
-                        )
-                    }
-                } else if (Constant.PrivilegeHomeResponseConst?.pinfo?.size == 0) {
-                    cardDataList.add(
-                        PrivilegeCardData(
-                            "",
-                            "PPP",
-                            false,
-                            "",
-                            "",
-                            points_data,
-                            output
-                        )
-                    )
-                }
-            }
-        }
-        val layoutManager =
-            LinearLayoutManager(this@InCinemaModeActivity, LinearLayoutManager.HORIZONTAL, false)
-        val mSnapHelper = PagerSnapHelper()
-        binding?.privilegeCardList?.layoutManager = layoutManager
-        val cardAdapter =
-            PrivilegeCardAdapter(cardDataList, this@InCinemaModeActivity, preferences, this)
-        binding?.privilegeCardList?.adapter = cardAdapter
-        binding?.privilegeCardList?.onFlingListener = null
-        mSnapHelper.attachToRecyclerView(binding?.privilegeCardList!!)
-        binding?.privilegeCardList?.addOnScrollListener(object :
-            RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
-                    //Dragging
-                } else if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    HomeActivity.reviewPosition =
-                        HomeActivity.getCurrentItem(binding?.privilegeCardList!!)
-                    if (HomeActivity.reviewPosition == 0) {
-//                        binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_loyalty)
-                        if (cardDataList[HomeActivity.reviewPosition].lock == true) {
-                            binding?.unLockView?.show()
-                            binding?.cardBelowView?.hide()
-                            binding?.passportView?.hide()
-                            binding?.titleUnlock?.text = "PVR Privilege"
-                            binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_loyalty)
-                        } else {
-                            binding?.unLockView?.hide()
-                            binding?.passportView?.hide()
-                            binding?.cardBelowView?.show()
-                        }
-                    } else if (HomeActivity.reviewPosition == 1) {
-                        if (cardDataList[HomeActivity.reviewPosition].lock == true) {
-                            binding?.unLockView?.show()
-                            binding?.cardBelowView?.hide()
-                            binding?.passportView?.hide()
-                            if (preferences.getString(Constant.SharedPreference.SUBS_OPEN) == "true") {
-                                binding?.titleUnlock?.text = "PVR Passport"
-                                binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_passport)
-                            } else {
-                                binding?.titleUnlock?.text = "Kotak Card"
-                                binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_kotak)
-                            }
-                        } else {
-                            binding?.cardBelowView?.hide()
-                            binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_kotak)
-                            if (cardDataList[HomeActivity.reviewPosition].type.equals("PPP")) {
-                                binding?.passportView?.hide()
-                                binding?.unLockView?.hide()
-                                binding?.cardBelowView?.show()
-                            } else {
-                                if (preferences.getString(Constant.SharedPreference.SUBS_OPEN) == "true") {
-                                    binding?.passportView?.show()
-                                    binding?.unLockView?.hide()
-                                    binding?.cardBelowView?.hide()
-                                    binding?.bookBtn?.isEnabled = true
-                                    binding?.bookBtn?.isClickable = true
-                                } else {
-                                    binding?.passportView?.show()
-                                    binding?.unLockView?.hide()
-                                    binding?.cardBelowView?.hide()
-                                    binding?.bookBtn?.isEnabled = false
-                                    binding?.bookBtn?.isClickable = false
-                                }
-                            }
-                        }
-                    } else if (HomeActivity.reviewPosition == 2) {
-//                        binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_kotak)
-                        if (cardDataList!![HomeActivity.reviewPosition].lock == true) {
-                            binding?.unLockView?.show()
-                            binding?.cardBelowView?.hide()
-                            binding?.passportView?.hide()
-                            binding?.titleUnlock?.text = "Kotak Card"
-                        } else {
-                            binding?.passportView?.hide()
-                            binding?.cardBelowView?.show()
-                            binding?.unLockView?.hide()
-                        }
-                    }
-                }
-            }
-
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-            }
-        })
-        if (mIntent!! != null && mIntent!!.getStringExtra("type") != null && !mIntent!!.getStringExtra(
-                "type"
-            )
-                .equals("", ignoreCase = true)
-        ) {
-            for (i in cardDataList.indices) {
-                if (cardDataList[i].type.equals(mIntent!!.getStringExtra("type"))) {
-                    if (mIntent!!.getStringExtra("type").equals("T", ignoreCase = true)) {
-                        HomeActivity.reviewPosition = 1
-                        binding?.passportView?.show()
-                        binding?.unLockView?.hide()
-                        binding?.cardBelowView?.hide()
-                        if (preferences.getString(Constant.SharedPreference.SUBS_OPEN) != "true") {
-                            binding?.bookBtn?.isEnabled = false
-                            binding?.bookBtn?.isClickable = false
-                        }
-                        break
-                    } else {
-                        HomeActivity.reviewPosition = i
-                        if (cardDataList[i].type.equals("PP")) {
-                            if (cardDataList[i].lock == true) {
-                                binding?.unLockView?.show()
-                                binding?.cardBelowView?.hide()
-                                binding?.passportView?.hide()
-                                binding?.titleUnlock?.text = "PVR Passport"
-                            }
-                        } else if (mIntent!!.getStringExtra("type")
-                                .equals("T", ignoreCase = true)
-                        ) {
-                            HomeActivity.reviewPosition = 1
-                            binding?.passportView?.show()
-                            binding?.unLockView?.hide()
-                            binding?.cardBelowView?.hide()
-                            if (preferences.getString(Constant.SharedPreference.SUBS_OPEN) != "true") {
-                                binding?.bookBtn?.isEnabled = false
-                                binding?.bookBtn?.isClickable = false
-                            }
-                        } else {
-                            if (cardDataList[i].lock == true) {
-                                binding?.unLockView?.show()
-                                binding?.cardBelowView?.hide()
-                                binding?.titleUnlock?.text = "Kotak Card"
-                            }
-                        }
-                    }
-                    break
-                } else {
-                    if (intent != null && mIntent!!.getStringExtra("type")
-                            .equals("T", ignoreCase = true)
-                    ) {
-                        HomeActivity.reviewPosition = 1
-                        binding?.passportView?.show()
-                        binding?.unLockView?.hide()
-                        binding?.cardBelowView?.hide()
-                        if (preferences.getString(Constant.SharedPreference.SUBS_OPEN) != "true") {
-                            binding?.bookBtn?.isEnabled = false
-                            binding?.bookBtn?.isClickable = false
-                        }
-                    } else {
-                        if (intent != null && mIntent!!.getStringExtra("type")
-                                .equals("C", ignoreCase = true)
-                        ) {
-                            binding?.unLockView?.hide()
-                            binding?.cardBelowView?.show()
-                            binding?.passportView?.hide()
-                            HomeActivity.reviewPosition = 0
-                        } else {
-                            HomeActivity.reviewPosition = i
-                            if (cardDataList[i].type.equals("PP")) {
-                                if (cardDataList[i].lock == true) {
-                                    binding?.unLockView?.show()
-                                    binding?.cardBelowView?.hide()
-                                    binding?.passportView?.hide()
-                                    binding?.titleUnlock?.text = "PVR Passport"
-                                }
-                            } else {
-                                if (cardDataList[i].lock == true) {
-                                    binding?.unLockView?.show()
-                                    binding?.cardBelowView?.hide()
-                                    binding?.passportView?.hide()
-                                    binding?.titleUnlock?.text = "Kotak Card"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if (preferences.getString(Constant.SharedPreference.SUBSCRIPTION_STATUS) == Constant.SharedPreference.ACTIVE && mIntent!!.getStringExtra(
-                    "type"
-                ).equals("C", ignoreCase = true)
-            ) {
-                HomeActivity.reviewPosition = 1
-                binding?.unLockView?.hide()
-                binding?.cardBelowView?.hide()
-                binding?.passportView?.show()
-
-                if (preferences.getString(Constant.SharedPreference.SUBS_OPEN) != "true") {
-                    binding?.bookBtn?.isClickable = false
-                    binding?.bookBtn?.isEnabled = false
-                }
-            }
-            binding?.privilegeCardList?.smoothScrollToPosition(HomeActivity.reviewPosition)
-        }
-    }
 
     private fun createMovieDetailAdapter() = GenericRecyclerViewAdapter(
         getViewLayout = { R.layout.movie_details_item },

@@ -728,4 +728,21 @@ IMAX Corporation is one of the world\'s leading entertainment technology compani
     <string name="awesome">Awesome!</string>
     <string name="saved_with_this_ncoupon_code">saved with this\ncoupon code</string>
 
+    <string name="in_cinema_mode">In Cinema Mode</string>
+    <string name="one_tickets_booked">1 Tickets Booked</string>
+    <string name="show_details">SHOW DETAILS</string>
+    <string name="two_d">2D</string>
+    <string name="your_f_and_b_orders"><![CDATA[Your F&B Orders]]></string>
+    <string name="rupee">₹</string>
+    <string name="food_and_beverages"><![CDATA[Food & Beverages]]></string>
+    <string name="ready_to_leave">Ready to leave?</string>
+    <string name="feedback">Feedback</string>
+    <string name="uber">Uber</string>
+    <string name="select_cab_provider">Select Cab Provider</string>
+    <string name="please_rate_your_experience">Please rate your experience</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="permission_location_rationale">Please grant location permission</string>
+    <string name="how_it_works_underlined"><u>How it Works?</u></string>
+
+
 </resources>

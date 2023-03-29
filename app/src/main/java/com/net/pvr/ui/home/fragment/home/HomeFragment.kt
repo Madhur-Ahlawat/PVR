@@ -42,6 +42,7 @@ import com.google.gson.internal.LinkedTreeMap
 import com.net.pvr.MainApplication.Companion.homeLoadBanner
 import com.net.pvr.R
 import com.net.pvr.databinding.FragmentHomeBinding
+import com.net.pvr.databinding.InCinemaModeBinding
 import com.net.pvr.databinding.TrailersDialogBinding
 import com.net.pvr.di.preference.PreferenceManager
 import com.net.pvr.ui.bookingSession.MovieSessionActivity
@@ -60,6 +61,8 @@ import com.net.pvr.ui.home.fragment.more.offer.OfferActivity
 import com.net.pvr.ui.home.fragment.more.offer.offerDetails.OfferDetailsActivity
 import com.net.pvr.ui.home.fragment.more.offer.response.OfferResponse
 import com.net.pvr.ui.home.fragment.more.profile.userDetails.ProfileActivity
+import com.net.pvr.ui.home.inCinemaMode.InCinemaModeActivity
+import com.net.pvr.ui.home.inCinemaMode.response.Data
 import com.net.pvr.ui.home.interfaces.PlayPopup
 import com.net.pvr.ui.location.selectCity.SelectCityActivity
 import com.net.pvr.ui.login.LoginActivity
@@ -159,6 +162,9 @@ class HomeFragment : Fragment(),
 
     private var videoData: ArrayList<MovieDetailsResponse.Trs> = ArrayList()
 
+    private val inCinemaModeAdapter: GenericRecyclerViewAdapter<Data> by lazy { createInCinemaHomeAdapter() }
+
+
     companion object {
         var dialogTrailer: Dialog? = null
         private var movieData: ArrayList<HomeResponse.Mv> = ArrayList()
@@ -220,6 +226,7 @@ class HomeFragment : Fragment(),
 
     private fun manageFunction() {
 //         manage login
+        initInCinemaMode()
         if (preferences.getIsLogin()) {
             binding?.includeAppBar?.profileBtn?.show()
             binding?.constraintLayout135?.show()
@@ -233,9 +240,9 @@ class HomeFragment : Fragment(),
             )
 
 //            nextBooking
-            authViewModel.nextBooking(
-                preferences.getUserId(), Constant().getDeviceId(requireActivity())
-            )
+//            authViewModel.nextBooking(
+//                preferences.getUserId(), Constant().getDeviceId(requireActivity())
+//            )
 
         } else {
             binding?.includeAppBar?.profileBtn?.hide()
@@ -260,11 +267,61 @@ class HomeFragment : Fragment(),
         getShimmerData()
         movedNext()
         homeApi()
-        nextBooking()
+        //nextBooking()
         createQr()
         getMovieFormatFromApi()
         makeToTop()
         offerDataLoad()
+        getInCinemaModeWithBookingIDDataLoad()
+
+    }
+
+    private fun showLoader() {
+        if (loader == null) {
+            loader = LoaderDialog(R.string.pleaseWait)
+            loader?.show(requireActivity().supportFragmentManager, null)
+        }
+        else{
+            if(!loader!!.isAdded){
+                loader?.show(requireActivity().supportFragmentManager, null)
+            }
+        }
+    }
+
+    private fun getInCinemaModeWithBookingIDDataLoad() {
+        authViewModel.getInCinemaLiveDataHome.observe(viewLifecycleOwner) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    dismissLoader()
+                    if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
+                        try {
+                            if (it.data.output != null && it.data.output.data.isNotEmpty()) {
+                                inCinemaModeAdapter.submitList(it.data.output.data)
+                                binding?.rvInCinemaHome?.show()
+                            } else {
+                                binding?.rvInCinemaHome?.hide()
+                            }
+                        } catch (e: Exception) {
+                            binding?.rvInCinemaHome?.hide()
+                            e.printStackTrace()
+                        }
+                    }
+                }
+                is NetworkResult.Error -> {
+                    binding?.rvInCinemaHome?.hide()
+                    dismissLoader()
+
+                }
+
+                is NetworkResult.Loading -> {
+                }
+            }
+        }
+        authViewModel.getInCinemaHome(preferences.getUserId(), preferences.getCityName())
+    }
+
+    private fun dismissLoader() {
+        loader?.dismiss()
     }
 
     private fun makeToTop() {
@@ -1987,5 +2044,41 @@ class HomeFragment : Fragment(),
         return filteredMovies.size
     }
 
+    private fun initInCinemaMode() {
+        binding?.rvInCinemaHome?.apply {
+            layoutManager = LinearLayoutManager(context).also {
+                it.orientation = LinearLayoutManager.HORIZONTAL
+            }
+            LinearSnapHelper().attachToRecyclerView(this)
+            addItemDecoration(RecyclerViewMarginInCinemaMode(10, 1))
+
+        }
+        binding?.rvInCinemaHome?.adapter = inCinemaModeAdapter
+    }
+
+    var clickedItem: Data? = null
+    private fun createInCinemaHomeAdapter() = GenericRecyclerViewAdapter(
+        getViewLayout = { R.layout.in_cinema_mode },
+        areItemsSame = ::isCinemaModeSame,
+        areItemContentsEqual = ::isCinemaModeSame,
+        onBind = { inCinemaModeItem, viewDataBinding, _ ->
+            with(viewDataBinding as InCinemaModeBinding) {
+                Glide.with(requireActivity()).load(inCinemaModeItem.icon).into(imageViewIcm);
+                bookedTicketsCount.text = inCinemaModeItem.title
+                imageButtonInCinemaMode.text = inCinemaModeItem.btext
+                constraintlayoutRoot.setOnClickListener {
+                    clickedItem = inCinemaModeItem
+                    val intent = Intent(requireContext(), InCinemaModeActivity::class.java)
+                    intent.putExtra(Constant.IN_CINEMA_MODE_TYPE, clickedItem!!.type)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                    requireContext().startActivity(intent)
+                }
+            }
+        }
+    )
+
+    fun isCinemaModeSame(item1: Data, item2: Data): Boolean {
+        return ((item1.title == item2.title) && (item1.type == item2.type) && (item1.btext == item2.type))
+    }
 
 }

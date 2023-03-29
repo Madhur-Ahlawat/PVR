@@ -33,6 +33,9 @@ import com.net.pvr.ui.home.fragment.privilege.response.LoyaltyDataResponse
 import com.net.pvr.ui.home.fragment.privilege.response.PassportHistory
 import com.net.pvr.ui.home.fragment.privilege.response.PassportPlanResponse
 import com.net.pvr.ui.home.fragment.privilege.response.PrivilegeHomeResponse
+import com.net.pvr.ui.home.inCinemaMode.response.GetBookingResponse
+import com.net.pvr.ui.home.inCinemaMode.response.GetInCinemaResponse
+import com.net.pvr.ui.home.inCinemaMode.response.InCinemaHomeResponse
 import com.net.pvr.ui.location.selectCity.response.SelectCityResponse
 import com.net.pvr.ui.login.otpVerify.response.ResisterResponse
 import com.net.pvr.ui.login.response.LoginResponse
@@ -1668,6 +1671,36 @@ interface UserAPI {
         @Query("did") did: String
     ): Response<JusPayInitResponse>
 
+
+    /************* IN Cinema mode
+     *
+     */
+
+    @POST("api/content/home")
+    suspend fun inCinemaHome(
+        @Query("userid") userid: String,
+        @Query("city") city: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<InCinemaHomeResponse>
+
+    @POST("api/content/getincinema")
+    suspend fun getInCinemaBookingID(
+        @Query("userid") userid: String,
+        @Query("city") city: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String,
+        @Query("did") did: String
+    ): Response<GetInCinemaResponse>
+
+    @POST("api/content/incinema/getBooking")
+    suspend fun getBooking(
+        @Query("bookingId") bookingId: String,
+        @Query("city") city: String,
+        @Query("av") version: String,
+        @Query("pt") platform: String
+    ): Response<GetBookingResponse>
 
 
 
