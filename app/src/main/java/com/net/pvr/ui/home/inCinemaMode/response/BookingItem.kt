@@ -1,5 +1,7 @@
 package com.net.pvr.ui.home.inCinemaMode.response
 
+import com.net.pvr.ui.home.fragment.home.response.HomeResponse
+
 data class BookingItem(
     val audi: String,
     val cinemaname: String,
@@ -12,7 +14,7 @@ data class BookingItem(
     val mcensor: String,
     val mname: String,
     val movieImage: String,
-    val placeholders: List<Any>,
+    val placeholders: ArrayList<HomeResponse.Ph>,
     val popups: List<Any>,
     val seats: List<String>,
     val showData: List<ShowData>,

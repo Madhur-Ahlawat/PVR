@@ -6,9 +6,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
         android:background="@color/black"
         android:backgroundTint="@color/black"
+        android:fitsSystemWindows="true"
         android:theme="@style/Theme.ICM"
         tools:context=".ui.home.inCinemaMode.InCinemaModeActivity">
 
@@ -34,17 +34,18 @@
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:fillViewport="false"
+            android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayoutToolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/dimen_24dp">
+                android:paddingBottom="@dimen/dimen_37dp"
+                android:layout_height="match_parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayoutScanQR"
@@ -101,7 +102,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginStart="@dimen/dimen_14dp"
-
                             app:layout_constraintBottom_toBottomOf="@id/linearlayout_movie_details"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="@id/linearlayout_movie_details">
@@ -315,7 +315,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/dimen_14dp"
                             android:fontFamily="@font/sf_pro_text_semi_bold"
-                            android:text="Audi 06 - Prime"
+                            tools:text="Audi 06 - Prime"
                             android:textColor="@color/white"
                             android:textSize="@dimen/dimen_14sp"
                             app:layout_constraintStart_toStartOf="parent"
@@ -412,52 +412,35 @@
                     android:id="@+id/rv_quick_option"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/dimen_14dp"
-                    android:layout_marginTop="@dimen/dimen_15dp"
+                    android:layout_marginHorizontal="@dimen/dimen_15dp"
+                    android:layout_marginTop="@dimen/dimen_11dp"
                     android:backgroundTint="@color/bg_dark_seat_indicator"
-                    app:cardCornerRadius="@dimen/dimen_10dp"
-                    tools:listitem="@layout/item_quick_option_incinema"
-                    tools:itemCount="3"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:nestedScrollingEnabled="false"
                     android:orientation="vertical"
+                    app:cardCornerRadius="@dimen/dimen_10dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cardview_food_orders"/>
+                    app:layout_constraintTop_toBottomOf="@id/cardview_food_orders"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_quick_option_incinema" />
 
-                <RelativeLayout
-                    android:id="@+id/rlImgContainer"
-                    android:layout_width="match_parent"
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView51"
+                    android:layout_width="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/dimen_14dp"
+                    android:layout_marginHorizontal="@dimen/dimen_12dp"
                     android:layout_marginTop="@dimen/dimen_15dp"
-                    android:background="@drawable/gradient_loyalty"
+                    android:orientation="horizontal"
                     android:visibility="visible"
-                    app:layout_constraintTop_toBottomOf="@id/rv_quick_option">
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_quick_option"
+                    tools:listitem="@layout/ticket__conf_item_offer" />
 
-
-                    <LinearLayout
-                        android:id="@+id/llTop"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fitsSystemWindows="true"
-                        android:orientation="vertical">
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyclerView51"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:orientation="horizontal"
-                            android:visibility="visible"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView367"
-                            tools:listitem="@layout/ticket__conf_item_offer" />
-
-                    </LinearLayout>
-                </RelativeLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

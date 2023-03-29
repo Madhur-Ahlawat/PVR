@@ -36,11 +36,11 @@ class RecyclerViewDecorationInCinemaTypes
             outRect.top = margin
         }
         if(position==childCount-1){
-            outRect.bottom=0
+            outRect.bottom=margin
         }
         try{
             if (position % columns == 0) {
-                outRect.left = margin
+                outRect.top = margin
             }
         }
         catch (e:java.lang.Exception){}
