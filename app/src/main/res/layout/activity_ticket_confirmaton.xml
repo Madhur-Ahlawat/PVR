@@ -1806,17 +1806,16 @@ ididunt ut labore et dolore magna aliqua." />
         android:paddingTop="@dimen/padding_10"
         android:paddingEnd="@dimen/dimen_24dp"
         android:paddingBottom="@dimen/padding_10"
-        android:weightSum="3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
        >
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/dimen_10dp"
-            android:layout_weight="1.6"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
@@ -1843,11 +1842,12 @@ ididunt ut labore et dolore magna aliqua." />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/dimen_10dp"
-            android:layout_weight="0.7"
+            android:layout_weight="1.7"
             android:id="@+id/shareBtn"
+            android:visibility="visible"
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
@@ -1870,10 +1870,11 @@ ididunt ut labore et dolore magna aliqua." />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.7"
+            android:layout_weight="1.7"
             android:id="@+id/downloadBtn"
+            android:visibility="visible"
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView

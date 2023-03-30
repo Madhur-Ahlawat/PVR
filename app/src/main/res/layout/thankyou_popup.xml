@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/top_curve_bottomsheet"
+    android:layout_margin="@dimen/dimen_15dp"
+    android:layout_gravity="bottom"
+    android:id="@+id/first"
+    android:layout_height="wrap_content">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_15dp"
+        android:layout_marginBottom="@dimen/dimen_16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="50dp"
+            android:layout_height="@dimen/dimen_5dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/gray_color"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/popupList"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:padding="3dp"
+            android:src="@drawable/food_thank"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logo" />
+
+
+        <TextView
+            android:id="@+id/cross_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/helvetica_neu_bold"
+            android:layout_margin="@dimen/dimen_20dp"
+            android:gravity="center"
+            android:text="Thank you for pre-ordering your
+food, see you at the movies!"
+            android:textColor="@color/pvr_dark_black"
+            android:textSize="@dimen/dimen_16sp"
+            app:layout_constraintEnd_toEndOf="@+id/popupList"
+            app:layout_constraintStart_toStartOf="@+id/popupList"
+            app:layout_constraintTop_toBottomOf="@+id/popupList" />
+
+        <TextView
+            android:id="@+id/cross_text_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_20dp"
+            android:fontFamily="@font/sf_pro_text_medium"
+            android:gravity="center"
+            android:text="Please collect from the Concessionaire at the Cinema!"
+            android:paddingStart="@dimen/dimen_20dp"
+            android:paddingEnd="@dimen/dimen_20dp"
+            android:paddingTop="@dimen/padding_10"
+            android:paddingBottom="@dimen/padding_10"
+            android:backgroundTint="#FFF4CA"
+            android:textColor="#363636"
+            android:textSize="@dimen/dimen_16sp"
+            app:layout_constraintEnd_toEndOf="@+id/cross_text"
+            app:layout_constraintStart_toStartOf="@+id/cross_text"
+            app:layout_constraintTop_toBottomOf="@+id/cross_text" />
+
+
+        <TextView
+            android:id="@+id/addbutton"
+            android:fontFamily="@font/sf_pro_text_bold"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:background="@drawable/round_corner_8"
+            android:backgroundTint="@color/pvr_yellow"
+            android:gravity="center"
+            android:text="Okay"
+            android:textColor="#2F2F2F"
+            app:layout_constraintEnd_toEndOf="@+id/cross_text_new"
+            app:layout_constraintStart_toStartOf="@+id/cross_text_new"
+            app:layout_constraintTop_toBottomOf="@+id/cross_text_new">
+
+        </TextView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="@dimen/dimen_20dp"
+        android:layout_height="@dimen/dimen_20dp"
+        android:visibility="gone"
+        android:layout_marginEnd="@dimen/padding_10"
+        android:layout_marginTop="@dimen/dimen_30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_x_circle" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

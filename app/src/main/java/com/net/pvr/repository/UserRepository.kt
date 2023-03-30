@@ -3988,8 +3988,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     val getInCinemaResponseLiveData: LiveData<NetworkResult<GetInCinemaResponse>>
         get() = _getInCinemaResponseLiveData
 
-    private val _getBookingResponseLiveData = MutableLiveData<NetworkResult<GetBookingResponse>>()
-    val getBookingResponseLiveData: LiveData<NetworkResult<GetBookingResponse>>
+    private val _getBookingResponseLiveData = MutableLiveData<NetworkResult<GetInCinemaResponse>>()
+    val getBookingResponseLiveData: LiveData<NetworkResult<GetInCinemaResponse>>
         get() = _getBookingResponseLiveData
 
     suspend fun getInCinema(userId: String, city: String) {
@@ -4024,7 +4024,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
             _getInCinemaResponseLiveData.postValue(NetworkResult.Error("Something Went Wrong"))
         }
     }
-    private fun processBookingResponse(response: Response<GetBookingResponse>) {
+    private fun processBookingResponse(response: Response<GetInCinemaResponse>) {
         if (response.isSuccessful && response.body() != null) {
             _getBookingResponseLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {

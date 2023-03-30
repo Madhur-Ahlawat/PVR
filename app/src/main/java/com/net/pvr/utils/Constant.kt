@@ -452,19 +452,19 @@ class Constant {
 
 
     fun printTicket(activity: Activity) {
-        if (Constant.INCINEMA == "true") {
+//        if (Constant.INCINEMA == "true") {
             val intent = Intent(
                 activity, TicketConfirmationActivity::class.java
             )
             intent.putExtra("type", "HOME")
             activity.startActivity(intent)
             activity.finish()
-        }else{
-            activity.launchActivity(
-                InCinemaModeActivity::class.java,
-                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-            )
-        }
+//        }else{
+//            activity.launchActivity(
+//                InCinemaModeActivity::class.java,
+//                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+//            )
+//        }
     }
 
     fun shareData(activity: Activity, title: String, shareUrl: String) {

@@ -1702,7 +1702,7 @@ interface UserAPI {
         @Query("city") city: String,
         @Query("av") version: String,
         @Query("pt") platform: String
-    ): Response<GetBookingResponse>
+    ): Response<GetInCinemaResponse>
 
 
 

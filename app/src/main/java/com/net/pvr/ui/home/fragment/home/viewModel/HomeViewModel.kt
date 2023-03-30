@@ -109,7 +109,7 @@ class HomeViewModel @Inject constructor(private val userRepository: UserReposito
 
     val getInCinemaLiveData: LiveData<NetworkResult<GetInCinemaResponse>>
         get() = userRepository.getInCinemaResponseLiveData
-    val getBookingLiveData: LiveData<NetworkResult<GetBookingResponse>>
+    val getBookingLiveData: LiveData<NetworkResult<GetInCinemaResponse>>
         get() = userRepository.getBookingResponseLiveData
 
     fun getInCinema(

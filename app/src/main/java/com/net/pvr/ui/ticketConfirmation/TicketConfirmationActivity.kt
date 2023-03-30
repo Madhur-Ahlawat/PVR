@@ -11,10 +11,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.text.Html
 import android.text.TextUtils
+import android.util.DisplayMetrics
 import android.view.*
 import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.bumptech.glide.Glide
@@ -37,6 +39,7 @@ import com.net.pvr.ui.food.FoodActivity
 import com.net.pvr.ui.home.HomeActivity
 import com.net.pvr.ui.home.fragment.home.HomeFragment
 import com.net.pvr.ui.home.fragment.home.response.FeedbackDataResponse
+import com.net.pvr.ui.home.inCinemaMode.InCinemaModeActivity
 import com.net.pvr.ui.payment.PaymentActivity
 import com.net.pvr.ui.ticketConfirmation.adapter.TicketFoodAdapter
 import com.net.pvr.ui.ticketConfirmation.adapter.TicketPlaceHolderAdapter
@@ -46,6 +49,7 @@ import com.net.pvr.ui.ticketConfirmation.viewModel.TicketConfirmationViewModel
 import com.net.pvr.ui.webView.WebViewActivity
 import com.net.pvr.utils.*
 import com.net.pvr.utils.Constant.Companion.BACK_TO_BOOKING
+import com.net.pvr.utils.Constant.Companion.BOOK_TYPE
 import com.net.pvr.utils.ga.GoogleAnalytics
 import com.net.pvr.utils.isevent.ISEvents
 import dagger.hilt.android.AndroidEntryPoint
@@ -300,6 +304,11 @@ class TicketConfirmationActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun retrieveData(output: TicketBookedResponse.Output, from: String) {
+
+        if ((Constant.TRANSACTION_ID != null && !Constant.TRANSACTION_ID.equals("", ignoreCase = true)) || BOOK_TYPE == "FOOD") {
+            if (output.fmsg != null && output.fmsg != "")
+                show(output.fmsg)
+        }
         printLog(Constant.BOOK_TYPE + output.toString())
         ticketData = output
         if (Constant.BOOK_TYPE == "BOOKING") {
@@ -613,7 +622,12 @@ class TicketConfirmationActivity : AppCompatActivity() {
                     )
                 } else if (binding?.textView368?.text == "Back To Bookings") {
                     onBackPressed()
-                } else {
+                } else if (binding?.textView368?.text == "Back to In-Cinema Mode") {
+                    launchActivity(
+                        InCinemaModeActivity::class.java,
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    )
+                }else{
                     if (output.parkbooking) {
                         authViewModel.showParking(output.bi)
                     } else {
@@ -702,7 +716,14 @@ class TicketConfirmationActivity : AppCompatActivity() {
         } else if (Constant.BOOK_TYPE == "FOOD") {
             binding?.foodView?.show()
             binding?.ticketView?.hide()
-            binding?.bottomView?.hide()
+            if (Constant.INCINEMA == "YES") {
+                binding?.bottomView?.show()
+                binding?.downloadBtn?.hide()
+                binding?.textView368?.text = "Back to In-Cinema Mode"
+                binding?.shareBtn?.hide()
+            }else{
+                binding?.bottomView?.hide()
+            }
             GoogleAnalytics.hitPurchaseEvent(
                 this,
                 Constant.BOOKING_ID, output.amount, "Food", output.food.size
@@ -1216,7 +1237,14 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             )
         } else {
-            super.onBackPressed()
+            if (Constant.INCINEMA == "YES"){
+                launchActivity(
+                    InCinemaModeActivity::class.java,
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                )
+            }else {
+                super.onBackPressed()
+            }
         }
     }
 
@@ -1359,4 +1387,32 @@ class TicketConfirmationActivity : AppCompatActivity() {
         dialog.setContentView(bindingProfile.root)
         dialog.show()
     }
+
+    fun show(msg: String?) {
+        val dialog = BottomSheetDialog(this, R.style.NoBackgroundDialogTheme)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.thankyou_popup)
+        dialog.setCancelable(true)
+        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window!!.setLayout(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        val name = dialog.findViewById<ImageView>(R.id.imageView5)
+        val first = dialog.findViewById<ConstraintLayout>(R.id.first)
+        val displayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        val height = displayMetrics.heightPixels
+        val width = displayMetrics.widthPixels
+        first!!.layoutParams.width = width - 40
+        val addbutton = dialog.findViewById<TextView>(R.id.addbutton)
+        val cross_text = dialog.findViewById<TextView>(R.id.cross_text)
+        val cross_text_new = dialog.findViewById<TextView>(R.id.cross_text_new)
+        cross_text!!.text = msg
+        dialog.show()
+        name!!.setOnClickListener { dialog.dismiss() }
+        addbutton!!.setOnClickListener { dialog.dismiss() }
+    }
+
 }

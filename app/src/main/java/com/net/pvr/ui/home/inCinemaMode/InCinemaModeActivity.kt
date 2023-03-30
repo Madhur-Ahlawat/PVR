@@ -106,8 +106,8 @@ class InCinemaModeActivity : AppCompatActivity(),
         binding = ActivityInCinemaModeBinding.inflate(layoutInflater)
         setContentView(binding?.root)
         initUI()
+
         setClickListeners()
-        getInCinemaMode()
         createQr()
 
         binding?.textViewHowItWorks?.setOnClickListener {
@@ -115,6 +115,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                 openHowToWork()
             }
         }
+
 
     }
 
@@ -333,88 +334,14 @@ class InCinemaModeActivity : AppCompatActivity(),
                 false
             )
             rvFoodandbevrages.addItemDecoration(RecyclerViewMarginFoodOrder(30, 1))
-            PagerSnapHelper().attachToRecyclerView(binding!!.rvIntervalTiming)
+            PagerSnapHelper().attachToRecyclerView(binding?.rvIntervalTiming)
 
             rvFoodandbevrages.adapter = orderAdapter
-//            privilegeCardList.layoutManager = layoutManager
-//            privilegeCardList.adapter = cardAdapter
-//            privilegeCardList.onFlingListener = null
-//            privilegeCardList.addOnScrollListener(object :
-//                RecyclerView.OnScrollListener() {
-//                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-//                    super.onScrollStateChanged(recyclerView, newState)
-//                    if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
-//                        //Dragging
-//                    } else if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-//                        HomeActivity.reviewPosition =
-//                            HomeActivity.getCurrentItem(binding?.privilegeCardList!!)
-//                        if (HomeActivity.reviewPosition == 0) {
-//                            binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_loyalty)
-//                            if (cardDataList[HomeActivity.reviewPosition].lock == true) {
-//                                binding?.unLockView?.show()
-//                                binding?.cardBelowView?.hide()
-//                                binding?.passportView?.hide()
-//                                binding?.titleUnlock?.text = "PVR Privilege"
-//                                binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_loyalty)
-//                            } else {
-//                                binding?.unLockView?.hide()
-//                                binding?.passportView?.hide()
-//                                binding?.cardBelowView?.show()
-//                            }
-//                        } else if (HomeActivity.reviewPosition == 1) {
-//                            if (cardDataList[HomeActivity.reviewPosition].lock == true) {
-//                                binding?.unLockView?.show()
-//                                binding?.cardBelowView?.hide()
-//                                binding?.passportView?.hide()
-//                                if (preferences.getString(Constant.SharedPreference.SUBS_OPEN) == "true") {
-//                                    binding?.titleUnlock?.text = "PVR Passport"
-//                                    binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_passport)
-//                                } else {
-//                                    binding?.titleUnlock?.text = "Kotak Card"
-//                                    binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_kotak)
-//                                }
-//                            } else {
-//                                binding?.cardBelowView?.hide()
-//                                binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_kotak)
-//                                if (cardDataList[HomeActivity.reviewPosition].type.equals("PPP")) {
-//                                    binding?.passportView?.hide()
-//                                    binding?.unLockView?.hide()
-//                                    binding?.cardBelowView?.show()
-//                                } else {
-//                                    if (preferences.getString(Constant.SharedPreference.SUBS_OPEN) == "true") {
-//                                        binding?.passportView?.show()
-//                                        binding?.unLockView?.hide()
-//                                        binding?.cardBelowView?.hide()
-//                                        binding?.bookBtn?.isEnabled = true
-//                                        binding?.bookBtn?.isClickable = true
-//                                    } else {
-//                                        binding?.passportView?.show()
-//                                        binding?.unLockView?.hide()
-//                                        binding?.cardBelowView?.hide()
-//                                        binding?.bookBtn?.isEnabled = false
-//                                        binding?.bookBtn?.isClickable = false
-//                                    }
-//                                }
-//                            }
-//                        } else if (HomeActivity.reviewPosition == 2) {
-//                            binding?.rlImgContainer?.setBackgroundResource(R.drawable.gradient_kotak)
-//                            if (cardDataList[HomeActivity.reviewPosition].lock == true) {
-//                                binding?.unLockView?.show()
-//                                binding?.cardBelowView?.hide()
-//                                binding?.passportView?.hide()
-//                                binding?.titleUnlock?.text = "Kotak Card"
-//                            } else {
-//                                binding?.passportView?.hide()
-//                                binding?.cardBelowView?.show()
-//                                binding?.unLockView?.hide()
-//                            }
-//                        }
-//                    }
-//                }
-//
-//            })
-//            mSnapHelper.attachToRecyclerView(privilegeCardList)
+
             initNoDataDialog()
+
+            getInCinemaMode()
+
         }
     }
 
@@ -422,7 +349,7 @@ class InCinemaModeActivity : AppCompatActivity(),
         noDataDialog = OptionDialog(this,
             R.mipmap.ic_launcher,
             R.string.app_name,
-            getString(R.string.note_data),
+            "Some thing went wrong!",
             positiveBtnText = R.string.ok,
             negativeBtnText = R.string.no,
             positiveClick = {
@@ -450,10 +377,83 @@ class InCinemaModeActivity : AppCompatActivity(),
                                 }
                             }
                             if (bookingIdList!!.size != 0) {
-                                getBookingInfo(
-                                    bookingIdList!![currentBooking],
-                                    preferences.getCityName()
-                                )
+                                try {
+                                    if (bookingData != null) {
+                                        binding
+                                            ?.apply {
+                                                nestedScrollView.show()
+                                                textviewMovieNumber.text =
+                                                    (currentBooking + 1).toString() + "/" + bookingIdList!!.size.toString()
+
+                                                Glide.with(this@InCinemaModeActivity).load("")
+                                                    .placeholder(getDrawable(R.drawable.placeholder_vertical))
+                                                    .error(getDrawable(R.drawable.placeholder_vertical))
+                                                    .into(imageviewMoviewPoster)
+                                                bookingData?.apply {
+                                                    textViewAudiName.text = audi
+                                                    textviewMovieTheatreLocation.text = cinemaname
+                                                    textviewMovieDateAndTime.text = showtime
+                                                    textviewMovieCategory.text = mcensor
+                                                    textviewMovieLanguage.text = lang
+                                                    textviewMovieType.text = format
+                                                    textviewMovieName.text = mname
+                                                }
+
+                                                if (currentBooking == 0) {
+                                                    imageviewPreviousBookedMovie.hide()
+                                                    imageviewNextBookedMovie.show()
+                                                } else if (currentBooking == bookingIdList!!.size - 1) {
+                                                    imageviewPreviousBookedMovie.show()
+                                                    imageviewNextBookedMovie.hide()
+                                                } else if (currentBooking < bookingIdList!!.size) {
+                                                    imageviewPreviousBookedMovie.show()
+                                                    imageviewNextBookedMovie.show()
+                                                }
+                                            }
+                                        movieDetailsAdapter.submitList(bookingData!!.seats)
+                                        intervalAdadapter.submitList(bookingData!!.showData)
+                                        inCinemaTypesAdadapter.submitList(bookingData!!.incinemaTypes)
+                                        orderAdapter!!.clear()
+                                        bookingData!!.inCinemaFoodResp.forEach {
+                                            println("it--->$it")
+                                            orderAdapter!!.add(
+                                                OrderItemView(
+                                                    context = this@InCinemaModeActivity,
+                                                    it
+                                                )
+                                            )
+                                        }
+                                        orderAdapter!!.notifyDataSetChanged()
+                                        //placeholder
+                                        if (bookingData?.placeholders?.isEmpty() == true) {
+                                            binding?.recyclerView51?.hide()
+                                        } else {
+                                            binding?.recyclerView51?.show()
+                                            val snapHelper = PagerSnapHelper()
+                                            binding?.recyclerView51?.onFlingListener = null
+                                            snapHelper.attachToRecyclerView(binding?.recyclerView51)
+                                            val layoutManagerPlaceHolder =
+                                                LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                                            val ticketPlaceHolderAdapter = TicketPlaceHolderAdapter(
+                                                this,
+                                                bookingData?.placeholders!!
+                                            )
+
+                                            binding?.recyclerView51?.setHasFixedSize(true)
+                                            binding?.recyclerView51?.layoutManager = layoutManagerPlaceHolder
+                                            binding?.recyclerView51?.adapter = ticketPlaceHolderAdapter
+                                        }
+                                    } else {
+                                        dismissLoader()
+                                        binding?.nestedScrollView?.hide()
+                                        noDataDialog?.show()
+                                    }
+                                } catch (e: Exception) {
+                                    dismissLoader()
+                                    binding?.nestedScrollView?.hide()
+                                    noDataDialog?.show()
+                                    e.printStackTrace()
+                                }
                             } else {
                                 binding!!.nestedScrollView.hide()
                                 dialog!!.show()
@@ -499,7 +499,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                 is NetworkResult.Success -> {
                     dismissLoader()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        bookingData = it.data.output
+                        mCinemaData = it.data.output
                         try {
                             if (bookingData != null) {
                                 binding
@@ -586,7 +586,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                 }
 
                 is NetworkResult.Loading -> {
-                    showLoader()
+                    //showLoader()
                 }
             }
         }
