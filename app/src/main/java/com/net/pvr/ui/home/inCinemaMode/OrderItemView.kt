@@ -2,7 +2,6 @@ package com.net.pvr.ui.home.inCinemaMode
 
 import android.content.Context
 import android.os.Build
-import android.view.View
 import androidx.annotation.RequiresApi
 import com.net.pvr.R
 import com.net.pvr.databinding.ItemFoodOrderBinding
@@ -16,54 +15,53 @@ import com.xwray.groupie.ViewHolder
 import com.xwray.groupie.databinding.BindableItem
 
 
-class OrderItemView(var context: Context?, var item: InCinemaFoodResp) :
-    BindableItem<ItemFoodOrderBinding>(){
+class OrderItemView(
+    var context: Context?,
+    var item: InCinemaFoodResp,
+    var orderAdapter: GroupAdapter<ViewHolder>
+) :
+    BindableItem<ItemFoodOrderBinding>() {
     var viewBinding: ItemFoodOrderBinding? = null
-    var rowindex = 0
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun bind(viewBinding: ItemFoodOrderBinding, position: Int) {
         var groupAdapter = GroupAdapter<ViewHolder>()
         this.viewBinding = viewBinding
         viewBinding.apply {
-            if(rvOrdersList.itemDecorationCount==0){
+            if (rvOrdersList.itemDecorationCount == 0) {
                 rvOrdersList.addItemDecoration(RecyclerViewMarginFoodInnerItem(30, 1))
             }
-            if (rowindex == position){
+            if (item.isExpanded) {
+                groupAdapter.clear()
+                item.foods.forEach {
+                    groupAdapter.add(FoodItemView(context, it))
+                }
+                rvOrdersList.adapter = groupAdapter
                 rvOrdersList.show()
-            }else{
+                imageviewExpandOrder.setImageDrawable(
+                    imageviewExpandOrder.context.resources.getDrawable(
+                        R.drawable.ic_arrow_up_white
+                    )
+                )
+
+            } else {
                 rvOrdersList.hide()
+                groupAdapter.clear()
+                imageviewExpandOrder.setImageDrawable(
+                    imageviewExpandOrder.context.resources.getDrawable(
+                        R.drawable.ic_arrow_down
+                    )
+                )
             }
-            println("item.bookingId--->"+item.bookingId)
+            println("item.bookingId--->" + item.bookingId)
             textViewOrderId.text = item.bookingId
-            textviewOrderValue.text=item.totalPrice
+            textviewOrderValue.text = item.totalPrice
             groupAdapter = GroupAdapter<ViewHolder>()
             rootOrder.setOnClickListener {
-                rowindex = position
-                if(rvOrdersList.visibility==View.GONE){
-                    groupAdapter.clear()
-                    item.foods.forEach {
-                        groupAdapter.add(FoodItemView(context,it))
-                    }
-                    rvOrdersList.adapter=groupAdapter
-                    rvOrdersList.visibility=View.VISIBLE
-                    imageviewExpandOrder.setImageDrawable(imageviewExpandOrder.context.resources.getDrawable(R.drawable.ic_arrow_up_white))
-                }
-                else{
-                    groupAdapter.clear()
-                    rvOrdersList.visibility=View.GONE
-                    imageviewExpandOrder.setImageDrawable(imageviewExpandOrder.context.resources.getDrawable(R.drawable.ic_arrow_down))
-                }
-
+                item.isExpanded = !item.isExpanded
                 groupAdapter.notifyDataSetChanged()
-
+                orderAdapter.notifyDataSetChanged()
             }
-            groupAdapter.clear()
-            item.foods.forEach {
-                groupAdapter.add(FoodItemView(context,it))
-            }
-            rvOrdersList.adapter=groupAdapter
-            rvOrdersList.visibility=View.VISIBLE
-            imageviewExpandOrder.setImageDrawable(imageviewExpandOrder.context.resources.getDrawable(R.drawable.ic_arrow_up_white))
         }
     }
 

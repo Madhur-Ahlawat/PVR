@@ -26,8 +26,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.card.MaterialCardView
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.gson.Gson
-import com.net.pvr.MainApplication
 import com.net.pvr.R
 import com.net.pvr.databinding.*
 import com.net.pvr.di.preference.PreferenceManager
@@ -40,13 +38,9 @@ import com.net.pvr.ui.home.fragment.home.viewModel.HomeViewModel
 import com.net.pvr.ui.home.fragment.privilege.adapter.HowItWorkAdapter
 import com.net.pvr.ui.home.fragment.privilege.adapter.PrivilegeCardAdapter
 import com.net.pvr.ui.home.fragment.privilege.response.PrivilegeCardData
-import com.net.pvr.ui.home.inCinemaMode.response.BookingItem
-import com.net.pvr.ui.home.inCinemaMode.response.IncinemaType
-import com.net.pvr.ui.home.inCinemaMode.response.Output
-import com.net.pvr.ui.home.inCinemaMode.response.ShowData
+import com.net.pvr.ui.home.inCinemaMode.adapters.TicketPlaceHolderAdapter
+import com.net.pvr.ui.home.inCinemaMode.response.*
 import com.net.pvr.ui.scanner.ScannerActivity
-import com.net.pvr.ui.ticketConfirmation.adapter.TicketPlaceHolderAdapter
-import com.net.pvr.ui.ticketConfirmation.response.TicketBookedResponse
 import com.net.pvr.utils.*
 import com.net.pvr.utils.ga.GoogleAnalytics
 import com.xwray.groupie.GroupAdapter
@@ -62,7 +56,6 @@ import javax.inject.Inject
 class InCinemaModeActivity : AppCompatActivity(),
     PrivilegeCardAdapter.RecycleViewItemClickListener, StoriesProgressView.StoriesListener,
     HowItWorkAdapter.RecycleViewItemClickListener {
-    private var bookingData: BookingItem? = null
     private var mCinemaData: Output? = null
     private var ivCross: TextView? = null
     private var tv_button: TextView? = null
@@ -92,31 +85,27 @@ class InCinemaModeActivity : AppCompatActivity(),
     private var binding: ActivityInCinemaModeBinding? = null
     private val authViewModel: HomeViewModel by viewModels()
     private var loader: LoaderDialog? = null
-    private val mSnapHelper = PagerSnapHelper()
-    private var orderAdapter: GroupAdapter<ViewHolder>? = null
-    private val movieDetailsAdapter: GenericRecyclerViewAdapter<String> by lazy { createMovieDetailAdapter() }
+    private val orderAdapter: GroupAdapter<ViewHolder> = GroupAdapter<ViewHolder>()
+    private val seatsAdapter: GenericRecyclerViewAdapter<String> by lazy { createSeatsAdapter() }
     private val intervalAdadapter: GenericRecyclerViewAdapter<ShowData> by lazy { createIntervalTimingAdapter() }
     private val inCinemaTypesAdadapter: GenericRecyclerViewAdapter<IncinemaType> by lazy { createInCinemaTypesAdapter() }
     private var mIntent: Intent? = null
     var dialog: OptionDialog? = null
     private var noDataDialog: OptionDialog? = null
+    private var inCinemaPageData: InCinemaResp?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mIntent = intent
         binding = ActivityInCinemaModeBinding.inflate(layoutInflater)
         setContentView(binding?.root)
         initUI()
-
         setClickListeners()
         createQr()
-
         binding?.textViewHowItWorks?.setOnClickListener {
             if (mCinemaData?.inCinemaResp?.popups?.isNotEmpty() == true) {
                 openHowToWork()
             }
         }
-
-
     }
 
 
@@ -314,7 +303,6 @@ class InCinemaModeActivity : AppCompatActivity(),
     }
 
     private fun initUI() {
-        orderAdapter = GroupAdapter<ViewHolder>()
         cardAdapter =
             PrivilegeCardAdapter(cardDataList, this@InCinemaModeActivity, preferences, this)
         binding?.apply {
@@ -325,7 +313,7 @@ class InCinemaModeActivity : AppCompatActivity(),
             rvQuickOption.addItemDecoration(RecyclerViewDecorationInCinemaTypes(6, 1))
             rvQuickOption.adapter = inCinemaTypesAdadapter
             rvIntervalTiming.adapter = intervalAdadapter
-            rvSeatNumber.adapter = movieDetailsAdapter
+            rvSeatNumber.adapter = seatsAdapter
             rvIntervalTiming.addItemDecoration(RecyclerViewMarginBookedTickets(14, 1))
             rvSeatNumber.layoutManager = GridAutoFitLayoutManager(
                 this@InCinemaModeActivity,
@@ -361,12 +349,14 @@ class InCinemaModeActivity : AppCompatActivity(),
 
     private fun getInCinemaMode() {
         showLoader()
+        authViewModel.getInCinema(preferences.getUserId(), preferences.getCityName())
         authViewModel.getInCinemaLiveData.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
                     dismissLoader()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        mCinemaData = it.data.output
+                        currentBooking=0
+                        inCinemaPageData = it.data.output.inCinemaResp
                         try {
                             bookingIdList!!.clear()
                             bookingIdList!!.addAll(it.data.output.bookingIdList)
@@ -378,18 +368,18 @@ class InCinemaModeActivity : AppCompatActivity(),
                             }
                             if (bookingIdList!!.size != 0) {
                                 try {
-                                    if (bookingData != null) {
+                                    if (inCinemaPageData != null) {
                                         binding
                                             ?.apply {
                                                 nestedScrollView.show()
                                                 textviewMovieNumber.text =
                                                     (currentBooking + 1).toString() + "/" + bookingIdList!!.size.toString()
 
-                                                Glide.with(this@InCinemaModeActivity).load("")
+                                                Glide.with(this@InCinemaModeActivity).load(inCinemaPageData?.movieImage)
                                                     .placeholder(getDrawable(R.drawable.placeholder_vertical))
                                                     .error(getDrawable(R.drawable.placeholder_vertical))
                                                     .into(imageviewMoviewPoster)
-                                                bookingData?.apply {
+                                                inCinemaPageData?.apply {
                                                     textViewAudiName.text = audi
                                                     textviewMovieTheatreLocation.text = cinemaname
                                                     textviewMovieDateAndTime.text = showtime
@@ -410,22 +400,24 @@ class InCinemaModeActivity : AppCompatActivity(),
                                                     imageviewNextBookedMovie.show()
                                                 }
                                             }
-                                        movieDetailsAdapter.submitList(bookingData!!.seats)
-                                        intervalAdadapter.submitList(bookingData!!.showData)
-                                        inCinemaTypesAdadapter.submitList(bookingData!!.incinemaTypes)
+                                        seatsAdapter.submitList(inCinemaPageData!!.seats)
+                                        intervalAdadapter.submitList(inCinemaPageData?.showData)
+                                        inCinemaTypesAdadapter.submitList(inCinemaPageData?.incinemaTypes)
                                         orderAdapter!!.clear()
-                                        bookingData!!.inCinemaFoodResp.forEach {
+                                        inCinemaPageData?.inCinemaFoodResp?.get(0)?.isExpanded=true
+                                        inCinemaPageData?.inCinemaFoodResp?.forEach {
                                             println("it--->$it")
                                             orderAdapter!!.add(
                                                 OrderItemView(
                                                     context = this@InCinemaModeActivity,
-                                                    it
+                                                    it,
+                                                    orderAdapter
                                                 )
                                             )
                                         }
                                         orderAdapter!!.notifyDataSetChanged()
                                         //placeholder
-                                        if (bookingData?.placeholders?.isEmpty() == true) {
+                                        if (inCinemaPageData?.placeholders?.isEmpty() == true) {
                                             binding?.recyclerView51?.hide()
                                         } else {
                                             binding?.recyclerView51?.show()
@@ -436,14 +428,15 @@ class InCinemaModeActivity : AppCompatActivity(),
                                                 LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
                                             val ticketPlaceHolderAdapter = TicketPlaceHolderAdapter(
                                                 this,
-                                                bookingData?.placeholders!!
+                                                inCinemaPageData?.placeholders!!
                                             )
 
                                             binding?.recyclerView51?.setHasFixedSize(true)
                                             binding?.recyclerView51?.layoutManager = layoutManagerPlaceHolder
                                             binding?.recyclerView51?.adapter = ticketPlaceHolderAdapter
                                         }
-                                    } else {
+                                    }
+                                    else {
                                         dismissLoader()
                                         binding?.nestedScrollView?.hide()
                                         noDataDialog?.show()
@@ -475,12 +468,11 @@ class InCinemaModeActivity : AppCompatActivity(),
                 }
             }
         }
-
-        authViewModel.getInCinema(preferences.getUserId(), preferences.getCityName())
     }
 
     private fun dismissLoader() {
         loader?.dismiss()
+        loader=null
     }
 
     private fun getBookingInfo(bookingId: String, city: String) {
@@ -499,20 +491,20 @@ class InCinemaModeActivity : AppCompatActivity(),
                 is NetworkResult.Success -> {
                     dismissLoader()
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
-                        mCinemaData = it.data.output
+                        inCinemaPageData = it.data.output
                         try {
-                            if (bookingData != null) {
+                            if (inCinemaPageData != null) {
                                 binding
                                     ?.apply {
                                         nestedScrollView.show()
                                         textviewMovieNumber.text =
                                             (currentBooking + 1).toString() + "/" + bookingIdList!!.size.toString()
 
-                                        Glide.with(this@InCinemaModeActivity).load("")
+                                        Glide.with(this@InCinemaModeActivity).load(inCinemaPageData?.movieImage)
                                             .placeholder(getDrawable(R.drawable.placeholder_vertical))
                                             .error(getDrawable(R.drawable.placeholder_vertical))
                                             .into(imageviewMoviewPoster)
-                                        bookingData?.apply {
+                                        inCinemaPageData?.apply {
                                             textViewAudiName.text = audi
                                             textviewMovieTheatreLocation.text = cinemaname
                                             textviewMovieDateAndTime.text = showtime
@@ -533,22 +525,26 @@ class InCinemaModeActivity : AppCompatActivity(),
                                             imageviewNextBookedMovie.show()
                                         }
                                     }
-                                movieDetailsAdapter.submitList(bookingData!!.seats)
-                                intervalAdadapter.submitList(bookingData!!.showData)
-                                inCinemaTypesAdadapter.submitList(bookingData!!.incinemaTypes)
+                                inCinemaPageData?.apply {
+                                    seatsAdapter.submitList(seats)
+                                    intervalAdadapter.submitList(showData)
+                                    inCinemaTypesAdadapter.submitList(incinemaTypes)
+                                }
+
                                 orderAdapter!!.clear()
-                                bookingData!!.inCinemaFoodResp.forEach {
+                                inCinemaPageData?.inCinemaFoodResp?.get(0)?.isExpanded=true
+                                inCinemaPageData?.inCinemaFoodResp?.forEach {
                                     println("it--->$it")
-                                    orderAdapter!!.add(
+                                    orderAdapter?.add(
                                         OrderItemView(
                                             context = this@InCinemaModeActivity,
-                                            it
+                                            it,orderAdapter
                                         )
                                     )
                                 }
-                                orderAdapter!!.notifyDataSetChanged()
+                                orderAdapter?.notifyDataSetChanged()
                                 //placeholder
-                                if (bookingData?.placeholders?.isEmpty() == true) {
+                                if (inCinemaPageData?.placeholders?.isEmpty() == true) {
                                     binding?.recyclerView51?.hide()
                                 } else {
                                     binding?.recyclerView51?.show()
@@ -559,7 +555,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                                         LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
                                     val ticketPlaceHolderAdapter = TicketPlaceHolderAdapter(
                                         this,
-                                        bookingData?.placeholders!!
+                                        inCinemaPageData?.placeholders!!
                                     )
 
                                     binding?.recyclerView51?.setHasFixedSize(true)
@@ -594,14 +590,13 @@ class InCinemaModeActivity : AppCompatActivity(),
 
     private fun showLoader() {
         loader = LoaderDialog(R.string.pleaseWait)
-        loader?.show(this@InCinemaModeActivity.supportFragmentManager, null)
+        loader?.show(supportFragmentManager, "loader")
     }
 
-
-    private fun createMovieDetailAdapter() = GenericRecyclerViewAdapter(
+    private fun createSeatsAdapter() = GenericRecyclerViewAdapter(
         getViewLayout = { R.layout.movie_details_item },
-        areItemsSame = ::isMovieDetailSame,
-        areItemContentsEqual = ::isMovieDetailSame,
+        areItemsSame = ::isSeatSame,
+        areItemContentsEqual = ::isSeatSame,
         onBind = { seat, viewDataBinding, _ ->
             with(viewDataBinding as MovieDetailsItemBinding) {
                 textviewSeatNumber.text = seat
@@ -609,21 +604,8 @@ class InCinemaModeActivity : AppCompatActivity(),
             }
         }
     )
-
-    private fun createOrderAdapter() = GenericRecyclerViewAdapter(
-        getViewLayout = { R.layout.movie_details_item },
-        areItemsSame = ::isMovieDetailSame,
-        areItemContentsEqual = ::isMovieDetailSame,
-        onBind = { seat, viewDataBinding, _ ->
-            with(viewDataBinding as MovieDetailsItemBinding) {
-                textviewSeatNumber.text = seat
-
-            }
-        }
-    )
-
-    private fun isMovieDetailSame(any: String, any1: String): Boolean {
-        return false
+    private fun isSeatSame(seat1: String, seat2: String): Boolean {
+        return seat1.equals(seat2)
     }
 
     private fun createIntervalTimingAdapter() = GenericRecyclerViewAdapter(
@@ -638,8 +620,8 @@ class InCinemaModeActivity : AppCompatActivity(),
         }
     )
 
-    private fun isIntervalTimingSame(any: ShowData, any1: ShowData): Boolean {
-        return false
+    private fun isIntervalTimingSame(timing1: ShowData, timing2: ShowData): Boolean {
+        return timing1.time.equals(timing2.time)
     }
 
     override fun onQrClick() {
@@ -855,10 +837,10 @@ class InCinemaModeActivity : AppCompatActivity(),
                         textViewTypeLabel.text = inCinemaModeItem.value
                         cardviewQuickOptionsType.setOnClickListener {
                             Constant.CINEMA_ID = ""
-                            bookingData?.let {
+                            inCinemaPageData?.let {
                                 it.inCinemaFoodResp?.let {
                                     Constant.BOOKING_ID = bookingIdList!![currentBooking]
-                                    Constant.CINEMA_ID = bookingData?.ccode!!
+                                    Constant.CINEMA_ID = inCinemaPageData?.ccode!!
                                 }
 
                             }
@@ -870,8 +852,6 @@ class InCinemaModeActivity : AppCompatActivity(),
                                 val intent = Intent(this@InCinemaModeActivity, FoodActivity::class.java)
                                 intent.putExtra("from", "pcOrdrsnc")
                                 intent.putExtra("NF", "true")
-                                Constant.CINEMA_ID = mCinemaData?.inCinemaResp?.ccode!!
-                                Constant.BOOKING_ID = mCinemaData?.inCinemaResp?.bookingId!!
                                 Constant.BOOK_TYPE = "FOOD"
                                 intent.putExtra("SEATS", java.lang.String.valueOf(mCinemaData?.inCinemaResp?.seats?.size))
                                 startActivity(intent)

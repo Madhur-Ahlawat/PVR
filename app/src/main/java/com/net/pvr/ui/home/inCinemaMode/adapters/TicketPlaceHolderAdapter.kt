@@ -1,4 +1,4 @@
-package com.net.pvr.ui.ticketConfirmation.adapter
+package com.net.pvr.ui.home.inCinemaMode.adapters
 
 import android.app.Activity
 import android.content.Intent
@@ -20,7 +20,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.net.pvr.R
 import com.net.pvr.ui.home.HomeActivity
-import com.net.pvr.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr.ui.home.inCinemaMode.response.Placeholder
 import com.net.pvr.ui.player.PlayerActivity
 import com.net.pvr.ui.webView.WebViewActivity
@@ -34,7 +33,7 @@ import kotlin.collections.ArrayList
 @Suppress("DEPRECATION")
 class TicketPlaceHolderAdapter(
     private val context: Activity,
-    private val movies: ArrayList<HomeResponse.Ph>,
+    private val movies: ArrayList<Placeholder>,
 ) : RecyclerView.Adapter<TicketPlaceHolderAdapter.MovieViewHolder>() {
 
     private var displayMetrics = DisplayMetrics()

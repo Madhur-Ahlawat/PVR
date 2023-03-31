@@ -4,7 +4,7 @@ data class GetBookingResponse(
     val code: Int,
     val minversion: Any,
     val msg: String,
-    val output: BookingItem,
+    val output: InCinemaResp,
     val result: String,
     val version: Any
 )

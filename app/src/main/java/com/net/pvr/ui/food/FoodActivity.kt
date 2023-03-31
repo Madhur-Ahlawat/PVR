@@ -185,7 +185,6 @@ class FoodActivity : AppCompatActivity(),
         //internet Check
         broadcastReceiver = NetworkReceiver()
         broadcastIntent()
-
         movedNext()
         foodDetails()
         getShimmerData()

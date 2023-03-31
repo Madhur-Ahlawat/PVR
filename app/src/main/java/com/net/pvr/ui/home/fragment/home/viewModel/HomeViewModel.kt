@@ -8,7 +8,6 @@ import com.net.pvr.ui.home.fragment.home.response.FeedbackDataResponse
 import com.net.pvr.ui.home.fragment.home.response.HomeResponse
 import com.net.pvr.ui.home.fragment.home.response.NextBookingResponse
 import com.net.pvr.ui.home.fragment.more.offer.response.OfferResponse
-import com.net.pvr.ui.home.fragment.more.response.WhatsAppOptStatus
 import com.net.pvr.ui.home.fragment.privilege.response.PrivilegeHomeResponse
 import com.net.pvr.ui.home.inCinemaMode.response.GetBookingResponse
 import com.net.pvr.ui.home.inCinemaMode.response.GetInCinemaResponse
@@ -109,7 +108,7 @@ class HomeViewModel @Inject constructor(private val userRepository: UserReposito
 
     val getInCinemaLiveData: LiveData<NetworkResult<GetInCinemaResponse>>
         get() = userRepository.getInCinemaResponseLiveData
-    val getBookingLiveData: LiveData<NetworkResult<GetInCinemaResponse>>
+    val getBookingLiveData: LiveData<NetworkResult<GetBookingResponse>>
         get() = userRepository.getBookingResponseLiveData
 
     fun getInCinema(

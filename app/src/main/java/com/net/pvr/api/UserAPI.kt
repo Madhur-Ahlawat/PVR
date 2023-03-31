@@ -63,7 +63,6 @@ import com.net.pvr.ui.watchList.response.WatchListResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -1702,7 +1701,7 @@ interface UserAPI {
         @Query("city") city: String,
         @Query("av") version: String,
         @Query("pt") platform: String
-    ): Response<GetInCinemaResponse>
+    ): Response<GetBookingResponse>
 
 
 

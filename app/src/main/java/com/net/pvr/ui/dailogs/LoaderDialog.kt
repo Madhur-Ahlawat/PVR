@@ -13,8 +13,6 @@ class LoaderDialog(private val message: Int) : DialogFragment() {
     private var binding: DialogLoaderBinding? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //setStyle(STYLE_NORMAL, R.style.full_screen_dialog)
     }
 
     override fun onCreateView(
@@ -22,12 +20,13 @@ class LoaderDialog(private val message: Int) : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        dialog?.window?.setBackgroundDrawableResource(R.color.translucent1);
         val displayRectangle = Rect()
-        dialog!!.window!!.decorView
-            .getWindowVisibleDisplayFrame(displayRectangle)
-        dialog?.window?.setLayout(displayRectangle.width(), displayRectangle.height());
-
+        dialog?.window?.apply {
+            setBackgroundDrawableResource(R.color.translucent1);
+            decorView
+                .getWindowVisibleDisplayFrame(displayRectangle)
+            setLayout(displayRectangle.width(), displayRectangle.height());
+        }
         isCancelable = false
         return DialogLoaderBinding.inflate(inflater, container, false).also {
             binding = it
