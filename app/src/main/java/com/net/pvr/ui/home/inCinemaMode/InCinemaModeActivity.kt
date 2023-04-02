@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -54,9 +53,9 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class InCinemaModeActivity : AppCompatActivity(), PrivilegeCardAdapter.RecycleViewItemClickListener,
-    StoriesProgressView.StoriesListener, HowItWorkAdapter.RecycleViewItemClickListener,
-    DialogInterface {
+class InCinemaModeActivity : AppCompatActivity(),
+    PrivilegeCardAdapter.RecycleViewItemClickListener, StoriesProgressView.StoriesListener,
+    HowItWorkAdapter.RecycleViewItemClickListener {
     private var mCinemaData: Output? = null
     private var ivCross: TextView? = null
     private var tv_button: TextView? = null
@@ -174,7 +173,8 @@ class InCinemaModeActivity : AppCompatActivity(), PrivilegeCardAdapter.RecycleVi
             window?.apply {
                 setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                 setLayout(
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
                 )
                 setGravity(Gravity.CENTER)
             }
@@ -204,9 +204,12 @@ class InCinemaModeActivity : AppCompatActivity(), PrivilegeCardAdapter.RecycleVi
             tv_button!!.visibility = View.GONE
             ivBanner = findViewById<View>(R.id.storyList) as RecyclerView
 
-            val layoutManager = LinearLayoutManager(
-                this@InCinemaModeActivity, LinearLayoutManager.HORIZONTAL, false
-            )
+            val layoutManager =
+                LinearLayoutManager(
+                    this@InCinemaModeActivity,
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
             ivBanner?.layoutManager = layoutManager
             recyclerAdapter = HowItWorkAdapter(
                 mCinemaData?.inCinemaResp?.st!!,
@@ -255,7 +258,8 @@ class InCinemaModeActivity : AppCompatActivity(), PrivilegeCardAdapter.RecycleVi
             bundle.putString("ecommerce values will be pass", "")
             GoogleAnalytics.hitEvent(this@InCinemaModeActivity, "passport_purchase", bundle)
             GoogleAnalytics.hitPurchaseEvent(
-                this@InCinemaModeActivity, id, price1, "Passport", 1
+                this@InCinemaModeActivity,
+                id, price1, "Passport", 1
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -268,7 +272,8 @@ class InCinemaModeActivity : AppCompatActivity(), PrivilegeCardAdapter.RecycleVi
         dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window!!.setLayout(
-            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
         )
         dialog.window!!.setGravity(Gravity.CENTER)
         val referenceNo = dialog.findViewById<View>(R.id.refrenceNo) as TextView?
@@ -299,6 +304,7 @@ class InCinemaModeActivity : AppCompatActivity(), PrivilegeCardAdapter.RecycleVi
         cardAdapter =
             PrivilegeCardAdapter(cardDataList, this@InCinemaModeActivity, preferences, this)
         binding?.apply {
+            rvSeatNumber.layoutManager = GridLayoutManager(this@InCinemaModeActivity, 7)
             layoutManager =
                 LinearLayoutManager(this@InCinemaModeActivity, LinearLayoutManager.VERTICAL, false)
             rvQuickOption?.apply {
@@ -325,6 +331,9 @@ class InCinemaModeActivity : AppCompatActivity(), PrivilegeCardAdapter.RecycleVi
             }
 
             initNoDataDialog()
+
+            getInCinemaMode()
+
         }
     }
 
@@ -529,6 +538,7 @@ class InCinemaModeActivity : AppCompatActivity(), PrivilegeCardAdapter.RecycleVi
                                             imageviewNextBookedMovie.show()
                                         }
                                     }
+                                inCinemaPageData?.apply {
                                     seatsAdapter.submitList(seats)
                                     intervalAdadapter.submitList(showData)
                                     inCinemaTypesAdadapter.submitList(incinemaTypes)
@@ -1068,14 +1078,6 @@ class InCinemaModeActivity : AppCompatActivity(), PrivilegeCardAdapter.RecycleVi
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
         dialog.setContentView(bindingProfile.root)
         dialog.show()
-    }
-
-    override fun cancel() {
-        onBackPressed()
-    }
-
-    override fun dismiss() {
-        onBackPressed()
     }
 }
 
