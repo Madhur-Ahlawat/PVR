@@ -404,6 +404,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                                         intervalAdadapter.submitList(inCinemaPageData?.showData)
                                         inCinemaTypesAdadapter.submitList(inCinemaPageData?.incinemaTypes)
                                         orderAdapter!!.clear()
+                                        if (inCinemaPageData?.inCinemaFoodResp?.size!! >0)
                                         inCinemaPageData?.inCinemaFoodResp?.get(0)?.isExpanded=true
                                         inCinemaPageData?.inCinemaFoodResp?.forEach {
                                             println("it--->$it")
