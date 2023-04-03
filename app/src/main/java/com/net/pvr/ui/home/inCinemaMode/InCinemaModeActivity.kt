@@ -358,6 +358,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                     dismissLoader()
                     setData(it.data)
                 }
+
                 is NetworkResult.Error -> {
                     dismissLoader()
                     binding?.nestedScrollView?.hide()
