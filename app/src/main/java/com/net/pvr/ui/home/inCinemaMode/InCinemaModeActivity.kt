@@ -380,6 +380,8 @@ class InCinemaModeActivity : AppCompatActivity(),
                     if (inCinemaPageData != null) {
                         inCinemaPageData?.apply {
                             binding?.apply {
+                                textviewMovieNumber.text =
+                                    (currentBooking + 1).toString() + "/" + bookingIdList!!.size.toString()
                                 nestedScrollView.show()
                                 Glide.with(this@InCinemaModeActivity)
                                     .load(movieImage)
@@ -394,15 +396,18 @@ class InCinemaModeActivity : AppCompatActivity(),
                                 textviewMovieType.text = format
                                 textviewMovieName.text = mname
 
-                                if (currentBooking == 0) {
+                                if (currentBooking ==0 && bookingIdList!!.size>0) {
                                     imageviewPreviousBookedMovie.hide()
                                     imageviewNextBookedMovie.show()
-                                } else if (currentBooking == bookingIdList!!.size - 1) {
-                                    imageviewPreviousBookedMovie.show()
-                                    imageviewNextBookedMovie.hide()
-                                } else if (currentBooking < bookingIdList!!.size) {
+                                }
+
+                                if(currentBooking>0 && currentBooking < bookingIdList!!.size-1){
                                     imageviewPreviousBookedMovie.show()
                                     imageviewNextBookedMovie.show()
+                                }
+                                if (currentBooking == bookingIdList!!.size - 1) {
+                                    imageviewPreviousBookedMovie.hide()
+                                    imageviewNextBookedMovie.hide()
                                 }
                             }
                             seatsAdapter.submitList(seats)
@@ -478,8 +483,10 @@ class InCinemaModeActivity : AppCompatActivity(),
     }
 
     private fun dismissLoader() {
-        loader?.dismiss()
-        loader = null
+        loaderDialogs.forEach {
+            it?.dismiss()
+        }
+        loaderDialogs.clear()
     }
 
     private fun getBookingInfo(bookingId: String, city: String) {
@@ -519,16 +526,20 @@ class InCinemaModeActivity : AppCompatActivity(),
                                     textviewMovieType.text = format
                                     textviewMovieName.text = mname
 
-                                    if (currentBooking == 0) {
+                                    if (currentBooking ==0 && bookingIdList!!.size>0) {
                                         imageviewPreviousBookedMovie.hide()
                                         imageviewNextBookedMovie.show()
-                                    } else if (currentBooking == bookingIdList!!.size - 1) {
-                                        imageviewPreviousBookedMovie.show()
-                                        imageviewNextBookedMovie.hide()
-                                    } else if (currentBooking < bookingIdList!!.size) {
+                                    }
+
+                                    if(currentBooking>0 && currentBooking < bookingIdList!!.size-1){
                                         imageviewPreviousBookedMovie.show()
                                         imageviewNextBookedMovie.show()
                                     }
+                                    if (currentBooking == bookingIdList!!.size - 1) {
+                                        imageviewPreviousBookedMovie.hide()
+                                        imageviewNextBookedMovie.hide()
+                                    }
+
                                 }
                                 inCinemaPageData?.apply {
                                     seatsAdapter.submitList(seats)
@@ -608,15 +619,14 @@ class InCinemaModeActivity : AppCompatActivity(),
                 }
 
                 is NetworkResult.Loading -> {
-                    //showLoader()
                 }
             }
         }
     }
-
+    var loaderDialogs= mutableListOf<LoaderDialog>()
     private fun showLoader() {
-        loader = LoaderDialog(R.string.pleaseWait)
-        loader?.show(supportFragmentManager, null)
+        loader = LoaderDialog(R.string.pleaseWait).also { it.show(supportFragmentManager, null) }
+        loaderDialogs.add(loader!!)
     }
 
     private fun createSeatsAdapter() =
