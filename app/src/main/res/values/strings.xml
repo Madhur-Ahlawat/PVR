@@ -744,6 +744,9 @@ IMAX Corporation is one of the world\'s leading entertainment technology compani
     <string name="dismiss">Dismiss</string>
     <string name="permission_location_rationale">Please grant location permission</string>
     <string name="how_it_works_underlined"><u>How it Works?</u></string>
+    <string name="something_went_wrong">Something went wrong!</string>
+    <string name="no_orders_available">No orders available!</string>
+    <string name="no_food_orders">No food orders!</string>
 
 
 </resources>

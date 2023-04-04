@@ -1944,7 +1944,6 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         }
     }
 
-
     //Food
     private val foodLiveData = MutableLiveData<NetworkResult<FoodResponse>>()
     val foodResponseLiveData: LiveData<NetworkResult<FoodResponse>>
