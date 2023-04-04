@@ -28,7 +28,7 @@
                 android:layout_below="@+id/topView"
                 android:layout_centerHorizontal="true"
                 android:layout_marginEnd="@dimen/padding_10"
-                android:drawableEnd="@drawable/cross_small"
+                android:drawableEnd="@drawable/cross_white"
                 android:elevation="5dp"
                 android:gravity="center"
                 android:minWidth="90dp"

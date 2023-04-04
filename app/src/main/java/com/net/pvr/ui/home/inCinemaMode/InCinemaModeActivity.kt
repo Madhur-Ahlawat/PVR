@@ -103,7 +103,7 @@ class InCinemaModeActivity : AppCompatActivity(),
         setClickListeners()
         createQr()
         binding?.textViewHowItWorks?.setOnClickListener {
-            if (mCinemaData?.inCinemaResp?.st?.isNotEmpty() == true) {
+            if (inCinemaPageData?.st?.isNotEmpty() == true) {
                 openHowToWork()
             }
         }
@@ -112,6 +112,10 @@ class InCinemaModeActivity : AppCompatActivity(),
             onBackPressed()
         }
         getInCinemaMode()
+    }
+
+    private fun processhiw(mCinemaData: Output?) {
+       Toast.makeText(this,"",Toast.LENGTH_LONG).show()
     }
 
 
@@ -217,7 +221,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                 )
             ivBanner?.layoutManager = layoutManager
             recyclerAdapter = HowItWorkAdapter(
-                mCinemaData?.inCinemaResp?.st!!,
+                inCinemaPageData?.st!!,
                 this@InCinemaModeActivity,
                 this@InCinemaModeActivity
             )
