@@ -77,7 +77,7 @@ class TicketConfirmationActivity : AppCompatActivity() {
         PaymentActivity.createdAt = ""
         PaymentActivity.isPromoCodeApplied = false
         PaymentActivity.offerList = ArrayList()
-
+//        Constant.INCINEMA = "YES"
         manageFunction()
     }
 
@@ -304,6 +304,31 @@ class TicketConfirmationActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun retrieveData(output: TicketBookedResponse.Output, from: String) {
+
+        binding?.textView368?.setOnClickListener {
+            println("fjfjddjffdj--->"+binding?.textView368?.text)
+
+            if (binding?.textView368?.text == "Back To Home") {
+                launchActivity(
+                    HomeActivity::class.java,
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                )
+            } else if (binding?.textView368?.text == "Back To Bookings") {
+                onBackPressed()
+            } else if (binding?.textView368?.text == "Back to In-Cinema Mode") {
+                launchActivity(
+                    InCinemaModeActivity::class.java,
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                )
+            }else{
+                if (output.parkbooking) {
+                    authViewModel.showParking(output.bi)
+                } else {
+                    authViewModel.bookParking(output.bi)
+                }
+            }
+        }
+
 
         if ((Constant.TRANSACTION_ID != null && !Constant.TRANSACTION_ID.equals("", ignoreCase = true)) || BOOK_TYPE == "FOOD") {
             if (output.fmsg != null && output.fmsg != "")
@@ -614,27 +639,6 @@ class TicketConfirmationActivity : AppCompatActivity() {
                 }
             }
 
-            binding?.textView368?.setOnClickListener {
-                if (binding?.textView368?.text == "Back To Home") {
-                    launchActivity(
-                        HomeActivity::class.java,
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                    )
-                } else if (binding?.textView368?.text == "Back To Bookings") {
-                    onBackPressed()
-                } else if (binding?.textView368?.text == "Back to In-Cinema Mode") {
-                    launchActivity(
-                        InCinemaModeActivity::class.java,
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                    )
-                }else{
-                    if (output.parkbooking) {
-                        authViewModel.showParking(output.bi)
-                    } else {
-                        authViewModel.bookParking(output.bi)
-                    }
-                }
-            }
 
             // Share
             binding?.shareBtn?.setOnClickListener {
@@ -713,7 +717,8 @@ class TicketConfirmationActivity : AppCompatActivity() {
                     getFeedBackData()
                 }, 5000)
             }
-        } else if (Constant.BOOK_TYPE == "FOOD") {
+        } else
+            if (Constant.BOOK_TYPE == "FOOD") {
             binding?.foodView?.show()
             binding?.ticketView?.hide()
             if (Constant.INCINEMA == "YES") {

@@ -33,6 +33,7 @@ import com.net.pvr.ui.GridAutoFitLayoutManager
 import com.net.pvr.ui.dailogs.LoaderDialog
 import com.net.pvr.ui.dailogs.OptionDialog
 import com.net.pvr.ui.food.FoodActivity
+import com.net.pvr.ui.home.HomeActivity
 import com.net.pvr.ui.home.fragment.home.response.FeedbackDataResponse
 import com.net.pvr.ui.home.fragment.home.viewModel.HomeViewModel
 import com.net.pvr.ui.home.fragment.privilege.adapter.HowItWorkAdapter
@@ -102,9 +103,14 @@ class InCinemaModeActivity : AppCompatActivity(),
         setClickListeners()
         createQr()
         binding?.textViewHowItWorks?.setOnClickListener {
-            if (mCinemaData?.inCinemaResp?.popups?.isNotEmpty() == true) {
+            toast("fhfhdfhdhd....."+mCinemaData?.inCinemaResp?.st?.size)
+            if (mCinemaData?.inCinemaResp?.st?.isNotEmpty() == true) {
                 openHowToWork()
             }
+        }
+
+        binding?.toolbar?.imageView58?.setOnClickListener {
+            onBackPressed()
         }
     }
 
@@ -357,6 +363,7 @@ class InCinemaModeActivity : AppCompatActivity(),
                     if (Constant.status == it.data?.result && Constant.SUCCESS_CODE == it.data.code) {
                         currentBooking=0
                         inCinemaPageData = it.data.output.inCinemaResp
+                        mCinemaData = it.data.output
                         try {
                             bookingIdList!!.clear()
                             bookingIdList!!.addAll(it.data.output.bookingIdList)
@@ -391,12 +398,14 @@ class InCinemaModeActivity : AppCompatActivity(),
 
                                                 if (currentBooking == 0) {
                                                     imageviewPreviousBookedMovie.hide()
+                                                    if (bookingIdList?.size!!>1)
                                                     imageviewNextBookedMovie.show()
                                                 } else if (currentBooking == bookingIdList!!.size - 1) {
                                                     imageviewPreviousBookedMovie.show()
                                                     imageviewNextBookedMovie.hide()
                                                 } else if (currentBooking < bookingIdList!!.size) {
                                                     imageviewPreviousBookedMovie.show()
+                                                    if (bookingIdList?.size!!>1)
                                                     imageviewNextBookedMovie.show()
                                                 }
                                             }
@@ -482,6 +491,11 @@ class InCinemaModeActivity : AppCompatActivity(),
     }
 
     override fun onBackPressed() {
+        Constant.INCINEMA = "NO"
+        launchActivity(
+            HomeActivity::class.java,
+            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        )
         finish()
     }
 

@@ -34,7 +34,7 @@
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:fillViewport="true"
@@ -243,6 +243,7 @@
                     android:layout_height="@dimen/dimen_22dp"
                     android:layout_marginHorizontal="@dimen/dimen_14dp"
                     android:elevation="1dp"
+                    android:visibility="gone"
                     android:src="@drawable/ic_circular_arrow_right"
                     app:layout_constraintBottom_toBottomOf="@+id/cardView_booked_movie_ticket"
                     app:layout_constraintEnd_toEndOf="parent"
