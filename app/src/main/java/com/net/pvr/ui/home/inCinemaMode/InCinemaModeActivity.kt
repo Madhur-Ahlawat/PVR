@@ -545,8 +545,8 @@ class InCinemaModeActivity : AppCompatActivity(),
                                         imageviewPreviousBookedMovie.show()
                                         imageviewNextBookedMovie.show()
                                     }
-                                    if (currentBooking == bookingIdList!!.size - 1) {
-                                        imageviewPreviousBookedMovie.hide()
+                                    if (currentBooking>0 && currentBooking == bookingIdList!!.size - 1) {
+                                        imageviewPreviousBookedMovie.show()
                                         imageviewNextBookedMovie.hide()
                                     }
 
